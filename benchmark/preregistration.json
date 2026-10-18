@@ -1,5 +1,5 @@
 {
-  "version": 8,
+  "version": 9,
   "frozen_on": "2026-10-18",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -54,7 +54,9 @@
   "latency": {
     "gated": false,
     "invocations_per_case": 15,
-    "report": "median and bootstrap interval; cold and warm cache separately"
+    "report": "median and bootstrap interval; cold and warm cache separately",
+    "held_out_quality_run": "1 invocation per tool and case (outputs are deterministic and checked); timings from this run are not used for inference",
+    "latency_run": "15 alternating invocations per case on a quiet machine, only for arms that pass the decision rule, against Graphify"
   },
   "agent_trials": {
     "minimum_tasks": 20,
@@ -108,6 +110,11 @@
       "version": 8,
       "date": "2026-10-18",
       "change": "froze the held-out workload (sha256 665e1fbacccc88a0...) before any retrieval tool saw it"
+    },
+    {
+      "version": 9,
+      "date": "2026-10-18",
+      "change": "split the held-out run into a 1-repeat quality/token run (any load) and a separate 15-repeat latency run for passing arms; 15 repeats of 14 tools over 246 cases would take ~6 h on a quiet machine. Decided before any held-out run"
     }
   ],
   "arms": {
