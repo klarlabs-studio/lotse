@@ -17,20 +17,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--expect-search-unchanged", action="store_true",
                         help="For this delivery-only experiment, also compare search outputs/indexes to the saved v1 run")
+    parser.add_argument("--comparison", type=Path, default=BASE / "results/graphify-comparison.json")
     args = parser.parse_args()
-    source = BASE / "results/graphify-comparison.json"
+    source = args.comparison.resolve()
     result = json.loads(source.read_text())
+    queries = BASE / result.get("queries", "benchmark/queries.json")
+    scratch = BASE / result.get("scratch", ".research/comparison")
     assert sha(BASE / "benchmark/compare_graphify.py") == result["driver_sha256"]
-    assert sha(BASE / "benchmark/queries.json") == result["query_sha256"]
+    assert sha(queries) == result["query_sha256"]
     assert sha(BASE / "target/release/graf") == result["binary_sha256"]
     for path, hashed in result["source_hashes"].items():
         assert sha(BASE / path) == hashed, f"Stale source receipt: {path}"
-    cases = {q["id"]: q for q in json.loads((BASE / "benchmark/queries.json").read_text())}
+    cases = {q["id"]: q for q in json.loads(queries.read_text())}
     expected = {(q, budget) for q in cases for budget in (2000, 8000)}
     assert len(result["rows"]) == len(expected)
     indexes = {}
     for repo, info in result["repositories"].items():
-        root = BASE / ".research/comparison" / repo / "input"
+        root = scratch / repo / "input"
         index_path = root / ".graf/index.json"
         index = json.loads(index_path.read_text())
         assert set(index["files"]) == set(info["file_hashes"])
@@ -54,7 +57,7 @@ def main():
         seen.add(pair)
         assert row["repo"] == cases[row["id"]]["repo"]
         assert set(row["tools"]) == set(ARMS)
-        root = BASE / ".research/comparison" / row["repo"] / "input"
+        root = scratch / row["repo"] / "input"
         files = result["repositories"][row["repo"]]["file_hashes"]
         for tool, value in row["tools"].items():
             samples = value["latency_ms"]
@@ -101,7 +104,7 @@ def main():
     audit = {"status": "passed", "comparison_sha256": sha(source), "cases": len(seen),
              "timing_samples": timing_samples, "verified_locate_hints": hints,
              "search_outputs_and_indexes_unchanged_from_v1": args.expect_search_unchanged}
-    (BASE / "results/graphify-comparison-audit.json").write_text(json.dumps(audit, indent=2) + "\n")
+    source.with_name(source.stem + "-audit.json").write_text(json.dumps(audit, indent=2) + "\n")
     print(json.dumps(audit, indent=2))
 
 

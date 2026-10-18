@@ -8,8 +8,9 @@ retrieval pass never authorizes promotion: agent trials remain required.
 
     python benchmark/decision.py [--arm graf_locate ...]
 
-Writes results/decision.json from results/graphify-comparison.json and exits
-nonzero unless the rule passes.
+Reads results/graphify-comparison.json (development) or
+results/heldout-comparison.json (frozen held-out workload), writes
+results/decision.json, and exits nonzero unless the rule passes.
 """
 import argparse
 import hashlib
@@ -144,10 +145,11 @@ def main():
     queries = json.loads(query_path.read_text())
     budgets = sorted({prereg["primary"]["budget"], *prereg["guardrails"]["budgets"]})
     expected = {(q["id"], b): code_hint_recall(q, []) is not None for q in queries for b in budgets}
-    source = BASE / "results/graphify-comparison.json"
+    source = BASE / ("results/heldout-comparison.json" if role == "held_out"
+                     else "results/graphify-comparison.json")
     # Authenticate saved outputs against their source receipts before evaluating.
-    audit = subprocess.run([sys.executable, str(BASE / "benchmark/check_comparison.py")],
-                           capture_output=True, text=True)
+    audit = subprocess.run([sys.executable, str(BASE / "benchmark/check_comparison.py"),
+                            "--comparison", str(source)], capture_output=True, text=True)
     if audit.returncode:
         result = {"status": "invalid_evidence", "product_promotion_allowed": False,
                   "audit_stdout": audit.stdout, "audit_stderr": audit.stderr}
@@ -155,6 +157,8 @@ def main():
         print(json.dumps({"status": result["status"], "audit_stderr": audit.stderr[-500:]}, indent=2))
         return 1
     data = json.loads(source.read_text())
+    if BASE / data.get("queries", "benchmark/queries.json") != query_path:
+        raise RuntimeError(f"{source.name} was not produced from {query_path.name}")
     experimental = prereg["arms"]["experimental"]
     arms = [evaluate(data["rows"], expected, arm, prereg, role,
                      family=len(experimental) if arm in experimental else 1)

@@ -127,6 +127,8 @@ def main():
     from retrieval import load_documents, tokens
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--binary", type=Path, default=BASE / "target/release/graf")
+    parser.add_argument("--queries", type=Path, default=BASE / "benchmark/queries.json")
+    parser.add_argument("--output", type=Path, default=BASE / "results/graphify-comparison.json")
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
     parser.add_argument("--repeats", type=int, default=prereg["latency"]["invocations_per_case"])
     args = parser.parse_args()
@@ -150,8 +152,11 @@ def main():
         if not reference.is_file() or sha(path) != sha(reference):
             raise RuntimeError(f"Graphify source differs from pinned snapshot: {path.name}")
     snapshots = json.loads((BASE / "results/snapshots.json").read_text())
-    cases = json.loads((BASE / "benchmark/queries.json").read_text())
-    scratch = BASE / ".research/comparison"
+    queries, output_path = args.queries.resolve(), args.output.resolve()
+    cases = json.loads(queries.read_text())
+    # The development run keeps its historical scratch path; other workloads get their own.
+    default_output = output_path == BASE / "results/graphify-comparison.json"
+    scratch = BASE / ".research" / ("comparison" if default_output else f"comparison-{output_path.stem}")
     scratch.mkdir(parents=True, exist_ok=True)
     result = {
         "baseline": {"pin": pin, "installed_version": installed, "mode": "code_only_no_clustering",
@@ -161,7 +166,8 @@ def main():
                  "graphify": "Native code-only navigation hints"},
         "repeats": args.repeats, "preregistration_sha256": sha(BASE / "benchmark/preregistration.json"),
         "input_receipts": snapshots,
-        "driver_sha256": sha(Path(__file__)), "query_sha256": sha(BASE / "benchmark/queries.json"),
+        "driver_sha256": sha(Path(__file__)), "query_sha256": sha(queries),
+        "queries": str(queries.relative_to(BASE)), "scratch": str(scratch.relative_to(BASE)),
         "binary_sha256": sha(binary),
         "source_hashes": {str(p.relative_to(BASE)): sha(p) for p in
                           [BASE / "Cargo.toml", BASE / "Cargo.lock", *sorted((BASE / "src").rglob("*.rs")), BASE / "benchmark/retrieval.py", BASE / "benchmark/locate-experiment.json"]},
@@ -281,7 +287,7 @@ def main():
                 "median_output_tokens": statistics.median(v["output_tokens"] for v in values),
                 "over_cl100k_budget": sum(v["over_cl100k_budget"] for v in values),
             }
-    dest = BASE / "results/graphify-comparison.json"
+    dest = output_path
     dest.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result["summary"], indent=2))
 
