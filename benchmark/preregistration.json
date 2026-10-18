@@ -58,13 +58,16 @@
     "minimum_paired_trials_per_task_and_arm": 5,
     "success": "non-inferiority, Wilson intervals, pass^k for k = 1..5",
     "efficiency": "superiority on total cost across all attempts",
-    "solver": "Claude Code 2.1.302 headless: claude -p --model claude-haiku-5-5 --tools \"\" --strict-mcp-config --mcp-config <broker server for the arm> --setting-sources \"\" --no-session-persistence --output-format stream-json --max-budget-usd 0.50; the broker (benchmark/task_session.py) is the only tool surface",
+    "solver": "Claude Code 2.1.302 headless: claude -p --model claude-haiku-5-5 --tools \"\" --strict-mcp-config --mcp-config <broker server for the arm> --setting-sources \"\" --disable-slash-commands --no-session-persistence --output-format stream-json --max-budget-usd 0.50; the broker (benchmark/task_session.py) is the only tool surface",
     "model": "claude-haiku-5-5",
     "spend_cap_usd": null,
     "billing": "the operator's Claude Code Max 5x subscription; caps are usage-equivalent, not charges",
     "per_run_cap": "--max-budget-usd 0.50 estimated; a run that hits the cap counts as a failure with its full usage",
     "pacing": "batches sized to the subscription's usage windows; every attempt, including capped and errored runs, is recorded",
-    "usage_source": "stream-json usage per model call; estimated cost reported separately from tokens"
+    "usage_source": "stream-json usage per model call; estimated cost reported separately from tokens",
+    "max_budget_usd": 0.5,
+    "implementation": "benchmark/run_agent_trial.py (runner) and benchmark/broker_mcp.py (MCP adapter)",
+    "isolation_check": "2026-10-18 smoke call: empty cwd, no tools or MCP servers, ~730 input tokens total, model reported no personal instructions or recalled context"
   },
   "report_every_case": true,
   "revisions": [
@@ -96,7 +99,7 @@
     {
       "version": 7,
       "date": "2026-10-18",
-      "change": "specified the agent solver (headless Claude Code with Haiku, broker-only tools) and per-run cap under the operator's subscription; decision rule unchanged"
+      "change": "specified the agent solver (headless Claude Code with Haiku, broker-only tools) and per-run cap under the operator's subscription; decision rule unchanged; machine-readable max_budget_usd and --disable-slash-commands added the same day, before any trial"
     }
   ],
   "arms": {
