@@ -106,6 +106,20 @@ class DecisionTests(unittest.TestCase):
 
 
 
+class RescoreTests(unittest.TestCase):
+    def test_judged_files_join_the_relevant_set_for_every_tool(self):
+        from decision import rescore
+        rows = [{"id": "q", "budget": 2000, "tools": {
+            "cand": {"cited_paths": ["a.go", "b.go"], "cited_path_order": ["b.go", "a.go"]},
+            "graphify": {"cited_paths": ["a.go"], "cited_path_order": ["a.go"]}}}]
+        cases = {"q": {"id": "q", "evidence": [{"path": "a.go"}]}}
+        judgments = {"q": {"b.go": {"relevant": True, "reason": "r"}}}
+        [scored] = rescore(rows, cases, judgments)
+        self.assertEqual(scored["tools"]["cand"]["code_file_hint_recall"], 1.0)
+        self.assertEqual(scored["tools"]["graphify"]["code_file_hint_recall"], 0.5)
+        self.assertEqual(scored["tools"]["graphify"]["code_file_hint_recall_at_5"], 0.5)
+        self.assertNotIn("relevant", rows[0]["tools"]["cand"], "input rows are not mutated")
+
 class PreregistrationTests(unittest.TestCase):
     def test_driver_arms_match_the_frozen_definitions(self):
         from compare_graphify import EXPERIMENTAL_ARMS, GRAF_ARMS, describe

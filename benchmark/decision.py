@@ -125,6 +125,23 @@ def evaluate(rows, expected, candidate, prereg, role, family=1):
             "planning": _planning(guardrails, prereg), "cases": _cases(table, quality)}
 
 
+def rescore(rows, cases, judgments):
+    """Recompute code-file recall against author labels plus judged-relevant pooled files."""
+    from pool_judgments import relevant_files
+    rescored = []
+    for row in rows:
+        relevant = relevant_files(cases[row["id"]], judgments)
+        tools = {}
+        for name, value in row["tools"].items():
+            def recall(paths):
+                return len(relevant & set(paths)) / len(relevant) if relevant else None
+            tools[name] = {**value, "code_file_hint_recall": recall(value["cited_paths"]),
+                           "code_file_hint_recall_at_5": recall(value["cited_path_order"][:5]),
+                           "code_file_hint_recall_at_10": recall(value["cited_path_order"][:10])}
+        rescored.append({**row, "tools": tools})
+    return rescored
+
+
 def _workload(prereg, requested):
     """The requested workload; held out only when its file matches the frozen hash."""
     if requested == "development":
@@ -163,8 +180,20 @@ def main():
     data = json.loads(source.read_text())
     if BASE / data.get("queries", "benchmark/queries.json") != query_path:
         raise RuntimeError(f"{source.name} was not produced from {query_path.name}")
+    rows, judging = data["rows"], None
+    if role == "held_out":
+        from pool_judgments import JUDGMENTS, POOL, check_judgments
+        if not (POOL.is_file() and JUDGMENTS.is_file()):
+            raise RuntimeError("Pooled blind judgments are required before a held-out decision")
+        pool = {q: v["files"] for q, v in json.loads(POOL.read_text())["queries"].items()}
+        judgments = json.loads(JUDGMENTS.read_text())
+        if errors := check_judgments(pool, judgments):
+            raise RuntimeError(f"Incomplete judgments: {errors[:3]}")
+        rows = rescore(rows, {q["id"]: q for q in queries}, judgments)
+        judging = {"pool_sha256": hashlib.sha256(POOL.read_bytes()).hexdigest(),
+                   "judgments_sha256": hashlib.sha256(JUDGMENTS.read_bytes()).hexdigest()}
     experimental = prereg["arms"]["experimental"]
-    arms = [evaluate(data["rows"], expected, arm, prereg, role,
+    arms = [evaluate(rows, expected, arm, prereg, role,
                      family=len(experimental) if arm in experimental else 1)
             for arm in args.arm or GRAF_ARMS]
     result = {"status": "passed" if all(a["status"] == "passed" for a in arms) else "not_passed",
@@ -172,6 +201,7 @@ def main():
               "preregistration_sha256": hashlib.sha256(prereg_path.read_bytes()).hexdigest(),
               "comparison_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
               "evaluator_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              "judging": judging,
               "arms": arms}
     dest = BASE / "results/decision.json"
     dest.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
