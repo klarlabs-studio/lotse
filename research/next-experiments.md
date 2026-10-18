@@ -46,7 +46,7 @@ B2 changes the index schema and requires a rebuild path.
 Adopted 2026-10-18. Parameters the proposal gave only as examples were fixed in `benchmark/preregistration.json` on the same day, before any held-out data existed.
 
 1. **Split the queries.** The 30 existing queries become a development and pilot set. They are used only to estimate the variance of paired differences.
-2. **Held-out set.** Use independently authored requests, frozen before any arm runs. Size the set from the pilot variances, with a floor of 70. The first pilot (`results/decision.json`, development workload) found per-query recall differences with standard deviations up to about 0.41, because most queries label one or two code files. At the preregistered 0.05 margin, that implies roughly 410–430 queries. The margin and the authoring budget therefore have to be reconciled before the held-out set is written. These are normal-approximation planning estimates, not cited results. Treat budgets as a repeated factor, not as extra queries.
+2. **Held-out set.** Use independently authored requests, frozen before any arm runs. Size the set from the pilot variances, with a floor of 70. The first pilot (`results/decision.json`, development workload) found per-query recall differences with standard deviations up to about 0.41, because most queries label one or two code files. At the preregistered 0.05 margin, that implies roughly 410–430 queries. Preregistration version 3 therefore widens the margin to 0.10, which implies about 105–110 queries; the held-out minimum is 110. These are normal-approximation planning estimates, not cited results. Treat budgets as a repeated factor, not as extra queries.
 3. **Judgments.** Pool the union of the top ten files from every arm and Graphify. A judge who did not tune graf, and who does not see which system returned each file, labels the pool. Report the unjudged fraction.
 4. **Primary metric and test.** Preregister one primary efficiency metric, for example delivered tokens at a stated budget. Test the per-query mean difference with a one-sided paired permutation test at α = 0.05.
 5. **Quality guardrails.** Use non-inferiority tests with fixed margins on code-file recall and recall among the first five and ten files, with Holm correction across guardrails.
@@ -59,6 +59,5 @@ The current design (30 tuned queries, 3 timing samples, 6 × 3 planned agent tri
 
 ## Decisions needed
 
-1. The non-inferiority margin versus held-out size (see item 2 above).
-2. Who authors and judges the held-out requests.
-3. The agent solver, model, and spend caps.
+1. Who authors and judges the held-out requests.
+2. The agent solver, model, and spend caps.
