@@ -125,7 +125,7 @@ def main():
         "driver_sha256": sha(Path(__file__)), "query_sha256": sha(BASE / "benchmark/queries.json"),
         "binary_sha256": sha(binary),
         "source_hashes": {str(p.relative_to(BASE)): sha(p) for p in
-                          [BASE / "Cargo.toml", BASE / "Cargo.lock", BASE / "src/lib.rs", BASE / "src/main.rs", BASE / "benchmark/retrieval.py", BASE / "benchmark/locate-experiment.json"]},
+                          [BASE / "Cargo.toml", BASE / "Cargo.lock", *sorted((BASE / "src").rglob("*.rs")), BASE / "benchmark/retrieval.py", BASE / "benchmark/locate-experiment.json"]},
         "subprocess_environment": {"PYTHONHASHSEED": "0"},
         "timing_scope": "fresh subprocess per query: startup, imports, index load, query, rendering, stdout; OS caches uncontrolled",
         "quality_scope": "shared code-file discovery only; graf full excerpts and compact locate vs native Graphify hints; Graphify code-only does not index docs",

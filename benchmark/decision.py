@@ -16,6 +16,7 @@ import hashlib
 import json
 from pathlib import Path
 import statistics
+import subprocess
 import sys
 
 from acceptance import number
@@ -143,6 +144,15 @@ def main():
     budgets = sorted({prereg["primary"]["budget"], *prereg["guardrails"]["budgets"]})
     expected = {(q["id"], b): code_hint_recall(q, []) is not None for q in queries for b in budgets}
     source = BASE / "results/graphify-comparison.json"
+    # Authenticate saved outputs against their source receipts before evaluating.
+    audit = subprocess.run([sys.executable, str(BASE / "benchmark/check_comparison.py")],
+                           capture_output=True, text=True)
+    if audit.returncode:
+        result = {"status": "invalid_evidence", "product_promotion_allowed": False,
+                  "audit_stdout": audit.stdout, "audit_stderr": audit.stderr}
+        (BASE / "results/decision.json").write_text(json.dumps(result, indent=2) + "\n")
+        print(json.dumps({"status": result["status"], "audit_stderr": audit.stderr[-500:]}, indent=2))
+        return 1
     data = json.loads(source.read_text())
     arms = [evaluate(data["rows"], expected, arm, prereg, role)
             for arm in args.arm or ("graf", "graf_locate")]
