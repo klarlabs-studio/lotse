@@ -53,7 +53,7 @@ def main():
         files = result["repositories"][row["repo"]]["file_hashes"]
         for tool, value in row["tools"].items():
             samples = value["latency_ms"]
-            assert len(samples) == 3 and all(t >= 0 for t in samples)
+            assert len(samples) == result["repeats"] and all(t >= 0 for t in samples)
             timing_samples += len(samples)
             assert statistics.median(samples) == value["median_ms"]
             context = value["context"]
@@ -70,7 +70,7 @@ def main():
             assert code_hint_recall(cases[row["id"]], paths) == value["code_file_hint_recall"]
             for limit in (5, 10):
                 assert code_hint_recall(cases[row["id"]], ordered[:limit]) == value[f"code_file_hint_recall_at_{limit}"]
-            if tool == "graf_locate":
+            if tool.startswith("graf_locate"):
                 verified = validate_locate(context, root, indexes[row["repo"]])
                 assert verified == value["validated_hint_count"]
                 hints += verified

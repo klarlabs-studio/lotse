@@ -87,6 +87,15 @@ class DecisionTests(unittest.TestCase):
         self.assertEqual(result["primary"]["queries"], 40)
         self.assertEqual(result["guardrails"][0]["queries"], 39)
 
+    def test_experimental_arms_split_primary_alpha(self):
+        # Exactly 6 of 40 queries reduce tokens: one-sided p = 2^-6 = 0.0156.
+        for i, r in enumerate(self.rows):
+            r["tools"]["cand"]["output_tokens"] = 1700 if i % 2 == 0 and i < 12 else 1800
+        self.assertTrue(self.run_rule()["primary"]["passed"])
+        result = evaluate(self.rows, self.expected, "cand", PREREG, "held_out", family=5)
+        self.assertEqual(result["primary"]["alpha"], 0.01)
+        self.assertFalse(result["primary"]["passed"])
+
     def test_reports_planning_sample_size_from_observed_variance(self):
         rows = copy.deepcopy(self.rows)
         for i, r in enumerate(rows):
@@ -95,6 +104,14 @@ class DecisionTests(unittest.TestCase):
         self.assertGreaterEqual(planning["required_queries"],
                                 PREREG["workloads"]["held_out"]["minimum_queries"])
 
+
+
+class PreregistrationTests(unittest.TestCase):
+    def test_driver_arms_match_the_frozen_definitions(self):
+        from compare_graphify import EXPERIMENTAL_ARMS, GRAF_ARMS
+        arms = {**PREREG["arms"]["accepted"], **PREREG["arms"]["experimental"]}
+        self.assertEqual({k: " ".join(v) for k, v in GRAF_ARMS.items()}, arms)
+        self.assertEqual(set(EXPERIMENTAL_ARMS), set(PREREG["arms"]["experimental"]))
 
 if __name__ == "__main__":
     unittest.main()

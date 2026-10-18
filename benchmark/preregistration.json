@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "frozen_on": "2026-10-18",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -73,6 +73,27 @@
       "version": 3,
       "date": "2026-10-18",
       "change": "margin 0.05 -> 0.10 and held-out minimum 70 -> 110, decided after the development-set variance pilot implied ~410-430 queries at 0.05; no held-out data existed"
+    },
+    {
+      "version": 4,
+      "date": "2026-10-18",
+      "change": "recorded the query-time candidate arm definitions, constants, and a Bonferroni split of the primary alpha across experimental arms before any run"
     }
-  ]
+  ],
+  "arms": {
+    "accepted": {
+      "graf": "search",
+      "graf_locate": "locate"
+    },
+    "experimental": {
+      "graf_gap": "search --stop gap",
+      "graf_floor": "search --stop floor",
+      "graf_locate_gap": "locate --stop gap",
+      "graf_locate_floor": "locate --stop floor",
+      "graf_locate_damped": "locate --file-score damped"
+    },
+    "constants": "src/policy.rs: gap minimum 3, buffer 2, search share 0.9; floor ratio 0.5; damping 1, 0.5, 0.25",
+    "deferred": "B2 path field and C1-C3 tokenization need index-schema changes; preregister them as a later version",
+    "multiplicity": "the primary test for each experimental arm uses alpha / number of experimental arms (Bonferroni); guardrails and the tail cap apply unchanged; report every arm, including losing ones"
+  }
 }

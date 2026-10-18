@@ -95,7 +95,8 @@ def main():
         data = json.loads(source.read_text())
         pinned = json.loads((BASE / "benchmark/corpora.json").read_text())
         pin = next(p for p in pinned["repositories"] if p["id"] == "graphify")
-        arms = [evaluate(data["rows"], expected, arm) for arm in ("graf", "graf_locate")]
+        from compare_graphify import GRAF_ARMS
+        arms = [evaluate(data["rows"], expected, arm) for arm in GRAF_ARMS]
         pin_matches = data["baseline"]["pin"] == pin
         result = {"status": "not_passed", "product_promotion_allowed": False,
                   "baseline_pin_matches": pin_matches,

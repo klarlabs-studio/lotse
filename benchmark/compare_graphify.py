@@ -19,7 +19,20 @@ import time
 import tomllib
 
 BASE = Path(__file__).resolve().parents[1]
-ARMS = ("graf", "graf_locate", "graphify")
+# graf arms: subcommand and flags. The first two are the accepted behavior; the
+# rest are preregistered experiments (research/next-experiments.md), never
+# accepted improvements until benchmark/decision.py passes on held-out queries.
+GRAF_ARMS = {
+    "graf": ("search",),
+    "graf_locate": ("locate",),
+    "graf_gap": ("search", "--stop", "gap"),
+    "graf_floor": ("search", "--stop", "floor"),
+    "graf_locate_gap": ("locate", "--stop", "gap"),
+    "graf_locate_floor": ("locate", "--stop", "floor"),
+    "graf_locate_damped": ("locate", "--file-score", "damped"),
+}
+EXPERIMENTAL_ARMS = tuple(GRAF_ARMS)[2:]
+ARMS = (*GRAF_ARMS, "graphify")
 
 
 def sha(path):
@@ -92,7 +105,8 @@ def main():
     from retrieval import load_documents, tokens
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--binary", type=Path, default=BASE / "target/release/graf")
-    parser.add_argument("--repeats", type=int, default=3)
+    prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
+    parser.add_argument("--repeats", type=int, default=prereg["latency"]["invocations_per_case"])
     args = parser.parse_args()
     if args.repeats < 1:
         parser.error("--repeats must be positive")
@@ -120,7 +134,10 @@ def main():
     result = {
         "baseline": {"pin": pin, "installed_version": installed, "mode": "code_only_no_clustering",
                      "python_sources": {str(p.relative_to(graphify_root)): sha(p) for p in sorted(graphify_root.rglob("*.py"))}},
-        "arms": {"graf": "Full source excerpts", "graf_locate": "One compact source hint per file with expansion ID", "graphify": "Native code-only navigation hints"},
+        "arms": {"graf": "Full source excerpts", "graf_locate": "One compact source hint per file with expansion ID",
+                 **{arm: "Experimental: " + " ".join(GRAF_ARMS[arm]) for arm in EXPERIMENTAL_ARMS},
+                 "graphify": "Native code-only navigation hints"},
+        "repeats": args.repeats, "preregistration_sha256": sha(BASE / "benchmark/preregistration.json"),
         "input_receipts": snapshots,
         "driver_sha256": sha(Path(__file__)), "query_sha256": sha(BASE / "benchmark/queries.json"),
         "binary_sha256": sha(binary),
@@ -174,13 +191,14 @@ def main():
         for case in (c for c in cases if c["repo"] == repo):
             for budget in (2000, 8000):
                 commands = {
-                    "graf": [str(binary), "--root", str(staged), "search", case["query"], "--budget", str(budget), "--limit", "1000", "--text"],
-                    "graf_locate": [str(binary), "--root", str(staged), "locate", case["query"], "--budget", str(budget), "--limit", "1000", "--text"],
+                    **{arm: [str(binary), "--root", str(staged), command, case["query"], *flags,
+                             "--budget", str(budget), "--limit", "1000", "--text"]
+                       for arm, (command, *flags) in GRAF_ARMS.items()},
                     "graphify": [sys.executable, str(Path(__file__).resolve()), "--graphify-query", str(output / "graphify-out/graph.json"), case["query"], str(budget)],
                 }
                 measurements = {tool: {"latency_ms": [], "context": None, "command": cmd} for tool,cmd in commands.items()}
                 for repeat in range(args.repeats):
-                    # Rotate order so each arm occupies every position across three repetitions.
+                    # Rotate order so arms occupy different positions across repetitions.
                     offset = repeat % len(ARMS)
                     for tool in ARMS[offset:] + ARMS[:offset]:
                         start = time.perf_counter()
@@ -194,7 +212,7 @@ def main():
                     context = value["context"]
                     paths = cited_paths(tool, context, staged, files)
                     ordered = cited_path_order(tool, context, staged, files)
-                    if tool == "graf_locate":
+                    if tool.startswith("graf_locate"):
                         value["validated_hint_count"] = validate_locate(context, staged, graf_index)
                     value.update(cited_path_order=ordered,
                                  code_file_hint_recall_at_5=code_hint_recall(case, ordered[:5]),

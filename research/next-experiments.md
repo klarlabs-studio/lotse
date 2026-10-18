@@ -10,7 +10,7 @@ The gate also has statistical limits. It requires zero regression on each of 60 
 
 ## Candidate interventions
 
-Test one factor at a time against current graf and pinned Graphify. Freeze every parameter below before any held-out run. The values come from the cited literature or are round defaults, not tuning on the 30 exploratory queries. Changing a value after seeing held-out results creates a new, separately labeled experiment.
+Arms A1, A2, and B1 are implemented behind opt-in CLI flags and run as separate arms by `benchmark/compare_graphify.py` (preregistration version 4). B2 and C1–C3 change the index and remain to be implemented. Test one factor at a time against current graf and pinned Graphify. Freeze every parameter below before any held-out run. The values come from the cited literature or are round defaults, not tuning on the 30 exploratory queries. Changing a value after seeing held-out results creates a new, separately labeled experiment.
 
 ### A. Stopping rule (affects delivered tokens)
 

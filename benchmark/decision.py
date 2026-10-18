@@ -6,7 +6,7 @@ guardrail (Holm-corrected), and a cap on the share of queries with severe losses
 Every case is still reported. Only a frozen held-out workload can pass, and a
 retrieval pass never authorizes promotion: agent trials remain required.
 
-    python benchmark/decision.py [--arm graf_locate]
+    python benchmark/decision.py [--arm graf_locate ...]
 
 Writes results/decision.json from results/graphify-comparison.json and exits
 nonzero unless the rule passes.
@@ -52,8 +52,8 @@ def _cases(table, quality):
             for (q, b), (c, g) in sorted(table.items())]
 
 
-def _primary(table, prereg):
-    spec = prereg["primary"]
+def _primary(table, prereg, family):
+    spec = {**prereg["primary"], "alpha": prereg["primary"]["alpha"] / family, "family": family}
     diffs = [g[spec["metric"]] - c[spec["metric"]]
              for (_, b), (c, g) in sorted(table.items()) if b == spec["budget"]]
     p = sign_flip_p(diffs) if diffs else 1.0
@@ -97,14 +97,15 @@ def _planning(guardrails, prereg):
             "per_guardrail": sizes, "required_queries": max([floor, *sizes.values()])}
 
 
-def evaluate(rows, expected, candidate, prereg, role):
+def evaluate(rows, expected, candidate, prereg, role, family=1):
+    """Apply the rule to one arm; family is the number of arms sharing the primary alpha."""
     quality = prereg["guardrails"]["metrics"]
     table, errors = _measurements(rows, expected, candidate, quality)
     if errors:
         return {"status": "not_passed", "candidate": candidate, "workload": role,
                 "product_promotion_allowed": False, "blockers": errors,
                 "cases": _cases(table, quality)}
-    primary = _primary(table, prereg)
+    primary = _primary(table, prereg, family)
     guardrails = _guardrails(table, expected, prereg)
     tail = _tail(table, expected, prereg)
     blockers = []
@@ -134,9 +135,9 @@ def _workload(prereg):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--arm", action="append", choices=("graf", "graf_locate"))
+    from compare_graphify import GRAF_ARMS, code_hint_recall
+    parser.add_argument("--arm", action="append", choices=tuple(GRAF_ARMS))
     args = parser.parse_args()
-    from compare_graphify import code_hint_recall
     prereg_path = BASE / "benchmark/preregistration.json"
     prereg = json.loads(prereg_path.read_text())
     role, query_path = _workload(prereg)
@@ -154,8 +155,10 @@ def main():
         print(json.dumps({"status": result["status"], "audit_stderr": audit.stderr[-500:]}, indent=2))
         return 1
     data = json.loads(source.read_text())
-    arms = [evaluate(data["rows"], expected, arm, prereg, role)
-            for arm in args.arm or ("graf", "graf_locate")]
+    experimental = prereg["arms"]["experimental"]
+    arms = [evaluate(data["rows"], expected, arm, prereg, role,
+                     family=len(experimental) if arm in experimental else 1)
+            for arm in args.arm or GRAF_ARMS]
     result = {"status": "passed" if all(a["status"] == "passed" for a in arms) else "not_passed",
               "product_promotion_allowed": False, "workload": role,
               "preregistration_sha256": hashlib.sha256(prereg_path.read_bytes()).hexdigest(),
