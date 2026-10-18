@@ -6,7 +6,7 @@ guardrail (Holm-corrected), and a cap on the share of queries with severe losses
 Every case is still reported. Only a frozen held-out workload can pass, and a
 retrieval pass never authorizes promotion: agent trials remain required.
 
-    python benchmark/decision.py [--arm graf_locate ...]
+    python benchmark/decision.py [--workload development|held_out] [--arm graf_locate ...]
 
 Reads results/graphify-comparison.json (development) or
 results/heldout-comparison.json (frozen held-out workload), writes
@@ -125,23 +125,27 @@ def evaluate(rows, expected, candidate, prereg, role, family=1):
             "planning": _planning(guardrails, prereg), "cases": _cases(table, quality)}
 
 
-def _workload(prereg):
-    """Held out only when the frozen held-out file exists and matches its hash."""
+def _workload(prereg, requested):
+    """The requested workload; held out only when its file matches the frozen hash."""
+    if requested == "development":
+        return "development", BASE / prereg["workloads"]["development"]["queries"]
     held = prereg["workloads"]["held_out"]
     path = BASE / held["queries"]
-    if held["sha256"] and path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == held["sha256"]:
-        return "held_out", path
-    return "development", BASE / prereg["workloads"]["development"]["queries"]
+    if not (held["sha256"] and path.is_file()
+            and hashlib.sha256(path.read_bytes()).hexdigest() == held["sha256"]):
+        raise RuntimeError("Held-out queries are missing or differ from the frozen hash")
+    return "held_out", path
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     from compare_graphify import GRAF_ARMS, code_hint_recall
     parser.add_argument("--arm", action="append", choices=tuple(GRAF_ARMS))
+    parser.add_argument("--workload", choices=("development", "held_out"), default="development")
     args = parser.parse_args()
     prereg_path = BASE / "benchmark/preregistration.json"
     prereg = json.loads(prereg_path.read_text())
-    role, query_path = _workload(prereg)
+    role, query_path = _workload(prereg, args.workload)
     queries = json.loads(query_path.read_text())
     budgets = sorted({prereg["primary"]["budget"], *prereg["guardrails"]["budgets"]})
     expected = {(q["id"], b): code_hint_recall(q, []) is not None for q in queries for b in budgets}
