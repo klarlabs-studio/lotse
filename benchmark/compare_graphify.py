@@ -35,6 +35,8 @@ GRAF_ARMS = {
     "graf_locate_nostop": (("--stopwords", "none"), ("locate",)),
     "graf_locate_fullid": (("--stopwords", "english", "--full-identifiers"), ("locate",)),
     "graf_locate_path3": (("--path-weight", "3"), ("locate",)),
+    "graf_locate_damped_gap": ((), ("locate", "--file-score", "damped", "--stop", "gap")),
+    "graf_locate_damped_floor": ((), ("locate", "--file-score", "damped", "--stop", "floor")),
 }
 EXPERIMENTAL_ARMS = tuple(GRAF_ARMS)[2:]
 ARMS = (*GRAF_ARMS, "graphify")
