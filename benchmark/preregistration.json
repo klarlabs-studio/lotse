@@ -1,5 +1,5 @@
 {
-  "version": 6,
+  "version": 7,
   "frozen_on": "2026-10-18",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -58,9 +58,13 @@
     "minimum_paired_trials_per_task_and_arm": 5,
     "success": "non-inferiority, Wilson intervals, pass^k for k = 1..5",
     "efficiency": "superiority on total cost across all attempts",
-    "solver": "to be specified: a broker-only tool loop (benchmark/task_session.py) driving the model; no native shell or file access",
+    "solver": "Claude Code 2.1.302 headless: claude -p --model claude-haiku-5-5 --tools \"\" --strict-mcp-config --mcp-config <broker server for the arm> --setting-sources \"\" --no-session-persistence --output-format stream-json --max-budget-usd 0.50; the broker (benchmark/task_session.py) is the only tool surface",
     "model": "claude-haiku-5-5",
-    "spend_cap_usd": null
+    "spend_cap_usd": null,
+    "billing": "the operator's Claude Code Max 5x subscription; caps are usage-equivalent, not charges",
+    "per_run_cap": "--max-budget-usd 0.50 estimated; a run that hits the cap counts as a failure with its full usage",
+    "pacing": "batches sized to the subscription's usage windows; every attempt, including capped and errored runs, is recorded",
+    "usage_source": "stream-json usage per model call; estimated cost reported separately from tokens"
   },
   "report_every_case": true,
   "revisions": [
@@ -88,6 +92,11 @@
       "version": 6,
       "date": "2026-10-18",
       "change": "added combined arms (damped file score with gap or floor stopping) and fixed the agent model to claude-haiku-5-5, before any held-out data existed. The combination was proposed after seeing development-set diagnostics, so its held-out result is the only valid evidence; primary alpha now split across 11 experimental arms"
+    },
+    {
+      "version": 7,
+      "date": "2026-10-18",
+      "change": "specified the agent solver (headless Claude Code with Haiku, broker-only tools) and per-run cap under the operator's subscription; decision rule unchanged"
     }
   ],
   "arms": {
