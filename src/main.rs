@@ -1,6 +1,6 @@
 use anyhow::{Result, ensure};
 use clap::{Parser, Subcommand, ValueEnum};
-use graf::{Index, canonical_root};
+use graf::{FileScore, Index, Policy, Stop, canonical_root};
 use serde::Serialize;
 use std::io::{self, Write};
 use std::path::PathBuf;
@@ -34,6 +34,25 @@ impl Kind {
     }
 }
 
+/// Experimental delivery arms; see research/next-experiments.md.
+#[derive(Clone, Copy, ValueEnum)]
+enum StopArg {
+    /// Offer every ranked candidate until the budget is full (accepted behavior).
+    Full,
+    /// Arm A1: cut after the largest relative score gap, plus two.
+    Gap,
+    /// Arm A2: cut below half of the best score.
+    Floor,
+}
+
+#[derive(Clone, Copy, ValueEnum)]
+enum FileScoreArg {
+    /// Best window per file (accepted behavior).
+    Max,
+    /// Arm B1: best window plus damped second and third windows.
+    Damped,
+}
+
 #[derive(clap::Args)]
 struct QueryArgs {
     query: String,
@@ -50,6 +69,28 @@ struct QueryArgs {
     /// Emit only context, without JSON metadata.
     #[arg(long)]
     text: bool,
+    /// Experimental stopping rule; not an accepted improvement.
+    #[arg(long, value_enum, default_value = "full")]
+    stop: StopArg,
+    /// Experimental file score for locate; not an accepted improvement.
+    #[arg(long, value_enum, default_value = "max")]
+    file_score: FileScoreArg,
+}
+
+impl QueryArgs {
+    fn policy(&self) -> Policy {
+        Policy {
+            stop: match self.stop {
+                StopArg::Full => Stop::Full,
+                StopArg::Gap => Stop::Gap,
+                StopArg::Floor => Stop::Floor,
+            },
+            file_score: match self.file_score {
+                FileScoreArg::Max => FileScore::Max,
+                FileScoreArg::Damped => FileScore::Damped,
+            },
+        }
+    }
 }
 
 #[derive(Subcommand)]
@@ -103,6 +144,15 @@ fn print_json(value: &impl Serialize) -> Result<()> {
     write_stdout(&format!("{}\n", serde_json::to_string(value)?))
 }
 
+/// Text mode writes only the delivered context; otherwise the full JSON response.
+fn emit(text: bool, context: &str, response: &impl Serialize) -> Result<()> {
+    if text {
+        write_stdout(context)
+    } else {
+        print_json(response)
+    }
+}
+
 fn run() -> Result<()> {
     let cli = Cli::parse();
     let root = canonical_root(&cli.root)?;
@@ -111,47 +161,31 @@ fn run() -> Result<()> {
     }
     let index = Index::load(&root)?;
     match cli.command {
-        Command::Search(QueryArgs {
-            query,
-            budget,
-            limit,
-            scope,
-            kind,
-            text,
-        }) => {
-            let response = index.search(
-                &query,
-                budget,
-                limit,
-                scope.as_deref(),
-                kind.as_ref().map(Kind::as_str),
+        Command::Search(args) => {
+            ensure!(
+                matches!(args.file_score, FileScoreArg::Max),
+                "--file-score applies to locate only"
+            );
+            let response = index.search_with(
+                &args.query,
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
             )?;
-            if text {
-                write_stdout(&response.context)
-            } else {
-                print_json(&response)
-            }
+            emit(args.text, &response.context, &response)
         }
-        Command::Locate(QueryArgs {
-            query,
-            budget,
-            limit,
-            scope,
-            kind,
-            text,
-        }) => {
-            let response = index.locate(
-                &query,
-                budget,
-                limit,
-                scope.as_deref(),
-                kind.as_ref().map(Kind::as_str),
+        Command::Locate(args) => {
+            let response = index.locate_with(
+                &args.query,
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
             )?;
-            if text {
-                write_stdout(&response.context)
-            } else {
-                print_json(&response)
-            }
+            emit(args.text, &response.context, &response)
         }
         Command::Expand {
             id,

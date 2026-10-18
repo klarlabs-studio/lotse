@@ -2,6 +2,7 @@
 use crate::handles::{MIN_HANDLE, compact_handles};
 use crate::index::Index;
 use crate::pack::Packer;
+use crate::policy::{Policy, Stop};
 use crate::response::{Excerpt, Hint, LocateResponse, Response, TOKENIZER, status};
 use crate::source::Chunk;
 use crate::terms::terms;
@@ -24,6 +25,14 @@ fn ensure_limit(limit: usize) -> Result<()> {
         "limit must be between 1 and {MAX_LIMIT}"
     );
     Ok(())
+}
+
+/// The leading ranked candidates offered to the packer under a stopping rule.
+fn candidates<T>(ranking: Vec<(T, f64)>, stop: Stop) -> Vec<(T, f64)> {
+    let mut candidates: Vec<_> = ranking.into_iter().take(MAX_CANDIDATES).collect();
+    let scores: Vec<f64> = candidates.iter().map(|(_, score)| *score).collect();
+    candidates.truncate(stop.keep(&scores));
+    candidates
 }
 
 /// `"path":start-end`. JSON escaping keeps malicious/newline filenames on one line.
@@ -105,6 +114,19 @@ impl Index {
         scope: Option<&str>,
         kind: Option<&str>,
     ) -> Result<Response> {
+        self.search_with(query, budget, limit, scope, kind, Policy::default())
+    }
+
+    /// `search` under an experimental delivery policy.
+    pub fn search_with(
+        &self,
+        query: &str,
+        budget: usize,
+        limit: usize,
+        scope: Option<&str>,
+        kind: Option<&str>,
+        policy: Policy,
+    ) -> Result<Response> {
         ensure_limit(limit)?;
         let ranking = self.ranked_chunks(query, scope, kind)?;
         let matched_chunks = ranking.len();
@@ -112,7 +134,7 @@ impl Index {
         let mut packer = Packer::new(&bpe, budget);
         let mut excerpts = Vec::new();
         let mut checked = BTreeSet::new();
-        for (chunk, score) in ranking.into_iter().take(MAX_CANDIDATES) {
+        for (chunk, score) in candidates(ranking, policy.stop) {
             if excerpts.len() >= limit {
                 break;
             }
@@ -149,20 +171,30 @@ impl Index {
         scope: Option<&str>,
         kind: Option<&str>,
     ) -> Result<LocateResponse> {
+        self.locate_with(query, budget, limit, scope, kind, Policy::default())
+    }
+
+    /// `locate` under an experimental delivery policy.
+    pub fn locate_with(
+        &self,
+        query: &str,
+        budget: usize,
+        limit: usize,
+        scope: Option<&str>,
+        kind: Option<&str>,
+        policy: Policy,
+    ) -> Result<LocateResponse> {
         ensure_limit(limit)?;
-        let mut seen = BTreeSet::new();
-        let files: Vec<_> = self
-            .ranked_chunks(query, scope, kind)?
-            .into_iter()
-            .filter(|(chunk, _)| seen.insert(chunk.path.as_str()))
-            .collect();
+        let files = policy
+            .file_score
+            .files(self.ranked_chunks(query, scope, kind)?);
         let matched_files = files.len();
         let query_terms: BTreeSet<_> = terms(query).into_iter().collect();
         let handles = compact_handles(self.chunks().map(|c| c.id.as_str()));
         let bpe = cl100k_base()?;
         let mut packer = Packer::new(&bpe, budget);
         let mut hints = Vec::new();
-        for (chunk, score) in files.into_iter().take(MAX_CANDIDATES) {
+        for (chunk, score) in candidates(files, policy.stop) {
             if hints.len() >= limit {
                 break;
             }

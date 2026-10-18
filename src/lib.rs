@@ -2,12 +2,14 @@
 mod handles;
 mod index;
 mod pack;
+mod policy;
 mod query;
 mod response;
 mod source;
 mod terms;
 
 pub use index::{BuildReport, Index, IndexStats, Posting, index_path};
+pub use policy::{FileScore, Policy, Stop};
 pub use response::{Excerpt, Hint, LocateResponse, Response};
 pub use source::{Chunk, Source, digest};
 pub use terms::terms;

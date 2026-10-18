@@ -475,3 +475,63 @@ fn locate_rejects_stale_sources_and_cli_handles_round_trip() {
             .contains("Stale source")
     );
 }
+
+#[test]
+fn experimental_policies_are_opt_in_and_only_narrow_delivery() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::write(
+        dir.path().join("rotation.rs"),
+        "fn rotate_session_key() { rotate(session, key); rotate(session, key); }\n",
+    )
+    .unwrap();
+    for i in 0..8 {
+        fs::write(
+            dir.path().join(format!("other{i}.rs")),
+            "fn unrelated() { session(); }\n",
+        )
+        .unwrap();
+    }
+    let run = |args: &[&str]| {
+        Command::new(env!("CARGO_BIN_EXE_graf"))
+            .arg("--root")
+            .arg(dir.path())
+            .args(args)
+            .output()
+            .unwrap()
+    };
+    assert!(run(&["index"]).status.success());
+    let hints = |args: &[&str]| -> Vec<String> {
+        let output = run(args);
+        assert!(output.status.success(), "{args:?}");
+        let value: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
+        value["hints"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|h| h["path"].as_str().unwrap().into())
+            .collect()
+    };
+    let query = "rotate session key";
+    let accepted = hints(&["locate", query]);
+    assert_eq!(accepted.len(), 9);
+    assert_eq!(
+        hints(&["locate", query, "--stop", "full", "--file-score", "max"]),
+        accepted
+    );
+    let floor = hints(&["locate", query, "--stop", "floor"]);
+    assert_eq!(floor, ["rotation.rs"]);
+    let gap = hints(&["locate", query, "--stop", "gap"]);
+    // Largest gap follows the first file: raised to the minimum of 3, plus a buffer of 2.
+    assert_eq!(gap, accepted[..5]);
+    assert_eq!(
+        hints(&["locate", query, "--file-score", "damped"])[0],
+        "rotation.rs"
+    );
+    let rejected = run(&["search", query, "--file-score", "damped"]);
+    assert!(!rejected.status.success());
+    assert!(
+        String::from_utf8(rejected.stderr)
+            .unwrap()
+            .contains("locate only")
+    );
+}

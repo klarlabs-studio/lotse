@@ -21,6 +21,10 @@ The `context` field contains quoted path headers, inclusive one-based line range
 
 Search scores only postings for query terms. It sorts positive candidates deterministically, then considers at most 100 candidates for packing. `--limit` bounds returned excerpts (default 20). No positive candidate yields `no_lexical_match`; candidates that cannot fit yield `budget_exhausted`. Neither status is semantic abstention. Empty queries are rejected.
 
+## Experimental delivery arms
+
+`search` and `locate` accept `--stop gap|floor` and `locate` accepts `--file-score damped`. These implement the preregistered candidate arms in [next-experiments.md](next-experiments.md), with constants fixed in `src/policy.rs` and `benchmark/preregistration.json`. The defaults (`--stop full`, `--file-score max`) are the accepted behavior and produce byte-identical output to the previous release. The arms are not accepted improvements; each must pass `benchmark/decision.py` on the frozen held-out workload first.
+
 ## Compact navigation
 
 `locate` selects the best-scoring chunk per file from the existing BM25 ranking, retaining score/tie order. It considers at most 100 unique file candidates and returns up to `--limit` hints (default 20). Each hint includes the quoted path and anchor range, a compact expansion handle, and one source preview. Handles are the shortest globally unique prefix of the full content-derived SHA-256 ID, with a minimum of 12 hex characters. Uniqueness is checked against all indexed chunks, including those outside the request's scope or budget. The preview chooses the anchor line with the most distinct query terms, with ties in source order; it trims whitespace and caps the prefix at 160 Unicode characters. Truncation is explicit. These are source prefixes, not generated summaries or resolved symbol relationships.
