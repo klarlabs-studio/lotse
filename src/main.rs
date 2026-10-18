@@ -119,10 +119,6 @@ fn run() -> Result<()> {
             kind,
             text,
         }) => {
-            ensure!(
-                (1..=1000).contains(&limit),
-                "limit must be between 1 and 1000"
-            );
             let response = index.search(
                 &query,
                 budget,
