@@ -23,7 +23,7 @@ Search scores only postings for query terms. It sorts positive candidates determ
 
 ## Experimental delivery arms
 
-`search` and `locate` accept `--stop gap|floor` and `locate` accepts `--file-score damped`. These implement the preregistered candidate arms in [next-experiments.md](next-experiments.md), with constants fixed in `src/policy.rs` and `benchmark/preregistration.json`. The defaults (`--stop full`, `--file-score max`) are the accepted behavior and produce byte-identical output to the previous release. The arms are not accepted improvements; each must pass `benchmark/decision.py` on the frozen held-out workload first.
+`search` and `locate` accept `--stop gap|floor` and `locate` accepts `--file-score damped`. `index` accepts `--stopwords english|none`, `--full-identifiers`, and `--path-weight N` (1–10). A non-default analyzer is recorded in the index, and queries always use the analyzer their index was built with. Analyzer flags apply to each build, so a plain `graf index` restores the accepted analyzer. These implement the preregistered candidate arms in [next-experiments.md](next-experiments.md), with constants fixed in `src/policy.rs`, `src/terms.rs`, and `benchmark/preregistration.json`. The defaults (`--stop full`, `--file-score max`, `--stopwords request`, path weight 1) are the accepted behavior and produce byte-identical indexes and output to the previous release. The arms are not accepted improvements; each must pass `benchmark/decision.py` on the frozen held-out workload first.
 
 ## Compact navigation
 

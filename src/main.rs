@@ -1,6 +1,6 @@
 use anyhow::{Result, ensure};
 use clap::{Parser, Subcommand, ValueEnum};
-use graf::{FileScore, Index, Policy, Stop, canonical_root};
+use graf::{Analyzer, FileScore, Index, Policy, Stop, Stopwords, canonical_root};
 use serde::Serialize;
 use std::io::{self, Write};
 use std::path::PathBuf;
@@ -43,6 +43,16 @@ enum StopArg {
     Gap,
     /// Arm A2: cut below half of the best score.
     Floor,
+}
+
+#[derive(Clone, Copy, ValueEnum)]
+enum StopwordsArg {
+    /// English plus request-phrasing words (accepted behavior).
+    Request,
+    /// Arm C1: Lucene's default English stop set.
+    English,
+    /// Arm C2: no stopwords.
+    None,
 }
 
 #[derive(Clone, Copy, ValueEnum)]
@@ -96,10 +106,20 @@ impl QueryArgs {
 #[derive(Subcommand)]
 enum Command {
     /// Create/update the index. Reuse unchanged chunks; rebuild lexical postings.
+    /// The analyzer flags are experimental arms; without them the accepted analyzer is used.
     Index {
         /// Discard an incompatible or moved index.
         #[arg(long)]
         rebuild: bool,
+        /// Experimental stopword list (arms C1/C2); not an accepted improvement.
+        #[arg(long, value_enum, default_value = "request")]
+        stopwords: StopwordsArg,
+        /// Experimental: also index compound identifiers whole (arm C3).
+        #[arg(long)]
+        full_identifiers: bool,
+        /// Experimental: count path terms this many times (arm B2, 1 to 10).
+        #[arg(long, default_value_t = 1)]
+        path_weight: u32,
     },
     /// Rank source windows with BM25. JSON output includes context and expansion IDs.
     Search(QueryArgs),
@@ -156,8 +176,23 @@ fn emit(text: bool, context: &str, response: &impl Serialize) -> Result<()> {
 fn run() -> Result<()> {
     let cli = Cli::parse();
     let root = canonical_root(&cli.root)?;
-    if let Command::Index { rebuild } = cli.command {
-        return print_json(&Index::build(&root, rebuild)?);
+    if let Command::Index {
+        rebuild,
+        stopwords,
+        full_identifiers,
+        path_weight,
+    } = cli.command
+    {
+        let analyzer = Analyzer {
+            stopwords: match stopwords {
+                StopwordsArg::Request => Stopwords::Request,
+                StopwordsArg::English => Stopwords::English,
+                StopwordsArg::None => Stopwords::None,
+            },
+            full_identifiers,
+            path_weight,
+        };
+        return print_json(&Index::build_with(&root, rebuild, analyzer)?);
     }
     let index = Index::load(&root)?;
     match cli.command {

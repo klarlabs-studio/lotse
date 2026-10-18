@@ -5,7 +5,7 @@ use crate::pack::Packer;
 use crate::policy::{Policy, Stop};
 use crate::response::{Excerpt, Hint, LocateResponse, Response, TOKENIZER, status};
 use crate::source::Chunk;
-use crate::terms::terms;
+use crate::terms::Analyzer;
 use anyhow::{Context, Result, ensure};
 use std::collections::{BTreeSet, HashMap};
 use tiktoken_rs::cl100k_base;
@@ -41,10 +41,15 @@ fn citation(path: &str, start: usize, end: usize) -> Result<String> {
 }
 
 /// The anchor line with the most distinct query terms; ties keep source order.
-fn best_line<'a>(chunk: &'a Chunk, query_terms: &BTreeSet<String>) -> (usize, &'a str) {
+fn best_line<'a>(
+    chunk: &'a Chunk,
+    query_terms: &BTreeSet<String>,
+    analyzer: &Analyzer,
+) -> (usize, &'a str) {
     let mut best = (0, 0, "");
     for (offset, line) in chunk.text.lines().enumerate() {
-        let matches = terms(line)
+        let matches = analyzer
+            .terms(line)
             .into_iter()
             .collect::<BTreeSet<_>>()
             .intersection(query_terms)
@@ -67,7 +72,12 @@ impl Index {
         let chunks: Vec<&Chunk> = self.chunks().collect();
         let mut scores = HashMap::<usize, f64>::new();
         let average = self.lengths.iter().sum::<usize>() as f64 / self.lengths.len().max(1) as f64;
-        for term in terms(query).into_iter().collect::<BTreeSet<_>>() {
+        for term in self
+            .analyzer
+            .terms(query)
+            .into_iter()
+            .collect::<BTreeSet<_>>()
+        {
             let Some(hits) = self.postings.get(&term) else {
                 continue;
             };
@@ -189,7 +199,7 @@ impl Index {
             .file_score
             .files(self.ranked_chunks(query, scope, kind)?);
         let matched_files = files.len();
-        let query_terms: BTreeSet<_> = terms(query).into_iter().collect();
+        let query_terms: BTreeSet<_> = self.analyzer.terms(query).into_iter().collect();
         let handles = compact_handles(self.chunks().map(|c| c.id.as_str()));
         let bpe = cl100k_base()?;
         let mut packer = Packer::new(&bpe, budget);
@@ -199,7 +209,7 @@ impl Index {
                 break;
             }
             self.current_text(&chunk.path)?;
-            let (offset, line) = best_line(chunk, &query_terms);
+            let (offset, line) = best_line(chunk, &query_terms, &self.analyzer);
             let line_number = chunk.start + offset;
             let preview: String = line.trim().chars().take(PREVIEW_CHARS).collect();
             let preview_truncated = line.trim().chars().count() > PREVIEW_CHARS;

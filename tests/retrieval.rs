@@ -535,3 +535,58 @@ fn experimental_policies_are_opt_in_and_only_narrow_delivery() {
             .contains("locate only")
     );
 }
+
+#[test]
+fn experimental_analyzers_persist_with_the_index_and_drive_queries() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::write(
+        dir.path().join("helpers.rs"),
+        "fn test_helpers() { refreshCache(); }\n",
+    )
+    .unwrap();
+    let run = |args: &[&str]| {
+        Command::new(env!("CARGO_BIN_EXE_graf"))
+            .arg("--root")
+            .arg(dir.path())
+            .args(args)
+            .output()
+            .unwrap()
+    };
+    let index_json = || -> serde_json::Value {
+        serde_json::from_slice(&fs::read(graf::index_path(dir.path())).unwrap()).unwrap()
+    };
+    let matched = |query: &str| -> u64 {
+        let value: serde_json::Value =
+            serde_json::from_slice(&run(&["search", query]).stdout).unwrap();
+        value["matched_chunks"].as_u64().unwrap()
+    };
+    assert!(run(&["index"]).status.success());
+    assert!(
+        index_json().get("analyzer").is_none(),
+        "accepted indexes are unchanged"
+    );
+    assert_eq!(matched("test"), 0, "request phrasing is a stopword");
+    assert_eq!(matched("refreshcache"), 0);
+
+    let built = run(&[
+        "index",
+        "--stopwords",
+        "english",
+        "--full-identifiers",
+        "--path-weight",
+        "3",
+    ]);
+    assert!(built.status.success());
+    let analyzer = &index_json()["analyzer"];
+    assert_eq!(analyzer["stopwords"], "english");
+    assert_eq!(analyzer["path_weight"], 3);
+    assert_eq!(matched("test"), 1, "queries use the index's analyzer");
+    assert_eq!(matched("refreshcache"), 1);
+
+    assert!(run(&["index"]).status.success());
+    assert!(
+        index_json().get("analyzer").is_none(),
+        "flags apply per build"
+    );
+    assert!(!run(&["index", "--path-weight", "0"]).status.success());
+}

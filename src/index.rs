@@ -1,6 +1,6 @@
 //! The persisted snapshot: scanning, postings, validation, and source freshness.
 use crate::source::{Chunk, Source, digest, supported};
-use crate::terms::terms;
+use crate::terms::Analyzer;
 use anyhow::{Context, Result, ensure};
 use ignore::WalkBuilder;
 use serde::{Deserialize, Serialize};
@@ -10,6 +10,7 @@ use std::io::{BufWriter, Write};
 use std::path::{Component, Path, PathBuf};
 
 const SCHEMA: u32 = 1;
+const MAX_PATH_WEIGHT: u32 = 10;
 const MAX_FILE_BYTES: u64 = 1_000_000;
 const SKIPPED_DIRS: [&str; 5] = ["node_modules", "vendor", "target", "dist", "__pycache__"];
 
@@ -28,6 +29,9 @@ pub struct Index {
     pub postings: BTreeMap<String, Vec<Posting>>,
     /// Term counts per chunk, in [`Index::chunks`] order.
     pub lengths: Vec<usize>,
+    /// Omitted when it is the accepted analyzer, so accepted indexes are unchanged.
+    #[serde(default, skip_serializing_if = "Analyzer::is_default")]
+    pub analyzer: Analyzer,
 }
 
 #[derive(Debug, Serialize)]
@@ -89,6 +93,10 @@ impl Index {
         );
         let chunk_count = self.chunks().count();
         ensure!(
+            (1..=MAX_PATH_WEIGHT).contains(&self.analyzer.path_weight),
+            "Invalid analyzer; run `graf index --rebuild`"
+        );
+        ensure!(
             self.lengths.len() == chunk_count,
             "Invalid chunk counts; run `graf index --rebuild`"
         );
@@ -112,6 +120,16 @@ impl Index {
     }
 
     pub fn build(root: &Path, rebuild: bool) -> Result<BuildReport> {
+        Self::build_with(root, rebuild, Analyzer::default())
+    }
+
+    /// Build with an experimental analyzer. Postings are always rebuilt, so
+    /// switching analyzers reuses unchanged chunks safely.
+    pub fn build_with(root: &Path, rebuild: bool, analyzer: Analyzer) -> Result<BuildReport> {
+        ensure!(
+            (1..=MAX_PATH_WEIGHT).contains(&analyzer.path_weight),
+            "path weight must be between 1 and {MAX_PATH_WEIGHT}"
+        );
         let previous = if !rebuild && index_path(root).exists() {
             Some(Self::load(root)?)
         } else {
@@ -124,7 +142,7 @@ impl Index {
                 .filter(|p| !scan.files.contains_key(*p))
                 .count()
         });
-        let index = Self::with_postings(root, scan.files);
+        let index = Self::with_postings(root, scan.files, analyzer);
         index.save()?;
         Ok(BuildReport {
             changed_files: scan.changed,
@@ -135,20 +153,21 @@ impl Index {
         })
     }
 
-    fn with_postings(root: &Path, files: BTreeMap<String, Source>) -> Self {
+    fn with_postings(root: &Path, files: BTreeMap<String, Source>, analyzer: Analyzer) -> Self {
         let mut index = Self {
             schema: SCHEMA,
             root: root.into(),
             files,
             postings: BTreeMap::new(),
             lengths: Vec::new(),
+            analyzer,
         };
         let mut postings = BTreeMap::<String, Vec<Posting>>::new();
         let mut lengths = Vec::new();
         for chunk in index.chunks() {
             // Paths contribute terms along with source text.
             let mut counts = BTreeMap::new();
-            for term in terms(&format!("{}\n{}", chunk.path, chunk.text)) {
+            for term in analyzer.window_terms(&chunk.path, &chunk.text) {
                 *counts.entry(term).or_insert(0usize) += 1;
             }
             let ordinal = lengths.len();

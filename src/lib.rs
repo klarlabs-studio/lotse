@@ -12,7 +12,7 @@ pub use index::{BuildReport, Index, IndexStats, Posting, index_path};
 pub use policy::{FileScore, Policy, Stop};
 pub use response::{Excerpt, Hint, LocateResponse, Response};
 pub use source::{Chunk, Source, digest};
-pub use terms::terms;
+pub use terms::{Analyzer, Stopwords, terms};
 
 use anyhow::{Context, Result, bail};
 use std::path::{Path, PathBuf};
