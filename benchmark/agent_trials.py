@@ -16,8 +16,8 @@ import time
 BASE = Path(__file__).resolve().parents[1]
 
 
-def tasks():
-    return json.loads((BASE / "benchmark/agent-tasks.json").read_text())
+def tasks(catalog=BASE / "benchmark/agent-tasks.json"):
+    return json.loads(Path(catalog).read_text())
 
 
 def prepare(task, trial_id):

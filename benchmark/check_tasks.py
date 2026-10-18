@@ -8,9 +8,9 @@ from pathlib import Path
 from agent_trials import BASE, prepare, tasks, verify
 
 
-def main(run_id):
+def main(run_id, catalog, report):
     results = []
-    for task in tasks():
+    for task in tasks(catalog):
         trial_id = run_id + "-" + task["id"]
         root = BASE / ".research/trials" / trial_id / "workspace"
         if root.exists():
@@ -38,7 +38,7 @@ def main(run_id):
         results.append(dict(task=task["id"], returncodes=codes,
                             sanity_passed=codes["base"] == 0 and codes["fault"] != 0 and codes["restored"] == 0,
                             kind="fixture_validation_not_agent_repair"))
-    (BASE / "results/task-sanity.json").write_text(json.dumps(results, indent=2) + "\n")
+    Path(report).write_text(json.dumps(results, indent=2) + "\n")
     if not all(r["sanity_passed"] for r in results):
         raise SystemExit("Some task fixtures need repair; inspect .research/task-logs")
 
@@ -46,4 +46,7 @@ def main(run_id):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-id", default="sanity")
-    main(parser.parse_args().run_id)
+    parser.add_argument("--catalog", type=Path, default=BASE / "benchmark/agent-tasks.json")
+    parser.add_argument("--report", type=Path, default=BASE / "results/task-sanity.json")
+    args = parser.parse_args()
+    main(args.run_id, args.catalog, args.report)
