@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 8,
   "frozen_on": "2026-10-18",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -10,9 +10,12 @@
     },
     "held_out": {
       "queries": "benchmark/heldout-queries.json",
-      "sha256": null,
+      "sha256": "665e1fbacccc88a00b705d2bf90dc9ba89e07996cfa958caccfb445fed0576df",
       "minimum_queries": 110,
-      "requirements": "authored and judged independently of graf tuning; pooled top-10 files of every arm and Graphify judged blind; freeze sha256 here before any arm runs"
+      "requirements": "authored and judged independently of graf tuning; pooled top-10 files of every arm and Graphify judged blind; freeze sha256 here before any arm runs",
+      "frozen_on": "2026-10-18",
+      "authoring": "123 queries (111 with code evidence) drafted by three Claude subagents, one per repository, that read only the pinned snapshots and had no access to graf, Graphify, or any retrieval output; the operator chose this over independent human authoring. A random sample of 9 was spot-checked, 4 line by line. Weaker independence than human authoring; report it with every result",
+      "judging": "after the run, pool the top-10 cited files of every arm and Graphify per query; a fresh agent that is not told which system cited a file judges each pooled file; recall uses author labels plus judged-relevant files"
     }
   },
   "unit": "query",
@@ -100,6 +103,11 @@
       "version": 7,
       "date": "2026-10-18",
       "change": "specified the agent solver (headless Claude Code with Haiku, broker-only tools) and per-run cap under the operator's subscription; decision rule unchanged; machine-readable max_budget_usd and --disable-slash-commands added the same day, before any trial"
+    },
+    {
+      "version": 8,
+      "date": "2026-10-18",
+      "change": "froze the held-out workload (sha256 665e1fbacccc88a0...) before any retrieval tool saw it"
     }
   ],
   "arms": {
