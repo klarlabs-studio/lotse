@@ -38,6 +38,14 @@ cargo clippy --locked --all-targets -- -D warnings
 cargo test --locked
 ```
 
+A change that must not alter results (refactors, packing or loading speedups) should also be checked for byte-identical output against the previous binary. Using fresh copies of the frozen corpora, `benchmark/check_equivalence.py` compares rebuilt indexes and every search, locate, expand, map, stats, and error output for the 30 requests at several budgets, kinds, and limits:
+
+```sh
+.research/venv/bin/python benchmark/check_equivalence.py OLD_GRAF target/release/graf
+```
+
+Equivalence is a diagnostic. It does not replace the Graphify comparison for any performance claim.
+
 Every performance/retrieval benchmark must include the pinned Graphify baseline, as required by [AGENTS.md](AGENTS.md). After preparing the Python research environment and frozen corpora below, run the paired comparison on identical staged inputs, 30 requests, and 2K/8K budgets:
 
 ```sh
