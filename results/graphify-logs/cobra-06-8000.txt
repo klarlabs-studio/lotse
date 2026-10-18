@@ -1,0 +1,13 @@
+Traversal: BFS depth=3 | Start: ['MinimumNArgs()', '.MarkZshCompPositionalArgumentFile()', '.MarkZshCompPositionalArgumentWords()', '.test()', 'PositionalArgs', 'exactArgsWithInvalidCount()'] | Context: parameter_type (heuristic) | 8 nodes found
+
+NODE MinimumNArgs() [src=args.go loc=L87 community=]
+NODE .MarkZshCompPositionalArgumentFile() [src=zsh_completions.go loc=L55 community=]
+NODE .MarkZshCompPositionalArgumentWords() [src=zsh_completions.go loc=L66 community=]
+NODE .test() [src=command_test.go loc=L2442 community=]
+NODE PositionalArgs [src=args.go loc=L22 community=]
+NODE exactArgsWithInvalidCount() [src=args_test.go loc=L88 community=]
+NODE testing.T [src= loc= community=]
+NODE getCommand() [src=args_test.go loc=L23 community=]
+EDGE .test() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2442
+EDGE exactArgsWithInvalidCount() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L88
+EDGE PositionalArgs --references [EXTRACTED context=parameter_type]--> getCommand() at=args_test.go:L23

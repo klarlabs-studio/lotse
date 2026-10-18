@@ -1,0 +1,719 @@
+[
+  {
+    "id": "cobra-01",
+    "repo": "cobra",
+    "category": "exact",
+    "query": "Locate the ExactArgs implementation and its invalid-count test.",
+    "evidence": [
+      {
+        "path": "args.go",
+        "start": 107,
+        "end": 107,
+        "anchor": "func ExactArgs(",
+        "file_sha256": "15b870d1e8a0a10341675ddee8e20bef92a21883257b6b3b11110944a573a2e7"
+      },
+      {
+        "path": "args_test.go",
+        "start": 345,
+        "end": 345,
+        "anchor": "func TestExactArgs_WithInvalidCount(",
+        "file_sha256": "37058f718eb5ffc7d70f917d694c04aa11fc39ba32ad8d1db9766e9d8eb009ae"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-02",
+    "repo": "cobra",
+    "category": "exact",
+    "query": "Locate ExecuteContext and the test for executing with a context.",
+    "evidence": [
+      {
+        "path": "command.go",
+        "start": 1062,
+        "end": 1062,
+        "anchor": "func (c *Command) ExecuteContext(",
+        "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+      },
+      {
+        "path": "command_test.go",
+        "start": 177,
+        "end": 177,
+        "anchor": "func TestExecuteContext(",
+        "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-03",
+    "repo": "cobra",
+    "category": "conceptual",
+    "query": "How can a command require username and password to be supplied together?",
+    "evidence": [
+      {
+        "path": "site/content/user_guide.md",
+        "start": 341,
+        "end": 341,
+        "anchor": "rootCmd.MarkFlagsRequiredTogether(\"username\", \"password\")",
+        "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+      },
+      {
+        "path": "flag_groups.go",
+        "start": 33,
+        "end": 33,
+        "anchor": "func (c *Command) MarkFlagsRequiredTogether(",
+        "file_sha256": "3b0572e1fc2fc6e8ef62319b4294cdda86259fb0b1afebc18b03fa643e431251"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-04",
+    "repo": "cobra",
+    "category": "conceptual",
+    "query": "How can a child command parse flags belonging to its parent?",
+    "evidence": [
+      {
+        "path": "site/content/user_guide.md",
+        "start": 287,
+        "end": 287,
+        "anchor": "parent commands are ignored.",
+        "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+      },
+      {
+        "path": "command.go",
+        "start": 1120,
+        "end": 1120,
+        "anchor": "if c.TraverseChildren {",
+        "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-05",
+    "repo": "cobra",
+    "category": "architecture",
+    "query": "Explain the order and inheritance of persistent pre-run hooks during command execution.",
+    "evidence": [
+      {
+        "path": "site/content/user_guide.md",
+        "start": 775,
+        "end": 775,
+        "anchor": "Set `EnableTraverseRunHooks`",
+        "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+      },
+      {
+        "path": "command.go",
+        "start": 985,
+        "end": 985,
+        "anchor": "if p.PersistentPreRunE != nil {",
+        "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-06",
+    "repo": "cobra",
+    "category": "impact",
+    "query": "If positional argument count validation changes, which MinimumNArgs implementation and boundary test need inspection?",
+    "evidence": [
+      {
+        "path": "args.go",
+        "start": 87,
+        "end": 87,
+        "anchor": "func MinimumNArgs(",
+        "file_sha256": "15b870d1e8a0a10341675ddee8e20bef92a21883257b6b3b11110944a573a2e7"
+      },
+      {
+        "path": "args_test.go",
+        "start": 245,
+        "end": 245,
+        "anchor": "func TestMinimumNArgs_WithLessArgs(",
+        "file_sha256": "37058f718eb5ffc7d70f917d694c04aa11fc39ba32ad8d1db9766e9d8eb009ae"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-07",
+    "repo": "cobra",
+    "category": "trace",
+    "query": "Trace the requirement that mutually exclusive flags cannot be supplied together to its enforcement and tests.",
+    "evidence": [
+      {
+        "path": "site/content/user_guide.md",
+        "start": 350,
+        "end": 350,
+        "anchor": "rootCmd.MarkFlagsMutuallyExclusive(",
+        "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+      },
+      {
+        "path": "flag_groups.go",
+        "start": 188,
+        "end": 188,
+        "anchor": "func validateExclusiveFlagGroups(",
+        "file_sha256": "3b0572e1fc2fc6e8ef62319b4294cdda86259fb0b1afebc18b03fa643e431251"
+      },
+      {
+        "path": "flag_groups_test.go",
+        "start": 22,
+        "end": 22,
+        "anchor": "func TestValidateFlagGroups(",
+        "file_sha256": "3a13a270c02f712ea0597e2cb85a039c92c52cc166a127189d902ea0e41b9913"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-08",
+    "repo": "cobra",
+    "category": "trace",
+    "query": "Find the Markdown documentation generation guide, implementation, and tests.",
+    "evidence": [
+      {
+        "path": "site/content/docgen/md.md",
+        "start": 20,
+        "end": 20,
+        "anchor": "GenMarkdownTree",
+        "file_sha256": "c31db20884568d9c3a7c875b9e10693e0c42ff47e4c560a28d58ce6c880b4475"
+      },
+      {
+        "path": "doc/md_docs.go",
+        "start": 125,
+        "end": 125,
+        "anchor": "func GenMarkdownTree(",
+        "file_sha256": "b6f51d89c0d9963df27b489066fd1617a58f805ec3ff7e0d3036088a13927daf"
+      },
+      {
+        "path": "doc/md_docs_test.go",
+        "start": 94,
+        "end": 94,
+        "anchor": "func TestGenMdTree(",
+        "file_sha256": "4e7497a90f5c9c4d2c51bdd0b7382592ba4fa25985d0f4e24dd1c464a25f764a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-09",
+    "repo": "cobra",
+    "category": "discrepancy",
+    "query": "Check the claim that ExecuteContext preserves an earlier SetContext value against the source contract and implementation.",
+    "evidence": [
+      {
+        "path": "command.go",
+        "start": 274,
+        "end": 274,
+        "anchor": "// Command.ExecuteContext or Command.ExecuteContextC.",
+        "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+      },
+      {
+        "path": "command.go",
+        "start": 1062,
+        "end": 1062,
+        "anchor": "func (c *Command) ExecuteContext(",
+        "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-10",
+    "repo": "cobra",
+    "category": "no_evidence",
+    "query": "What approved customer pricing tiers and enterprise subscription prices will Cobra launch next quarter?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-01",
+    "repo": "flask",
+    "category": "exact",
+    "query": "Locate ensure_sync and the async route test.",
+    "evidence": [
+      {
+        "path": "src/flask/app.py",
+        "start": 1065,
+        "end": 1065,
+        "anchor": "    def ensure_sync(",
+        "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+      },
+      {
+        "path": "tests/test_async.py",
+        "start": 82,
+        "end": 82,
+        "anchor": "def test_async_route(",
+        "file_sha256": "0a6a50bfd651581478abe8cda5c94aba6d70df35567a220aabc7ba08202d471c"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-02",
+    "repo": "flask",
+    "category": "exact",
+    "query": "Locate SecureCookieSessionInterface.get_signing_serializer and the secret key fallback test.",
+    "evidence": [
+      {
+        "path": "src/flask/sessions.py",
+        "start": 303,
+        "end": 303,
+        "anchor": "    def get_signing_serializer(",
+        "file_sha256": "26fa7cc311b841f8409ad93933d3a3a52b068150c6f15fc3cd0c107e7a9aaf9d"
+      },
+      {
+        "path": "tests/test_basic.py",
+        "start": 396,
+        "end": 396,
+        "anchor": "def test_session_secret_key_fallbacks(",
+        "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-03",
+    "repo": "flask",
+    "category": "conceptual",
+    "query": "Why do background asyncio tasks spawned by an async view get cancelled?",
+    "evidence": [
+      {
+        "path": "docs/async-await.rst",
+        "start": 54,
+        "end": 54,
+        "anchor": "will be cancelled.",
+        "file_sha256": "3bd27302f2664390c705b0f72bc4f84787bb7011ef81a298d65caf2e2789af29"
+      },
+      {
+        "path": "src/flask/app.py",
+        "start": 1100,
+        "end": 1100,
+        "anchor": "        return asgiref_async_to_sync(func)",
+        "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-04",
+    "repo": "flask",
+    "category": "conceptual",
+    "query": "How can session signing keys be rotated without invalidating existing cookies?",
+    "evidence": [
+      {
+        "path": "docs/config.rst",
+        "start": 128,
+        "end": 128,
+        "anchor": ".. py:data:: SECRET_KEY_FALLBACKS",
+        "file_sha256": "2ad5bb5692512847144f87f100ec801aa9b9862c919331c9cf93ac3686ef6e3d"
+      },
+      {
+        "path": "src/flask/sessions.py",
+        "start": 309,
+        "end": 309,
+        "anchor": "        if fallbacks := app.config[\"SECRET_KEY_FALLBACKS\"]:",
+        "file_sha256": "26fa7cc311b841f8409ad93933d3a3a52b068150c6f15fc3cd0c107e7a9aaf9d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-05",
+    "repo": "flask",
+    "category": "architecture",
+    "query": "Explain where response processing saves sessions in the request lifecycle.",
+    "evidence": [
+      {
+        "path": "docs/lifecycle.rst",
+        "start": 145,
+        "end": 145,
+        "anchor": "#.  The session is saved",
+        "file_sha256": "e2e503d011ce423f3d8702313056245b5e4b83aeaa314a755fbd32e542fcc745"
+      },
+      {
+        "path": "src/flask/app.py",
+        "start": 1416,
+        "end": 1416,
+        "anchor": "            self.session_interface.save_session(",
+        "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-06",
+    "repo": "flask",
+    "category": "impact",
+    "query": "If after_request callback execution order changes, which response processor and ordering test should be inspected?",
+    "evidence": [
+      {
+        "path": "src/flask/app.py",
+        "start": 1412,
+        "end": 1412,
+        "anchor": "                for func in reversed(self.after_request_funcs[name]):",
+        "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+      },
+      {
+        "path": "tests/test_basic.py",
+        "start": 851,
+        "end": 851,
+        "anchor": "def test_before_after_request_order(",
+        "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-07",
+    "repo": "flask",
+    "category": "trace",
+    "query": "Trace the request body size limit requirement to the request implementation and tests.",
+    "evidence": [
+      {
+        "path": "docs/config.rst",
+        "start": 320,
+        "end": 320,
+        "anchor": ".. py:data:: MAX_CONTENT_LENGTH",
+        "file_sha256": "2ad5bb5692512847144f87f100ec801aa9b9862c919331c9cf93ac3686ef6e3d"
+      },
+      {
+        "path": "src/flask/wrappers.py",
+        "start": 60,
+        "end": 60,
+        "anchor": "    def max_content_length(",
+        "file_sha256": "8d492fe2655e93622ae21c3177846faab20c6faf41bf43c49438162e6779391a"
+      },
+      {
+        "path": "tests/test_request.py",
+        "start": 9,
+        "end": 9,
+        "anchor": "def test_max_content_length(",
+        "file_sha256": "4e9b4bb6fa9ec22285bf8c5004bec5a32d25b60ab1717acd38f98ed8f6ec63c4"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-08",
+    "repo": "flask",
+    "category": "trace",
+    "query": "Trace the documented session key fallback support to implementation and regression tests.",
+    "evidence": [
+      {
+        "path": "docs/config.rst",
+        "start": 128,
+        "end": 128,
+        "anchor": ".. py:data:: SECRET_KEY_FALLBACKS",
+        "file_sha256": "2ad5bb5692512847144f87f100ec801aa9b9862c919331c9cf93ac3686ef6e3d"
+      },
+      {
+        "path": "src/flask/sessions.py",
+        "start": 310,
+        "end": 310,
+        "anchor": "            keys.extend(fallbacks)",
+        "file_sha256": "26fa7cc311b841f8409ad93933d3a3a52b068150c6f15fc3cd0c107e7a9aaf9d"
+      },
+      {
+        "path": "tests/test_basic.py",
+        "start": 396,
+        "end": 396,
+        "anchor": "def test_session_secret_key_fallbacks(",
+        "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-09",
+    "repo": "flask",
+    "category": "discrepancy",
+    "query": "Check the claim that after_request callbacks run in registration order against the source contract and implementation.",
+    "evidence": [
+      {
+        "path": "src/flask/app.py",
+        "start": 1401,
+        "end": 1401,
+        "anchor": "           execution are called in reverse order of registration.",
+        "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+      },
+      {
+        "path": "src/flask/app.py",
+        "start": 1412,
+        "end": 1412,
+        "anchor": "                for func in reversed(self.after_request_funcs[name]):",
+        "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-10",
+    "repo": "flask",
+    "category": "no_evidence",
+    "query": "What customer research approved a paid Flask enterprise plan for next quarter, and what is its subscription price?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-01",
+    "repo": "fastify",
+    "category": "exact",
+    "query": "Locate decorate and the duplicate decorator error it raises.",
+    "evidence": [
+      {
+        "path": "lib/decorate.js",
+        "start": 19,
+        "end": 19,
+        "anchor": "function decorate (",
+        "file_sha256": "8b33c5fb73b04c6c95483277c5aad87ede9257af040e273f9b0df6ea1b7ab339"
+      },
+      {
+        "path": "lib/decorate.js",
+        "start": 21,
+        "end": 21,
+        "anchor": "    throw new FST_ERR_DEC_ALREADY_PRESENT(name)",
+        "file_sha256": "8b33c5fb73b04c6c95483277c5aad87ede9257af040e273f9b0df6ea1b7ab339"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-02",
+    "repo": "fastify",
+    "category": "exact",
+    "query": "Locate validateBodyLimitOption and its invalid bodyLimit error.",
+    "evidence": [
+      {
+        "path": "lib/route.js",
+        "start": 631,
+        "end": 631,
+        "anchor": "function validateBodyLimitOption (",
+        "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+      },
+      {
+        "path": "lib/route.js",
+        "start": 634,
+        "end": 634,
+        "anchor": "    throw new FST_ERR_ROUTE_BODY_LIMIT_OPTION_NOT_INT(bodyLimit)",
+        "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-03",
+    "repo": "fastify",
+    "category": "conceptual",
+    "query": "Why is a shared object disallowed as a request decorator, and how should per-request values be created?",
+    "evidence": [
+      {
+        "path": "docs/Reference/Decorators.md",
+        "start": 183,
+        "end": 183,
+        "anchor": "To achieve proper encapsulation across requests",
+        "file_sha256": "434868b09a9c1f780d9e0fc263c76760a7c4c2608b77976a779ba817e10ba1ec"
+      },
+      {
+        "path": "lib/decorate.js",
+        "start": 69,
+        "end": 69,
+        "anchor": "function checkReferenceType (",
+        "file_sha256": "8b33c5fb73b04c6c95483277c5aad87ede9257af040e273f9b0df6ea1b7ab339"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-04",
+    "repo": "fastify",
+    "category": "conceptual",
+    "query": "How can a route handle schema validation errors itself instead of using the default error handler?",
+    "evidence": [
+      {
+        "path": "docs/Reference/Validation-and-Serialization.md",
+        "start": 921,
+        "end": 921,
+        "anchor": "To handle errors inside the route",
+        "file_sha256": "42433f0dd22568d71914d2a2ecdca12e820837bf9dfb06a31cabb82041ff78a1"
+      },
+      {
+        "path": "lib/handle-request.js",
+        "start": 128,
+        "end": 128,
+        "anchor": "attachValidation",
+        "file_sha256": "14f3c8b213ab287131f54b03710a5c4afaad59a267b1580f9f694667cfc952dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-05",
+    "repo": "fastify",
+    "category": "architecture",
+    "query": "Explain plugin encapsulation and where a child instance is created.",
+    "evidence": [
+      {
+        "path": "docs/Reference/Encapsulation.md",
+        "start": 6,
+        "end": 6,
+        "anchor": "A fundamental feature of Fastify",
+        "file_sha256": "fd07e0f6a52a3d788858f44ca270145b56212937b7eb2cb7825a6ff718a05f5d"
+      },
+      {
+        "path": "lib/plugin-override.js",
+        "start": 38,
+        "end": 38,
+        "anchor": "Object.create(old)",
+        "file_sha256": "1718ff0f184e29bf57a15494c84406943f4e8dd35800447514b129910b7deb21"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-06",
+    "repo": "fastify",
+    "category": "impact",
+    "query": "If bodyLimit validation changes, which route validator and request body limit tests should be inspected?",
+    "evidence": [
+      {
+        "path": "lib/route.js",
+        "start": 631,
+        "end": 631,
+        "anchor": "function validateBodyLimitOption (",
+        "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+      },
+      {
+        "path": "test/body-limit.test.js",
+        "start": 7,
+        "end": 7,
+        "anchor": "bodyLimit",
+        "file_sha256": "4bcc91a6920e21b3e4ff1bd9a23e4e529337e0e0755e833083707c26fd0f6831"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-07",
+    "repo": "fastify",
+    "category": "trace",
+    "query": "Trace trustProxy configuration from the server documentation to request implementation and tests.",
+    "evidence": [
+      {
+        "path": "docs/Reference/Server.md",
+        "start": 555,
+        "end": 555,
+        "anchor": "### `trustProxy`",
+        "file_sha256": "5639a2a9a1086e5a0928c98de8e4ed73d88d242e79269cc6863903f356eae302"
+      },
+      {
+        "path": "lib/request.js",
+        "start": 64,
+        "end": 64,
+        "anchor": "trustProxy",
+        "file_sha256": "0cb858105fda2eef2358d3209fb4f4a0190217756e662765ab60eb73eed33dce"
+      },
+      {
+        "path": "test/trust-proxy.test.js",
+        "start": 56,
+        "end": 56,
+        "anchor": "trustProxy",
+        "file_sha256": "773a6b03a034a86e0d4247f1e5a7a27e854b9b477ecdd021309f6060cfbaafbd"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-08",
+    "repo": "fastify",
+    "category": "trace",
+    "query": "Trace the requirement to reject duplicate decorators to implementation and tests.",
+    "evidence": [
+      {
+        "path": "docs/Reference/Decorators.md",
+        "start": 299,
+        "end": 299,
+        "anchor": "with the same name more than once",
+        "file_sha256": "434868b09a9c1f780d9e0fc263c76760a7c4c2608b77976a779ba817e10ba1ec"
+      },
+      {
+        "path": "lib/decorate.js",
+        "start": 21,
+        "end": 21,
+        "anchor": "    throw new FST_ERR_DEC_ALREADY_PRESENT(name)",
+        "file_sha256": "8b33c5fb73b04c6c95483277c5aad87ede9257af040e273f9b0df6ea1b7ab339"
+      },
+      {
+        "path": "test/throw.test.js",
+        "start": 149,
+        "end": 149,
+        "anchor": "test('Should throw on duplicate decorator',",
+        "file_sha256": "02c17eb3927e26b31a237e7fa293023810f53270c959491b65940fef4892a0dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-09",
+    "repo": "fastify",
+    "category": "discrepancy",
+    "query": "Check the claim that bodyLimit can be zero against the documented contract and route validation.",
+    "evidence": [
+      {
+        "path": "docs/Reference/Server.md",
+        "start": 293,
+        "end": 293,
+        "anchor": "### `bodyLimit`",
+        "file_sha256": "5639a2a9a1086e5a0928c98de8e4ed73d88d242e79269cc6863903f356eae302"
+      },
+      {
+        "path": "lib/route.js",
+        "start": 633,
+        "end": 633,
+        "anchor": "  if (!Number.isInteger(bodyLimit) || bodyLimit <= 0) {",
+        "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-10",
+    "repo": "fastify",
+    "category": "no_evidence",
+    "query": "Which approved customer interviews set Fastify enterprise pricing and next quarter's paid subscription tiers?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "author_selected_exploratory"
+  }
+]

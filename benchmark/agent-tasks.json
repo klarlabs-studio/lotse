@@ -1,0 +1,38 @@
+[
+  {
+    "id": "cobra-exact-args", "repo": "cobra",
+    "issue": "A command configured to accept exactly two positional arguments accepts three. Restore the documented argument-count contract and preserve validation behavior.",
+    "fault": {"path": "args.go", "before": "if len(args) != n {", "after": "if len(args) < n {"},
+    "verify": ["go", "test", ".", "-run", "^TestExactArgs", "-count=1"]
+  },
+  {
+    "id": "cobra-minimum-args", "repo": "cobra",
+    "issue": "A command requiring a minimum number of arguments now rejects an input with exactly that number. Restore the documented boundary behavior.",
+    "fault": {"path": "args.go", "before": "if len(args) < n {", "after": "if len(args) <= n {"},
+    "verify": ["go", "test", ".", "-run", "^TestMinimumNArgs", "-count=1"]
+  },
+  {
+    "id": "flask-response-order", "repo": "flask",
+    "issue": "Application after_request callbacks execute in the opposite order from the documented behavior. Restore the callback ordering without changing the request lifecycle.",
+    "fault": {"path": "src/flask/app.py", "before": "for func in reversed(self.after_request_funcs[name]):", "after": "for func in self.after_request_funcs[name]:"},
+    "verify": ["{python}", "-m", "pytest", "-q", "tests/test_basic.py::test_before_after_request_order"]
+  },
+  {
+    "id": "flask-key-rotation", "repo": "flask",
+    "issue": "Session cookies signed with a configured fallback key stop working after key rotation. Restore fallback signing-key support.",
+    "fault": {"path": "src/flask/sessions.py", "before": "keys.extend(fallbacks)", "after": "keys.extend([])"},
+    "verify": ["{python}", "-m", "pytest", "-q", "tests/test_basic.py::test_session_secret_key_fallbacks"]
+  },
+  {
+    "id": "fastify-duplicate-decorator", "repo": "fastify",
+    "issue": "Calling decorate twice with the same name in the same instance silently overwrites the original value. Restore the documented duplicate-decoration error.",
+    "fault": {"path": "lib/decorate.js", "before": "if (Object.hasOwn(instance, name)) {", "after": "if (false && Object.hasOwn(instance, name)) {"},
+    "verify": ["node", "--test", "test/throw.test.js"]
+  },
+  {
+    "id": "fastify-body-limit", "repo": "fastify",
+    "issue": "A route configured with a fractional bodyLimit is accepted during registration. Restore validation of the route payload limit option.",
+    "fault": {"path": "lib/route.js", "before": "if (!Number.isInteger(bodyLimit) || bodyLimit <= 0) {", "after": "if (typeof bodyLimit !== 'number' || bodyLimit <= 0) {"},
+    "verify": ["node", "--test", "test/route.2.test.js"]
+  }
+]

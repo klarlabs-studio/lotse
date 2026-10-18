@@ -1,0 +1,37 @@
+{
+  "hypothesis": "Globally unique short content-ID prefixes reduce navigation-hint overhead without changing ranking; extra budget may increase file coverage.",
+  "policy_fixed_before_run": {
+    "ranking": "Existing BM25 scores, parameters, tokenization, and tie order are unchanged",
+    "file_selection": "Best-scoring chunk per file, in BM25 order",
+    "max_candidate_files": 100,
+    "preview": "Line in the anchor chunk with most distinct query terms; source-order ties; trim whitespace; first 160 Unicode characters",
+    "handles": "Shortest globally unique SHA-256 prefix of at least 12 hex characters, extending on collision; full IDs remain accepted by expand. Text and JSON deliver the same short handle.",
+    "budgets": [
+      2000,
+      8000
+    ],
+    "arms": [
+      "graf full source search",
+      "graf compact locate",
+      "pinned Graphify code-only native hints"
+    ],
+    "repetitions": 3,
+    "order": "Rotate tool order each repetition; execute sequentially"
+  },
+  "judgments": "The same 30 authored requests are now development diagnostics, not held-out validation. This experiment changes only handle delivery/resolution, with no ranking or query-specific tuning.",
+  "primary_shared_metric": "Code-file hint recall; hints do not count as delivered full source evidence",
+  "unmeasured": [
+    "Agent success",
+    "Total locate-plus-expand task tokens",
+    "Docs-enabled Graphify",
+    "Resident serving comparison"
+  ],
+  "secondary_metrics": [
+    "Code-file recall among first 5 and 10 delivered unique file hints",
+    "Delivered unique file counts",
+    "Actual delivered text tokens including IDs and previews",
+    "Fresh-process latency"
+  ],
+  "previous_results": "results/graphify-comparison-locate-v1.json",
+  "primary_efficiency_metric": "Delivered retrieval-text tokens, including handles; never total agent usage"
+}

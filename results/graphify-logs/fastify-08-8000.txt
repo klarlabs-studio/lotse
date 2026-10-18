@@ -1,0 +1,1101 @@
+Traversal: BFS depth=3 | Start: ['decorators', '.trace()', 'runTests()', 'handleReject()', 'lib_errors_fst_err_sch_duplicate'] | 316 nodes found
+
+[i] Complete answer over budget: all 316 nodes and 781 edges shown (~35007 tokens vs the requested ~8000-token budget). Edges are never dropped once every node fits, so this is already the full answer — raising --budget further will not shrink it. Narrow with context_filter=['call'] or use get_node for a specific symbol to reduce size instead.
+
+NODE decorators [src=lib/reply.js loc=L60 community=]
+NODE .trace() [src=test/types/logger.tst.ts loc=L56 community=]
+NODE runTests() [src=test/decorator.test.js loc=L120 community=]
+NODE handleReject() [src=lib/hooks.js loc=L399 community=]
+NODE lib_errors_fst_err_sch_duplicate [src= loc= community=]
+NODE reply.js [src=lib/reply.js loc=L1 community=]
+NODE schemas.js [src=lib/schemas.js loc=L1 community=]
+NODE test/decorator.test.js [src=test/decorator.test.js loc=L1 community=]
+NODE request() [src=test/logger/logger-test-utils.js loc=L28 community=]
+NODE CustomLoggerImpl [src=test/types/logger.tst.ts loc=L44 community=]
+NODE next() [src=lib/hooks.js loc=L377 community=]
+NODE onRequestAbortHookRunner() [src=lib/hooks.js loc=L374 community=]
+NODE next() [src=lib/hooks.js loc=L234 community=]
+NODE next() [src=lib/hooks.js loc=L281 community=]
+NODE next() [src=lib/hooks.js loc=L332 community=]
+NODE ref_node_test [src= loc= community=]
+NODE fastify.js [src=fastify.js loc=L1 community=]
+NODE ref [src= loc= community=]
+NODE route.js [src=lib/route.js loc=L1 community=]
+NODE lib/hooks.js [src=lib/hooks.js loc=L1 community=]
+NODE symbols.js [src=lib/symbols.js loc=L1 community=]
+NODE decorate.js [src=lib/decorate.js loc=L1 community=]
+NODE reply.test.js [src=test/internals/reply.test.js loc=L1 community=]
+NODE error-handler.js [src=lib/error-handler.js loc=L1 community=]
+NODE four-oh-four.js [src=lib/four-oh-four.js loc=L1 community=]
+NODE logger-factory.js [src=lib/logger-factory.js loc=L1 community=]
+NODE errors.js [src=lib/errors.js loc=L1 community=]
+NODE ref_node_stream [src= loc= community=]
+NODE logger.tst.ts [src=test/types/logger.tst.ts loc=L1 community=]
+NODE plugin-override.js [src=lib/plugin-override.js loc=L1 community=]
+NODE instantiation.test.js [src=test/logger/instantiation.test.js loc=L1 community=]
+NODE logging.test.js [src=test/logger/logging.test.js loc=L1 community=]
+NODE handle-request.test.js [src=test/internals/handle-request.test.js loc=L1 community=]
+NODE logger/request.test.js [src=test/logger/request.test.js loc=L1 community=]
+NODE content-type-parser.test.js [src=test/internals/content-type-parser.test.js loc=L1 community=]
+NODE validation.test.js [src=test/internals/validation.test.js loc=L1 community=]
+NODE logger-test-utils.js [src=test/logger/logger-test-utils.js loc=L1 community=]
+NODE ref_fastify_plugin [src= loc= community=]
+NODE lib_symbols_kroutecontext [src= loc= community=]
+NODE content-type.js [src=lib/content-type.js loc=L1 community=]
+NODE error-before-handler.test.js [src=test/diagnostics-channel/error-before-handler.test.js loc=L1 community=]
+NODE wrap-thenable.test.js [src=test/wrap-thenable.test.js loc=L1 community=]
+NODE routeHandler() [src=lib/route.js loc=L463 community=]
+NODE onSendHookRunner() [src=lib/hooks.js loc=L278 community=]
+NODE done() [src=test/internals/hook-runner.test.js loc=L35 community=]
+NODE onErrorHook() [src=lib/reply.js loc=L960 community=]
+NODE lib_symbols_klogcontroller [src= loc= community=]
+NODE preParsingHookRunner() [src=lib/hooks.js loc=L329 community=]
+NODE onSendHook() [src=lib/reply.js loc=L565 community=]
+NODE schema-controller.js [src=lib/schema-controller.js loc=L1 community=]
+NODE normalizeSchema() [src=lib/schemas.js loc=L58 community=]
+NODE onEnd() [src=lib/content-type-parser.js loc=L295 community=]
+NODE handleError() [src=lib/error-handler.js loc=L30 community=]
+NODE hookRunnerGenerator() [src=lib/hooks.js loc=L230 community=]
+NODE getSchemaSerializer() [src=lib/schemas.js loc=L148 community=]
+NODE lib_symbols_kreplyiserror [src= loc= community=]
+NODE same-shape.test.js [src=test/same-shape.test.js loc=L1 community=]
+NODE handleResolve() [src=lib/hooks.js loc=L395 community=]
+NODE serialize() [src=lib/reply.js loc=L1086 community=]
+NODE Schemas() [src=lib/schemas.js loc=L17 community=]
+NODE lib_symbols_kreplyserializerdefault [src= loc= community=]
+NODE next() [src=lib/hooks.js loc=L119 community=]
+NODE fn3() [src=test/internals/hook-runner.test.js loc=L29 community=]
+NODE cleanup() [src=test/logger/logger-test-utils.js loc=L20 community=]
+NODE next() [src=lib/hooks.js loc=L192 community=]
+NODE buildSchemas() [src=lib/schemas.js loc=L214 community=]
+NODE lib_symbols_kreplyheaders [src= loc= community=]
+NODE lib_symbols_kschemaresponse [src= loc= community=]
+NODE CustomLogger [src=test/types/logger.tst.ts loc=L40 community=]
+NODE .error() [src=test/types/logger.tst.ts loc=L54 community=]
+NODE lib_errors_fst_err_rep_invalid_payload_type [src= loc= community=]
+NODE handleReject() [src=lib/hooks.js loc=L256 community=]
+NODE handleReject() [src=lib/hooks.js loc=L316 community=]
+NODE handleResolve() [src=lib/hooks.js loc=L308 community=]
+NODE handleReject() [src=lib/hooks.js loc=L363 community=]
+NODE fastClone [src=lib/schemas.js loc=L3 community=]
+NODE generateFluentSchema() [src=lib/schemas.js loc=L120 community=]
+NODE isCustomSchemaPrototype() [src=lib/schemas.js loc=L54 community=]
+NODE lib_symbols_kreplyerrorhandlercalled [src= loc= community=]
+NODE lib_symbols_kreplyisrunningonerrorhook [src= loc= community=]
+NODE lib_symbols_kreplynexterrorhandler [src= loc= community=]
+NODE lib_symbols_kreplyserializer [src= loc= community=]
+NODE lib_symbols_kschemavisited [src= loc= community=]
+NODE assertsThrowOnUndeclaredDecorator() [src=test/decorator.test.js loc=L1259 community=]
+NODE completed() [src=test/decorator.test.js loc=L473 community=]
+NODE Fastify [src=test/decorator.test.js loc=L4 community=]
+NODE fp [src=test/decorator.test.js loc=L5 community=]
+NODE nestedAssert() [src=test/decorator.test.js loc=L863 community=]
+NODE rootAssert() [src=test/decorator.test.js loc=L859 community=]
+NODE createDeferredPromise() [src=test/logger/logger-test-utils.js loc=L9 community=]
+NODE .child() [src=test/types/logger.tst.ts loc=L60 community=]
+NODE lib_errors_fst_err_sch_already_present [src= loc= community=]
+NODE lib_errors_fst_err_sch_content_missing_schema [src= loc= community=]
+NODE lib_errors_fst_err_sch_missing_id [src= loc= community=]
+NODE ContentType [src=lib/schemas.js loc=L13 community=]
+NODE {  FST_ERR_SCH_MISSING_ID,  FST_ERR_SCH_ALREADY_PRESENT,  FST_ERR_SCH_DUPLICATE,  FST_ERR_SCH_CONTENT_MISSING_SCHEMA} [src=lib/schemas.js loc=L7 community=]
+NODE kFluentSchema [src=lib/schemas.js loc=L5 community=]
+NODE { kSchemaVisited, kSchemaResponse } [src=lib/schemas.js loc=L4 community=]
+NODE SCHEMAS_SOURCE [src=lib/schemas.js loc=L15 community=]
+NODE getter() [src=test/decorator.test.js loc=L433 community=]
+NODE setter() [src=test/decorator.test.js loc=L738 community=]
+NODE symbols [src=test/decorator.test.js loc=L6 community=]
+NODE { test, describe } [src=test/decorator.test.js loc=L3 community=]
+NODE .customMethod() [src=test/types/logger.tst.ts loc=L46 community=]
+NODE .debug() [src=test/types/logger.tst.ts loc=L57 community=]
+NODE .fatal() [src=test/types/logger.tst.ts loc=L55 community=]
+NODE .info() [src=test/types/logger.tst.ts loc=L49 community=]
+NODE .silent() [src=test/types/logger.tst.ts loc=L58 community=]
+NODE .warn() [src=test/types/logger.tst.ts loc=L53 community=]
+NODE fastify() [src=fastify.js loc=L89 community=]
+NODE request.js [src=lib/request.js loc=L1 community=]
+NODE content-type-parser.js [src=lib/content-type-parser.js loc=L1 community=]
+NODE helper.js [src=test/helper.js loc=L1 community=]
+NODE plugin-utils.js [src=lib/plugin-utils.js loc=L1 community=]
+NODE lib/server.js [src=lib/server.js loc=L1 community=]
+NODE handle-request.js [src=lib/handle-request.js loc=L1 community=]
+NODE test/hooks.test.js [src=test/hooks.test.js loc=L1 community=]
+NODE schema-feature.test.js [src=test/schema-feature.test.js loc=L1 community=]
+NODE ref_node_http [src= loc= community=]
+NODE validation.js [src=lib/validation.js loc=L1 community=]
+NODE schema-validation.test.js [src=test/schema-validation.test.js loc=L1 community=]
+NODE content-parser.test.js [src=test/content-parser.test.js loc=L1 community=]
+NODE request-error.test.js [src=test/request-error.test.js loc=L1 community=]
+NODE context.js [src=lib/context.js loc=L1 community=]
+NODE closing.test.js [src=test/http2/closing.test.js loc=L1 community=]
+NODE reply-error.test.js [src=test/reply-error.test.js loc=L1 community=]
+NODE buildRouting() [src=lib/route.js loc=L76 community=]
+NODE ref_split2 [src= loc= community=]
+NODE 404s.test.js [src=test/404s.test.js loc=L1 community=]
+NODE ref_node_fs [src= loc= community=]
+NODE hooks.on-listen.test.js [src=test/hooks.on-listen.test.js loc=L1 community=]
+NODE router-compile.test.js [src=test/router-compile.test.js loc=L1 community=]
+NODE router-options.test.js [src=test/router-options.test.js loc=L1 community=]
+NODE stream.4.test.js [src=test/stream.4.test.js loc=L1 community=]
+NODE ref_tstyche [src= loc= community=]
+NODE hook-runner.test.js [src=test/internals/hook-runner.test.js loc=L1 community=]
+NODE plugin.test.js [src=test/internals/plugin.test.js loc=L1 community=]
+NODE request-validate.test.js [src=test/internals/request-validate.test.js loc=L1 community=]
+NODE plugin.4.test.js [src=test/plugin.4.test.js loc=L1 community=]
+NODE LogController [src=lib/log-controller.js loc=L10 community=]
+NODE plugin.1.test.js [src=test/plugin.1.test.js loc=L1 community=]
+NODE SchemaController [src=lib/schema-controller.js loc=L40 community=]
+NODE wrap-thenable.js [src=lib/wrap-thenable.js loc=L1 community=]
+NODE handler-timeout.test.js [src=test/handler-timeout.test.js loc=L1 community=]
+NODE inject.test.js [src=test/inject.test.js loc=L1 community=]
+NODE req-id-gen-factory.js [src=lib/req-id-gen-factory.js loc=L1 community=]
+NODE ref_fastify_error [src= loc= community=]
+NODE fastify-instance.test.js [src=test/fastify-instance.test.js loc=L1 community=]
+NODE reply-serialize.test.js [src=test/internals/reply-serialize.test.js loc=L1 community=]
+NODE internals/request.test.js [src=test/internals/request.test.js loc=L1 community=]
+NODE plugin.3.test.js [src=test/plugin.3.test.js loc=L1 community=]
+NODE schema-serialization.test.js [src=test/schema-serialization.test.js loc=L1 community=]
+NODE ContentType [src=lib/content-type.js loc=L74 community=]
+NODE initial-config-validation.js [src=lib/initial-config-validation.js loc=L1 community=]
+NODE genReqId.test.js [src=test/genReqId.test.js loc=L1 community=]
+NODE listen.1.test.js [src=test/listen.1.test.js loc=L1 community=]
+NODE route.1.test.js [src=test/route.1.test.js loc=L1 community=]
+NODE createChildLogger() [src=lib/logger-factory.js loc=L29 community=]
+NODE ref_node_path [src= loc= community=]
+NODE context-config.test.js [src=test/context-config.test.js loc=L1 community=]
+NODE custom-http-server.test.js [src=test/custom-http-server.test.js loc=L1 community=]
+NODE internals/decorator.test.js [src=test/internals/decorator.test.js loc=L1 community=]
+NODE logger-pino.js [src=lib/logger-pino.js loc=L1 community=]
+NODE getGenReqId() [src=lib/req-id-gen-factory.js loc=L26 community=]
+NODE addNewRoute() [src=lib/route.js loc=L277 community=]
+NODE ref_node_os [src= loc= community=]
+NODE ref_pino [src= loc= community=]
+NODE find-route.test.js [src=test/find-route.test.js loc=L1 community=]
+NODE context.test.js [src=test/internals/context.test.js loc=L1 community=]
+NODE schema-controller-perf.test.js [src=test/internals/schema-controller-perf.test.js loc=L1 community=]
+NODE buildErrorHandler() [src=lib/error-handler.js loc=L124 community=]
+NODE ref_ajv [src= loc= community=]
+NODE 500s.test.js [src=test/500s.test.js loc=L1 community=]
+NODE content-type.test.js [src=test/content-type.test.js loc=L1 community=]
+NODE route.8.test.js [src=test/route.8.test.js loc=L1 community=]
+NODE set-error-handler.test.js [src=test/set-error-handler.test.js loc=L1 community=]
+NODE error-status.js [src=lib/error-status.js loc=L1 community=]
+NODE setErrorStatusCode() [src=lib/error-status.js loc=L7 community=]
+NODE hookRunnerApplication() [src=lib/hooks.js loc=L93 community=]
+NODE encapsulated-child-logger-factory.test.js [src=test/encapsulated-child-logger-factory.test.js loc=L1 community=]
+NODE handler-context.test.js [src=test/handler-context.test.js loc=L1 community=]
+NODE errors.test.js [src=test/internals/errors.test.js loc=L1 community=]
+NODE middleware.test.js [src=test/middleware.test.js loc=L1 community=]
+NODE plugin.2.test.js [src=test/plugin.2.test.js loc=L1 community=]
+NODE rawBody() [src=lib/content-type-parser.js loc=L251 community=]
+NODE partialDeepStrictEqual() [src=test/helper.js loc=L529 community=]
+NODE onListenHookRunner() [src=lib/hooks.js loc=L183 community=]
+NODE plainTextParser() [src=test/helper.js loc=L505 community=]
+NODE body() [src=test/internals/validation.test.js loc=L55 community=]
+NODE fastify_fastifybaselogger [src= loc= community=]
+NODE fastify_fastifyerror [src= loc= community=]
+NODE fastify_fastifyreply [src= loc= community=]
+NODE fastify_fastifyrequest [src= loc= community=]
+NODE error-serializer.js [src=lib/error-serializer.js loc=L1 community=]
+NODE appendStackTrace() [src=lib/errors.js loc=L534 community=]
+NODE log-controller.js [src=lib/log-controller.js loc=L1 community=]
+NODE ref_types_logger_js [src= loc= community=]
+NODE createTempFile() [src=test/logger/logger-test-utils.js loc=L18 community=]
+NODE .run() [src=lib/content-type-parser.js loc=L192 community=]
+NODE onData() [src=lib/content-type-parser.js loc=L274 community=]
+NODE defaultErrorHandler() [src=lib/error-handler.js loc=L78 community=]
+NODE fallbackErrorHandler() [src=lib/error-handler.js loc=L85 community=]
+NODE handleTimeout() [src=lib/route.js loc=L602 community=]
+NODE runPreParsing() [src=lib/route.js loc=L654 community=]
+NODE buildSchemaController() [src=lib/schema-controller.js loc=L11 community=]
+NODE exit() [src=lib/hooks.js loc=L100 community=]
+NODE wrap() [src=lib/hooks.js loc=L208 community=]
+NODE onRequestHookRunner [src=lib/hooks.js loc=L276 community=]
+NODE ref_http_errors [src= loc= community=]
+NODE esbuild/src/fail-plugin-version.js [src=test/bundler/esbuild/src/fail-plugin-version.js loc=L1 community=]
+NODE webpack/src/fail-plugin-version.js [src=test/bundler/webpack/src/fail-plugin-version.js loc=L1 community=]
+NODE fn1() [src=test/internals/hook-runner.test.js loc=L17 community=]
+NODE fn2() [src=test/internals/hook-runner.test.js loc=L23 community=]
+NODE destroy() [src=test/internals/reply.test.js loc=L71 community=]
+NODE fastify_fastifylogfn [src= loc= community=]
+NODE serializeError [src=lib/error-handler.js loc=L22 community=]
+NODE setErrorHeaders() [src=lib/error-handler.js loc=L134 community=]
+NODE wrapThenable [src=lib/error-handler.js loc=L4 community=]
+NODE lib_errors_fst_err_log_invalid_logger [src= loc= community=]
+NODE .add() [src=lib/schemas.js loc=L21 community=]
+NODE lib_symbols_kdiagnosticsstore [src= loc= community=]
+NODE ref_toad_cache [src= loc= community=]
+NODE doGet() [src=test/internals/reply.test.js loc=L23 community=]
+NODE Fastify [src=test/internals/reply.test.js loc=L9 community=]
+NODE removeHeader() [src=test/internals/reply.test.js loc=L1028 community=]
+NODE Reply [src=test/internals/reply.test.js loc=L7 community=]
+NODE setHeader() [src=test/internals/reply.test.js loc=L1028 community=]
+NODE CustomSchemaClass [src=test/internals/validation.test.js loc=L394 community=]
+NODE Fastify [src=test/logger/instantiation.test.js loc=L12 community=]
+NODE split [src=test/logger/instantiation.test.js loc=L8 community=]
+NODE Fastify [src=test/logger/logging.test.js loc=L9 community=]
+NODE pino [src=test/logger/logging.test.js loc=L7 community=]
+NODE split [src=test/logger/logging.test.js loc=L6 community=]
+NODE Fastify [src=test/logger/request.test.js loc=L8 community=]
+NODE split [src=test/logger/request.test.js loc=L6 community=]
+NODE plugin.helper.js [src=test/plugin.helper.js loc=L1 community=]
+NODE fastify [src=test/same-shape.test.js loc=L4 community=]
+NODE Foo [src=test/types/logger.tst.ts loc=L17 community=]
+NODE fastify_loglevel [src= loc= community=]
+NODE cache [src=lib/content-type.js loc=L66 community=]
+NODE { FifoMap: Fifo } [src=lib/content-type.js loc=L3 community=]
+NODE RFC-9110 [src=lib/content-type.js loc=L7 community=]
+NODE {  FST_ERR_REP_INVALID_PAYLOAD_TYPE,  FST_ERR_FAILED_ERROR_SERIALIZATION} [src=lib/error-handler.js loc=L15 community=]
+NODE { getSchemaSerializer } [src=lib/error-handler.js loc=L20 community=]
+NODE {  kReplyHeaders,  kReplyNextErrorHandler,  kReplyIsRunningOnErrorHook,  kRouteContext,  kLogController,  kDiagnosticsStore} [src=lib/error-handler.js loc=L6 community=]
+NODE rootErrorHandler [src=lib/error-handler.js loc=L23 community=]
+NODE { setErrorStatusCode } [src=lib/error-handler.js loc=L5 community=]
+NODE codes [src=lib/errors.js loc=L5 community=]
+NODE createError [src=lib/errors.js loc=L3 community=]
+NODE lib_errors_fst_err_failed_error_serialization [src= loc= community=]
+NODE handleResolve() [src=lib/hooks.js loc=L252 community=]
+NODE handleResolve() [src=lib/hooks.js loc=L359 community=]
+NODE { buildSchemas } [src=lib/schema-controller.js loc=L3 community=]
+NODE .getSchema() [src=lib/schemas.js loc=L44 community=]
+NODE .getSchemas() [src=lib/schemas.js loc=L40 community=]
+NODE keys [src=lib/symbols.js loc=L3 community=]
+NODE lib_validation_symbols [src= loc= community=]
+NODE fs [src=test/internals/reply.test.js loc=L20 community=]
+NODE http [src=test/internals/reply.test.js loc=L4 community=]
+NODE {  kReplyErrorHandlerCalled,  kReplyHeaders,  kReplySerializer,  kReplyIsError,  kReplySerializerDefault,  kRouteContext,  kLogController} [src=test/internals/reply.test.js loc=L11 community=]
+NODE { LogController } [src=test/internals/reply.test.js loc=L8 community=]
+NODE path [src=test/internals/reply.test.js loc=L21 community=]
+NODE read() [src=test/internals/reply.test.js loc=L70 community=]
+NODE { Readable, Writable } [src=test/internals/reply.test.js loc=L10 community=]
+NODE Request [src=test/internals/reply.test.js loc=L6 community=]
+NODE { test } [src=test/internals/reply.test.js loc=L3 community=]
+NODE Ajv [src=test/internals/validation.test.js loc=L5 community=]
+NODE get() [src=test/internals/validation.test.js loc=L28 community=]
+NODE Headers [src=test/internals/validation.test.js loc=L346 community=]
+NODE { kSchemaVisited } [src=test/internals/validation.test.js loc=L11 community=]
+NODE { normalizeSchema } [src=test/internals/validation.test.js loc=L9 community=]
+NODE { test } [src=test/internals/validation.test.js loc=L3 community=]
+NODE validation [src=test/internals/validation.test.js loc=L8 community=]
+NODE { createTempFile, request } [src=test/logger/instantiation.test.js loc=L16 community=]
+NODE fs [src=test/logger/instantiation.test.js loc=L5 community=]
+NODE { FST_ERR_LOG_INVALID_LOGGER } [src=test/logger/instantiation.test.js loc=L14 community=]
+NODE helper [src=test/logger/instantiation.test.js loc=L13 community=]
+NODE os [src=test/logger/instantiation.test.js loc=L4 community=]
+NODE { partialDeepStrictEqual } [src=test/logger/instantiation.test.js loc=L17 community=]
+NODE stream [src=test/logger/instantiation.test.js loc=L3 community=]
+NODE { streamSym } [src=test/logger/instantiation.test.js loc=L10 community=]
+NODE t [src=test/logger/instantiation.test.js loc=L7 community=]
+NODE fs [src=test/logger/logger-test-utils.js loc=L5 community=]
+NODE http [src=test/logger/logger-test-utils.js loc=L3 community=]
+NODE os [src=test/logger/logger-test-utils.js loc=L4 community=]
+NODE path [src=test/logger/logger-test-utils.js loc=L7 community=]
+NODE helper [src=test/logger/logging.test.js loc=L11 community=]
+NODE isLogDisabled() [src=test/logger/logging.test.js loc=L92 community=]
+NODE { LogController } [src=test/logger/logging.test.js loc=L10 community=]
+NODE { partialDeepStrictEqual } [src=test/logger/logging.test.js loc=L14 community=]
+NODE { request } [src=test/logger/logging.test.js loc=L13 community=]
+NODE stream [src=test/logger/logging.test.js loc=L3 community=]
+NODE t [src=test/logger/logging.test.js loc=L5 community=]
+NODE genReqId() [src=test/logger/request.test.js loc=L95 community=]
+NODE helper [src=test/logger/request.test.js loc=L9 community=]
+NODE { partialDeepStrictEqual } [src=test/logger/request.test.js loc=L12 community=]
+NODE req() [src=test/logger/request.test.js loc=L191 community=]
+NODE { request } [src=test/logger/request.test.js loc=L11 community=]
+NODE stream [src=test/logger/request.test.js loc=L3 community=]
+NODE t [src=test/logger/request.test.js loc=L5 community=]
+NODE { test } [src=test/same-shape.test.js loc=L3 community=]
+NODE .customMethod() [src=test/types/logger.tst.ts loc=L41 community=]
+NODE handler() [src=test/types/logger.tst.ts loc=L91 community=]
+NODE logController [src=test/types/logger.tst.ts loc=L275 community=]
+NODE passPinoOption [src=test/types/logger.tst.ts loc=L252 community=]
+NODE passStreamAsOption [src=test/types/logger.tst.ts loc=L244 community=]
+NODE serverAutoInferredFileOption [src=test/types/logger.tst.ts loc=L183 community=]
+NODE serverAutoInferredSerializerObjectOption [src=test/types/logger.tst.ts loc=L208 community=]
+NODE serverAutoInferredSerializerResponseObjectOption [src=test/types/logger.tst.ts loc=L192 community=]
+NODE serverAutoInferringTypes [src=test/types/logger.tst.ts loc=L127 community=]
+NODE serverWithCustomLogger [src=test/types/logger.tst.ts loc=L65 community=]
+NODE serverWithFileOption [src=test/types/logger.tst.ts loc=L114 community=]
+NODE serverWithLoggerInstance [src=test/types/logger.tst.ts loc=L135 community=]
+NODE serverWithLogOptions [src=test/types/logger.tst.ts loc=L102 community=]
+NODE serverWithPino [src=test/types/logger.tst.ts loc=L74 community=]
+NODE serverWithPinoConfig [src=test/types/logger.tst.ts loc=L144 community=]
+EDGE decorators --contains [EXTRACTED]--> reply.js at=lib/reply.js:L60
+EDGE handleReject() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L248
+EDGE handleReject() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L304
+EDGE handleReject() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L355
+EDGE handleReject() --contains [EXTRACTED]--> onRequestAbortHookRunner() at=lib/hooks.js:L399
+EDGE handleReject() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L391
+EDGE handleReject() --indirect_call [INFERRED context=argument]--> request() at=lib/hooks.js:L404
+EDGE lib_errors_fst_err_sch_duplicate --imports [EXTRACTED context=import]--> schemas.js at=lib/schemas.js:L7
+EDGE .trace() --method [EXTRACTED]--> CustomLoggerImpl at=test/types/logger.tst.ts:L56
+EDGE runTests() --contains [EXTRACTED]--> test/decorator.test.js at=test/decorator.test.js:L120
+EDGE runTests() --calls [EXTRACTED context=call]--> test/decorator.test.js at=test/decorator.test.js:L159
+EDGE CustomLoggerImpl --contains [EXTRACTED]--> logger.tst.ts at=test/types/logger.tst.ts:L44
+EDGE CustomLoggerImpl --method [EXTRACTED]--> .customMethod() at=test/types/logger.tst.ts:L46
+EDGE CustomLoggerImpl --method [EXTRACTED]--> .info() at=test/types/logger.tst.ts:L49
+EDGE CustomLoggerImpl --method [EXTRACTED]--> .warn() at=test/types/logger.tst.ts:L53
+EDGE CustomLoggerImpl --method [EXTRACTED]--> .error() at=test/types/logger.tst.ts:L54
+EDGE CustomLoggerImpl --method [EXTRACTED]--> .fatal() at=test/types/logger.tst.ts:L55
+EDGE CustomLoggerImpl --method [EXTRACTED]--> .debug() at=test/types/logger.tst.ts:L57
+EDGE CustomLoggerImpl --method [EXTRACTED]--> .silent() at=test/types/logger.tst.ts:L58
+EDGE CustomLoggerImpl --calls [EXTRACTED context=call]--> .child() at=test/types/logger.tst.ts:L60
+EDGE CustomLoggerImpl --implements [EXTRACTED context=type]--> CustomLogger at=test/types/logger.tst.ts:L44
+EDGE next() --contains [EXTRACTED]--> onSendHookRunner() at=lib/hooks.js:L281
+EDGE next() --indirect_call [INFERRED context=argument]--> handleResolve() at=lib/hooks.js:L304
+EDGE onRequestAbortHookRunner() --contains [EXTRACTED]--> lib/hooks.js at=lib/hooks.js:L374
+EDGE onRequestAbortHookRunner() --indirect_call [INFERRED context=collection]--> lib/hooks.js at=lib/hooks.js:L423
+EDGE onRequestAbortHookRunner() --contains [EXTRACTED]--> handleResolve() at=lib/hooks.js:L395
+EDGE onRequestAbortHookRunner() --imports [EXTRACTED context=import]--> route.js at=lib/route.js:L6
+EDGE onRequestAbortHookRunner() --calls [EXTRACTED context=call]--> routeHandler() at=lib/route.js:L585
+EDGE next() --contains [EXTRACTED]--> preParsingHookRunner() at=lib/hooks.js:L332
+EDGE next() --indirect_call [INFERRED context=argument]--> handleResolve() at=lib/hooks.js:L355
+EDGE next() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L144
+EDGE next() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L205
+EDGE next() --indirect_call [INFERRED context=argument]--> handleResolve() at=lib/hooks.js:L391
+EDGE schemas.js --imports_from [EXTRACTED context=import]--> error-handler.js at=lib/error-handler.js:L20
+EDGE schemas.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L7
+EDGE schemas.js --imports_from [EXTRACTED context=import]--> schema-controller.js at=lib/schema-controller.js:L3
+EDGE schemas.js --contains [EXTRACTED]--> fastClone at=lib/schemas.js:L3
+EDGE schemas.js --imports_from [EXTRACTED context=import]--> symbols.js at=lib/schemas.js:L4
+EDGE schemas.js --imports [EXTRACTED context=import]--> lib_symbols_kschemavisited at=lib/schemas.js:L4
+EDGE schemas.js --imports [EXTRACTED context=import]--> lib_symbols_kschemaresponse at=lib/schemas.js:L4
+EDGE schemas.js --contains [EXTRACTED]--> { kSchemaVisited, kSchemaResponse } at=lib/schemas.js:L4
+EDGE schemas.js --contains [EXTRACTED]--> kFluentSchema at=lib/schemas.js:L5
+EDGE schemas.js --imports_from [EXTRACTED context=import]--> errors.js at=lib/schemas.js:L7
+EDGE schemas.js --imports [EXTRACTED context=import]--> lib_errors_fst_err_sch_missing_id at=lib/schemas.js:L7
+EDGE schemas.js --imports [EXTRACTED context=import]--> lib_errors_fst_err_sch_already_present at=lib/schemas.js:L7
+EDGE schemas.js --imports [EXTRACTED context=import]--> lib_errors_fst_err_sch_content_missing_schema at=lib/schemas.js:L7
+EDGE schemas.js --contains [EXTRACTED]--> {  FST_ERR_SCH_MISSING_ID,  FST_ERR_SCH_ALREADY_PRESENT,  FST_ERR_SCH_DUPLICATE,  FST_ERR_SCH_CONTENT_MISSING_SCHEMA} at=lib/schemas.js:L7
+EDGE schemas.js --imports_from [EXTRACTED context=import]--> content-type.js at=lib/schemas.js:L13
+EDGE schemas.js --contains [EXTRACTED]--> ContentType at=lib/schemas.js:L13
+EDGE schemas.js --contains [EXTRACTED]--> SCHEMAS_SOURCE at=lib/schemas.js:L15
+EDGE schemas.js --contains [EXTRACTED]--> Schemas() at=lib/schemas.js:L17
+EDGE schemas.js --contains [EXTRACTED]--> isCustomSchemaPrototype() at=lib/schemas.js:L54
+EDGE schemas.js --contains [EXTRACTED]--> normalizeSchema() at=lib/schemas.js:L58
+EDGE schemas.js --indirect_call [INFERRED context=collection]--> normalizeSchema() at=lib/schemas.js:L216
+EDGE schemas.js --contains [EXTRACTED]--> generateFluentSchema() at=lib/schemas.js:L120
+EDGE schemas.js --contains [EXTRACTED]--> getSchemaSerializer() at=lib/schemas.js:L148
+EDGE schemas.js --indirect_call [INFERRED context=collection]--> getSchemaSerializer() at=lib/schemas.js:L215
+EDGE schemas.js --contains [EXTRACTED]--> buildSchemas() at=lib/schemas.js:L214
+EDGE schemas.js --imports_from [EXTRACTED context=import]--> validation.test.js at=test/internals/validation.test.js:L9
+EDGE test/decorator.test.js --imports_from [EXTRACTED context=import]--> ref_node_test at=test/decorator.test.js:L3
+EDGE test/decorator.test.js --contains [EXTRACTED]--> { test, describe } at=test/decorator.test.js:L3
+EDGE test/decorator.test.js --imports_from [EXTRACTED context=import]--> ref at=test/decorator.test.js:L4
+EDGE test/decorator.test.js --contains [EXTRACTED]--> Fastify at=test/decorator.test.js:L4
+EDGE test/decorator.test.js --calls [EXTRACTED context=call]--> Fastify at=test/decorator.test.js:L10
+EDGE test/decorator.test.js --imports_from [EXTRACTED context=import]--> ref_fastify_plugin at=test/decorator.test.js:L5
+EDGE test/decorator.test.js --contains [EXTRACTED]--> fp at=test/decorator.test.js:L5
+EDGE test/decorator.test.js --calls [EXTRACTED context=call]--> fp at=test/decorator.test.js:L104
+EDGE test/decorator.test.js --imports_from [EXTRACTED context=import]--> symbols.js at=test/decorator.test.js:L6
+EDGE test/decorator.test.js --contains [EXTRACTED]--> symbols at=test/decorator.test.js:L6
+EDGE test/decorator.test.js --contains [EXTRACTED]--> getter() at=test/decorator.test.js:L433
+EDGE test/decorator.test.js --contains [EXTRACTED]--> completed() at=test/decorator.test.js:L473
+EDGE test/decorator.test.js --calls [EXTRACTED context=call]--> completed() at=test/decorator.test.js:L483
+EDGE test/decorator.test.js --contains [EXTRACTED]--> setter() at=test/decorator.test.js:L738
+EDGE test/decorator.test.js --contains [EXTRACTED]--> rootAssert() at=test/decorator.test.js:L859
+EDGE test/decorator.test.js --indirect_call [INFERRED context=argument]--> rootAssert() at=test/decorator.test.js:L834
+EDGE test/decorator.test.js --contains [EXTRACTED]--> nestedAssert() at=test/decorator.test.js:L863
+EDGE test/decorator.test.js --indirect_call [INFERRED context=argument]--> nestedAssert() at=test/decorator.test.js:L844
+EDGE test/decorator.test.js --contains [EXTRACTED]--> assertsThrowOnUndeclaredDecorator() at=test/decorator.test.js:L1259
+EDGE test/decorator.test.js --calls [EXTRACTED context=call]--> assertsThrowOnUndeclaredDecorator() at=test/decorator.test.js:L1277
+EDGE request() --indirect_call [INFERRED context=argument]--> onEnd() at=lib/content-type-parser.js:L328
+EDGE request() --indirect_call [INFERRED context=argument]--> handleReject() at=lib/hooks.js:L261
+EDGE request() --indirect_call [INFERRED context=argument]--> handleResolve() at=lib/hooks.js:L312
+EDGE request() --indirect_call [INFERRED context=argument]--> handleReject() at=lib/hooks.js:L321
+EDGE request() --indirect_call [INFERRED context=argument]--> handleReject() at=lib/hooks.js:L368
+EDGE request() --indirect_call [INFERRED context=argument]--> fn3() at=test/internals/hook-runner.test.js:L275
+EDGE request() --indirect_call [INFERRED context=argument]--> done() at=test/internals/hook-runner.test.js:L283
+EDGE request() --indirect_call [INFERRED context=argument]--> reply.test.js at=test/internals/reply.test.js:L1776
+EDGE request() --imports [EXTRACTED context=import]--> instantiation.test.js at=test/logger/instantiation.test.js:L16
+EDGE request() --contains [EXTRACTED]--> logger-test-utils.js at=test/logger/logger-test-utils.js:L28
+EDGE request() --indirect_call [INFERRED context=collection]--> logger-test-utils.js at=test/logger/logger-test-utils.js:L45
+EDGE request() --calls [EXTRACTED context=call]--> createDeferredPromise() at=test/logger/logger-test-utils.js:L29
+EDGE request() --calls [EXTRACTED context=call]--> cleanup() at=test/logger/logger-test-utils.js:L37
+EDGE request() --imports [EXTRACTED context=import]--> logging.test.js at=test/logger/logging.test.js:L13
+EDGE request() --imports [EXTRACTED context=import]--> logger/request.test.js at=test/logger/request.test.js:L11
+EDGE request() --indirect_call [INFERRED context=argument]--> same-shape.test.js at=test/same-shape.test.js:L24
+EDGE next() --contains [EXTRACTED]--> hookRunnerGenerator() at=lib/hooks.js:L234
+EDGE next() --indirect_call [INFERRED context=argument]--> handleResolve() at=lib/hooks.js:L248
+EDGE getSchemaSerializer() --calls [EXTRACTED context=call]--> fallbackErrorHandler() at=lib/error-handler.js:L91
+EDGE getSchemaSerializer() --calls [EXTRACTED context=call]--> serialize() at=lib/reply.js:L1087
+EDGE validation.test.js --contains [EXTRACTED]--> { test } at=test/internals/validation.test.js:L3
+EDGE validation.test.js --imports_from [EXTRACTED context=import]--> ref_ajv at=test/internals/validation.test.js:L5
+EDGE validation.test.js --contains [EXTRACTED]--> Ajv at=test/internals/validation.test.js:L5
+EDGE validation.test.js --imports_from [EXTRACTED context=import]--> validation.js at=test/internals/validation.test.js:L8
+EDGE validation.test.js --contains [EXTRACTED]--> validation at=test/internals/validation.test.js:L8
+EDGE validation.test.js --contains [EXTRACTED]--> { normalizeSchema } at=test/internals/validation.test.js:L9
+EDGE validation.test.js --imports [EXTRACTED context=import]--> lib_validation_symbols at=test/internals/validation.test.js:L10
+EDGE validation.test.js --contains [EXTRACTED]--> { kSchemaVisited } at=test/internals/validation.test.js:L11
+EDGE validation.test.js --contains [EXTRACTED]--> get() at=test/internals/validation.test.js:L28
+EDGE validation.test.js --contains [EXTRACTED]--> body() at=test/internals/validation.test.js:L55
+EDGE validation.test.js --contains [EXTRACTED]--> Headers at=test/internals/validation.test.js:L346
+EDGE validation.test.js --contains [EXTRACTED]--> CustomSchemaClass at=test/internals/validation.test.js:L394
+EDGE validation.test.js --calls [EXTRACTED context=call]--> CustomSchemaClass at=test/internals/validation.test.js:L398
+EDGE preParsingHookRunner() --contains [EXTRACTED]--> handleResolve() at=lib/hooks.js:L359
+EDGE preParsingHookRunner() --calls [EXTRACTED context=call]--> runPreParsing() at=lib/route.js:L665
+EDGE next() --calls [EXTRACTED context=call]--> onListenHookRunner() at=lib/hooks.js:L200
+EDGE next() --calls [EXTRACTED context=call]--> wrap() at=lib/hooks.js:L205
+EDGE routeHandler() --contains [EXTRACTED]--> buildRouting() at=lib/route.js:L463
+EDGE routeHandler() --indirect_call [INFERRED context=collection]--> buildRouting() at=lib/route.js:L120
+EDGE routeHandler() --indirect_call [INFERRED context=argument]--> addNewRoute() at=lib/route.js:L363
+EDGE routeHandler() --indirect_call [INFERRED context=argument]--> handleTimeout() at=lib/route.js:L565
+EDGE routeHandler() --indirect_call [INFERRED context=argument]--> runPreParsing() at=lib/route.js:L575
+EDGE routeHandler() --calls [EXTRACTED context=call]--> runPreParsing() at=lib/route.js:L578
+EDGE routeHandler() --calls [EXTRACTED context=call]--> getGenReqId() at=lib/route.js:L464
+EDGE routeHandler() --calls [EXTRACTED context=call]--> createChildLogger() at=lib/route.js:L483
+EDGE routeHandler() --calls [EXTRACTED context=call]--> onRequestHookRunner at=lib/route.js:L571
+EDGE Schemas() --method [EXTRACTED]--> .add() at=lib/schemas.js:L21
+EDGE Schemas() --method [EXTRACTED]--> .getSchemas() at=lib/schemas.js:L40
+EDGE Schemas() --method [EXTRACTED]--> .getSchema() at=lib/schemas.js:L44
+EDGE fastClone --calls [EXTRACTED context=call]--> .add() at=lib/schemas.js:L22
+EDGE onSendHookRunner() --calls [EXTRACTED context=call]--> onSendHook() at=lib/reply.js:L567
+EDGE onSendHookRunner() --calls [EXTRACTED context=call]--> onErrorHook() at=lib/reply.js:L963
+EDGE onSendHookRunner() --imports [EXTRACTED context=import]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L4
+EDGE .error() --indirect_call [INFERRED context=argument]--> inject.test.js at=test/inject.test.js:L327
+EDGE .error() --indirect_call [INFERRED context=argument]--> reply-error.test.js at=test/reply-error.test.js:L548
+EDGE fn3() --contains [EXTRACTED]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L29
+EDGE fn3() --indirect_call [INFERRED context=collection]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L11
+EDGE same-shape.test.js --contains [EXTRACTED]--> { test } at=test/same-shape.test.js:L3
+EDGE same-shape.test.js --contains [EXTRACTED]--> fastify at=test/same-shape.test.js:L4
+EDGE same-shape.test.js --calls [EXTRACTED context=call]--> fastify at=test/same-shape.test.js:L9
+EDGE logging.test.js --imports_from [EXTRACTED context=import]--> ref_node_stream at=test/logger/logging.test.js:L3
+EDGE logging.test.js --contains [EXTRACTED]--> stream at=test/logger/logging.test.js:L3
+EDGE logging.test.js --contains [EXTRACTED]--> t at=test/logger/logging.test.js:L5
+EDGE logging.test.js --imports_from [EXTRACTED context=import]--> ref_split2 at=test/logger/logging.test.js:L6
+EDGE logging.test.js --contains [EXTRACTED]--> split at=test/logger/logging.test.js:L6
+EDGE logging.test.js --calls [EXTRACTED context=call]--> split at=test/logger/logging.test.js:L30
+EDGE logging.test.js --imports_from [EXTRACTED context=import]--> ref_pino at=test/logger/logging.test.js:L7
+EDGE logging.test.js --contains [EXTRACTED]--> pino at=test/logger/logging.test.js:L7
+EDGE logging.test.js --calls [EXTRACTED context=call]--> pino at=test/logger/logging.test.js:L32
+EDGE logging.test.js --imports_from [EXTRACTED context=import]--> fastify.js at=test/logger/logging.test.js:L9
+EDGE logging.test.js --contains [EXTRACTED]--> Fastify at=test/logger/logging.test.js:L9
+EDGE logging.test.js --calls [EXTRACTED context=call]--> Fastify at=test/logger/logging.test.js:L34
+EDGE logging.test.js --imports_from [EXTRACTED context=import]--> log-controller.js at=test/logger/logging.test.js:L10
+EDGE logging.test.js --imports [EXTRACTED context=import]--> LogController at=test/logger/logging.test.js:L10
+EDGE logging.test.js --contains [EXTRACTED]--> { LogController } at=test/logger/logging.test.js:L10
+EDGE logging.test.js --imports_from [EXTRACTED context=import]--> helper.js at=test/logger/logging.test.js:L11
+EDGE logging.test.js --contains [EXTRACTED]--> helper at=test/logger/logging.test.js:L11
+EDGE logging.test.js --contains [EXTRACTED]--> { request } at=test/logger/logging.test.js:L13
+EDGE logging.test.js --imports [EXTRACTED context=import]--> partialDeepStrictEqual() at=test/logger/logging.test.js:L14
+EDGE logging.test.js --contains [EXTRACTED]--> { partialDeepStrictEqual } at=test/logger/logging.test.js:L14
+EDGE logging.test.js --contains [EXTRACTED]--> isLogDisabled() at=test/logger/logging.test.js:L92
+EDGE content-type.js --imports_from [EXTRACTED context=import]--> content-type-parser.js at=lib/content-type-parser.js:L6
+EDGE content-type.js --imports_from [EXTRACTED context=import]--> ref_toad_cache at=lib/content-type.js:L3
+EDGE content-type.js --contains [EXTRACTED]--> { FifoMap: Fifo } at=lib/content-type.js:L3
+EDGE content-type.js --contains [EXTRACTED]--> cache at=lib/content-type.js:L66
+EDGE content-type.js --contains [EXTRACTED]--> ContentType at=lib/content-type.js:L74
+EDGE content-type.js --cites [EXTRACTED]--> RFC-9110 at=lib/content-type.js:L7
+EDGE content-type.js --imports_from [EXTRACTED context=import]--> handle-request.js at=lib/handle-request.js:L20
+EDGE content-type.js --imports_from [EXTRACTED context=import]--> request.js at=lib/request.js:L21
+EDGE content-type.js --imports_from [EXTRACTED context=import]--> content-type.test.js at=test/content-type.test.js:L4
+EDGE content-type.js --imports_from [EXTRACTED context=import]--> schema-serialization.test.js at=test/schema-serialization.test.js:L5
+EDGE cleanup() --contains [EXTRACTED]--> createTempFile() at=test/logger/logger-test-utils.js:L20
+EDGE cleanup() --indirect_call [INFERRED context=collection]--> createTempFile() at=test/logger/logger-test-utils.js:L25
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> ref_node_stream at=test/logger/instantiation.test.js:L3
+EDGE instantiation.test.js --contains [EXTRACTED]--> stream at=test/logger/instantiation.test.js:L3
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> ref_node_os at=test/logger/instantiation.test.js:L4
+EDGE instantiation.test.js --contains [EXTRACTED]--> os at=test/logger/instantiation.test.js:L4
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> ref_node_fs at=test/logger/instantiation.test.js:L5
+EDGE instantiation.test.js --contains [EXTRACTED]--> fs at=test/logger/instantiation.test.js:L5
+EDGE instantiation.test.js --contains [EXTRACTED]--> t at=test/logger/instantiation.test.js:L7
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> ref_split2 at=test/logger/instantiation.test.js:L8
+EDGE instantiation.test.js --contains [EXTRACTED]--> split at=test/logger/instantiation.test.js:L8
+EDGE instantiation.test.js --calls [EXTRACTED context=call]--> split at=test/logger/instantiation.test.js:L32
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> ref_pino at=test/logger/instantiation.test.js:L10
+EDGE instantiation.test.js --contains [EXTRACTED]--> { streamSym } at=test/logger/instantiation.test.js:L10
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> fastify.js at=test/logger/instantiation.test.js:L12
+EDGE instantiation.test.js --contains [EXTRACTED]--> Fastify at=test/logger/instantiation.test.js:L12
+EDGE instantiation.test.js --calls [EXTRACTED context=call]--> Fastify at=test/logger/instantiation.test.js:L36
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> helper.js at=test/logger/instantiation.test.js:L13
+EDGE instantiation.test.js --contains [EXTRACTED]--> helper at=test/logger/instantiation.test.js:L13
+EDGE instantiation.test.js --imports [EXTRACTED context=import]--> lib_errors_fst_err_log_invalid_logger at=test/logger/instantiation.test.js:L14
+EDGE instantiation.test.js --contains [EXTRACTED]--> { FST_ERR_LOG_INVALID_LOGGER } at=test/logger/instantiation.test.js:L14
+EDGE instantiation.test.js --imports [EXTRACTED context=import]--> createTempFile() at=test/logger/instantiation.test.js:L16
+EDGE instantiation.test.js --contains [EXTRACTED]--> { createTempFile, request } at=test/logger/instantiation.test.js:L16
+EDGE instantiation.test.js --imports [EXTRACTED context=import]--> partialDeepStrictEqual() at=test/logger/instantiation.test.js:L17
+EDGE instantiation.test.js --contains [EXTRACTED]--> { partialDeepStrictEqual } at=test/logger/instantiation.test.js:L17
+EDGE done() --indirect_call [INFERRED context=argument]--> .run() at=lib/content-type-parser.js:L220
+EDGE done() --contains [EXTRACTED]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L35
+EDGE done() --indirect_call [INFERRED context=argument]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L11
+EDGE done() --calls [EXTRACTED context=call]--> fn1() at=test/internals/hook-runner.test.js:L20
+EDGE done() --calls [EXTRACTED context=call]--> fn2() at=test/internals/hook-runner.test.js:L26
+EDGE done() --indirect_call [INFERRED context=argument]--> listen.1.test.js at=test/listen.1.test.js:L60
+EDGE .child() --indirect_call [INFERRED context=argument]--> request-validate.test.js at=test/internals/request-validate.test.js:L1339
+EDGE CustomLogger --method [EXTRACTED]--> .customMethod() at=test/types/logger.tst.ts:L41
+EDGE next() --calls [EXTRACTED context=call]--> hookRunnerApplication() at=lib/hooks.js:L144
+EDGE next() --calls [EXTRACTED context=call]--> exit() at=lib/hooks.js:L121
+EDGE next() --calls [EXTRACTED context=call]--> wrap() at=lib/hooks.js:L148
+EDGE reply.test.js --contains [EXTRACTED]--> { test } at=test/internals/reply.test.js:L3
+EDGE reply.test.js --imports_from [EXTRACTED context=import]--> ref_node_http at=test/internals/reply.test.js:L4
+EDGE reply.test.js --contains [EXTRACTED]--> http at=test/internals/reply.test.js:L4
+EDGE reply.test.js --imports_from [EXTRACTED context=import]--> ref_http_errors at=test/internals/reply.test.js:L5
+EDGE reply.test.js --imports_from [EXTRACTED context=import]--> request.js at=test/internals/reply.test.js:L6
+EDGE reply.test.js --contains [EXTRACTED]--> Request at=test/internals/reply.test.js:L6
+EDGE reply.test.js --contains [EXTRACTED]--> Reply at=test/internals/reply.test.js:L7
+EDGE reply.test.js --calls [EXTRACTED context=call]--> Reply at=test/internals/reply.test.js:L46
+EDGE reply.test.js --imports_from [EXTRACTED context=import]--> log-controller.js at=test/internals/reply.test.js:L8
+EDGE reply.test.js --imports [EXTRACTED context=import]--> LogController at=test/internals/reply.test.js:L8
+EDGE reply.test.js --contains [EXTRACTED]--> { LogController } at=test/internals/reply.test.js:L8
+EDGE reply.test.js --contains [EXTRACTED]--> Fastify at=test/internals/reply.test.js:L9
+EDGE reply.test.js --calls [EXTRACTED context=call]--> Fastify at=test/internals/reply.test.js:L147
+EDGE reply.test.js --imports_from [EXTRACTED context=import]--> ref_node_stream at=test/internals/reply.test.js:L10
+EDGE reply.test.js --contains [EXTRACTED]--> { Readable, Writable } at=test/internals/reply.test.js:L10
+EDGE reply.test.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyerrorhandlercalled at=test/internals/reply.test.js:L11
+EDGE reply.test.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyheaders at=test/internals/reply.test.js:L11
+EDGE reply.test.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyserializer at=test/internals/reply.test.js:L11
+EDGE reply.test.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyiserror at=test/internals/reply.test.js:L11
+EDGE reply.test.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyserializerdefault at=test/internals/reply.test.js:L11
+EDGE reply.test.js --imports [EXTRACTED context=import]--> lib_symbols_kroutecontext at=test/internals/reply.test.js:L11
+EDGE reply.test.js --imports [EXTRACTED context=import]--> lib_symbols_klogcontroller at=test/internals/reply.test.js:L11
+EDGE reply.test.js --contains [EXTRACTED]--> {  kReplyErrorHandlerCalled,  kReplyHeaders,  kReplySerializer,  kReplyIsError,  kReplySerializerDefault,  kRouteContext,  kLogController} at=test/internals/reply.test.js:L11
+EDGE reply.test.js --imports_from [EXTRACTED context=import]--> ref_node_fs at=test/internals/reply.test.js:L20
+EDGE reply.test.js --contains [EXTRACTED]--> fs at=test/internals/reply.test.js:L20
+EDGE reply.test.js --imports_from [EXTRACTED context=import]--> ref_node_path at=test/internals/reply.test.js:L21
+EDGE reply.test.js --contains [EXTRACTED]--> path at=test/internals/reply.test.js:L21
+EDGE reply.test.js --contains [EXTRACTED]--> doGet() at=test/internals/reply.test.js:L23
+EDGE reply.test.js --calls [EXTRACTED context=call]--> doGet() at=test/internals/reply.test.js:L1878
+EDGE reply.test.js --contains [EXTRACTED]--> read() at=test/internals/reply.test.js:L70
+EDGE reply.test.js --contains [EXTRACTED]--> destroy() at=test/internals/reply.test.js:L71
+EDGE reply.test.js --calls [EXTRACTED context=call]--> destroy() at=test/internals/reply.test.js:L100
+EDGE reply.test.js --contains [EXTRACTED]--> setHeader() at=test/internals/reply.test.js:L1028
+EDGE reply.test.js --calls [EXTRACTED context=call]--> setHeader() at=test/internals/reply.test.js:L1107
+EDGE reply.test.js --contains [EXTRACTED]--> removeHeader() at=test/internals/reply.test.js:L1028
+EDGE reply.test.js --calls [EXTRACTED context=call]--> removeHeader() at=test/internals/reply.test.js:L1136
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> fastify.js at=fastify.js:L82
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> ref_node_http at=lib/error-handler.js:L3
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> wrap-thenable.js at=lib/error-handler.js:L4
+EDGE error-handler.js --contains [EXTRACTED]--> wrapThenable at=lib/error-handler.js:L4
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> error-status.js at=lib/error-handler.js:L5
+EDGE error-handler.js --imports [EXTRACTED context=import]--> setErrorStatusCode() at=lib/error-handler.js:L5
+EDGE error-handler.js --contains [EXTRACTED]--> { setErrorStatusCode } at=lib/error-handler.js:L5
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyheaders at=lib/error-handler.js:L6
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_symbols_kreplynexterrorhandler at=lib/error-handler.js:L6
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyisrunningonerrorhook at=lib/error-handler.js:L6
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_symbols_kroutecontext at=lib/error-handler.js:L6
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_symbols_klogcontroller at=lib/error-handler.js:L6
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_symbols_kdiagnosticsstore at=lib/error-handler.js:L6
+EDGE error-handler.js --contains [EXTRACTED]--> {  kReplyHeaders,  kReplyNextErrorHandler,  kReplyIsRunningOnErrorHook,  kRouteContext,  kLogController,  kDiagnosticsStore} at=lib/error-handler.js:L6
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_errors_fst_err_rep_invalid_payload_type at=lib/error-handler.js:L15
+EDGE error-handler.js --imports [EXTRACTED context=import]--> lib_errors_fst_err_failed_error_serialization at=lib/error-handler.js:L15
+EDGE error-handler.js --contains [EXTRACTED]--> {  FST_ERR_REP_INVALID_PAYLOAD_TYPE,  FST_ERR_FAILED_ERROR_SERIALIZATION} at=lib/error-handler.js:L15
+EDGE error-handler.js --contains [EXTRACTED]--> { getSchemaSerializer } at=lib/error-handler.js:L20
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> error-serializer.js at=lib/error-handler.js:L22
+EDGE error-handler.js --contains [EXTRACTED]--> serializeError at=lib/error-handler.js:L22
+EDGE error-handler.js --contains [EXTRACTED]--> rootErrorHandler at=lib/error-handler.js:L23
+EDGE error-handler.js --contains [EXTRACTED]--> handleError() at=lib/error-handler.js:L30
+EDGE error-handler.js --indirect_call [INFERRED context=collection]--> handleError() at=lib/error-handler.js:L154
+EDGE error-handler.js --contains [EXTRACTED]--> defaultErrorHandler() at=lib/error-handler.js:L78
+EDGE error-handler.js --indirect_call [INFERRED context=collection]--> defaultErrorHandler() at=lib/error-handler.js:L24
+EDGE error-handler.js --contains [EXTRACTED]--> fallbackErrorHandler() at=lib/error-handler.js:L85
+EDGE error-handler.js --contains [EXTRACTED]--> buildErrorHandler() at=lib/error-handler.js:L124
+EDGE error-handler.js --indirect_call [INFERRED context=collection]--> buildErrorHandler() at=lib/error-handler.js:L153
+EDGE error-handler.js --contains [EXTRACTED]--> setErrorHeaders() at=lib/error-handler.js:L134
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> four-oh-four.js at=lib/four-oh-four.js:L18
+EDGE hookRunnerGenerator() --contains [EXTRACTED]--> handleResolve() at=lib/hooks.js:L252
+EDGE hookRunnerGenerator() --imports [EXTRACTED context=import]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L4
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> fastify.js at=fastify.js:L10
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> content-type-parser.js at=lib/content-type-parser.js:L7
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> context.js at=lib/context.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> decorate.js at=lib/decorate.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> error-status.js at=lib/error-status.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> four-oh-four.js at=lib/four-oh-four.js:L8
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> handle-request.js at=lib/handle-request.js:L12
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> logger-factory.js at=lib/logger-factory.js:L12
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> plugin-override.js at=lib/plugin-override.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> plugin-utils.js at=lib/plugin-utils.js:L6
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> req-id-gen-factory.js at=lib/req-id-gen-factory.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> request.js at=lib/request.js:L4
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> lib/server.js at=lib/server.js:L9
+EDGE symbols.js --contains [EXTRACTED]--> keys at=lib/symbols.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> validation.js at=lib/validation.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> wrap-thenable.js at=lib/wrap-thenable.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> 500s.test.js at=test/500s.test.js:L5
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> content-parser.test.js at=test/content-parser.test.js:L7
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> context-config.test.js at=test/context-config.test.js:L5
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> error-before-handler.test.js at=test/diagnostics-channel/error-before-handler.test.js:L8
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> fastify-instance.test.js at=test/fastify-instance.test.js:L7
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> handler-context.test.js at=test/handler-context.test.js:L3
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> handler-timeout.test.js at=test/handler-timeout.test.js:L7
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> helper.js at=test/helper.js:L6
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> hooks.on-listen.test.js at=test/hooks.on-listen.test.js:L8
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L9
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> closing.test.js at=test/http2/closing.test.js:L11
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> content-type-parser.test.js at=test/internals/content-type-parser.test.js:L6
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> context.test.js at=test/internals/context.test.js:L4
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> internals/decorator.test.js at=test/internals/decorator.test.js:L5
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L8
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> plugin.test.js at=test/internals/plugin.test.js:L6
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> reply-serialize.test.js at=test/internals/reply-serialize.test.js:L4
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> request-validate.test.js at=test/internals/request-validate.test.js:L5
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> internals/request.test.js at=test/internals/request.test.js:L7
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> schema-controller-perf.test.js at=test/internals/schema-controller-perf.test.js:L4
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> request-error.test.js at=test/request-error.test.js:L6
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> schema-feature.test.js at=test/schema-feature.test.js:L9
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> schema-validation.test.js at=test/schema-validation.test.js:L9
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L9
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> wrap-thenable.test.js at=test/wrap-thenable.test.js:L4
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> 404s.test.js at=test/404s.test.js:L4
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> esbuild/src/fail-plugin-version.js at=test/bundler/esbuild/src/fail-plugin-version.js:L3
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> webpack/src/fail-plugin-version.js at=test/bundler/webpack/src/fail-plugin-version.js:L3
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> encapsulated-child-logger-factory.test.js at=test/encapsulated-child-logger-factory.test.js:L5
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> find-route.test.js at=test/find-route.test.js:L5
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> genReqId.test.js at=test/genReqId.test.js:L5
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> hooks.on-listen.test.js at=test/hooks.on-listen.test.js:L5
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L6
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> plugin.1.test.js at=test/plugin.1.test.js:L6
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> plugin.2.test.js at=test/plugin.2.test.js:L5
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> plugin.3.test.js at=test/plugin.3.test.js:L5
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> plugin.4.test.js at=test/plugin.4.test.js:L5
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> plugin.helper.js at=test/plugin.helper.js:L3
+EDGE ref_fastify_plugin --imports_from [EXTRACTED context=import]--> schema-feature.test.js at=test/schema-feature.test.js:L4
+EDGE logger/request.test.js --imports_from [EXTRACTED context=import]--> ref_node_stream at=test/logger/request.test.js:L3
+EDGE logger/request.test.js --contains [EXTRACTED]--> stream at=test/logger/request.test.js:L3
+EDGE logger/request.test.js --contains [EXTRACTED]--> t at=test/logger/request.test.js:L5
+EDGE logger/request.test.js --imports_from [EXTRACTED context=import]--> ref_split2 at=test/logger/request.test.js:L6
+EDGE logger/request.test.js --contains [EXTRACTED]--> split at=test/logger/request.test.js:L6
+EDGE logger/request.test.js --calls [EXTRACTED context=call]--> split at=test/logger/request.test.js:L27
+EDGE logger/request.test.js --imports_from [EXTRACTED context=import]--> fastify.js at=test/logger/request.test.js:L8
+EDGE logger/request.test.js --contains [EXTRACTED]--> Fastify at=test/logger/request.test.js:L8
+EDGE logger/request.test.js --calls [EXTRACTED context=call]--> Fastify at=test/logger/request.test.js:L28
+EDGE logger/request.test.js --imports_from [EXTRACTED context=import]--> helper.js at=test/logger/request.test.js:L9
+EDGE logger/request.test.js --contains [EXTRACTED]--> helper at=test/logger/request.test.js:L9
+EDGE logger/request.test.js --contains [EXTRACTED]--> { request } at=test/logger/request.test.js:L11
+EDGE logger/request.test.js --imports [EXTRACTED context=import]--> partialDeepStrictEqual() at=test/logger/request.test.js:L12
+EDGE logger/request.test.js --contains [EXTRACTED]--> { partialDeepStrictEqual } at=test/logger/request.test.js:L12
+EDGE logger/request.test.js --contains [EXTRACTED]--> genReqId() at=test/logger/request.test.js:L95
+EDGE logger/request.test.js --contains [EXTRACTED]--> req() at=test/logger/request.test.js:L191
+EDGE errors.js --imports_from [EXTRACTED context=import]--> fastify.js at=fastify.js:L55
+EDGE errors.js --imports_from [EXTRACTED context=import]--> content-type-parser.js at=lib/content-type-parser.js:L18
+EDGE errors.js --imports_from [EXTRACTED context=import]--> decorate.js at=lib/decorate.js:L10
+EDGE errors.js --imports_from [EXTRACTED context=import]--> ref_fastify_error at=lib/errors.js:L3
+EDGE errors.js --contains [EXTRACTED]--> createError at=lib/errors.js:L3
+EDGE errors.js --contains [EXTRACTED]--> codes at=lib/errors.js:L5
+EDGE errors.js --contains [EXTRACTED]--> appendStackTrace() at=lib/errors.js:L534
+EDGE errors.js --imports_from [EXTRACTED context=import]--> four-oh-four.js at=lib/four-oh-four.js:L19
+EDGE errors.js --imports_from [EXTRACTED context=import]--> handle-request.js at=lib/handle-request.js:L7
+EDGE errors.js --imports_from [EXTRACTED context=import]--> initial-config-validation.js at=lib/initial-config-validation.js:L5
+EDGE errors.js --imports_from [EXTRACTED context=import]--> logger-factory.js at=lib/logger-factory.js:L5
+EDGE errors.js --imports_from [EXTRACTED context=import]--> logger-pino.js at=lib/logger-pino.js:L11
+EDGE errors.js --imports_from [EXTRACTED context=import]--> plugin-utils.js at=lib/plugin-utils.js:L10
+EDGE errors.js --imports_from [EXTRACTED context=import]--> request.js at=lib/request.js:L19
+EDGE errors.js --imports_from [EXTRACTED context=import]--> lib/server.js at=lib/server.js:L12
+EDGE errors.js --imports_from [EXTRACTED context=import]--> validation.js at=lib/validation.js:L12
+EDGE errors.js --imports_from [EXTRACTED context=import]--> content-parser.test.js at=test/content-parser.test.js:L8
+EDGE errors.js --imports_from [EXTRACTED context=import]--> custom-http-server.test.js at=test/custom-http-server.test.js:L7
+EDGE errors.js --imports_from [EXTRACTED context=import]--> errors.test.js at=test/internals/errors.test.js:L4
+EDGE errors.js --imports_from [EXTRACTED context=import]--> middleware.test.js at=test/middleware.test.js:L5
+EDGE errors.js --imports_from [EXTRACTED context=import]--> plugin.4.test.js at=test/plugin.4.test.js:L6
+EDGE errors.js --imports_from [EXTRACTED context=import]--> route.1.test.js at=test/route.1.test.js:L5
+EDGE errors.js --imports_from [EXTRACTED context=import]--> route.8.test.js at=test/route.8.test.js:L5
+EDGE errors.js --imports_from [EXTRACTED context=import]--> router-compile.test.js at=test/router-compile.test.js:L6
+EDGE errors.js --imports_from [EXTRACTED context=import]--> router-options.test.js at=test/router-options.test.js:L7
+EDGE errors.js --imports_from [EXTRACTED context=import]--> set-error-handler.test.js at=test/set-error-handler.test.js:L5
+EDGE logger.tst.ts --imports_from [EXTRACTED context=import]--> ref_node_fs at=test/types/logger.tst.ts:L1
+EDGE logger.tst.ts --imports_from [EXTRACTED context=import]--> ref_node_http at=test/types/logger.tst.ts:L2
+EDGE logger.tst.ts --imports_from [EXTRACTED context=import]--> ref_pino at=test/types/logger.tst.ts:L3
+EDGE logger.tst.ts --imports_from [EXTRACTED context=import]--> ref_tstyche at=test/types/logger.tst.ts:L4
+EDGE logger.tst.ts --imports_from [EXTRACTED context=import]--> fastify.js at=test/types/logger.tst.ts:L5
+EDGE logger.tst.ts --imports [EXTRACTED context=import]--> fastify_fastifybaselogger at=test/types/logger.tst.ts:L5
+EDGE logger.tst.ts --imports [EXTRACTED context=import]--> fastify_fastifyerror at=test/types/logger.tst.ts:L5
+EDGE logger.tst.ts --imports [EXTRACTED context=import]--> fastify_fastifylogfn at=test/types/logger.tst.ts:L5
+EDGE logger.tst.ts --imports [EXTRACTED context=import]--> fastify_fastifyreply at=test/types/logger.tst.ts:L5
+EDGE logger.tst.ts --imports [EXTRACTED context=import]--> fastify_fastifyrequest at=test/types/logger.tst.ts:L5
+EDGE logger.tst.ts --imports [EXTRACTED context=import]--> fastify_loglevel at=test/types/logger.tst.ts:L5
+EDGE logger.tst.ts --imports_from [EXTRACTED context=import]--> ref_types_logger_js at=test/types/logger.tst.ts:L13
+EDGE logger.tst.ts --contains [EXTRACTED]--> Foo at=test/types/logger.tst.ts:L17
+EDGE logger.tst.ts --calls [EXTRACTED context=call]--> Foo at=test/types/logger.tst.ts:L36
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverWithCustomLogger at=test/types/logger.tst.ts:L65
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverWithPino at=test/types/logger.tst.ts:L74
+EDGE logger.tst.ts --contains [EXTRACTED]--> handler() at=test/types/logger.tst.ts:L91
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverWithLogOptions at=test/types/logger.tst.ts:L102
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverWithFileOption at=test/types/logger.tst.ts:L114
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverAutoInferringTypes at=test/types/logger.tst.ts:L127
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverWithLoggerInstance at=test/types/logger.tst.ts:L135
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverWithPinoConfig at=test/types/logger.tst.ts:L144
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverAutoInferredFileOption at=test/types/logger.tst.ts:L183
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverAutoInferredSerializerResponseObjectOption at=test/types/logger.tst.ts:L192
+EDGE logger.tst.ts --contains [EXTRACTED]--> serverAutoInferredSerializerObjectOption at=test/types/logger.tst.ts:L208
+EDGE logger.tst.ts --contains [EXTRACTED]--> passStreamAsOption at=test/types/logger.tst.ts:L244
+EDGE logger.tst.ts --contains [EXTRACTED]--> passPinoOption at=test/types/logger.tst.ts:L252
+EDGE logger.tst.ts --contains [EXTRACTED]--> logController at=test/types/logger.tst.ts:L275
+EDGE logger.tst.ts --calls [EXTRACTED context=call]--> fastify() at=test/types/logger.tst.ts:L21
+EDGE logger-test-utils.js --imports_from [EXTRACTED context=import]--> ref_node_http at=test/logger/logger-test-utils.js:L3
+EDGE logger-test-utils.js --contains [EXTRACTED]--> http at=test/logger/logger-test-utils.js:L3
+EDGE logger-test-utils.js --imports_from [EXTRACTED context=import]--> ref_node_os at=test/logger/logger-test-utils.js:L4
+EDGE logger-test-utils.js --contains [EXTRACTED]--> os at=test/logger/logger-test-utils.js:L4
+EDGE logger-test-utils.js --imports_from [EXTRACTED context=import]--> ref_node_fs at=test/logger/logger-test-utils.js:L5
+EDGE logger-test-utils.js --contains [EXTRACTED]--> fs at=test/logger/logger-test-utils.js:L5
+EDGE logger-test-utils.js --imports_from [EXTRACTED context=import]--> ref_node_path at=test/logger/logger-test-utils.js:L7
+EDGE logger-test-utils.js --contains [EXTRACTED]--> path at=test/logger/logger-test-utils.js:L7
+EDGE logger-test-utils.js --contains [EXTRACTED]--> createTempFile() at=test/logger/logger-test-utils.js:L18
+EDGE logger-test-utils.js --indirect_call [INFERRED context=collection]--> createTempFile() at=test/logger/logger-test-utils.js:L46
+EDGE onEnd() --contains [EXTRACTED]--> rawBody() at=lib/content-type-parser.js:L295
+EDGE onEnd() --indirect_call [INFERRED context=argument]--> rawBody() at=lib/content-type-parser.js:L270
+EDGE onEnd() --indirect_call [INFERRED context=argument]--> onData() at=lib/content-type-parser.js:L296
+EDGE onEnd() --indirect_call [INFERRED context=argument]--> plainTextParser() at=test/helper.js:L510
+EDGE lib_symbols_kschemaresponse --imports [EXTRACTED context=import]--> validation.js at=lib/validation.js:L3
+EDGE schema-controller.js --imports_from [EXTRACTED context=import]--> fastify.js at=fastify.js:L46
+EDGE schema-controller.js --imports_from [EXTRACTED context=import]--> plugin-override.js at=lib/plugin-override.js:L21
+EDGE schema-controller.js --contains [EXTRACTED]--> { buildSchemas } at=lib/schema-controller.js:L3
+EDGE schema-controller.js --contains [EXTRACTED]--> buildSchemaController() at=lib/schema-controller.js:L11
+EDGE schema-controller.js --contains [EXTRACTED]--> SchemaController at=lib/schema-controller.js:L40
+EDGE normalizeSchema() --calls [EXTRACTED context=call]--> addNewRoute() at=lib/route.js:L413
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> ref_node_http at=fastify.js:L6
+EDGE fastify.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyserializerdefault at=fastify.js:L10
+EDGE fastify.js --imports [EXTRACTED context=import]--> lib_symbols_klogcontroller at=fastify.js:L10
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> lib/server.js at=fastify.js:L40
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> reply.js at=fastify.js:L41
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> request.js at=fastify.js:L42
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> context.js at=fastify.js:L43
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> decorate.js at=fastify.js:L44
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> content-type-parser.js at=fastify.js:L45
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> lib/hooks.js at=fastify.js:L47
+EDGE fastify.js --imports [EXTRACTED context=import]--> hookRunnerApplication() at=fastify.js:L47
+EDGE fastify.js --dynamic_import [EXTRACTED context=import]--> logger-factory.js at=lib/logger-factory.js:L48
+EDGE fastify.js --imports [EXTRACTED context=import]--> createChildLogger() at=fastify.js:L48
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> plugin-utils.js at=fastify.js:L49
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> req-id-gen-factory.js at=fastify.js:L50
+EDGE fastify.js --imports [EXTRACTED context=import]--> getGenReqId() at=fastify.js:L50
+EDGE fastify.js --dynamic_import [EXTRACTED context=import]--> route.js at=lib/route.js:L51
+EDGE fastify.js --imports [EXTRACTED context=import]--> buildRouting() at=fastify.js:L51
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> four-oh-four.js at=fastify.js:L52
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> initial-config-validation.js at=fastify.js:L53
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> plugin-override.js at=fastify.js:L54
+EDGE fastify.js --imports [EXTRACTED context=import]--> appendStackTrace() at=fastify.js:L55
+EDGE fastify.js --imports [EXTRACTED context=import]--> buildErrorHandler() at=fastify.js:L82
+EDGE fastify.js --contains [EXTRACTED]--> fastify() at=fastify.js:L89
+EDGE fastify.js --dynamic_import [EXTRACTED]--> log-controller.js
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> hooks.on-listen.test.js at=test/hooks.on-listen.test.js:L4
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> reply-serialize.test.js at=test/internals/reply-serialize.test.js:L5
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> request-validate.test.js at=test/internals/request-validate.test.js:L6
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> schema-controller-perf.test.js at=test/internals/schema-controller-perf.test.js:L3
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> plugin.1.test.js at=test/plugin.1.test.js:L5
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> plugin.2.test.js at=test/plugin.2.test.js:L4
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> plugin.3.test.js at=test/plugin.3.test.js:L4
+EDGE fastify.js --imports_from [EXTRACTED context=import]--> plugin.4.test.js at=test/plugin.4.test.js:L4
+EDGE fastify() --calls [EXTRACTED context=call]--> buildRouting() at=fastify.js:L99
+EDGE fastify() --calls [EXTRACTED context=call]--> buildErrorHandler() at=fastify.js:L161
+EDGE fastify() --calls [EXTRACTED context=call]--> hookRunnerApplication() at=fastify.js:L395
+EDGE fastify() --indirect_call [INFERRED context=argument]--> plugin.1.test.js at=test/plugin.1.test.js:L115
+EDGE content-type.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/reply.js:L61
+EDGE content-type-parser.js --imports_from [EXTRACTED context=import]--> ref_toad_cache at=lib/content-type-parser.js:L4
+EDGE content-type-parser.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyiserror at=lib/content-type-parser.js:L7
+EDGE content-type-parser.js --imports [EXTRACTED context=import]--> lib_symbols_kroutecontext at=lib/content-type-parser.js:L7
+EDGE content-type-parser.js --contains [EXTRACTED]--> rawBody() at=lib/content-type-parser.js:L251
+EDGE content-type-parser.js --indirect_call [INFERRED context=collection]--> rawBody() at=lib/content-type-parser.js:L446
+EDGE content-type-parser.js --imports_from [EXTRACTED context=import]--> plugin-override.js at=lib/plugin-override.js:L22
+EDGE .run() --calls [EXTRACTED context=call]--> rawBody() at=lib/content-type-parser.js:L215
+EDGE rawBody() --contains [EXTRACTED]--> onData() at=lib/content-type-parser.js:L274
+EDGE rawBody() --indirect_call [INFERRED context=argument]--> onData() at=lib/content-type-parser.js:L269
+EDGE onData() --indirect_call [INFERRED context=argument]--> plainTextParser() at=test/helper.js:L509
+EDGE onEnd() --indirect_call [INFERRED context=argument]--> done() at=lib/content-type-parser.js:L328
+EDGE context.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyserializerdefault at=lib/context.js:L3
+EDGE context.js --imports_from [EXTRACTED context=import]--> four-oh-four.js at=lib/four-oh-four.js:L7
+EDGE context.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L4
+EDGE context.js --imports_from [EXTRACTED context=import]--> context.test.js at=test/internals/context.test.js:L5
+EDGE context.js --imports_from [EXTRACTED context=import]--> internals/request.test.js at=test/internals/request.test.js:L6
+EDGE decorate.js --imports_from [EXTRACTED context=import]--> plugin-utils.js at=lib/plugin-utils.js:L9
+EDGE decorate.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/reply.js:L60
+EDGE decorate.js --imports_from [EXTRACTED context=import]--> request.js at=lib/request.js:L20
+EDGE decorate.js --imports_from [EXTRACTED context=import]--> internals/decorator.test.js at=test/internals/decorator.test.js:L4
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> symbols.js at=lib/error-handler.js:L6
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> errors.js at=lib/error-handler.js:L15
+EDGE error-handler.js --imports [EXTRACTED context=import]--> getSchemaSerializer() at=lib/error-handler.js:L20
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/reply.js:L39
+EDGE error-handler.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L58
+EDGE buildErrorHandler() --imports [EXTRACTED context=import]--> four-oh-four.js at=lib/four-oh-four.js:L18
+EDGE buildErrorHandler() --imports [EXTRACTED context=import]--> route.js at=lib/route.js:L58
+EDGE buildErrorHandler() --calls [EXTRACTED context=call]--> addNewRoute() at=lib/route.js:L381
+EDGE defaultErrorHandler() --calls [EXTRACTED context=call]--> setErrorHeaders() at=lib/error-handler.js:L79
+EDGE defaultErrorHandler() --calls [EXTRACTED context=call]--> setErrorStatusCode() at=lib/error-handler.js:L80
+EDGE fallbackErrorHandler() --calls [EXTRACTED context=call]--> handleError() at=lib/error-handler.js:L35
+EDGE fallbackErrorHandler() --calls [EXTRACTED context=call]--> serializeError at=lib/error-handler.js:L93
+EDGE handleError() --calls [EXTRACTED context=call]--> wrapThenable at=lib/error-handler.js:L68
+EDGE handleError() --imports [EXTRACTED context=import]--> reply.js at=lib/reply.js:L39
+EDGE handleError() --calls [EXTRACTED context=call]--> onErrorHook() at=lib/reply.js:L968
+EDGE error-status.js --contains [EXTRACTED]--> setErrorStatusCode() at=lib/error-status.js:L7
+EDGE error-status.js --indirect_call [INFERRED context=collection]--> setErrorStatusCode() at=lib/error-status.js:L16
+EDGE error-status.js --imports_from [EXTRACTED context=import]--> handle-request.js at=lib/handle-request.js:L11
+EDGE error-status.js --imports_from [EXTRACTED context=import]--> wrap-thenable.js at=lib/wrap-thenable.js:L7
+EDGE setErrorStatusCode() --imports [EXTRACTED context=import]--> handle-request.js at=lib/handle-request.js:L11
+EDGE setErrorStatusCode() --imports [EXTRACTED context=import]--> wrap-thenable.js at=lib/wrap-thenable.js:L7
+EDGE errors.js --imports_from [EXTRACTED context=import]--> lib/hooks.js at=lib/hooks.js:L24
+EDGE errors.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/reply.js:L47
+EDGE errors.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L16
+EDGE errors.js --imports_from [EXTRACTED context=import]--> instantiation.test.js at=test/logger/instantiation.test.js:L14
+EDGE appendStackTrace() --imports [EXTRACTED context=import]--> lib/hooks.js at=lib/hooks.js:L24
+EDGE appendStackTrace() --calls [EXTRACTED context=call]--> exit() at=lib/hooks.js:L106
+EDGE lib_errors_fst_err_log_invalid_logger --imports [EXTRACTED context=import]--> logger-factory.js at=lib/logger-factory.js:L5
+EDGE lib_errors_fst_err_rep_invalid_payload_type --imports [EXTRACTED context=import]--> reply.js at=lib/reply.js:L47
+EDGE four-oh-four.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/four-oh-four.js:L5
+EDGE four-oh-four.js --imports_from [EXTRACTED context=import]--> request.js at=lib/four-oh-four.js:L6
+EDGE four-oh-four.js --imports [EXTRACTED context=import]--> lib_symbols_klogcontroller at=lib/four-oh-four.js:L8
+EDGE four-oh-four.js --imports_from [EXTRACTED context=import]--> lib/hooks.js at=lib/four-oh-four.js:L17
+EDGE four-oh-four.js --imports_from [EXTRACTED context=import]--> logger-factory.js at=lib/four-oh-four.js:L22
+EDGE four-oh-four.js --imports [EXTRACTED context=import]--> createChildLogger() at=lib/four-oh-four.js:L22
+EDGE four-oh-four.js --imports_from [EXTRACTED context=import]--> req-id-gen-factory.js at=lib/four-oh-four.js:L23
+EDGE four-oh-four.js --imports [EXTRACTED context=import]--> getGenReqId() at=lib/four-oh-four.js:L23
+EDGE handle-request.js --imports_from [EXTRACTED context=import]--> wrap-thenable.js at=lib/handle-request.js:L4
+EDGE handle-request.js --imports_from [EXTRACTED context=import]--> validation.js at=lib/handle-request.js:L5
+EDGE handle-request.js --imports_from [EXTRACTED context=import]--> lib/hooks.js at=lib/handle-request.js:L6
+EDGE handle-request.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyiserror at=lib/handle-request.js:L12
+EDGE handle-request.js --imports [EXTRACTED context=import]--> lib_symbols_kroutecontext at=lib/handle-request.js:L12
+EDGE handle-request.js --imports [EXTRACTED context=import]--> lib_symbols_kdiagnosticsstore at=lib/handle-request.js:L12
+EDGE handle-request.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L5
+EDGE handle-request.js --imports_from [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L4
+EDGE lib/hooks.js --imports_from [EXTRACTED context=import]--> symbols.js at=lib/hooks.js:L34
+EDGE lib/hooks.js --contains [EXTRACTED]--> hookRunnerApplication() at=lib/hooks.js:L93
+EDGE lib/hooks.js --indirect_call [INFERRED context=collection]--> hookRunnerApplication() at=lib/hooks.js:L425
+EDGE lib/hooks.js --contains [EXTRACTED]--> onListenHookRunner() at=lib/hooks.js:L183
+EDGE lib/hooks.js --indirect_call [INFERRED context=collection]--> onListenHookRunner() at=lib/hooks.js:L426
+EDGE lib/hooks.js --contains [EXTRACTED]--> hookRunnerGenerator() at=lib/hooks.js:L230
+EDGE lib/hooks.js --indirect_call [INFERRED context=collection]--> hookRunnerGenerator() at=lib/hooks.js:L418
+EDGE lib/hooks.js --contains [EXTRACTED]--> onRequestHookRunner at=lib/hooks.js:L276
+EDGE lib/hooks.js --contains [EXTRACTED]--> onSendHookRunner() at=lib/hooks.js:L278
+EDGE lib/hooks.js --indirect_call [INFERRED context=collection]--> onSendHookRunner() at=lib/hooks.js:L421
+EDGE lib/hooks.js --contains [EXTRACTED]--> preParsingHookRunner() at=lib/hooks.js:L329
+EDGE lib/hooks.js --indirect_call [INFERRED context=collection]--> preParsingHookRunner() at=lib/hooks.js:L419
+EDGE lib/hooks.js --imports_from [EXTRACTED context=import]--> plugin-override.js at=lib/plugin-override.js:L23
+EDGE lib/hooks.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/reply.js:L29
+EDGE lib/hooks.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L6
+EDGE lib/hooks.js --imports_from [EXTRACTED context=import]--> lib/server.js at=lib/server.js:L11
+EDGE lib/hooks.js --imports_from [EXTRACTED context=import]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L4
+EDGE hookRunnerApplication() --contains [EXTRACTED]--> exit() at=lib/hooks.js:L100
+EDGE hookRunnerGenerator() --contains [EXTRACTED]--> handleReject() at=lib/hooks.js:L256
+EDGE next() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L242
+EDGE next() --indirect_call [INFERRED context=argument]--> request() at=lib/hooks.js:L236
+EDGE onListenHookRunner() --contains [EXTRACTED]--> wrap() at=lib/hooks.js:L208
+EDGE onListenHookRunner() --imports [EXTRACTED context=import]--> lib/server.js at=lib/server.js:L11
+EDGE onRequestAbortHookRunner() --contains [EXTRACTED]--> next() at=lib/hooks.js:L377
+EDGE next() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L298
+EDGE next() --indirect_call [INFERRED context=argument]--> next() at=lib/hooks.js:L348
+EDGE next() --indirect_call [INFERRED context=argument]--> request() at=lib/hooks.js:L379
+EDGE onRequestHookRunner --imports [EXTRACTED context=import]--> route.js at=lib/route.js:L6
+EDGE onSendHookRunner() --contains [EXTRACTED]--> handleResolve() at=lib/hooks.js:L308
+EDGE onSendHookRunner() --contains [EXTRACTED]--> handleReject() at=lib/hooks.js:L316
+EDGE onSendHookRunner() --imports [EXTRACTED context=import]--> reply.js at=lib/reply.js:L29
+EDGE next() --indirect_call [INFERRED context=argument]--> request() at=lib/hooks.js:L283
+EDGE preParsingHookRunner() --contains [EXTRACTED]--> handleReject() at=lib/hooks.js:L363
+EDGE preParsingHookRunner() --imports [EXTRACTED context=import]--> route.js at=lib/route.js:L6
+EDGE next() --indirect_call [INFERRED context=argument]--> request() at=lib/hooks.js:L342
+EDGE initial-config-validation.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L9
+EDGE log-controller.js --contains [EXTRACTED]--> LogController at=lib/log-controller.js:L10
+EDGE log-controller.js --imports_from [EXTRACTED context=import]--> logger-factory.js at=lib/logger-factory.js:L15
+EDGE LogController --imports [EXTRACTED context=import]--> logger-factory.js at=lib/logger-factory.js:L15
+EDGE logger-factory.js --imports [EXTRACTED context=import]--> lib_symbols_klogcontroller at=lib/logger-factory.js:L12
+EDGE logger-factory.js --contains [EXTRACTED]--> createChildLogger() at=lib/logger-factory.js:L29
+EDGE logger-factory.js --indirect_call [INFERRED context=collection]--> createChildLogger() at=lib/logger-factory.js:L150
+EDGE logger-factory.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/reply.js:L37
+EDGE logger-factory.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L59
+EDGE createChildLogger() --imports [EXTRACTED context=import]--> route.js at=lib/route.js:L59
+EDGE logger-pino.js --imports_from [EXTRACTED context=import]--> ref_pino at=lib/logger-pino.js:L9
+EDGE plugin-override.js --imports_from [EXTRACTED context=import]--> reply.js at=lib/plugin-override.js:L19
+EDGE plugin-override.js --imports_from [EXTRACTED context=import]--> request.js at=lib/plugin-override.js:L20
+EDGE plugin-override.js --imports_from [EXTRACTED context=import]--> plugin-utils.js at=lib/plugin-override.js:L24
+EDGE plugin-utils.js --imports_from [EXTRACTED context=import]--> plugin.test.js at=test/internals/plugin.test.js:L5
+EDGE reply.js --imports_from [EXTRACTED context=import]--> ref_node_stream at=lib/reply.js:L3
+EDGE reply.js --imports_from [EXTRACTED context=import]--> symbols.js at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyerrorhandlercalled at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyserializer at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyserializerdefault at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyiserror at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyheaders at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyisrunningonerrorhook at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kreplynexterrorhandler at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kschemaresponse at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_kroutecontext at=lib/reply.js:L5
+EDGE reply.js --imports [EXTRACTED context=import]--> lib_symbols_klogcontroller at=lib/reply.js:L5
+EDGE reply.js --imports_from [EXTRACTED context=import]--> schemas.js at=lib/reply.js:L40
+EDGE reply.js --imports [EXTRACTED context=import]--> getSchemaSerializer() at=lib/reply.js:L40
+EDGE reply.js --contains [EXTRACTED]--> onSendHook() at=lib/reply.js:L565
+EDGE reply.js --contains [EXTRACTED]--> onErrorHook() at=lib/reply.js:L960
+EDGE reply.js --contains [EXTRACTED]--> serialize() at=lib/reply.js:L1086
+EDGE reply.js --imports_from [EXTRACTED context=import]--> error-before-handler.test.js at=test/diagnostics-channel/error-before-handler.test.js:L7
+EDGE reply.js --imports_from [EXTRACTED context=import]--> content-type-parser.test.js at=test/internals/content-type-parser.test.js:L8
+EDGE reply.js --imports_from [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L7
+EDGE reply.js --imports_from [EXTRACTED context=import]--> reply.test.js at=test/internals/reply.test.js:L7
+EDGE reply.js --imports_from [EXTRACTED context=import]--> wrap-thenable.test.js at=test/wrap-thenable.test.js:L6
+EDGE req-id-gen-factory.js --contains [EXTRACTED]--> getGenReqId() at=lib/req-id-gen-factory.js:L26
+EDGE req-id-gen-factory.js --indirect_call [INFERRED context=collection]--> getGenReqId() at=lib/req-id-gen-factory.js:L53
+EDGE req-id-gen-factory.js --imports_from [EXTRACTED context=import]--> route.js at=lib/route.js:L60
+EDGE getGenReqId() --imports [EXTRACTED context=import]--> route.js at=lib/route.js:L60
+EDGE request.js --imports [EXTRACTED context=import]--> lib_symbols_kroutecontext at=lib/request.js:L4
+EDGE request.js --imports_from [EXTRACTED context=import]--> error-before-handler.test.js at=test/diagnostics-channel/error-before-handler.test.js:L6
+EDGE request.js --imports_from [EXTRACTED context=import]--> content-type-parser.test.js at=test/internals/content-type-parser.test.js:L7
+EDGE request.js --imports_from [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L6
+EDGE request.js --imports_from [EXTRACTED context=import]--> internals/request.test.js at=test/internals/request.test.js:L5
+EDGE route.js --imports [EXTRACTED context=import]--> normalizeSchema() at=lib/route.js:L7
+EDGE route.js --imports_from [EXTRACTED context=import]--> validation.js at=lib/route.js:L11
+EDGE route.js --imports_from [EXTRACTED context=import]--> symbols.js at=lib/route.js:L36
+EDGE route.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyserializerdefault at=lib/route.js:L36
+EDGE route.js --imports [EXTRACTED context=import]--> lib_symbols_kreplyiserror at=lib/route.js:L36
+EDGE route.js --imports [EXTRACTED context=import]--> lib_symbols_kroutecontext at=lib/route.js:L36
+EDGE route.js --imports [EXTRACTED context=import]--> lib_symbols_klogcontroller at=lib/route.js:L36
+EDGE route.js --contains [EXTRACTED]--> buildRouting() at=lib/route.js:L76
+EDGE route.js --indirect_call [INFERRED context=collection]--> buildRouting() at=lib/route.js:L701
+EDGE route.js --contains [EXTRACTED]--> handleTimeout() at=lib/route.js:L602
+EDGE route.js --contains [EXTRACTED]--> runPreParsing() at=lib/route.js:L654
+EDGE schema-controller.js --imports [EXTRACTED context=import]--> buildSchemas() at=lib/schema-controller.js:L3
+EDGE buildSchemaController() --calls [EXTRACTED context=call]--> SchemaController at=lib/schema-controller.js:L13
+EDGE buildSchemas() --calls [EXTRACTED context=call]--> Schemas() at=lib/schemas.js:L214
+EDGE generateFluentSchema() --calls [EXTRACTED context=call]--> normalizeSchema() at=lib/schemas.js:L75
+EDGE isCustomSchemaPrototype() --calls [EXTRACTED context=call]--> normalizeSchema() at=lib/schemas.js:L79
+EDGE normalizeSchema() --imports [EXTRACTED context=import]--> validation.test.js at=test/internals/validation.test.js:L9
+EDGE lib/server.js --imports_from [EXTRACTED context=import]--> ref_node_http at=lib/server.js:L3
+EDGE lib/server.js --imports_from [EXTRACTED context=import]--> ref_node_os at=lib/server.js:L7
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> reply.test.js at=test/internals/reply.test.js:L11
+EDGE symbols.js --imports_from [EXTRACTED context=import]--> validation.test.js at=test/internals/validation.test.js:L11
+EDGE lib_symbols_klogcontroller --imports [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L9
+EDGE lib_symbols_kreplyiserror --imports [EXTRACTED context=import]--> wrap-thenable.js at=lib/wrap-thenable.js:L3
+EDGE lib_symbols_kroutecontext --imports [EXTRACTED context=import]--> context-config.test.js at=test/context-config.test.js:L5
+EDGE lib_symbols_kroutecontext --imports [EXTRACTED context=import]--> handler-context.test.js at=test/handler-context.test.js:L3
+EDGE lib_symbols_kroutecontext --imports [EXTRACTED context=import]--> content-type-parser.test.js at=test/internals/content-type-parser.test.js:L6
+EDGE lib_symbols_kroutecontext --imports [EXTRACTED context=import]--> context.test.js at=test/internals/context.test.js:L4
+EDGE lib_symbols_kroutecontext --imports [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L8
+EDGE lib_symbols_kroutecontext --imports [EXTRACTED context=import]--> reply-serialize.test.js at=test/internals/reply-serialize.test.js:L4
+EDGE lib_symbols_kroutecontext --imports [EXTRACTED context=import]--> request-validate.test.js at=test/internals/request-validate.test.js:L5
+EDGE lib_symbols_kschemavisited --imports [EXTRACTED context=import]--> validation.test.js at=test/internals/validation.test.js:L11
+EDGE validation.js --imports_from [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L9
+EDGE wrap-thenable.js --imports_from [EXTRACTED context=import]--> wrap-thenable.test.js at=test/wrap-thenable.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> 404s.test.js at=test/404s.test.js:L7
+EDGE ref --imports_from [EXTRACTED context=import]--> 500s.test.js at=test/500s.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> content-parser.test.js at=test/content-parser.test.js:L6
+EDGE ref --imports_from [EXTRACTED context=import]--> content-type.test.js at=test/content-type.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> context-config.test.js at=test/context-config.test.js:L6
+EDGE ref --imports_from [EXTRACTED context=import]--> custom-http-server.test.js at=test/custom-http-server.test.js:L6
+EDGE ref --imports_from [EXTRACTED context=import]--> encapsulated-child-logger-factory.test.js at=test/encapsulated-child-logger-factory.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> fastify-instance.test.js at=test/fastify-instance.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> find-route.test.js at=test/find-route.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> genReqId.test.js at=test/genReqId.test.js:L6
+EDGE ref --imports_from [EXTRACTED context=import]--> handler-context.test.js at=test/handler-context.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> handler-timeout.test.js at=test/handler-timeout.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> closing.test.js at=test/http2/closing.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> inject.test.js at=test/inject.test.js:L6
+EDGE ref --imports_from [EXTRACTED context=import]--> context.test.js at=test/internals/context.test.js:L7
+EDGE ref --imports_from [EXTRACTED context=import]--> reply.test.js at=test/internals/reply.test.js:L9
+EDGE ref --imports_from [EXTRACTED context=import]--> listen.1.test.js at=test/listen.1.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> middleware.test.js at=test/middleware.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> reply-error.test.js at=test/reply-error.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> request-error.test.js at=test/request-error.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> route.1.test.js at=test/route.1.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> route.8.test.js at=test/route.8.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> router-compile.test.js at=test/router-compile.test.js:L5
+EDGE ref --imports_from [EXTRACTED context=import]--> router-options.test.js at=test/router-options.test.js:L6
+EDGE ref --imports_from [EXTRACTED context=import]--> same-shape.test.js at=test/same-shape.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> schema-feature.test.js at=test/schema-feature.test.js:L6
+EDGE ref --imports_from [EXTRACTED context=import]--> schema-serialization.test.js at=test/schema-serialization.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> schema-validation.test.js at=test/schema-validation.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> set-error-handler.test.js at=test/set-error-handler.test.js:L4
+EDGE ref --imports_from [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L8
+EDGE ref_ajv --imports_from [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L11
+EDGE ref_ajv --imports_from [EXTRACTED context=import]--> request-validate.test.js at=test/internals/request-validate.test.js:L4
+EDGE ref_ajv --imports_from [EXTRACTED context=import]--> schema-feature.test.js at=test/schema-feature.test.js:L8
+EDGE ref_ajv --imports_from [EXTRACTED context=import]--> schema-validation.test.js at=test/schema-validation.test.js:L6
+EDGE ref_fastify_error --imports_from [EXTRACTED context=import]--> 500s.test.js at=test/500s.test.js:L6
+EDGE ref_http_errors --imports_from [EXTRACTED context=import]--> 404s.test.js at=test/404s.test.js:L5
+EDGE ref_http_errors --imports_from [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L4
+EDGE ref_node_fs --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L7
+EDGE ref_node_fs --imports_from [EXTRACTED context=import]--> errors.test.js at=test/internals/errors.test.js:L5
+EDGE ref_node_fs --imports_from [EXTRACTED context=import]--> reply-error.test.js at=test/reply-error.test.js:L8
+EDGE ref_node_http --imports_from [EXTRACTED context=import]--> custom-http-server.test.js at=test/custom-http-server.test.js:L4
+EDGE ref_node_http --imports_from [EXTRACTED context=import]--> reply-error.test.js at=test/reply-error.test.js:L6
+EDGE ref_node_http --imports_from [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L27
+EDGE ref_node_os --imports_from [EXTRACTED context=import]--> fastify-instance.test.js at=test/fastify-instance.test.js:L5
+EDGE ref_node_os --imports_from [EXTRACTED context=import]--> hooks.on-listen.test.js at=test/hooks.on-listen.test.js:L9
+EDGE ref_node_os --imports_from [EXTRACTED context=import]--> listen.1.test.js at=test/listen.1.test.js:L3
+EDGE ref_node_path --imports_from [EXTRACTED context=import]--> errors.test.js at=test/internals/errors.test.js:L6
+EDGE ref_node_path --imports_from [EXTRACTED context=import]--> schema-controller-perf.test.js at=test/internals/schema-controller-perf.test.js:L1
+EDGE ref_node_path --imports_from [EXTRACTED context=import]--> reply-error.test.js at=test/reply-error.test.js:L9
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> 404s.test.js at=test/404s.test.js:L955
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> content-parser.test.js at=test/content-parser.test.js:L5
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> genReqId.test.js at=test/genReqId.test.js:L3
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> handler-timeout.test.js at=test/handler-timeout.test.js:L6
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> helper.js at=test/helper.js:L4
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L4
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> inject.test.js at=test/inject.test.js:L4
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> content-type-parser.test.js at=test/internals/content-type-parser.test.js:L5
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> request-error.test.js at=test/request-error.test.js:L8
+EDGE ref_node_stream --imports_from [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L6
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> 404s.test.js at=test/404s.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> 500s.test.js at=test/500s.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> content-parser.test.js at=test/content-parser.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> content-type.test.js at=test/content-type.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> context-config.test.js at=test/context-config.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> custom-http-server.test.js at=test/custom-http-server.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> error-before-handler.test.js at=test/diagnostics-channel/error-before-handler.test.js:L4
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> encapsulated-child-logger-factory.test.js at=test/encapsulated-child-logger-factory.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> fastify-instance.test.js at=test/fastify-instance.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> find-route.test.js at=test/find-route.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> genReqId.test.js at=test/genReqId.test.js:L4
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> handler-context.test.js at=test/handler-context.test.js:L2
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> handler-timeout.test.js at=test/handler-timeout.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> hooks.on-listen.test.js at=test/hooks.on-listen.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> closing.test.js at=test/http2/closing.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> inject.test.js at=test/inject.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> content-type-parser.test.js at=test/internals/content-type-parser.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> context.test.js at=test/internals/context.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> internals/decorator.test.js at=test/internals/decorator.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> errors.test.js at=test/internals/errors.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> handle-request.test.js at=test/internals/handle-request.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> hook-runner.test.js at=test/internals/hook-runner.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> plugin.test.js at=test/internals/plugin.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> reply-serialize.test.js at=test/internals/reply-serialize.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> reply.test.js at=test/internals/reply.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> request-validate.test.js at=test/internals/request-validate.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> internals/request.test.js at=test/internals/request.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> schema-controller-perf.test.js at=test/internals/schema-controller-perf.test.js:L2
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> validation.test.js at=test/internals/validation.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> listen.1.test.js at=test/listen.1.test.js:L4
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> instantiation.test.js at=test/logger/instantiation.test.js:L7
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> logging.test.js at=test/logger/logging.test.js:L5
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> logger/request.test.js at=test/logger/request.test.js:L5
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> middleware.test.js at=test/middleware.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> plugin.1.test.js at=test/plugin.1.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> plugin.2.test.js at=test/plugin.2.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> plugin.3.test.js at=test/plugin.3.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> plugin.4.test.js at=test/plugin.4.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> reply-error.test.js at=test/reply-error.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> request-error.test.js at=test/request-error.test.js:L4
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> route.1.test.js at=test/route.1.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> route.8.test.js at=test/route.8.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> router-compile.test.js at=test/router-compile.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> router-options.test.js at=test/router-options.test.js:L4
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> same-shape.test.js at=test/same-shape.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> schema-feature.test.js at=test/schema-feature.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> schema-serialization.test.js at=test/schema-serialization.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> schema-validation.test.js at=test/schema-validation.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> set-error-handler.test.js at=test/set-error-handler.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L3
+EDGE ref_node_test --imports_from [EXTRACTED context=import]--> wrap-thenable.test.js at=test/wrap-thenable.test.js:L3
+EDGE ref_split2 --imports_from [EXTRACTED context=import]--> 404s.test.js at=test/404s.test.js:L6
+EDGE ref_split2 --imports_from [EXTRACTED context=import]--> hooks.on-listen.test.js at=test/hooks.on-listen.test.js:L6
+EDGE ref_split2 --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L8
+EDGE ref_split2 --imports_from [EXTRACTED context=import]--> reply-error.test.js at=test/reply-error.test.js:L7
+EDGE ref_split2 --imports_from [EXTRACTED context=import]--> request-error.test.js at=test/request-error.test.js:L7
+EDGE ref_split2 --imports_from [EXTRACTED context=import]--> router-options.test.js at=test/router-options.test.js:L3
+EDGE ref_split2 --imports_from [EXTRACTED context=import]--> stream.4.test.js at=test/stream.4.test.js:L7
+EDGE 404s.test.js --imports_from [EXTRACTED context=import]--> helper.js at=test/404s.test.js:L8
+EDGE helper.js --contains [EXTRACTED]--> plainTextParser() at=test/helper.js:L505
+EDGE helper.js --contains [EXTRACTED]--> partialDeepStrictEqual() at=test/helper.js:L529
+EDGE helper.js --imports_from [EXTRACTED context=import]--> hooks.on-listen.test.js at=test/hooks.on-listen.test.js:L7
+EDGE helper.js --imports_from [EXTRACTED context=import]--> test/hooks.test.js at=test/hooks.test.js:L13
+EDGE helper.js --imports_from [EXTRACTED context=import]--> closing.test.js at=test/http2/closing.test.js:L10
+EDGE helper.js --imports_from [EXTRACTED context=import]--> listen.1.test.js at=test/listen.1.test.js:L6
+EDGE helper.js --imports_from [EXTRACTED context=import]--> request-error.test.js at=test/request-error.test.js:L9
+EDGE helper.js --imports_from [EXTRACTED context=import]--> route.1.test.js at=test/route.1.test.js:L9
+EDGE helper.js --imports_from [EXTRACTED context=import]--> schema-feature.test.js at=test/schema-feature.test.js:L11
+EDGE helper.js --imports_from [EXTRACTED context=import]--> schema-serialization.test.js at=test/schema-serialization.test.js:L6
+EDGE helper.js --imports_from [EXTRACTED context=import]--> schema-validation.test.js at=test/schema-validation.test.js:L8
+EDGE inject.test.js --indirect_call [INFERRED context=argument]--> body() at=test/inject.test.js:L350
+EDGE hook-runner.test.js --contains [EXTRACTED]--> fn1() at=test/internals/hook-runner.test.js:L17
+EDGE hook-runner.test.js --indirect_call [INFERRED context=collection]--> fn1() at=test/internals/hook-runner.test.js:L11
+EDGE hook-runner.test.js --contains [EXTRACTED]--> fn2() at=test/internals/hook-runner.test.js:L23
+EDGE hook-runner.test.js --indirect_call [INFERRED context=collection]--> fn2() at=test/internals/hook-runner.test.js:L11
+EDGE done() --calls [EXTRACTED context=call]--> fn3() at=test/internals/hook-runner.test.js:L32
+EDGE instantiation.test.js --imports_from [EXTRACTED context=import]--> logger-test-utils.js at=test/logger/instantiation.test.js:L16
+EDGE instantiation.test.js --indirect_call [INFERRED context=argument]--> cleanup() at=test/logger/instantiation.test.js:L156
+EDGE logger-test-utils.js --contains [EXTRACTED]--> createDeferredPromise() at=test/logger/logger-test-utils.js:L9
+EDGE logger-test-utils.js --imports_from [EXTRACTED context=import]--> logging.test.js at=test/logger/logging.test.js:L13
+EDGE logger-test-utils.js --imports_from [EXTRACTED context=import]--> logger/request.test.js at=test/logger/request.test.js:L11
+EDGE logger.tst.ts --contains [EXTRACTED]--> CustomLogger at=test/types/logger.tst.ts:L40

@@ -1,0 +1,103 @@
+"""Audit the current paired comparison against source receipts and raw outputs."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import statistics
+
+from compare_graphify import ARMS, cited_paths, cited_path_order, code_hint_recall, validate_locate
+from retrieval import BASE, tokens
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--expect-search-unchanged", action="store_true",
+                        help="For this delivery-only experiment, also compare search outputs/indexes to the saved v1 run")
+    args = parser.parse_args()
+    source = BASE / "results/graphify-comparison.json"
+    result = json.loads(source.read_text())
+    assert sha(BASE / "benchmark/compare_graphify.py") == result["driver_sha256"]
+    assert sha(BASE / "benchmark/queries.json") == result["query_sha256"]
+    assert sha(BASE / "target/release/graf") == result["binary_sha256"]
+    for path, hashed in result["source_hashes"].items():
+        assert sha(BASE / path) == hashed, f"Stale source receipt: {path}"
+    cases = {q["id"]: q for q in json.loads((BASE / "benchmark/queries.json").read_text())}
+    expected = {(q, budget) for q in cases for budget in (2000, 8000)}
+    assert len(result["rows"]) == len(expected)
+    indexes = {}
+    for repo, info in result["repositories"].items():
+        root = BASE / ".research/comparison" / repo / "input"
+        index_path = root / ".graf/index.json"
+        index = json.loads(index_path.read_text())
+        assert set(index["files"]) == set(info["file_hashes"])
+        assert sha(index_path) == info["builds"]["graf"]["artifact_sha256"]
+        graph_path = root.parent / "graph/graphify-out/graph.json"
+        assert sha(graph_path) == info["builds"]["graphify"]["artifact_sha256"]
+        for name, hashed in info["file_hashes"].items():
+            assert sha(root / name) == hashed
+        indexes[repo] = index
+    seen = set()
+    timing_samples = 0
+    hints = 0
+    for row in result["rows"]:
+        pair = row["id"], row["budget"]
+        assert pair not in seen
+        seen.add(pair)
+        assert row["repo"] == cases[row["id"]]["repo"]
+        assert set(row["tools"]) == set(ARMS)
+        root = BASE / ".research/comparison" / row["repo"] / "input"
+        files = result["repositories"][row["repo"]]["file_hashes"]
+        for tool, value in row["tools"].items():
+            samples = value["latency_ms"]
+            assert len(samples) == 3 and all(t >= 0 for t in samples)
+            timing_samples += len(samples)
+            assert statistics.median(samples) == value["median_ms"]
+            context = value["context"]
+            count = len(tokens(context))
+            assert count == value["output_tokens"]
+            assert (count > row["budget"]) == value["over_cl100k_budget"]
+            if tool.startswith("graf"):
+                assert count <= row["budget"]
+            paths = cited_paths(tool, context, root, files)
+            ordered = cited_path_order(tool, context, root, files)
+            assert paths == value["cited_paths"]
+            assert ordered == value["cited_path_order"]
+            assert len(paths) == value["cited_file_count"]
+            assert code_hint_recall(cases[row["id"]], paths) == value["code_file_hint_recall"]
+            for limit in (5, 10):
+                assert code_hint_recall(cases[row["id"]], ordered[:limit]) == value[f"code_file_hint_recall_at_{limit}"]
+            if tool == "graf_locate":
+                verified = validate_locate(context, root, indexes[row["repo"]])
+                assert verified == value["validated_hint_count"]
+                hints += verified
+    assert seen == expected
+    for budget in (2000, 8000):
+        for tool in ARMS:
+            values = [r["tools"][tool] for r in result["rows"] if r["budget"] == budget]
+            summary = result["summary"][str(budget)][tool]
+            for metric in ("code_file_hint_recall", "code_file_hint_recall_at_5", "code_file_hint_recall_at_10"):
+                assert statistics.mean(v[metric] for v in values if v[metric] is not None) == summary[metric]
+            assert statistics.median(v["median_ms"] for v in values) == summary["median_query_ms"]
+            assert statistics.median(v["cited_file_count"] for v in values) == summary["median_cited_files"]
+            assert statistics.median(v["output_tokens"] for v in values) == summary["median_output_tokens"]
+            assert sum(v["over_cl100k_budget"] for v in values) == summary["over_cl100k_budget"]
+    if args.expect_search_unchanged:
+        before = json.loads((BASE / "results/graphify-comparison-search-v1.json").read_text())
+        original = {(r["id"], r["budget"]): r for r in before["rows"]}
+        for row in result["rows"]:
+            assert row["tools"]["graf"]["context"] == original[row["id"], row["budget"]]["tools"]["graf"]["context"]
+        for repo, info in result["repositories"].items():
+            assert info["builds"]["graf"]["artifact_sha256"] == before["repositories"][repo]["builds"]["graf"]["artifact_sha256"]
+    audit = {"status": "passed", "comparison_sha256": sha(source), "cases": len(seen),
+             "timing_samples": timing_samples, "verified_locate_hints": hints,
+             "search_outputs_and_indexes_unchanged_from_v1": args.expect_search_unchanged}
+    (BASE / "results/graphify-comparison-audit.json").write_text(json.dumps(audit, indent=2) + "\n")
+    print(json.dumps(audit, indent=2))
+
+
+if __name__ == "__main__":
+    main()

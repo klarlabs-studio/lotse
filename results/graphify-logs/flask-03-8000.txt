@@ -1,0 +1,630 @@
+Traversal: BFS depth=3 | Start: ['asyncio', 'View', 'get', 'tasks.py', 'AsyncMethodView'] | 193 nodes found
+
+[i] Complete answer over budget: all 193 nodes and 433 edges shown (~19036 tokens vs the requested ~8000-token budget). Edges are never dropped once every node fits, so this is already the full answer — raising --budget further will not shrink it. Narrow with context_filter=['call'] or use get_node for a specific symbol to reduce size instead.
+
+NODE asyncio [src= loc= community=]
+NODE View [src=src/flask/views.py loc=L16 community=]
+NODE get [src= loc= community=]
+NODE tasks.py [src=examples/celery/src/task_app/tasks.py loc=L1 community=]
+NODE AsyncMethodView [src=tests/test_async.py loc=L30 community=]
+NODE test_async.py [src=tests/test_async.py loc=L1 community=]
+NODE flask/views.py [src=src/flask/views.py loc=L1 community=]
+NODE task_app/views.py [src=examples/celery/src/task_app/views.py loc=L1 community=]
+NODE MethodView [src=src/flask/views.py loc=L138 community=]
+NODE .as_view() [src=src/flask/views.py loc=L86 community=]
+NODE RenderTemplateView [src=tests/type_check/typing_route.py loc=L101 community=]
+NODE process() [src=examples/celery/src/task_app/tasks.py loc=L18 community=]
+NODE AsyncView [src=tests/test_async.py loc=L22 community=]
+NODE block() [src=examples/celery/src/task_app/tasks.py loc=L13 community=]
+NODE .dispatch_request() [src=src/flask/views.py loc=L78 community=]
+NODE time [src= loc= community=]
+NODE add() [src=examples/celery/src/task_app/tasks.py loc=L8 community=]
+NODE result() [src=examples/celery/src/task_app/views.py loc=L11 community=]
+NODE Subclass this class and override :meth:`dispatch_request` to create a generic… [src=src/flask/views.py loc=L17 community=]
+NODE .get() [src=tests/test_async.py loc=L31 community=]
+NODE .post() [src=tests/test_async.py loc=L35 community=]
+NODE flask [src= loc= community=]
+NODE flask/__init__.py [src=src/flask/__init__.py loc=L1 community=]
+NODE pytest [src= loc= community=]
+NODE globals.py [src=src/flask/globals.py loc=L1 community=]
+NODE typing [src= loc= community=]
+NODE typing_route.py [src=tests/type_check/typing_route.py loc=L1 community=]
+NODE test_views.py [src=tests/test_views.py loc=L1 community=]
+NODE typing.py [src=src/flask/typing.py loc=L1 community=]
+NODE _async_app() [src=tests/test_async.py loc=L41 community=]
+NODE test_async_before_after_request() [src=tests/test_async.py loc=L97 community=]
+NODE TestUrlFor [src=tests/test_helpers.py loc=L94 community=]
+NODE task_app/__init__.py [src=examples/celery/src/task_app/__init__.py loc=L1 community=]
+NODE .dispatch_request() [src=src/flask/views.py loc=L182 community=]
+NODE test_remove_method_from_parent() [src=tests/test_views.py loc=L237 community=]
+NODE shared_task [src= loc= community=]
+NODE Any [src= loc= community=]
+NODE AppError [src=tests/test_async.py loc=L14 community=]
+NODE BlueprintError [src=tests/test_async.py loc=L18 community=]
+NODE add() [src=examples/celery/src/task_app/views.py loc=L22 community=]
+NODE block() [src=examples/celery/src/task_app/views.py loc=L30 community=]
+NODE process() [src=examples/celery/src/task_app/views.py loc=L36 community=]
+NODE .__init_subclass__() [src=src/flask/views.py loc=L165 community=]
+NODE ResponseReturnValue [src= loc= community=]
+NODE view() [src=src/flask/views.py loc=L106 community=]
+NODE test_async_error_handler() [src=tests/test_async.py loc=L91 community=]
+NODE test_async_route() [src=tests/test_async.py loc=L82 community=]
+NODE .dispatch_request() [src=tests/type_check/typing_route.py loc=L105 community=]
+NODE celery_result [src= loc= community=]
+NODE RouteCallable [src= loc= community=]
+NODE Dispatches request methods to the corresponding instance methods. For example,… [src=src/flask/views.py loc=L139 community=]
+NODE The actual view function behavior. Subclasses must override this and return a… [src=src/flask/views.py loc=L79 community=]
+NODE Convert the class into a view function that can be registered for a route. By… [src=src/flask/views.py loc=L89 community=]
+NODE Task [src= loc= community=]
+NODE .dispatch_request() [src=tests/test_async.py loc=L25 community=]
+NODE .__init__() [src=tests/type_check/typing_route.py loc=L102 community=]
+NODE Flask [src=src/flask/app.py loc=L109 community=]
+NODE test_basic.py [src=tests/test_basic.py loc=L1 community=]
+NODE cli.py [src=src/flask/cli.py loc=L1 community=]
+NODE flask/app.py [src=src/flask/app.py loc=L1 community=]
+NODE setupmethod() [src=src/flask/sansio/scaffold.py loc=L42 community=]
+NODE test_blueprints.py [src=tests/test_blueprints.py loc=L1 community=]
+NODE AppContext [src=src/flask/ctx.py loc=L260 community=]
+NODE sansio/app.py [src=src/flask/sansio/app.py loc=L1 community=]
+NODE test_cli.py [src=tests/test_cli.py loc=L1 community=]
+NODE helpers.py [src=src/flask/helpers.py loc=L1 community=]
+NODE test_templating.py [src=tests/test_templating.py loc=L1 community=]
+NODE Request [src=src/flask/wrappers.py loc=L18 community=]
+NODE test_testing.py [src=tests/test_testing.py loc=L1 community=]
+NODE ctx.py [src=src/flask/ctx.py loc=L1 community=]
+NODE testing.py [src=src/flask/testing.py loc=L1 community=]
+NODE test_json.py [src=tests/test_json.py loc=L1 community=]
+NODE scaffold.py [src=src/flask/sansio/scaffold.py loc=L1 community=]
+NODE sessions.py [src=src/flask/sessions.py loc=L1 community=]
+NODE templating.py [src=src/flask/templating.py loc=L1 community=]
+NODE test_config.py [src=tests/test_config.py loc=L1 community=]
+NODE tag.py [src=src/flask/json/tag.py loc=L1 community=]
+NODE test_helpers.py [src=tests/test_helpers.py loc=L1 community=]
+NODE SessionMixin [src=src/flask/sessions.py loc=L24 community=]
+NODE wrappers.py [src=src/flask/wrappers.py loc=L1 community=]
+NODE json/__init__.py [src=src/flask/json/__init__.py loc=L1 community=]
+NODE render_template() [src=src/flask/templating.py loc=L136 community=]
+NODE test_appctx.py [src=tests/test_appctx.py loc=L1 community=]
+NODE flask/blueprints.py [src=src/flask/blueprints.py loc=L1 community=]
+NODE debughelpers.py [src=src/flask/debughelpers.py loc=L1 community=]
+NODE provider.py [src=src/flask/json/provider.py loc=L1 community=]
+NODE test_reqctx.py [src=tests/test_reqctx.py loc=L1 community=]
+NODE tests/conftest.py [src=tests/conftest.py loc=L1 community=]
+NODE sansio/blueprints.py [src=src/flask/sansio/blueprints.py loc=L1 community=]
+NODE _AppCtxGlobals [src=src/flask/ctx.py loc=L30 community=]
+NODE tutorial/tests/conftest.py [src=examples/tutorial/tests/conftest.py loc=L1 community=]
+NODE config.py [src=src/flask/config.py loc=L1 community=]
+NODE test_logging.py [src=tests/test_logging.py loc=L1 community=]
+NODE test_blog.py [src=examples/tutorial/tests/test_blog.py loc=L1 community=]
+NODE logging.py [src=src/flask/logging.py loc=L1 community=]
+NODE test_instance_config.py [src=tests/test_instance_config.py loc=L1 community=]
+NODE test_json_tag.py [src=tests/test_json_tag.py loc=L1 community=]
+NODE test_auth.py [src=examples/tutorial/tests/test_auth.py loc=L1 community=]
+NODE test_user_error_handler.py [src=tests/test_user_error_handler.py loc=L1 community=]
+NODE test_find_best_app() [src=tests/test_cli.py loc=L47 community=]
+NODE collections_abc [src= loc= community=]
+NODE test_scriptinfo() [src=tests/test_cli.py loc=L246 community=]
+NODE test_error_handler_no_match() [src=tests/test_user_error_handler.py loc=L10 community=]
+NODE test_db.py [src=examples/tutorial/tests/test_db.py loc=L1 community=]
+NODE test_provide_automatic_options_method_disable() [src=tests/test_views.py loc=L136 community=]
+NODE test_view_provide_automatic_options_attr_disable() [src=tests/test_views.py loc=L101 community=]
+NODE test_view_provide_automatic_options_attr_enable() [src=tests/test_views.py loc=L117 community=]
+NODE celery_init_app() [src=examples/celery/src/task_app/__init__.py loc=L29 community=]
+NODE test_locate_app_raises() [src=tests/test_cli.py loc=L216 community=]
+NODE test_redirect_with_app() [src=tests/test_helpers.py loc=L170 community=]
+NODE test_duplicate_tag() [src=tests/test_json_tag.py loc=L32 community=]
+NODE common_test() [src=tests/test_views.py loc=L7 community=]
+NODE hello_json() [src=tests/type_check/typing_route.py loc=L27 community=]
+NODE typeshed_wsgi [src= loc= community=]
+NODE create_app() [src=examples/celery/src/task_app/__init__.py loc=L7 community=]
+NODE javascript/tests/conftest.py [src=examples/javascript/tests/conftest.py loc=L1 community=]
+NODE test_js_example.py [src=examples/javascript/tests/test_js_example.py loc=L1 community=]
+NODE .get() [src=src/flask/ctx.py loc=L68 community=]
+NODE test_locate_app_suppress_raise() [src=tests/test_cli.py loc=L221 community=]
+NODE test_open_resource_exceptions() [src=tests/test_helpers.py loc=L364 community=]
+NODE test_explicit_instance_paths() [src=tests/test_instance_config.py loc=L8 community=]
+NODE test_session_interface.py [src=tests/test_session_interface.py loc=L1 community=]
+NODE test_method_based_view() [src=tests/test_views.py loc=L28 community=]
+NODE test_view_decorators() [src=tests/test_views.py loc=L80 community=]
+NODE test_view_inheritance() [src=tests/test_views.py loc=L62 community=]
+NODE test_view_patching() [src=tests/test_views.py loc=L41 community=]
+NODE hello_generator() [src=tests/type_check/typing_route.py loc=L51 community=]
+NODE wrapped_view() [src=examples/tutorial/flaskr/auth.py loc=L23 community=]
+NODE post [src= loc= community=]
+NODE AppContextProxy [src=src/flask/globals.py loc=L24 community=]
+NODE FlaskProxy [src=src/flask/globals.py loc=L22 community=]
+NODE RequestProxy [src=src/flask/globals.py loc=L28 community=]
+NODE SessionMixinProxy [src=src/flask/globals.py loc=L30 community=]
+NODE test_run_cert_adhoc() [src=tests/test_cli.py loc=L603 community=]
+NODE test_run_cert_import() [src=tests/test_cli.py loc=L620 community=]
+NODE test_abort_no_app() [src=tests/test_helpers.py loc=L180 community=]
+NODE test_abort_with_app() [src=tests/test_helpers.py loc=L199 community=]
+NODE .test_url_with_method() [src=tests/test_helpers.py loc=L135 community=]
+NODE test_tag_interface() [src=tests/test_json_tag.py loc=L66 community=]
+NODE test_basic_view() [src=tests/test_views.py loc=L17 community=]
+NODE test_endpoint_override() [src=tests/test_views.py loc=L182 community=]
+NODE test_explicit_head() [src=tests/test_views.py loc=L166 community=]
+NODE test_init_once() [src=tests/test_views.py loc=L256 community=]
+NODE test_methods_var_inheritance() [src=tests/test_views.py loc=L200 community=]
+NODE test_multiple_inheritance() [src=tests/test_views.py loc=L218 community=]
+NODE hello_json_dict() [src=tests/type_check/typing_route.py loc=L32 community=]
+NODE hello_json_list() [src=tests/type_check/typing_route.py loc=L37 community=]
+NODE return_template() [src=tests/type_check/typing_route.py loc=L87 community=]
+NODE return_template_stream() [src=tests/type_check/typing_route.py loc=L92 community=]
+NODE typed_dict() [src=tests/type_check/typing_route.py loc=L46 community=]
+NODE werkzeug_datastructures [src= loc= community=]
+NODE werkzeug_sansio_response [src= loc= community=]
+NODE contextvars [src= loc= community=]
+NODE http [src= loc= community=]
+NODE _AppCtxGlobalsProxy [src=src/flask/globals.py loc=L26 community=]
+NODE __getattr__() [src=src/flask/globals.py loc=L65 community=]
+NODE ProxyMixin [src=src/flask/globals.py loc=L17 community=]
+NODE bp_error() [src=tests/test_async.py loc=L70 community=]
+NODE error() [src=tests/test_async.py loc=L55 community=]
+NODE Exception [src= loc= community=]
+NODE parametrize [src= loc= community=]
+NODE test_run_cert_no_ssl() [src=tests/test_cli.py loc=L642 community=]
+NODE test_run_cert_path() [src=tests/test_cli.py loc=L585 community=]
+NODE .test_url_for_with_alternating_schemes() [src=tests/test_helpers.py loc=L123 community=]
+NODE .test_url_for_with_anchor() [src=tests/test_helpers.py loc=L95 community=]
+NODE .test_url_for_with_scheme() [src=tests/test_helpers.py loc=L102 community=]
+NODE .test_url_for_with_self() [src=tests/test_helpers.py loc=L156 community=]
+NODE test_implicit_head() [src=tests/test_views.py loc=L152 community=]
+NODE async_route() [src=tests/type_check/typing_route.py loc=L97 community=]
+NODE hello_bytes() [src=tests/type_check/typing_route.py loc=L22 community=]
+NODE hello_generator_expression() [src=tests/type_check/typing_route.py loc=L60 community=]
+NODE hello_iterator() [src=tests/type_check/typing_route.py loc=L65 community=]
+NODE hello_str() [src=tests/type_check/typing_route.py loc=L17 community=]
+NODE StatusJSON [src=tests/type_check/typing_route.py loc=L41 community=]
+NODE tuple_headers() [src=tests/type_check/typing_route.py loc=L81 community=]
+NODE tuple_status() [src=tests/type_check/typing_route.py loc=L71 community=]
+NODE tuple_status_enum() [src=tests/type_check/typing_route.py loc=L76 community=]
+NODE werkzeug_local [src= loc= community=]
+NODE make_celery.py [src=examples/celery/make_celery.py loc=L1 community=]
+NODE bp_handle() [src=tests/test_async.py loc=L66 community=]
+NODE bp_index() [src=tests/test_async.py loc=L61 community=]
+NODE handle() [src=tests/test_async.py loc=L51 community=]
+NODE index() [src=tests/test_async.py loc=L46 community=]
+NODE fixture [src= loc= community=]
+NODE after() [src=tests/test_async.py loc=L115 community=]
+NODE before() [src=tests/test_async.py loc=L110 community=]
+NODE bp_after() [src=tests/test_async.py loc=L132 community=]
+NODE bp_before() [src=tests/test_async.py loc=L127 community=]
+NODE bp_index() [src=tests/test_async.py loc=L123 community=]
+NODE index() [src=tests/test_async.py loc=L106 community=]
+NODE .test_url_for_with_scheme_not_external() [src=tests/test_helpers.py loc=L112 community=]
+NODE get() [src=tests/test_views.py loc=L239 community=]
+NODE post() [src=tests/test_views.py loc=L243 community=]
+EDGE AsyncMethodView --contains [EXTRACTED]--> test_async.py at=tests/test_async.py:L30
+EDGE AsyncMethodView --inherits [EXTRACTED]--> MethodView at=tests/test_async.py:L30
+EDGE AsyncMethodView --uses [INFERRED]--> MethodView at=tests/test_async.py:L30
+EDGE AsyncMethodView --method [EXTRACTED]--> .get() at=tests/test_async.py:L31
+EDGE AsyncMethodView --method [EXTRACTED]--> .post() at=tests/test_async.py:L35
+EDGE get --references [EXTRACTED context=decorator]--> result() at=examples/celery/src/task_app/views.py:L10
+EDGE tasks.py --imports [EXTRACTED context=import]--> time at=examples/celery/src/task_app/tasks.py:L1
+EDGE tasks.py --contains [EXTRACTED]--> add() at=examples/celery/src/task_app/tasks.py:L8
+EDGE tasks.py --contains [EXTRACTED]--> block() at=examples/celery/src/task_app/tasks.py:L13
+EDGE tasks.py --contains [EXTRACTED]--> process() at=examples/celery/src/task_app/tasks.py:L18
+EDGE tasks.py --imports_from [EXTRACTED context=submodule_import]--> task_app/views.py at=examples/celery/src/task_app/views.py:L5
+EDGE asyncio --imports [EXTRACTED context=import]--> test_async.py at=tests/test_async.py:L1
+EDGE View --contains [EXTRACTED]--> flask/views.py at=src/flask/views.py:L16
+EDGE View --method [EXTRACTED]--> .dispatch_request() at=src/flask/views.py:L78
+EDGE View --method [EXTRACTED]--> .as_view() at=src/flask/views.py:L86
+EDGE View --inherits [EXTRACTED]--> MethodView at=src/flask/views.py:L138
+EDGE View --rationale_for [EXTRACTED]--> Subclass this class and override :meth:`dispatch_request` to create a generic… at=src/flask/views.py:L17
+EDGE View --inherits [EXTRACTED]--> AsyncView at=tests/test_async.py:L22
+EDGE View --uses [INFERRED]--> AsyncView at=tests/test_async.py:L22
+EDGE View --inherits [EXTRACTED]--> RenderTemplateView at=tests/type_check/typing_route.py:L101
+EDGE View --uses [INFERRED]--> RenderTemplateView at=tests/type_check/typing_route.py:L101
+EDGE MethodView --method [EXTRACTED]--> .__init_subclass__() at=src/flask/views.py:L165
+EDGE MethodView --method [EXTRACTED]--> .dispatch_request() at=src/flask/views.py:L182
+EDGE MethodView --rationale_for [EXTRACTED]--> Dispatches request methods to the corresponding instance methods. For example,… at=src/flask/views.py:L139
+EDGE MethodView --uses [INFERRED]--> TestUrlFor at=tests/test_helpers.py:L138
+EDGE .as_view() --references [EXTRACTED context=parameter_type]--> Any at=src/flask/views.py:L86
+EDGE .as_view() --references [EXTRACTED context=return_type]--> RouteCallable at=src/flask/views.py:L86
+EDGE .as_view() --contains [EXTRACTED]--> view() at=src/flask/views.py:L106
+EDGE .as_view() --rationale_for [EXTRACTED]--> Convert the class into a view function that can be registered for a route. By… at=src/flask/views.py:L89
+EDGE .as_view() --calls [EXTRACTED context=call]--> test_remove_method_from_parent() at=tests/test_views.py:L249
+EDGE block() --references [EXTRACTED context=decorator]--> shared_task at=examples/celery/src/task_app/tasks.py:L12
+EDGE process() --references [EXTRACTED context=decorator]--> shared_task at=examples/celery/src/task_app/tasks.py:L17
+EDGE process() --references [EXTRACTED context=parameter_type]--> Task at=examples/celery/src/task_app/tasks.py:L18
+EDGE RenderTemplateView --contains [EXTRACTED]--> typing_route.py at=tests/type_check/typing_route.py:L101
+EDGE RenderTemplateView --references [EXTRACTED context=parameter_type]--> .__init__() at=tests/type_check/typing_route.py:L102
+EDGE RenderTemplateView --references [EXTRACTED context=parameter_type]--> .dispatch_request() at=tests/type_check/typing_route.py:L105
+EDGE add() --references [EXTRACTED context=decorator]--> shared_task at=examples/celery/src/task_app/tasks.py:L7
+EDGE .dispatch_request() --references [EXTRACTED context=return_type]--> ResponseReturnValue at=src/flask/views.py:L78
+EDGE .dispatch_request() --rationale_for [EXTRACTED]--> The actual view function behavior. Subclasses must override this and return a… at=src/flask/views.py:L79
+EDGE AsyncView --method [EXTRACTED]--> .dispatch_request() at=tests/test_async.py:L25
+EDGE test_async.py --imports [EXTRACTED context=import]--> pytest at=tests/test_async.py:L3
+EDGE test_async.py --imports_from [EXTRACTED context=import]--> flask at=tests/test_async.py:L5
+EDGE test_async.py --contains [EXTRACTED]--> AppError at=tests/test_async.py:L14
+EDGE test_async.py --contains [EXTRACTED]--> BlueprintError at=tests/test_async.py:L18
+EDGE test_async.py --contains [EXTRACTED]--> _async_app() at=tests/test_async.py:L41
+EDGE test_async.py --contains [EXTRACTED]--> test_async_route() at=tests/test_async.py:L82
+EDGE test_async.py --contains [EXTRACTED]--> test_async_error_handler() at=tests/test_async.py:L91
+EDGE test_async.py --contains [EXTRACTED]--> test_async_before_after_request() at=tests/test_async.py:L97
+EDGE flask/views.py --imports [EXTRACTED context=import]--> typing at=src/flask/views.py:L3
+EDGE flask/views.py --imports_from [EXTRACTED context=import]--> flask/__init__.py at=src/flask/views.py:L5
+EDGE flask/views.py --imports_from [EXTRACTED context=import]--> globals.py at=src/flask/views.py:L6
+EDGE flask/views.py --imports_from [EXTRACTED context=submodule_import]--> typing.py at=src/flask/views.py:L5
+EDGE flask/views.py --imports [EXTRACTED context=import]--> test_views.py at=tests/test_views.py:L3
+EDGE flask/views.py --imports_from [EXTRACTED context=import]--> typing_route.py at=tests/type_check/typing_route.py:L10
+EDGE task_app/views.py --imports_from [EXTRACTED context=import]--> task_app/__init__.py at=examples/celery/src/task_app/views.py:L5
+EDGE task_app/views.py --imports_from [EXTRACTED context=import]--> celery_result at=examples/celery/src/task_app/views.py:L1
+EDGE task_app/views.py --imports_from [EXTRACTED context=import]--> flask at=examples/celery/src/task_app/views.py:L2
+EDGE task_app/views.py --contains [EXTRACTED]--> add() at=examples/celery/src/task_app/views.py:L22
+EDGE task_app/views.py --contains [EXTRACTED]--> block() at=examples/celery/src/task_app/views.py:L30
+EDGE task_app/views.py --contains [EXTRACTED]--> process() at=examples/celery/src/task_app/views.py:L36
+EDGE block() --references [EXTRACTED context=decorator]--> post at=examples/celery/src/task_app/views.py:L29
+EDGE TestUrlFor --contains [EXTRACTED]--> test_helpers.py at=tests/test_helpers.py:L94
+EDGE TestUrlFor --method [EXTRACTED]--> .test_url_for_with_anchor() at=tests/test_helpers.py:L95
+EDGE TestUrlFor --method [EXTRACTED]--> .test_url_for_with_scheme() at=tests/test_helpers.py:L102
+EDGE TestUrlFor --method [EXTRACTED]--> .test_url_for_with_scheme_not_external() at=tests/test_helpers.py:L112
+EDGE TestUrlFor --method [EXTRACTED]--> .test_url_for_with_alternating_schemes() at=tests/test_helpers.py:L123
+EDGE TestUrlFor --method [EXTRACTED]--> .test_url_with_method() at=tests/test_helpers.py:L135
+EDGE TestUrlFor --method [EXTRACTED]--> .test_url_for_with_self() at=tests/test_helpers.py:L156
+EDGE test_async_before_after_request() --contains [EXTRACTED]--> index() at=tests/test_async.py:L106
+EDGE test_async_before_after_request() --contains [EXTRACTED]--> before() at=tests/test_async.py:L110
+EDGE test_async_before_after_request() --contains [EXTRACTED]--> after() at=tests/test_async.py:L115
+EDGE test_async_before_after_request() --contains [EXTRACTED]--> bp_index() at=tests/test_async.py:L123
+EDGE test_async_before_after_request() --contains [EXTRACTED]--> bp_before() at=tests/test_async.py:L127
+EDGE test_async_before_after_request() --contains [EXTRACTED]--> bp_after() at=tests/test_async.py:L132
+EDGE test_async_before_after_request() --calls [INFERRED context=call]--> Flask at=tests/test_async.py:L103
+EDGE BlueprintError --inherits [EXTRACTED]--> Exception at=tests/test_async.py:L18
+EDGE BlueprintError --calls [EXTRACTED context=call]--> bp_error() at=tests/test_async.py:L71
+EDGE test_async_route() --references [EXTRACTED context=decorator]--> parametrize at=tests/test_async.py:L81
+EDGE test_async_error_handler() --references [EXTRACTED context=decorator]--> parametrize at=tests/test_async.py:L90
+EDGE process() --references [EXTRACTED context=decorator]--> post at=examples/celery/src/task_app/views.py:L35
+EDGE globals.py --imports_from [EXTRACTED context=import]--> flask/app.py at=src/flask/globals.py:L9
+EDGE globals.py --imports_from [EXTRACTED context=import]--> flask/blueprints.py at=src/flask/blueprints.py:L8
+EDGE globals.py --imports_from [EXTRACTED context=import]--> cli.py at=src/flask/cli.py:L23
+EDGE globals.py --imports_from [EXTRACTED context=import]--> ctx.py at=src/flask/globals.py:L10
+EDGE globals.py --imports_from [EXTRACTED context=import]--> debughelpers.py at=src/flask/debughelpers.py:L9
+EDGE globals.py --imports_from [EXTRACTED context=import]--> contextvars at=src/flask/globals.py:L4
+EDGE globals.py --imports_from [EXTRACTED context=import]--> werkzeug_local at=src/flask/globals.py:L6
+EDGE globals.py --imports_from [EXTRACTED context=import]--> sessions.py at=src/flask/globals.py:L12
+EDGE globals.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/wrappers.py:L11
+EDGE globals.py --contains [EXTRACTED]--> ProxyMixin at=src/flask/globals.py:L17
+EDGE globals.py --contains [EXTRACTED]--> FlaskProxy at=src/flask/globals.py:L22
+EDGE globals.py --contains [EXTRACTED]--> AppContextProxy at=src/flask/globals.py:L24
+EDGE globals.py --contains [EXTRACTED]--> _AppCtxGlobalsProxy at=src/flask/globals.py:L26
+EDGE globals.py --contains [EXTRACTED]--> RequestProxy at=src/flask/globals.py:L28
+EDGE globals.py --contains [EXTRACTED]--> SessionMixinProxy at=src/flask/globals.py:L30
+EDGE globals.py --contains [EXTRACTED]--> __getattr__() at=src/flask/globals.py:L65
+EDGE globals.py --imports [EXTRACTED context=import]--> Flask at=src/flask/globals.py:L9
+EDGE globals.py --imports [EXTRACTED context=import]--> _AppCtxGlobals at=src/flask/globals.py:L10
+EDGE globals.py --imports [EXTRACTED context=import]--> AppContext at=src/flask/globals.py:L11
+EDGE globals.py --imports [EXTRACTED context=import]--> SessionMixin at=src/flask/globals.py:L12
+EDGE globals.py --imports [EXTRACTED context=import]--> Request at=src/flask/globals.py:L13
+EDGE globals.py --imports_from [EXTRACTED context=import]--> helpers.py at=src/flask/helpers.py:L17
+EDGE globals.py --imports_from [EXTRACTED context=import]--> json/__init__.py at=src/flask/json/__init__.py:L6
+EDGE globals.py --re_exports [EXTRACTED context=export]--> json/__init__.py at=src/flask/json/__init__.py:L6
+EDGE globals.py --imports_from [EXTRACTED context=import]--> logging.py at=src/flask/logging.py:L9
+EDGE globals.py --imports_from [EXTRACTED context=import]--> templating.py at=src/flask/templating.py:L11
+EDGE globals.py --imports_from [EXTRACTED context=import]--> tests/conftest.py at=tests/conftest.py:L7
+EDGE globals.py --imports_from [EXTRACTED context=import]--> test_appctx.py at=tests/test_appctx.py:L4
+EDGE globals.py --imports_from [EXTRACTED context=import]--> test_basic.py at=tests/test_basic.py:L24
+EDGE globals.py --imports_from [EXTRACTED context=import]--> test_session_interface.py at=tests/test_session_interface.py:L2
+EDGE globals.py --imports_from [EXTRACTED context=import]--> test_testing.py at=tests/test_testing.py:L9
+EDGE _async_app() --references [EXTRACTED context=decorator]--> fixture at=tests/test_async.py:L40
+EDGE _async_app() --contains [EXTRACTED]--> index() at=tests/test_async.py:L46
+EDGE _async_app() --contains [EXTRACTED]--> handle() at=tests/test_async.py:L51
+EDGE _async_app() --contains [EXTRACTED]--> error() at=tests/test_async.py:L55
+EDGE _async_app() --contains [EXTRACTED]--> bp_index() at=tests/test_async.py:L61
+EDGE _async_app() --contains [EXTRACTED]--> bp_handle() at=tests/test_async.py:L66
+EDGE _async_app() --contains [EXTRACTED]--> bp_error() at=tests/test_async.py:L70
+EDGE _async_app() --calls [INFERRED context=call]--> Flask at=tests/test_async.py:L42
+EDGE pytest --imports [EXTRACTED context=import]--> javascript/tests/conftest.py at=examples/javascript/tests/conftest.py:L1
+EDGE pytest --imports [EXTRACTED context=import]--> test_js_example.py at=examples/javascript/tests/test_js_example.py:L1
+EDGE pytest --imports [EXTRACTED context=import]--> tutorial/tests/conftest.py at=examples/tutorial/tests/conftest.py:L4
+EDGE pytest --imports [EXTRACTED context=import]--> test_auth.py at=examples/tutorial/tests/test_auth.py:L1
+EDGE pytest --imports [EXTRACTED context=import]--> test_blog.py at=examples/tutorial/tests/test_blog.py:L1
+EDGE pytest --imports [EXTRACTED context=import]--> test_db.py at=examples/tutorial/tests/test_db.py:L3
+EDGE pytest --imports [EXTRACTED context=import]--> tests/conftest.py at=tests/conftest.py:L4
+EDGE pytest --imports [EXTRACTED context=import]--> test_appctx.py at=tests/test_appctx.py:L1
+EDGE pytest --imports [EXTRACTED context=import]--> test_basic.py at=tests/test_basic.py:L13
+EDGE pytest --imports [EXTRACTED context=import]--> test_blueprints.py at=tests/test_blueprints.py:L1
+EDGE pytest --imports [EXTRACTED context=import]--> test_cli.py at=tests/test_cli.py:L13
+EDGE pytest --calls [EXTRACTED context=call]--> test_find_best_app() at=tests/test_cli.py:L111
+EDGE pytest --calls [EXTRACTED context=call]--> test_locate_app_raises() at=tests/test_cli.py:L217
+EDGE pytest --calls [EXTRACTED context=call]--> test_locate_app_suppress_raise() at=tests/test_cli.py:L226
+EDGE pytest --calls [EXTRACTED context=call]--> test_scriptinfo() at=tests/test_cli.py:L273
+EDGE pytest --calls [EXTRACTED context=call]--> test_run_cert_path() at=tests/test_cli.py:L587
+EDGE pytest --calls [EXTRACTED context=call]--> test_run_cert_adhoc() at=tests/test_cli.py:L607
+EDGE pytest --calls [EXTRACTED context=call]--> test_run_cert_import() at=tests/test_cli.py:L624
+EDGE pytest --calls [EXTRACTED context=call]--> test_run_cert_no_ssl() at=tests/test_cli.py:L645
+EDGE pytest --imports [EXTRACTED context=import]--> test_config.py at=tests/test_config.py:L5
+EDGE pytest --imports [EXTRACTED context=import]--> test_helpers.py at=tests/test_helpers.py:L4
+EDGE pytest --calls [EXTRACTED context=call]--> test_redirect_with_app() at=tests/test_helpers.py:L176
+EDGE pytest --calls [EXTRACTED context=call]--> test_abort_no_app() at=tests/test_helpers.py:L181
+EDGE pytest --calls [EXTRACTED context=call]--> test_abort_with_app() at=tests/test_helpers.py:L205
+EDGE pytest --calls [EXTRACTED context=call]--> test_open_resource_exceptions() at=tests/test_helpers.py:L367
+EDGE pytest --imports [EXTRACTED context=import]--> test_instance_config.py at=tests/test_instance_config.py:L3
+EDGE pytest --calls [EXTRACTED context=call]--> test_explicit_instance_paths() at=tests/test_instance_config.py:L9
+EDGE pytest --imports [EXTRACTED context=import]--> test_json.py at=tests/test_json.py:L6
+EDGE pytest --imports [EXTRACTED context=import]--> test_json_tag.py at=tests/test_json_tag.py:L5
+EDGE pytest --calls [EXTRACTED context=call]--> test_duplicate_tag() at=tests/test_json_tag.py:L37
+EDGE pytest --calls [EXTRACTED context=call]--> test_tag_interface() at=tests/test_json_tag.py:L68
+EDGE pytest --imports [EXTRACTED context=import]--> test_logging.py at=tests/test_logging.py:L5
+EDGE pytest --imports [EXTRACTED context=import]--> test_reqctx.py at=tests/test_reqctx.py:L7
+EDGE pytest --imports [EXTRACTED context=import]--> test_templating.py at=tests/test_templating.py:L3
+EDGE pytest --imports [EXTRACTED context=import]--> test_testing.py at=tests/test_testing.py:L4
+EDGE pytest --imports [EXTRACTED context=import]--> test_user_error_handler.py at=tests/test_user_error_handler.py:L1
+EDGE pytest --calls [EXTRACTED context=call]--> test_error_handler_no_match() at=tests/test_user_error_handler.py:L19
+EDGE task_app/__init__.py --imports_from [EXTRACTED context=import]--> make_celery.py at=examples/celery/make_celery.py:L1
+EDGE task_app/__init__.py --imports_from [EXTRACTED context=import]--> Flask at=examples/celery/src/task_app/__init__.py:L3
+EDGE task_app/__init__.py --contains [EXTRACTED]--> create_app() at=examples/celery/src/task_app/__init__.py:L7
+EDGE task_app/__init__.py --contains [EXTRACTED]--> celery_init_app() at=examples/celery/src/task_app/__init__.py:L29
+EDGE add() --references [EXTRACTED context=decorator]--> post at=examples/celery/src/task_app/views.py:L21
+EDGE typing --imports [EXTRACTED context=import]--> flask/app.py at=src/flask/app.py:L7
+EDGE typing --imports [EXTRACTED context=import]--> flask/blueprints.py at=src/flask/blueprints.py:L4
+EDGE typing --imports [EXTRACTED context=import]--> cli.py at=src/flask/cli.py:L12
+EDGE typing --imports [EXTRACTED context=import]--> config.py at=src/flask/config.py:L7
+EDGE typing --imports [EXTRACTED context=import]--> ctx.py at=src/flask/ctx.py:L4
+EDGE typing --imports [EXTRACTED context=import]--> debughelpers.py at=src/flask/debughelpers.py:L3
+EDGE typing --imports [EXTRACTED context=import]--> helpers.py at=src/flask/helpers.py:L6
+EDGE typing --imports [EXTRACTED context=import]--> json/__init__.py at=src/flask/json/__init__.py:L4
+EDGE typing --imports [EXTRACTED context=import]--> provider.py at=src/flask/json/provider.py:L6
+EDGE typing --imports [EXTRACTED context=import]--> tag.py at=src/flask/json/tag.py:L46
+EDGE typing --imports [EXTRACTED context=import]--> logging.py at=src/flask/logging.py:L5
+EDGE typing --imports [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L7
+EDGE typing --imports [EXTRACTED context=import]--> sansio/blueprints.py at=src/flask/sansio/blueprints.py:L4
+EDGE typing --imports [EXTRACTED context=import]--> scaffold.py at=src/flask/sansio/scaffold.py:L7
+EDGE typing --calls [EXTRACTED context=call]--> setupmethod() at=src/flask/sansio/scaffold.py:L49
+EDGE typing --imports [EXTRACTED context=import]--> sessions.py at=src/flask/sessions.py:L5
+EDGE typing --imports [EXTRACTED context=import]--> templating.py at=src/flask/templating.py:L3
+EDGE typing --imports [EXTRACTED context=import]--> testing.py at=src/flask/testing.py:L4
+EDGE typing --imports [EXTRACTED context=import]--> wrappers.py at=src/flask/wrappers.py:L3
+EDGE typing --imports [EXTRACTED context=import]--> test_basic.py at=tests/test_basic.py:L4
+EDGE view() --calls [INFERRED context=call]--> wrapped_view() at=examples/tutorial/flaskr/auth.py:L27
+EDGE typing.py --imports_from [EXTRACTED context=import]--> flask/app.py at=src/flask/app.py:L62
+EDGE typing.py --imports_from [EXTRACTED context=submodule_import]--> ctx.py at=src/flask/ctx.py:L11
+EDGE typing.py --imports_from [EXTRACTED context=submodule_import]--> sansio/app.py at=src/flask/sansio/app.py:L21
+EDGE typing.py --imports_from [EXTRACTED context=submodule_import]--> sansio/blueprints.py at=src/flask/sansio/blueprints.py:L8
+EDGE typing.py --imports_from [EXTRACTED context=submodule_import]--> scaffold.py at=src/flask/sansio/scaffold.py:L17
+EDGE typing.py --imports [EXTRACTED context=import]--> collections_abc at=src/flask/typing.py:L3
+EDGE typing.py --imports_from [EXTRACTED context=import]--> typeshed_wsgi at=src/flask/typing.py:L7
+EDGE typing.py --imports_from [EXTRACTED context=import]--> werkzeug_datastructures at=src/flask/typing.py:L8
+EDGE typing.py --imports_from [EXTRACTED context=import]--> werkzeug_sansio_response at=src/flask/typing.py:L9
+EDGE test_views.py --imports_from [EXTRACTED context=import]--> testing.py at=tests/test_views.py:L4
+EDGE test_views.py --contains [EXTRACTED]--> common_test() at=tests/test_views.py:L7
+EDGE test_views.py --contains [EXTRACTED]--> test_basic_view() at=tests/test_views.py:L17
+EDGE test_views.py --contains [EXTRACTED]--> test_method_based_view() at=tests/test_views.py:L28
+EDGE test_views.py --contains [EXTRACTED]--> test_view_patching() at=tests/test_views.py:L41
+EDGE test_views.py --contains [EXTRACTED]--> test_view_inheritance() at=tests/test_views.py:L62
+EDGE test_views.py --contains [EXTRACTED]--> test_view_decorators() at=tests/test_views.py:L80
+EDGE test_views.py --contains [EXTRACTED]--> test_view_provide_automatic_options_attr_disable() at=tests/test_views.py:L101
+EDGE test_views.py --contains [EXTRACTED]--> test_view_provide_automatic_options_attr_enable() at=tests/test_views.py:L117
+EDGE test_views.py --contains [EXTRACTED]--> test_provide_automatic_options_method_disable() at=tests/test_views.py:L136
+EDGE test_views.py --contains [EXTRACTED]--> test_implicit_head() at=tests/test_views.py:L152
+EDGE test_views.py --contains [EXTRACTED]--> test_explicit_head() at=tests/test_views.py:L166
+EDGE test_views.py --contains [EXTRACTED]--> test_endpoint_override() at=tests/test_views.py:L182
+EDGE test_views.py --contains [EXTRACTED]--> test_methods_var_inheritance() at=tests/test_views.py:L200
+EDGE test_views.py --contains [EXTRACTED]--> test_multiple_inheritance() at=tests/test_views.py:L218
+EDGE test_views.py --contains [EXTRACTED]--> test_init_once() at=tests/test_views.py:L256
+EDGE .dispatch_request() --indirect_call [INFERRED context=getattr]--> .get() at=src/flask/views.py:L188
+EDGE test_remove_method_from_parent() --contains [EXTRACTED]--> get() at=tests/test_views.py:L239
+EDGE test_remove_method_from_parent() --contains [EXTRACTED]--> post() at=tests/test_views.py:L243
+EDGE typing_route.py --imports_from [EXTRACTED context=import]--> http at=tests/type_check/typing_route.py:L4
+EDGE typing_route.py --imports_from [EXTRACTED context=import]--> templating.py at=tests/type_check/typing_route.py:L9
+EDGE typing_route.py --imports_from [EXTRACTED context=import]--> wrappers.py at=tests/type_check/typing_route.py:L11
+EDGE typing_route.py --contains [EXTRACTED]--> hello_str() at=tests/type_check/typing_route.py:L17
+EDGE typing_route.py --contains [EXTRACTED]--> hello_bytes() at=tests/type_check/typing_route.py:L22
+EDGE typing_route.py --contains [EXTRACTED]--> hello_json() at=tests/type_check/typing_route.py:L27
+EDGE typing_route.py --contains [EXTRACTED]--> hello_json_dict() at=tests/type_check/typing_route.py:L32
+EDGE typing_route.py --contains [EXTRACTED]--> hello_json_list() at=tests/type_check/typing_route.py:L37
+EDGE typing_route.py --contains [EXTRACTED]--> StatusJSON at=tests/type_check/typing_route.py:L41
+EDGE typing_route.py --contains [EXTRACTED]--> typed_dict() at=tests/type_check/typing_route.py:L46
+EDGE typing_route.py --contains [EXTRACTED]--> hello_generator() at=tests/type_check/typing_route.py:L51
+EDGE typing_route.py --contains [EXTRACTED]--> hello_generator_expression() at=tests/type_check/typing_route.py:L60
+EDGE typing_route.py --contains [EXTRACTED]--> hello_iterator() at=tests/type_check/typing_route.py:L65
+EDGE typing_route.py --contains [EXTRACTED]--> tuple_status() at=tests/type_check/typing_route.py:L71
+EDGE typing_route.py --contains [EXTRACTED]--> tuple_status_enum() at=tests/type_check/typing_route.py:L76
+EDGE typing_route.py --contains [EXTRACTED]--> tuple_headers() at=tests/type_check/typing_route.py:L81
+EDGE typing_route.py --contains [EXTRACTED]--> return_template() at=tests/type_check/typing_route.py:L87
+EDGE typing_route.py --contains [EXTRACTED]--> return_template_stream() at=tests/type_check/typing_route.py:L92
+EDGE typing_route.py --contains [EXTRACTED]--> async_route() at=tests/type_check/typing_route.py:L97
+EDGE .dispatch_request() --calls [EXTRACTED context=call]--> render_template() at=tests/type_check/typing_route.py:L106
+EDGE AppError --inherits [EXTRACTED]--> Exception at=tests/test_async.py:L14
+EDGE AppError --calls [EXTRACTED context=call]--> error() at=tests/test_async.py:L56
+EDGE collections_abc --imports [EXTRACTED context=import]--> flask/app.py at=src/flask/app.py:L3
+EDGE collections_abc --imports [EXTRACTED context=import]--> cli.py at=src/flask/cli.py:L4
+EDGE collections_abc --imports [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L3
+EDGE collections_abc --imports [EXTRACTED context=import]--> sessions.py at=src/flask/sessions.py:L3
+EDGE collections_abc --imports_from [EXTRACTED context=import]--> sessions.py at=src/flask/sessions.py:L6
+EDGE collections_abc --imports [EXTRACTED context=import]--> test_reqctx.py at=tests/test_reqctx.py:L3
+EDGE contextvars --imports [EXTRACTED context=import]--> ctx.py at=src/flask/ctx.py:L3
+EDGE celery_init_app() --calls [EXTRACTED context=call]--> create_app() at=examples/celery/src/task_app/__init__.py:L17
+EDGE celery_init_app() --references [EXTRACTED context=parameter_type]--> Flask at=examples/celery/src/task_app/__init__.py:L29
+EDGE create_app() --references [EXTRACTED context=return_type]--> Flask at=examples/celery/src/task_app/__init__.py:L7
+EDGE block() --calls [EXTRACTED context=call]--> time at=examples/celery/src/task_app/tasks.py:L14
+EDGE process() --calls [EXTRACTED context=call]--> time at=examples/celery/src/task_app/tasks.py:L21
+EDGE task_app/views.py --contains [EXTRACTED]--> result() at=examples/celery/src/task_app/views.py:L11
+EDGE test_js_example.py --imports_from [EXTRACTED context=import]--> flask at=examples/javascript/tests/test_js_example.py:L2
+EDGE test_auth.py --imports_from [EXTRACTED context=import]--> flask at=examples/tutorial/tests/test_auth.py:L2
+EDGE flask --imports_from [EXTRACTED context=import]--> tests/conftest.py at=tests/conftest.py:L6
+EDGE flask --imports_from [EXTRACTED context=import]--> test_cli.py at=tests/test_cli.py:L16
+EDGE flask --imports [EXTRACTED context=import]--> test_config.py at=tests/test_config.py:L7
+EDGE flask --imports [EXTRACTED context=import]--> test_helpers.py at=tests/test_helpers.py:L7
+EDGE flask --calls [EXTRACTED context=call]--> test_redirect_with_app() at=tests/test_helpers.py:L177
+EDGE flask --calls [EXTRACTED context=call]--> test_abort_no_app() at=tests/test_helpers.py:L182
+EDGE flask --calls [EXTRACTED context=call]--> test_abort_with_app() at=tests/test_helpers.py:L206
+EDGE flask --calls [EXTRACTED context=call]--> test_open_resource_exceptions() at=tests/test_helpers.py:L365
+EDGE flask --imports [EXTRACTED context=import]--> test_instance_config.py at=tests/test_instance_config.py:L5
+EDGE flask --calls [EXTRACTED context=call]--> test_explicit_instance_paths() at=tests/test_instance_config.py:L10
+EDGE flask --imports [EXTRACTED context=import]--> test_json.py at=tests/test_json.py:L9
+EDGE flask --imports_from [EXTRACTED context=import]--> test_json.py at=tests/test_json.py:L10
+EDGE flask --imports [EXTRACTED context=import]--> test_session_interface.py at=tests/test_session_interface.py:L1
+EDGE flask --imports [EXTRACTED context=import]--> test_templating.py at=tests/test_templating.py:L8
+EDGE flask --imports [EXTRACTED context=import]--> test_testing.py at=tests/test_testing.py:L6
+EDGE flask --imports_from [EXTRACTED context=import]--> test_testing.py at=tests/test_testing.py:L7
+EDGE flask --imports [EXTRACTED context=import]--> test_user_error_handler.py at=tests/test_user_error_handler.py:L7
+EDGE flask --imports_from [EXTRACTED context=import]--> typing_route.py at=tests/type_check/typing_route.py:L6
+EDGE pytest --imports [EXTRACTED context=import]--> test_views.py at=tests/test_views.py:L1
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> flask/__init__.py at=src/flask/app.py:L31
+EDGE flask/app.py --re_exports [EXTRACTED context=export]--> flask/__init__.py at=src/flask/__init__.py:L2
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> werkzeug_datastructures at=src/flask/app.py:L18
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> ctx.py at=src/flask/ctx.py:L21
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> helpers.py at=src/flask/app.py:L39
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/app.py:L44
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> sessions.py at=src/flask/sessions.py:L19
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> templating.py at=src/flask/app.py:L52
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/app.py:L53
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> typeshed_wsgi at=src/flask/app.py:L57
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> testing.py at=src/flask/testing.py:L24
+EDGE flask/app.py --contains [EXTRACTED]--> Flask at=src/flask/app.py:L109
+EDGE flask/app.py --imports [EXTRACTED context=import]--> AppContext at=src/flask/app.py:L33
+EDGE flask/app.py --imports [EXTRACTED context=import]--> Request at=src/flask/app.py:L53
+EDGE flask/app.py --imports_from [EXTRACTED context=import]--> cli.py at=src/flask/cli.py:L34
+EDGE Flask --imports [EXTRACTED context=import]--> flask/__init__.py at=src/flask/__init__.py:L2
+EDGE Flask --uses [INFERRED]--> AppContext at=src/flask/ctx.py:L302
+EDGE Flask --uses [INFERRED]--> Request at=src/flask/app.py:L240
+EDGE Flask --imports [EXTRACTED context=import]--> cli.py at=src/flask/cli.py:L34
+EDGE Flask --imports [EXTRACTED context=import]--> ctx.py at=src/flask/ctx.py:L21
+EDGE Flask --inherits [EXTRACTED]--> FlaskProxy at=src/flask/globals.py:L22
+EDGE Flask --uses [INFERRED]--> FlaskProxy at=src/flask/globals.py:L22
+EDGE Flask --imports [EXTRACTED context=import]--> sessions.py at=src/flask/sessions.py:L19
+EDGE Flask --imports [EXTRACTED context=import]--> testing.py at=src/flask/testing.py:L24
+EDGE Flask --imports [EXTRACTED context=import]--> test_appctx.py at=tests/test_appctx.py:L3
+EDGE Flask --imports [EXTRACTED context=import]--> test_basic.py at=tests/test_basic.py:L23
+EDGE Flask --imports [EXTRACTED context=import]--> test_blueprints.py at=tests/test_blueprints.py:L4
+EDGE Flask --calls [INFERRED context=call]--> test_find_best_app() at=tests/test_cli.py:L49
+EDGE Flask --imports [EXTRACTED context=import]--> test_reqctx.py at=tests/test_reqctx.py:L9
+EDGE Flask --references [EXTRACTED context=parameter_type]--> test_view_provide_automatic_options_attr_disable() at=tests/test_views.py:L101
+EDGE Flask --references [EXTRACTED context=parameter_type]--> test_view_provide_automatic_options_attr_enable() at=tests/test_views.py:L117
+EDGE Flask --references [EXTRACTED context=parameter_type]--> test_provide_automatic_options_method_disable() at=tests/test_views.py:L136
+EDGE flask/blueprints.py --imports_from [EXTRACTED context=import]--> flask/__init__.py at=src/flask/__init__.py:L3
+EDGE flask/blueprints.py --re_exports [EXTRACTED context=export]--> flask/__init__.py at=src/flask/__init__.py:L3
+EDGE flask/blueprints.py --imports_from [EXTRACTED context=import]--> cli.py at=src/flask/blueprints.py:L7
+EDGE flask/blueprints.py --imports_from [EXTRACTED context=import]--> helpers.py at=src/flask/blueprints.py:L9
+EDGE flask/blueprints.py --imports_from [EXTRACTED context=import]--> sansio/blueprints.py at=src/flask/blueprints.py:L10
+EDGE flask/blueprints.py --imports_from [EXTRACTED context=import]--> scaffold.py at=src/flask/blueprints.py:L12
+EDGE flask/blueprints.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/blueprints.py:L15
+EDGE flask/blueprints.py --imports_from [EXTRACTED context=import]--> debughelpers.py at=src/flask/debughelpers.py:L8
+EDGE cli.py --imports_from [EXTRACTED context=import]--> helpers.py at=src/flask/cli.py:L24
+EDGE cli.py --imports_from [EXTRACTED context=import]--> typeshed_wsgi at=src/flask/cli.py:L30
+EDGE cli.py --imports_from [EXTRACTED context=import]--> testing.py at=src/flask/testing.py:L17
+EDGE cli.py --imports_from [EXTRACTED context=import]--> test_cli.py at=tests/test_cli.py:L19
+EDGE cli.py --imports_from [EXTRACTED context=import]--> test_testing.py at=tests/test_testing.py:L8
+EDGE config.py --imports_from [EXTRACTED context=import]--> flask/__init__.py at=src/flask/__init__.py:L4
+EDGE config.py --re_exports [EXTRACTED context=export]--> flask/__init__.py at=src/flask/__init__.py:L4
+EDGE config.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L22
+EDGE ctx.py --imports_from [EXTRACTED context=import]--> flask/__init__.py at=src/flask/ctx.py:L11
+EDGE ctx.py --re_exports [EXTRACTED context=export]--> flask/__init__.py at=src/flask/__init__.py:L5
+EDGE ctx.py --imports_from [EXTRACTED context=import]--> helpers.py at=src/flask/ctx.py:L13
+EDGE ctx.py --imports_from [EXTRACTED context=import]--> typeshed_wsgi at=src/flask/ctx.py:L19
+EDGE ctx.py --imports_from [EXTRACTED context=import]--> sessions.py at=src/flask/ctx.py:L22
+EDGE ctx.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/ctx.py:L23
+EDGE ctx.py --contains [EXTRACTED]--> _AppCtxGlobals at=src/flask/ctx.py:L30
+EDGE ctx.py --contains [EXTRACTED]--> AppContext at=src/flask/ctx.py:L260
+EDGE ctx.py --imports [EXTRACTED context=import]--> SessionMixin at=src/flask/ctx.py:L22
+EDGE ctx.py --imports [EXTRACTED context=import]--> Request at=src/flask/ctx.py:L23
+EDGE ctx.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L24
+EDGE ctx.py --imports_from [EXTRACTED context=import]--> templating.py at=src/flask/templating.py:L10
+EDGE AppContext --uses [INFERRED]--> SessionMixin at=src/flask/ctx.py:L305
+EDGE AppContext --uses [INFERRED]--> Request at=src/flask/ctx.py:L304
+EDGE AppContext --inherits [EXTRACTED]--> AppContextProxy at=src/flask/globals.py:L24
+EDGE AppContext --uses [INFERRED]--> AppContextProxy at=src/flask/globals.py:L24
+EDGE AppContext --imports [EXTRACTED context=import]--> templating.py at=src/flask/templating.py:L10
+EDGE _AppCtxGlobals --method [EXTRACTED]--> .get() at=src/flask/ctx.py:L68
+EDGE _AppCtxGlobals --inherits [EXTRACTED]--> _AppCtxGlobalsProxy at=src/flask/globals.py:L26
+EDGE _AppCtxGlobals --imports [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L24
+EDGE debughelpers.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/debughelpers.py:L10
+EDGE debughelpers.py --imports_from [EXTRACTED context=import]--> scaffold.py at=src/flask/debughelpers.py:L13
+EDGE debughelpers.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/debughelpers.py:L14
+EDGE debughelpers.py --imports [EXTRACTED context=import]--> Request at=src/flask/debughelpers.py:L14
+EDGE globals.py --imports_from [EXTRACTED context=import]--> flask/__init__.py at=src/flask/__init__.py:L9
+EDGE globals.py --re_exports [EXTRACTED context=export]--> flask/__init__.py at=src/flask/__init__.py:L9
+EDGE globals.py --imports [EXTRACTED context=import]--> typing at=src/flask/globals.py:L3
+EDGE RequestProxy --inherits [EXTRACTED]--> Request at=src/flask/globals.py:L28
+EDGE RequestProxy --uses [INFERRED]--> Request at=src/flask/globals.py:L28
+EDGE SessionMixinProxy --inherits [EXTRACTED]--> SessionMixin at=src/flask/globals.py:L30
+EDGE SessionMixinProxy --uses [INFERRED]--> SessionMixin at=src/flask/globals.py:L30
+EDGE helpers.py --imports_from [EXTRACTED context=import]--> flask/__init__.py at=src/flask/__init__.py:L13
+EDGE helpers.py --re_exports [EXTRACTED context=export]--> flask/__init__.py at=src/flask/__init__.py:L13
+EDGE helpers.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/wrappers.py:L12
+EDGE helpers.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L25
+EDGE helpers.py --imports_from [EXTRACTED context=import]--> scaffold.py at=src/flask/sansio/scaffold.py:L18
+EDGE helpers.py --imports_from [EXTRACTED context=import]--> templating.py at=src/flask/templating.py:L12
+EDGE helpers.py --imports_from [EXTRACTED context=import]--> test_helpers.py at=tests/test_helpers.py:L8
+EDGE flask/__init__.py --imports_from [EXTRACTED context=import]--> json/__init__.py at=src/flask/__init__.py:L23
+EDGE flask/__init__.py --re_exports [EXTRACTED context=export]--> json/__init__.py at=src/flask/__init__.py:L23
+EDGE flask/__init__.py --imports_from [EXTRACTED context=import]--> templating.py at=src/flask/__init__.py:L34
+EDGE flask/__init__.py --re_exports [EXTRACTED context=export]--> templating.py at=src/flask/__init__.py:L34
+EDGE flask/__init__.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/wrappers.py:L10
+EDGE flask/__init__.py --re_exports [EXTRACTED context=export]--> wrappers.py at=src/flask/__init__.py:L38
+EDGE flask/__init__.py --imports [EXTRACTED context=import]--> render_template() at=src/flask/__init__.py:L34
+EDGE flask/__init__.py --imports [EXTRACTED context=import]--> Request at=src/flask/__init__.py:L38
+EDGE flask/__init__.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L21
+EDGE flask/__init__.py --imports_from [EXTRACTED context=import]--> sansio/blueprints.py at=src/flask/sansio/blueprints.py:L8
+EDGE flask/__init__.py --imports_from [EXTRACTED context=import]--> scaffold.py at=src/flask/sansio/scaffold.py:L17
+EDGE json/__init__.py --imports_from [EXTRACTED context=import]--> provider.py at=src/flask/json/__init__.py:L7
+EDGE json/__init__.py --re_exports [EXTRACTED context=export]--> provider.py at=src/flask/json/__init__.py:L7
+EDGE json/__init__.py --imports_from [EXTRACTED context=submodule_import]--> wrappers.py at=src/flask/wrappers.py:L10
+EDGE json/__init__.py --re_exports [EXTRACTED context=export]--> wrappers.py at=src/flask/json/__init__.py:L10
+EDGE json/__init__.py --imports_from [EXTRACTED context=import]--> tag.py at=src/flask/json/tag.py:L56
+EDGE json/__init__.py --imports_from [EXTRACTED context=import]--> test_testing.py at=tests/test_testing.py:L10
+EDGE provider.py --imports_from [EXTRACTED context=import]--> werkzeug_sansio_response at=src/flask/json/provider.py:L14
+EDGE provider.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L27
+EDGE provider.py --imports_from [EXTRACTED context=import]--> test_json.py at=tests/test_json.py:L11
+EDGE tag.py --imports_from [EXTRACTED context=import]--> sessions.py at=src/flask/sessions.py:L14
+EDGE tag.py --imports_from [EXTRACTED context=import]--> test_json_tag.py at=tests/test_json_tag.py:L8
+EDGE logging.py --imports_from [EXTRACTED context=import]--> werkzeug_local at=src/flask/logging.py:L7
+EDGE logging.py --imports_from [EXTRACTED context=import]--> sansio/app.py at=src/flask/sansio/app.py:L29
+EDGE logging.py --imports_from [EXTRACTED context=import]--> test_logging.py at=tests/test_logging.py:L7
+EDGE sansio/app.py --imports_from [EXTRACTED context=import]--> werkzeug_sansio_response at=src/flask/sansio/app.py:L17
+EDGE sansio/app.py --imports_from [EXTRACTED context=import]--> templating.py at=src/flask/templating.py:L17
+EDGE sansio/app.py --imports_from [EXTRACTED context=import]--> scaffold.py at=src/flask/sansio/app.py:L32
+EDGE sansio/app.py --imports_from [EXTRACTED context=import]--> testing.py at=src/flask/sansio/app.py:L40
+EDGE sansio/app.py --imports_from [EXTRACTED context=import]--> sansio/blueprints.py at=src/flask/sansio/blueprints.py:L15
+EDGE sansio/app.py --imports [EXTRACTED context=import]--> setupmethod() at=src/flask/sansio/app.py:L35
+EDGE sansio/blueprints.py --imports_from [EXTRACTED context=import]--> scaffold.py at=src/flask/sansio/blueprints.py:L9
+EDGE sansio/blueprints.py --imports [EXTRACTED context=import]--> setupmethod() at=src/flask/sansio/blueprints.py:L12
+EDGE scaffold.py --imports_from [EXTRACTED context=import]--> templating.py at=src/flask/templating.py:L18
+EDGE scaffold.py --contains [EXTRACTED]--> setupmethod() at=src/flask/sansio/scaffold.py:L42
+EDGE sessions.py --imports_from [EXTRACTED context=import]--> werkzeug_datastructures at=src/flask/sessions.py:L12
+EDGE sessions.py --imports_from [EXTRACTED context=import]--> wrappers.py at=src/flask/sessions.py:L20
+EDGE sessions.py --contains [EXTRACTED]--> SessionMixin at=src/flask/sessions.py:L24
+EDGE sessions.py --imports [EXTRACTED context=import]--> Request at=src/flask/sessions.py:L20
+EDGE sessions.py --imports_from [EXTRACTED context=import]--> testing.py at=src/flask/testing.py:L18
+EDGE sessions.py --imports_from [EXTRACTED context=import]--> test_reqctx.py at=tests/test_reqctx.py:L10
+EDGE sessions.py --imports_from [EXTRACTED context=import]--> test_session_interface.py at=tests/test_session_interface.py:L3
+EDGE SessionMixin --imports [EXTRACTED context=import]--> testing.py at=src/flask/testing.py:L18
+EDGE templating.py --contains [EXTRACTED]--> render_template() at=src/flask/templating.py:L136
+EDGE render_template() --calls [EXTRACTED context=call]--> return_template() at=tests/type_check/typing_route.py:L88
+EDGE testing.py --imports_from [EXTRACTED context=import]--> typeshed_wsgi at=src/flask/testing.py:L21
+EDGE testing.py --imports_from [EXTRACTED context=import]--> test_appctx.py at=tests/test_appctx.py:L5
+EDGE testing.py --imports_from [EXTRACTED context=import]--> test_basic.py at=tests/test_basic.py:L25
+EDGE testing.py --imports_from [EXTRACTED context=import]--> test_reqctx.py at=tests/test_reqctx.py:L12
+EDGE testing.py --imports_from [EXTRACTED context=import]--> test_testing.py at=tests/test_testing.py:L11
+EDGE typing.py --imports [EXTRACTED context=import]--> typing at=src/flask/typing.py:L4
+EDGE flask/views.py --contains [EXTRACTED]--> MethodView at=src/flask/views.py:L138
+EDGE flask/views.py --imports_from [EXTRACTED context=import]--> test_async.py at=tests/test_async.py:L8
+EDGE .dispatch_request() --references [EXTRACTED context=parameter_type]--> Any at=src/flask/views.py:L182
+EDGE .dispatch_request() --references [EXTRACTED context=return_type]--> ResponseReturnValue at=src/flask/views.py:L182
+EDGE .__init_subclass__() --references [EXTRACTED context=parameter_type]--> Any at=src/flask/views.py:L165
+EDGE wrappers.py --contains [EXTRACTED]--> Request at=src/flask/wrappers.py:L18
+EDGE test_async.py --contains [EXTRACTED]--> AsyncView at=tests/test_async.py:L22
+EDGE test_cli.py --contains [EXTRACTED]--> test_find_best_app() at=tests/test_cli.py:L47
+EDGE test_cli.py --contains [EXTRACTED]--> test_locate_app_raises() at=tests/test_cli.py:L216
+EDGE test_cli.py --contains [EXTRACTED]--> test_locate_app_suppress_raise() at=tests/test_cli.py:L221
+EDGE test_cli.py --contains [EXTRACTED]--> test_scriptinfo() at=tests/test_cli.py:L246
+EDGE test_cli.py --contains [EXTRACTED]--> test_run_cert_path() at=tests/test_cli.py:L585
+EDGE test_cli.py --contains [EXTRACTED]--> test_run_cert_adhoc() at=tests/test_cli.py:L603
+EDGE test_cli.py --contains [EXTRACTED]--> test_run_cert_import() at=tests/test_cli.py:L620
+EDGE test_cli.py --contains [EXTRACTED]--> test_run_cert_no_ssl() at=tests/test_cli.py:L642
+EDGE test_helpers.py --contains [EXTRACTED]--> test_redirect_with_app() at=tests/test_helpers.py:L170
+EDGE test_helpers.py --contains [EXTRACTED]--> test_abort_no_app() at=tests/test_helpers.py:L180
+EDGE test_helpers.py --contains [EXTRACTED]--> test_abort_with_app() at=tests/test_helpers.py:L199
+EDGE test_helpers.py --contains [EXTRACTED]--> test_open_resource_exceptions() at=tests/test_helpers.py:L364
+EDGE test_instance_config.py --contains [EXTRACTED]--> test_explicit_instance_paths() at=tests/test_instance_config.py:L8
+EDGE test_json_tag.py --contains [EXTRACTED]--> test_duplicate_tag() at=tests/test_json_tag.py:L32
+EDGE test_json_tag.py --contains [EXTRACTED]--> test_tag_interface() at=tests/test_json_tag.py:L66
+EDGE test_user_error_handler.py --contains [EXTRACTED]--> test_error_handler_no_match() at=tests/test_user_error_handler.py:L10
+EDGE test_views.py --contains [EXTRACTED]--> test_remove_method_from_parent() at=tests/test_views.py:L237
+EDGE common_test() --calls [EXTRACTED context=call]--> test_basic_view() at=tests/test_views.py:L25
+EDGE common_test() --calls [EXTRACTED context=call]--> test_method_based_view() at=tests/test_views.py:L38
+EDGE common_test() --calls [EXTRACTED context=call]--> test_view_patching() at=tests/test_views.py:L59
+EDGE common_test() --calls [EXTRACTED context=call]--> test_endpoint_override() at=tests/test_views.py:L197
+EDGE typing_route.py --imports [EXTRACTED context=import]--> typing at=tests/type_check/typing_route.py:L3
+EDGE StatusJSON --references [EXTRACTED context=return_type]--> typed_dict() at=tests/type_check/typing_route.py:L46

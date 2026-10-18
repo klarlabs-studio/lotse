@@ -1,0 +1,128 @@
+{
+  "scientific_review": {
+    "papers": 13,
+    "status": "complete",
+    "training_results_reproduced": false
+  },
+  "retrieval_pilot": {
+    "status": "complete",
+    "repositories": 3,
+    "queries": 30,
+    "positive_queries": 27,
+    "budgets": [
+      2000,
+      8000
+    ],
+    "prototype_result_rows": 360,
+    "native_ripgrep_rows": 60,
+    "graphify_native_rows": 60
+  },
+  "validation": {
+    "measurement_tests": 6,
+    "fixture_checks": 6,
+    "fixture_phases": [
+      "base_pass",
+      "injected_fail",
+      "restored_pass"
+    ],
+    "saved_result_audit": "passed",
+    "dependency_check": "passed",
+    "python_integrity_tests": 25
+  },
+  "agent_and_interface_trials": {
+    "status": "not_run",
+    "reason": "Fixed solver selection and total inference cap are unspecified; broker-only solver adapter is not configured",
+    "fixtures_prepared": true,
+    "detected_codex_model": "gpt-6.1-sol",
+    "detected_codex_reasoning": "low",
+    "detected_codex_version": "0.156.1",
+    "model_calls": 0
+  },
+  "rust_cli": {
+    "status": "implemented",
+    "version": "0.1.0",
+    "commands": [
+      "index",
+      "locate",
+      "search",
+      "expand",
+      "map",
+      "stats"
+    ],
+    "integration_tests": 13,
+    "clippy": "passed",
+    "format": "passed",
+    "pilot_cases": 60,
+    "source_and_token_audit": "passed",
+    "results": "results/graphify-comparison.json",
+    "agent_savings_measured": false,
+    "historical_standalone_results": "results/rust-pilot.json"
+  },
+  "graphify_comparison": {
+    "status": "complete",
+    "required_for_benchmarks": true,
+    "cases": 60,
+    "timed_queries": 540,
+    "matched_source_sets": true,
+    "baseline_mode": "code_only_no_clustering",
+    "comparison_tests": 5,
+    "saved_result_audit": "passed",
+    "results": "results/graphify-comparison.json",
+    "report": "research/graphify-comparison.md",
+    "agent_savings_measured": false,
+    "query_arms": [
+      "graf",
+      "graf_locate",
+      "graphify"
+    ],
+    "audit": "results/graphify-comparison-audit.json",
+    "verified_locate_hints": 3100,
+    "search_outputs_and_indexes_unchanged_from_v1": true,
+    "historical_results": "results/graphify-comparison-search-v1.json"
+  },
+  "task_broker_preparation": {
+    "status": "validated_without_solver",
+    "tasks": 6,
+    "backends": [
+      "graf",
+      "graphify"
+    ],
+    "fixture_sessions": 12,
+    "behavioral_verifications": 36,
+    "broker_integrity_tests": 4,
+    "unknown_usage_tests": 4,
+    "cached_clean_indexes_excluded": true,
+    "matched_faulty_inputs": true,
+    "solver_invoked": false,
+    "agent_results_available": false,
+    "results": "results/task-broker-sanity.json",
+    "report": "research/task-comparison.md"
+  },
+  "superiority_acceptance": {
+    "status": "not_passed",
+    "policy": "research/protocol.md#decision-rule",
+    "required_baseline": "pinned Graphify",
+    "last_accepted_graf_version": null,
+    "requirements": [
+      "Freeze workload, quality criteria, primary efficiency metric, limits, and paired repetition plan before evaluation",
+      "No per-case quality or primary-efficiency regression; strict workload improvement in the primary efficiency metric",
+      "Complete verified agent outcomes and all-attempt usage accounting for agent-efficiency acceptance",
+      "Held-out natural tasks before product superiority claims"
+    ],
+    "current_evidence": [
+      "At 2K, exploratory locate code-file recall is 94.444% versus Graphify 96.296%",
+      "Model-backed task comparison has not run; agent efficiency is unmeasured"
+    ],
+    "assessment_kind": "Executable retrospective retrieval diagnostic; product promotion remains blocked",
+    "command": ".research/venv/bin/python benchmark/acceptance.py",
+    "results": "results/acceptance.json",
+    "evidence_audit": "passed",
+    "acceptance_tests": 6,
+    "cases_per_arm": 60,
+    "regressing_cases": {
+      "graf": 53,
+      "graf_locate": 37
+    },
+    "product_promotion_allowed": false
+  }
+}

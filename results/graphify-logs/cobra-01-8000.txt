@@ -1,0 +1,1523 @@
+Traversal: BFS depth=3 | Start: ['ExactArgs()', 'exactArgsWithInvalidCount()', 'TestExactArgs_WithInvalidCount()', '.test()', 'validOnlyWithInvalidArgs()'] | 316 nodes found
+
+[i] Complete answer over budget: all 316 nodes and 1203 edges shown (~48212 tokens vs the requested ~8000-token budget). Edges are never dropped once every node fits, so this is already the full answer — raising --budget further will not shrink it. Narrow with context_filter=['call'] or use get_node for a specific symbol to reduce size instead.
+
+NODE ExactArgs() [src=args.go loc=L107 community=]
+NODE exactArgsWithInvalidCount() [src=args_test.go loc=L88 community=]
+NODE TestExactArgs_WithInvalidCount() [src=args_test.go loc=L345 community=]
+NODE .test() [src=command_test.go loc=L2442 community=]
+NODE validOnlyWithInvalidArgs() [src=args_test.go loc=L44 community=]
+NODE testing.T [src= loc= community=]
+NODE executeCommand() [src=command_test.go loc=L32 community=]
+NODE .AddCommand() [src=command.go loc=L1342 community=]
+NODE args_test.go [src=args_test.go loc=L1 community=]
+NODE getCommand() [src=args_test.go loc=L23 community=]
+NODE .Name() [src=command.go loc=L1541 community=]
+NODE args.go [src=args.go loc=L1 community=]
+NODE .Execute() [src=command.go loc=L1070 community=]
+NODE .SetErr() [src=command.go loc=L302 community=]
+NODE .SetOut() [src=command.go loc=L296 community=]
+NODE PositionalArgs [src=args.go loc=L22 community=]
+NODE ExactValidArgs() [src=args.go loc=L142 community=]
+NODE TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L363 community=]
+NODE TestExactArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L339 community=]
+NODE TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L313 community=]
+NODE TestMaximumNArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L289 community=]
+NODE TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L263 community=]
+NODE TestMinimumNArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L239 community=]
+NODE TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L413 community=]
+NODE TestRangeArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L389 community=]
+NODE .SetArgs() [src=command.go loc=L281 community=]
+NODE TestArbitraryArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L213 community=]
+NODE TestExactArgs() [src=args_test.go loc=L321 community=]
+NODE TestExactArgs_WithInvalidCount_WithValid() [src=args_test.go loc=L351 community=]
+NODE TestExactArgs_WithInvalidCount_WithValid_WithInvalidArgs() [src=args_test.go loc=L357 community=]
+NODE TestExactArgs_WithValid() [src=args_test.go loc=L327 community=]
+NODE TestExactArgs_WithValid_WithInvalidArgs() [src=args_test.go loc=L333 community=]
+NODE TestExactValidArgs_WithInvalidArgs() [src=args_test.go loc=L545 community=]
+NODE TestExactValidArgs_WithInvalidCount() [src=args_test.go loc=L533 community=]
+NODE TestExactValidArgs_WithInvalidCount_WithInvalidArgs() [src=args_test.go loc=L539 community=]
+NODE TestNoArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L147 community=]
+NODE TestNoDuplicateArgs_WithValidOnly_WithInvalidArgs() [src=args_test.go loc=L187 community=]
+NODE TestMatchAll() [src=args_test.go loc=L477 community=]
+NODE TestOnlyValidArgs_WithInvalidArgs() [src=args_test.go loc=L161 community=]
+NODE TestAliasPrefixMatching() [src=command_test.go loc=L334 community=]
+NODE TestChildCommand() [src=command_test.go loc=L113 community=]
+NODE TestChildSameName() [src=command_test.go loc=L437 community=]
+NODE TestCommandAlias() [src=command_test.go loc=L274 community=]
+NODE TestEnablePrefixMatching() [src=command_test.go loc=L305 community=]
+NODE TestGrandChildSameName() [src=command_test.go loc=L465 community=]
+NODE TestSingleCommand() [src=command_test.go loc=L88 community=]
+NODE .CalledAs() [src=command.go loc=L1562 community=]
+NODE calledAsTestcase [src=command_test.go loc=L2435 community=]
+NODE Command [src=command.go loc=L54 community=]
+NODE command_test.go [src=command_test.go loc=L1 community=]
+NODE io.Writer [src= loc= community=]
+NODE assertNoErr() [src=cobra_test.go loc=L27 community=]
+NODE go_pkg_fmt [src= loc= community=]
+NODE defaultUsageFunc() [src=command.go loc=L1974 community=]
+NODE go_pkg_strings [src= loc= community=]
+NODE expectSuccess() [src=args_test.go loc=L35 community=]
+NODE .ExecuteC() [src=command.go loc=L1084 community=]
+NODE .execute() [src=command.go loc=L905 community=]
+NODE .InitDefaultHelpCmd() [src=command.go loc=L1263 community=]
+NODE check() [src=bash_completions_test.go loc=L33 community=]
+NODE .CommandPath() [src=command.go loc=L1465 community=]
+NODE MatchAll() [src=args.go loc=L127 community=]
+NODE MinimumNArgs() [src=args.go loc=L87 community=]
+NODE .DisplayName() [src=command.go loc=L1474 community=]
+NODE TestBashCompletions() [src=bash_completions_test.go loc=L83 community=]
+NODE checkOmit() [src=bash_completions_test.go loc=L27 community=]
+NODE .initCompleteCmd() [src=completions.go loc=L231 community=]
+NODE TestDefaultCompletionCmd() [src=completions_test.go loc=L2461 community=]
+NODE TestCommandPrintRedirection() [src=command_test.go loc=L2177 community=]
+NODE MaximumNArgs() [src=args.go loc=L97 community=]
+NODE RangeArgs() [src=args.go loc=L117 community=]
+NODE writeCommands() [src=bash_completions.go loc=L447 community=]
+NODE .RemoveCommand() [src=command.go loc=L1401 community=]
+NODE .UseLine() [src=command.go loc=L1482 community=]
+NODE executeCommandWithContext() [src=command_test.go loc=L37 community=]
+NODE executeCommandWithContextC() [src=command_test.go loc=L59 community=]
+NODE TestConfigActiveHelp() [src=active_help_test.go loc=L266 community=]
+NODE TestDisableActiveHelp() [src=active_help_test.go loc=L319 community=]
+NODE .InitDefaultCompletionCmd() [src=completions.go loc=L748 community=]
+NODE .InitDefaultVersionFlag() [src=command.go loc=L1238 community=]
+NODE executeCommandC() [src=command_test.go loc=L48 community=]
+NODE TestHelpFuncExecuted() [src=command_test.go loc=L2925 community=]
+NODE TestValidateFlagGroups() [src=flag_groups_test.go loc=L22 community=]
+NODE legacyArgs() [src=args.go loc=L28 community=]
+NODE .DebugFlags() [src=command.go loc=L1501 community=]
+NODE .findNext() [src=command.go loc=L798 community=]
+NODE TestSetContextPersistentPreRun() [src=command_test.go loc=L2675 community=]
+NODE TestSetHelpCommand() [src=command_test.go loc=L998 community=]
+NODE TestSetUsageTemplate() [src=command_test.go loc=L1129 community=]
+NODE TestNoCmdNameCompletionInGo() [src=completions_test.go loc=L157 community=]
+NODE TestExactValidArgs() [src=args_test.go loc=L527 community=]
+NODE TestMaximumNArgs() [src=args_test.go loc=L271 community=]
+NODE TestMaximumNArgs_WithMoreArgs() [src=args_test.go loc=L295 community=]
+NODE TestMaximumNArgs_WithMoreArgs_WithValid() [src=args_test.go loc=L301 community=]
+NODE TestMaximumNArgs_WithMoreArgs_WithValid_WithInvalidArgs() [src=args_test.go loc=L307 community=]
+NODE TestMaximumNArgs_WithValid() [src=args_test.go loc=L277 community=]
+NODE TestMaximumNArgs_WithValid_WithInvalidArgs() [src=args_test.go loc=L283 community=]
+NODE TestMinimumNArgs() [src=args_test.go loc=L221 community=]
+NODE TestMinimumNArgs_WithLessArgs() [src=args_test.go loc=L245 community=]
+NODE TestMinimumNArgs_WithLessArgs_WithValid() [src=args_test.go loc=L251 community=]
+NODE TestMinimumNArgs_WithLessArgs_WithValid_WithInvalidArgs() [src=args_test.go loc=L257 community=]
+NODE TestMinimumNArgs_WithValid() [src=args_test.go loc=L227 community=]
+NODE TestMinimumNArgs_WithValid__WithInvalidArgs() [src=args_test.go loc=L233 community=]
+NODE TestRangeArgs() [src=args_test.go loc=L371 community=]
+NODE TestRangeArgs_WithInvalidCount() [src=args_test.go loc=L395 community=]
+NODE TestRangeArgs_WithInvalidCount_WithValid() [src=args_test.go loc=L401 community=]
+NODE TestRangeArgs_WithInvalidCount_WithValid_WithInvalidArgs() [src=args_test.go loc=L407 community=]
+NODE TestRangeArgs_WithValid() [src=args_test.go loc=L377 community=]
+NODE TestRangeArgs_WithValid_WithInvalidArgs() [src=args_test.go loc=L383 community=]
+NODE .GenBashCompletion() [src=bash_completions.go loc=L683 community=]
+NODE TestBashCompletionNoActiveHelp() [src=bash_completions_test.go loc=L279 community=]
+NODE writeCmdAliases() [src=bash_completions.go loc=L629 community=]
+NODE TestBashCompletionV2WithActiveHelp() [src=bash_completionsV2_test.go loc=L23 community=]
+NODE .genPowerShellCompletion() [src=powershell_completions.go loc=L313 community=]
+NODE .genZshCompletion() [src=zsh_completions.go loc=L80 community=]
+NODE TestSetHelpTemplate() [src=command_test.go loc=L1021 community=]
+NODE TestTraverseNoParentFlags() [src=command_test.go loc=L2344 community=]
+NODE TestTraverseWithBadChildFlag() [src=command_test.go loc=L2382 community=]
+NODE TestTraverseWithParentFlags() [src=command_test.go loc=L2322 community=]
+NODE checkIfFlagCompletion() [src=completions.go loc=L657 community=]
+NODE TestCompleteCompletion() [src=completions_test.go loc=L2607 community=]
+NODE TestDisableDescriptions() [src=completions_test.go loc=L3822 community=]
+NODE TestFishCompletionNoActiveHelp() [src=fish_completions_test.go loc=L89 community=]
+NODE TestPwshCompletionNoActiveHelp() [src=powershell_completions_test.go loc=L23 community=]
+NODE TestZshCompletionWithActiveHelp() [src=zsh_completions_test.go loc=L23 community=]
+NODE OnlyValidArgs() [src=args.go loc=L51 community=]
+NODE maximumNArgsWithMoreArgs() [src=args_test.go loc=L77 community=]
+NODE minimumNArgsWithLessArgs() [src=args_test.go loc=L66 community=]
+NODE noArgsWithArgs() [src=args_test.go loc=L55 community=]
+NODE rangeArgsWithInvalidCount() [src=args_test.go loc=L99 community=]
+NODE TestArbitraryArgs() [src=args_test.go loc=L195 community=]
+NODE TestArbitraryArgs_WithValid() [src=args_test.go loc=L201 community=]
+NODE TestArbitraryArgs_WithValid_WithInvalidArgs() [src=args_test.go loc=L207 community=]
+NODE TestNoArgs() [src=args_test.go loc=L123 community=]
+NODE TestNoArgs_WithArgs() [src=args_test.go loc=L129 community=]
+NODE TestNoArgs_WithValid_WithArgs() [src=args_test.go loc=L135 community=]
+NODE TestNoArgs_WithValid_WithInvalidArgs() [src=args_test.go loc=L141 community=]
+NODE TestNoDuplicateArgs() [src=args_test.go loc=L169 community=]
+NODE TestNoDuplicateArgs_WithDuplicateArgs() [src=args_test.go loc=L175 community=]
+NODE TestNoDuplicateArgs_WithValid_WithDuplicateArgs() [src=args_test.go loc=L181 community=]
+NODE TestOnlyValidArgs() [src=args_test.go loc=L155 community=]
+NODE .ExecuteContext() [src=command.go loc=L1062 community=]
+NODE .SuggestionsFor() [src=command.go loc=L863 community=]
+NODE TestCommandsAreSorted() [src=command_test.go loc=L1913 community=]
+NODE TestEnableCommandSortingIsDisabled() [src=command_test.go loc=L1935 community=]
+NODE TestExecuteContext() [src=command_test.go loc=L177 community=]
+NODE TestExecuteContextC() [src=command_test.go loc=L206 community=]
+NODE TestRemoveCommand() [src=command_test.go loc=L1585 community=]
+NODE TestReplaceCommandWithRemove() [src=command_test.go loc=L1597 community=]
+NODE TestSetContext() [src=command_test.go loc=L2603 community=]
+NODE TestSetContextPreRun() [src=command_test.go loc=L2628 community=]
+NODE TestSetContextPreRunOverwrite() [src=command_test.go loc=L2654 community=]
+NODE TestSubcommandExecuteC() [src=command_test.go loc=L159 community=]
+NODE TestTraverseWithTwoSubcommands() [src=command_test.go loc=L2403 community=]
+NODE removeCompCmd() [src=completions_test.go loc=L2451 community=]
+NODE TestCompletionDoesNotMutateOsArgs() [src=completions_test.go loc=L4076 community=]
+NODE TestValidArgsFuncCmdContext() [src=completions_test.go loc=L1276 community=]
+NODE noDuplicateArgsWithDuplicate() [src=args_test.go loc=L110 community=]
+NODE .genBashCompletion() [src=bash_completionsV2.go loc=L24 community=]
+NODE .GenFishCompletion() [src=fish_completions.go loc=L276 community=]
+NODE TestSetErr() [src=command_test.go loc=L2145 community=]
+NODE TestSetOut() [src=command_test.go loc=L2137 community=]
+NODE TestValidArgsCompletionInGo() [src=completions_test.go loc=L322 community=]
+NODE TestValidArgsFuncSingleCmdInvalidArg() [src=completions_test.go loc=L1357 community=]
+NODE ArbitraryArgs() [src=args.go loc=L82 community=]
+NODE NoArgs() [src=args.go loc=L42 community=]
+NODE NoDuplicateArgs() [src=args.go loc=L69 community=]
+NODE checkNumOccurrences() [src=bash_completions_test.go loc=L39 community=]
+NODE checkRegex() [src=bash_completions_test.go loc=L46 community=]
+NODE .hasNameOrAliasPrefix() [src=command.go loc=L1571 community=]
+NODE .NameAndAliases() [src=command.go loc=L1586 community=]
+NODE TestUpdateName() [src=command_test.go loc=L2425 community=]
+NODE .Less() [src=command.go loc=L1329 community=]
+NODE .Flags() [src=command.go loc=L1688 community=]
+NODE completions_test.go [src=completions_test.go loc=L1 community=]
+NODE .PersistentFlags() [src=command.go loc=L1775 community=]
+NODE completions.go [src=completions.go loc=L1 community=]
+NODE cobra.go [src=cobra.go loc=L1 community=]
+NODE command.go [src=command.go loc=L1 community=]
+NODE bash_completions.go [src=bash_completions.go loc=L1 community=]
+NODE man_docs.go [src=doc/man_docs.go loc=L1 community=]
+NODE .HasParent() [src=command.go loc=L1677 community=]
+NODE WriteStringAndCheck() [src=cobra.go loc=L243 community=]
+NODE io.StringWriter [src= loc= community=]
+NODE man_docs_test.go [src=doc/man_docs_test.go loc=L1 community=]
+NODE bash_completions_test.go [src=bash_completions_test.go loc=L1 community=]
+NODE .getCompletions() [src=completions.go loc=L316 community=]
+NODE .LocalFlags() [src=command.go loc=L1716 community=]
+NODE .mergePersistentFlags() [src=command.go loc=L1898 community=]
+NODE rest_docs.go [src=doc/rest_docs.go loc=L1 community=]
+NODE yaml_docs.go [src=doc/yaml_docs.go loc=L1 community=]
+NODE .InheritedFlags() [src=command.go loc=L1744 community=]
+NODE .Root() [src=command.go loc=L892 community=]
+NODE gen() [src=bash_completions.go loc=L652 community=]
+NODE md_docs.go [src=doc/md_docs.go loc=L1 community=]
+NODE activeHelpEnvVar() [src=active_help.go loc=L58 community=]
+NODE .Traverse() [src=command.go loc=L821 community=]
+NODE cobra_test.go [src=cobra_test.go loc=L1 community=]
+NODE fish_completions_test.go [src=fish_completions_test.go loc=L1 community=]
+NODE .Commands() [src=command.go loc=L1332 community=]
+NODE .IsAvailableCommand() [src=command.go loc=L1607 community=]
+NODE GenMan() [src=doc/man_docs.go loc=L105 community=]
+NODE .Context() [src=command.go loc=L269 community=]
+NODE .Find() [src=command.go loc=L757 community=]
+NODE yaml_docs_test.go [src=doc/yaml_docs_test.go loc=L1 community=]
+NODE active_help_test.go [src=active_help_test.go loc=L1 community=]
+NODE .OutOrStdout() [src=command.go loc=L393 community=]
+NODE flag_groups.go [src=flag_groups.go loc=L1 community=]
+NODE github.com/spf13/pflag.Flag [src= loc= community=]
+NODE .HelpFunc() [src=command.go loc=L484 community=]
+NODE .Print() [src=command.go loc=L1435 community=]
+NODE .SetOutput() [src=command.go loc=L289 community=]
+NODE GenMarkdown() [src=doc/md_docs.go loc=L52 community=]
+NODE GenReSTCustom() [src=doc/rest_docs.go loc=L62 community=]
+NODE GenYamlCustom() [src=doc/yaml_docs.go loc=L93 community=]
+NODE .InitDefaultHelpFlag() [src=command.go loc=L1219 community=]
+NODE .Parent() [src=command.go loc=L1892 community=]
+NODE .ParseFlags() [src=command.go loc=L1868 community=]
+NODE .updateParentsPflags() [src=command.go loc=L1907 community=]
+NODE GenMarkdownCustom() [src=doc/md_docs.go loc=L57 community=]
+NODE GenReST() [src=doc/rest_docs.go loc=L57 community=]
+NODE GenYaml() [src=doc/yaml_docs.go loc=L88 community=]
+NODE AppendActiveHelp() [src=active_help.go loc=L38 community=]
+NODE GetActiveHelpConfig() [src=active_help.go loc=L47 community=]
+NODE .LocalNonPersistentFlags() [src=command.go loc=L1702 community=]
+NODE .persistentFlag() [src=command.go loc=L1855 community=]
+NODE .Println() [src=command.go loc=L1440 community=]
+NODE .UsageString() [src=command.go loc=L526 community=]
+NODE cmd_test.go [src=doc/cmd_test.go loc=L1 community=]
+NODE context.Context [src= loc= community=]
+NODE .ErrOrStderr() [src=command.go loc=L403 community=]
+NODE .HasAvailableFlags() [src=command.go loc=L1822 community=]
+NODE .HasFlags() [src=command.go loc=L1801 community=]
+NODE .PrintErr() [src=command.go loc=L1450 community=]
+NODE .PrintErrln() [src=command.go loc=L1455 community=]
+NODE .Runnable() [src=command.go loc=L1596 community=]
+NODE .SetContext() [src=command.go loc=L275 community=]
+NODE defaultHelpFunc() [src=command.go loc=L2047 community=]
+NODE CompletionWithDesc() [src=completions.go loc=L142 community=]
+NODE findFlag() [src=completions.go loc=L932 community=]
+NODE man_examples_test.go [src=doc/man_examples_test.go loc=L1 community=]
+NODE fish_completions.go [src=fish_completions.go loc=L1 community=]
+NODE powershell_completions.go [src=powershell_completions.go loc=L1 community=]
+NODE active_help.go [src=active_help.go loc=L1 community=]
+NODE writePreamble() [src=bash_completions.go loc=L36 community=]
+NODE bash_completionsV2.go [src=bash_completionsV2.go loc=L1 community=]
+NODE CheckErr() [src=cobra.go loc=L235 community=]
+NODE .getOut() [src=command.go loc=L412 community=]
+NODE .HasPersistentFlags() [src=command.go loc=L1806 community=]
+NODE .HasSubCommands() [src=command.go loc=L1601 community=]
+NODE .OutOrStderr() [src=command.go loc=L398 community=]
+NODE .Printf() [src=command.go loc=L1445 community=]
+NODE commandSorterByName [src=command.go loc=L1325 community=]
+NODE command_win.go [src=command_win.go loc=L1 community=]
+NODE getEnvConfig() [src=completions.go loc=L1018 community=]
+NODE util.go [src=doc/util.go loc=L1 community=]
+NODE genFishComp() [src=fish_completions.go loc=L25 community=]
+NODE genPowerShellComp() [src=powershell_completions.go loc=L28 community=]
+NODE zsh_completions.go [src=zsh_completions.go loc=L1 community=]
+NODE writePostscript() [src=bash_completions.go loc=L404 community=]
+NODE genBashComp() [src=bash_completionsV2.go loc=L31 community=]
+NODE bash_completionsV2_test.go [src=bash_completionsV2_test.go loc=L1 community=]
+NODE .checkCommandGroups() [src=command.go loc=L1205 community=]
+NODE .ExecuteContextC() [src=command.go loc=L1078 community=]
+NODE .findSuggestions() [src=command.go loc=L781 community=]
+NODE .getErr() [src=command.go loc=L422 community=]
+NODE .getHelpTemplateFunc() [src=command.go loc=L505 community=]
+NODE .getUsageTemplateFunc() [src=command.go loc=L464 community=]
+NODE .getVersionTemplateFunc() [src=command.go loc=L631 community=]
+NODE .HasAlias() [src=command.go loc=L1551 community=]
+NODE .HasAvailableInheritedFlags() [src=command.go loc=L1839 community=]
+NODE .HasAvailableLocalFlags() [src=command.go loc=L1833 community=]
+NODE .IsAdditionalHelpTopicCommand() [src=command.go loc=L1628 community=]
+NODE .PrintErrf() [src=command.go loc=L1460 community=]
+NODE .Usage() [src=command.go loc=L478 community=]
+NODE .string() [src=completions.go loc=L200 community=]
+NODE stringInSlice() [src=cobra.go loc=L225 community=]
+NODE tmplFunc [src=command.go loc=L1937 community=]
+NODE configEnvVar() [src=completions.go loc=L1006 community=]
+NODE powershell_completions_test.go [src=powershell_completions_test.go loc=L1 community=]
+NODE genZshComp() [src=zsh_completions.go loc=L87 community=]
+NODE zsh_completions_test.go [src=zsh_completions_test.go loc=L1 community=]
+NODE runShellCheck() [src=bash_completions_test.go loc=L56 community=]
+NODE .AllChildCommandsHaveGroup() [src=command.go loc=L1376 community=]
+NODE .ErrPrefix() [src=command.go loc=L643 community=]
+NODE .FlagErrorFunc() [src=command.go loc=L547 community=]
+NODE .GenBashCompletionV2() [src=bash_completionsV2.go loc=L482 community=]
+NODE .genPowerShellCompletionFile() [src=powershell_completions.go loc=L320 community=]
+NODE .genZshCompletionFile() [src=zsh_completions.go loc=L70 community=]
+NODE .Groups() [src=command.go loc=L1371 community=]
+NODE .HasAvailableSubCommands() [src=command.go loc=L1662 community=]
+NODE .HasHelpSubCommands() [src=command.go loc=L1648 community=]
+NODE .Help() [src=command.go loc=L520 community=]
+NODE .ResetFlags() [src=command.go loc=L1787 community=]
+NODE .ValidateArgs() [src=command.go loc=L1172 community=]
+NODE .ValidateRequiredFlags() [src=command.go loc=L1180 community=]
+NODE ld() [src=cobra.go loc=L192 community=]
+NODE rpad() [src=cobra.go loc=L174 community=]
+NODE trimRightSpace() [src=cobra.go loc=L159 community=]
+NODE commandNameMatches() [src=command.go loc=L1928 community=]
+NODE defaultVersionFunc() [src=command.go loc=L2068 community=]
+NODE isFlagArg() [src=command.go loc=L750 community=]
+NODE CompErrorln() [src=completions.go loc=L991 community=]
+NODE flag_groups_test.go [src=flag_groups_test.go loc=L1 community=]
+NODE .CommandPathPadding() [src=command.go loc=L573 community=]
+NODE .GenPowerShellCompletion() [src=powershell_completions.go loc=L337 community=]
+NODE .GenPowerShellCompletionWithDesc() [src=powershell_completions.go loc=L348 community=]
+NODE .GenZshCompletion() [src=zsh_completions.go loc=L31 community=]
+NODE .GenZshCompletionNoDesc() [src=zsh_completions.go loc=L42 community=]
+NODE .HasExample() [src=command.go loc=L1591 community=]
+NODE .NamePadding() [src=command.go loc=L583 community=]
+NODE .postRun() [src=command.go loc=L1053 community=]
+NODE .preRun() [src=command.go loc=L1047 community=]
+NODE .SetHelpCommand() [src=command.go loc=L338 community=]
+NODE .GenBashCompletionFile() [src=bash_completions.go loc=L701 community=]
+NODE .GenFishCompletionFile() [src=fish_completions.go loc=L284 community=]
+EDGE .test() --method [EXTRACTED]--> calledAsTestcase at=command_test.go:L2442
+EDGE .test() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2442
+EDGE .test() --calls [INFERRED context=call]--> .Name() at=command_test.go:L2447
+EDGE .test() --calls [INFERRED context=call]--> .AddCommand() at=command_test.go:L2453
+EDGE .test() --calls [INFERRED context=call]--> .SetArgs() at=command_test.go:L2455
+EDGE .test() --calls [INFERRED context=call]--> .SetOut() at=command_test.go:L2458
+EDGE .test() --calls [INFERRED context=call]--> .SetErr() at=command_test.go:L2459
+EDGE .test() --calls [INFERRED context=call]--> .Execute() at=command_test.go:L2461
+EDGE .test() --calls [INFERRED context=call]--> .CalledAs() at=command_test.go:L2472
+EDGE TestExactArgs_WithInvalidCount() --contains [EXTRACTED]--> args_test.go at=args_test.go:L345
+EDGE TestExactArgs_WithInvalidCount() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L345
+EDGE TestExactArgs_WithInvalidCount() --calls [EXTRACTED context=call]--> getCommand() at=args_test.go:L346
+EDGE TestExactArgs_WithInvalidCount() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L347
+EDGE validOnlyWithInvalidArgs() --contains [EXTRACTED]--> args_test.go at=args_test.go:L44
+EDGE validOnlyWithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L44
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestNoArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L150
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestOnlyValidArgs_WithInvalidArgs() at=args_test.go:L164
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestNoDuplicateArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L190
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestArbitraryArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L216
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L242
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L266
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L292
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L316
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestExactArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L342
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() at=args_test.go:L366
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestRangeArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L392
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() at=args_test.go:L416
+EDGE validOnlyWithInvalidArgs() --calls [EXTRACTED context=call]--> TestExactValidArgs_WithInvalidArgs() at=args_test.go:L548
+EDGE ExactArgs() --contains [EXTRACTED]--> args.go at=args.go:L107
+EDGE ExactArgs() --references [EXTRACTED context=return_type]--> PositionalArgs at=args.go:L107
+EDGE ExactArgs() --calls [EXTRACTED context=call]--> ExactValidArgs() at=args.go:L143
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs() at=args_test.go:L322
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs_WithValid() at=args_test.go:L328
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs_WithValid_WithInvalidArgs() at=args_test.go:L334
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L340
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs_WithInvalidCount_WithValid() at=args_test.go:L352
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs_WithInvalidCount_WithValid_WithInvalidArgs() at=args_test.go:L358
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() at=args_test.go:L364
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestMatchAll() at=args_test.go:L481
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestSingleCommand() at=command_test.go:L92
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestChildCommand() at=command_test.go:L118
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestCommandAlias() at=command_test.go:L285
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestEnablePrefixMatching() at=command_test.go:L312
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestAliasPrefixMatching() at=command_test.go:L347
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestChildSameName() at=command_test.go:L442
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestGrandChildSameName() at=command_test.go:L471
+EDGE exactArgsWithInvalidCount() --contains [EXTRACTED]--> args_test.go at=args_test.go:L88
+EDGE exactArgsWithInvalidCount() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L88
+EDGE exactArgsWithInvalidCount() --calls [EXTRACTED context=call]--> TestExactArgs_WithInvalidCount_WithValid() at=args_test.go:L354
+EDGE exactArgsWithInvalidCount() --calls [EXTRACTED context=call]--> TestExactArgs_WithInvalidCount_WithValid_WithInvalidArgs() at=args_test.go:L360
+EDGE exactArgsWithInvalidCount() --calls [EXTRACTED context=call]--> TestExactValidArgs_WithInvalidCount() at=args_test.go:L536
+EDGE exactArgsWithInvalidCount() --calls [EXTRACTED context=call]--> TestExactValidArgs_WithInvalidCount_WithInvalidArgs() at=args_test.go:L542
+EDGE TestExactArgs_WithValid() --calls [EXTRACTED context=call]--> expectSuccess() at=args_test.go:L330
+EDGE TestMatchAll() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L480
+EDGE TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L364
+EDGE .SetOut() --method [EXTRACTED]--> Command at=command.go:L296
+EDGE .SetOut() --references [EXTRACTED context=parameter_type]--> io.Writer at=command.go:L296
+EDGE .SetOut() --calls [INFERRED context=call]--> executeCommandWithContext() at=command_test.go:L39
+EDGE .SetOut() --calls [INFERRED context=call]--> executeCommandC() at=command_test.go:L50
+EDGE .SetOut() --calls [INFERRED context=call]--> executeCommandWithContextC() at=command_test.go:L61
+EDGE .SetOut() --calls [INFERRED context=call]--> TestSetOut() at=command_test.go:L2139
+EDGE .SetOut() --calls [INFERRED context=call]--> TestCommandPrintRedirection() at=command_test.go:L2193
+EDGE .SetOut() --calls [INFERRED context=call]--> TestCompletionDoesNotMutateOsArgs() at=completions_test.go:L4106
+EDGE TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L314
+EDGE TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MaximumNArgs() at=args_test.go:L314
+EDGE .SetArgs() --method [EXTRACTED]--> Command at=command.go:L281
+EDGE .SetArgs() --calls [INFERRED context=call]--> executeCommandWithContext() at=command_test.go:L41
+EDGE .SetArgs() --calls [INFERRED context=call]--> executeCommandC() at=command_test.go:L52
+EDGE .SetArgs() --calls [INFERRED context=call]--> executeCommandWithContextC() at=command_test.go:L63
+EDGE .SetArgs() --calls [INFERRED context=call]--> TestSetContextPersistentPreRun() at=command_test.go:L2699
+EDGE .SetArgs() --calls [INFERRED context=call]--> TestValidateFlagGroups() at=flag_groups_test.go:L185
+EDGE TestRangeArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L390
+EDGE TestRangeArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> RangeArgs() at=args_test.go:L390
+EDGE .Execute() --method [EXTRACTED]--> Command at=command.go:L1070
+EDGE .Execute() --calls [EXTRACTED context=call]--> .ExecuteContext() at=command.go:L1064
+EDGE .Execute() --calls [EXTRACTED context=call]--> .ExecuteC() at=command.go:L1071
+EDGE .Execute() --calls [INFERRED context=call]--> TestCommandPrintRedirection() at=command_test.go:L2195
+EDGE .Execute() --calls [INFERRED context=call]--> TestSetContext() at=command_test.go:L2622
+EDGE .Execute() --calls [INFERRED context=call]--> TestSetContextPreRun() at=command_test.go:L2648
+EDGE .Execute() --calls [INFERRED context=call]--> TestSetContextPersistentPreRun() at=command_test.go:L2700
+EDGE .Execute() --calls [INFERRED context=call]--> TestDefaultCompletionCmd() at=completions_test.go:L2469
+EDGE .Execute() --calls [INFERRED context=call]--> TestValidateFlagGroups() at=flag_groups_test.go:L186
+EDGE TestChildCommand() --contains [EXTRACTED]--> command_test.go at=command_test.go:L113
+EDGE TestAliasPrefixMatching() --contains [EXTRACTED]--> command_test.go at=command_test.go:L334
+EDGE TestNoArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L148
+EDGE TestMinimumNArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L240
+EDGE TestMinimumNArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MinimumNArgs() at=args_test.go:L240
+EDGE getCommand() --references [EXTRACTED context=return_type]--> Command at=args_test.go:L23
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoArgs() at=args_test.go:L124
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoArgs_WithArgs() at=args_test.go:L130
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoArgs_WithValid_WithArgs() at=args_test.go:L136
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoArgs_WithValid_WithInvalidArgs() at=args_test.go:L142
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestOnlyValidArgs() at=args_test.go:L156
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoDuplicateArgs() at=args_test.go:L170
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoDuplicateArgs_WithDuplicateArgs() at=args_test.go:L176
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoDuplicateArgs_WithValid_WithDuplicateArgs() at=args_test.go:L182
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestArbitraryArgs() at=args_test.go:L196
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestArbitraryArgs_WithValid() at=args_test.go:L202
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestArbitraryArgs_WithValid_WithInvalidArgs() at=args_test.go:L208
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs() at=args_test.go:L222
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithValid() at=args_test.go:L228
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithValid__WithInvalidArgs() at=args_test.go:L234
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithLessArgs() at=args_test.go:L246
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithLessArgs_WithValid() at=args_test.go:L252
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithLessArgs_WithValid_WithInvalidArgs() at=args_test.go:L258
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs() at=args_test.go:L272
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithValid() at=args_test.go:L278
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithValid_WithInvalidArgs() at=args_test.go:L284
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithMoreArgs() at=args_test.go:L296
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithMoreArgs_WithValid() at=args_test.go:L302
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithMoreArgs_WithValid_WithInvalidArgs() at=args_test.go:L308
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs() at=args_test.go:L372
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs_WithValid() at=args_test.go:L378
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs_WithValid_WithInvalidArgs() at=args_test.go:L384
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs_WithInvalidCount() at=args_test.go:L396
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs_WithInvalidCount_WithValid() at=args_test.go:L402
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs_WithInvalidCount_WithValid_WithInvalidArgs() at=args_test.go:L408
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactValidArgs() at=args_test.go:L528
+EDGE PositionalArgs --references [EXTRACTED context=return_type]--> MinimumNArgs() at=args.go:L87
+EDGE PositionalArgs --references [EXTRACTED context=return_type]--> MaximumNArgs() at=args.go:L97
+EDGE PositionalArgs --references [EXTRACTED context=return_type]--> RangeArgs() at=args.go:L117
+EDGE PositionalArgs --references [EXTRACTED context=return_type]--> MatchAll() at=args.go:L127
+EDGE PositionalArgs --references [EXTRACTED context=field]--> Command at=command.go:L93
+EDGE TestNoDuplicateArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L188
+EDGE TestArbitraryArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L214
+EDGE TestExactArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L340
+EDGE TestChildSameName() --contains [EXTRACTED]--> command_test.go at=command_test.go:L437
+EDGE .CalledAs() --method [EXTRACTED]--> Command at=command.go:L1562
+EDGE .CalledAs() --calls [INFERRED context=call]--> .initCompleteCmd() at=completions.go:L251
+EDGE TestSingleCommand() --contains [EXTRACTED]--> command_test.go at=command_test.go:L88
+EDGE .Name() --calls [INFERRED context=call]--> TestConfigActiveHelp() at=active_help_test.go:L281
+EDGE .Name() --calls [INFERRED context=call]--> TestDisableActiveHelp() at=active_help_test.go:L336
+EDGE .Name() --calls [INFERRED context=call]--> writeCommands() at=bash_completions.go:L453
+EDGE .Name() --calls [INFERRED context=call]--> writeCmdAliases() at=bash_completions.go:L639
+EDGE .Name() --calls [INFERRED context=call]--> .GenBashCompletion() at=bash_completions.go:L685
+EDGE .Name() --calls [INFERRED context=call]--> .genBashCompletion() at=bash_completionsV2.go:L26
+EDGE .Name() --calls [INFERRED context=call]--> TestBashCompletionV2WithActiveHelp() at=bash_completionsV2_test.go:L31
+EDGE .Name() --calls [INFERRED context=call]--> TestBashCompletions() at=bash_completions_test.go:L195
+EDGE .Name() --calls [INFERRED context=call]--> TestBashCompletionNoActiveHelp() at=bash_completions_test.go:L287
+EDGE .Name() --method [EXTRACTED]--> Command at=command.go:L1541
+EDGE .Name() --calls [EXTRACTED context=call]--> .findNext() at=command.go:L801
+EDGE .Name() --calls [EXTRACTED context=call]--> .SuggestionsFor() at=command.go:L867
+EDGE .Name() --calls [EXTRACTED context=call]--> .execute() at=command.go:L911
+EDGE .Name() --calls [EXTRACTED context=call]--> .ExecuteC() at=command.go:L1139
+EDGE .Name() --calls [EXTRACTED context=call]--> .InitDefaultVersionFlag() at=command.go:L1246
+EDGE .Name() --calls [EXTRACTED context=call]--> .InitDefaultHelpCmd() at=command.go:L1286
+EDGE .Name() --calls [EXTRACTED context=call]--> .Less() at=command.go:L1329
+EDGE .Name() --calls [EXTRACTED context=call]--> .RemoveCommand() at=command.go:L1427
+EDGE .Name() --calls [EXTRACTED context=call]--> .CommandPath() at=command.go:L1467
+EDGE .Name() --calls [EXTRACTED context=call]--> .DisplayName() at=command.go:L1478
+EDGE .Name() --calls [EXTRACTED context=call]--> .UseLine() at=command.go:L1484
+EDGE .Name() --calls [EXTRACTED context=call]--> .DebugFlags() at=command.go:L1502
+EDGE .Name() --calls [EXTRACTED context=call]--> .hasNameOrAliasPrefix() at=command.go:L1572
+EDGE .Name() --calls [EXTRACTED context=call]--> .NameAndAliases() at=command.go:L1587
+EDGE .Name() --calls [EXTRACTED context=call]--> defaultUsageFunc() at=command.go:L1996
+EDGE .Name() --calls [INFERRED context=call]--> TestSubcommandExecuteC() at=command_test.go:L172
+EDGE .Name() --calls [INFERRED context=call]--> TestSetHelpCommand() at=command_test.go:L1007
+EDGE .Name() --calls [INFERRED context=call]--> TestCommandsAreSorted() at=command_test.go:L1926
+EDGE .Name() --calls [INFERRED context=call]--> TestEnableCommandSortingIsDisabled() at=command_test.go:L1947
+EDGE .Name() --calls [INFERRED context=call]--> TestTraverseWithParentFlags() at=command_test.go:L2339
+EDGE .Name() --calls [INFERRED context=call]--> TestTraverseNoParentFlags() at=command_test.go:L2359
+EDGE .Name() --calls [INFERRED context=call]--> TestTraverseWithBadChildFlag() at=command_test.go:L2398
+EDGE .Name() --calls [INFERRED context=call]--> TestTraverseWithTwoSubcommands() at=command_test.go:L2418
+EDGE .Name() --calls [INFERRED context=call]--> TestUpdateName() at=command_test.go:L2427
+EDGE .Name() --calls [INFERRED context=call]--> checkIfFlagCompletion() at=completions.go:L727
+EDGE .Name() --calls [INFERRED context=call]--> .InitDefaultCompletionCmd() at=completions.go:L754
+EDGE .Name() --calls [INFERRED context=call]--> removeCompCmd() at=completions_test.go:L2454
+EDGE .Name() --calls [INFERRED context=call]--> TestDefaultCompletionCmd() at=completions_test.go:L2471
+EDGE .Name() --calls [INFERRED context=call]--> TestCompleteCompletion() at=completions_test.go:L2672
+EDGE .Name() --calls [INFERRED context=call]--> TestDisableDescriptions() at=completions_test.go:L3835
+EDGE .Name() --calls [INFERRED context=call]--> .GenFishCompletion() at=fish_completions.go:L278
+EDGE .Name() --calls [INFERRED context=call]--> TestFishCompletionNoActiveHelp() at=fish_completions_test.go:L97
+EDGE .Name() --calls [INFERRED context=call]--> .genPowerShellCompletion() at=powershell_completions.go:L315
+EDGE .Name() --calls [INFERRED context=call]--> TestPwshCompletionNoActiveHelp() at=powershell_completions_test.go:L31
+EDGE .Name() --calls [INFERRED context=call]--> .genZshCompletion() at=zsh_completions.go:L82
+EDGE .Name() --calls [INFERRED context=call]--> TestZshCompletionWithActiveHelp() at=zsh_completions_test.go:L31
+EDGE TestCommandAlias() --contains [EXTRACTED]--> command_test.go at=command_test.go:L274
+EDGE TestExactArgs_WithValid_WithInvalidArgs() --calls [EXTRACTED context=call]--> expectSuccess() at=args_test.go:L336
+EDGE TestEnablePrefixMatching() --contains [EXTRACTED]--> command_test.go at=command_test.go:L305
+EDGE TestMaximumNArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L290
+EDGE TestMaximumNArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MaximumNArgs() at=args_test.go:L290
+EDGE TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L264
+EDGE TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MinimumNArgs() at=args_test.go:L264
+EDGE ExactValidArgs() --calls [EXTRACTED context=call]--> MatchAll() at=args.go:L143
+EDGE ExactValidArgs() --calls [INFERRED context=call]--> TestExactValidArgs() at=args_test.go:L528
+EDGE TestGrandChildSameName() --contains [EXTRACTED]--> command_test.go at=command_test.go:L465
+EDGE calledAsTestcase --contains [EXTRACTED]--> command_test.go at=command_test.go:L2435
+EDGE TestExactArgs() --calls [EXTRACTED context=call]--> expectSuccess() at=args_test.go:L324
+EDGE args.go --imports_from [EXTRACTED context=import]--> go_pkg_fmt at=args.go:L18
+EDGE args.go --imports_from [EXTRACTED context=import]--> go_pkg_strings at=args.go:L19
+EDGE args.go --contains [EXTRACTED]--> legacyArgs() at=args.go:L28
+EDGE args.go --contains [EXTRACTED]--> NoArgs() at=args.go:L42
+EDGE args.go --contains [EXTRACTED]--> OnlyValidArgs() at=args.go:L51
+EDGE args.go --contains [EXTRACTED]--> NoDuplicateArgs() at=args.go:L69
+EDGE args.go --contains [EXTRACTED]--> ArbitraryArgs() at=args.go:L82
+EDGE args.go --contains [EXTRACTED]--> MinimumNArgs() at=args.go:L87
+EDGE args.go --contains [EXTRACTED]--> MaximumNArgs() at=args.go:L97
+EDGE args.go --contains [EXTRACTED]--> RangeArgs() at=args.go:L117
+EDGE args.go --contains [EXTRACTED]--> MatchAll() at=args.go:L127
+EDGE TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> MatchAll() at=args_test.go:L414
+EDGE TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> RangeArgs() at=args_test.go:L414
+EDGE .SetErr() --method [EXTRACTED]--> Command at=command.go:L302
+EDGE .SetErr() --references [EXTRACTED context=parameter_type]--> io.Writer at=command.go:L302
+EDGE .SetErr() --calls [INFERRED context=call]--> executeCommandWithContext() at=command_test.go:L40
+EDGE .SetErr() --calls [INFERRED context=call]--> executeCommandC() at=command_test.go:L51
+EDGE .SetErr() --calls [INFERRED context=call]--> executeCommandWithContextC() at=command_test.go:L62
+EDGE .SetErr() --calls [INFERRED context=call]--> TestSetErr() at=command_test.go:L2147
+EDGE .SetErr() --calls [INFERRED context=call]--> TestCommandPrintRedirection() at=command_test.go:L2192
+EDGE .SetErr() --calls [INFERRED context=call]--> TestCompletionDoesNotMutateOsArgs() at=completions_test.go:L4107
+EDGE TestTraverseWithParentFlags() --calls [INFERRED context=call]--> .Flags() at=command_test.go:L2324
+EDGE TestTraverseWithParentFlags() --calls [INFERRED context=call]--> .Traverse() at=command_test.go:L2332
+EDGE TestDefaultCompletionCmd() --contains [EXTRACTED]--> completions_test.go at=completions_test.go:L2461
+EDGE TestDefaultCompletionCmd() --calls [INFERRED context=call]--> assertNoErr() at=completions_test.go:L2469
+EDGE TestDefaultCompletionCmd() --calls [INFERRED context=call]--> check() at=completions_test.go:L2527
+EDGE TestDefaultCompletionCmd() --calls [INFERRED context=call]--> checkOmit() at=completions_test.go:L2528
+EDGE TestDefaultCompletionCmd() --calls [INFERRED context=call]--> .Find() at=completions_test.go:L2549
+EDGE TestDefaultCompletionCmd() --calls [INFERRED context=call]--> .Flags() at=completions_test.go:L2552
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .HasSubCommands() at=command.go:L1264
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .Find() at=command.go:L1276
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .Root() at=command.go:L1276
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .Commands() at=command.go:L1284
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .IsAvailableCommand() at=command.go:L1285
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .Printf() at=command.go:L1296
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .Usage() at=command.go:L1297
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .InitDefaultHelpFlag() at=command.go:L1304
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .Help() at=command.go:L1306
+EDGE .InitDefaultHelpCmd() --calls [INFERRED context=call]--> CompletionWithDesc() at=command.go:L1287
+EDGE .InitDefaultHelpCmd() --calls [INFERRED context=call]--> CheckErr() at=command.go:L1297
+EDGE TestNoArgs_WithValid_WithArgs() --calls [EXTRACTED context=call]--> noArgsWithArgs() at=args_test.go:L138
+EDGE TestSetOut() --calls [INFERRED context=call]--> .OutOrStdout() at=command_test.go:L2140
+EDGE .initCompleteCmd() --calls [EXTRACTED context=call]--> .getCompletions() at=completions.go:L243
+EDGE .initCompleteCmd() --calls [EXTRACTED context=call]--> CompErrorln() at=completions.go:L245
+EDGE .initCompleteCmd() --calls [EXTRACTED context=call]--> getEnvConfig() at=completions.go:L253
+EDGE .initCompleteCmd() --calls [EXTRACTED context=call]--> .string() at=completions.go:L293
+EDGE .initCompleteCmd() --calls [INFERRED context=call]--> GetActiveHelpConfig() at=completions.go:L257
+EDGE .initCompleteCmd() --calls [INFERRED context=call]--> .OutOrStdout() at=completions.go:L258
+EDGE .initCompleteCmd() --calls [INFERRED context=call]--> .ErrOrStderr() at=completions.go:L293
+EDGE .initCompleteCmd() --calls [INFERRED context=call]--> .Find() at=completions.go:L297
+EDGE TestRangeArgs_WithInvalidCount() --calls [EXTRACTED context=call]--> rangeArgsWithInvalidCount() at=args_test.go:L398
+EDGE .ExecuteContext() --references [EXTRACTED context=parameter_type]--> context.Context at=command.go:L1062
+EDGE .ExecuteContext() --calls [INFERRED context=call]--> TestSetContextPreRunOverwrite() at=command_test.go:L2669
+EDGE checkIfFlagCompletion() --contains [EXTRACTED]--> completions.go at=completions.go:L657
+EDGE checkIfFlagCompletion() --calls [EXTRACTED context=call]--> .getCompletions() at=completions.go:L365
+EDGE checkIfFlagCompletion() --references [EXTRACTED context=return_type]--> github.com/spf13/pflag.Flag at=completions.go:L657
+EDGE checkIfFlagCompletion() --calls [EXTRACTED context=call]--> findFlag() at=completions.go:L724
+EDGE checkIfFlagCompletion() --calls [INFERRED context=call]--> isFlagArg() at=completions.go:L696
+EDGE legacyArgs() --calls [INFERRED context=call]--> .HasSubCommands() at=args.go:L30
+EDGE legacyArgs() --calls [INFERRED context=call]--> .HasParent() at=args.go:L35
+EDGE legacyArgs() --calls [INFERRED context=call]--> .findSuggestions() at=args.go:L36
+EDGE legacyArgs() --calls [INFERRED context=call]--> .Find() at=command.go:L776
+EDGE .genZshCompletion() --calls [EXTRACTED context=call]--> .GenZshCompletion() at=zsh_completions.go:L32
+EDGE .genZshCompletion() --calls [EXTRACTED context=call]--> .GenZshCompletionNoDesc() at=zsh_completions.go:L43
+EDGE .genZshCompletion() --calls [EXTRACTED context=call]--> .genZshCompletionFile() at=zsh_completions.go:L77
+EDGE .genZshCompletion() --calls [EXTRACTED context=call]--> genZshComp() at=zsh_completions.go:L82
+EDGE TestValidateFlagGroups() --contains [EXTRACTED]--> flag_groups_test.go at=flag_groups_test.go:L22
+EDGE TestValidateFlagGroups() --calls [INFERRED context=call]--> .Flags() at=flag_groups_test.go:L30
+EDGE TestValidateFlagGroups() --calls [INFERRED context=call]--> .PersistentFlags() at=flag_groups_test.go:L33
+EDGE TestValidateFlagGroups() --calls [INFERRED context=call]--> .Commands() at=flag_groups_test.go:L166
+EDGE .GenBashCompletion() --calls [EXTRACTED context=call]--> writePreamble() at=bash_completions.go:L685
+EDGE .GenBashCompletion() --calls [EXTRACTED context=call]--> gen() at=bash_completions.go:L689
+EDGE .GenBashCompletion() --calls [EXTRACTED context=call]--> writePostscript() at=bash_completions.go:L690
+EDGE .GenBashCompletion() --calls [EXTRACTED context=call]--> .GenBashCompletionFile() at=bash_completions.go:L708
+EDGE TestCommandsAreSorted() --calls [INFERRED context=call]--> .Commands() at=command_test.go:L1925
+EDGE .UseLine() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L1485
+EDGE .UseLine() --calls [EXTRACTED context=call]--> .HasAvailableFlags() at=command.go:L1493
+EDGE .UseLine() --calls [INFERRED context=call]--> TestSetHelpTemplate() at=command_test.go:L1034
+EDGE .UseLine() --calls [INFERRED context=call]--> TestSetUsageTemplate() at=command_test.go:L1142
+EDGE TestNoArgs_WithArgs() --calls [EXTRACTED context=call]--> noArgsWithArgs() at=args_test.go:L132
+EDGE TestCompleteCompletion() --contains [EXTRACTED]--> completions_test.go at=completions_test.go:L2607
+EDGE TestCompleteCompletion() --calls [INFERRED context=call]--> .Commands() at=completions_test.go:L2671
+EDGE .Less() --method [EXTRACTED]--> commandSorterByName at=command.go:L1329
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> active_help_test.go at=active_help_test.go:L20
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> bash_completions.go at=bash_completions.go:L23
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> bash_completions_test.go at=bash_completions_test.go:L23
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> cobra.go at=cobra.go:L26
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> cobra_test.go at=cobra_test.go:L22
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> command.go at=command.go:L28
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> completions.go at=completions.go:L22
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> completions_test.go at=completions_test.go:L22
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> cmd_test.go at=doc/cmd_test.go:L18
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> man_docs.go at=doc/man_docs.go:L25
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> man_docs_test.go at=doc/man_docs_test.go:L23
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> md_docs.go at=doc/md_docs.go:L24
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> rest_docs.go at=doc/rest_docs.go:L24
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> util.go at=doc/util.go:L18
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> yaml_docs.go at=doc/yaml_docs.go:L23
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> fish_completions.go at=fish_completions.go:L22
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> flag_groups.go at=flag_groups.go:L20
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> flag_groups_test.go at=flag_groups_test.go:L18
+EDGE go_pkg_strings --imports_from [EXTRACTED context=import]--> powershell_completions.go at=powershell_completions.go:L25
+EDGE TestSetErr() --calls [INFERRED context=call]--> .ErrOrStderr() at=command_test.go:L2148
+EDGE TestFishCompletionNoActiveHelp() --contains [EXTRACTED]--> fish_completions_test.go at=fish_completions_test.go:L89
+EDGE TestFishCompletionNoActiveHelp() --calls [INFERRED context=call]--> assertNoErr() at=fish_completions_test.go:L93
+EDGE TestFishCompletionNoActiveHelp() --calls [INFERRED context=call]--> activeHelpEnvVar() at=fish_completions_test.go:L97
+EDGE TestFishCompletionNoActiveHelp() --calls [INFERRED context=call]--> check() at=fish_completions_test.go:L98
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> active_help.go at=active_help.go:L18
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> active_help_test.go at=active_help_test.go:L18
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> bash_completions.go at=bash_completions.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> bash_completionsV2.go at=bash_completionsV2.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> bash_completionsV2_test.go at=bash_completionsV2_test.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> bash_completions_test.go at=bash_completions_test.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> cobra.go at=cobra.go:L21
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> command.go at=command.go:L23
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> command_win.go at=command_win.go:L21
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> completions.go at=completions.go:L18
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> completions_test.go at=completions_test.go:L20
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> man_docs.go at=doc/man_docs.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> man_docs_test.go at=doc/man_docs_test.go:L20
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> man_examples_test.go at=doc/man_examples_test.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> md_docs.go at=doc/md_docs.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> rest_docs.go at=doc/rest_docs.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> yaml_docs.go at=doc/yaml_docs.go:L18
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> yaml_docs_test.go at=doc/yaml_docs_test.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> fish_completions.go at=fish_completions.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> fish_completions_test.go at=fish_completions_test.go:L20
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> flag_groups.go at=flag_groups.go:L18
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> powershell_completions.go at=powershell_completions.go:L22
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> powershell_completions_test.go at=powershell_completions_test.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> zsh_completions.go at=zsh_completions.go:L19
+EDGE go_pkg_fmt --imports_from [EXTRACTED context=import]--> zsh_completions_test.go at=zsh_completions_test.go:L19
+EDGE TestSetHelpCommand() --calls [INFERRED context=call]--> .SetHelpCommand() at=command_test.go:L1003
+EDGE TestSetHelpCommand() --calls [INFERRED context=call]--> .Print() at=command_test.go:L1008
+EDGE .InitDefaultVersionFlag() --calls [EXTRACTED context=call]--> .mergePersistentFlags() at=command.go:L1243
+EDGE .InitDefaultVersionFlag() --calls [EXTRACTED context=call]--> .Flags() at=command.go:L1244
+EDGE .InitDefaultVersionFlag() --calls [INFERRED context=call]--> .getCompletions() at=completions.go:L358
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .InitDefaultHelpFlag() at=command.go:L1223
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .Flags() at=command.go:L1690
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .LocalNonPersistentFlags() at=command.go:L1705
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .LocalFlags() at=command.go:L1720
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .InheritedFlags() at=command.go:L1748
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .PersistentFlags() at=command.go:L1777
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .ResetFlags() at=command.go:L1790
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .updateParentsPflags() at=command.go:L1909
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> defaultVersionFunc() at=command.go:L2070
+EDGE TestConfigActiveHelp() --contains [EXTRACTED]--> active_help_test.go at=active_help_test.go:L266
+EDGE TestConfigActiveHelp() --calls [INFERRED context=call]--> activeHelpEnvVar() at=active_help_test.go:L281
+EDGE TestConfigActiveHelp() --calls [INFERRED context=call]--> GetActiveHelpConfig() at=active_help_test.go:L284
+EDGE TestConfigActiveHelp() --calls [INFERRED context=call]--> .Flags() at=active_help_test.go:L302
+EDGE .genBashCompletion() --calls [EXTRACTED context=call]--> genBashComp() at=bash_completionsV2.go:L26
+EDGE .genBashCompletion() --calls [EXTRACTED context=call]--> .GenBashCompletionV2() at=bash_completionsV2.go:L483
+EDGE TestRangeArgs_WithInvalidCount_WithValid_WithInvalidArgs() --calls [EXTRACTED context=call]--> rangeArgsWithInvalidCount() at=args_test.go:L410
+EDGE TestEnableCommandSortingIsDisabled() --calls [INFERRED context=call]--> .Commands() at=command_test.go:L1946
+EDGE executeCommandWithContext() --references [EXTRACTED context=parameter_type]--> context.Context at=command_test.go:L37
+EDGE executeCommandWithContext() --calls [EXTRACTED context=call]--> TestExecuteContext() at=command_test.go:L193
+EDGE executeCommandWithContext() --calls [EXTRACTED context=call]--> TestHelpFuncExecuted() at=command_test.go:L2948
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .GenBashCompletionV2() at=bash_completionsV2.go:L482
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .SetOutput() at=command.go:L289
+EDGE io.Writer --references [EXTRACTED context=return_type]--> .OutOrStdout() at=command.go:L393
+EDGE io.Writer --references [EXTRACTED context=return_type]--> .OutOrStderr() at=command.go:L398
+EDGE io.Writer --references [EXTRACTED context=return_type]--> .ErrOrStderr() at=command.go:L403
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .getOut() at=command.go:L412
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .getErr() at=command.go:L422
+EDGE io.Writer --references [EXTRACTED context=return_type]--> .getUsageTemplateFunc() at=command.go:L464
+EDGE io.Writer --references [EXTRACTED context=return_type]--> .getHelpTemplateFunc() at=command.go:L505
+EDGE io.Writer --references [EXTRACTED context=return_type]--> .getVersionTemplateFunc() at=command.go:L631
+EDGE io.Writer --references [EXTRACTED context=field]--> tmplFunc at=command.go:L1939
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> defaultHelpFunc() at=command.go:L2047
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> defaultVersionFunc() at=command.go:L2068
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> GenMan() at=doc/man_docs.go:L105
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> GenMarkdown() at=doc/md_docs.go:L52
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> GenMarkdownCustom() at=doc/md_docs.go:L57
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> GenReST() at=doc/rest_docs.go:L57
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> GenReSTCustom() at=doc/rest_docs.go:L62
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> GenYaml() at=doc/yaml_docs.go:L88
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> GenYamlCustom() at=doc/yaml_docs.go:L93
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .GenPowerShellCompletion() at=powershell_completions.go:L337
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .GenPowerShellCompletionWithDesc() at=powershell_completions.go:L348
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .GenZshCompletion() at=zsh_completions.go:L31
+EDGE io.Writer --references [EXTRACTED context=parameter_type]--> .GenZshCompletionNoDesc() at=zsh_completions.go:L42
+EDGE TestCommandPrintRedirection() --calls [INFERRED context=call]--> .PrintErr() at=command_test.go:L2182
+EDGE TestCommandPrintRedirection() --calls [INFERRED context=call]--> .PrintErrln() at=command_test.go:L2183
+EDGE TestCommandPrintRedirection() --calls [INFERRED context=call]--> .PrintErrf() at=command_test.go:L2184
+EDGE TestCommandPrintRedirection() --calls [INFERRED context=call]--> .Print() at=command_test.go:L2186
+EDGE TestCommandPrintRedirection() --calls [INFERRED context=call]--> .Println() at=command_test.go:L2187
+EDGE TestCommandPrintRedirection() --calls [INFERRED context=call]--> .Printf() at=command_test.go:L2188
+EDGE .findNext() --calls [EXTRACTED context=call]--> .Find() at=command.go:L767
+EDGE .findNext() --calls [EXTRACTED context=call]--> commandNameMatches() at=command.go:L801
+EDGE .findNext() --calls [EXTRACTED context=call]--> .HasAlias() at=command.go:L801
+EDGE .findNext() --calls [EXTRACTED context=call]--> .Traverse() at=command.go:L849
+EDGE defaultUsageFunc() --contains [EXTRACTED]--> command.go at=command.go:L1974
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .Runnable() at=command.go:L1977
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .HasAvailableSubCommands() at=command.go:L1980
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .HasExample() at=command.go:L1987
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .Commands() at=command.go:L1992
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .Groups() at=command.go:L1993
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .IsAvailableCommand() at=command.go:L1996
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .NamePadding() at=command.go:L1997
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .AllChildCommandsHaveGroup() at=command.go:L2009
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .HasAvailableLocalFlags() at=command.go:L2019
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .LocalFlags() at=command.go:L2021
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .HasAvailableInheritedFlags() at=command.go:L2023
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .InheritedFlags() at=command.go:L2025
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .HasHelpSubCommands() at=command.go:L2027
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .IsAdditionalHelpTopicCommand() at=command.go:L2030
+EDGE defaultUsageFunc() --calls [EXTRACTED context=call]--> .CommandPathPadding() at=command.go:L2031
+EDGE defaultUsageFunc() --calls [INFERRED context=call]--> rpad() at=command.go:L1997
+EDGE defaultUsageFunc() --calls [INFERRED context=call]--> trimRightSpace() at=command.go:L2021
+EDGE .execute() --calls [EXTRACTED context=call]--> .Printf() at=command.go:L911
+EDGE .execute() --calls [EXTRACTED context=call]--> .InitDefaultHelpFlag() at=command.go:L916
+EDGE .execute() --calls [EXTRACTED context=call]--> .ParseFlags() at=command.go:L919
+EDGE .execute() --calls [EXTRACTED context=call]--> .FlagErrorFunc() at=command.go:L921
+EDGE .execute() --calls [EXTRACTED context=call]--> .Flags() at=command.go:L926
+EDGE .execute() --calls [EXTRACTED context=call]--> .Println() at=command.go:L930
+EDGE .execute() --calls [EXTRACTED context=call]--> .getVersionTemplateFunc() at=command.go:L946
+EDGE .execute() --calls [EXTRACTED context=call]--> .OutOrStdout() at=command.go:L947
+EDGE .execute() --calls [EXTRACTED context=call]--> .Runnable() at=command.go:L955
+EDGE .execute() --calls [EXTRACTED context=call]--> .preRun() at=command.go:L959
+EDGE .execute() --calls [EXTRACTED context=call]--> .postRun() at=command.go:L961
+EDGE .execute() --calls [EXTRACTED context=call]--> .ValidateArgs() at=command.go:L968
+EDGE .execute() --calls [EXTRACTED context=call]--> .Parent() at=command.go:L973
+EDGE .execute() --calls [EXTRACTED context=call]--> .ValidateRequiredFlags() at=command.go:L1007
+EDGE TestDisableActiveHelp() --contains [EXTRACTED]--> active_help_test.go at=active_help_test.go:L319
+EDGE TestDisableActiveHelp() --calls [INFERRED context=call]--> activeHelpEnvVar() at=active_help_test.go:L336
+EDGE TestDisableActiveHelp() --calls [INFERRED context=call]--> AppendActiveHelp() at=active_help_test.go:L340
+EDGE TestDisableActiveHelp() --calls [INFERRED context=call]--> GetActiveHelpConfig() at=active_help_test.go:L389
+EDGE TestSetContextPersistentPreRun() --calls [INFERRED context=call]--> .Context() at=command_test.go:L2681
+EDGE TestSetContextPersistentPreRun() --calls [INFERRED context=call]--> .SetContext() at=command_test.go:L2682
+EDGE TestRangeArgs_WithInvalidCount_WithValid() --calls [EXTRACTED context=call]--> rangeArgsWithInvalidCount() at=args_test.go:L404
+EDGE .genPowerShellCompletion() --calls [EXTRACTED context=call]--> genPowerShellComp() at=powershell_completions.go:L315
+EDGE .genPowerShellCompletion() --calls [EXTRACTED context=call]--> .genPowerShellCompletionFile() at=powershell_completions.go:L327
+EDGE .genPowerShellCompletion() --calls [EXTRACTED context=call]--> .GenPowerShellCompletion() at=powershell_completions.go:L338
+EDGE .genPowerShellCompletion() --calls [EXTRACTED context=call]--> .GenPowerShellCompletionWithDesc() at=powershell_completions.go:L349
+EDGE executeCommandWithContextC() --references [EXTRACTED context=parameter_type]--> context.Context at=command_test.go:L59
+EDGE executeCommandWithContextC() --calls [INFERRED context=call]--> .ExecuteContextC() at=command_test.go:L65
+EDGE executeCommandWithContextC() --calls [EXTRACTED context=call]--> TestExecuteContextC() at=command_test.go:L222
+EDGE executeCommandWithContextC() --calls [INFERRED context=call]--> TestValidArgsFuncCmdContext() at=completions_test.go:L1304
+EDGE .SuggestionsFor() --calls [EXTRACTED context=call]--> .findSuggestions() at=command.go:L789
+EDGE .SuggestionsFor() --calls [EXTRACTED context=call]--> .IsAvailableCommand() at=command.go:L866
+EDGE .SuggestionsFor() --calls [INFERRED context=call]--> ld() at=command.go:L867
+EDGE writeCmdAliases() --contains [EXTRACTED]--> bash_completions.go at=bash_completions.go:L629
+EDGE writeCmdAliases() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=bash_completions.go:L629
+EDGE writeCmdAliases() --calls [INFERRED context=call]--> WriteStringAndCheck() at=bash_completions.go:L636
+EDGE TestMinimumNArgs_WithLessArgs_WithValid() --calls [EXTRACTED context=call]--> minimumNArgsWithLessArgs() at=args_test.go:L254
+EDGE TestBashCompletions() --contains [EXTRACTED]--> bash_completions_test.go at=bash_completions_test.go:L83
+EDGE TestBashCompletions() --calls [EXTRACTED context=call]--> check() at=bash_completions_test.go:L170
+EDGE TestBashCompletions() --calls [EXTRACTED context=call]--> checkNumOccurrences() at=bash_completions_test.go:L180
+EDGE TestBashCompletions() --calls [EXTRACTED context=call]--> checkOmit() at=bash_completions_test.go:L189
+EDGE TestBashCompletions() --calls [EXTRACTED context=call]--> checkRegex() at=bash_completions_test.go:L197
+EDGE TestBashCompletions() --calls [EXTRACTED context=call]--> runShellCheck() at=bash_completions_test.go:L224
+EDGE TestBashCompletions() --calls [INFERRED context=call]--> assertNoErr() at=bash_completions_test.go:L92
+EDGE TestBashCompletions() --calls [INFERRED context=call]--> .Flags() at=bash_completions_test.go:L91
+EDGE TestBashCompletions() --calls [INFERRED context=call]--> .PersistentFlags() at=bash_completions_test.go:L99
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .ExecuteContextC() at=command.go:L1080
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L1090
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .Root() at=command.go:L1091
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .checkCommandGroups() at=command.go:L1117
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .Traverse() at=command.go:L1121
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .Find() at=command.go:L1123
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .PrintErrln() at=command.go:L1131
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .ErrPrefix() at=command.go:L1131
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .PrintErrf() at=command.go:L1132
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .HelpFunc() at=command.go:L1153
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .Println() at=command.go:L1166
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .UsageString() at=command.go:L1166
+EDGE TestSetContextPreRun() --calls [INFERRED context=call]--> .Context() at=command_test.go:L2634
+EDGE TestSetContextPreRun() --calls [INFERRED context=call]--> .SetContext() at=command_test.go:L2635
+EDGE removeCompCmd() --contains [EXTRACTED]--> completions_test.go at=completions_test.go:L2451
+EDGE TestMaximumNArgs_WithMoreArgs_WithValid_WithInvalidArgs() --calls [EXTRACTED context=call]--> maximumNArgsWithMoreArgs() at=args_test.go:L310
+EDGE writeCommands() --contains [EXTRACTED]--> bash_completions.go at=bash_completions.go:L447
+EDGE writeCommands() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=bash_completions.go:L447
+EDGE writeCommands() --calls [INFERRED context=call]--> WriteStringAndCheck() at=bash_completions.go:L448
+EDGE writeCommands() --calls [INFERRED context=call]--> .Commands() at=bash_completions.go:L449
+EDGE writeCommands() --calls [INFERRED context=call]--> .IsAvailableCommand() at=bash_completions.go:L450
+EDGE writeCommands() --calls [EXTRACTED context=call]--> gen() at=bash_completions.go:L674
+EDGE TestCompletionDoesNotMutateOsArgs() --contains [EXTRACTED]--> completions_test.go at=completions_test.go:L4076
+EDGE TestBashCompletionV2WithActiveHelp() --contains [EXTRACTED]--> bash_completionsV2_test.go at=bash_completionsV2_test.go:L23
+EDGE TestBashCompletionV2WithActiveHelp() --calls [INFERRED context=call]--> assertNoErr() at=bash_completionsV2_test.go:L27
+EDGE TestBashCompletionV2WithActiveHelp() --calls [INFERRED context=call]--> activeHelpEnvVar() at=bash_completionsV2_test.go:L31
+EDGE TestBashCompletionV2WithActiveHelp() --calls [INFERRED context=call]--> checkOmit() at=bash_completionsV2_test.go:L32
+EDGE TestMinimumNArgs_WithLessArgs_WithValid_WithInvalidArgs() --calls [EXTRACTED context=call]--> minimumNArgsWithLessArgs() at=args_test.go:L260
+EDGE TestZshCompletionWithActiveHelp() --contains [EXTRACTED]--> zsh_completions_test.go at=zsh_completions_test.go:L23
+EDGE TestZshCompletionWithActiveHelp() --calls [INFERRED context=call]--> assertNoErr() at=zsh_completions_test.go:L27
+EDGE TestZshCompletionWithActiveHelp() --calls [INFERRED context=call]--> activeHelpEnvVar() at=zsh_completions_test.go:L31
+EDGE TestZshCompletionWithActiveHelp() --calls [INFERRED context=call]--> checkOmit() at=zsh_completions_test.go:L32
+EDGE OnlyValidArgs() --calls [INFERRED context=call]--> stringInSlice() at=args.go:L60
+EDGE OnlyValidArgs() --calls [INFERRED context=call]--> .findSuggestions() at=args.go:L61
+EDGE TestSetContext() --calls [INFERRED context=call]--> .Context() at=command_test.go:L2609
+EDGE TestSetContext() --calls [INFERRED context=call]--> .SetContext() at=command_test.go:L2621
+EDGE TestDisableDescriptions() --contains [EXTRACTED]--> completions_test.go at=completions_test.go:L3822
+EDGE TestDisableDescriptions() --calls [INFERRED context=call]--> configEnvVar() at=completions_test.go:L3835
+EDGE TestNoDuplicateArgs_WithValid_WithDuplicateArgs() --calls [EXTRACTED context=call]--> noDuplicateArgsWithDuplicate() at=args_test.go:L184
+EDGE TestNoDuplicateArgs_WithDuplicateArgs() --calls [EXTRACTED context=call]--> noDuplicateArgsWithDuplicate() at=args_test.go:L178
+EDGE TestMinimumNArgs_WithLessArgs() --calls [EXTRACTED context=call]--> minimumNArgsWithLessArgs() at=args_test.go:L248
+EDGE .RemoveCommand() --calls [INFERRED context=call]--> TestRemoveCommand() at=command_test.go:L1589
+EDGE .RemoveCommand() --calls [INFERRED context=call]--> TestReplaceCommandWithRemove() at=command_test.go:L1609
+EDGE .InitDefaultCompletionCmd() --calls [INFERRED context=call]--> .HasAlias() at=completions.go:L754
+EDGE .InitDefaultCompletionCmd() --calls [INFERRED context=call]--> .Root() at=completions.go:L777
+EDGE .InitDefaultCompletionCmd() --calls [INFERRED context=call]--> .Find() at=completions.go:L792
+EDGE .InitDefaultCompletionCmd() --calls [INFERRED context=call]--> .OutOrStdout() at=completions.go:L801
+EDGE .InitDefaultCompletionCmd() --calls [INFERRED context=call]--> .Flags() at=completions.go:L836
+EDGE TestTraverseWithTwoSubcommands() --calls [INFERRED context=call]--> .Traverse() at=command_test.go:L2414
+EDGE TestMaximumNArgs_WithMoreArgs() --calls [EXTRACTED context=call]--> maximumNArgsWithMoreArgs() at=args_test.go:L298
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestNoCmdNameCompletionInGo() at=completions_test.go:L167
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestValidArgsCompletionInGo() at=completions_test.go:L326
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestValidArgsFuncSingleCmdInvalidArg() at=completions_test.go:L1364
+EDGE TestNoArgs_WithValid_WithInvalidArgs() --calls [EXTRACTED context=call]--> noArgsWithArgs() at=args_test.go:L144
+EDGE TestPwshCompletionNoActiveHelp() --contains [EXTRACTED]--> powershell_completions_test.go at=powershell_completions_test.go:L23
+EDGE TestPwshCompletionNoActiveHelp() --calls [INFERRED context=call]--> assertNoErr() at=powershell_completions_test.go:L27
+EDGE TestPwshCompletionNoActiveHelp() --calls [INFERRED context=call]--> activeHelpEnvVar() at=powershell_completions_test.go:L31
+EDGE TestPwshCompletionNoActiveHelp() --calls [INFERRED context=call]--> check() at=powershell_completions_test.go:L32
+EDGE ArbitraryArgs() --calls [INFERRED context=call]--> .ValidateArgs() at=command.go:L1174
+EDGE TestBashCompletionNoActiveHelp() --contains [EXTRACTED]--> bash_completions_test.go at=bash_completions_test.go:L279
+EDGE TestBashCompletionNoActiveHelp() --calls [EXTRACTED context=call]--> check() at=bash_completions_test.go:L288
+EDGE TestBashCompletionNoActiveHelp() --calls [INFERRED context=call]--> assertNoErr() at=bash_completions_test.go:L283
+EDGE TestBashCompletionNoActiveHelp() --calls [INFERRED context=call]--> activeHelpEnvVar() at=bash_completions_test.go:L287
+EDGE .DebugFlags() --calls [EXTRACTED context=call]--> .Println() at=command.go:L1502
+EDGE .DebugFlags() --calls [EXTRACTED context=call]--> .HasFlags() at=command.go:L1506
+EDGE .DebugFlags() --calls [EXTRACTED context=call]--> .HasPersistentFlags() at=command.go:L1506
+EDGE .DebugFlags() --calls [EXTRACTED context=call]--> .persistentFlag() at=command.go:L1511
+EDGE .DebugFlags() --calls [EXTRACTED context=call]--> .HasSubCommands() at=command.go:L1530
+EDGE .CommandPath() --calls [INFERRED context=call]--> gen() at=bash_completions.go:L659
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> .checkCommandGroups() at=command.go:L1209
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L1466
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> .Parent() at=command.go:L1467
+EDGE TestTraverseNoParentFlags() --calls [INFERRED context=call]--> .Flags() at=command_test.go:L2346
+EDGE TestTraverseNoParentFlags() --calls [INFERRED context=call]--> .Traverse() at=command_test.go:L2352
+EDGE TestMaximumNArgs_WithMoreArgs_WithValid() --calls [EXTRACTED context=call]--> maximumNArgsWithMoreArgs() at=args_test.go:L304
+EDGE TestTraverseWithBadChildFlag() --calls [INFERRED context=call]--> .Flags() at=command_test.go:L2384
+EDGE TestTraverseWithBadChildFlag() --calls [INFERRED context=call]--> .Traverse() at=command_test.go:L2391
+EDGE .GenFishCompletion() --calls [EXTRACTED context=call]--> genFishComp() at=fish_completions.go:L278
+EDGE .GenFishCompletion() --calls [EXTRACTED context=call]--> .GenFishCompletionFile() at=fish_completions.go:L291
+EDGE active_help.go --contains [EXTRACTED]--> AppendActiveHelp() at=active_help.go:L38
+EDGE active_help.go --contains [EXTRACTED]--> GetActiveHelpConfig() at=active_help.go:L47
+EDGE active_help.go --contains [EXTRACTED]--> activeHelpEnvVar() at=active_help.go:L58
+EDGE activeHelpEnvVar() --calls [EXTRACTED context=call]--> GetActiveHelpConfig() at=active_help.go:L50
+EDGE activeHelpEnvVar() --calls [INFERRED context=call]--> configEnvVar() at=active_help.go:L59
+EDGE activeHelpEnvVar() --calls [INFERRED context=call]--> writePreamble() at=bash_completions.go:L401
+EDGE activeHelpEnvVar() --calls [INFERRED context=call]--> genFishComp() at=fish_completions.go:L272
+EDGE activeHelpEnvVar() --calls [INFERRED context=call]--> genPowerShellComp() at=powershell_completions.go:L310
+EDGE GetActiveHelpConfig() --references [EXTRACTED context=parameter_type]--> Command at=active_help.go:L47
+EDGE GetActiveHelpConfig() --calls [INFERRED context=call]--> .Root() at=active_help.go:L50
+EDGE TestConfigActiveHelp() --references [EXTRACTED context=parameter_type]--> testing.T at=active_help_test.go:L266
+EDGE TestConfigActiveHelp() --calls [INFERRED context=call]--> executeCommand() at=active_help_test.go:L291
+EDGE TestConfigActiveHelp() --calls [INFERRED context=call]--> .AddCommand() at=active_help_test.go:L277
+EDGE TestDisableActiveHelp() --references [EXTRACTED context=parameter_type]--> testing.T at=active_help_test.go:L319
+EDGE TestDisableActiveHelp() --calls [INFERRED context=call]--> executeCommand() at=active_help_test.go:L344
+EDGE TestDisableActiveHelp() --calls [INFERRED context=call]--> .AddCommand() at=active_help_test.go:L330
+EDGE args.go --contains [EXTRACTED]--> PositionalArgs at=args.go:L22
+EDGE args.go --contains [EXTRACTED]--> ExactValidArgs() at=args.go:L142
+EDGE ArbitraryArgs() --references [EXTRACTED context=parameter_type]--> Command at=args.go:L82
+EDGE ExactArgs() --calls [INFERRED context=call]--> TestExactArgs_WithInvalidCount() at=args_test.go:L346
+EDGE ExactValidArgs() --references [EXTRACTED context=return_type]--> PositionalArgs at=args.go:L142
+EDGE ExactValidArgs() --calls [INFERRED context=call]--> TestExactValidArgs_WithInvalidCount() at=args_test.go:L534
+EDGE ExactValidArgs() --calls [INFERRED context=call]--> TestExactValidArgs_WithInvalidCount_WithInvalidArgs() at=args_test.go:L540
+EDGE ExactValidArgs() --calls [INFERRED context=call]--> TestExactValidArgs_WithInvalidArgs() at=args_test.go:L546
+EDGE legacyArgs() --references [EXTRACTED context=parameter_type]--> Command at=args.go:L28
+EDGE legacyArgs() --calls [INFERRED context=call]--> .CommandPath() at=args.go:L36
+EDGE MaximumNArgs() --calls [INFERRED context=call]--> TestMaximumNArgs() at=args_test.go:L272
+EDGE MaximumNArgs() --calls [INFERRED context=call]--> TestMaximumNArgs_WithValid() at=args_test.go:L278
+EDGE MaximumNArgs() --calls [INFERRED context=call]--> TestMaximumNArgs_WithValid_WithInvalidArgs() at=args_test.go:L284
+EDGE MaximumNArgs() --calls [INFERRED context=call]--> TestMaximumNArgs_WithMoreArgs() at=args_test.go:L296
+EDGE MaximumNArgs() --calls [INFERRED context=call]--> TestMaximumNArgs_WithMoreArgs_WithValid() at=args_test.go:L302
+EDGE MaximumNArgs() --calls [INFERRED context=call]--> TestMaximumNArgs_WithMoreArgs_WithValid_WithInvalidArgs() at=args_test.go:L308
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestMinimumNArgs() at=args_test.go:L222
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestMinimumNArgs_WithValid() at=args_test.go:L228
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestMinimumNArgs_WithValid__WithInvalidArgs() at=args_test.go:L234
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestMinimumNArgs_WithLessArgs() at=args_test.go:L246
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestMinimumNArgs_WithLessArgs_WithValid() at=args_test.go:L252
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestMinimumNArgs_WithLessArgs_WithValid_WithInvalidArgs() at=args_test.go:L258
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> TestBashCompletions() at=bash_completions_test.go:L133
+EDGE MinimumNArgs() --calls [INFERRED context=call]--> .initCompleteCmd() at=completions.go:L238
+EDGE NoArgs() --references [EXTRACTED context=parameter_type]--> Command at=args.go:L42
+EDGE NoArgs() --calls [INFERRED context=call]--> .CommandPath() at=args.go:L44
+EDGE NoDuplicateArgs() --references [EXTRACTED context=parameter_type]--> Command at=args.go:L69
+EDGE NoDuplicateArgs() --calls [INFERRED context=call]--> .CommandPath() at=args.go:L73
+EDGE OnlyValidArgs() --references [EXTRACTED context=parameter_type]--> Command at=args.go:L51
+EDGE OnlyValidArgs() --calls [INFERRED context=call]--> .CommandPath() at=args.go:L61
+EDGE RangeArgs() --calls [INFERRED context=call]--> TestRangeArgs() at=args_test.go:L372
+EDGE RangeArgs() --calls [INFERRED context=call]--> TestRangeArgs_WithValid() at=args_test.go:L378
+EDGE RangeArgs() --calls [INFERRED context=call]--> TestRangeArgs_WithValid_WithInvalidArgs() at=args_test.go:L384
+EDGE RangeArgs() --calls [INFERRED context=call]--> TestRangeArgs_WithInvalidCount() at=args_test.go:L396
+EDGE RangeArgs() --calls [INFERRED context=call]--> TestRangeArgs_WithInvalidCount_WithValid() at=args_test.go:L402
+EDGE RangeArgs() --calls [INFERRED context=call]--> TestRangeArgs_WithInvalidCount_WithValid_WithInvalidArgs() at=args_test.go:L408
+EDGE args_test.go --imports_from [EXTRACTED context=import]--> go_pkg_fmt at=args_test.go:L18
+EDGE args_test.go --imports_from [EXTRACTED context=import]--> go_pkg_strings at=args_test.go:L19
+EDGE args_test.go --contains [EXTRACTED]--> getCommand() at=args_test.go:L23
+EDGE args_test.go --contains [EXTRACTED]--> expectSuccess() at=args_test.go:L35
+EDGE args_test.go --contains [EXTRACTED]--> noArgsWithArgs() at=args_test.go:L55
+EDGE args_test.go --contains [EXTRACTED]--> minimumNArgsWithLessArgs() at=args_test.go:L66
+EDGE args_test.go --contains [EXTRACTED]--> maximumNArgsWithMoreArgs() at=args_test.go:L77
+EDGE args_test.go --contains [EXTRACTED]--> rangeArgsWithInvalidCount() at=args_test.go:L99
+EDGE args_test.go --contains [EXTRACTED]--> noDuplicateArgsWithDuplicate() at=args_test.go:L110
+EDGE args_test.go --contains [EXTRACTED]--> TestNoArgs() at=args_test.go:L123
+EDGE args_test.go --contains [EXTRACTED]--> TestNoArgs_WithArgs() at=args_test.go:L129
+EDGE args_test.go --contains [EXTRACTED]--> TestNoArgs_WithValid_WithArgs() at=args_test.go:L135
+EDGE args_test.go --contains [EXTRACTED]--> TestNoArgs_WithValid_WithInvalidArgs() at=args_test.go:L141
+EDGE args_test.go --contains [EXTRACTED]--> TestNoArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L147
+EDGE args_test.go --contains [EXTRACTED]--> TestOnlyValidArgs() at=args_test.go:L155
+EDGE args_test.go --contains [EXTRACTED]--> TestOnlyValidArgs_WithInvalidArgs() at=args_test.go:L161
+EDGE args_test.go --contains [EXTRACTED]--> TestNoDuplicateArgs() at=args_test.go:L169
+EDGE args_test.go --contains [EXTRACTED]--> TestNoDuplicateArgs_WithDuplicateArgs() at=args_test.go:L175
+EDGE args_test.go --contains [EXTRACTED]--> TestNoDuplicateArgs_WithValid_WithDuplicateArgs() at=args_test.go:L181
+EDGE args_test.go --contains [EXTRACTED]--> TestNoDuplicateArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L187
+EDGE args_test.go --contains [EXTRACTED]--> TestArbitraryArgs() at=args_test.go:L195
+EDGE args_test.go --contains [EXTRACTED]--> TestArbitraryArgs_WithValid() at=args_test.go:L201
+EDGE args_test.go --contains [EXTRACTED]--> TestArbitraryArgs_WithValid_WithInvalidArgs() at=args_test.go:L207
+EDGE args_test.go --contains [EXTRACTED]--> TestArbitraryArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L213
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs() at=args_test.go:L221
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs_WithValid() at=args_test.go:L227
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs_WithValid__WithInvalidArgs() at=args_test.go:L233
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L239
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs_WithLessArgs() at=args_test.go:L245
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs_WithLessArgs_WithValid() at=args_test.go:L251
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs_WithLessArgs_WithValid_WithInvalidArgs() at=args_test.go:L257
+EDGE args_test.go --contains [EXTRACTED]--> TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L263
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs() at=args_test.go:L271
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs_WithValid() at=args_test.go:L277
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs_WithValid_WithInvalidArgs() at=args_test.go:L283
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L289
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs_WithMoreArgs() at=args_test.go:L295
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs_WithMoreArgs_WithValid() at=args_test.go:L301
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs_WithMoreArgs_WithValid_WithInvalidArgs() at=args_test.go:L307
+EDGE args_test.go --contains [EXTRACTED]--> TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L313
+EDGE args_test.go --contains [EXTRACTED]--> TestExactArgs() at=args_test.go:L321
+EDGE args_test.go --contains [EXTRACTED]--> TestExactArgs_WithValid() at=args_test.go:L327
+EDGE args_test.go --contains [EXTRACTED]--> TestExactArgs_WithValid_WithInvalidArgs() at=args_test.go:L333
+EDGE args_test.go --contains [EXTRACTED]--> TestExactArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L339
+EDGE args_test.go --contains [EXTRACTED]--> TestExactArgs_WithInvalidCount_WithValid() at=args_test.go:L351
+EDGE args_test.go --contains [EXTRACTED]--> TestExactArgs_WithInvalidCount_WithValid_WithInvalidArgs() at=args_test.go:L357
+EDGE args_test.go --contains [EXTRACTED]--> TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() at=args_test.go:L363
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs() at=args_test.go:L371
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs_WithValid() at=args_test.go:L377
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs_WithValid_WithInvalidArgs() at=args_test.go:L383
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L389
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs_WithInvalidCount() at=args_test.go:L395
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs_WithInvalidCount_WithValid() at=args_test.go:L401
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs_WithInvalidCount_WithValid_WithInvalidArgs() at=args_test.go:L407
+EDGE args_test.go --contains [EXTRACTED]--> TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() at=args_test.go:L413
+EDGE args_test.go --contains [EXTRACTED]--> TestMatchAll() at=args_test.go:L477
+EDGE args_test.go --contains [EXTRACTED]--> TestExactValidArgs() at=args_test.go:L527
+EDGE args_test.go --contains [EXTRACTED]--> TestExactValidArgs_WithInvalidCount() at=args_test.go:L533
+EDGE args_test.go --contains [EXTRACTED]--> TestExactValidArgs_WithInvalidCount_WithInvalidArgs() at=args_test.go:L539
+EDGE args_test.go --contains [EXTRACTED]--> TestExactValidArgs_WithInvalidArgs() at=args_test.go:L545
+EDGE exactArgsWithInvalidCount() --calls [EXTRACTED context=call]--> TestExactArgs_WithInvalidCount() at=args_test.go:L348
+EDGE expectSuccess() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L35
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestNoArgs() at=args_test.go:L126
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestOnlyValidArgs() at=args_test.go:L158
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestNoDuplicateArgs() at=args_test.go:L172
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestArbitraryArgs() at=args_test.go:L198
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestArbitraryArgs_WithValid() at=args_test.go:L204
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestArbitraryArgs_WithValid_WithInvalidArgs() at=args_test.go:L210
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestMinimumNArgs() at=args_test.go:L224
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithValid() at=args_test.go:L230
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithValid__WithInvalidArgs() at=args_test.go:L236
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestMaximumNArgs() at=args_test.go:L274
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithValid() at=args_test.go:L280
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithValid_WithInvalidArgs() at=args_test.go:L286
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestRangeArgs() at=args_test.go:L374
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestRangeArgs_WithValid() at=args_test.go:L380
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestRangeArgs_WithValid_WithInvalidArgs() at=args_test.go:L386
+EDGE expectSuccess() --calls [EXTRACTED context=call]--> TestExactValidArgs() at=args_test.go:L530
+EDGE getCommand() --references [EXTRACTED context=parameter_type]--> PositionalArgs at=args_test.go:L23
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L148
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestOnlyValidArgs_WithInvalidArgs() at=args_test.go:L162
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestNoDuplicateArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L188
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestArbitraryArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L214
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L240
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L264
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L290
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L314
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactArgs() at=args_test.go:L322
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactArgs_WithValid() at=args_test.go:L328
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactArgs_WithValid_WithInvalidArgs() at=args_test.go:L334
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L340
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactArgs_WithInvalidCount_WithValid() at=args_test.go:L352
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactArgs_WithInvalidCount_WithValid_WithInvalidArgs() at=args_test.go:L358
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() at=args_test.go:L364
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs_WithValidOnly_WithInvalidArgs() at=args_test.go:L390
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() at=args_test.go:L414
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactValidArgs_WithInvalidCount() at=args_test.go:L534
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactValidArgs_WithInvalidCount_WithInvalidArgs() at=args_test.go:L540
+EDGE getCommand() --calls [EXTRACTED context=call]--> TestExactValidArgs_WithInvalidArgs() at=args_test.go:L546
+EDGE maximumNArgsWithMoreArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L77
+EDGE minimumNArgsWithLessArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L66
+EDGE noArgsWithArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L55
+EDGE noDuplicateArgsWithDuplicate() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L110
+EDGE rangeArgsWithInvalidCount() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L99
+EDGE TestArbitraryArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L195
+EDGE TestArbitraryArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L197
+EDGE TestArbitraryArgs_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L201
+EDGE TestArbitraryArgs_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L203
+EDGE TestArbitraryArgs_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L207
+EDGE TestArbitraryArgs_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L209
+EDGE TestArbitraryArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L213
+EDGE TestArbitraryArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L215
+EDGE TestExactArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L321
+EDGE TestExactArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L323
+EDGE TestExactArgs_WithInvalidCount_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L351
+EDGE TestExactArgs_WithInvalidCount_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L353
+EDGE TestExactArgs_WithInvalidCount_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L357
+EDGE TestExactArgs_WithInvalidCount_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L359
+EDGE TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L363
+EDGE TestExactArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L365
+EDGE TestExactArgs_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L327
+EDGE TestExactArgs_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L329
+EDGE TestExactArgs_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L333
+EDGE TestExactArgs_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L335
+EDGE TestExactArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L339
+EDGE TestExactArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L341
+EDGE TestExactValidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L527
+EDGE TestExactValidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L529
+EDGE TestExactValidArgs_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L545
+EDGE TestExactValidArgs_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L547
+EDGE TestExactValidArgs_WithInvalidCount() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L533
+EDGE TestExactValidArgs_WithInvalidCount() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L535
+EDGE TestExactValidArgs_WithInvalidCount_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L539
+EDGE TestExactValidArgs_WithInvalidCount_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L541
+EDGE TestMatchAll() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L477
+EDGE TestMatchAll() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L514
+EDGE TestMaximumNArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L271
+EDGE TestMaximumNArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L273
+EDGE TestMaximumNArgs_WithMoreArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L295
+EDGE TestMaximumNArgs_WithMoreArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L297
+EDGE TestMaximumNArgs_WithMoreArgs_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L301
+EDGE TestMaximumNArgs_WithMoreArgs_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L303
+EDGE TestMaximumNArgs_WithMoreArgs_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L307
+EDGE TestMaximumNArgs_WithMoreArgs_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L309
+EDGE TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L313
+EDGE TestMaximumNArgs_WithMoreArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L315
+EDGE TestMaximumNArgs_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L277
+EDGE TestMaximumNArgs_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L279
+EDGE TestMaximumNArgs_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L283
+EDGE TestMaximumNArgs_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L285
+EDGE TestMaximumNArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L289
+EDGE TestMaximumNArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L291
+EDGE TestMinimumNArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L221
+EDGE TestMinimumNArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L223
+EDGE TestMinimumNArgs_WithLessArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L245
+EDGE TestMinimumNArgs_WithLessArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L247
+EDGE TestMinimumNArgs_WithLessArgs_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L251
+EDGE TestMinimumNArgs_WithLessArgs_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L253
+EDGE TestMinimumNArgs_WithLessArgs_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L257
+EDGE TestMinimumNArgs_WithLessArgs_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L259
+EDGE TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L263
+EDGE TestMinimumNArgs_WithLessArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L265
+EDGE TestMinimumNArgs_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L227
+EDGE TestMinimumNArgs_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L229
+EDGE TestMinimumNArgs_WithValid__WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L233
+EDGE TestMinimumNArgs_WithValid__WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L235
+EDGE TestMinimumNArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L239
+EDGE TestMinimumNArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L241
+EDGE TestNoArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L123
+EDGE TestNoArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L125
+EDGE TestNoArgs_WithArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L129
+EDGE TestNoArgs_WithArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L131
+EDGE TestNoArgs_WithValid_WithArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L135
+EDGE TestNoArgs_WithValid_WithArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L137
+EDGE TestNoArgs_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L141
+EDGE TestNoArgs_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L143
+EDGE TestNoArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L147
+EDGE TestNoArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L149
+EDGE TestNoDuplicateArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L169
+EDGE TestNoDuplicateArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L171
+EDGE TestNoDuplicateArgs_WithDuplicateArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L175
+EDGE TestNoDuplicateArgs_WithDuplicateArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L177
+EDGE TestNoDuplicateArgs_WithValid_WithDuplicateArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L181
+EDGE TestNoDuplicateArgs_WithValid_WithDuplicateArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L183
+EDGE TestNoDuplicateArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L187
+EDGE TestNoDuplicateArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L189
+EDGE TestOnlyValidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L155
+EDGE TestOnlyValidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L157
+EDGE TestOnlyValidArgs_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L161
+EDGE TestOnlyValidArgs_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L163
+EDGE TestRangeArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L371
+EDGE TestRangeArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L373
+EDGE TestRangeArgs_WithInvalidCount() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L395
+EDGE TestRangeArgs_WithInvalidCount() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L397
+EDGE TestRangeArgs_WithInvalidCount_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L401
+EDGE TestRangeArgs_WithInvalidCount_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L403
+EDGE TestRangeArgs_WithInvalidCount_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L407
+EDGE TestRangeArgs_WithInvalidCount_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L409
+EDGE TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L413
+EDGE TestRangeArgs_WithInvalidCount_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L415
+EDGE TestRangeArgs_WithValid() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L377
+EDGE TestRangeArgs_WithValid() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L379
+EDGE TestRangeArgs_WithValid_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L383
+EDGE TestRangeArgs_WithValid_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L385
+EDGE TestRangeArgs_WithValidOnly_WithInvalidArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=args_test.go:L389
+EDGE TestRangeArgs_WithValidOnly_WithInvalidArgs() --calls [INFERRED context=call]--> executeCommand() at=args_test.go:L391
+EDGE bash_completions.go --contains [EXTRACTED]--> writePreamble() at=bash_completions.go:L36
+EDGE bash_completions.go --contains [EXTRACTED]--> writePostscript() at=bash_completions.go:L404
+EDGE bash_completions.go --contains [EXTRACTED]--> gen() at=bash_completions.go:L652
+EDGE gen() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=bash_completions.go:L652
+EDGE gen() --references [EXTRACTED context=parameter_type]--> Command at=bash_completions.go:L652
+EDGE gen() --calls [INFERRED context=call]--> WriteStringAndCheck() at=bash_completions.go:L664
+EDGE gen() --calls [INFERRED context=call]--> .Commands() at=bash_completions.go:L653
+EDGE gen() --calls [INFERRED context=call]--> .IsAvailableCommand() at=bash_completions.go:L654
+EDGE gen() --calls [INFERRED context=call]--> .Root() at=bash_completions.go:L663
+EDGE .GenBashCompletion() --references [EXTRACTED context=parameter_type]--> io.Writer at=bash_completions.go:L683
+EDGE bash_completions_test.go --contains [EXTRACTED]--> checkOmit() at=bash_completions_test.go:L27
+EDGE bash_completions_test.go --contains [EXTRACTED]--> check() at=bash_completions_test.go:L33
+EDGE bash_completions_test.go --contains [EXTRACTED]--> checkNumOccurrences() at=bash_completions_test.go:L39
+EDGE bash_completions_test.go --contains [EXTRACTED]--> checkRegex() at=bash_completions_test.go:L46
+EDGE bash_completions_test.go --contains [EXTRACTED]--> runShellCheck() at=bash_completions_test.go:L56
+EDGE check() --references [EXTRACTED context=parameter_type]--> testing.T at=bash_completions_test.go:L33
+EDGE checkNumOccurrences() --references [EXTRACTED context=parameter_type]--> testing.T at=bash_completions_test.go:L39
+EDGE checkOmit() --references [EXTRACTED context=parameter_type]--> testing.T at=bash_completions_test.go:L27
+EDGE checkRegex() --references [EXTRACTED context=parameter_type]--> testing.T at=bash_completions_test.go:L46
+EDGE runShellCheck() --calls [INFERRED context=call]--> CheckErr() at=bash_completions_test.go:L69
+EDGE TestBashCompletionNoActiveHelp() --references [EXTRACTED context=parameter_type]--> testing.T at=bash_completions_test.go:L279
+EDGE TestBashCompletions() --references [EXTRACTED context=parameter_type]--> testing.T at=bash_completions_test.go:L83
+EDGE TestBashCompletions() --calls [INFERRED context=call]--> .AddCommand() at=bash_completions_test.go:L163
+EDGE writeCmdAliases() --calls [EXTRACTED context=call]--> writeCommands() at=bash_completions.go:L454
+EDGE writeCmdAliases() --references [EXTRACTED context=parameter_type]--> Command at=bash_completions.go:L629
+EDGE writeCommands() --references [EXTRACTED context=parameter_type]--> Command at=bash_completions.go:L447
+EDGE writePostscript() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=bash_completions.go:L404
+EDGE writePostscript() --calls [INFERRED context=call]--> WriteStringAndCheck() at=bash_completions.go:L406
+EDGE writePreamble() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=bash_completions.go:L36
+EDGE writePreamble() --calls [INFERRED context=call]--> WriteStringAndCheck() at=bash_completions.go:L37
+EDGE bash_completionsV2.go --contains [EXTRACTED]--> genBashComp() at=bash_completionsV2.go:L31
+EDGE genBashComp() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=bash_completionsV2.go:L31
+EDGE genBashComp() --calls [INFERRED context=call]--> WriteStringAndCheck() at=bash_completionsV2.go:L37
+EDGE .genBashCompletion() --references [EXTRACTED context=parameter_type]--> io.Writer at=bash_completionsV2.go:L24
+EDGE TestBashCompletionV2WithActiveHelp() --references [EXTRACTED context=parameter_type]--> testing.T at=bash_completionsV2_test.go:L23
+EDGE cobra.go --contains [EXTRACTED]--> trimRightSpace() at=cobra.go:L159
+EDGE cobra.go --contains [EXTRACTED]--> rpad() at=cobra.go:L174
+EDGE cobra.go --contains [EXTRACTED]--> ld() at=cobra.go:L192
+EDGE cobra.go --contains [EXTRACTED]--> stringInSlice() at=cobra.go:L225
+EDGE cobra.go --contains [EXTRACTED]--> CheckErr() at=cobra.go:L235
+EDGE cobra.go --contains [EXTRACTED]--> WriteStringAndCheck() at=cobra.go:L243
+EDGE CheckErr() --calls [EXTRACTED context=call]--> WriteStringAndCheck() at=cobra.go:L245
+EDGE CheckErr() --calls [INFERRED context=call]--> .UsageString() at=command.go:L535
+EDGE .AddCommand() --method [EXTRACTED]--> Command at=command.go:L1342
+EDGE .AddCommand() --calls [EXTRACTED context=call]--> .InitDefaultHelpCmd() at=command.go:L1313
+EDGE .AddCommand() --calls [EXTRACTED context=call]--> .CommandPath() at=command.go:L1353
+EDGE .AddCommand() --calls [EXTRACTED context=call]--> .Name() at=command.go:L1357
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestSingleCommand() at=command_test.go:L97
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestChildCommand() at=command_test.go:L122
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestSubcommandExecuteC() at=command_test.go:L162
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestExecuteContext() at=command_test.go:L190
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestExecuteContextC() at=command_test.go:L219
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestCommandAlias() at=command_test.go:L288
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestEnablePrefixMatching() at=command_test.go:L316
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestAliasPrefixMatching() at=command_test.go:L350
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestChildSameName() at=command_test.go:L446
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestGrandChildSameName() at=command_test.go:L474
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestSetHelpCommand() at=command_test.go:L1000
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestSetHelpTemplate() at=command_test.go:L1024
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestSetUsageTemplate() at=command_test.go:L1132
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestRemoveCommand() at=command_test.go:L1588
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestReplaceCommandWithRemove() at=command_test.go:L1608
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestCommandsAreSorted() at=command_test.go:L1922
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestEnableCommandSortingIsDisabled() at=command_test.go:L1943
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestTraverseWithParentFlags() at=command_test.go:L2330
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestTraverseNoParentFlags() at=command_test.go:L2350
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestTraverseWithBadChildFlag() at=command_test.go:L2387
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestTraverseWithTwoSubcommands() at=command_test.go:L2407
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestSetContextPersistentPreRun() at=command_test.go:L2698
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestHelpFuncExecuted() at=command_test.go:L2946
+EDGE .AddCommand() --calls [INFERRED context=call]--> .initCompleteCmd() at=completions.go:L296
+EDGE .AddCommand() --calls [INFERRED context=call]--> .InitDefaultCompletionCmd() at=completions.go:L783
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestNoCmdNameCompletionInGo() at=completions_test.go:L170
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestValidArgsFuncCmdContext() at=completions_test.go:L1298
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestDefaultCompletionCmd() at=completions_test.go:L2492
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestCompleteCompletion() at=completions_test.go:L2649
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestDisableDescriptions() at=completions_test.go:L3833
+EDGE .AddCommand() --calls [INFERRED context=call]--> TestValidateFlagGroups() at=flag_groups_test.go:L40
+EDGE .AllChildCommandsHaveGroup() --method [EXTRACTED]--> Command at=command.go:L1376
+EDGE .AllChildCommandsHaveGroup() --calls [EXTRACTED context=call]--> .IsAvailableCommand() at=command.go:L1378
+EDGE .checkCommandGroups() --method [EXTRACTED]--> Command at=command.go:L1205
+EDGE .CommandPath() --method [EXTRACTED]--> Command at=command.go:L1465
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> .ExecuteC() at=command.go:L1132
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> .RemoveCommand() at=command.go:L1423
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> .DisplayName() at=command.go:L1469
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> .UseLine() at=command.go:L1486
+EDGE .CommandPath() --calls [EXTRACTED context=call]--> defaultUsageFunc() at=command.go:L1981
+EDGE .CommandPathPadding() --method [EXTRACTED]--> Command at=command.go:L573
+EDGE .Commands() --references [EXTRACTED context=return_type]--> Command at=command.go:L1332
+EDGE .Commands() --calls [EXTRACTED context=call]--> commandSorterByName at=command.go:L1335
+EDGE .Commands() --calls [INFERRED context=call]--> .getCompletions() at=completions.go:L520
+EDGE .Context() --method [EXTRACTED]--> Command at=command.go:L269
+EDGE .Context() --references [EXTRACTED context=return_type]--> context.Context at=command.go:L269
+EDGE .Context() --calls [INFERRED context=call]--> TestExecuteContext() at=command_test.go:L181
+EDGE .Context() --calls [INFERRED context=call]--> TestExecuteContextC() at=command_test.go:L210
+EDGE .Context() --calls [INFERRED context=call]--> TestSetContextPreRunOverwrite() at=command_test.go:L2660
+EDGE .Context() --calls [INFERRED context=call]--> TestHelpFuncExecuted() at=command_test.go:L2940
+EDGE .Context() --calls [INFERRED context=call]--> TestValidArgsFuncCmdContext() at=completions_test.go:L1278
+EDGE .DebugFlags() --method [EXTRACTED]--> Command at=command.go:L1501
+EDGE .DisplayName() --method [EXTRACTED]--> Command at=command.go:L1474
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .InitDefaultVersionFlag() at=command.go:L1249
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .InitDefaultHelpCmd() at=command.go:L1273
+EDGE .DisplayName() --calls [EXTRACTED context=call]--> .UseLine() at=command.go:L1484
+EDGE .ErrOrStderr() --method [EXTRACTED]--> Command at=command.go:L403
+EDGE .ErrOrStderr() --calls [EXTRACTED context=call]--> .getErr() at=command.go:L404
+EDGE .ErrOrStderr() --calls [EXTRACTED context=call]--> .PrintErr() at=command.go:L1451
+EDGE .ErrPrefix() --method [EXTRACTED]--> Command at=command.go:L643
+EDGE .ErrPrefix() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L648
+EDGE .execute() --method [EXTRACTED]--> Command at=command.go:L905
+EDGE .execute() --calls [EXTRACTED context=call]--> .InitDefaultVersionFlag() at=command.go:L917
+EDGE .execute() --calls [EXTRACTED context=call]--> .ExecuteC() at=command.go:L1148
+EDGE .ExecuteC() --references [EXTRACTED context=return_type]--> Command at=command.go:L1084
+EDGE .ExecuteC() --calls [EXTRACTED context=call]--> .InitDefaultHelpCmd() at=command.go:L1100
+EDGE .ExecuteC() --calls [INFERRED context=call]--> executeCommandC() at=command_test.go:L54
+EDGE .ExecuteC() --calls [INFERRED context=call]--> TestCompletionDoesNotMutateOsArgs() at=completions_test.go:L4109
+EDGE .ExecuteContext() --method [EXTRACTED]--> Command at=command.go:L1062
+EDGE .ExecuteContext() --calls [INFERRED context=call]--> executeCommandWithContext() at=command_test.go:L43
+EDGE .ExecuteContextC() --references [EXTRACTED context=return_type]--> Command at=command.go:L1078
+EDGE .ExecuteContextC() --references [EXTRACTED context=parameter_type]--> context.Context at=command.go:L1078
+EDGE .Find() --references [EXTRACTED context=return_type]--> Command at=command.go:L757
+EDGE .findNext() --references [EXTRACTED context=return_type]--> Command at=command.go:L798
+EDGE .findNext() --calls [EXTRACTED context=call]--> .hasNameOrAliasPrefix() at=command.go:L805
+EDGE .findSuggestions() --method [EXTRACTED]--> Command at=command.go:L781
+EDGE .FlagErrorFunc() --references [EXTRACTED context=return_type]--> Command at=command.go:L547
+EDGE .FlagErrorFunc() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L552
+EDGE .Flags() --method [EXTRACTED]--> Command at=command.go:L1688
+EDGE .Flags() --calls [EXTRACTED context=call]--> .Traverse() at=command.go:L830
+EDGE .Flags() --calls [EXTRACTED context=call]--> .ValidateRequiredFlags() at=command.go:L1185
+EDGE .Flags() --calls [EXTRACTED context=call]--> .InitDefaultHelpFlag() at=command.go:L1221
+EDGE .Flags() --calls [EXTRACTED context=call]--> .SetOutput() at=command.go:L1694
+EDGE .Flags() --calls [EXTRACTED context=call]--> .LocalFlags() at=command.go:L1726
+EDGE .Flags() --calls [EXTRACTED context=call]--> .HasFlags() at=command.go:L1802
+EDGE .Flags() --calls [EXTRACTED context=call]--> .HasAvailableFlags() at=command.go:L1823
+EDGE .Flags() --calls [EXTRACTED context=call]--> .ParseFlags() at=command.go:L1880
+EDGE .Flags() --calls [EXTRACTED context=call]--> .mergePersistentFlags() at=command.go:L1900
+EDGE .Flags() --calls [INFERRED context=call]--> .getCompletions() at=completions.go:L373
+EDGE .Flags() --calls [INFERRED context=call]--> findFlag() at=completions.go:L933
+EDGE .Flags() --calls [INFERRED context=call]--> TestNoCmdNameCompletionInGo() at=completions_test.go:L162
+EDGE .GenFishCompletion() --references [EXTRACTED context=parameter_type]--> io.Writer at=fish_completions.go:L276
+EDGE .genPowerShellCompletion() --references [EXTRACTED context=parameter_type]--> io.Writer at=powershell_completions.go:L313
+EDGE .genZshCompletion() --references [EXTRACTED context=parameter_type]--> io.Writer at=zsh_completions.go:L80
+EDGE .getCompletions() --calls [EXTRACTED context=call]--> CompletionWithDesc() at=completions.go:L523
+EDGE .getCompletions() --calls [INFERRED context=call]--> .Root() at=completions.go:L330
+EDGE .getCompletions() --calls [INFERRED context=call]--> .InitDefaultHelpFlag() at=completions.go:L357
+EDGE .getCompletions() --calls [INFERRED context=call]--> .ParseFlags() at=completions.go:L372
+EDGE .getCompletions() --calls [INFERRED context=call]--> .InheritedFlags() at=completions.go:L464
+EDGE .getCompletions() --calls [INFERRED context=call]--> .LocalNonPersistentFlags() at=completions.go:L507
+EDGE .getErr() --method [EXTRACTED]--> Command at=command.go:L422
+EDGE .getErr() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L426
+EDGE .getHelpTemplateFunc() --method [EXTRACTED]--> Command at=command.go:L505
+EDGE .getHelpTemplateFunc() --calls [EXTRACTED context=call]--> .HelpFunc() at=command.go:L493
+EDGE .getHelpTemplateFunc() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L510
+EDGE .getOut() --method [EXTRACTED]--> Command at=command.go:L412
+EDGE .getOut() --calls [EXTRACTED context=call]--> .OutOrStdout() at=command.go:L394
+EDGE .getOut() --calls [EXTRACTED context=call]--> .OutOrStderr() at=command.go:L399
+EDGE .getOut() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L416
+EDGE .getUsageTemplateFunc() --method [EXTRACTED]--> Command at=command.go:L464
+EDGE .getUsageTemplateFunc() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L469
+EDGE .getVersionTemplateFunc() --method [EXTRACTED]--> Command at=command.go:L631
+EDGE .getVersionTemplateFunc() --calls [EXTRACTED context=call]--> .HasParent() at=command.go:L636
+EDGE .Groups() --method [EXTRACTED]--> Command at=command.go:L1371
+EDGE .HasAlias() --method [EXTRACTED]--> Command at=command.go:L1551
+EDGE .HasAlias() --calls [EXTRACTED context=call]--> commandNameMatches() at=command.go:L1553
+EDGE .HasAvailableFlags() --method [EXTRACTED]--> Command at=command.go:L1822
+EDGE .HasAvailableFlags() --calls [EXTRACTED context=call]--> .HasAvailableLocalFlags() at=command.go:L1834
+EDGE .HasAvailableFlags() --calls [EXTRACTED context=call]--> .HasAvailableInheritedFlags() at=command.go:L1840
+EDGE .HasAvailableInheritedFlags() --method [EXTRACTED]--> Command at=command.go:L1839
+EDGE .HasAvailableInheritedFlags() --calls [EXTRACTED context=call]--> .InheritedFlags() at=command.go:L1840
+EDGE .HasAvailableLocalFlags() --method [EXTRACTED]--> Command at=command.go:L1833
+EDGE .HasAvailableLocalFlags() --calls [EXTRACTED context=call]--> .LocalFlags() at=command.go:L1834
+EDGE .HasAvailableSubCommands() --method [EXTRACTED]--> Command at=command.go:L1662
+EDGE .HasAvailableSubCommands() --calls [EXTRACTED context=call]--> .IsAvailableCommand() at=command.go:L1666
+EDGE .HasExample() --method [EXTRACTED]--> Command at=command.go:L1591
+EDGE .HasFlags() --method [EXTRACTED]--> Command at=command.go:L1801
+EDGE .HasFlags() --calls [EXTRACTED context=call]--> .HasPersistentFlags() at=command.go:L1807
+EDGE .HasHelpSubCommands() --method [EXTRACTED]--> Command at=command.go:L1648
+EDGE .HasHelpSubCommands() --calls [EXTRACTED context=call]--> .IsAdditionalHelpTopicCommand() at=command.go:L1651
+EDGE .hasNameOrAliasPrefix() --method [EXTRACTED]--> Command at=command.go:L1571
+EDGE .HasParent() --method [EXTRACTED]--> Command at=command.go:L1677
+EDGE .HasParent() --calls [EXTRACTED context=call]--> .HelpFunc() at=command.go:L488
+EDGE .HasParent() --calls [EXTRACTED context=call]--> .Root() at=command.go:L893
+EDGE .HasParent() --calls [EXTRACTED context=call]--> .IsAvailableCommand() at=command.go:L1612
+EDGE .HasPersistentFlags() --method [EXTRACTED]--> Command at=command.go:L1806
+EDGE .HasPersistentFlags() --calls [EXTRACTED context=call]--> .PersistentFlags() at=command.go:L1807
+EDGE .HasPersistentFlags() --calls [EXTRACTED context=call]--> .persistentFlag() at=command.go:L1856
+EDGE .HasSubCommands() --method [EXTRACTED]--> Command at=command.go:L1601
+EDGE .HasSubCommands() --calls [EXTRACTED context=call]--> defaultHelpFunc() at=command.go:L2058
+EDGE .Help() --method [EXTRACTED]--> Command at=command.go:L520
+EDGE .Help() --calls [EXTRACTED context=call]--> .HelpFunc() at=command.go:L521
+EDGE .HelpFunc() --references [EXTRACTED context=return_type]--> Command at=command.go:L484
+EDGE .HelpFunc() --calls [EXTRACTED context=call]--> .Parent() at=command.go:L489
+EDGE .HelpFunc() --calls [EXTRACTED context=call]--> .mergePersistentFlags() at=command.go:L492
+EDGE .HelpFunc() --calls [EXTRACTED context=call]--> .OutOrStdout() at=command.go:L496
+EDGE .HelpFunc() --calls [EXTRACTED context=call]--> .PrintErrln() at=command.go:L498
+EDGE .InheritedFlags() --method [EXTRACTED]--> Command at=command.go:L1744
+EDGE .InheritedFlags() --calls [EXTRACTED context=call]--> .mergePersistentFlags() at=command.go:L1745
+EDGE .InheritedFlags() --calls [EXTRACTED context=call]--> .SetOutput() at=command.go:L1752
+EDGE .InheritedFlags() --calls [EXTRACTED context=call]--> .LocalFlags() at=command.go:L1755
+EDGE .InheritedFlags() --calls [INFERRED context=call]--> findFlag() at=completions.go:L940
+EDGE .initCompleteCmd() --calls [INFERRED context=call]--> .RemoveCommand() at=completions.go:L304
+EDGE .InitDefaultCompletionCmd() --calls [INFERRED context=call]--> .RemoveCommand() at=completions.go:L796
+EDGE .InitDefaultHelpCmd() --method [EXTRACTED]--> Command at=command.go:L1263
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .InitDefaultVersionFlag() at=command.go:L1305
+EDGE .InitDefaultHelpCmd() --calls [EXTRACTED context=call]--> .RemoveCommand() at=command.go:L1312
+EDGE .InitDefaultHelpFlag() --method [EXTRACTED]--> Command at=command.go:L1219
+EDGE .InitDefaultHelpFlag() --calls [EXTRACTED context=call]--> .mergePersistentFlags() at=command.go:L1220
+EDGE .InitDefaultVersionFlag() --method [EXTRACTED]--> Command at=command.go:L1238
+EDGE .IsAdditionalHelpTopicCommand() --method [EXTRACTED]--> Command at=command.go:L1628
+EDGE .IsAdditionalHelpTopicCommand() --calls [EXTRACTED context=call]--> .Runnable() at=command.go:L1630
+EDGE .IsAvailableCommand() --method [EXTRACTED]--> Command at=command.go:L1607
+EDGE .IsAvailableCommand() --calls [EXTRACTED context=call]--> .Parent() at=command.go:L1612
+EDGE .IsAvailableCommand() --calls [EXTRACTED context=call]--> .Runnable() at=command.go:L1616
+EDGE .LocalFlags() --method [EXTRACTED]--> Command at=command.go:L1716
+EDGE .LocalFlags() --calls [EXTRACTED context=call]--> .LocalNonPersistentFlags() at=command.go:L1706
+EDGE .LocalFlags() --calls [EXTRACTED context=call]--> .mergePersistentFlags() at=command.go:L1717
+EDGE .LocalFlags() --calls [EXTRACTED context=call]--> .SetOutput() at=command.go:L1724
+EDGE .LocalFlags() --calls [EXTRACTED context=call]--> .PersistentFlags() at=command.go:L1738
+EDGE .LocalNonPersistentFlags() --method [EXTRACTED]--> Command at=command.go:L1702
+EDGE .LocalNonPersistentFlags() --calls [EXTRACTED context=call]--> .PersistentFlags() at=command.go:L1703
+EDGE .mergePersistentFlags() --method [EXTRACTED]--> Command at=command.go:L1898
+EDGE .mergePersistentFlags() --calls [EXTRACTED context=call]--> .ParseFlags() at=command.go:L1877
+EDGE .mergePersistentFlags() --calls [EXTRACTED context=call]--> .updateParentsPflags() at=command.go:L1899
+EDGE .mergePersistentFlags() --calls [EXTRACTED context=call]--> .PersistentFlags() at=command.go:L1900
+EDGE .NameAndAliases() --method [EXTRACTED]--> Command at=command.go:L1586
+EDGE .NameAndAliases() --calls [EXTRACTED context=call]--> defaultUsageFunc() at=command.go:L1985
+EDGE .NamePadding() --method [EXTRACTED]--> Command at=command.go:L583
+EDGE .OutOrStderr() --method [EXTRACTED]--> Command at=command.go:L398
+EDGE .OutOrStderr() --calls [EXTRACTED context=call]--> .Print() at=command.go:L1436
+EDGE .OutOrStdout() --method [EXTRACTED]--> Command at=command.go:L393
+EDGE .OutOrStdout() --calls [INFERRED context=call]--> TestHelpFuncExecuted() at=command_test.go:L2934
+EDGE .Parent() --references [EXTRACTED context=return_type]--> Command at=command.go:L1892
+EDGE .Parent() --calls [EXTRACTED context=call]--> .Root() at=command.go:L894
+EDGE .ParseFlags() --method [EXTRACTED]--> Command at=command.go:L1868
+EDGE .ParseFlags() --calls [EXTRACTED context=call]--> .Traverse() at=command.go:L854
+EDGE .ParseFlags() --calls [EXTRACTED context=call]--> .Print() at=command.go:L1885
+EDGE .persistentFlag() --method [EXTRACTED]--> Command at=command.go:L1855
+EDGE .persistentFlag() --references [EXTRACTED context=return_type]--> github.com/spf13/pflag.Flag at=command.go:L1855
+EDGE .persistentFlag() --calls [EXTRACTED context=call]--> .PersistentFlags() at=command.go:L1857
+EDGE .persistentFlag() --calls [EXTRACTED context=call]--> .updateParentsPflags() at=command.go:L1861
+EDGE .PersistentFlags() --method [EXTRACTED]--> Command at=command.go:L1775
+EDGE .PersistentFlags() --calls [EXTRACTED context=call]--> .SetOutput() at=command.go:L1781
+EDGE .PersistentFlags() --calls [EXTRACTED context=call]--> .updateParentsPflags() at=command.go:L1918
+EDGE .PersistentFlags() --calls [INFERRED context=call]--> TestNoCmdNameCompletionInGo() at=completions_test.go:L171
+EDGE .postRun() --method [EXTRACTED]--> Command at=command.go:L1053
+EDGE .preRun() --method [EXTRACTED]--> Command at=command.go:L1047
+EDGE .Print() --method [EXTRACTED]--> Command at=command.go:L1435
+EDGE .Print() --calls [EXTRACTED context=call]--> .Println() at=command.go:L1441
+EDGE .Print() --calls [EXTRACTED context=call]--> .Printf() at=command.go:L1446
+EDGE .PrintErr() --method [EXTRACTED]--> Command at=command.go:L1450
+EDGE .PrintErr() --calls [EXTRACTED context=call]--> .PrintErrln() at=command.go:L1456
+EDGE .PrintErr() --calls [EXTRACTED context=call]--> .PrintErrf() at=command.go:L1461
+EDGE .PrintErrf() --method [EXTRACTED]--> Command at=command.go:L1460
+EDGE .PrintErrln() --method [EXTRACTED]--> Command at=command.go:L1455
+EDGE .Printf() --method [EXTRACTED]--> Command at=command.go:L1445
+EDGE .Println() --method [EXTRACTED]--> Command at=command.go:L1440
+EDGE .RemoveCommand() --method [EXTRACTED]--> Command at=command.go:L1401
+EDGE .RemoveCommand() --calls [INFERRED context=call]--> removeCompCmd() at=completions_test.go:L2455
+EDGE .ResetFlags() --method [EXTRACTED]--> Command at=command.go:L1787
+EDGE .ResetFlags() --calls [EXTRACTED context=call]--> .SetOutput() at=command.go:L1791
+EDGE .Root() --references [EXTRACTED context=return_type]--> Command at=command.go:L892
+EDGE .Root() --calls [EXTRACTED context=call]--> .updateParentsPflags() at=command.go:L1918
+EDGE .Root() --calls [INFERRED context=call]--> getEnvConfig() at=completions.go:L1019
+EDGE .Runnable() --method [EXTRACTED]--> Command at=command.go:L1596
+EDGE .Runnable() --calls [EXTRACTED context=call]--> defaultHelpFunc() at=command.go:L2058
+EDGE .SetContext() --method [EXTRACTED]--> Command at=command.go:L275
+EDGE .SetContext() --references [EXTRACTED context=parameter_type]--> context.Context at=command.go:L275
+EDGE .SetContext() --calls [INFERRED context=call]--> TestSetContextPreRunOverwrite() at=command_test.go:L2668
+EDGE .SetHelpCommand() --references [EXTRACTED context=parameter_type]--> Command at=command.go:L338
+EDGE .SetOutput() --method [EXTRACTED]--> Command at=command.go:L289
+EDGE .SetOutput() --calls [EXTRACTED context=call]--> .updateParentsPflags() at=command.go:L1910
+EDGE .SuggestionsFor() --method [EXTRACTED]--> Command at=command.go:L863
+EDGE .Traverse() --references [EXTRACTED context=return_type]--> Command at=command.go:L821
+EDGE .Traverse() --calls [EXTRACTED context=call]--> isFlagArg() at=command.go:L844
+EDGE .updateParentsPflags() --method [EXTRACTED]--> Command at=command.go:L1907
+EDGE .Usage() --method [EXTRACTED]--> Command at=command.go:L478
+EDGE .Usage() --calls [EXTRACTED context=call]--> .UsageString() at=command.go:L535
+EDGE .UsageString() --method [EXTRACTED]--> Command at=command.go:L526
+EDGE .UsageString() --calls [EXTRACTED context=call]--> defaultHelpFunc() at=command.go:L2059
+EDGE .UseLine() --method [EXTRACTED]--> Command at=command.go:L1482
+EDGE .UseLine() --calls [EXTRACTED context=call]--> defaultUsageFunc() at=command.go:L1978
+EDGE .ValidateArgs() --method [EXTRACTED]--> Command at=command.go:L1172
+EDGE .ValidateRequiredFlags() --method [EXTRACTED]--> Command at=command.go:L1180
+EDGE commandSorterByName --contains [EXTRACTED]--> command.go at=command.go:L1325
+EDGE cobra_test.go --contains [EXTRACTED]--> assertNoErr() at=cobra_test.go:L27
+EDGE assertNoErr() --references [EXTRACTED context=parameter_type]--> testing.T at=cobra_test.go:L27
+EDGE tmplFunc --contains [EXTRACTED]--> command.go at=command.go:L1937
+EDGE tmplFunc --references [EXTRACTED context=field]--> Command at=command.go:L174
+EDGE trimRightSpace() --calls [INFERRED context=call]--> defaultHelpFunc() at=command.go:L2053
+EDGE WriteStringAndCheck() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=cobra.go:L243
+EDGE WriteStringAndCheck() --calls [INFERRED context=call]--> genFishComp() at=fish_completions.go:L35
+EDGE WriteStringAndCheck() --calls [INFERRED context=call]--> genPowerShellComp() at=powershell_completions.go:L38
+EDGE WriteStringAndCheck() --calls [INFERRED context=call]--> genZshComp() at=zsh_completions.go:L92
+EDGE commandNameMatches() --contains [EXTRACTED]--> command.go at=command.go:L1928
+EDGE defaultHelpFunc() --contains [EXTRACTED]--> command.go at=command.go:L2047
+EDGE defaultUsageFunc() --references [EXTRACTED context=parameter_type]--> io.Writer at=command.go:L1974
+EDGE defaultVersionFunc() --contains [EXTRACTED]--> command.go at=command.go:L2068
+EDGE Command --contains [EXTRACTED]--> command.go at=command.go:L54
+EDGE Command --references [EXTRACTED context=field]--> io.Writer at=command.go:L200
+EDGE Command --references [EXTRACTED context=field]--> context.Context at=command.go:L218
+EDGE Command --references [EXTRACTED context=parameter_type]--> executeCommand() at=command_test.go:L32
+EDGE Command --references [EXTRACTED context=parameter_type]--> executeCommandWithContext() at=command_test.go:L37
+EDGE Command --references [EXTRACTED context=parameter_type]--> executeCommandC() at=command_test.go:L48
+EDGE Command --references [EXTRACTED context=parameter_type]--> executeCommandWithContextC() at=command_test.go:L59
+EDGE Command --references [EXTRACTED context=parameter_type]--> removeCompCmd() at=completions_test.go:L2451
+EDGE command.go --contains [EXTRACTED]--> isFlagArg() at=command.go:L750
+EDGE command_test.go --imports_from [EXTRACTED context=import]--> go_pkg_fmt at=command_test.go:L20
+EDGE command_test.go --imports_from [EXTRACTED context=import]--> go_pkg_strings at=command_test.go:L24
+EDGE command_test.go --contains [EXTRACTED]--> executeCommand() at=command_test.go:L32
+EDGE command_test.go --contains [EXTRACTED]--> executeCommandWithContext() at=command_test.go:L37
+EDGE command_test.go --contains [EXTRACTED]--> executeCommandC() at=command_test.go:L48
+EDGE command_test.go --contains [EXTRACTED]--> executeCommandWithContextC() at=command_test.go:L59
+EDGE command_test.go --contains [EXTRACTED]--> TestSubcommandExecuteC() at=command_test.go:L159
+EDGE command_test.go --contains [EXTRACTED]--> TestExecuteContext() at=command_test.go:L177
+EDGE command_test.go --contains [EXTRACTED]--> TestExecuteContextC() at=command_test.go:L206
+EDGE command_test.go --contains [EXTRACTED]--> TestSetHelpCommand() at=command_test.go:L998
+EDGE command_test.go --contains [EXTRACTED]--> TestSetHelpTemplate() at=command_test.go:L1021
+EDGE command_test.go --contains [EXTRACTED]--> TestSetUsageTemplate() at=command_test.go:L1129
+EDGE command_test.go --contains [EXTRACTED]--> TestRemoveCommand() at=command_test.go:L1585
+EDGE command_test.go --contains [EXTRACTED]--> TestReplaceCommandWithRemove() at=command_test.go:L1597
+EDGE command_test.go --contains [EXTRACTED]--> TestCommandsAreSorted() at=command_test.go:L1913
+EDGE command_test.go --contains [EXTRACTED]--> TestEnableCommandSortingIsDisabled() at=command_test.go:L1935
+EDGE command_test.go --contains [EXTRACTED]--> TestSetOut() at=command_test.go:L2137
+EDGE command_test.go --contains [EXTRACTED]--> TestSetErr() at=command_test.go:L2145
+EDGE command_test.go --contains [EXTRACTED]--> TestCommandPrintRedirection() at=command_test.go:L2177
+EDGE command_test.go --contains [EXTRACTED]--> TestTraverseWithParentFlags() at=command_test.go:L2322
+EDGE command_test.go --contains [EXTRACTED]--> TestTraverseNoParentFlags() at=command_test.go:L2344
+EDGE command_test.go --contains [EXTRACTED]--> TestTraverseWithBadChildFlag() at=command_test.go:L2382
+EDGE command_test.go --contains [EXTRACTED]--> TestTraverseWithTwoSubcommands() at=command_test.go:L2403
+EDGE command_test.go --contains [EXTRACTED]--> TestUpdateName() at=command_test.go:L2425
+EDGE command_test.go --contains [EXTRACTED]--> TestSetContext() at=command_test.go:L2603
+EDGE command_test.go --contains [EXTRACTED]--> TestSetContextPreRun() at=command_test.go:L2628
+EDGE command_test.go --contains [EXTRACTED]--> TestSetContextPreRunOverwrite() at=command_test.go:L2654
+EDGE command_test.go --contains [EXTRACTED]--> TestSetContextPersistentPreRun() at=command_test.go:L2675
+EDGE command_test.go --contains [EXTRACTED]--> TestHelpFuncExecuted() at=command_test.go:L2925
+EDGE executeCommand() --calls [EXTRACTED context=call]--> executeCommandC() at=command_test.go:L33
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestSingleCommand() at=command_test.go:L99
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestChildCommand() at=command_test.go:L124
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestCommandAlias() at=command_test.go:L291
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestEnablePrefixMatching() at=command_test.go:L318
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestAliasPrefixMatching() at=command_test.go:L353
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestChildSameName() at=command_test.go:L448
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestGrandChildSameName() at=command_test.go:L477
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestSetHelpCommand() at=command_test.go:L1011
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestSetHelpTemplate() at=command_test.go:L1029
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestSetUsageTemplate() at=command_test.go:L1137
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestRemoveCommand() at=command_test.go:L1591
+EDGE executeCommand() --calls [EXTRACTED context=call]--> TestReplaceCommandWithRemove() at=command_test.go:L1612
+EDGE executeCommand() --calls [INFERRED context=call]--> TestNoCmdNameCompletionInGo() at=completions_test.go:L183
+EDGE executeCommand() --calls [INFERRED context=call]--> TestValidArgsCompletionInGo() at=completions_test.go:L330
+EDGE executeCommand() --calls [INFERRED context=call]--> TestValidArgsFuncSingleCmdInvalidArg() at=completions_test.go:L1370
+EDGE executeCommand() --calls [INFERRED context=call]--> TestDefaultCompletionCmd() at=completions_test.go:L2478
+EDGE executeCommand() --calls [INFERRED context=call]--> TestCompleteCompletion() at=completions_test.go:L2612
+EDGE executeCommand() --calls [INFERRED context=call]--> TestDisableDescriptions() at=completions_test.go:L3895
+EDGE executeCommandC() --calls [EXTRACTED context=call]--> TestSubcommandExecuteC() at=command_test.go:L164
+EDGE TestAliasPrefixMatching() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L334
+EDGE TestChildCommand() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L113
+EDGE TestChildSameName() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L437
+EDGE TestCommandAlias() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L274
+EDGE TestCommandPrintRedirection() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2177
+EDGE TestCommandsAreSorted() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L1913
+EDGE TestEnableCommandSortingIsDisabled() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L1935
+EDGE TestEnablePrefixMatching() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L305
+EDGE TestExecuteContext() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L177
+EDGE TestExecuteContextC() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L206
+EDGE TestGrandChildSameName() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L465
+EDGE TestHelpFuncExecuted() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2925
+EDGE TestRemoveCommand() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L1585
+EDGE TestReplaceCommandWithRemove() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L1597
+EDGE TestSetContext() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2603
+EDGE TestSetContextPersistentPreRun() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2675
+EDGE TestSetContextPreRun() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2628
+EDGE TestSetContextPreRunOverwrite() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2654
+EDGE TestSetErr() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2145
+EDGE TestSetHelpCommand() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L998
+EDGE TestSetHelpTemplate() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L1021
+EDGE TestSetOut() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2137
+EDGE TestSetUsageTemplate() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L1129
+EDGE TestSingleCommand() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L88
+EDGE TestSubcommandExecuteC() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L159
+EDGE TestTraverseNoParentFlags() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2344
+EDGE TestTraverseWithBadChildFlag() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2382
+EDGE TestTraverseWithParentFlags() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2322
+EDGE TestTraverseWithTwoSubcommands() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2403
+EDGE TestUpdateName() --references [EXTRACTED context=parameter_type]--> testing.T at=command_test.go:L2425
+EDGE completions.go --contains [EXTRACTED]--> CompletionWithDesc() at=completions.go:L142
+EDGE completions.go --contains [EXTRACTED]--> findFlag() at=completions.go:L932
+EDGE completions.go --contains [EXTRACTED]--> CompErrorln() at=completions.go:L991
+EDGE completions.go --contains [EXTRACTED]--> configEnvVar() at=completions.go:L1006
+EDGE completions.go --contains [EXTRACTED]--> getEnvConfig() at=completions.go:L1018
+EDGE configEnvVar() --calls [EXTRACTED context=call]--> getEnvConfig() at=completions.go:L1019
+EDGE findFlag() --references [EXTRACTED context=return_type]--> github.com/spf13/pflag.Flag at=completions.go:L932
+EDGE completions_test.go --contains [EXTRACTED]--> TestNoCmdNameCompletionInGo() at=completions_test.go:L157
+EDGE completions_test.go --contains [EXTRACTED]--> TestValidArgsCompletionInGo() at=completions_test.go:L322
+EDGE completions_test.go --contains [EXTRACTED]--> TestValidArgsFuncCmdContext() at=completions_test.go:L1276
+EDGE completions_test.go --contains [EXTRACTED]--> TestValidArgsFuncSingleCmdInvalidArg() at=completions_test.go:L1357
+EDGE removeCompCmd() --calls [EXTRACTED context=call]--> TestDefaultCompletionCmd() at=completions_test.go:L2485
+EDGE TestCompleteCompletion() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L2607
+EDGE TestCompletionDoesNotMutateOsArgs() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L4076
+EDGE TestDefaultCompletionCmd() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L2461
+EDGE TestDisableDescriptions() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L3822
+EDGE TestNoCmdNameCompletionInGo() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L157
+EDGE TestValidArgsCompletionInGo() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L322
+EDGE TestValidArgsFuncCmdContext() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L1276
+EDGE TestValidArgsFuncSingleCmdInvalidArg() --references [EXTRACTED context=parameter_type]--> testing.T at=completions_test.go:L1357
+EDGE man_docs.go --contains [EXTRACTED]--> GenMan() at=doc/man_docs.go:L105
+EDGE md_docs.go --contains [EXTRACTED]--> GenMarkdown() at=doc/md_docs.go:L52
+EDGE md_docs.go --contains [EXTRACTED]--> GenMarkdownCustom() at=doc/md_docs.go:L57
+EDGE GenMarkdown() --calls [EXTRACTED context=call]--> GenMarkdownCustom() at=doc/md_docs.go:L53
+EDGE rest_docs.go --contains [EXTRACTED]--> GenReST() at=doc/rest_docs.go:L57
+EDGE rest_docs.go --contains [EXTRACTED]--> GenReSTCustom() at=doc/rest_docs.go:L62
+EDGE GenReST() --calls [EXTRACTED context=call]--> GenReSTCustom() at=doc/rest_docs.go:L58
+EDGE yaml_docs.go --contains [EXTRACTED]--> GenYaml() at=doc/yaml_docs.go:L88
+EDGE yaml_docs.go --contains [EXTRACTED]--> GenYamlCustom() at=doc/yaml_docs.go:L93
+EDGE GenYaml() --calls [EXTRACTED context=call]--> GenYamlCustom() at=doc/yaml_docs.go:L89
+EDGE fish_completions.go --contains [EXTRACTED]--> genFishComp() at=fish_completions.go:L25
+EDGE genFishComp() --references [EXTRACTED context=parameter_type]--> io.StringWriter at=fish_completions.go:L25
+EDGE TestFishCompletionNoActiveHelp() --references [EXTRACTED context=parameter_type]--> testing.T at=fish_completions_test.go:L89
+EDGE TestValidateFlagGroups() --references [EXTRACTED context=parameter_type]--> testing.T at=flag_groups_test.go:L22
+EDGE io.StringWriter --references [EXTRACTED context=parameter_type]--> genPowerShellComp() at=powershell_completions.go:L28
+EDGE io.StringWriter --references [EXTRACTED context=parameter_type]--> genZshComp() at=zsh_completions.go:L87
+EDGE testing.T --references [EXTRACTED context=parameter_type]--> TestPwshCompletionNoActiveHelp() at=powershell_completions_test.go:L23
+EDGE testing.T --references [EXTRACTED context=parameter_type]--> TestZshCompletionWithActiveHelp() at=zsh_completions_test.go:L23
+EDGE powershell_completions.go --contains [EXTRACTED]--> genPowerShellComp() at=powershell_completions.go:L28
+EDGE zsh_completions.go --contains [EXTRACTED]--> genZshComp() at=zsh_completions.go:L87

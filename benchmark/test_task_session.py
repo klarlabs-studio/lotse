@@ -1,0 +1,86 @@
+"""Broker integrity checks only: these do not run a repair agent."""
+import contextlib
+import io
+import json
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+
+import agent_trials
+import task_session
+
+
+class TaskBrokerIntegrity(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.base = Path(self.temp.name)
+        self.patches = [patch.object(agent_trials, "BASE", self.base), patch.object(task_session, "BASE", self.base)]
+        for p in self.patches:
+            p.start()
+        self.task = {"id": "fixture", "repo": "fixture", "issue": "Repair the boundary behavior.",
+                     "fault": {"path": "app.py", "before": "return 1", "after": "return 2"},
+                     "verify": ["true"]}
+        root = self.base / ".research/corpora/fixture"
+        (root / ".graf").mkdir(parents=True)
+        (root / ".graf/index.json").write_text('clean source: return 1')
+        (root / "graphify-out").mkdir()
+        (root / "graphify-out/graph.json").write_text('clean source: return 1')
+        (root / "tests").mkdir()
+        (root / "tests/test_app.py").write_text("# protected verification source\n")
+        (root / "app.py").write_text("def value():\n    return 1\n")
+        self.session = task_session.prepare_session(self.task, "fixture-trial", "graf")
+
+    def tearDown(self):
+        for p in reversed(self.patches):
+            p.stop()
+        self.temp.cleanup()
+
+    def test_prepare_excludes_clean_indexes_and_injects_fault(self):
+        self.assertFalse((self.session.root / ".graf").exists())
+        self.assertFalse((self.session.root / "graphify-out").exists())
+        self.assertIn("return 2", (self.session.root / "app.py").read_text())
+        self.assertIn("return 1", (self.base / ".research/corpora/fixture/app.py").read_text())
+        with self.assertRaises(ValueError):
+            task_session.Session(self.task, "fixture-trial", "graphify")
+
+    def test_read_blocks_metadata_parent_paths_and_symlinks(self):
+        for path in ["../task.json", str(self.session.directory / "task.json"), ".graf/index.json"]:
+            result = self.session.call("read", {"path": path})
+            self.assertFalse(result["ok"])
+        outside = self.base / "private.py"
+        outside.write_text("private")
+        (self.session.root / "link.py").symlink_to(outside)
+        self.assertFalse(self.session.call("read", {"path": "link.py"})["ok"])
+        result = self.session.call("read", {"path": str(self.session.input / "app.py")})
+        self.assertTrue(result["ok"])
+        self.assertIn("return 2", result["result"]["content"])
+        limited = self.session.call("read", {"path": "app.py", "budget": 1})
+        self.assertTrue(limited["result"]["truncated"])
+
+    def test_edits_mark_indexes_dirty_and_protected_changes_fail_verification(self):
+        self.session.dirty = False
+        result = self.session.call("edit", {"path": "app.py", "old": "return 2", "new": "return 1"})
+        self.assertTrue(result["ok"])
+        self.assertTrue(self.session.dirty)
+        result = self.session.call("edit", {"path": "tests/test_app.py", "old": "protected", "new": "tampered"})
+        self.assertFalse(result["ok"])
+        (self.session.root / "tests/test_app.py").write_text("external tampering")
+        reopened = task_session.Session(self.task, "fixture-trial", "graf")
+        finished = reopened.call("finish", {})
+        self.assertFalse(finished["result"]["verification_passed"])
+        self.assertTrue(reopened.closed)
+        self.assertTrue(task_session.Session(self.task, "fixture-trial", "graf").closed)
+
+    def test_tool_only_trace_cannot_be_scored_as_agent_usage(self):
+        self.assertTrue(self.session.call("finish", {})["result"]["verification_passed"])
+        events = [json.loads(s) for s in self.session.events.read_text().splitlines()]
+        self.assertEqual(events[-1]["type"], "verification")
+        self.assertTrue(events[-1]["passed"])
+        with self.assertRaises(ValueError):
+            agent_trials.audit_trace(self.session.events)
+        self.assertFalse(self.session.call("read", {"path": "app.py"})["ok"])
+
+
+if __name__ == "__main__":
+    unittest.main()
