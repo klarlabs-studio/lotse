@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "frozen_on": "2026-10-18",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -78,6 +78,11 @@
       "version": 4,
       "date": "2026-10-18",
       "change": "recorded the query-time candidate arm definitions, constants, and a Bonferroni split of the primary alpha across experimental arms before any run"
+    },
+    {
+      "version": 5,
+      "date": "2026-10-18",
+      "change": "added index-time arms B2 (path weight 3) and C1-C3 (English stopwords, none, English plus full identifiers) for locate before any run; primary alpha now split across 9 experimental arms"
     }
   ],
   "arms": {
@@ -90,10 +95,14 @@
       "graf_floor": "search --stop floor",
       "graf_locate_gap": "locate --stop gap",
       "graf_locate_floor": "locate --stop floor",
-      "graf_locate_damped": "locate --file-score damped"
+      "graf_locate_damped": "locate --file-score damped",
+      "graf_locate_english": "locate (index --stopwords english)",
+      "graf_locate_nostop": "locate (index --stopwords none)",
+      "graf_locate_fullid": "locate (index --stopwords english --full-identifiers)",
+      "graf_locate_path3": "locate (index --path-weight 3)"
     },
-    "constants": "src/policy.rs: gap minimum 3, buffer 2, search share 0.9; floor ratio 0.5; damping 1, 0.5, 0.25",
-    "deferred": "B2 path field and C1-C3 tokenization need index-schema changes; preregister them as a later version",
+    "constants": "src/policy.rs: gap minimum 3, buffer 2, search share 0.9; floor ratio 0.5; damping 1, 0.5, 0.25. src/terms.rs: C1 is Lucene's 33-word EnglishAnalyzer stop set; C3 adds lowercased identifiers that split into two or more parts; B2 counts path terms 3 times (BM25F, integer weight, shared length normalization)",
+    "deferred": "index-time arms run with locate only: search fills the budget, so it cannot pass the token test whatever the analyzer",
     "multiplicity": "the primary test for each experimental arm uses alpha / number of experimental arms (Bonferroni); guardrails and the tail cap apply unchanged; report every arm, including losing ones"
   }
 }

@@ -108,9 +108,9 @@ class DecisionTests(unittest.TestCase):
 
 class PreregistrationTests(unittest.TestCase):
     def test_driver_arms_match_the_frozen_definitions(self):
-        from compare_graphify import EXPERIMENTAL_ARMS, GRAF_ARMS
+        from compare_graphify import EXPERIMENTAL_ARMS, GRAF_ARMS, describe
         arms = {**PREREG["arms"]["accepted"], **PREREG["arms"]["experimental"]}
-        self.assertEqual({k: " ".join(v) for k, v in GRAF_ARMS.items()}, arms)
+        self.assertEqual({k: describe(k) for k in GRAF_ARMS}, arms)
         self.assertEqual(set(EXPERIMENTAL_ARMS), set(PREREG["arms"]["experimental"]))
 
 if __name__ == "__main__":

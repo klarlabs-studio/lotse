@@ -19,20 +19,40 @@ import time
 import tomllib
 
 BASE = Path(__file__).resolve().parents[1]
-# graf arms: subcommand and flags. The first two are the accepted behavior; the
-# rest are preregistered experiments (research/next-experiments.md), never
-# accepted improvements until benchmark/decision.py passes on held-out queries.
+# graf arms: (index flags, query subcommand and flags). The first two are the
+# accepted behavior; the rest are preregistered experiments
+# (research/next-experiments.md), never accepted improvements until
+# benchmark/decision.py passes on held-out queries.
 GRAF_ARMS = {
-    "graf": ("search",),
-    "graf_locate": ("locate",),
-    "graf_gap": ("search", "--stop", "gap"),
-    "graf_floor": ("search", "--stop", "floor"),
-    "graf_locate_gap": ("locate", "--stop", "gap"),
-    "graf_locate_floor": ("locate", "--stop", "floor"),
-    "graf_locate_damped": ("locate", "--file-score", "damped"),
+    "graf": ((), ("search",)),
+    "graf_locate": ((), ("locate",)),
+    "graf_gap": ((), ("search", "--stop", "gap")),
+    "graf_floor": ((), ("search", "--stop", "floor")),
+    "graf_locate_gap": ((), ("locate", "--stop", "gap")),
+    "graf_locate_floor": ((), ("locate", "--stop", "floor")),
+    "graf_locate_damped": ((), ("locate", "--file-score", "damped")),
+    "graf_locate_english": (("--stopwords", "english"), ("locate",)),
+    "graf_locate_nostop": (("--stopwords", "none"), ("locate",)),
+    "graf_locate_fullid": (("--stopwords", "english", "--full-identifiers"), ("locate",)),
+    "graf_locate_path3": (("--path-weight", "3"), ("locate",)),
 }
 EXPERIMENTAL_ARMS = tuple(GRAF_ARMS)[2:]
 ARMS = (*GRAF_ARMS, "graphify")
+INDEX_VARIANTS = tuple(dict.fromkeys(flags for flags, _ in GRAF_ARMS.values()))
+
+
+def describe(arm):
+    flags, query = GRAF_ARMS[arm]
+    return " ".join(query) + (f" (index {' '.join(flags)})" if flags else "")
+
+
+def variant_name(flags):
+    """Build-record key: "graf" for the accepted index, else graf plus its flags."""
+    return "graf" + "".join("-" + flag.strip("-") for flag in flags)
+
+
+def variant_root(repo_scratch, flags):
+    return repo_scratch / ("input" if not flags else "input-" + variant_name(flags)[5:])
 
 
 def sha(path):
@@ -135,7 +155,7 @@ def main():
         "baseline": {"pin": pin, "installed_version": installed, "mode": "code_only_no_clustering",
                      "python_sources": {str(p.relative_to(graphify_root)): sha(p) for p in sorted(graphify_root.rglob("*.py"))}},
         "arms": {"graf": "Full source excerpts", "graf_locate": "One compact source hint per file with expansion ID",
-                 **{arm: "Experimental: " + " ".join(GRAF_ARMS[arm]) for arm in EXPERIMENTAL_ARMS},
+                 **{arm: "Experimental: " + describe(arm) for arm in EXPERIMENTAL_ARMS},
                  "graphify": "Native code-only navigation hints"},
         "repeats": args.repeats, "preregistration_sha256": sha(BASE / "benchmark/preregistration.json"),
         "input_receipts": snapshots,
@@ -180,6 +200,21 @@ def main():
         graf_index = json.loads((staged / ".graf/index.json").read_text())
         if set(graf_index["files"]) != set(files):
             raise RuntimeError(f"{repo}: staged inputs differ from graf index; fix filters before comparing")
+        # Experimental analyzers index identical copies of the staged input.
+        for flags in INDEX_VARIANTS[1:]:
+            root = variant_root(scratch / repo, flags)
+            if root.exists():
+                shutil.rmtree(root)
+            shutil.copytree(staged, root, ignore=shutil.ignore_patterns(".graf"))
+            command = [str(binary), "--root", str(root), "index", "--rebuild", *flags]
+            start = time.perf_counter()
+            subprocess.run(command, capture_output=True, text=True, timeout=180, check=True, env=env)
+            elapsed = (time.perf_counter() - start) * 1000
+            artifact = root / ".graf/index.json"
+            if set(json.loads(artifact.read_text())["files"]) != set(files):
+                raise RuntimeError(f"{repo}: {flags} index differs from staged inputs")
+            builds[variant_name(flags)] = {"elapsed_ms": elapsed, "index_bytes": artifact.stat().st_size,
+                                           "artifact_sha256": sha(artifact), "command": command}
         result["repositories"][repo] = {"files": len(files), "file_hashes": {p: hashlib.sha256(t.encode()).hexdigest() for p,t in files.items()}, "builds": builds}
         print(f"{repo}: source-set preflight and fresh builds complete", flush=True)
     # Validate/build every source set before spending time on repeated queries.
@@ -187,13 +222,14 @@ def main():
         staged = scratch / repo / "input"
         output = scratch / repo / "graph"
         files = repository["file_hashes"]
-        graf_index = json.loads((staged / ".graf/index.json").read_text())
+        roots = {flags: variant_root(scratch / repo, flags) for flags in INDEX_VARIANTS}
+        graf_indexes = {flags: json.loads((root / ".graf/index.json").read_text()) for flags, root in roots.items()}
         for case in (c for c in cases if c["repo"] == repo):
             for budget in (2000, 8000):
                 commands = {
-                    **{arm: [str(binary), "--root", str(staged), command, case["query"], *flags,
+                    **{arm: [str(binary), "--root", str(roots[index_flags]), command, case["query"], *flags,
                              "--budget", str(budget), "--limit", "1000", "--text"]
-                       for arm, (command, *flags) in GRAF_ARMS.items()},
+                       for arm, (index_flags, (command, *flags)) in GRAF_ARMS.items()},
                     "graphify": [sys.executable, str(Path(__file__).resolve()), "--graphify-query", str(output / "graphify-out/graph.json"), case["query"], str(budget)],
                 }
                 measurements = {tool: {"latency_ms": [], "context": None, "command": cmd} for tool,cmd in commands.items()}
@@ -213,7 +249,8 @@ def main():
                     paths = cited_paths(tool, context, staged, files)
                     ordered = cited_path_order(tool, context, staged, files)
                     if tool.startswith("graf_locate"):
-                        value["validated_hint_count"] = validate_locate(context, staged, graf_index)
+                        flags = GRAF_ARMS[tool][0]
+                        value["validated_hint_count"] = validate_locate(context, roots[flags], graf_indexes[flags])
                     value.update(cited_path_order=ordered,
                                  code_file_hint_recall_at_5=code_hint_recall(case, ordered[:5]),
                                  code_file_hint_recall_at_10=code_hint_recall(case, ordered[:10]),
