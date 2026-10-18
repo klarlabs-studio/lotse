@@ -72,7 +72,7 @@ The source-line diagnostic writes `results/rust-pilot.json` and links its paired
 
 This workspace also contains a cited scientific review, frozen inputs, 30 exploratory requests, retrieval prototypes, a pinned Graphify navigation baseline, and six synthetic coding-task fixtures.
 
-Start with the [research findings](research/report.md), [scientific evidence](research/evidence.md), and [evaluation protocol](research/protocol.md). Raw measurements live in `results/`; downloaded repositories, model weights, vector caches, source excerpts, and test workspaces stay under ignored `.research/`.
+Start with the [research findings](research/report.md), [scientific evidence](research/evidence.md), and [evaluation protocol](research/protocol.md). [Proposed next experiments](research/next-experiments.md) are not yet adopted protocol. Raw measurements live in `results/`; downloaded repositories, model weights, vector caches, source excerpts, and test workspaces stay under ignored `.research/`.
 
 ## Reproduce the retrieval pilot
 
