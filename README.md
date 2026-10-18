@@ -131,3 +131,7 @@ The [complete-task comparison setup](research/task-comparison.md) has a common J
 Supply JSONL events to `benchmark/agent_trials.py audit TRACE.jsonl`. A `model_usage` event requires `component`, `model`, `input_tokens`, `cached_input_tokens`, `output_tokens`, `reasoning_tokens`, and `cost_usd`. Input/output totals must be measured and include any cached/reasoning breakdowns. Use explicit `null` for an unknown cached/reasoning breakdown or dollar charge; its aggregate stays unknown rather than becoming zero. Include every solver, explorer, compressor, and retrieval-model call. Tool events use `type: tool`; the final event uses `type: verification` and boolean `passed`.
 
 Missing usage is unmeasured, not zero. The validator checks accounting shape and sums; it cannot authenticate provider usage or independently prove that a reported verification event occurred. Preserve actual provider logs, final diffs, and verifier output for a trustworthy trial.
+
+## License
+
+MIT. See [LICENSE](LICENSE). Downloaded corpora and the Graphify baseline under `.research/` keep their own upstream licenses.
