@@ -53,10 +53,11 @@ cargo build --release --locked
 .research/venv/bin/python benchmark/compare_graphify.py
 .research/venv/bin/python benchmark/check_comparison.py
 .research/venv/bin/python benchmark/acceptance.py
+.research/venv/bin/python benchmark/decision.py
 .research/venv/bin/python benchmark/report_graphify_comparison.py
 ```
 
-`acceptance.py` writes a per-case [acceptance report](results/acceptance.json) and exits nonzero while promotion is blocked. It checks quality and delivered-text token regressions; these exploratory results cannot establish agent efficiency. See the [decision rule](research/protocol.md#decision-rule) for the remaining acceptance requirements.
+`decision.py` applies the preregistered [decision rule](research/protocol.md#decision-rule) from `benchmark/preregistration.json` and writes `results/decision.json`, including the held-out size implied by the observed variance; only the frozen held-out workload can pass it. `acceptance.py` writes a per-case [acceptance report](results/acceptance.json) and exits nonzero while promotion is blocked. It checks quality and delivered-text token regressions; these exploratory results cannot establish agent efficiency. See the [decision rule](research/protocol.md#decision-rule) for the remaining acceptance requirements.
 
 The [paired report](research/graphify-comparison.md) is generated from `results/graphify-comparison.json`, with source receipts, commands, raw text, three timing samples per query arm/case, shared code-file discovery recall, recall among the first 5/10 delivered files, file counts, output tokens, index size, and build time. Query timings include fresh-process startup and index loading for both tools. Graphify uses its pinned serving API in a Python subprocess helper; graf uses the Rust CLI. Both `graf search` and `graf locate` are compared to Graphify using the same index and unchanged BM25 scores. The [fixed locate policy](benchmark/locate-experiment.json) is recorded before measurement. The Graphify configuration is code-only, so documentation quality and agent task savings remain unmeasured. Navigation hints and source excerpts are labeled separately; do not compare source-anchor recall against Graphify's file hints.
 

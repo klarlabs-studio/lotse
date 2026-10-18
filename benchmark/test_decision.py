@@ -1,0 +1,100 @@
+"""The preregistered decision rule must fail closed and report every case."""
+import copy
+import json
+from pathlib import Path
+import unittest
+
+from decision import evaluate
+
+BASE = Path(__file__).resolve().parents[1]
+PREREG = json.loads((BASE / "benchmark/preregistration.json").read_text())
+QUALITY = PREREG["guardrails"]["metrics"]
+
+
+def row(query, budget, tokens, recall, base_tokens=1800, base_recall=1.0):
+    return {"id": query, "budget": budget, "tools": {
+        "cand": {**{m: recall for m in QUALITY}, "output_tokens": tokens, "median_ms": 5},
+        "graphify": {**{m: base_recall for m in QUALITY}, "output_tokens": base_tokens,
+                     "median_ms": 9}}}
+
+
+class DecisionTests(unittest.TestCase):
+    def setUp(self):
+        self.queries = [f"q{i:02d}" for i in range(40)]
+        self.expected = {(q, b): True for q in self.queries for b in (2000, 8000)}
+        self.rows = [row(q, b, 1500, 1.0) for q in self.queries for b in (2000, 8000)]
+
+    def run_rule(self, rows=None, role="held_out", expected=None):
+        return evaluate(self.rows if rows is None else rows,
+                        self.expected if expected is None else expected,
+                        "cand", PREREG, role)
+
+    def test_clear_held_out_win_passes_but_never_authorizes_promotion_alone(self):
+        result = self.run_rule()
+        self.assertEqual(result["status"], "passed")
+        self.assertFalse(result["product_promotion_allowed"])
+        self.assertEqual(len(result["cases"]), 80)
+
+    def test_development_workload_cannot_pass(self):
+        result = self.run_rule(role="development")
+        self.assertEqual(result["status"], "not_passed")
+        self.assertIn("development", " ".join(result["blockers"]))
+
+    def test_small_quality_noise_within_margin_does_not_block(self):
+        for r in self.rows[:4]:
+            r["tools"]["cand"]["code_file_hint_recall_at_5"] = 0.9
+        self.assertEqual(self.run_rule()["status"], "passed")
+
+    def test_systematic_quality_loss_blocks_token_win(self):
+        for r in self.rows:
+            r["tools"]["cand"]["code_file_hint_recall_at_5"] = 0.8
+        result = self.run_rule()
+        self.assertEqual(result["status"], "not_passed")
+        failed = [g for g in result["guardrails"] if not g["non_inferior"]]
+        self.assertTrue(all(g["metric"] == "code_file_hint_recall_at_5" for g in failed))
+
+    def test_severe_losses_on_too_many_queries_block(self):
+        for r in self.rows[:16]:
+            for m in QUALITY:
+                r["tools"]["cand"][m] = 0.0
+        result = self.run_rule()
+        self.assertFalse(result["tail"]["passed"])
+        self.assertEqual(result["status"], "not_passed")
+
+    def test_no_token_reduction_blocks(self):
+        for r in self.rows:
+            r["tools"]["cand"]["output_tokens"] = 1800
+        result = self.run_rule()
+        self.assertFalse(result["primary"]["passed"])
+        self.assertEqual(result["status"], "not_passed")
+
+    def test_missing_duplicate_and_invalid_measurements_reject(self):
+        broken = copy.deepcopy(self.rows)
+        broken[0]["tools"]["cand"]["output_tokens"] = float("nan")
+        for rows in (self.rows[1:], self.rows + self.rows[:1], broken):
+            self.assertEqual(self.run_rule(rows)["status"], "not_passed")
+
+    def test_inapplicable_queries_are_excluded_from_quality_only(self):
+        expected = dict(self.expected)
+        for b in (2000, 8000):
+            expected[("q00", b)] = False
+        rows = copy.deepcopy(self.rows)
+        for r in rows[:2]:
+            for m in QUALITY:
+                r["tools"]["cand"][m] = r["tools"]["graphify"][m] = None
+        result = self.run_rule(rows, expected=expected)
+        self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["primary"]["queries"], 40)
+        self.assertEqual(result["guardrails"][0]["queries"], 39)
+
+    def test_reports_planning_sample_size_from_observed_variance(self):
+        rows = copy.deepcopy(self.rows)
+        for i, r in enumerate(rows):
+            r["tools"]["cand"]["code_file_hint_recall"] = 1.0 if i % 4 else 0.5
+        planning = self.run_rule(rows, role="development")["planning"]
+        self.assertGreaterEqual(planning["required_queries"],
+                                PREREG["workloads"]["held_out"]["minimum_queries"])
+
+
+if __name__ == "__main__":
+    unittest.main()

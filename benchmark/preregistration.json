@@ -1,0 +1,56 @@
+{
+  "version": 2,
+  "frozen_on": "2026-10-18",
+  "rationale": "research/next-experiments.md; sources in research/evidence.md",
+  "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
+  "workloads": {
+    "development": {
+      "queries": "benchmark/queries.json",
+      "role": "variance pilot and regression diagnostics; already used for tuning, so it cannot pass the decision rule"
+    },
+    "held_out": {
+      "queries": "benchmark/heldout-queries.json",
+      "sha256": null,
+      "minimum_queries": 70,
+      "requirements": "authored and judged independently of graf tuning; pooled top-10 files of every arm and Graphify judged blind; freeze sha256 here before any arm runs"
+    }
+  },
+  "unit": "query",
+  "comparators": ["graphify (pin in benchmark/corpora.json)", "last accepted graf version, once one exists"],
+  "primary": {
+    "metric": "output_tokens",
+    "budget": 2000,
+    "hypothesis": "candidate delivers fewer tokens than the comparator",
+    "test": "one-sided paired sign-flip permutation on comparator minus candidate",
+    "alpha": 0.05
+  },
+  "guardrails": {
+    "metrics": ["code_file_hint_recall", "code_file_hint_recall_at_5", "code_file_hint_recall_at_10"],
+    "budgets": [2000, 8000],
+    "test": "one-sided paired sign-flip non-inferiority on candidate minus comparator",
+    "margin": 0.05,
+    "alpha": 0.05,
+    "correction": "holm",
+    "scope": "queries whose annotations contain code evidence"
+  },
+  "tail": {
+    "severe_loss": "candidate code_file_hint_recall is 0 at any budget where the comparator's is above 0",
+    "max_wilson_upper": 0.15,
+    "confidence": 0.95
+  },
+  "latency": {
+    "gated": false,
+    "invocations_per_case": 15,
+    "report": "median and bootstrap interval; cold and warm cache separately"
+  },
+  "agent_trials": {
+    "minimum_tasks": 20,
+    "minimum_paired_trials_per_task_and_arm": 5,
+    "success": "non-inferiority, Wilson intervals, pass^k for k = 1..5",
+    "efficiency": "superiority on total cost across all attempts",
+    "solver": null,
+    "model": null,
+    "spend_cap_usd": null
+  },
+  "report_every_case": true
+}

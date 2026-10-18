@@ -1,6 +1,6 @@
 # Proposed next experiments
 
-**Status: proposal.** Nothing here is adopted protocol. [AGENTS.md](../AGENTS.md) and the [decision rule](protocol.md#decision-rule) remain in force until they are explicitly revised. Evidence and limitations for each proposal are in [evidence.md](evidence.md#evidence-for-the-next-retrieval-decisions).
+**Status:** the evaluation design below was adopted on 2026-10-18 as the [decision rule](protocol.md#decision-rule) and frozen in [preregistration.json](../benchmark/preregistration.json). The candidate interventions are planned experiments, not accepted changes. Evidence and limitations for each proposal are in [evidence.md](evidence.md#evidence-for-the-next-retrieval-decisions).
 
 ## Why the current gate cannot be passed by retrieval changes alone
 
@@ -41,12 +41,12 @@ B2 changes the index schema and requires a rebuild path.
 | C2 | No stopwords; BM25's IDF alone down-weights common terms | BLUiR | As for C1 |
 | C3 | C1 plus the lowercased full compound identifier indexed alongside its parts | BLUiR | No gain, or document-length effects reduce quality |
 
-## Proposed evaluation design
+## Evaluation design (adopted)
 
-This would revise the decision rule. It needs an explicit decision before AGENTS.md changes.
+Adopted 2026-10-18. Parameters the proposal gave only as examples were fixed in `benchmark/preregistration.json` on the same day, before any held-out data existed.
 
 1. **Split the queries.** The 30 existing queries become a development and pilot set. They are used only to estimate the variance of paired differences.
-2. **Held-out set.** Use independently authored requests, frozen before any arm runs. Size the set from the pilot variances; a normal-approximation estimate suggests roughly 70 queries for a non-inferiority margin of 0.3 standard deviations at 80% power. That figure is a planning estimate, not a cited result. Treat budgets as a repeated factor, not as extra queries.
+2. **Held-out set.** Use independently authored requests, frozen before any arm runs. Size the set from the pilot variances, with a floor of 70. The first pilot (`results/decision.json`, development workload) found per-query recall differences with standard deviations up to about 0.41, because most queries label one or two code files. At the preregistered 0.05 margin, that implies roughly 410–430 queries. The margin and the authoring budget therefore have to be reconciled before the held-out set is written. These are normal-approximation planning estimates, not cited results. Treat budgets as a repeated factor, not as extra queries.
 3. **Judgments.** Pool the union of the top ten files from every arm and Graphify. A judge who did not tune graf, and who does not see which system returned each file, labels the pool. Report the unjudged fraction.
 4. **Primary metric and test.** Preregister one primary efficiency metric, for example delivered tokens at a stated budget. Test the per-query mean difference with a one-sided paired permutation test at α = 0.05.
 5. **Quality guardrails.** Use non-inferiority tests with fixed margins on code-file recall and recall among the first five and ten files, with Holm correction across guardrails.
@@ -59,7 +59,6 @@ The current design (30 tuned queries, 3 timing samples, 6 × 3 planned agent tri
 
 ## Decisions needed
 
-1. Whether to revise the decision rule from per-case zero regression to non-inferiority with a tail guardrail.
-2. The primary efficiency metric and the budget it is declared at.
-3. Who authors and judges the held-out requests.
-4. The agent solver, model, and spend caps.
+1. The non-inferiority margin versus held-out size (see item 2 above).
+2. Who authors and judges the held-out requests.
+3. The agent solver, model, and spend caps.
