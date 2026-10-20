@@ -33,7 +33,7 @@ Three preregistered batches with the same solver and spend cap. Batches `t` and 
 
 ### Interpretation within these conditions
 
-- On natural tasks with this solver, neither retriever reduced cost compared with search and reads alone, and they did not differ from each other. graf_floor's smaller payload did not turn into savings: Graphify was cheaper on 5 tasks, by larger amounts, mostly the hard ones.
+- On natural tasks with this solver, neither retriever reduced cost compared with search and reads alone, and they did not differ from each other. graf_floor's smaller payload did not turn into savings: Graphify was cheaper on only 5 tasks, but by larger amounts, and most of the gap came from the two hardest (`cobra-1257`, `fastify-4327`).
 - The `t2` win over Graphify did not replicate on natural tasks. It should be read as specific to those synthetic tasks.
 - These tasks are harder (pass^5 ≈ 0.8), but 12 of 18 are still at ceiling, and 18 tasks × 5 attempts cannot resolve per-task cost differences of a few hundredths of a cent.
 - Contamination: the fixes are public and predate the solver's training cutoff, so the solver may recall them. That affects all arms equally, but it may shrink the role of retrieval.
