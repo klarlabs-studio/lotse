@@ -3,11 +3,12 @@ import json
 import unittest
 
 from broker_mcp import TOOLS, handle
-from task_session import TOOL_DEFINITIONS
+from task_session import TOOL_DEFINITIONS, tool_definitions
 
 
 class FakeSession:
-    def __init__(self):
+    def __init__(self, arm="graf"):
+        self.arm = arm
         self.calls = []
 
     def call(self, operation, arguments):
@@ -38,6 +39,15 @@ class BrokerMcpTests(unittest.TestCase):
         for tool in tools:
             self.assertEqual(tool["inputSchema"]["type"], "object")
             self.assertFalse(tool["inputSchema"].get("additionalProperties", True))
+
+    def test_search_only_arm_has_no_retrieve_tool(self):
+        self.session = FakeSession("search_only")
+        tools = [t["name"] for t in self.request("tools/list")["result"]["tools"]]
+        self.assertEqual(tools, ["read", "search", "edit", "test", "finish"])
+        self.assertEqual(tools, [t["name"] for t in tool_definitions("search_only")])
+        reply = self.request("tools/call", {"name": "retrieve", "arguments": {"query": "x"}})
+        self.assertTrue(reply["result"]["isError"])
+        self.assertEqual(self.session.calls, [])
 
     def test_call_forwards_to_the_session_and_reports_errors(self):
         reply = self.request("tools/call", {"name": "read", "arguments": {"path": "args.go"}})

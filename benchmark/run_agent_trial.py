@@ -1,6 +1,6 @@
 """Run one paired repair trial: headless Claude Code with only the task broker.
 
-    python benchmark/run_agent_trial.py TASK TRIAL_ID --arm graf|graphify [--catalog FILE]
+    python benchmark/run_agent_trial.py TASK TRIAL_ID --arm ARM [--catalog FILE]
 
 The solver configuration is frozen in benchmark/preregistration.json. The
 agent runs in an empty directory with every built-in tool disabled, no user or
@@ -14,12 +14,13 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import time
 
 from agent_trials import BASE, audit_trace, tasks
-from task_session import Session, prepare_session
+from task_session import ARMS, Session, prepare_session
 
 SYSTEM_PROMPT = (
     "You are repairing a bug in a software repository. You can act only through the "
@@ -28,8 +29,16 @@ SYSTEM_PROMPT = (
     "test runs the project's verification, and finish ends the attempt. Locate the cause, "
     "make the smallest correct fix, run test, and call finish when the fix is in place or "
     "when you cannot make progress.")
+SEARCH_ONLY_PROMPT = SYSTEM_PROMPT.replace(
+    "retrieve finds relevant source locations, read shows source lines, ", "read shows source lines, ")
 TIMEOUT_SECONDS = 1200
-TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graphify": BASE / ".research/venv/bin/graphify"}
+TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "target/release/graf",
+                 "graphify": BASE / ".research/venv/bin/graphify",
+                 "search_only": Path(shutil.which("rg") or "rg")}
+
+
+def system_prompt(arm):
+    return SEARCH_ONLY_PROMPT if arm == "search_only" else SYSTEM_PROMPT
 
 
 def preflight(arm, binary):
@@ -39,12 +48,12 @@ def preflight(arm, binary):
     return hashlib.sha256(binary.read_bytes()).hexdigest()
 
 
-def claude_command(issue, mcp_config, model, budget):
+def claude_command(issue, mcp_config, model, budget, arm):
     return ["claude", "-p", f"Issue report:\n\n{issue}",
             "--model", model, "--tools", "", "--strict-mcp-config", "--mcp-config", str(mcp_config),
             "--allowedTools", "mcp__broker", "--setting-sources", "", "--disable-slash-commands",
             "--no-session-persistence", "--output-format", "stream-json", "--verbose",
-            "--max-budget-usd", str(budget), "--system-prompt", SYSTEM_PROMPT]
+            "--max-budget-usd", str(budget), "--system-prompt", system_prompt(arm)]
 
 
 def usage_events(result):
@@ -74,7 +83,7 @@ def run(task, trial_id, arm, catalog):
         "command": sys.executable,
         "args": [str(BASE / "benchmark/broker_mcp.py"), task["id"], trial_id, "--arm", arm,
                  "--catalog", str(catalog)]}}}, indent=2) + "\n")
-    command = claude_command(task["issue"], mcp_config, prereg["model"], prereg["max_budget_usd"])
+    command = claude_command(task["issue"], mcp_config, prereg["model"], prereg["max_budget_usd"], arm)
     start = time.perf_counter()
     with (directory / "agent-stream.jsonl").open("w") as stream, \
          (directory / "agent-stderr.txt").open("w") as stderr:
@@ -123,7 +132,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("task")
     parser.add_argument("trial_id")
-    parser.add_argument("--arm", required=True, choices=["graf", "graphify"])
+    parser.add_argument("--arm", required=True, choices=ARMS)
     parser.add_argument("--catalog", type=Path, default=BASE / "benchmark/agent-tasks.json")
     args = parser.parse_args()
     task = next(t for t in tasks(args.catalog) if t["id"] == args.task)

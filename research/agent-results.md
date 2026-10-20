@@ -1,6 +1,6 @@
 # Paired agent trials (first valid batch)
 
-**Outcome: graf fails the preregistered agent-trial rule. Nothing is promoted.** The candidate was not cheaper than Graphify plus source reads. Every task and arm summary is in [agent-decision.json](../results/agent-decision.json). The rule is `agent_trials.rule` in [preregistration v10](../benchmark/preregistration.json).
+**Outcome: graf fails the preregistered agent-trial rule. Nothing is promoted.** The candidate was not cheaper than Graphify plus source reads. Every task and arm summary is in [agent-decision-t.json](../results/agent-decision-t.json). The rule is `agent_trials.rule` and batch `t` in [preregistration v10/v11](../benchmark/preregistration.json).
 
 ## Conditions
 

@@ -1,13 +1,16 @@
 """Apply the preregistered agent-trial rule (preregistration.json agent_trials.rule).
 
-    python benchmark/agent_decision.py
+    python benchmark/agent_decision.py [--batch ID]
 
-Reads every .research/trials/*/summary.json in the planned batch, pairs the two
-arms by task, and writes results/agent-decision.json. The candidate passes only
-if it costs significantly less across all attempts and its verifier success is
-non-inferior within the margin. Missing trials or incomplete usage fail closed.
+Reads every .research/trials/ID-*/summary.json of one preregistered batch, pairs
+each candidate and control with the comparator by task, and writes
+results/agent-decision-ID.json. A candidate passes only if it costs significantly
+less across all attempts and its verifier success is non-inferior within the
+margin; alphas are split across tested arms. Controls are reported but never pass
+a batch. Missing trials or incomplete usage fail closed.
 Exits nonzero unless the rule passes.
 """
+import argparse
 import json
 from math import comb
 from pathlib import Path
@@ -70,51 +73,66 @@ def _arm_summary(per_task, arm, trials):
                                 if t[arm]["attempts"])}
 
 
-def evaluate(summaries, task_ids, trials, rule):
-    cand, comp = rule["candidate"], rule["comparator"]
-    table, reasons = _index(summaries, task_ids, trials, (cand, comp))
-    per_task = []
-    for task in sorted(task_ids):
-        row = {"task": task}
-        for arm in (cand, comp):
-            row[arm] = _arm_task([table[(task, arm, k)] for k in range(1, trials + 1)
-                                  if (task, arm, k) in table], trials)
-        per_task.append(row)
-    paired = [t for t in per_task if t[cand]["attempts"] and t[comp]["attempts"]]
-    cost = [t[comp]["mean_cost_usd"] - t[cand]["mean_cost_usd"] for t in paired]
-    tokens = [t[comp]["mean_tokens"] - t[cand]["mean_tokens"] for t in paired]
-    success = [t[cand]["passes"] / t[cand]["attempts"] - t[comp]["passes"] / t[comp]["attempts"]
+def _compare(per_task, arm, comparator, rule, family):
+    paired = [t for t in per_task if t[arm]["attempts"] and t[comparator]["attempts"]]
+    cost = [t[comparator]["mean_cost_usd"] - t[arm]["mean_cost_usd"] for t in paired]
+    tokens = [t[comparator]["mean_tokens"] - t[arm]["mean_tokens"] for t in paired]
+    success = [t[arm]["passes"] / t[arm]["attempts"] - t[comparator]["passes"] / t[comparator]["attempts"]
                for t in paired]
     primary_p = sign_flip_p(cost) if cost else 1.0
     success_p = non_inferiority_p(success, rule["success"]["margin"]) if success else 1.0
     primary = {"metric": "cost_usd", "mean_reduction": statistics.fmean(cost) if cost else None,
-               "p": primary_p, "alpha": rule["primary"]["alpha"],
-               "passed": primary_p <= rule["primary"]["alpha"]}
+               "p": primary_p, "alpha": rule["primary"]["alpha"] / family}
     guard = {"metric": "success_rate", "mean_difference": statistics.fmean(success) if success else None,
-             "margin": rule["success"]["margin"], "p": success_p, "alpha": rule["success"]["alpha"],
-             "passed": success_p <= rule["success"]["alpha"]}
-    reasons += [f"{name} test failed" for name, test in (("primary cost", primary), ("success", guard))
-                if not test["passed"]]
-    return {"passed": not reasons, "reasons": reasons, "primary": primary, "success": guard,
+             "margin": rule["success"]["margin"], "p": success_p, "alpha": rule["success"]["alpha"] / family}
+    for test in (primary, guard):
+        test["passed"] = test["p"] <= test["alpha"]
+    return {"primary": primary, "success": guard, "passed": primary["passed"] and guard["passed"],
+            "cheaper_tasks": sum(d > 0 for d in cost),
             "secondary": {"mean_token_reduction": statistics.fmean(tokens) if tokens else None,
-                          "token_reduction_p": sign_flip_p(tokens) if tokens else None},
-            "arms": {arm: _arm_summary(per_task, arm, trials) for arm in (cand, comp)},
+                          "token_reduction_p": sign_flip_p(tokens) if tokens else None}}
+
+
+def evaluate(summaries, task_ids, trials, rule, batch):
+    """Compare every candidate and control with the comparator; only a candidate can pass."""
+    arms, comparator = batch["arms"], batch["comparator"]
+    table, reasons = _index(summaries, task_ids, trials, arms)
+    per_task = []
+    for task in sorted(task_ids):
+        row = {"task": task}
+        for arm in arms:
+            row[arm] = _arm_task([table[(task, arm, k)] for k in range(1, trials + 1)
+                                  if (task, arm, k) in table], trials)
+        per_task.append(row)
+    tested = [*batch["candidates"], *batch["controls"]]
+    comparisons = {arm: {"role": "candidate" if arm in batch["candidates"] else "control",
+                         **_compare(per_task, arm, comparator, rule, len(tested))} for arm in tested}
+    if not any(comparisons[arm]["passed"] for arm in batch["candidates"]):
+        reasons.append("no candidate passed both the cost and success tests")
+    return {"passed": not reasons, "reasons": reasons, "comparator": comparator,
+            "comparisons": comparisons,
+            "arms": {arm: _arm_summary(per_task, arm, trials) for arm in arms},
             "tasks": per_task, "scope": rule["scope"]}
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--batch", help="batch id in agent_trials.batches (default: latest)")
+    args = parser.parse_args()
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
     spec = prereg["agent_trials"]
+    batch_id = args.batch or list(spec["batches"])[-1]
+    batch = spec["batches"][batch_id]
     task_ids = [t["id"] for t in tasks(BASE / "benchmark/agent-tasks.json")]
     summaries = [json.loads(p.read_text())
-                 for p in sorted((BASE / ".research/trials").glob("t-*/summary.json"))]
-    result = evaluate(summaries, task_ids, spec["minimum_paired_trials_per_task_and_arm"], spec["rule"])
-    result = {"preregistration_version": prereg["version"], **result}
-    out = BASE / "results/agent-decision.json"
+                 for p in sorted((BASE / ".research/trials").glob(f"{batch_id}-*/summary.json"))]
+    result = evaluate(summaries, task_ids, spec["minimum_paired_trials_per_task_and_arm"], spec["rule"], batch)
+    result = {"preregistration_version": prereg["version"], "batch": batch_id, **result}
+    out = BASE / f"results/agent-decision-{batch_id}.json"
     out.write_text(json.dumps(result, indent=2) + "\n")
-    arms = result["arms"]
-    print(json.dumps({"passed": result["passed"], "reasons": result["reasons"][:10],
-                      **{a: {"passes": v["passes"], "attempts": v["attempts"]} for a, v in arms.items()}}))
+    print(json.dumps({"batch": batch_id, "passed": result["passed"], "reasons": result["reasons"][:10],
+                      **{a: {"passes": v["passes"], "attempts": v["attempts"]}
+                         for a, v in result["arms"].items()}}))
     return 0 if result["passed"] else 1
 
 

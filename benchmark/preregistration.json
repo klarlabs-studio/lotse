@@ -1,6 +1,6 @@
 {
-  "version": 10,
-  "frozen_on": "2026-10-19",
+  "version": 11,
+  "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
   "workloads": {
@@ -75,8 +75,6 @@
     "isolation_check": "2026-10-18 smoke call: empty cwd, no tools or MCP servers, ~730 input tokens total, model reported no personal instructions or recalled context",
     "rule": {
       "unit": "task; each task's 5 attempts per arm are averaged, and the 20 task means are paired across arms",
-      "candidate": "graf",
-      "comparator": "graphify",
       "primary": {
         "metric": "cost_usd",
         "aggregation": "mean list-price estimate over every attempt, including failed and capped ones",
@@ -96,7 +94,46 @@
         "pass^k for k = 1..5 (unbiased per-task estimator, averaged over tasks)"
       ],
       "completeness": "every planned task x trial x arm must have a summary with complete usage; infrastructure aborts are rerun from scratch and their partial runs are kept outside the plan",
-      "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself"
+      "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself",
+      "multiplicity": "both alphas are divided by the number of tested arms (candidates plus controls) in a batch"
+    },
+    "batches": {
+      "t": {
+        "arms": [
+          "graf",
+          "graphify"
+        ],
+        "candidates": [
+          "graf"
+        ],
+        "controls": [],
+        "comparator": "graphify",
+        "seed": 20261019,
+        "frozen_in_version": 10,
+        "outcome": "decided 2026-10-20 under v10: fail (graf cost more; results/agent-decision-t.json)"
+      },
+      "t2": {
+        "arms": [
+          "graf_floor",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "graf_floor"
+        ],
+        "controls": [
+          "search_only"
+        ],
+        "comparator": "graphify",
+        "seed": 20261020,
+        "frozen_in_version": 11,
+        "arm_definitions": {
+          "graf_floor": "retrieve runs graf locate --file-score damped --stop floor (the preregistered held-out arm graf_locate_damped_floor; constants unchanged); same system prompt as batch t",
+          "search_only": "no retrieve tool; read, search, edit, test, finish only; the system prompt omits the retrieve clause. A control: it can never pass the batch or be promoted",
+          "graphify": "as in batch t, rerun in this batch's interleaved order"
+        },
+        "rationale": "batch t: both arms solved 100/100, graf cost more because its retrieve payload fills the budget and stays in context; the closest held-out arm returns fewer tokens. The control asks whether any retrieve tool pays for itself on these tasks"
+      }
     }
   },
   "report_every_case": true,
@@ -145,6 +182,11 @@
       "version": 10,
       "date": "2026-10-19",
       "change": "made the agent-trial success margin (0.10), primary cost test, and pairing unit explicit before outcome analysis; 20 of 200 trials had run and only the runner's per-trial pass/fail lines had been seen, with no aggregation or arm comparison"
+    },
+    {
+      "version": 11,
+      "date": "2026-10-20",
+      "change": "added agent batch t2 (graf_floor candidate, search_only control, graphify comparator; Bonferroni over tested arms) before any t2 run; moved batch t's arms into agent_trials.batches without changing its rule"
     }
   ],
   "arms": {

@@ -34,14 +34,33 @@ TOOL_DEFINITIONS = [
 ]
 
 
+GRAF_QUERY_FLAGS = {"graf": (), "graf_floor": ("--file-score", "damped", "--stop", "floor")}
+ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only")
+
+
+def tool_definitions(arm):
+    """The operations an arm's model can request; the search-only control has no retriever."""
+    return [d for d in TOOL_DEFINITIONS if arm != "search_only" or d["name"] != "retrieve"]
+
+
+def retrieve_command(arm, input_dir, output_dir, query, budget):
+    if arm in GRAF_QUERY_FLAGS:
+        return [str(BASE / "target/release/graf"), "--root", str(input_dir), "locate", query,
+                "--budget", str(budget), "--limit", "1000", "--text", *GRAF_QUERY_FLAGS[arm]]
+    if arm == "graphify":
+        return [sys.executable, str(BASE / "benchmark/compare_graphify.py"), "--graphify-query",
+                str(output_dir / "graphify-out/graph.json"), query, str(budget)]
+    raise ValueError("retrieve is not available in this arm")
+
+
 class InfrastructureError(RuntimeError):
     """A broker tool failed for reasons outside the agent's control; the trial is invalid."""
 
 
-def run_tool(command, **kwargs):
-    """Run a retrieval backend; a missing or failing executable is infrastructure, not the agent."""
+def run_tool(command, check=True, **kwargs):
+    """Run a broker backend; a missing or failing executable is infrastructure, not the agent."""
     try:
-        return subprocess.run(command, capture_output=True, text=True, check=True, **kwargs)
+        return subprocess.run(command, capture_output=True, text=True, check=check, **kwargs)
     except (OSError, subprocess.SubprocessError) as error:
         raise InfrastructureError(f"{Path(command[0]).name} failed: {error}") from error
 
@@ -92,8 +111,8 @@ def graphify_pin():
 
 class Session:
     def __init__(self, task, trial_id, arm):
-        if arm not in {"graf", "graphify"}:
-            raise ValueError("arm must be graf or graphify")
+        if arm not in ARMS:
+            raise ValueError(f"arm must be one of {', '.join(ARMS)}")
         self.task, self.arm = task, arm
         self.root = (BASE / ".research/trials" / trial_id / "workspace").resolve()
         self.directory = self.root.parent
@@ -166,7 +185,7 @@ class Session:
             path = self.input / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
-        if self.arm == "graf":
+        if self.arm in GRAF_QUERY_FLAGS:
             command = [str(BASE / "target/release/graf"), "--root", str(self.input), "index", "--rebuild"]
         else:
             graphify_pin()
@@ -182,7 +201,7 @@ class Session:
             "stdout": result.stdout, "stderr": result.stderr,
             "snapshot": sha(json.dumps(files, sort_keys=True)),
         }, indent=2) + "\n")
-        if self.arm == "graf":
+        if self.arm in GRAF_QUERY_FLAGS:
             index = json.loads((self.input / ".graf/index.json").read_text())
             if set(index["files"]) != set(files):
                 raise RuntimeError("graf source filters differ from the shared input set")
@@ -216,14 +235,9 @@ class Session:
             query = args.get("query")
             if not isinstance(query, str) or not query.strip():
                 raise ValueError("query must be nonempty")
+            command = retrieve_command(self.arm, self.input, self.output, query, budget)
             if self.dirty:
                 self.rebuild()
-            if self.arm == "graf":
-                command = [str(BASE / "target/release/graf"), "--root", str(self.input), "locate", query,
-                           "--budget", str(budget), "--limit", "1000", "--text"]
-            else:
-                command = [sys.executable, str(BASE / "benchmark/compare_graphify.py"), "--graphify-query",
-                           str(self.output / "graphify-out/graph.json"), query, str(budget)]
             context = run_tool(command, timeout=90, env=self.environment()).stdout
             return {"content": context, "requested_budget": budget, "reference_text_tokens": len(tokens(context)),
                     "over_reference_budget": len(tokens(context)) > budget}
@@ -247,7 +261,7 @@ class Session:
             if not files:
                 return {"content": ""}
             command = ["rg", "--no-config", "--color", "never", "--line-number", "--max-count", "10", "--", pattern, *files]
-            result = subprocess.run(command, cwd=self.root, capture_output=True, text=True, timeout=30)
+            result = run_tool(command, check=False, cwd=self.root, timeout=30)
             if result.returncode not in (0, 1):
                 raise ValueError(result.stderr.strip())
             delivered = bounded(result.stdout, budget_of(args))
@@ -312,7 +326,7 @@ def prepare_session(task, trial_id, arm):
         (session.root / "node_modules").symlink_to(BASE / ".research/task-runtime/fastify/node_modules", target_is_directory=True)
     (session.directory / "session.json").write_text(json.dumps({
         "task": task["id"], "arm": arm, "issue": task["issue"],
-        "tools": TOOL_DEFINITIONS, "solver_status": "not_configured",
+        "tools": tool_definitions(arm), "solver_status": "not_configured",
         "protected_source_hashes": session.protected,
         "fault_metadata_exposed_to_model": False,
     }, indent=2) + "\n")
@@ -324,12 +338,12 @@ def main():
     parser.add_argument("action", choices=["prepare", "serve"])
     parser.add_argument("task", choices=[t["id"] for t in tasks()])
     parser.add_argument("trial_id")
-    parser.add_argument("--arm", required=True, choices=["graf", "graphify"])
+    parser.add_argument("--arm", required=True, choices=ARMS)
     args = parser.parse_args()
     task = next(t for t in tasks() if t["id"] == args.task)
     session = prepare_session(task, args.trial_id, args.arm) if args.action == "prepare" else Session(task, args.trial_id, args.arm)
     if args.action == "prepare":
-        print(json.dumps({"issue": task["issue"], "tools": TOOL_DEFINITIONS,
+        print(json.dumps({"issue": task["issue"], "tools": tool_definitions(args.arm),
                           "session": str(session.directory / "session.json")}))
         return
     for line in sys.stdin:

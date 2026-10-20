@@ -1,27 +1,36 @@
 {
-  "preregistration_version": 10,
+  "preregistration_version": 11,
+  "batch": "t",
   "passed": false,
   "reasons": [
-    "primary cost test failed"
+    "no candidate passed both the cost and success tests"
   ],
-  "primary": {
-    "metric": "cost_usd",
-    "mean_reduction": -0.00025378809999999994,
-    "p": 0.9707402925970741,
-    "alpha": 0.05,
-    "passed": false
-  },
-  "success": {
-    "metric": "success_rate",
-    "mean_difference": 0.0,
-    "margin": 0.1,
-    "p": 9.99990000099999e-06,
-    "alpha": 0.05,
-    "passed": true
-  },
-  "secondary": {
-    "mean_token_reduction": -7205.57,
-    "token_reduction_p": 0.9153708462915371
+  "comparator": "graphify",
+  "comparisons": {
+    "graf": {
+      "role": "candidate",
+      "primary": {
+        "metric": "cost_usd",
+        "mean_reduction": -0.00025378809999999994,
+        "p": 0.9707402925970741,
+        "alpha": 0.05,
+        "passed": false
+      },
+      "success": {
+        "metric": "success_rate",
+        "mean_difference": 0.0,
+        "margin": 0.1,
+        "p": 9.99990000099999e-06,
+        "alpha": 0.05,
+        "passed": true
+      },
+      "passed": false,
+      "cheaper_tasks": 7,
+      "secondary": {
+        "mean_token_reduction": -7205.57,
+        "token_reduction_p": 0.9153708462915371
+      }
+    }
   },
   "arms": {
     "graf": {

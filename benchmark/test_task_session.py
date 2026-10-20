@@ -81,6 +81,15 @@ class TaskBrokerIntegrity(unittest.TestCase):
         agent_error = self.session.call("read", {"path": "missing.py"})
         self.assertNotIn("infrastructure", agent_error)
 
+    def test_retrieve_commands_per_arm(self):
+        base = task_session.retrieve_command("graf", Path("in"), Path("out"), "q", 2000)
+        floor = task_session.retrieve_command("graf_floor", Path("in"), Path("out"), "q", 2000)
+        self.assertEqual(floor[:len(base)], base)
+        self.assertEqual(floor[len(base):], ["--file-score", "damped", "--stop", "floor"])
+        self.assertIn("--graphify-query", task_session.retrieve_command("graphify", Path("in"), Path("out"), "q", 2000))
+        with self.assertRaises(ValueError):
+            task_session.retrieve_command("search_only", Path("in"), Path("out"), "q", 2000)
+
     def test_tool_only_trace_cannot_be_scored_as_agent_usage(self):
         self.assertTrue(self.session.call("finish", {})["result"]["verification_passed"])
         events = [json.loads(s) for s in self.session.events.read_text().splitlines()]

@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 from agent_trials import audit_trace
-from run_agent_trial import claude_command, preflight, usage_events
+from run_agent_trial import SYSTEM_PROMPT, claude_command, preflight, system_prompt, usage_events
 
 RESULT = {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3,
           "total_cost_usd": 0.0123,
@@ -47,7 +47,7 @@ class UsageTests(unittest.TestCase):
 
 class CommandTests(unittest.TestCase):
     def test_command_disables_builtin_tools_and_foreign_configuration(self):
-        command = claude_command("issue text", Path("/x/mcp.json"), "claude-haiku-5-5", 0.5)
+        command = claude_command("issue text", Path("/x/mcp.json"), "claude-haiku-5-5", 0.5, "graf")
         joined = " ".join(command)
         for flag in ('--tools', '--strict-mcp-config', '--setting-sources', '--disable-slash-commands',
                      '--no-session-persistence', '--max-budget-usd 0.5', '--model claude-haiku-5-5',
@@ -55,6 +55,15 @@ class CommandTests(unittest.TestCase):
             self.assertIn(flag, joined)
         self.assertEqual(command[command.index("--tools") + 1], "")
         self.assertEqual(command[command.index("--setting-sources") + 1], "")
+
+
+    def test_prompt_names_only_the_arm_tools(self):
+        # Batch t ran with SYSTEM_PROMPT for both arms; retrieval arms keep it unchanged.
+        for arm in ("graf", "graf_floor", "graphify"):
+            self.assertEqual(system_prompt(arm), SYSTEM_PROMPT)
+        self.assertNotIn("retrieve", system_prompt("search_only"))
+        command = claude_command("issue", Path("/x/mcp.json"), "m", 0.5, "search_only")
+        self.assertEqual(command[command.index("--system-prompt") + 1], system_prompt("search_only"))
 
 
 class PreflightTests(unittest.TestCase):

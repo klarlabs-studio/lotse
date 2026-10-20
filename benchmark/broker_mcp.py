@@ -1,8 +1,8 @@
 """Expose one prepared trial's task broker to an MCP client over stdio.
 
-    python benchmark/broker_mcp.py TASK TRIAL_ID --arm graf|graphify [--catalog FILE]
+    python benchmark/broker_mcp.py TASK TRIAL_ID --arm ARM [--catalog FILE]
 
-The model sees only the broker operations in task_session.TOOL_DEFINITIONS.
+The model sees only the broker operations its arm offers (task_session.tool_definitions).
 Every call goes through Session.call, which records tool events outside the
 model's workspace. Newline-delimited JSON-RPC 2.0; no third-party SDK.
 """
@@ -12,7 +12,7 @@ from pathlib import Path
 import sys
 
 from agent_trials import BASE, tasks
-from task_session import TOOL_DEFINITIONS, Session
+from task_session import ARMS, Session, tool_definitions
 
 BUDGET = {"type": "integer", "minimum": 1, "maximum": 8000, "default": 2000}
 TOOLS = {
@@ -55,10 +55,10 @@ def handle(message, session):
     elif method == "ping":
         result = {}
     elif method == "tools/list":
-        result = {"tools": [_tool(d) for d in TOOL_DEFINITIONS]}
+        result = {"tools": [_tool(d) for d in tool_definitions(session.arm)]}
     elif method == "tools/call":
         name = params.get("name")
-        if name not in TOOLS:
+        if name not in {d["name"] for d in tool_definitions(session.arm)}:
             result = _text(f"Unknown tool: {name}", True)
         else:
             response = session.call(name, params.get("arguments") or {})
@@ -73,7 +73,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("task")
     parser.add_argument("trial_id")
-    parser.add_argument("--arm", required=True, choices=["graf", "graphify"])
+    parser.add_argument("--arm", required=True, choices=ARMS)
     parser.add_argument("--catalog", type=Path, default=BASE / "benchmark/agent-tasks.json")
     args = parser.parse_args()
     task = next(t for t in tasks(args.catalog) if t["id"] == args.task)
