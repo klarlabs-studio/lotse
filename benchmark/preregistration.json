@@ -1,5 +1,5 @@
 {
-  "version": 15,
+  "version": 16,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -249,6 +249,11 @@
       "version": 15,
       "date": "2026-10-20",
       "change": "added localization_screen: an offline, solver-free screen of AST-unit and call-graph retrieval against graf_floor and Graphify on issue-closing pull requests, frozen before any localization task was scored"
+    },
+    {
+      "version": 16,
+      "date": "2026-10-20",
+      "change": "after the 18-task dev run (debugging only; no held-out task scored): the primary metric becomes unit_acc@5 because 'any hit in the payload' rewards arms that cite many pointers (graf and Graphify cited about 40 spans, AST arms about 4); added ast_bounded and graf_floor_ids, motivated by research/code-representation-review.md; Holm now spans four candidate arms"
     }
   ],
   "arms": {
@@ -300,29 +305,36 @@
       "graphify": "pinned code-only Graphify extract + query at token_budget 2000; navigation hints",
       "file_bm25": "BM25 over whole files, ranked paths, stop below 0.5 x best score; a lexical file-ranking proxy, not the search-only agent",
       "ast_units": "BM25 (retrieval.terms, k1 1.2, b 0.75) over code units; whole units in score order, stop below 0.5 x best score or when the next unit does not fit; an over-long best unit is cut to the budget. Idea: cAST structural chunking (Zhang et al. 2025), Agentless function-level localization (Xia et al. 2024)",
-      "ast_graph": "ast_units with call-graph propagation: score + 0.5 x best neighbour score over undirected call edges between function units, linked by called name; names defined by more than 3 units are not linked. Idea: RepoGraph (Ouyang et al. 2025), LocAgent (Chen et al. 2025)"
+      "ast_graph": "ast_units with call-graph propagation: score + 0.5 x best neighbour score over undirected call edges between function units, linked by called name; names defined by more than 3 units are not linked. Idea: RepoGraph (Ouyang et al. 2025), LocAgent (Chen et al. 2025)",
+      "ast_bounded": "ast_units with function units longer than 24 lines split into 24-line pieces aligned to the function start (size-bounded structural chunks). Idea: cAST (Zhang et al. 2025); Wu et al. 2026 found unbounded function chunks worst",
+      "graf_floor_ids": "graf_floor with a deterministic rewritten query: the issue title plus code-like tokens from the body (file paths, dotted names, camelCase, PascalCase with an inner capital, snake_case and constants, called names, and identifiers inside backticks or code blocks), deduplicated in order; the raw issue if none. Idea: BLIZZARD (Rahman and Roy 2018), Caumartin and Melo 2026"
     },
     "parameters_note": "0.5 floor, 0.5 propagation weight, 3-definition cap, and 2,000-token budget are round defaults chosen before any task was scored, not tuned",
     "metrics": {
-      "primary": "unit_hit: some cited span (graf window, unit, or Graphify symbol start line) overlaps a gold unit",
+      "ranking": "each arm's cited spans, in output order, map to the code units they overlap; each unit counts once at its first citation. Files rank in citation order",
+      "primary": "unit_acc@5: a gold unit is among the first 5 cited units (function-level Acc@5, the localization literature's standard)",
       "secondary": [
-        "file_hit: a gold file is among the cited files (shared with Graphify hints and file_bm25)",
+        "unit_acc@1 and @10; file_acc@1, @5, @10",
+        "unit_hit: a gold unit anywhere in the payload",
         "gold_line_shown: a gold line's text appears in the payload inside a span covering it (code-returning arms only; Graphify hints return no code by design)",
-        "payload tokens"
+        "payload tokens and cited units"
       ],
-      "labels": "Graphify is code-only and returns hints, not code; file_bm25 has no spans and reports file_hit only"
+      "labels": "Graphify is code-only and returns hints, not code; its order is its traversal order. file_bm25 has no spans and reports file metrics only"
     },
     "decision": {
-      "structured_arms": [
+      "candidate_arms": [
         "ast_units",
-        "ast_graph"
+        "ast_graph",
+        "ast_bounded",
+        "graf_floor_ids"
       ],
       "comparators": [
         "graf_floor",
         "graphify"
       ],
-      "test": "exact one-sided McNemar (binomial on discordant tasks) on unit_hit, per structured arm against each comparator",
-      "rule": "an arm qualifies for a preregistered agent batch only if it beats every comparator (intersection-union: its p is the larger of the two), with Holm correction across the two structured arms at family alpha 0.05",
+      "k": 5,
+      "test": "exact one-sided McNemar (binomial on discordant tasks) on unit_acc@5, per candidate arm against each comparator",
+      "rule": "an arm qualifies for a preregistered agent batch only if it beats every comparator (intersection-union: its p is the larger of the two), with Holm correction across the four candidate arms at family alpha 0.05",
       "report": "every task and arm, all pairwise rates descriptively, and results by repository"
     }
   }

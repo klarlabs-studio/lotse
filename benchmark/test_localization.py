@@ -1,7 +1,7 @@
 """Localization scoring must be symmetric across arms and anchored to the real fix."""
 import unittest
 
-from localization import (decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+from localization import (accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
                           pack_units, score_task)
 
 GO = """package x
@@ -124,12 +124,40 @@ class DecisionTests(unittest.TestCase):
         rows = []
         for i in range(40):
             rows.append({"task": f"t{i}", "repo": "r", "arms": {
-                "ast_units": {"unit_hit": True}, "ast_graph": {"unit_hit": i < 20},
-                "graf_floor": {"unit_hit": i < 20}, "graphify": {"unit_hit": i < 5}}})
+                "ast_units": {"unit_rank": 1}, "ast_graph": {"unit_rank": 1 if i < 20 else None},
+                "graf_floor": {"unit_rank": 3 if i < 20 else 9}, "graphify": {"unit_rank": 2 if i < 5 else None}}})
         result = decide(rows, ["ast_units", "ast_graph"], ["graf_floor", "graphify"], 0.05)
         self.assertTrue(result["arms"]["ast_units"]["qualifies"])
         self.assertFalse(result["arms"]["ast_graph"]["qualifies"])
         self.assertEqual(result["arms"]["ast_units"]["rate"], 1.0)
+
+
+class RankAndRewriteTests(unittest.TestCase):
+    def test_cited_units_keep_citation_order_without_duplicates(self):
+        units = {"x.go": code_units("x.go", GO)}
+        order = cited_units([("x.go", 7, 7), ("x.go", 4, 8), ("y.go", 1, 1)], units)
+        self.assertEqual([(u["name"]) for u in order][:2], ["Run", "helper"])
+        self.assertEqual(len(order), 3)  # Run, helper, and the blank module line 6 between them.
+
+    def test_accuracy_at_k(self):
+        ranked = [("a", 1), ("b", 2), ("c", 3)]
+        self.assertEqual(accuracy_at(ranked, {("c", 3)}, 2), False)
+        self.assertEqual(accuracy_at(ranked, {("c", 3)}, 3), True)
+
+    def test_bounded_units_split_long_functions_at_the_window(self):
+        text = "func long() {\n" + "\tx()\n" * 50 + "}\n"
+        pieces = [u for u in bounded_units(code_units("x.go", text)) if u["kind"] == "function"]
+        self.assertEqual([(u["start"], u["end"]) for u in pieces], [(1, 24), (25, 48), (49, 52)])
+        self.assertTrue(all(u["name"] == "long" for u in pieces))
+
+    def test_rewrite_keeps_title_and_code_like_tokens(self):
+        issue = ("reply.send fails\n\nWhen I call `reply.code(204)` the onSend hook in lib/reply.js "
+                 "throws FST_ERR_REP_ALREADY_SENT and the docs say nothing.\n```js\nfastify.addHook('onSend', fn)\n```")
+        query = rewrite_query(issue)
+        for token in ["reply.send", "reply.code", "onSend", "lib/reply.js", "FST_ERR_REP_ALREADY_SENT", "addHook"]:
+            self.assertIn(token, query)
+        self.assertNotIn("docs", query.split("\n", 1)[1])
+        self.assertEqual(rewrite_query("plain words only"), "plain words only")
 
 
 if __name__ == "__main__":

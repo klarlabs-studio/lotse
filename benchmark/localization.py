@@ -201,6 +201,57 @@ def _bounded(text, budget):
     return result
 
 
+
+def bounded_units(units, size=WINDOW):
+    """Split function units longer than the window into window-sized pieces aligned to the function start."""
+    result = []
+    for unit in units:
+        if unit["kind"] != "function" or unit["end"] - unit["start"] < size:
+            result.append(unit)
+            continue
+        lines = unit["text"].split("\n")
+        for offset in range(0, len(lines), size):
+            start = unit["start"] + offset
+            result.append({**unit, "start": start, "end": min(start + size - 1, unit["end"]),
+                           "text": "\n".join(lines[offset:offset + size])})
+    return result
+
+
+def cited_units(spans, units_by_path):
+    """Units reached by the cited spans, in citation order, each once."""
+    seen, order = set(), []
+    for path, start, end in spans:
+        for unit in units_by_path.get(path, []):
+            key = (path, unit["start"])
+            if unit["start"] <= end and start <= unit["end"] and key not in seen:
+                seen.add(key)
+                order.append(unit)
+    return order
+
+
+def accuracy_at(ranked, gold, k):
+    return any(item in gold for item in ranked[:k])
+
+
+CODE_SPANS = re.compile(r"```.*?```|`[^`\n]+`", re.S)
+CODE_TOKENS = re.compile(
+    r"[\w./-]+\.(?:go|py|js|mjs|cjs|ts)\b"            # file paths
+    r"|\b[A-Za-z_]\w+(?:\.[A-Za-z_]\w+)+\b"             # dotted names
+    r"|\b[a-z]+[A-Z]\w*\b"                               # camelCase
+    r"|\b[A-Z][a-z0-9]+[A-Z]\w*\b"                       # PascalCase with an inner capital
+    r"|\b\w*[A-Za-z]_\w+\b"                                # snake_case and CONSTANTS
+    r"|\b[A-Za-z_]\w*(?=\()")                            # called names
+
+
+def rewrite_query(issue):
+    """The issue title plus code-like tokens from the body (BLIZZARD-style); prose is dropped."""
+    title, _, body = issue.partition("\n")
+    found = CODE_TOKENS.findall(body)
+    for span in CODE_SPANS.findall(body):
+        found += re.findall(r"[A-Za-z_]\w+", span)
+    tokens_ = list(dict.fromkeys(found))
+    return f"{title}\n{' '.join(tokens_)}" if tokens_ else issue
+
 GRAPHIFY_NODE = re.compile(r"^NODE (.*?) \[src=(.*?) loc=L?(\d*) community=", re.M)
 
 
@@ -302,7 +353,8 @@ def build():
 # --- Arms --------------------------------------------------------------------------------------
 
 GRAF = BASE / "target/release/graf"
-GRAF_FLAGS = {"graf": [], "graf_floor": ["--file-score", "damped", "--stop", "floor"]}
+GRAF_FLAGS = {"graf": [], "graf_floor": ["--file-score", "damped", "--stop", "floor"],
+              "graf_floor_ids": ["--file-score", "damped", "--stop", "floor"]}
 GRAF_SPAN = re.compile(r'^"(.*?)":(\d+)-(\d+)$', re.M)
 FLOOR, WEIGHT = 0.5, 0.5
 
@@ -364,6 +416,10 @@ def run_file_bm25(files, query, budget):
     return {"payload": text, "files": cited, "spans": []}
 
 
+def first_rank(ranked, gold):
+    return next((i + 1 for i, item in enumerate(ranked) if item in gold), None)
+
+
 def run_ast(units, edges, query, budget, graph):
     scores = list(BM25([u["text"] for u in units]).score(query))
     if graph:
@@ -373,7 +429,8 @@ def run_ast(units, edges, query, budget, graph):
     return {"payload": text, "files": list(dict.fromkeys(p for p, _, _ in spans)), "spans": spans}
 
 
-ARMS = ("graf", "graf_floor", "graphify", "file_bm25", "ast_units", "ast_graph")
+ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_units", "ast_graph", "ast_bounded")
+RANKS = (1, 5, 10)
 
 
 def run_task(task, budget):
@@ -384,20 +441,27 @@ def run_task(task, budget):
     missing = [p for p in task["gold"] if p not in files]
     if missing:
         raise RuntimeError(f"{task['id']}: gold files outside the corpus: {missing}")
+    gold = {p: set(g) for p, g in task["gold"].items()}
+    gold_keys = {(p, u["start"]) for p, lines in gold.items() for u in gold_units(units_by_path[p], lines)}
+    pieces = bounded_units(units)
     results = {}
     for arm in ARMS:
         if arm in GRAF_FLAGS:
-            answer = run_graf(root, arm, task["query"], budget)
+            query = rewrite_query(task["query"]) if arm.endswith("_ids") else task["query"]
+            answer = run_graf(root, arm, query, budget)
         elif arm == "graphify":
             answer = run_graphify(root, task["query"], budget)
         elif arm == "file_bm25":
             answer = run_file_bm25(files, task["query"], budget)
+        elif arm == "ast_bounded":
+            answer = run_ast(pieces, [], task["query"], budget, graph=False)
         else:
             answer = run_ast(units, edges, task["query"], budget, graph=arm == "ast_graph")
-        gold = {p: set(g) for p, g in task["gold"].items()}
+        ranked = [(u["path"], u["start"]) for u in cited_units(answer["spans"], units_by_path)]
         results[arm] = {**score_task(gold, units_by_path, answer["files"], answer["spans"], answer["payload"]),
-                        "payload_tokens": len(tokens(answer["payload"])), "files": answer["files"][:20],
-                        "spans": answer["spans"][:40]}
+                        "unit_rank": first_rank(ranked, gold_keys), "file_rank": first_rank(answer["files"], gold),
+                        "cited_units": len(ranked), "payload_tokens": len(tokens(answer["payload"])),
+                        "files": answer["files"][:20], "spans": answer["spans"][:40]}
     return results
 
 
@@ -414,7 +478,7 @@ def run(split):
         if task["id"] in rows:
             continue
         rows[task["id"]] = {"task": task["id"], "repo": task["repo"], "arms": run_task(task, budget)}
-        hits = {a: int(r["unit_hit"]) for a, r in rows[task["id"]]["arms"].items()}
+        hits = {a: r["unit_rank"] for a, r in rows[task["id"]]["arms"].items()}
         print(task["id"], hits, flush=True)
         out.write_text(json.dumps({"split": split, "catalog_sha256": digest, "graf_sha256": graf_sha,
                                    "tasks": list(rows.values())}, indent=1) + "\n")
@@ -431,8 +495,12 @@ def mcnemar_one_sided(arm, comparator):
     return sum(comb(n, k) for k in range(wins, n + 1)) / 2 ** n if n else 1.0
 
 
-def decide(rows, structured, comparators, alpha):
-    hit = {a: [bool(r["arms"][a]["unit_hit"]) for r in rows] for a in {*structured, *comparators}}
+def hit_at(result, k):
+    return result["unit_rank"] is not None and result["unit_rank"] <= k
+
+
+def decide(rows, structured, comparators, alpha, k=5):
+    hit = {a: [hit_at(r["arms"][a], k) for r in rows] for a in {*structured, *comparators}}
     arms = {}
     for arm in structured:
         versus = {c: {"p": mcnemar_one_sided(hit[arm], hit[c]),
@@ -457,6 +525,10 @@ def summarize(rows):
             results = [r["arms"][arm] for r in subset]
             out[arm] = {key: sum(bool(x[key]) for x in results) / len(results)
                         for key in ("unit_hit", "file_hit", "gold_line_shown")}
+            for k in RANKS:
+                out[arm][f"unit_acc@{k}"] = sum(hit_at(x, k) for x in results) / len(results)
+                out[arm][f"file_acc@{k}"] = sum(x["file_rank"] is not None and x["file_rank"] <= k
+                                                for x in results) / len(results)
             out[arm]["mean_payload_tokens"] = sum(x["payload_tokens"] for x in results) / len(results)
         return out
     repos = sorted({r["repo"] for r in rows})
@@ -469,15 +541,15 @@ def decide_split(split):
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
     rule = screen["decision"]
     result = {"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"],
-              "decision": decide(data["tasks"], rule["structured_arms"], rule["comparators"], 0.05),
+              "decision": decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"]),
               "summary": summarize(data["tasks"]),
-              "pairwise_unit_hit": {f"{a}>{b}": mcnemar_one_sided([r["arms"][a]["unit_hit"] for r in data["tasks"]],
-                                                                  [r["arms"][b]["unit_hit"] for r in data["tasks"]])
+              "pairwise_unit_acc@k": {f"{a}>{b}": mcnemar_one_sided([hit_at(r["arms"][a], rule["k"]) for r in data["tasks"]],
+                                                                    [hit_at(r["arms"][b], rule["k"]) for r in data["tasks"]])
                                     for a in ARMS for b in ARMS if a != b and a != "file_bm25" and b != "file_bm25"}}
     out = BASE / f"results/localization-decision-{split}.json"
     out.write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps({"qualified": result["decision"]["qualified"],
-                      "unit_hit": {a: round(v["unit_hit"], 3) for a, v in result["summary"]["all"].items()}}))
+                      "unit_acc@k": {a: round(v[f"unit_acc@{rule['k']}"], 3) for a, v in result["summary"]["all"].items()}}))
     return 0 if result["decision"]["qualified"] else 1
 
 
