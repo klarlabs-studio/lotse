@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from agent_trials import audit_trace, tasks
+from agent_trials import audit_trace, task_faults, tasks
 from retrieval import BASE, chunks_from, pack, score_evidence, tokens
 
 
@@ -44,8 +44,8 @@ class MeasurementIntegrity(unittest.TestCase):
     def test_faults_are_unique_and_validation_files_exist(self):
         for task in tasks():
             root = BASE / ".research/corpora" / task["repo"]
-            f = task["fault"]
-            self.assertEqual((root / f["path"]).read_text().count(f["before"]), 1)
+            for f in task_faults(task):
+                self.assertEqual((root / f["path"]).read_text().count(f["before"]), 1)
             if task["repo"] == "fastify":
                 self.assertTrue((root / task["verify"][-1]).is_file())
             if task["repo"] == "flask":

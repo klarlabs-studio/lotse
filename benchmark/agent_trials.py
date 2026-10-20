@@ -1,6 +1,9 @@
-"""Prepare isolated synthetic tasks and verify a repair. Does not invoke an agent.
+"""Prepare isolated repair tasks and verify a repair. Does not invoke an agent.
 
 Fault definitions and reference evidence stay outside the agent's working copy.
+A task's fault is one replacement ("fault") or several ("faults", e.g. a reverted
+real fix). A natural task also lists "hidden_tests": the fix's test changes are
+reverted in the agent's copy and installed from the corpus only while grading.
 Dependencies must be provisioned before verification; nonzero exit is never success.
 """
 import argparse
@@ -20,6 +23,22 @@ def tasks(catalog=BASE / "benchmark/agent-tasks.json"):
     return json.loads(Path(catalog).read_text())
 
 
+def task_faults(task):
+    return task["faults"] if "faults" in task else [task["fault"]]
+
+
+def _apply(root, edits):
+    for edit in edits:
+        path = root / edit["path"]
+        if edit.get("added"):
+            path.unlink()
+            continue
+        text = path.read_text()
+        if text.count(edit["before"]) != 1:
+            raise ValueError(f"Fault must have exactly one source match in {edit['path']}")
+        path.write_text(text.replace(edit["before"], edit["after"], 1))
+
+
 def prepare(task, trial_id):
     if not trial_id.replace("-", "").replace("_", "").isalnum():
         raise ValueError("trial id must be alphanumeric with hyphens or underscores")
@@ -29,12 +48,7 @@ def prepare(task, trial_id):
     shutil.copytree(BASE / ".research/corpora" / task["repo"], dest,
                     ignore=shutil.ignore_patterns(".graf", "graphify-out", ".git", "__pycache__",
                                                  ".pytest_cache", "node_modules", "target"))
-    fault = task["fault"]
-    path = dest / fault["path"]
-    text = path.read_text()
-    if text.count(fault["before"]) != 1:
-        raise ValueError("Fault must have exactly one source match")
-    path.write_text(text.replace(fault["before"], fault["after"], 1))
+    _apply(dest, [*task_faults(task), *task.get("hidden_tests", [])])
     (dest.parent / "issue.txt").write_text(task["issue"] + "\n")
     (dest.parent / "task.json").write_text(json.dumps({"task": task["id"]}) + "\n")
     print(dest)
@@ -51,8 +65,19 @@ def verify(task, workspace):
     env = dict(os.environ)
     env.update(GOCACHE=str(BASE / ".research/go-cache"), GOMODCACHE=str(BASE / ".research/go-modules"),
                PYTHONPATH=str(root / "src"), PYTHONDONTWRITEBYTECODE="1")
+    hidden = {e["path"]: root / e["path"] for e in task.get("hidden_tests", [])}
+    agent_view = {name: path.read_text() if path.is_file() else None for name, path in hidden.items()}
     start = time.perf_counter()
-    run = subprocess.run(command, cwd=root, env=env, capture_output=True, text=True, timeout=180)
+    try:
+        for name, path in hidden.items():
+            path.write_text((BASE / ".research/corpora" / task["repo"] / name).read_text())
+        run = subprocess.run(command, cwd=root, env=env, capture_output=True, text=True, timeout=180)
+    finally:
+        for name, path in hidden.items():
+            if agent_view[name] is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_text(agent_view[name])
     result = dict(task=task["id"], command=command, returncode=run.returncode,
                   verification_passed=run.returncode == 0, wall_s=time.perf_counter()-start,
                   stdout=run.stdout, stderr=run.stderr)

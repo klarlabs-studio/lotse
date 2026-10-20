@@ -5,7 +5,7 @@ import io
 import json
 from pathlib import Path
 
-from agent_trials import BASE, prepare, tasks, verify
+from agent_trials import BASE, prepare, task_faults, tasks, verify
 
 
 def main(run_id, catalog, report):
@@ -19,13 +19,13 @@ def main(run_id, catalog, report):
             prepare(task, trial_id)
         if task["repo"] == "fastify":
             (root / "node_modules").symlink_to(BASE / ".research/task-runtime/fastify/node_modules", target_is_directory=True)
-        fault = task["fault"]
-        path = root / fault["path"]
-        faulty = path.read_text()
-        original = (BASE / ".research/corpora" / task["repo"] / fault["path"]).read_text()
+        names = sorted({f["path"] for f in task_faults(task)})
+        faulty = {name: (root / name).read_text() for name in names}
+        original = {name: (BASE / ".research/corpora" / task["repo"] / name).read_text() for name in names}
         codes = {}
-        for phase, text in [("base", original), ("fault", faulty), ("restored", original)]:
-            path.write_text(text)
+        for phase, texts in [("base", original), ("fault", faulty), ("restored", original)]:
+            for name, text in texts.items():
+                (root / name).write_text(text)
             stream = io.StringIO()
             with contextlib.redirect_stdout(stream):
                 code = verify(task, root)
