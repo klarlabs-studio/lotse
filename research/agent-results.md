@@ -1,6 +1,43 @@
 # Paired agent trials
 
-Two preregistered batches over the same 20 synthetic fault-repair tasks, solver, and spend cap. Batch `t2` is reported first.
+Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
+
+## Batch t3: natural tasks; no arm separates
+
+**Outcome: the candidate `graf_floor` fails.** It was not significantly cheaper than either comparator, `search_only` or Graphify. All three arms cost the same, within noise. Every task and arm summary is in [agent-decision-t3.json](../results/agent-decision-t3.json). The batch is `t3` in [preregistration v14](../benchmark/preregistration.json).
+
+### Conditions
+
+- **Tasks.** 18 natural tasks ([natural-tasks.json](../benchmark/natural-tasks.json), frozen catalog sha256 `e2867b67…`): 5 from Cobra, 3 from Flask, and 10 from Fastify. Each one reverts a real merged fix that closes an issue and predates the pin. The fix can span several places, and its tests stay hidden until grading. The agent sees the issue text verbatim. Selection followed the preregistered protocol (v12; v13 widened the size bound to 10 files and 400 lines and added drift, timeout, and mismatch rules; v14 froze the yield of 18 as the minimum). Every candidate and its outcome is in [natural-task-selection.json](../results/natural-task-selection.json).
+- **Arms.** `graf_floor` (candidate): `graf locate --file-score damped --stop floor`, same binary as `t2`. Comparators: `search_only` (no `retrieve` tool) and pinned code-only Graphify. The candidate must pass against both (intersection-union), so alpha is not split: 0.05 for each test.
+- **Plan.** 270 runs, 5 per task and arm, interleaved (seed 20261021), on 2026-10-20. Solver, prompt, and per-run cap ($0.50 estimated) are the same as `t2`. Cost is a list-price estimate, not a charge.
+- **Run integrity.** There were no infrastructure errors, every run finished normally, and none hit the cap. The batch stopped twice on harness bugs. Both were fixed with tests (`d142f16`, `abcce0e`), and each affected trial was rebuilt from its saved artifacts without rerunning the agent:
+  - `t3-fastify-6411-search_only-5`: tool calls sent alongside `finish` were refused after the verdict, and the trace audit rejected that. Result: failed.
+  - `t3-cobra-1651-graphify-1`: a refused second `finish` wrote a spurious failing verdict. It was dropped. Result: passed.
+- **Interim look (deviation).** After the second stop, at about 172 of 270 runs, I ran the decision script on the partial data and saw interim arm totals. The rule, tasks, and plan were not changed afterwards, and the remaining runs went ahead as scheduled. The disclosure is here because the look was not planned.
+
+### Results
+
+| | graf_floor | search_only | Graphify |
+| --- | ---: | ---: | ---: |
+| Verifier success | 83/90 (0.848–0.962) | 83/90 (0.848–0.962) | 85/90 (0.876–0.976) |
+| pass^5 | 0.78 | 0.83 | 0.78 |
+| Total estimated cost | $0.403 | $0.406 | $0.401 |
+| Total tokens | 8.44 M | 7.66 M | 7.92 M |
+| Mean `retrieve` calls per run | 0.88 | — | 0.88 |
+| Mean `retrieve` payload (cl100k) | 686 | — | 1,729 |
+
+- **graf_floor vs search_only.** Mean cost reduction +$0.00004 per task, p = 0.42; cheaper on 8 of 18 tasks. Success difference 0.00 (non-inferior, p = 0.0005). Tokens: graf_floor used 8,637 more per task. **Fail (primary).**
+- **graf_floor vs Graphify.** Mean cost reduction −$0.00002 per task, p = 0.52; cheaper on 13 of 18 tasks. Success difference −0.02 (non-inferior, p = 0.009). Tokens: 5,787 more per task. **Fail (primary).**
+- **Failures.** All 19 failures were wrong fixes that the agent submitted with `finish`. They cluster on `fastify-4327` (graf_floor 2/5, search_only 3/5, Graphify 4/5), `fastify-6411` (3/2/4), and `cobra-1257` (4/3/3). Twelve tasks were solved by every arm on every attempt.
+
+### Interpretation within these conditions
+
+- On natural tasks with this solver, neither retriever reduced cost compared with search and reads alone, and they did not differ from each other. graf_floor's smaller payload did not turn into savings: Graphify was cheaper on 5 tasks, by larger amounts, mostly the hard ones.
+- The `t2` win over Graphify did not replicate on natural tasks. It should be read as specific to those synthetic tasks.
+- These tasks are harder (pass^5 ≈ 0.8), but 12 of 18 are still at ceiling, and 18 tasks × 5 attempts cannot resolve per-task cost differences of a few hundredths of a cent.
+- Contamination: the fixes are public and predate the solver's training cutoff, so the solver may recall them. That affects all arms equally, but it may shrink the role of retrieval.
+- Nothing is promoted. graf_floor also still fails the held-out retrieval guardrail (total recall at 8K).
 
 ## Batch t2: floor-stop candidate passes; no retriever is just as cheap
 
@@ -67,4 +104,4 @@ An earlier 200-run batch is excluded. `target/` was deleted mid-batch by a proce
 
 ## Next steps
 
-Batch `t2` tested the smaller payload and the search-only control. The open question is whether graf beats search and reads at all. Answering it needs harder, natural held-out tasks, with `search_only` preregistered as a comparator rather than a control. For retrieval, any floor-stop variant must still pass the recall guardrails on a new held-out query set.
+Batch `t3` answered the open question from `t2`, within its conditions: on natural tasks, no retriever beat search and reads, and graf did not beat Graphify. More agent trials with this solver are unlikely to change that unless the tasks need more navigation, for example larger repositories or issues that do not name the code. For retrieval, any floor-stop variant must still pass the recall guardrails on a new held-out query set.
