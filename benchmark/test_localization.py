@@ -1,7 +1,7 @@
 """Localization scoring must be symmetric across arms and anchored to the real fix."""
 import unittest
 
-from localization import (corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+from localization import (write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
                           pack_units, score_task)
 
 GO = """package x
@@ -165,6 +165,20 @@ class CorpusGoldTests(unittest.TestCase):
         kept, dropped = corpus_gold({"lib/a.js": [1], ".github/x.js": [2]}, {"lib/a.js": "x"})
         self.assertEqual((kept, dropped), ({"lib/a.js": {1}}, [".github/x.js"]))
         self.assertEqual(corpus_gold({".github/x.js": [2]}, {"lib/a.js": "x"}), ({}, [".github/x.js"]))
+
+
+class WriteTests(unittest.TestCase):
+    def test_a_failed_write_keeps_the_previous_file(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "r.json"
+            write_json_atomic(out, {"a": 1})
+            with patch("json.dumps", side_effect=OSError("disk full")), self.assertRaises(OSError):
+                write_json_atomic(out, {"a": 2})
+            self.assertEqual(out.read_text(), '{\n "a": 1\n}\n')
+            self.assertEqual(list(Path(tmp).iterdir()), [out])
 
 
 if __name__ == "__main__":

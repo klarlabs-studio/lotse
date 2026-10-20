@@ -470,6 +470,16 @@ def run_task(task, budget):
     return {"dropped_gold_files": dropped, "arms": results}
 
 
+def write_json_atomic(path, data):
+    """Write beside the target and rename, so a full disk never truncates earlier results."""
+    temporary = path.with_name(path.name + ".tmp")
+    try:
+        temporary.write_text(json.dumps(data, indent=1) + "\n")
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def run(split):
     import hashlib
     catalog = json.loads(CATALOG.read_text())
@@ -485,8 +495,9 @@ def run(split):
         rows[task["id"]] = {"task": task["id"], "repo": task["repo"], **run_task(task, budget)}
         print(task["id"], {a: r["unit_rank"] for a, r in rows[task["id"]].get("arms", {}).items()}
               or rows[task["id"]]["excluded"], flush=True)
-        out.write_text(json.dumps({"split": split, "catalog_sha256": digest, "graf_sha256": graf_sha,
-                                   "tasks": list(rows.values())}, indent=1) + "\n")
+        write_json_atomic(out, {"split": split, "catalog_sha256": digest, "graf_sha256": graf_sha,
+                                "tasks": list(rows.values())})
+        shutil.rmtree(WORK / "snapshots" / task["id"], ignore_errors=True)  # Regenerable from git; disk is finite.
 
 
 # --- Decision ----------------------------------------------------------------------------------
