@@ -72,6 +72,15 @@ class TaskBrokerIntegrity(unittest.TestCase):
         self.assertTrue(reopened.closed)
         self.assertTrue(task_session.Session(self.task, "fixture-trial", "graf").closed)
 
+    def test_missing_retriever_is_an_infrastructure_error_not_an_agent_error(self):
+        # The fixture has no graf binary, as when target/ is deleted mid-batch.
+        result = self.session.call("retrieve", {"query": "boundary"})
+        self.assertFalse(result["ok"])
+        self.assertTrue(result["infrastructure"])
+        self.assertTrue(self.session.infrastructure_failed)
+        agent_error = self.session.call("read", {"path": "missing.py"})
+        self.assertNotIn("infrastructure", agent_error)
+
     def test_tool_only_trace_cannot_be_scored_as_agent_usage(self):
         self.assertTrue(self.session.call("finish", {})["result"]["verification_passed"])
         events = [json.loads(s) for s in self.session.events.read_text().splitlines()]

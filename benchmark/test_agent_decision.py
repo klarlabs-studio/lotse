@@ -12,7 +12,8 @@ TASKS = [f"task{i:02d}" for i in range(20)]
 
 def summary(task, arm, k, passed=True, cost=0.004, tokens=80_000):
     return {"task": task, "arm": arm, "trial": f"t-{task}-{arm}-{k}", "passed": passed,
-            "usage_complete": True,
+            "usage_complete": True, "infrastructure_error": False,
+            "tool_binary_sha256": "a" * 64,
             "audit": {"total_tokens": tokens, "cost_usd": cost, "unmeasured_fields": []}}
 
 
@@ -67,6 +68,20 @@ class AgentDecisionTests(unittest.TestCase):
         result = evaluate(rows, TASKS, 5, RULE)
         self.assertFalse(result["passed"])
         self.assertTrue(any("usage" in r for r in result["reasons"]))
+
+    def test_infrastructure_errors_or_changed_binaries_block(self):
+        rows = batch()
+        rows[5] = {**rows[5], "infrastructure_error": True}
+        result = evaluate(rows, TASKS, 5, RULE)
+        self.assertFalse(result["passed"])
+        self.assertTrue(any("infrastructure" in r for r in result["reasons"]))
+        rows = batch()
+        rows[2] = {**rows[2], "tool_binary_sha256": "b" * 64}
+        result = evaluate(rows, TASKS, 5, RULE)
+        self.assertFalse(result["passed"])
+        self.assertTrue(any("binary" in r for r in result["reasons"]))
+        legacy = [{k: v for k, v in r.items() if k != "infrastructure_error"} for r in batch()]
+        self.assertFalse(evaluate(legacy, TASKS, 5, RULE)["passed"])
 
     def test_duplicate_or_unplanned_trial_blocks(self):
         rows = batch()

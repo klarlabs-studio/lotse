@@ -32,10 +32,16 @@ def _index(summaries, task_ids, trials, arms):
             reasons.append(f"unplanned or duplicate trial {s.get('trial')}")
             continue
         audit = s.get("audit") or {}
+        if s.get("infrastructure_error") is not False:
+            reasons.append(f"infrastructure error or unaudited backend in {s['trial']}")
         if not s.get("usage_complete") or audit.get("unmeasured_fields") or audit.get("cost_usd") is None:
             reasons.append(f"incomplete usage for {s['trial']}")
         table[key] = s
     reasons += [f"missing trial {t}/{a}/{k}" for t, a, k in sorted(planned - set(table))]
+    for arm in arms:
+        hashes = {s.get("tool_binary_sha256") for (_, a, _), s in table.items() if a == arm}
+        if len(hashes) > 1 or None in hashes:
+            reasons.append(f"{arm} backend binary missing from or changed within the batch")
     return table, reasons
 
 

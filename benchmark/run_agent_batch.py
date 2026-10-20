@@ -53,6 +53,9 @@ def main():
         if (BASE / ".research/trials" / identifier).exists():
             raise SystemExit(f"{identifier} exists without a summary; inspect it before rerunning")
         summary = run(by_id[task], identifier, arm, catalog)
+        if summary["infrastructure_error"]:
+            raise SystemExit(f"{identifier}: broker infrastructure error; batch stopped. Move the trial "
+                             "aside with a note, fix the environment, and rerun it from scratch")
         audit = summary["audit"] or {}
         print(json.dumps({"trial": identifier, "passed": summary["passed"],
                           "subtype": summary["result_subtype"], "tokens": audit.get("total_tokens"),

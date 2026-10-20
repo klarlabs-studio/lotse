@@ -34,6 +34,18 @@ TOOL_DEFINITIONS = [
 ]
 
 
+class InfrastructureError(RuntimeError):
+    """A broker tool failed for reasons outside the agent's control; the trial is invalid."""
+
+
+def run_tool(command, **kwargs):
+    """Run a retrieval backend; a missing or failing executable is infrastructure, not the agent."""
+    try:
+        return subprocess.run(command, capture_output=True, text=True, check=True, **kwargs)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise InfrastructureError(f"{Path(command[0]).name} failed: {error}") from error
+
+
 def sha(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
@@ -93,6 +105,7 @@ class Session:
         self.closed = False
         self.tool_count = 0
         self.build_seconds = 0.0
+        self.infrastructure_failed = False
         self.events = self.directory / "tool-events.jsonl"
         self.protected = {}
         if not self.root.is_dir():
@@ -114,6 +127,7 @@ class Session:
             saved = json.loads(state.read_text())
             self.closed, self.tool_count = saved["closed"], saved["tool_count"]
             self.build_seconds = saved["build_seconds"]
+            self.infrastructure_failed = saved.get("infrastructure_failed", False)
 
     def path(self, name):
         if not isinstance(name, str) or not name:
@@ -158,8 +172,7 @@ class Session:
             graphify_pin()
             command = [str(BASE / ".research/venv/bin/graphify"), "extract", str(self.input),
                        "--code-only", "--no-cluster", "--max-workers", "2", "--out", str(self.output)]
-        result = subprocess.run(command, capture_output=True, text=True, timeout=180, check=True,
-                                env=self.environment())
+        result = run_tool(command, timeout=180, env=self.environment())
         seconds = time.perf_counter() - start
         self.build_seconds += seconds
         generation = sum(1 for _ in self.directory.glob("index-build-*.json")) + 1
@@ -211,7 +224,7 @@ class Session:
             else:
                 command = [sys.executable, str(BASE / "benchmark/compare_graphify.py"), "--graphify-query",
                            str(self.output / "graphify-out/graph.json"), query, str(budget)]
-            context = subprocess.check_output(command, text=True, timeout=90, env=self.environment())
+            context = run_tool(command, timeout=90, env=self.environment()).stdout
             return {"content": context, "requested_budget": budget, "reference_text_tokens": len(tokens(context)),
                     "over_reference_budget": len(tokens(context)) > budget}
         if operation == "read":
@@ -270,6 +283,9 @@ class Session:
         try:
             value = self.operate(operation, args)
             response = {"ok": True, "result": value}
+        except InfrastructureError as error:
+            self.infrastructure_failed = True
+            response = {"ok": False, "error": str(error), "infrastructure": True}
         except Exception as error:
             response = {"ok": False, "error": str(error)}
         payload = json.dumps(response, ensure_ascii=False, separators=(",", ":"))
@@ -283,7 +299,8 @@ class Session:
                     "passed": response.get("result", {}).get("verification_passed") is True,
                     "source": "trusted verifier; not a solver claim"}) + "\n")
         (self.directory / "tool-state.json").write_text(json.dumps({
-            "closed": self.closed, "tool_count": self.tool_count, "build_seconds": self.build_seconds}) + "\n")
+            "closed": self.closed, "tool_count": self.tool_count, "build_seconds": self.build_seconds,
+            "infrastructure_failed": self.infrastructure_failed}) + "\n")
         return response
 
 

@@ -10,7 +10,9 @@ trusted verifier decides the outcome even when the agent never calls finish.
 Results stay under .research/trials/TRIAL_ID/.
 """
 import argparse
+import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -27,6 +29,14 @@ SYSTEM_PROMPT = (
     "make the smallest correct fix, run test, and call finish when the fix is in place or "
     "when you cannot make progress.")
 TIMEOUT_SECONDS = 1200
+TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graphify": BASE / ".research/venv/bin/graphify"}
+
+
+def preflight(arm, binary):
+    """Refuse to start an agent whose retrieval backend is missing; return the backend's hash."""
+    if not binary.is_file() or not os.access(binary, os.X_OK):
+        raise RuntimeError(f"{arm} backend {binary} is missing or not executable; no trial was started")
+    return hashlib.sha256(binary.read_bytes()).hexdigest()
 
 
 def claude_command(issue, mcp_config, model, budget):
@@ -54,6 +64,7 @@ def usage_events(result):
 
 def run(task, trial_id, arm, catalog):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
+    binary_sha = preflight(arm, TOOL_BINARIES[arm])
     session = prepare_session(task, trial_id, arm)
     directory = session.directory
     agent_cwd = directory / "agent-cwd"
@@ -74,10 +85,10 @@ def run(task, trial_id, arm, catalog):
         except subprocess.TimeoutExpired:
             exit_code = "timeout"
     wall = time.perf_counter() - start
-    return finalize(task, trial_id, arm, command, exit_code, wall)
+    return finalize(task, trial_id, arm, command, exit_code, wall, binary_sha)
 
 
-def finalize(task, trial_id, arm, command, exit_code, wall):
+def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
     session = Session(task, trial_id, arm)
     directory = session.directory
     lines = (directory / "agent-stream.jsonl").read_text().splitlines()
@@ -100,6 +111,8 @@ def finalize(task, trial_id, arm, command, exit_code, wall):
                "agent_called_finish": agent_finished, "result_subtype": (result or {}).get("subtype"),
                "num_turns": (result or {}).get("num_turns"), "tool_calls": session.tool_count,
                "index_build_s": session.build_seconds,
+               "infrastructure_error": any(e.get("response", {}).get("infrastructure") for e in tool_events),
+               "tool_binary_sha256": binary_sha,
                "usage_complete": usage_error is None, "usage_error": usage_error,
                "audit": audit_trace(trace) if usage_error is None else None}
     (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")

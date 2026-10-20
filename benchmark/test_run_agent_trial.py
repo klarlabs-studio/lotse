@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 from agent_trials import audit_trace
-from run_agent_trial import claude_command, usage_events
+from run_agent_trial import claude_command, preflight, usage_events
 
 RESULT = {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3,
           "total_cost_usd": 0.0123,
@@ -55,6 +55,17 @@ class CommandTests(unittest.TestCase):
             self.assertIn(flag, joined)
         self.assertEqual(command[command.index("--tools") + 1], "")
         self.assertEqual(command[command.index("--setting-sources") + 1], "")
+
+
+class PreflightTests(unittest.TestCase):
+    def test_missing_tool_binary_stops_before_the_agent_runs(self):
+        with tempfile.TemporaryDirectory() as temp:
+            missing = Path(temp) / "graf"
+            with self.assertRaises(RuntimeError):
+                preflight("graf", missing)
+            missing.write_bytes(b"binary")
+            missing.chmod(0o755)
+            self.assertEqual(len(preflight("graf", missing)), 64)
 
 
 if __name__ == "__main__":
