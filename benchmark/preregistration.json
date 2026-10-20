@@ -1,5 +1,5 @@
 {
-  "version": 11,
+  "version": 12,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -95,7 +95,8 @@
       ],
       "completeness": "every planned task x trial x arm must have a summary with complete usage; infrastructure aborts are rerun from scratch and their partial runs are kept outside the plan",
       "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself",
-      "multiplicity": "both alphas are divided by the number of tested arms (candidates plus controls) in a batch"
+      "multiplicity": "both alphas are divided by the number of tested arms (candidates plus controls) in a batch",
+      "comparators": "a batch may list several comparators; a candidate passes only if it passes against every one (intersection-union, no alpha split across comparators)"
     },
     "batches": {
       "t": {
@@ -133,7 +134,45 @@
           "graphify": "as in batch t, rerun in this batch's interleaved order"
         },
         "rationale": "batch t: both arms solved 100/100, graf cost more because its retrieve payload fills the budget and stays in context; the closest held-out arm returns fewer tokens. The control asks whether any retrieve tool pays for itself on these tasks"
+      },
+      "t3": {
+        "arms": [
+          "graf_floor",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "graf_floor"
+        ],
+        "controls": [],
+        "comparators": [
+          "search_only",
+          "graphify"
+        ],
+        "catalog": "benchmark/natural-tasks.json",
+        "seed": 20261021,
+        "frozen_in_version": 12,
+        "arm_definitions": "as in batch t2; search_only is now a comparator, not a control",
+        "rationale": "batch t2 left graf_floor against search-only unresolved on ceiling-level synthetic tasks; natural held-out tasks test whether graf's retrieval pays for itself"
       }
+    },
+    "natural_tasks": {
+      "catalog": "benchmark/natural-tasks.json",
+      "purpose": "held-out natural repair tasks hard enough to separate arms; frozen before any solver sees them",
+      "source": "merged upstream pull requests of the pinned Cobra, Flask, and Fastify repositories whose merge commit is an ancestor of the pinned commit and which close a GitHub issue",
+      "enumeration": "per repository, newest merge first, walking back from the pin; accept the first 10 candidates that meet every criterion; record every rejected candidate with its reason",
+      "criteria": [
+        "the closed issue reports incorrect existing behavior (a bug), judged from the issue title and body alone; feature requests, docs, typing-only, dependency, and CI changes are excluded",
+        "the pull request changes at least one non-test source file (.go, .py, .js) and at least one test file",
+        "non-test changes span at most 5 files and 150 changed lines",
+        "every non-test hunk reverts uniquely on the pinned snapshot (code, docs, and changelog are all reverted)",
+        "fail-to-pass: with the fix's tests installed, the reverted snapshot fails and the pinned snapshot passes, within 180 s"
+      ],
+      "issue_text": "issue title, a blank line, then the issue body verbatim with HTML comments removed and truncated at 4,000 characters; no comments, links to the fix, or edits",
+      "hidden_tests": "the fix's test-file changes are reverted in the agent's copy and installed only during grading",
+      "verification": "Go: go test on the packages of the changed test files; Python: pytest on the changed test files; JavaScript: node --test on the changed test files",
+      "minimum_tasks": 20,
+      "contamination": "fixes may be in the solver's training data; this affects every arm equally and is reported"
     }
   },
   "report_every_case": true,
@@ -187,6 +226,11 @@
       "version": 11,
       "date": "2026-10-20",
       "change": "added agent batch t2 (graf_floor candidate, search_only control, graphify comparator; Bonferroni over tested arms) before any t2 run; moved batch t's arms into agent_trials.batches without changing its rule"
+    },
+    {
+      "version": 12,
+      "date": "2026-10-20",
+      "change": "froze the natural-task selection protocol and batch t3 (graf_floor against search_only and graphify, both required) before mining any candidate"
     }
   ],
   "arms": {
