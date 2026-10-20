@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 from agent_trials import audit_trace
-from run_agent_trial import SYSTEM_PROMPT, claude_command, preflight, system_prompt, usage_events
+from run_agent_trial import SYSTEM_PROMPT, claude_command, preflight, scored_events, system_prompt, usage_events
 
 RESULT = {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3,
           "total_cost_usd": 0.0123,
@@ -64,6 +64,17 @@ class CommandTests(unittest.TestCase):
         self.assertNotIn("retrieve", system_prompt("search_only"))
         command = claude_command("issue", Path("/x/mcp.json"), "m", 0.5, "search_only")
         self.assertEqual(command[command.index("--system-prompt") + 1], system_prompt("search_only"))
+
+
+class ScoredEventTests(unittest.TestCase):
+    def test_verdicts_written_by_a_refused_finish_are_dropped(self):
+        finish = {"type": "tool", "operation": "finish", "response": {"ok": True}}
+        refused = {"type": "tool", "operation": "finish", "response": {"ok": False, "error": "Trial is already finished"}}
+        events = [finish, {"type": "verification", "passed": True}, refused, {"type": "verification", "passed": False}]
+        kept, dropped = scored_events(events)
+        self.assertEqual(kept, events[:3])
+        self.assertEqual(dropped, 1)
+        self.assertEqual(scored_events(events[:2]), (events[:2], 0))
 
 
 class PreflightTests(unittest.TestCase):

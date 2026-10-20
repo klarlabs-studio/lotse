@@ -292,6 +292,7 @@ class Session:
         raise ValueError("Unknown tool operation")
 
     def call(self, operation, args):
+        already_closed = self.closed
         self.tool_count += 1
         start = time.perf_counter()
         try:
@@ -308,7 +309,7 @@ class Session:
                  "provider_usage": "unmeasured; solver adapter must record all model calls"}
         with self.events.open("a") as stream:
             stream.write(json.dumps(event) + "\n")
-            if operation == "finish" and self.closed:
+            if operation == "finish" and self.closed and not already_closed:  # Only the closing call grades.
                 stream.write(json.dumps({"type": "verification",
                     "passed": response.get("result", {}).get("verification_passed") is True,
                     "source": "trusted verifier; not a solver claim"}) + "\n")

@@ -71,6 +71,19 @@ def usage_events(result):
     return events
 
 
+def scored_events(tool_events):
+    """Drop verdicts that a refused, repeated finish wrote before that broker bug was fixed."""
+    kept, dropped = [], 0
+    for event in tool_events:
+        previous = kept[-1] if kept else {}
+        if (event.get("type") == "verification" and previous.get("operation") == "finish"
+                and previous.get("response", {}).get("ok") is False):
+            dropped += 1
+            continue
+        kept.append(event)
+    return kept, dropped
+
+
 def run(task, trial_id, arm, catalog):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
     binary_sha = preflight(arm, TOOL_BINARIES[arm])
@@ -106,7 +119,8 @@ def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
     agent_finished = session.closed
     if not agent_finished:
         session.call("finish", {})  # The verifier decides, whatever the agent did.
-    tool_events = [json.loads(line) for line in (directory / "tool-events.jsonl").read_text().splitlines()]
+    tool_events, dropped = scored_events(
+        [json.loads(line) for line in (directory / "tool-events.jsonl").read_text().splitlines()])
     try:
         usage = usage_events(result)
         usage_error = None
@@ -121,10 +135,28 @@ def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
                "agent_called_finish": agent_finished, "result_subtype": (result or {}).get("subtype"),
                "num_turns": (result or {}).get("num_turns"), "tool_calls": session.tool_count,
                "index_build_s": session.build_seconds,
+               "spurious_verdicts_dropped": dropped,
                "infrastructure_error": any(e.get("response", {}).get("infrastructure") for e in tool_events),
                "tool_binary_sha256": binary_sha,
                "usage_complete": usage_error is None, "usage_error": usage_error,
                "audit": audit_trace(trace) if usage_error is None else None}
+    (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+    return summary
+
+
+def recover(task, trial_id, arm, reason):
+    """Rebuild a summary from a finished trial's preserved artifacts, without rerunning the agent."""
+    directory = BASE / ".research/trials" / trial_id
+    if (directory / "summary.json").exists():
+        raise ValueError(f"{trial_id} already has a summary")
+    prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
+    lines = (directory / "agent-stream.jsonl").read_text().splitlines()
+    result = next(json.loads(l) for l in reversed(lines) if json.loads(l).get("type") == "result")
+    command = claude_command(task["issue"], directory / "mcp.json", prereg["model"], prereg["max_budget_usd"], arm)
+    summary = finalize(task, trial_id, arm, command, None, result["duration_ms"] / 1000,
+                       preflight(arm, TOOL_BINARIES[arm]))
+    summary["recovered"] = (f"{reason}; summary rebuilt from the preserved artifacts without rerunning the "
+                            "agent; exit code not recorded, wall time from the result event")
     (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     return summary
 

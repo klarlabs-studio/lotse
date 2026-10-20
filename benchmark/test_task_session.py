@@ -90,6 +90,12 @@ class TaskBrokerIntegrity(unittest.TestCase):
         with self.assertRaises(ValueError):
             task_session.retrieve_command("search_only", Path("in"), Path("out"), "q", 2000)
 
+    def test_a_refused_second_finish_records_no_verdict(self):
+        self.session.call("finish", {})
+        self.assertFalse(self.session.call("finish", {})["ok"])
+        events = [json.loads(s) for s in self.session.events.read_text().splitlines()]
+        self.assertEqual(sum(e["type"] == "verification" for e in events), 1)
+
     def test_tool_only_trace_cannot_be_scored_as_agent_usage(self):
         self.assertTrue(self.session.call("finish", {})["result"]["verification_passed"])
         events = [json.loads(s) for s in self.session.events.read_text().splitlines()]
