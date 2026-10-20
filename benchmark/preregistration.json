@@ -1,5 +1,5 @@
 {
-  "version": 16,
+  "version": 17,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -254,6 +254,11 @@
       "version": 16,
       "date": "2026-10-20",
       "change": "after the 18-task dev run (debugging only; no held-out task scored): the primary metric becomes unit_acc@5 because 'any hit in the payload' rewards arms that cite many pointers (graf and Graphify cited about 40 spans, AST arms about 4); added ast_bounded and graf_floor_ids, motivated by research/code-representation-review.md; Holm now spans four candidate arms"
+    },
+    {
+      "version": 17,
+      "date": "2026-10-21",
+      "change": "the held-out run stopped at task 281 of 397 (fastify-4265: its only gold file is under .github/, which the corpus excludes). Added the path-only rule for gold outside the corpus and made the decision refuse partial splits. Deviation: before this fix, the decision script was run once on the 280 completed held-out tasks and its interim rates were seen; the rule, arms, metric, and tasks were not changed in response"
     }
   ],
   "arms": {
@@ -294,7 +299,8 @@
       "gold": "for each modified non-test source file: pre-fix lines the fix replaced or deleted; a pure insertion marks the lines on either side. Gold units are the code units (below) containing a gold line",
       "dev_split": "the 18 tasks of benchmark/natural-tasks.json; used to debug the arms, never for the decision",
       "heldout_split": "every other task meeting the criteria",
-      "catalog": "benchmark/localization-tasks.json, hashed in results before the held-out run"
+      "catalog": "benchmark/localization-tasks.json, hashed in results before the held-out run",
+      "gold_outside_corpus": "gold files outside the load_documents corpus (hidden or vendored paths) are dropped and listed; a task left with no gold is excluded and listed (v17)"
     },
     "units": "tree-sitter (Go, Python, JavaScript): each outermost function, method, or function bound by a declaration, assignment, or object pair is one unit spanning its binding statement and decorators; every other line falls into 24-line module windows; non-code files use 24-line text windows",
     "budget_tokens": 2000,
@@ -335,7 +341,8 @@
       "k": 5,
       "test": "exact one-sided McNemar (binomial on discordant tasks) on unit_acc@5, per candidate arm against each comparator",
       "rule": "an arm qualifies for a preregistered agent batch only if it beats every comparator (intersection-union: its p is the larger of the two), with Holm correction across the four candidate arms at family alpha 0.05",
-      "report": "every task and arm, all pairwise rates descriptively, and results by repository"
+      "report": "every task and arm, all pairwise rates descriptively, and results by repository",
+      "completeness": "the decision runs only on the complete split; excluded tasks are reported"
     }
   }
 }

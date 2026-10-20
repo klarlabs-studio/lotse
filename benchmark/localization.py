@@ -433,15 +433,20 @@ ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_un
 RANKS = (1, 5, 10)
 
 
+def corpus_gold(gold, files):
+    """Gold lines in files the corpus holds; gold in excluded paths (hidden, vendored) cannot be retrieved by any arm."""
+    kept = {p: set(g) for p, g in gold.items() if p in files}
+    return kept, sorted(p for p in gold if p not in files)
+
+
 def run_task(task, budget):
     root, files = snapshot(task)
     units_by_path = {p: code_units(p, t) for p, t in files.items()}
     units = [u for p in sorted(units_by_path) for u in units_by_path[p]]
     edges = call_edges(units)
-    missing = [p for p in task["gold"] if p not in files]
-    if missing:
-        raise RuntimeError(f"{task['id']}: gold files outside the corpus: {missing}")
-    gold = {p: set(g) for p, g in task["gold"].items()}
+    gold, dropped = corpus_gold(task["gold"], files)
+    if not gold:
+        return {"excluded": f"every gold file is outside the corpus: {dropped}"}
     gold_keys = {(p, u["start"]) for p, lines in gold.items() for u in gold_units(units_by_path[p], lines)}
     pieces = bounded_units(units)
     results = {}
@@ -462,7 +467,7 @@ def run_task(task, budget):
                         "unit_rank": first_rank(ranked, gold_keys), "file_rank": first_rank(answer["files"], gold),
                         "cited_units": len(ranked), "payload_tokens": len(tokens(answer["payload"])),
                         "files": answer["files"][:20], "spans": answer["spans"][:40]}
-    return results
+    return {"dropped_gold_files": dropped, "arms": results}
 
 
 def run(split):
@@ -477,9 +482,9 @@ def run(split):
     for task in [t for t in catalog["tasks"] if t["split"] == split]:
         if task["id"] in rows:
             continue
-        rows[task["id"]] = {"task": task["id"], "repo": task["repo"], "arms": run_task(task, budget)}
-        hits = {a: r["unit_rank"] for a, r in rows[task["id"]]["arms"].items()}
-        print(task["id"], hits, flush=True)
+        rows[task["id"]] = {"task": task["id"], "repo": task["repo"], **run_task(task, budget)}
+        print(task["id"], {a: r["unit_rank"] for a, r in rows[task["id"]].get("arms", {}).items()}
+              or rows[task["id"]]["excluded"], flush=True)
         out.write_text(json.dumps({"split": split, "catalog_sha256": digest, "graf_sha256": graf_sha,
                                    "tasks": list(rows.values())}, indent=1) + "\n")
 
@@ -540,7 +545,13 @@ def decide_split(split):
     screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
     rule = screen["decision"]
-    result = {"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"],
+    planned = {t["id"] for t in json.loads(CATALOG.read_text())["tasks"] if t["split"] == split}
+    if {r["task"] for r in data["tasks"]} != planned:
+        raise SystemExit(f"{split}: {len(data['tasks'])} of {len(planned)} tasks run; no decision on a partial split")
+    excluded = {r["task"]: r["excluded"] for r in data["tasks"] if "excluded" in r}
+    data["tasks"] = [r for r in data["tasks"] if "excluded" not in r]
+    result = {"excluded_tasks": excluded,
+              "dropped_gold_files": {r["task"]: r["dropped_gold_files"] for r in data["tasks"] if r.get("dropped_gold_files")},"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"],
               "decision": decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"]),
               "summary": summarize(data["tasks"]),
               "pairwise_unit_acc@k": {f"{a}>{b}": mcnemar_one_sided([hit_at(r["arms"][a], rule["k"]) for r in data["tasks"]],

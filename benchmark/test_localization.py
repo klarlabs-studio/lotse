@@ -1,7 +1,7 @@
 """Localization scoring must be symmetric across arms and anchored to the real fix."""
 import unittest
 
-from localization import (accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+from localization import (corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
                           pack_units, score_task)
 
 GO = """package x
@@ -158,6 +158,13 @@ class RankAndRewriteTests(unittest.TestCase):
             self.assertIn(token, query)
         self.assertNotIn("docs", query.split("\n", 1)[1])
         self.assertEqual(rewrite_query("plain words only"), "plain words only")
+
+
+class CorpusGoldTests(unittest.TestCase):
+    def test_gold_outside_the_corpus_is_dropped_and_reported(self):
+        kept, dropped = corpus_gold({"lib/a.js": [1], ".github/x.js": [2]}, {"lib/a.js": "x"})
+        self.assertEqual((kept, dropped), ({"lib/a.js": {1}}, [".github/x.js"]))
+        self.assertEqual(corpus_gold({".github/x.js": [2]}, {"lib/a.js": "x"}), ({}, [".github/x.js"]))
 
 
 if __name__ == "__main__":
