@@ -114,7 +114,8 @@ def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
         usage, usage_error = [], str(error)
     trace = directory / "trace.jsonl"
     trace.write_text("".join(json.dumps(e) + "\n" for e in [*usage, *tool_events]))
-    passed = tool_events[-1].get("type") == "verification" and tool_events[-1]["passed"] is True
+    verdicts = [e for e in tool_events if e.get("type") == "verification"]
+    passed = len(verdicts) == 1 and verdicts[0]["passed"] is True
     summary = {"task": task["id"], "trial": trial_id, "arm": arm, "command": command,
                "exit_code": exit_code, "wall_s": wall, "passed": passed,
                "agent_called_finish": agent_finished, "result_subtype": (result or {}).get("subtype"),

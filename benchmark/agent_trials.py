@@ -115,9 +115,14 @@ def audit_trace(path):
                     or (event["reasoning_tokens"] is not None and event["reasoning_tokens"] > event["output_tokens"])):
                 raise ValueError("Cached input and reasoning must be subsets of their totals")
             usage.append(event)
-    if not usage or not events or events[-1].get("type") != "verification":
+    verdicts = [i for i, e in enumerate(events) if e["type"] == "verification"]
+    if not usage or len(verdicts) != 1:
         raise ValueError("Incomplete trace; cannot score an agent trial")
-    if not isinstance(events[-1].get("passed"), bool):
+    # A solver may issue calls alongside finish; they are refused after the verdict and change nothing.
+    if any(e["type"] != "tool" or e.get("response", {}).get("ok") is not False for e in events[verdicts[0] + 1:]):
+        raise ValueError("Only refused tool calls may follow the verification")
+    verdict = events[verdicts[0]]
+    if not isinstance(verdict.get("passed"), bool):
         raise ValueError("Verification must report a boolean result")
     # Reasoning and cached tokens are breakdowns, not additions to totals.
     def measured_sum(key):
@@ -129,7 +134,7 @@ def audit_trace(path):
                 cost_usd=measured_sum("cost_usd"),
                 unmeasured_fields=[k for k in ("cached_input_tokens", "reasoning_tokens", "cost_usd") if any(e[k] is None for e in usage)],
                 tool_calls=sum(e["type"] == "tool" for e in events),
-                verification_passed=events[-1].get("passed") is True)
+                verification_passed=verdict["passed"] is True)
 
 
 if __name__ == "__main__":

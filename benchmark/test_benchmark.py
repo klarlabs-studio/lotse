@@ -57,6 +57,17 @@ class MeasurementIntegrity(unittest.TestCase):
             path.write_text("\n".join(json.dumps(e) for e in events))
             return audit_trace(path)
 
+    def test_refused_calls_after_finish_keep_the_verdict(self):
+        usage = dict(type="model_usage", component="solver", model="m", input_tokens=10,
+                     cached_input_tokens=0, output_tokens=5, reasoning_tokens=0, cost_usd=.01)
+        verdict = dict(type="verification", passed=False)
+        refused = dict(type="tool", response={"ok": False, "error": "Trial is already finished"})
+        self.assertFalse(self.trace([usage, verdict, refused, refused])["verification_passed"])
+        with self.assertRaises(ValueError):
+            self.trace([usage, verdict, dict(type="tool", response={"ok": True})])
+        with self.assertRaises(ValueError):
+            self.trace([usage, verdict, refused, dict(verdict, passed=True)])
+
     def test_usage_does_not_double_count_reasoning_or_cache(self):
         usage = dict(type="model_usage", component="solver", model="fixed-model",
                      input_tokens=100, cached_input_tokens=60, output_tokens=50,
