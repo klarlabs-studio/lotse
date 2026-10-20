@@ -49,6 +49,10 @@ def prepare(task, trial_id):
                     ignore=shutil.ignore_patterns(".graf", "graphify-out", ".git", "__pycache__",
                                                  ".pytest_cache", "node_modules", "target"))
     _apply(dest, [*task_faults(task), *task.get("hidden_tests", [])])
+    runtime = task.get("runtime", "fastify" if task["repo"] == "fastify" else None)
+    if runtime:  # Provisioned dependencies, shared read-only; never part of the indexed source.
+        (dest / "node_modules").symlink_to(BASE / ".research/task-runtime" / runtime / "node_modules",
+                                           target_is_directory=True)
     (dest.parent / "issue.txt").write_text(task["issue"] + "\n")
     (dest.parent / "task.json").write_text(json.dumps({"task": task["id"]}) + "\n")
     print(dest)

@@ -94,8 +94,10 @@ def _compare(per_task, arm, comparator, rule, family):
 
 
 def evaluate(summaries, task_ids, trials, rule, batch):
-    """Compare every candidate and control with the comparator; only a candidate can pass."""
-    arms, comparator = batch["arms"], batch["comparator"]
+    """Compare every candidate and control with each comparator; only a candidate can pass, and only
+    by passing against every comparator (intersection-union, so comparators do not split alpha)."""
+    arms = batch["arms"]
+    comparators = batch.get("comparators") or [batch["comparator"]]
     table, reasons = _index(summaries, task_ids, trials, arms)
     per_task = []
     for task in sorted(task_ids):
@@ -105,11 +107,14 @@ def evaluate(summaries, task_ids, trials, rule, batch):
                                   if (task, arm, k) in table], trials)
         per_task.append(row)
     tested = [*batch["candidates"], *batch["controls"]]
-    comparisons = {arm: {"role": "candidate" if arm in batch["candidates"] else "control",
-                         **_compare(per_task, arm, comparator, rule, len(tested))} for arm in tested}
+    comparisons = {}
+    for arm in tested:
+        versus = {comp: _compare(per_task, arm, comp, rule, len(tested)) for comp in comparators}
+        comparisons[arm] = {"role": "candidate" if arm in batch["candidates"] else "control",
+                            "passed": all(v["passed"] for v in versus.values()), "versus": versus}
     if not any(comparisons[arm]["passed"] for arm in batch["candidates"]):
         reasons.append("no candidate passed both the cost and success tests")
-    return {"passed": not reasons, "reasons": reasons, "comparator": comparator,
+    return {"passed": not reasons, "reasons": reasons, "comparators": comparators,
             "comparisons": comparisons,
             "arms": {arm: _arm_summary(per_task, arm, trials) for arm in arms},
             "tasks": per_task, "scope": rule["scope"]}
@@ -123,7 +128,7 @@ def main():
     spec = prereg["agent_trials"]
     batch_id = args.batch or list(spec["batches"])[-1]
     batch = spec["batches"][batch_id]
-    task_ids = [t["id"] for t in tasks(BASE / "benchmark/agent-tasks.json")]
+    task_ids = [t["id"] for t in tasks(BASE / batch.get("catalog", "benchmark/agent-tasks.json"))]
     summaries = [json.loads(p.read_text())
                  for p in sorted((BASE / ".research/trials").glob(f"{batch_id}-*/summary.json"))]
     result = evaluate(summaries, task_ids, spec["minimum_paired_trials_per_task_and_arm"], spec["rule"], batch)

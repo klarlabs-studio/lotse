@@ -8,6 +8,7 @@ alternate in time, and runs pending trials one at a time. A trial whose summary 
 usage windows. Every attempt is kept, including errors and capped runs.
 """
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import random
@@ -34,12 +35,18 @@ def main():
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
-    catalog = (BASE / "benchmark/agent-tasks.json").resolve()
-    by_id = {t["id"]: t for t in tasks(catalog)}
-    if len(by_id) < prereg["minimum_tasks"]:
-        raise SystemExit(f"Only {len(by_id)} tasks; preregistration requires {prereg['minimum_tasks']}")
     batch_id = args.batch or list(prereg["batches"])[-1]
     batch = prereg["batches"][batch_id]
+    catalog = (BASE / batch.get("catalog", "benchmark/agent-tasks.json")).resolve()
+    by_id = {t["id"]: t for t in tasks(catalog)}
+    natural = prereg["natural_tasks"]
+    minimum = natural["minimum_tasks"] if batch.get("catalog") == natural["catalog"] else prereg["minimum_tasks"]
+    if len(by_id) < minimum:
+        raise SystemExit(f"Only {len(by_id)} tasks; preregistration requires {minimum}")
+    if batch.get("catalog") == natural["catalog"]:
+        digest = hashlib.sha256(catalog.read_bytes()).hexdigest()
+        if digest != natural["frozen_catalog_sha256"]:
+            raise SystemExit("The natural-task catalog differs from the frozen one")
     entries = plan(sorted(by_id), prereg["minimum_paired_trials_per_task_and_arm"], batch["arms"], batch["seed"])
     done = [e for e in entries
             if (BASE / ".research/trials" / trial_id(batch_id, *e) / "summary.json").is_file()]

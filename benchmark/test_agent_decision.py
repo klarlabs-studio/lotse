@@ -12,6 +12,8 @@ TASKS = [f"task{i:02d}" for i in range(20)]
 PAIR = {"arms": ["graf", "graphify"], "candidates": ["graf"], "controls": [], "comparator": "graphify"}
 TRIO = {"arms": ["graf_floor", "search_only", "graphify"], "candidates": ["graf_floor"],
         "controls": ["search_only"], "comparator": "graphify"}
+NATURAL = {"arms": ["graf_floor", "search_only", "graphify"], "candidates": ["graf_floor"], "controls": [],
+           "comparators": ["search_only", "graphify"]}
 
 
 def summary(task, arm, k, passed=True, cost=0.004, tokens=80_000):
@@ -44,6 +46,19 @@ class AgentDecisionTests(unittest.TestCase):
     def test_batches_are_preregistered(self):
         self.assertEqual({k: AGENT["batches"]["t"][k] for k in PAIR}, PAIR)
         self.assertEqual({k: AGENT["batches"]["t2"][k] for k in TRIO}, TRIO)
+        self.assertEqual({k: AGENT["batches"]["t3"][k] for k in NATURAL}, NATURAL)
+        self.assertEqual(AGENT["batches"]["t3"]["catalog"], "benchmark/natural-tasks.json")
+
+    def test_a_candidate_must_beat_every_comparator(self):
+        beats_one = batch(costs={"graf_floor": 0.003, "search_only": 0.002, "graphify": 0.004})
+        result = evaluate(beats_one, TASKS, 5, RULE, NATURAL)
+        versus = result["comparisons"]["graf_floor"]["versus"]
+        self.assertTrue(versus["graphify"]["passed"])
+        self.assertFalse(versus["search_only"]["passed"])
+        self.assertFalse(result["passed"])
+        self.assertEqual(versus["graphify"]["primary"]["alpha"], RULE["primary"]["alpha"])
+        beats_both = batch(costs={"graf_floor": 0.002, "search_only": 0.003, "graphify": 0.004})
+        self.assertTrue(evaluate(beats_both, TASKS, 5, RULE, NATURAL)["passed"])
 
     def test_cheaper_and_equally_successful_passes(self):
         result = evaluate(batch(), TASKS, 5, RULE, PAIR)
@@ -53,12 +68,12 @@ class AgentDecisionTests(unittest.TestCase):
 
     def test_more_expensive_candidate_fails_primary(self):
         result = evaluate(batch(graf_cost=0.005), TASKS, 5, RULE, PAIR)
-        self.assertFalse(result["comparisons"]["graf"]["primary"]["passed"])
+        self.assertFalse(result["comparisons"]["graf"]["versus"]["graphify"]["primary"]["passed"])
         self.assertFalse(result["passed"])
 
     def test_success_loss_beyond_margin_fails_guardrail(self):
         result = evaluate(batch(graf_pass=lambda t, k: k > 2), TASKS, 5, RULE, PAIR)  # 60% vs 100%
-        self.assertFalse(result["comparisons"]["graf"]["success"]["passed"])
+        self.assertFalse(result["comparisons"]["graf"]["versus"]["graphify"]["success"]["passed"])
         self.assertFalse(result["passed"])
 
     def test_failed_attempts_still_count_toward_cost(self):
@@ -80,9 +95,9 @@ class AgentDecisionTests(unittest.TestCase):
     def test_alpha_is_split_across_every_tested_arm(self):
         result = evaluate(batch(costs={"graf_floor": 0.003, "search_only": 0.003, "graphify": 0.004}),
                           TASKS, 5, RULE, TRIO)
-        self.assertAlmostEqual(result["comparisons"]["graf_floor"]["primary"]["alpha"],
+        self.assertAlmostEqual(result["comparisons"]["graf_floor"]["versus"]["graphify"]["primary"]["alpha"],
                                RULE["primary"]["alpha"] / 2)
-        self.assertAlmostEqual(result["comparisons"]["graf_floor"]["success"]["alpha"],
+        self.assertAlmostEqual(result["comparisons"]["graf_floor"]["versus"]["graphify"]["success"]["alpha"],
                                RULE["success"]["alpha"] / 2)
 
     def test_missing_trial_or_incomplete_usage_blocks(self):

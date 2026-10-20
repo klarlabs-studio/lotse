@@ -82,6 +82,15 @@ class NaturalTaskTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.prepare("unmatched")
 
+    def test_tasks_link_their_declared_node_runtime(self):
+        (self.base / ".research/task-runtime/fixture-full/node_modules").mkdir(parents=True)
+        self.task["runtime"] = "fixture-full"
+        workspace = self.prepare("with-runtime")
+        self.assertEqual((workspace / "node_modules").resolve(),
+                         (self.base / ".research/task-runtime/fixture-full/node_modules").resolve())
+        del self.task["runtime"]
+        self.assertFalse((self.prepare("without-runtime") / "node_modules").exists())
+
     def test_single_fault_tasks_still_work(self):
         legacy = {"id": "natural", "repo": "fixture", "issue": "x", "verify": ["true"],
                   "fault": {"path": "app.py", "before": "return fixed()", "after": "return 2"}}

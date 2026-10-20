@@ -322,8 +322,6 @@ def prepare_session(task, trial_id, arm):
     with contextlib.redirect_stdout(io.StringIO()):
         prepare(task, trial_id)
     session = Session(task, trial_id, arm)
-    if task["repo"] == "fastify":
-        (session.root / "node_modules").symlink_to(BASE / ".research/task-runtime/fastify/node_modules", target_is_directory=True)
     (session.directory / "session.json").write_text(json.dumps({
         "task": task["id"], "arm": arm, "issue": task["issue"],
         "tools": tool_definitions(arm), "solver_status": "not_configured",

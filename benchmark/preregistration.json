@@ -1,5 +1,5 @@
 {
-  "version": 12,
+  "version": 14,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -164,15 +164,18 @@
       "criteria": [
         "the closed issue reports incorrect existing behavior (a bug), judged from the issue title and body alone; feature requests, docs, typing-only, dependency, and CI changes are excluded",
         "the pull request changes at least one non-test source file (.go, .py, .js) and at least one test file",
-        "non-test changes span at most 5 files and 150 changed lines",
-        "every non-test hunk reverts uniquely on the pinned snapshot (code, docs, and changelog are all reverted)",
-        "fail-to-pass: with the fix's tests installed, the reverted snapshot fails and the pinned snapshot passes, within 180 s"
+        "non-test changes span at most 10 files and 400 changed lines (v13; was 5 and 150)",
+        "every non-test hunk reverts uniquely on the pinned snapshot (code, docs, and changelog are all reverted); a hunk whose context drifted reverts by removing its added block when that block is unique",
+        "fail-to-pass: with the fix's tests installed, the reverted snapshot fails and the pinned snapshot passes, within 180 s; a timeout is a rejection"
       ],
       "issue_text": "issue title, a blank line, then the issue body verbatim with HTML comments removed and truncated at 4,000 characters; no comments, links to the fix, or edits",
       "hidden_tests": "the fix's test-file changes are reverted in the agent's copy and installed only during grading",
       "verification": "Go: go test on the packages of the changed test files; Python: pytest on the changed test files; JavaScript: node --test on the changed test files",
-      "minimum_tasks": 20,
-      "contamination": "fixes may be in the solver's training data; this affects every arm equally and is reported"
+      "minimum_tasks": 18,
+      "contamination": "fixes may be in the solver's training data; this affects every arm equally and is reported",
+      "exclusions": "a candidate whose closing fix does not address the behavior its issue reports is excluded, with the reason recorded",
+      "runtime": "Fastify tasks run against .research/task-runtime/fastify-full: the pinned package.json with devDependencies, installed with --ignore-scripts, versions in its package-lock.json",
+      "frozen_catalog_sha256": "e2867b679cf9d5cdfd18a37604b4cf9f1b5c192b241b635dec6c777c4c603a35"
     }
   },
   "report_every_case": true,
@@ -231,6 +234,16 @@
       "version": 12,
       "date": "2026-10-20",
       "change": "froze the natural-task selection protocol and batch t3 (graf_floor against search_only and graphify, both required) before mining any candidate"
+    },
+    {
+      "version": 13,
+      "date": "2026-10-20",
+      "change": "raised the fix-size bound to 10 files and 400 lines because the v12 criteria yielded 17 valid tasks (Cobra 5, Flask 2, Fastify 10), below the minimum of 20; recorded the drift fallback, timeout rejection, mismatch exclusion, and Fastify dev-dependency runtime. No solver had seen any natural task"
+    },
+    {
+      "version": 14,
+      "date": "2026-10-20",
+      "change": "froze benchmark/natural-tasks.json (18 tasks: Cobra 5, Flask 3, Fastify 10; sha256 e2867b679cf9d5cd...) and set the minimum to that full yield instead of loosening the criteria further, which would admit feature work. Revert regions now keep per-region context. No solver had seen any natural task"
     }
   ],
   "arms": {

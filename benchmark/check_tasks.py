@@ -4,6 +4,7 @@ import argparse
 import io
 import json
 from pathlib import Path
+import subprocess
 
 from agent_trials import BASE, prepare, task_faults, tasks, verify
 
@@ -17,8 +18,6 @@ def main(run_id, catalog, report):
             raise RuntimeError(f"Trial already exists: {root}")
         with contextlib.redirect_stdout(io.StringIO()):
             prepare(task, trial_id)
-        if task["repo"] == "fastify":
-            (root / "node_modules").symlink_to(BASE / ".research/task-runtime/fastify/node_modules", target_is_directory=True)
         names = sorted({f["path"] for f in task_faults(task)})
         faulty = {name: (root / name).read_text() for name in names}
         original = {name: (BASE / ".research/corpora" / task["repo"] / name).read_text() for name in names}
@@ -27,16 +26,19 @@ def main(run_id, catalog, report):
             for name, text in texts.items():
                 (root / name).write_text(text)
             stream = io.StringIO()
-            with contextlib.redirect_stdout(stream):
-                code = verify(task, root)
-            record = json.loads(stream.getvalue())
+            try:
+                with contextlib.redirect_stdout(stream):
+                    code = verify(task, root)
+                record = json.loads(stream.getvalue())
+            except subprocess.TimeoutExpired as error:
+                code, record = "timeout", {"task": task["id"], "phase": phase, "timeout_s": error.timeout}
             log = BASE / ".research/task-logs" / f"{task['id']}-{phase}.json"
             log.parent.mkdir(parents=True, exist_ok=True)
             log.write_text(json.dumps(record, indent=2) + "\n")
             codes[phase] = code
             print(task["id"], phase, code, flush=True)
         results.append(dict(task=task["id"], returncodes=codes,
-                            sanity_passed=codes["base"] == 0 and codes["fault"] != 0 and codes["restored"] == 0,
+                            sanity_passed=codes["base"] == 0 and codes["fault"] not in (0, "timeout") and codes["restored"] == 0,
                             kind="fixture_validation_not_agent_repair"))
     Path(report).write_text(json.dumps(results, indent=2) + "\n")
     if not all(r["sanity_passed"] for r in results):
