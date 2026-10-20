@@ -1,0 +1,136 @@
+"""Localization scoring must be symmetric across arms and anchored to the real fix."""
+import unittest
+
+from localization import (decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+                          pack_units, score_task)
+
+GO = """package x
+
+func helper(a int) int {
+	return a + 1
+}
+
+func Run() int {
+	return helper(2)
+}
+"""
+PY = """import os
+
+
+@decorator
+def first():
+    return second()
+
+
+class Box:
+    size = 1
+
+    def second(self):
+        return 2
+"""
+JS = """'use strict'
+function onSend (reply) {
+  return wrap(reply)
+}
+const wrap = (r) => r
+module.exports = { onSend }
+"""
+
+
+class GoldTests(unittest.TestCase):
+    def test_changed_and_deleted_lines_map_to_pre_fix_lines(self):
+        pre = "a\nb\nc\nd\n"
+        self.assertEqual(gold_lines(pre, "a\nB\nc\nd\n"), {2})
+        self.assertEqual(gold_lines(pre, "a\nc\nd\n"), {2})
+
+    def test_pure_insertions_mark_the_bordering_lines(self):
+        self.assertEqual(gold_lines("a\nb\nc\n", "a\nb\nnew\nc\n"), {2, 3})
+        self.assertEqual(gold_lines("a\n", "a\nnew\n"), {1})
+
+
+class UnitTests(unittest.TestCase):
+    def test_go_functions_and_module_remainder(self):
+        units = code_units("x.go", GO)
+        names = {(u["name"], u["start"], u["end"]) for u in units if u["kind"] == "function"}
+        self.assertEqual(names, {("helper", 3, 5), ("Run", 7, 9)})
+        self.assertTrue(any(u["kind"] == "module" and u["start"] == 1 for u in units))
+
+    def test_python_decorators_and_methods(self):
+        units = {u["name"]: u for u in code_units("x.py", PY) if u["kind"] == "function"}
+        self.assertEqual((units["first"]["start"], units["first"]["end"]), (4, 6))
+        self.assertEqual((units["second"]["start"], units["second"]["end"]), (12, 13))
+
+    def test_javascript_declarations_and_arrow_bindings(self):
+        units = {u["name"]: u for u in code_units("x.js", JS) if u["kind"] == "function"}
+        self.assertEqual((units["onSend"]["start"], units["onSend"]["end"]), (2, 4))
+        self.assertEqual((units["wrap"]["start"], units["wrap"]["end"]), (5, 5))
+
+    def test_every_line_belongs_to_exactly_one_unit(self):
+        for path, text in [("x.go", GO), ("x.py", PY), ("x.js", JS), ("README.md", "a\n" * 50)]:
+            covered = sorted(n for u in code_units(path, text) for n in range(u["start"], u["end"] + 1))
+            self.assertEqual(covered, list(range(1, len(text.splitlines()) + 1)), path)
+
+    def test_gold_units_are_the_enclosing_units(self):
+        units = code_units("x.go", GO)
+        self.assertEqual({u["name"] for u in gold_units(units, {4})}, {"helper"})
+
+
+class GraphTests(unittest.TestCase):
+    def test_calls_link_units_by_defined_name(self):
+        units = code_units("x.go", GO) + code_units("x.js", JS)
+        edges = call_edges(units)
+        name = {i: u["name"] for i, u in enumerate(units)}
+        self.assertIn(("Run", "helper"), {(name[a], name[b]) for a, b in edges})
+        self.assertIn(("onSend", "wrap"), {(name[a], name[b]) for a, b in edges})
+
+    def test_propagation_adds_half_the_best_neighbour(self):
+        self.assertEqual(propagate([1.0, 4.0, 0.0], [(0, 1), (1, 2)], 0.5), [3.0, 4.5, 2.0])
+
+
+class PackAndScoreTests(unittest.TestCase):
+    def test_packing_stops_at_the_score_floor_and_budget(self):
+        units = [{"path": "a.go", "start": 1, "end": 1, "text": "x"},
+                 {"path": "b.go", "start": 1, "end": 1, "text": "y"},
+                 {"path": "c.go", "start": 1, "end": 1, "text": "z"}]
+        picked, _ = pack_units(units, [3.0, 2.0, 1.0], budget=2000, floor=0.5)
+        self.assertEqual([u["path"] for u in picked], ["a.go", "b.go"])
+        picked, _ = pack_units(units, [3.0, 2.9, 2.8], budget=8, floor=0.5)
+        self.assertEqual(len(picked), 1)
+
+    def test_graphify_locations_skip_file_and_external_nodes(self):
+        text = ("NODE Completion [src= loc= community=]\n"
+                "NODE .Flags() [src=command.go loc=L1688 community=]\n"
+                "NODE command_test.go [src=command_test.go loc=L1 community=]\n")
+        self.assertEqual(graphify_locations(text), (["command.go", "command_test.go"], [("command.go", 1688)]))
+
+    def test_function_and_file_hits(self):
+        units = code_units("x.go", GO)
+        gold = {"x.go": {4}}
+        snapshot_units = {"x.go": units}
+        hit = score_task(gold, snapshot_units, files=["x.go"], spans=[("x.go", 3, 3)], shown="")
+        self.assertEqual((hit["file_hit"], hit["unit_hit"]), (True, True))
+        miss = score_task(gold, snapshot_units, files=["x.go"], spans=[("x.go", 7, 9)], shown="")
+        self.assertEqual((miss["file_hit"], miss["unit_hit"]), (True, False))
+        shown = score_task(gold, snapshot_units, files=["x.go"], spans=[("x.go", 3, 5)], shown=GO)
+        self.assertTrue(shown["gold_line_shown"])
+
+
+class DecisionTests(unittest.TestCase):
+    def test_exact_mcnemar_counts_only_discordant_tasks(self):
+        self.assertAlmostEqual(mcnemar_one_sided([1, 1, 0, 1], [1, 0, 0, 0]), 0.25)
+        self.assertEqual(mcnemar_one_sided([1, 0], [1, 0]), 1.0)
+
+    def test_an_arm_must_beat_every_comparator_after_holm(self):
+        rows = []
+        for i in range(40):
+            rows.append({"task": f"t{i}", "repo": "r", "arms": {
+                "ast_units": {"unit_hit": True}, "ast_graph": {"unit_hit": i < 20},
+                "graf_floor": {"unit_hit": i < 20}, "graphify": {"unit_hit": i < 5}}})
+        result = decide(rows, ["ast_units", "ast_graph"], ["graf_floor", "graphify"], 0.05)
+        self.assertTrue(result["arms"]["ast_units"]["qualifies"])
+        self.assertFalse(result["arms"]["ast_graph"]["qualifies"])
+        self.assertEqual(result["arms"]["ast_units"]["rate"], 1.0)
+
+
+if __name__ == "__main__":
+    unittest.main()

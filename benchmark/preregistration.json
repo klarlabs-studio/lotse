@@ -1,5 +1,5 @@
 {
-  "version": 14,
+  "version": 15,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -244,6 +244,11 @@
       "version": 14,
       "date": "2026-10-20",
       "change": "froze benchmark/natural-tasks.json (18 tasks: Cobra 5, Flask 3, Fastify 10; sha256 e2867b679cf9d5cd...) and set the minimum to that full yield instead of loosening the criteria further, which would admit feature work. Revert regions now keep per-region context. No solver had seen any natural task"
+    },
+    {
+      "version": 15,
+      "date": "2026-10-20",
+      "change": "added localization_screen: an offline, solver-free screen of AST-unit and call-graph retrieval against graf_floor and Graphify on issue-closing pull requests, frozen before any localization task was scored"
     }
   ],
   "arms": {
@@ -267,5 +272,58 @@
     "constants": "src/policy.rs: gap minimum 3, buffer 2, search share 0.9; floor ratio 0.5; damping 1, 0.5, 0.25. src/terms.rs: C1 is Lucene's 33-word EnglishAnalyzer stop set; C3 adds lowercased identifiers that split into two or more parts; B2 counts path terms 3 times (BM25F, integer weight, shared length normalization)",
     "deferred": "index-time arms run with locate only: search fills the budget, so it cannot pass the token test whatever the analyzer",
     "multiplicity": "the primary test for each experimental arm uses alpha / number of experimental arms (Bonferroni); guardrails and the tail cap apply unchanged; report every arm, including losing ones"
+  },
+  "localization_screen": {
+    "purpose": "offline screen, no solver: does a retriever's first answer reach the code a real fix changed? Decides which retrieval designs, including AST-unit and call-graph designs, earn a later agent batch. It cannot by itself support an efficiency or promotion claim",
+    "tasks": {
+      "source": "every merged pull request in .research/history/REPO-candidates.json (issue-closing, merged before the pin) for Cobra, Flask, and Fastify",
+      "criteria": [
+        "the merge commit and its first parent exist in the clone",
+        "at least one non-test source file (.go, .py, .js) is modified (exists before the fix)",
+        "non-test changes span at most 10 files and 400 changed lines",
+        "the cleaned issue text is nonempty"
+      ],
+      "no_bug_judgment": "feature and bug issues are both kept; localization from the issue is the question either way. Issue labels are recorded",
+      "corpus": "the first parent of the merge (pre-fix snapshot), filtered exactly like load_documents in benchmark/retrieval.py",
+      "query": "the issue text, built exactly as for natural tasks (title, blank line, body without HTML comments, at most 4,000 characters)",
+      "gold": "for each modified non-test source file: pre-fix lines the fix replaced or deleted; a pure insertion marks the lines on either side. Gold units are the code units (below) containing a gold line",
+      "dev_split": "the 18 tasks of benchmark/natural-tasks.json; used to debug the arms, never for the decision",
+      "heldout_split": "every other task meeting the criteria",
+      "catalog": "benchmark/localization-tasks.json, hashed in results before the held-out run"
+    },
+    "units": "tree-sitter (Go, Python, JavaScript): each outermost function, method, or function bound by a declaration, assignment, or object pair is one unit spanning its binding statement and decorators; every other line falls into 24-line module windows; non-code files use 24-line text windows",
+    "budget_tokens": 2000,
+    "tokenizer": "cl100k_base",
+    "arms": {
+      "graf": "graf locate --text, default flags (current graf)",
+      "graf_floor": "graf locate --text --file-score damped --stop floor (agent batch t2/t3 candidate)",
+      "graphify": "pinned code-only Graphify extract + query at token_budget 2000; navigation hints",
+      "file_bm25": "BM25 over whole files, ranked paths, stop below 0.5 x best score; a lexical file-ranking proxy, not the search-only agent",
+      "ast_units": "BM25 (retrieval.terms, k1 1.2, b 0.75) over code units; whole units in score order, stop below 0.5 x best score or when the next unit does not fit; an over-long best unit is cut to the budget. Idea: cAST structural chunking (Zhang et al. 2025), Agentless function-level localization (Xia et al. 2024)",
+      "ast_graph": "ast_units with call-graph propagation: score + 0.5 x best neighbour score over undirected call edges between function units, linked by called name; names defined by more than 3 units are not linked. Idea: RepoGraph (Ouyang et al. 2025), LocAgent (Chen et al. 2025)"
+    },
+    "parameters_note": "0.5 floor, 0.5 propagation weight, 3-definition cap, and 2,000-token budget are round defaults chosen before any task was scored, not tuned",
+    "metrics": {
+      "primary": "unit_hit: some cited span (graf window, unit, or Graphify symbol start line) overlaps a gold unit",
+      "secondary": [
+        "file_hit: a gold file is among the cited files (shared with Graphify hints and file_bm25)",
+        "gold_line_shown: a gold line's text appears in the payload inside a span covering it (code-returning arms only; Graphify hints return no code by design)",
+        "payload tokens"
+      ],
+      "labels": "Graphify is code-only and returns hints, not code; file_bm25 has no spans and reports file_hit only"
+    },
+    "decision": {
+      "structured_arms": [
+        "ast_units",
+        "ast_graph"
+      ],
+      "comparators": [
+        "graf_floor",
+        "graphify"
+      ],
+      "test": "exact one-sided McNemar (binomial on discordant tasks) on unit_hit, per structured arm against each comparator",
+      "rule": "an arm qualifies for a preregistered agent batch only if it beats every comparator (intersection-union: its p is the larger of the two), with Holm correction across the two structured arms at family alpha 0.05",
+      "report": "every task and arm, all pairwise rates descriptively, and results by repository"
+    }
   }
 }
