@@ -10,6 +10,7 @@ the query is the issue text, and the gold lines are the pre-fix source lines the
 Every arm answers once within the same payload budget, and the same rules score every arm.
 """
 import argparse
+import os
 from collections import defaultdict
 from difflib import SequenceMatcher
 import json
@@ -360,7 +361,7 @@ def build(replication=False):
 
 # --- Arms --------------------------------------------------------------------------------------
 
-GRAF = BASE / "target/release/graf"
+GRAF = Path(os.environ.get("GRAF_BINARY", BASE / "target/release/graf"))  # A pinned copy keeps long runs stable.
 GRAF_FLAGS = {"graf": [], "graf_floor": ["--file-score", "damped", "--stop", "floor"],
               "graf_floor_ids": ["--file-score", "damped", "--stop", "floor"]}
 GRAF_SPAN = re.compile(r'^"(.*?)":(\d+)-(\d+)$', re.M)
