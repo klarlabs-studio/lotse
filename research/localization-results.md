@@ -112,6 +112,56 @@ Each arm's p is the larger of its two one-sided McNemar tests; wins are the disc
 - **Graphify remains best at file recall** (file Acc@5 0.627), and on undici every arm is within 4 points.
 - **All absolute rates are low:** the best arm misses the fix's units in its first five on about 70% of issues.
 
+## Confirmation on six more repositories: combining does not add
+
+**Outcome: the combined arm `ast_graph_ids` fails; `ast_graph` beats Graphify for the third time.** On 519 issue-closing pull requests in viper, chi, httpx, typer, koa, and axios, the call graph plus the query rewrite beats Graphify and `ast_graph`, but ties `graf_floor_ids` exactly: 60 wins each. It therefore does not qualify. The secondary confirmatory test, `ast_graph` against Graphify, passes (p = 0.0004). The rule is `localization_screen.confirmation` in [preregistration v21](../benchmark/preregistration.json), frozen before any pull request in these repositories was listed. Data: [localization-decision-confirmation.json](../results/localization-decision-confirmation.json) and [localization-confirmation.json](../results/localization-confirmation.json).
+
+- **Conditions.** These are the same arms, parameters, metric, budget, and pinned graf binary as the replication. The catalog ([localization-confirmation-tasks.json](../benchmark/localization-confirmation-tasks.json), sha256 `4f309d25…`) holds 519 tasks: httpx 219, axios 194, viper 40, chi 28, typer 21, koa 17. No task was excluded, and the run completed without interruption.
+
+| Arm | unit Acc@1 | **unit Acc@5** | unit Acc@10 | file Acc@1 | file Acc@5 | gold line shown | mean payload |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| graf_floor | 0.075 | 0.254 | 0.362 | 0.177 | 0.499 | 0.166 | 760 |
+| graf_floor_ids | 0.143 | **0.337** | **0.435** | **0.287** | 0.645 | 0.183 | **615** |
+| Graphify (code-only hints) | 0.073 | 0.212 | 0.293 | 0.241 | **0.657** | 0.002 | 1,968 |
+| ast_graph | 0.162 | 0.299 | 0.349 | 0.237 | 0.493 | 0.347 | 1,681 |
+| **ast_graph_ids** | **0.170** | **0.337** | 0.401 | 0.268 | 0.536 | **0.403** | 1,647 |
+
+| Test | Wins (arm vs comparator) | p | Result |
+| --- | --- | ---: | --- |
+| ast_graph_ids vs Graphify | 123 vs 58 | < 0.0001 | beats |
+| ast_graph_ids vs ast_graph | 46 vs 26 | 0.012 | beats |
+| ast_graph_ids vs graf_floor_ids | 60 vs 60 | 0.54 | **does not beat** |
+| **Primary: ast_graph_ids qualifies** | | 0.54 | **fails** |
+| Secondary: ast_graph vs Graphify | | 0.0004 | **confirmed** |
+
+**unit Acc@5 by repository:**
+
+| | graf_floor | graf_floor_ids | Graphify | ast_graph | ast_graph_ids |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| httpx (219) | 0.23 | 0.32 | 0.21 | 0.37 | **0.38** |
+| axios (194) | 0.32 | **0.42** | 0.22 | 0.22 | 0.28 |
+| viper (40) | 0.17 | 0.15 | 0.07 | 0.33 | **0.38** |
+| chi (28) | 0.25 | 0.25 | 0.29 | **0.36** | 0.32 |
+| typer (21) | 0.05 | 0.24 | 0.00 | 0.24 | **0.38** |
+| koa (17) | 0.18 | 0.35 | **0.59** | 0.24 | 0.29 |
+
+### Across all three held-out screens
+
+| Screen (tasks) | graf_floor | graf_floor_ids | Graphify | ast_graph |
+| --- | ---: | ---: | ---: | ---: |
+| Cobra, Flask, Fastify (395) | 0.276 | 0.344 | 0.291 | 0.365 |
+| gin, urfave/cli, click, jinja, express, undici (1,106) | 0.250 | 0.289 | 0.257 | 0.293 |
+| viper, chi, httpx, typer, koa, axios (519) | 0.254 | 0.337 | 0.212 | 0.299 |
+
+- **`ast_graph` beat Graphify on unit Acc@5 in all three preregistered tests,** across 15 repositories and 2,020 issues.
+- **The query rewrite alone (`graf_floor_ids`) beat Graphify in the last two screens.** It narrowly missed in the first.
+- **Both are cheap and complementary in kind,** but stacking them gave no gain over the rewrite alone at Acc@5. They overlap on which issues they solve.
+- **The two candidates win in different places:**
+  - The call graph leads on Go and Python libraries with deep internal call chains (httpx, viper, click, Flask).
+  - The rewrite leads where issues name identifiers and paths (axios, express, Cobra).
+- **Graphify keeps the best file recall** (file Acc@5 0.627–0.684) **and wins on small, flat codebases** (koa, Fastify).
+- **These are localization screens, not efficiency results.** Agent batch t4 tests whether `ast_graph`'s lead lowers agent cost.
+
 ## Deviations and disclosures
 
 - After the dev run (debugging only), v16 changed the primary metric from "any hit in the payload" to Acc@5. "Any hit" rewards arms that cite about 46 pointers. v16 also added `ast_bounded` and `graf_floor_ids`, motivated by the [literature review](code-representation-review.md). No held-out task had been scored at that point.
