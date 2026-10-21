@@ -66,6 +66,52 @@ Each arm's p is the larger of its two one-sided McNemar tests; wins are the disc
 - **Bug-labelled issues (exploratory, not preregistered).** On the 87 issues carrying a bug label, `ast_graph` (0.21) does not beat Graphify (0.25). This overlaps with the repository effect.
 - **Absolute rates are low.** Even the best arm misses the fix's functions in its first five units on about two-thirds of issues, so an agent will still have to search.
 
+## Replication on six new repositories
+
+**Outcome: both `ast_graph` and `graf_floor_ids` replicate.** On 1,106 issue-closing pull requests in gin, urfave/cli, click, jinja, express, and undici, each candidate beats both `graf_floor` and Graphify on unit Acc@5 after Holm correction. None of these repositories was used to develop or select an arm. The rule is `localization_screen.replication` in [preregistration v20](../benchmark/preregistration.json), frozen before the catalog was built. Data: [localization-decision-replication.json](../results/localization-decision-replication.json) and [localization-replication.json](../results/localization-replication.json).
+
+- **Conditions.** These are the same arms, parameters, metric, and budget as the held-out screen. The catalog ([localization-replication-tasks.json](../benchmark/localization-replication-tasks.json), sha256 `58200858…`) holds 1,106 tasks: undici 485, click 240, urfave/cli 182, jinja 96, gin 87, express 16. No task was excluded.
+- **Binary.** graf ran from a pinned copy (sha256 `e0ff0ae1…`), byte-identical to the audited baseline on 1,631 `locate`/`search` outputs.
+- **Interruptions.** The run stopped twice and resumed without rescoring finished tasks:
+  - urfave-cli-2229's issue text starts with `--verbose`, which graf parsed as an option. Queries are now passed after `--`, and output is unchanged otherwise.
+  - The Claude Code session ended mid-run.
+
+  No interim rates were looked at.
+
+| Arm | unit Acc@1 | **unit Acc@5** | unit Acc@10 | file Acc@1 | file Acc@5 | gold line shown | mean payload |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| graf | 0.074 | 0.241 | 0.307 | 0.187 | 0.459 | 0.190 | 1,935 |
+| graf_floor | 0.088 | 0.250 | 0.321 | 0.222 | 0.498 | 0.158 | 1,144 |
+| graf_floor_ids | 0.137 | 0.289 | **0.379** | **0.286** | 0.578 | 0.176 | **961** |
+| Graphify (code-only hints) | 0.076 | 0.257 | 0.333 | 0.229 | **0.627** | 0.001 | 2,207 |
+| ast_units | 0.104 | 0.224 | 0.259 | 0.164 | 0.380 | 0.262 | 1,701 |
+| **ast_graph** | **0.153** | **0.293** | 0.327 | 0.242 | 0.455 | **0.325** | 1,623 |
+| ast_bounded | 0.112 | 0.245 | 0.311 | 0.181 | 0.417 | 0.289 | 1,791 |
+
+| Candidate | vs graf_floor (wins, p) | vs Graphify (wins, p) | p | Holm α | Result |
+| --- | --- | --- | ---: | ---: | --- |
+| ast_graph | 124 vs 76, p = 0.0004 | 177 vs 137, p = 0.014 | 0.014 | 0.025 | **replicates** |
+| graf_floor_ids | 94 vs 50, p = 0.0002 | 173 vs 137, p = 0.023 | 0.023 | 0.05 | **replicates** |
+
+**unit Acc@5 by repository:**
+
+| | graf_floor | graf_floor_ids | Graphify | ast_graph |
+| --- | ---: | ---: | ---: | ---: |
+| click (240) | 0.30 | 0.32 | 0.31 | **0.42** |
+| express (16) | 0.56 | **0.69** | 0.38 | 0.56 |
+| gin (87) | 0.30 | 0.33 | 0.26 | **0.36** |
+| jinja (96) | 0.28 | 0.33 | 0.26 | 0.32 |
+| undici (485) | 0.25 | **0.27** | 0.24 | 0.23 |
+| urfave/cli (182) | 0.13 | 0.21 | 0.21 | **0.22** |
+
+### What the replication adds
+
+- **The call-graph effect holds out of sample.** `ast_graph` again beats whole units alone (0.293 vs 0.224) and nearly doubles graf_floor's Acc@1 (0.153 vs 0.088). Its margins are smaller than on Cobra, Flask, and Fastify: +4.3 points over `graf_floor` and +3.6 over Graphify here, against +8.9 and +7.4 before.
+- **Query rewriting now also beats Graphify.** `graf_floor_ids` passed both tests. It has the best Acc@10 and file Acc@1, with the smallest payload of any graf arm (961 tokens).
+- **The two candidates do not differ from each other** (p = 0.42 and 0.64, exploratory). The rewrite is a query-side change and the call graph is an index-side change, so combining them is the obvious next arm. That needs its own preregistered screen.
+- **Graphify remains best at file recall** (file Acc@5 0.627), and on undici every arm is within 4 points.
+- **All absolute rates are low:** the best arm misses the fix's units in its first five on about 70% of issues.
+
 ## Deviations and disclosures
 
 - After the dev run (debugging only), v16 changed the primary metric from "any hit in the payload" to Acc@5. "Any hit" rewards arms that cite about 46 pointers. v16 also added `ast_bounded` and `graf_floor_ids`, motivated by the [literature review](code-representation-review.md). No held-out task had been scored at that point.
