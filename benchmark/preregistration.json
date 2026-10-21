@@ -1,5 +1,5 @@
 {
-  "version": 18,
+  "version": 19,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -239,7 +239,17 @@
       "runtime": "JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts into .research/task-runtime/<repo>-full; Go modules downloaded into the shared module cache before mining; Python test dependencies installed into the research venv and recorded",
       "minimum_tasks": 20,
       "if_fewer": "if fewer than 20 tasks qualify, the batch does not run on a loosened set; a new version must record any change before a solver sees a task",
-      "contamination": "as for t3: affects every arm equally, reported"
+      "contamination": "as for t3: affects every arm equally, reported",
+      "frozen_catalog_sha256": "0555197e3a6454389d867493082b59840818f1f296d3673ec39b4e2cc5831020",
+      "yield": {
+        "gin": 10,
+        "urfave-cli": 10,
+        "click": 7,
+        "jinja": 10,
+        "express": 1,
+        "undici": 10,
+        "total": 48
+      }
     }
   },
   "report_every_case": true,
@@ -328,6 +338,11 @@
       "version": 18,
       "date": "2026-10-21",
       "change": "added batch t4 (ast_graph vs search_only and Graphify) and its fresh task source on six repositories not used for any arm development; frozen before any candidate pull request in those repositories was listed"
+    },
+    {
+      "version": 19,
+      "date": "2026-10-21",
+      "change": "froze benchmark/natural-tasks-t4.json (48 tasks: gin 10, urfave-cli 10, click 7, jinja 10, express 1, undici 10; sha256 0555197e...). A second pull request closing an already-listed issue is excluded (urfave-cli-2229). Python test dependencies installed: trio 0.34.0, pytest-timeout 2.4.0. No solver had seen any t4 task"
     }
   ],
   "arms": {

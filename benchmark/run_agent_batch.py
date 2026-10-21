@@ -24,6 +24,12 @@ def plan(task_ids, trials, arms, seed):
     return entries
 
 
+def natural_spec(prereg, catalog):
+    """The natural-task specification that freezes this catalog, if any."""
+    return next((spec for key, spec in prereg.items()
+                 if key.startswith("natural_tasks") and spec.get("catalog") == catalog), None)
+
+
 def trial_id(batch, task, k, arm):
     return f"{batch}-{task}-{arm}-{k}"
 
@@ -39,13 +45,13 @@ def main():
     batch = prereg["batches"][batch_id]
     catalog = (BASE / batch.get("catalog", "benchmark/agent-tasks.json")).resolve()
     by_id = {t["id"]: t for t in tasks(catalog)}
-    natural = prereg["natural_tasks"]
-    minimum = natural["minimum_tasks"] if batch.get("catalog") == natural["catalog"] else prereg["minimum_tasks"]
+    natural = natural_spec(prereg, batch.get("catalog"))
+    minimum = natural["minimum_tasks"] if natural else prereg["minimum_tasks"]
     if len(by_id) < minimum:
         raise SystemExit(f"Only {len(by_id)} tasks; preregistration requires {minimum}")
-    if batch.get("catalog") == natural["catalog"]:
+    if natural:
         digest = hashlib.sha256(catalog.read_bytes()).hexdigest()
-        if digest != natural["frozen_catalog_sha256"]:
+        if digest != natural.get("frozen_catalog_sha256"):
             raise SystemExit("The natural-task catalog differs from the frozen one")
     entries = plan(sorted(by_id), prereg["minimum_paired_trials_per_task_and_arm"], batch["arms"], batch["seed"])
     done = [e for e in entries
