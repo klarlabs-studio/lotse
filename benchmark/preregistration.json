@@ -1,5 +1,5 @@
 {
-  "version": 17,
+  "version": 18,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -154,6 +154,27 @@
         "frozen_in_version": 12,
         "arm_definitions": "as in batch t2; search_only is now a comparator, not a control",
         "rationale": "batch t2 left graf_floor against search-only unresolved on ceiling-level synthetic tasks; natural held-out tasks test whether graf's retrieval pays for itself"
+      },
+      "t4": {
+        "arms": [
+          "ast_graph",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "ast_graph"
+        ],
+        "controls": [],
+        "comparators": [
+          "search_only",
+          "graphify"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261022,
+        "frozen_in_version": 18,
+        "arm_definitions": "ast_graph: retrieve runs the localization-screen ast_graph arm (tree-sitter units, BM25, one-hop call propagation 0.5, floor 0.5, whole units packed within the requested budget; Python prototype in benchmark/localization.py, hashed per run). search_only and graphify as in t3",
+        "secondary": "mean turns per run and turns before the first edit, reported descriptively",
+        "rationale": "ast_graph was the only arm to beat both graf_floor and Graphify on the held-out localization screen (unit Acc@5 0.365 vs 0.276 and 0.291); this batch tests whether that localization gain lowers agent cost against both comparators. A pass would justify a Rust implementation, not promotion of the prototype"
       }
     },
     "natural_tasks": {
@@ -176,6 +197,49 @@
       "exclusions": "a candidate whose closing fix does not address the behavior its issue reports is excluded, with the reason recorded",
       "runtime": "Fastify tasks run against .research/task-runtime/fastify-full: the pinned package.json with devDependencies, installed with --ignore-scripts, versions in its package-lock.json",
       "frozen_catalog_sha256": "e2867b679cf9d5cdfd18a37604b4cf9f1b5c192b241b635dec6c777c4c603a35"
+    },
+    "natural_tasks_t4": {
+      "catalog": "benchmark/natural-tasks-t4.json",
+      "purpose": "fresh natural repair tasks for batch t4 from repositories never used to develop or select any arm (the localization screen selected ast_graph on Cobra, Flask, and Fastify, so those are excluded to avoid a winner's-curse bias)",
+      "repositories": {
+        "gin": {
+          "repository": "gin-gonic/gin",
+          "commit": "0f09c3a9b4626d9fe9979cf4d0521d6ae32ab646",
+          "language": "Go"
+        },
+        "urfave-cli": {
+          "repository": "urfave/cli",
+          "commit": "835fca1cc5c6d5064fd5519f8fa0378959640631",
+          "language": "Go"
+        },
+        "click": {
+          "repository": "pallets/click",
+          "commit": "2247b35ea1c47c727d7a06e51fa280e12a863ff6",
+          "language": "Python"
+        },
+        "jinja": {
+          "repository": "pallets/jinja",
+          "commit": "5ef70112a1ff19c05324ff889dd30405b1002044",
+          "language": "Python"
+        },
+        "express": {
+          "repository": "expressjs/express",
+          "commit": "0dee2c52c7c873498f8ed7d8ee4ddd0a04d3ada8",
+          "language": "JavaScript"
+        },
+        "undici": {
+          "repository": "nodejs/undici",
+          "commit": "25543f5bd5744ff673016ed89b4bb09455e4875a",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "two per language among the languages the unit parser supports; popular (over 7,000 stars), active, with issue-linked pull requests and a test suite that runs locally without services; pinned to the default branch head resolved on 2026-10-21; chosen before any candidate pull request was listed",
+      "selection": "the natural_tasks protocol (v12-v14) unchanged: criteria, enumeration (first 10 per repository, newest merge first), issue text, hidden tests, bug judgment from the issue alone, size bound of 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, mismatch exclusion",
+      "verification": "Go: go test on the changed test files' packages; Python: pytest on the changed test files with PYTHONPATH=src; express: its mocha runner on the changed test files; undici: node --test on the changed test files",
+      "runtime": "JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts into .research/task-runtime/<repo>-full; Go modules downloaded into the shared module cache before mining; Python test dependencies installed into the research venv and recorded",
+      "minimum_tasks": 20,
+      "if_fewer": "if fewer than 20 tasks qualify, the batch does not run on a loosened set; a new version must record any change before a solver sees a task",
+      "contamination": "as for t3: affects every arm equally, reported"
     }
   },
   "report_every_case": true,
@@ -259,6 +323,11 @@
       "version": 17,
       "date": "2026-10-21",
       "change": "the held-out run stopped at task 281 of 397 (fastify-4265: its only gold file is under .github/, which the corpus excludes). Added the path-only rule for gold outside the corpus and made the decision refuse partial splits. Deviation: before this fix, the decision script was run once on the 280 completed held-out tasks and its interim rates were seen; the rule, arms, metric, and tasks were not changed in response"
+    },
+    {
+      "version": 18,
+      "date": "2026-10-21",
+      "change": "added batch t4 (ast_graph vs search_only and Graphify) and its fresh task source on six repositories not used for any arm development; frozen before any candidate pull request in those repositories was listed"
     }
   ],
   "arms": {
