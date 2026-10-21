@@ -7,6 +7,7 @@ mod query;
 mod response;
 mod source;
 mod terms;
+pub mod units;
 
 pub use index::{BuildReport, Index, IndexStats, Posting, index_path};
 pub use policy::{FileScore, Policy, Stop};

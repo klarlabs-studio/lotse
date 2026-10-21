@@ -125,6 +125,16 @@ enum Command {
     Search(QueryArgs),
     /// Return one compact source hint per file, with handles for expand.
     Locate(QueryArgs),
+    /// Experimental: whole function units ranked by BM25 with one-hop call propagation.
+    /// A port of the ast_graph screening arm; not an accepted improvement.
+    Units {
+        query: String,
+        #[arg(long, default_value_t = 2000)]
+        budget: usize,
+        /// Emit only context, without JSON metadata.
+        #[arg(long)]
+        text: bool,
+    },
     /// Read an excerpt plus nearby lines using an ID returned by search.
     Expand {
         id: String,
@@ -235,6 +245,28 @@ fn run() -> Result<()> {
             } else {
                 print_json(&response)
             }
+        }
+        Command::Units {
+            query,
+            budget,
+            text,
+        } => {
+            let mut files = std::collections::BTreeMap::new();
+            for path in index.files.keys() {
+                files.insert(path.clone(), index.current_text(path)?);
+            }
+            let bpe = tiktoken_rs::cl100k_base()?;
+            let (units, context) = graf::units::retrieve(&bpe, &files, &query, budget);
+            let cited: Vec<_> = units
+                .iter()
+                .map(|u| serde_json::json!({"path": u.path, "start": u.start, "end": u.end, "name": u.name}))
+                .collect();
+            emit(
+                text,
+                &context,
+                &serde_json::json!({"context": context, "units": cited, "budget": budget,
+                                    "experimental": "units: tree-sitter units with call propagation"}),
+            )
         }
         Command::Stats => print_json(&index.stats()?),
         Command::Map {

@@ -221,7 +221,7 @@ impl Index {
     }
 
     /// Read an indexed file and prove it still matches the snapshot.
-    pub(crate) fn current_text(&self, path: &str) -> Result<String> {
+    pub fn current_text(&self, path: &str) -> Result<String> {
         ensure!(
             Path::new(path)
                 .components()
