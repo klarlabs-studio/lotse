@@ -295,11 +295,17 @@ CATALOG = BASE / "benchmark/localization-tasks.json"
 REPOS = ("cobra", "flask", "fastify")
 REPLICATION_CATALOG = BASE / "benchmark/localization-replication-tasks.json"
 REPLICATION_REPOS = ("gin", "urfave-cli", "click", "jinja", "express", "undici")
+CONFIRMATION_CATALOG = BASE / "benchmark/localization-confirmation-tasks.json"
+CONFIRMATION_REPOS = ("viper", "chi", "httpx", "typer", "koa", "axios")
+# Split -> (catalog, repositories). dev is the 18-task part of the heldout catalog.
+SPLITS = {"dev": (CATALOG, REPOS), "heldout": (CATALOG, REPOS),
+          "replication": (REPLICATION_CATALOG, REPLICATION_REPOS),
+          "confirmation": (CONFIRMATION_CATALOG, CONFIRMATION_REPOS)}
 
 
 def catalog_for(split):
-    """dev and heldout come from the screen catalog; replication has its own (preregistration v20)."""
-    return REPLICATION_CATALOG if split == "replication" else CATALOG
+    """dev and heldout share the screen catalog; replication (v20) and confirmation (v21) have their own."""
+    return SPLITS[split][0]
 MAX_FILES, MAX_LINES = 10, 400
 
 
@@ -337,11 +343,12 @@ def build_task(repo, record, issue, dev_ids, split="heldout"):
             "query": query, "gold": {p: g for p, g in gold.items() if g}}, None
 
 
-def build(replication=False):
-    dev_ids = set() if replication else {t["id"] for t in json.loads((BASE / "benchmark/natural-tasks.json").read_text())}
-    split, catalog = ("replication", REPLICATION_CATALOG) if replication else ("heldout", CATALOG)
+def build(split="heldout"):
+    split = "heldout" if split == "dev" else split
+    dev_ids = {t["id"] for t in json.loads((BASE / "benchmark/natural-tasks.json").read_text())} if split == "heldout" else set()
+    catalog, repos = SPLITS[split]
     tasks, rejected = [], []
-    for repo in REPLICATION_REPOS if replication else REPOS:
+    for repo in repos:
         prs = {pr["number"]: pr for pr in json.loads((HISTORY / f"{repo}-prs.json").read_text())}
         for record in json.loads((HISTORY / f"{repo}-candidates.json").read_text())["candidates"]:
             pr = prs[record["pr"]]
@@ -443,7 +450,8 @@ def run_ast(units, edges, query, budget, graph):
     return {"payload": text, "files": list(dict.fromkeys(p for p, _, _ in spans)), "spans": spans}
 
 
-ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_units", "ast_graph", "ast_bounded")
+ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_units", "ast_graph", "ast_bounded",
+        "ast_graph_ids")  # ast_graph_ids from v21; earlier splits were scored without it.
 RANKS = (1, 5, 10)
 
 
@@ -474,6 +482,8 @@ def run_task(task, budget):
             answer = run_file_bm25(files, task["query"], budget)
         elif arm == "ast_bounded":
             answer = run_ast(pieces, [], task["query"], budget, graph=False)
+        elif arm == "ast_graph_ids":
+            answer = run_ast(units, edges, rewrite_query(task["query"]), budget, graph=True)
         else:
             answer = run_ast(units, edges, task["query"], budget, graph=arm == "ast_graph")
         ranked = [(u["path"], u["start"]) for u in cited_units(answer["spans"], units_by_path)]
@@ -551,7 +561,7 @@ def summarize(rows):
     """Every arm's rates and payloads, overall and by repository."""
     def rates(subset):
         out = {}
-        for arm in ARMS:
+        for arm in [a for a in ARMS if a in subset[0]["arms"]]:
             results = [r["arms"][arm] for r in subset]
             out[arm] = {key: sum(bool(x[key]) for x in results) / len(results)
                         for key in ("unit_hit", "file_hit", "gold_line_shown")}
@@ -569,19 +579,20 @@ def summarize(rows):
 def decide_split(split):
     screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
-    rule = screen["replication"]["decision"] if split == "replication" else screen["decision"]
+    rule = screen[split]["decision"] if split in ("replication", "confirmation") else screen["decision"]
     planned = {t["id"] for t in json.loads(catalog_for(split).read_text())["tasks"] if t["split"] == split}
     if {r["task"] for r in data["tasks"]} != planned:
         raise SystemExit(f"{split}: {len(data['tasks'])} of {len(planned)} tasks run; no decision on a partial split")
     excluded = {r["task"]: r["excluded"] for r in data["tasks"] if "excluded" in r}
     data["tasks"] = [r for r in data["tasks"] if "excluded" not in r]
+    scored = [a for a in ARMS if a in data["tasks"][0]["arms"] and a != "file_bm25"]
     result = {"excluded_tasks": excluded,
               "dropped_gold_files": {r["task"]: r["dropped_gold_files"] for r in data["tasks"] if r.get("dropped_gold_files")},"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"],
               "decision": decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"]),
               "summary": summarize(data["tasks"]),
               "pairwise_unit_acc@k": {f"{a}>{b}": mcnemar_one_sided([hit_at(r["arms"][a], rule["k"]) for r in data["tasks"]],
                                                                     [hit_at(r["arms"][b], rule["k"]) for r in data["tasks"]])
-                                    for a in ARMS for b in ARMS if a != b and a != "file_bm25" and b != "file_bm25"}}
+                                    for a in scored for b in scored if a != b}}
     out = BASE / f"results/localization-decision-{split}.json"
     out.write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps({"qualified": result["decision"]["qualified"],
@@ -592,10 +603,10 @@ def decide_split(split):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("command", choices=["build", "run", "decide"])
-    parser.add_argument("--split", choices=["dev", "heldout", "replication"], default="dev")
+    parser.add_argument("--split", choices=list(SPLITS), default="dev")
     args = parser.parse_args()
     if args.command == "build":
-        build(replication=args.split == "replication")
+        build(args.split)
         return 0
     if args.command == "run":
         run(args.split)

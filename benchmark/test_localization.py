@@ -201,5 +201,18 @@ class GrafCommandTests(unittest.TestCase):
         self.assertIn("--stop", command[:-2])
 
 
+class ConfirmationTests(unittest.TestCase):
+    def test_confirmation_split_and_rule(self):
+        import json
+        from pathlib import Path
+        self.assertTrue(catalog_for("confirmation").name.startswith("localization-confirmation"))
+        screen = json.loads((Path(__file__).resolve().parents[1] / "benchmark/preregistration.json").read_text())["localization_screen"]
+        rule = screen["confirmation"]["decision"]
+        self.assertEqual(rule["candidate_arms"], ["ast_graph_ids"])
+        self.assertEqual(set(rule["comparators"]), {"graphify", "ast_graph", "graf_floor_ids"})
+        import localization
+        self.assertIn("ast_graph_ids", localization.ARMS)
+
+
 if __name__ == "__main__":
     unittest.main()

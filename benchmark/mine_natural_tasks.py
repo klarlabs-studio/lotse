@@ -25,7 +25,9 @@ MAX_FILES = 10
 MAX_LINES = 400
 ISSUE_LIMIT = 4000
 SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "gin": (".go",), "urfave-cli": (".go",),
-                   "click": (".py",), "jinja": (".py",), "express": (".js",), "undici": (".js",)}
+                   "click": (".py",), "jinja": (".py",), "express": (".js",), "undici": (".js",),
+                   "viper": (".go",), "chi": (".go",), "httpx": (".py",), "typer": (".py",), "koa": (".js",),
+                   "axios": (".js",)}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full"}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
@@ -178,12 +180,15 @@ def verify_command(repo, tests):
 
 
 def pinned(repo):
-    """The pinned snapshot: the benchmark corpora, or the batch t4 task repositories."""
+    """The pinned snapshot: the benchmark corpora, the batch t4 repositories, or the v21 confirmation ones."""
     for r in json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]:
         if r["id"] == repo:
             return r
-    t4 = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t4"]
-    return {"id": repo, **t4["repositories"][repo]}
+    prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
+    for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["localization_screen"]["confirmation"]):
+        if repo in spec["repositories"]:
+            return {"id": repo, **spec["repositories"][repo]}
+    raise KeyError(repo)
 
 
 def main():

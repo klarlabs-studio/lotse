@@ -1,5 +1,5 @@
 {
-  "version": 20,
+  "version": 21,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -348,6 +348,11 @@
       "version": 20,
       "date": "2026-10-21",
       "change": "added localization_screen.replication on the six t4 repositories, frozen before any replication task was built or scored"
+    },
+    {
+      "version": 21,
+      "date": "2026-10-21",
+      "change": "added localization_screen.confirmation: ast_graph_ids (call graph plus query rewrite) against Graphify, ast_graph, and graf_floor_ids on six new repositories, frozen before any of their pull requests was listed"
     }
   ],
   "arms": {
@@ -461,6 +466,62 @@
         "report": "every task and arm, by repository; agent batch t4 tasks are a subset and are also reported separately"
       },
       "independence": "the agent batch t4 rule and catalog are frozen (v19); this offline screen cannot change them"
+    },
+    "confirmation": {
+      "purpose": "test whether combining the two arms that replicated (ast_graph: index-side call graph; graf_floor_ids: query-side rewrite) adds to either, and confirm ast_graph against Graphify a third time, on six repositories never used for any arm; offline, no solver",
+      "repositories": {
+        "viper": {
+          "repository": "spf13/viper",
+          "commit": "528f7416c4b56a4948673984b190bf8713f0c3c4",
+          "language": "Go"
+        },
+        "chi": {
+          "repository": "go-chi/chi",
+          "commit": "9f8adb1aabaa8a91180a821111d3f8e668d1c0bf",
+          "language": "Go"
+        },
+        "httpx": {
+          "repository": "encode/httpx",
+          "commit": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+          "language": "Python"
+        },
+        "typer": {
+          "repository": "fastapi/typer",
+          "commit": "a5882dedf0bc7a46cd861fdfca020f88519e0f21",
+          "language": "Python"
+        },
+        "koa": {
+          "repository": "koajs/koa",
+          "commit": "a82feec38a7c28e14f4db7525b8f500801214a76",
+          "language": "JavaScript"
+        },
+        "axios": {
+          "repository": "axios/axios",
+          "commit": "e6b79d9cef796ca3a903bb83e51d4752b019fd67",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "two per supported language, popular (over 15,000 stars), with issue-linked pull requests; default branch heads resolved on 2026-10-21; chosen before any of their pull requests was listed",
+      "tasks": "the localization_screen task rules, one split 'confirmation'; catalog benchmark/localization-confirmation-tasks.json, hashed in the results",
+      "new_arm": {
+        "ast_graph_ids": "ast_graph scored with the graf_floor_ids rewritten query (rewrite_query); all other parameters unchanged"
+      },
+      "arms_metric_budget": "the eight v16 arms plus ast_graph_ids; unit_acc@5 primary; 2,000 tokens",
+      "decision": {
+        "candidate_arms": [
+          "ast_graph_ids"
+        ],
+        "comparators": [
+          "graphify",
+          "ast_graph",
+          "graf_floor_ids"
+        ],
+        "k": 5,
+        "test": "exact one-sided McNemar on unit_acc@5 against each comparator",
+        "rule": "ast_graph_ids qualifies only if it beats all three comparators (intersection-union) at alpha 0.05; one candidate, so no Holm step",
+        "secondary_confirmatory": "ast_graph against Graphify, one-sided exact McNemar at alpha 0.05, a third test of the replicated result",
+        "report": "every task and arm, by repository"
+      }
     }
   }
 }

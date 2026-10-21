@@ -58,6 +58,9 @@ class MinerTests(unittest.TestCase):
         from mine_natural_tasks import pinned
         self.assertEqual(pinned("undici")["repository"], "nodejs/undici")
         self.assertEqual(pinned("cobra")["repository"], "spf13/cobra")
+        self.assertEqual(pinned("axios")["repository"], "axios/axios")
+        self.assertEqual(classify("httpx", "tests/test_api.py"), "test")
+        self.assertEqual(classify("chi", "mux.go"), "source")
 
     def test_issue_text_is_verbatim_without_comments_and_bounded(self):
         text = clean_issue("Title", "Body <!-- template -->line\r\n" + "x" * 5000)
