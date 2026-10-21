@@ -1,5 +1,5 @@
 {
-  "version": 19,
+  "version": 20,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -343,6 +343,11 @@
       "version": 19,
       "date": "2026-10-21",
       "change": "froze benchmark/natural-tasks-t4.json (48 tasks: gin 10, urfave-cli 10, click 7, jinja 10, express 1, undici 10; sha256 0555197e...). A second pull request closing an already-listed issue is excluded (urfave-cli-2229). Python test dependencies installed: trio 0.34.0, pytest-timeout 2.4.0. No solver had seen any t4 task"
+    },
+    {
+      "version": 20,
+      "date": "2026-10-21",
+      "change": "added localization_screen.replication on the six t4 repositories, frozen before any replication task was built or scored"
     }
   ],
   "arms": {
@@ -427,6 +432,35 @@
       "rule": "an arm qualifies for a preregistered agent batch only if it beats every comparator (intersection-union: its p is the larger of the two), with Holm correction across the four candidate arms at family alpha 0.05",
       "report": "every task and arm, all pairwise rates descriptively, and results by repository",
       "completeness": "the decision runs only on the complete split; excluded tasks are reported"
+    },
+    "replication": {
+      "purpose": "replicate the held-out localization result on six repositories never used to develop or select any arm, before agent batch t4 finishes; offline, no solver",
+      "repositories": [
+        "gin",
+        "urfave-cli",
+        "click",
+        "jinja",
+        "express",
+        "undici"
+      ],
+      "pins": "agent_trials.natural_tasks_t4.repositories",
+      "tasks": "the localization_screen task rules (criteria, corpus, query, gold, gold outside the corpus) applied to every issue-closing pull request merged before each pin; all tasks form one split, 'replication'; catalog benchmark/localization-replication-tasks.json, hashed in the results",
+      "arms_metric_budget": "unchanged from v16-v17: the same eight arms and parameters, unit_acc@5 primary, 2,000 tokens",
+      "decision": {
+        "candidate_arms": [
+          "ast_graph",
+          "graf_floor_ids"
+        ],
+        "comparators": [
+          "graf_floor",
+          "graphify"
+        ],
+        "k": 5,
+        "test": "exact one-sided McNemar on unit_acc@5 per candidate against each comparator",
+        "rule": "a candidate replicates if it beats both comparators (intersection-union), with Holm correction across the two candidates at family alpha 0.05. ast_graph is the confirmatory hypothesis; graf_floor_ids narrowly failed against Graphify on the original held-out set and is retested",
+        "report": "every task and arm, by repository; agent batch t4 tasks are a subset and are also reported separately"
+      },
+      "independence": "the agent batch t4 rule and catalog are frozen (v19); this offline screen cannot change them"
     }
   }
 }

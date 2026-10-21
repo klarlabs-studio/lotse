@@ -1,7 +1,7 @@
 """Localization scoring must be symmetric across arms and anchored to the real fix."""
 import unittest
 
-from localization import (write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+from localization import (catalog_for, write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
                           pack_units, score_task)
 
 GO = """package x
@@ -179,6 +179,18 @@ class WriteTests(unittest.TestCase):
                 write_json_atomic(out, {"a": 2})
             self.assertEqual(out.read_text(), '{\n "a": 1\n}\n')
             self.assertEqual(list(Path(tmp).iterdir()), [out])
+
+
+class ReplicationTests(unittest.TestCase):
+    def test_replication_has_its_own_catalog_and_rule(self):
+        self.assertTrue(catalog_for("replication").name.startswith("localization-replication"))
+        self.assertEqual(catalog_for("heldout"), catalog_for("dev"))
+        import json
+        from pathlib import Path
+        screen = json.loads((Path(__file__).resolve().parents[1] / "benchmark/preregistration.json").read_text())["localization_screen"]
+        rule = screen["replication"]["decision"]
+        self.assertEqual(rule["candidate_arms"], ["ast_graph", "graf_floor_ids"])
+        self.assertEqual(rule["comparators"], ["graf_floor", "graphify"])
 
 
 if __name__ == "__main__":

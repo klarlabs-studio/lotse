@@ -292,6 +292,13 @@ HISTORY = BASE / ".research/history"
 WORK = BASE / ".research/localization"
 CATALOG = BASE / "benchmark/localization-tasks.json"
 REPOS = ("cobra", "flask", "fastify")
+REPLICATION_CATALOG = BASE / "benchmark/localization-replication-tasks.json"
+REPLICATION_REPOS = ("gin", "urfave-cli", "click", "jinja", "express", "undici")
+
+
+def catalog_for(split):
+    """dev and heldout come from the screen catalog; replication has its own (preregistration v20)."""
+    return REPLICATION_CATALOG if split == "replication" else CATALOG
 MAX_FILES, MAX_LINES = 10, 400
 
 
@@ -300,7 +307,7 @@ def _git(repo, *args, text=True):
                           check=True).stdout
 
 
-def build_task(repo, record, issue, dev_ids):
+def build_task(repo, record, issue, dev_ids, split="heldout"):
     """One catalog entry, or a rejection reason, for a mined pull request."""
     from mine_natural_tasks import classify, clean_issue
     commit = record.get("commit") or record.get("merge_commit")
@@ -325,29 +332,30 @@ def build_task(repo, record, issue, dev_ids):
             for path in modified}
     task_id = f"{repo}-{issue['number']}"
     return {"id": task_id, "repo": repo, "pr": record["pr"], "issue": issue["number"], "commit": commit,
-            "labels": record.get("labels", []), "split": "dev" if task_id in dev_ids else "heldout",
+            "labels": record.get("labels", []), "split": "dev" if task_id in dev_ids else split,
             "query": query, "gold": {p: g for p, g in gold.items() if g}}, None
 
 
-def build():
-    dev_ids = {t["id"] for t in json.loads((BASE / "benchmark/natural-tasks.json").read_text())}
+def build(replication=False):
+    dev_ids = set() if replication else {t["id"] for t in json.loads((BASE / "benchmark/natural-tasks.json").read_text())}
+    split, catalog = ("replication", REPLICATION_CATALOG) if replication else ("heldout", CATALOG)
     tasks, rejected = [], []
-    for repo in REPOS:
+    for repo in REPLICATION_REPOS if replication else REPOS:
         prs = {pr["number"]: pr for pr in json.loads((HISTORY / f"{repo}-prs.json").read_text())}
         for record in json.loads((HISTORY / f"{repo}-candidates.json").read_text())["candidates"]:
             pr = prs[record["pr"]]
             issue = pr["closingIssuesReferences"]["nodes"][0]
             record = {**record, "merge_commit": (pr.get("mergeCommit") or {}).get("oid")}
-            task, reason = build_task(repo, record, issue, dev_ids)
+            task, reason = build_task(repo, record, issue, dev_ids, split)
             if task and task["gold"] and not any(t["id"] == task["id"] for t in tasks):
                 tasks.append(task)
             else:
                 rejected.append({"repo": repo, "pr": record["pr"], "reason": reason or "duplicate issue or empty gold"})
-    CATALOG.write_text(json.dumps({"tasks": tasks, "rejected": rejected}, indent=1) + "\n")
+    catalog.write_text(json.dumps({"tasks": tasks, "rejected": rejected}, indent=1) + "\n")
     count = defaultdict(int)
     for t in tasks:
         count[(t["repo"], t["split"])] += 1
-    print(f"{len(tasks)} tasks ({dict(count)}), {len(rejected)} rejected -> {CATALOG.relative_to(BASE)}")
+    print(f"{len(tasks)} tasks ({dict(count)}), {len(rejected)} rejected -> {catalog.relative_to(BASE)}")
 
 
 # --- Arms --------------------------------------------------------------------------------------
@@ -482,8 +490,8 @@ def write_json_atomic(path, data):
 
 def run(split):
     import hashlib
-    catalog = json.loads(CATALOG.read_text())
-    digest = hashlib.sha256(CATALOG.read_bytes()).hexdigest()
+    catalog = json.loads(catalog_for(split).read_text())
+    digest = hashlib.sha256(catalog_for(split).read_bytes()).hexdigest()
     out = BASE / f"results/localization-{split}.json"
     previous = json.loads(out.read_text()) if out.is_file() else {}
     rows = {r["task"]: r for r in previous.get("tasks", []) if previous.get("catalog_sha256") == digest}
@@ -555,8 +563,8 @@ def summarize(rows):
 def decide_split(split):
     screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
-    rule = screen["decision"]
-    planned = {t["id"] for t in json.loads(CATALOG.read_text())["tasks"] if t["split"] == split}
+    rule = screen["replication"]["decision"] if split == "replication" else screen["decision"]
+    planned = {t["id"] for t in json.loads(catalog_for(split).read_text())["tasks"] if t["split"] == split}
     if {r["task"] for r in data["tasks"]} != planned:
         raise SystemExit(f"{split}: {len(data['tasks'])} of {len(planned)} tasks run; no decision on a partial split")
     excluded = {r["task"]: r["excluded"] for r in data["tasks"] if "excluded" in r}
@@ -578,10 +586,10 @@ def decide_split(split):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("command", choices=["build", "run", "decide"])
-    parser.add_argument("--split", choices=["dev", "heldout"], default="dev")
+    parser.add_argument("--split", choices=["dev", "heldout", "replication"], default="dev")
     args = parser.parse_args()
     if args.command == "build":
-        build()
+        build(replication=args.split == "replication")
         return 0
     if args.command == "run":
         run(args.split)
