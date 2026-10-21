@@ -35,7 +35,8 @@ TOOL_DEFINITIONS = [
 
 
 GRAF_QUERY_FLAGS = {"graf": (), "graf_floor": ("--file-score", "damped", "--stop", "floor")}
-ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only")
+ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph")
+SCRIPTS = Path(__file__).resolve().parent
 
 
 def tool_definitions(arm):
@@ -47,6 +48,8 @@ def retrieve_command(arm, input_dir, output_dir, query, budget):
     if arm in GRAF_QUERY_FLAGS:
         return [str(BASE / "target/release/graf"), "--root", str(input_dir), "locate", query,
                 "--budget", str(budget), "--limit", "1000", "--text", *GRAF_QUERY_FLAGS[arm]]
+    if arm == "ast_graph":
+        return [sys.executable, str(SCRIPTS / "ast_retrieve.py"), "query", str(output_dir), query, str(budget)]
     if arm == "graphify":
         return [sys.executable, str(BASE / "benchmark/compare_graphify.py"), "--graphify-query",
                 str(output_dir / "graphify-out/graph.json"), query, str(budget)]
@@ -187,6 +190,8 @@ class Session:
             path.write_text(text)
         if self.arm in GRAF_QUERY_FLAGS:
             command = [str(BASE / "target/release/graf"), "--root", str(self.input), "index", "--rebuild"]
+        elif self.arm == "ast_graph":
+            command = [sys.executable, str(SCRIPTS / "ast_retrieve.py"), "index", str(self.input), str(self.output)]
         else:
             graphify_pin()
             command = [str(BASE / ".research/venv/bin/graphify"), "extract", str(self.input),
@@ -201,8 +206,9 @@ class Session:
             "stdout": result.stdout, "stderr": result.stderr,
             "snapshot": sha(json.dumps(files, sort_keys=True)),
         }, indent=2) + "\n")
-        if self.arm in GRAF_QUERY_FLAGS:
-            index = json.loads((self.input / ".graf/index.json").read_text())
+        if self.arm in (*GRAF_QUERY_FLAGS, "ast_graph"):
+            built = self.input / ".graf/index.json" if self.arm in GRAF_QUERY_FLAGS else self.output / "ast-index.json"
+            index = json.loads(built.read_text())
             if set(index["files"]) != set(files):
                 raise RuntimeError("graf source filters differ from the shared input set")
         self.dirty = False

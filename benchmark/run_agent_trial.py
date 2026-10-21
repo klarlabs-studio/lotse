@@ -34,7 +34,8 @@ SEARCH_ONLY_PROMPT = SYSTEM_PROMPT.replace(
 TIMEOUT_SECONDS = 1200
 TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "target/release/graf",
                  "graphify": BASE / ".research/venv/bin/graphify",
-                 "search_only": Path(shutil.which("rg") or "rg")}
+                 "search_only": Path(shutil.which("rg") or "rg"),
+                 "ast_graph": [BASE / "benchmark" / name for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
 
 
 def system_prompt(arm):
@@ -42,7 +43,14 @@ def system_prompt(arm):
 
 
 def preflight(arm, binary):
-    """Refuse to start an agent whose retrieval backend is missing; return the backend's hash."""
+    """Refuse to start an agent whose retrieval backend is missing; return the backend's hash.
+
+    A script backend is a list of source files; its hash covers every one of them in order.
+    """
+    if isinstance(binary, list):
+        if not all(path.is_file() for path in binary):
+            raise RuntimeError(f"{arm} backend sources are missing; no trial was started")
+        return hashlib.sha256("".join(hashlib.sha256(p.read_bytes()).hexdigest() for p in binary).encode()).hexdigest()
     if not binary.is_file() or not os.access(binary, os.X_OK):
         raise RuntimeError(f"{arm} backend {binary} is missing or not executable; no trial was started")
     return hashlib.sha256(binary.read_bytes()).hexdigest()

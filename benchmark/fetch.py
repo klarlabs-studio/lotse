@@ -9,10 +9,14 @@ import urllib.request
 BASE = Path(__file__).resolve().parents[1]
 
 
-def fetch():
-    manifest = json.loads((BASE / "benchmark/corpora.json").read_text())
+def fetch(t4=False):
+    if t4:  # Batch t4 task repositories, pinned in the preregistration.
+        repos = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t4"]
+        items = [{"id": k, **v, "role": "agent_tasks"} for k, v in repos["repositories"].items()]
+    else:
+        items = json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]
     receipts = []
-    for item in manifest["repositories"]:
+    for item in items:
         url = f"https://codeload.github.com/{item['repository']}/tar.gz/{item['commit']}"
         request = urllib.request.Request(url, headers={"User-Agent": "graf-research"})
         data = urllib.request.urlopen(request, timeout=120).read()
@@ -34,8 +38,10 @@ def fetch():
                 count += 1
         receipts.append({**item, "archive_sha256": hashlib.sha256(data).hexdigest(), "files": count})
         print(item["id"], count, "files", flush=True)
-    (BASE / "results/snapshots.json").write_text(json.dumps(receipts, indent=2) + "\n")
+    out = "results/snapshots-t4.json" if t4 else "results/snapshots.json"
+    (BASE / out).write_text(json.dumps(receipts, indent=2) + "\n")
 
 
 if __name__ == "__main__":
-    fetch()
+    import sys
+    fetch(t4="--t4" in sys.argv[1:])

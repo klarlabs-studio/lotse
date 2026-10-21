@@ -87,8 +87,18 @@ class TaskBrokerIntegrity(unittest.TestCase):
         self.assertEqual(floor[:len(base)], base)
         self.assertEqual(floor[len(base):], ["--file-score", "damped", "--stop", "floor"])
         self.assertIn("--graphify-query", task_session.retrieve_command("graphify", Path("in"), Path("out"), "q", 2000))
+        ast = task_session.retrieve_command("ast_graph", Path("in"), Path("out"), "q", 2000)
+        self.assertEqual(ast[1:], [str(task_session.SCRIPTS / "ast_retrieve.py"), "query", "out", "q", "2000"])
         with self.assertRaises(ValueError):
             task_session.retrieve_command("search_only", Path("in"), Path("out"), "q", 2000)
+
+    def test_ast_graph_returns_whole_units_from_the_faulty_workspace(self):
+        session = task_session.prepare_session(self.task, "ast-trial", "ast_graph")
+        result = session.call("retrieve", {"query": "value"})
+        self.assertTrue(result["ok"], result)
+        self.assertIn("app.py:1-2\ndef value():\n    return 2", result["result"]["content"])
+        build = json.loads((session.directory / "index-build-1.json").read_text())
+        self.assertEqual(build["arm"], "ast_graph")
 
     def test_a_refused_second_finish_records_no_verdict(self):
         self.session.call("finish", {})

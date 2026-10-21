@@ -24,7 +24,9 @@ HISTORY = BASE / ".research/history"
 MAX_FILES = 10
 MAX_LINES = 400
 ISSUE_LIMIT = 4000
-SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",)}
+SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "gin": (".go",), "urfave-cli": (".go",),
+                   "click": (".py",), "jinja": (".py",), "express": (".js",), "undici": (".js",)}
+JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full"}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
 QUERY = """query($owner: String!, $name: String!, $cursor: String) {
@@ -41,11 +43,12 @@ QUERY = """query($owner: String!, $name: String!, $cursor: String) {
 def classify(repo, path):
     """test, source, or other (docs, changelog, configuration)."""
     name = Path(path).name
-    if repo == "cobra" and (name.endswith("_test.go") or "/testdata/" in f"/{path}"):
+    suffix = SOURCE_SUFFIXES[repo]
+    if suffix == (".go",) and (name.endswith("_test.go") or "/testdata/" in f"/{path}"):
         return "test"
-    if repo == "flask" and path.startswith("tests/"):
+    if suffix == (".py",) and path.startswith("tests/"):
         return "test"
-    if repo == "fastify" and path.startswith("test/"):
+    if suffix == (".js",) and path.startswith("test/"):
         return "test"
     return "source" if path.endswith(SOURCE_SUFFIXES[repo]) else "other"
 
@@ -154,24 +157,35 @@ def candidate(repo, pr, pin):
     return {**record, "outcome": "automatic criteria met", "commit": commit,
             "task": {"id": f"{repo}-{issue['number']}", "repo": repo, "issue": clean_issue(issue["title"], body),
                      "faults": faults, "hidden_tests": hidden, "verify": verify_command(repo, tests),
-                     **({"runtime": "fastify-full"} if repo == "fastify" else {})}}
+                     **({"runtime": JS_RUNTIME[repo]} if repo in JS_RUNTIME else {})}}
 
 
 def verify_command(repo, tests):
-    if repo == "cobra":
+    if repo == "express":
+        return ["node_modules/.bin/mocha", "--require", "test/support/env", "--check-leaks",
+                *sorted(t for t in tests if t.endswith(".js") and "/support/" not in t)]
+    if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
-    if repo == "flask":
+    if SOURCE_SUFFIXES[repo] == (".py",):
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(t for t in tests if t.endswith(".py"))]
     return ["node", "--test", *sorted(t for t in tests if t.endswith(".js"))]
+
+
+def pinned(repo):
+    """The pinned snapshot: the benchmark corpora, or the batch t4 task repositories."""
+    for r in json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]:
+        if r["id"] == repo:
+            return r
+    t4 = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t4"]
+    return {"id": repo, **t4["repositories"][repo]}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("repo", choices=sorted(SOURCE_SUFFIXES))
     args = parser.parse_args()
-    corpus = next(r for r in json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]
-                  if r["id"] == args.repo)
+    corpus = pinned(args.repo)
     slug = corpus["repository"].split("github.com/")[-1].removesuffix(".git")
     if not (HISTORY / args.repo).is_dir():
         HISTORY.mkdir(parents=True, exist_ok=True)

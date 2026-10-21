@@ -39,6 +39,25 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("fastify", "test/hooks.test.js"), "test")
         self.assertEqual(classify("fastify", "lib/reply.js"), "source")
         self.assertEqual(classify("fastify", "test/types/reply.test-d.ts"), "test")
+        self.assertEqual(classify("gin", "context_test.go"), "test")
+        self.assertEqual(classify("urfave-cli", "command.go"), "source")
+        self.assertEqual(classify("click", "src/click/core.py"), "source")
+        self.assertEqual(classify("jinja", "tests/test_api.py"), "test")
+        self.assertEqual(classify("express", "lib/response.js"), "source")
+        self.assertEqual(classify("undici", "test/fetch/client.js"), "test")
+
+    def test_verify_commands_per_runner(self):
+        from mine_natural_tasks import verify_command
+        self.assertEqual(verify_command("gin", ["render/render_test.go"]), ["go", "test", "./render", "-count=1"])
+        self.assertEqual(verify_command("click", ["tests/test_basic.py"])[-1], "tests/test_basic.py")
+        self.assertEqual(verify_command("express", ["test/res.send.js", "test/support/utils.js"]),
+                         ["node_modules/.bin/mocha", "--require", "test/support/env", "--check-leaks", "test/res.send.js"])
+        self.assertEqual(verify_command("undici", ["test/fetch/a.js"]), ["node", "--test", "test/fetch/a.js"])
+
+    def test_t4_repositories_resolve_to_their_pins(self):
+        from mine_natural_tasks import pinned
+        self.assertEqual(pinned("undici")["repository"], "nodejs/undici")
+        self.assertEqual(pinned("cobra")["repository"], "spf13/cobra")
 
     def test_issue_text_is_verbatim_without_comments_and_bounded(self):
         text = clean_issue("Title", "Body <!-- template -->line\r\n" + "x" * 5000)

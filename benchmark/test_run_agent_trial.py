@@ -59,7 +59,7 @@ class CommandTests(unittest.TestCase):
 
     def test_prompt_names_only_the_arm_tools(self):
         # Batch t ran with SYSTEM_PROMPT for both arms; retrieval arms keep it unchanged.
-        for arm in ("graf", "graf_floor", "graphify"):
+        for arm in ("graf", "graf_floor", "graphify", "ast_graph"):
             self.assertEqual(system_prompt(arm), SYSTEM_PROMPT)
         self.assertNotIn("retrieve", system_prompt("search_only"))
         command = claude_command("issue", Path("/x/mcp.json"), "m", 0.5, "search_only")
@@ -86,6 +86,17 @@ class PreflightTests(unittest.TestCase):
             missing.write_bytes(b"binary")
             missing.chmod(0o755)
             self.assertEqual(len(preflight("graf", missing)), 64)
+
+    def test_script_backends_hash_every_source_file(self):
+        with tempfile.TemporaryDirectory() as temp:
+            sources = [Path(temp) / "a.py", Path(temp) / "b.py"]
+            with self.assertRaises(RuntimeError):
+                preflight("ast_graph", sources)
+            for source in sources:
+                source.write_text("x = 1\n")
+            first = preflight("ast_graph", sources)
+            sources[1].write_text("x = 2\n")
+            self.assertNotEqual(preflight("ast_graph", sources), first)
 
 
 if __name__ == "__main__":
