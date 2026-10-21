@@ -84,9 +84,14 @@ def clean_issue(title, body):
     return text if len(text) <= ISSUE_LIMIT else text[:ISSUE_LIMIT] + "\n[truncated]"
 
 
-def git(repo, *args):
-    return subprocess.run(["git", "-C", str(HISTORY / repo), *args], capture_output=True, text=True,
-                          check=True).stdout
+def git(repo, *args, attempts=3):
+    """Run git in the partial clone; retry, since blobs are fetched lazily over the network."""
+    for attempt in range(attempts):
+        run = subprocess.run(["git", "-C", str(HISTORY / repo), *args], capture_output=True, text=True)
+        if run.returncode == 0:
+            return run.stdout
+        time.sleep(5 * (attempt + 1))
+    raise subprocess.CalledProcessError(run.returncode, run.args, run.stdout, run.stderr)
 
 
 def _graphql(command, attempts=4):
