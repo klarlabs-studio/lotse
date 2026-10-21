@@ -1,7 +1,7 @@
 """Localization scoring must be symmetric across arms and anchored to the real fix."""
 import unittest
 
-from localization import (catalog_for, write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+from localization import (graf_locate_command, catalog_for, write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
                           pack_units, score_task)
 
 GO = """package x
@@ -191,6 +191,14 @@ class ReplicationTests(unittest.TestCase):
         rule = screen["replication"]["decision"]
         self.assertEqual(rule["candidate_arms"], ["ast_graph", "graf_floor_ids"])
         self.assertEqual(rule["comparators"], ["graf_floor", "graphify"])
+
+
+class GrafCommandTests(unittest.TestCase):
+    def test_a_dash_leading_query_is_not_parsed_as_an_option(self):
+        from pathlib import Path
+        command = graf_locate_command(Path("root"), "graf_floor", "--verbose flag", 2000)
+        self.assertEqual(command[-2:], ["--", "--verbose flag"])
+        self.assertIn("--stop", command[:-2])
 
 
 if __name__ == "__main__":

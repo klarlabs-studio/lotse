@@ -84,8 +84,10 @@ class TaskBrokerIntegrity(unittest.TestCase):
     def test_retrieve_commands_per_arm(self):
         base = task_session.retrieve_command("graf", Path("in"), Path("out"), "q", 2000)
         floor = task_session.retrieve_command("graf_floor", Path("in"), Path("out"), "q", 2000)
-        self.assertEqual(floor[:len(base)], base)
-        self.assertEqual(floor[len(base):], ["--file-score", "damped", "--stop", "floor"])
+        self.assertEqual(floor[:len(base) - 2], base[:-2])
+        self.assertEqual(floor[len(base) - 2:], ["--file-score", "damped", "--stop", "floor", "--", "q"])
+        self.assertEqual(task_session.retrieve_command("graf", Path("in"), Path("out"), "--verbose", 2000)[-2:],
+                         ["--", "--verbose"])
         self.assertIn("--graphify-query", task_session.retrieve_command("graphify", Path("in"), Path("out"), "q", 2000))
         ast = task_session.retrieve_command("ast_graph", Path("in"), Path("out"), "q", 2000)
         self.assertEqual(ast[1:], [str(task_session.SCRIPTS / "ast_retrieve.py"), "query", "out", "q", "2000"])

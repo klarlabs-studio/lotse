@@ -43,8 +43,8 @@ def check_task(task, binary):
     rows = []
     for budget in BUDGETS:
         expected = prototype_query(out, task["query"], budget)
-        actual = subprocess.run([str(binary), "--root", str(root / "input"), "units", task["query"],
-                                 "--budget", str(budget), "--text"], check=True, capture_output=True,
+        actual = subprocess.run([str(binary), "--root", str(root / "input"), "units", "--budget", str(budget),
+                                 "--text", "--", task["query"]], check=True, capture_output=True,
                                 text=True).stdout
         rows.append({"budget": budget, "difference": compare(expected, actual)})
     shutil.rmtree(root, ignore_errors=True)

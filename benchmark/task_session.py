@@ -46,8 +46,8 @@ def tool_definitions(arm):
 
 def retrieve_command(arm, input_dir, output_dir, query, budget):
     if arm in GRAF_QUERY_FLAGS:
-        return [str(BASE / "target/release/graf"), "--root", str(input_dir), "locate", query,
-                "--budget", str(budget), "--limit", "1000", "--text", *GRAF_QUERY_FLAGS[arm]]
+        return [str(BASE / "target/release/graf"), "--root", str(input_dir), "locate",
+                "--budget", str(budget), "--limit", "1000", "--text", *GRAF_QUERY_FLAGS[arm], "--", query]
     if arm == "ast_graph":
         return [sys.executable, str(SCRIPTS / "ast_retrieve.py"), "query", str(output_dir), query, str(budget)]
     if arm == "graphify":

@@ -386,13 +386,18 @@ def snapshot(task):
     return root, load_documents(root / "input")
 
 
+def graf_locate_command(root, arm, query, budget):
+    """Options first, then `--`, so an issue text that starts with a dash stays the query."""
+    return [str(GRAF), "--root", str(root), "locate", "--budget", str(budget), "--limit", "1000", "--text",
+            *GRAF_FLAGS[arm], "--", query]
+
+
 def run_graf(root, arm, query, budget):
     if not (root / "input/.graf/index.json").is_file():
         subprocess.run([str(GRAF), "--root", str(root / "input"), "index", "--rebuild"], check=True,
                        capture_output=True)
-    out = subprocess.run([str(GRAF), "--root", str(root / "input"), "locate", query, "--budget", str(budget),
-                          "--limit", "1000", "--text", *GRAF_FLAGS[arm]], check=True, capture_output=True,
-                         text=True).stdout
+    out = subprocess.run(graf_locate_command(root / "input", arm, query, budget), check=True,
+                         capture_output=True, text=True).stdout
     spans = [(p, int(s), int(e)) for p, s, e in GRAF_SPAN.findall(out)]
     return {"payload": out, "files": list(dict.fromkeys(p for p, _, _ in spans)), "spans": spans}
 
