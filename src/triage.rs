@@ -6,12 +6,29 @@
 //! (`ast_graph_ids`). `outline` lists a file's function units so an agent can read
 //! one function instead of the whole file. Neither is an accepted improvement.
 use crate::rewrite::rewrite_query;
-use crate::units::{Unit, code_units, retrieve};
+use crate::units::{Unit, code_units, rank};
 use crate::{FileScore, Index, Policy, Stop};
-use anyhow::{Result, ensure};
-use serde::Serialize;
+use anyhow::{Context, Result, ensure};
+use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
+use std::fs;
+use std::io::Write;
 use tiktoken_rs::CoreBPE;
+
+/// Changes whenever unit extraction could change; a mismatching cache is rebuilt.
+const UNIT_CACHE_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "/units-1");
+
+#[derive(Default, Serialize, Deserialize)]
+struct UnitCache {
+    version: String,
+    files: BTreeMap<String, CachedUnits>,
+}
+
+#[derive(Serialize, Deserialize)]
+struct CachedUnits {
+    hash: String,
+    units: Vec<Unit>,
+}
 
 /// Files listed before the code.
 pub const TRIAGE_FILES: usize = 8;
@@ -48,13 +65,74 @@ pub struct Triage {
     pub experimental: &'static str,
 }
 
-/// Every indexed file's current text, refusing stale snapshots.
-pub fn indexed_texts(index: &Index) -> Result<BTreeMap<String, String>> {
-    index
-        .files
-        .keys()
-        .map(|path| Ok((path.clone(), index.current_text(path)?)))
-        .collect()
+/// Every indexed file's units, in path order. Units are cached in `.graf/units.json`
+/// by source hash, so only new or changed files are parsed.
+pub fn indexed_units(index: &Index) -> Result<Vec<Unit>> {
+    let path = index.root.join(".graf/units.json");
+    let mut cache: UnitCache = fs::read(&path)
+        .ok()
+        .and_then(|bytes| serde_json::from_slice(&bytes).ok())
+        .filter(|c: &UnitCache| c.version == UNIT_CACHE_VERSION)
+        .unwrap_or_default();
+    let mut fresh = BTreeMap::new();
+    let mut changed = false;
+    for (file, source) in &index.files {
+        let entry = match cache.files.remove(file) {
+            Some(cached) if cached.hash == source.hash => cached,
+            _ => {
+                changed = true;
+                let text = index.current_text(file)?;
+                CachedUnits {
+                    hash: source.hash.clone(),
+                    units: code_units(file, &text),
+                }
+            }
+        };
+        fresh.insert(file.clone(), entry);
+    }
+    let units = fresh
+        .values()
+        .flat_map(|c| c.units.iter().cloned())
+        .collect();
+    if changed || !cache.files.is_empty() {
+        save_cache(
+            index,
+            &UnitCache {
+                version: UNIT_CACHE_VERSION.into(),
+                files: fresh,
+            },
+        )?;
+    }
+    Ok(units)
+}
+
+fn save_cache(index: &Index, cache: &UnitCache) -> Result<()> {
+    let dir = index.root.join(".graf");
+    ensure!(
+        !fs::symlink_metadata(&dir)?.file_type().is_symlink(),
+        ".graf must not be a symlink"
+    );
+    let mut temp = tempfile::NamedTempFile::new_in(&dir)?;
+    temp.write_all(&serde_json::to_vec(cache)?)?;
+    temp.persist(dir.join("units.json"))
+        .map_err(|e| e.error)
+        .context("Cannot save the unit cache")?;
+    Ok(())
+}
+
+/// Ranked whole units for `query`; the files of the delivered units are checked against
+/// the snapshot, as search and expand check theirs.
+pub fn ranked_units(
+    bpe: &CoreBPE,
+    index: &Index,
+    query: &str,
+    budget: usize,
+) -> Result<(Vec<Unit>, String)> {
+    let (picked, context) = rank(bpe, &indexed_units(index)?, query, budget);
+    for unit in &picked {
+        index.current_text(&unit.path)?;
+    }
+    Ok((picked, context))
 }
 
 /// Likely files, then whole likely functions, within `budget` cl100k tokens in total.
@@ -89,7 +167,7 @@ pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Resul
         .saturating_sub(bpe.encode_ordinary(header).len());
     let mut units = Vec::new();
     if remaining > 0 {
-        let (picked, code) = retrieve(bpe, &indexed_texts(index)?, &query, remaining);
+        let (picked, code) = ranked_units(bpe, index, &query, remaining)?;
         if !code.is_empty() {
             context.push_str(header);
             context.push_str(&code);

@@ -655,3 +655,27 @@ fn outline_lists_functions_with_line_ranges() {
     assert!(graf::triage::outline(&index, "README.md").is_err());
     assert!(graf::triage::outline(&index, "missing.js").is_err());
 }
+
+#[test]
+fn unit_cache_is_reused_refreshed_and_never_serves_stale_code() {
+    let dir = agent_fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    let bpe = cl100k_base().unwrap();
+    let index = Index::load(&root).unwrap();
+    let cold = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    let cache = root.join(".graf/units.json");
+    let written = fs::metadata(&cache).unwrap().modified().unwrap();
+    let warm = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    assert_eq!(cold.1, warm.1);
+    assert_eq!(fs::metadata(&cache).unwrap().modified().unwrap(), written);
+
+    let changed = "function serialize (payload) {\n  return String(payload)\n}\nmodule.exports = { serialize }\n";
+    fs::write(root.join("lib/reply.js"), changed).unwrap();
+    assert!(graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).is_err());
+    Index::build(&root, false).unwrap();
+    let index = Index::load(&root).unwrap();
+    let fresh = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    assert!(fresh.1.contains("return String(payload)"));
+    assert!(!fresh.1.contains("JSON.stringify"));
+}

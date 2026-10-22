@@ -5,6 +5,7 @@
 //! Python-specific line splitting and term rules, so evidence about the prototype
 //! carries over; `benchmark/check_units_equivalence.py` verifies this. Not an
 //! accepted improvement.
+use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use tiktoken_rs::CoreBPE;
 use tree_sitter::{Language, Node, Parser};
@@ -85,11 +86,11 @@ const STOP: &[&str] = &[
     "tests",
 ];
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Unit {
     pub path: String,
     /// `function`, `module`, or `text`.
-    pub kind: &'static str,
+    pub kind: String,
     pub name: Option<String>,
     pub start: usize,
     pub end: usize,
@@ -269,7 +270,7 @@ fn windows(path: &str, lines: &[&str], start: usize, end: usize, kind: &'static 
             let e = (s + WINDOW - 1).min(end);
             Unit {
                 path: path.into(),
-                kind,
+                kind: kind.into(),
                 name: None,
                 start: s,
                 end: e,
@@ -303,7 +304,7 @@ pub fn code_units(path: &str, text: &str) -> Vec<Unit> {
         }
         units.push(Unit {
             path: path.into(),
-            kind: "function",
+            kind: "function".into(),
             name: name_of(node, text),
             start,
             end,
@@ -473,10 +474,15 @@ pub fn retrieve(
         .iter()
         .flat_map(|(path, text)| code_units(path, text))
         .collect();
-    let edges = call_edges(&units);
+    rank(bpe, &units, query, budget)
+}
+
+/// Score `units` (every file's units, in path order) for `query` and pack the payload.
+pub fn rank(bpe: &CoreBPE, units: &[Unit], query: &str, budget: usize) -> (Vec<Unit>, String) {
+    let edges = call_edges(units);
     let lexical = Bm25::new(units.iter().map(|u| u.text.as_str())).score(query);
     let scores = propagate(&lexical, &edges, WEIGHT);
-    pack_units(bpe, &units, &scores, budget, FLOOR)
+    pack_units(bpe, units, &scores, budget, FLOOR)
 }
 
 #[cfg(test)]
@@ -592,7 +598,7 @@ mod tests {
         let bpe = cl100k_base().unwrap();
         let unit = |path: &str, text: &str| Unit {
             path: path.into(),
-            kind: "function",
+            kind: "function".into(),
             name: None,
             start: 1,
             end: 1,

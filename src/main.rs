@@ -293,12 +293,8 @@ fn run() -> Result<()> {
             } else {
                 query
             };
-            let mut files = std::collections::BTreeMap::new();
-            for path in index.files.keys() {
-                files.insert(path.clone(), index.current_text(path)?);
-            }
             let bpe = tiktoken_rs::cl100k_base()?;
-            let (units, context) = graf::units::retrieve(&bpe, &files, &query, budget);
+            let (units, context) = graf::triage::ranked_units(&bpe, &index, &query, budget)?;
             let cited: Vec<_> = units
                 .iter()
                 .map(|u| serde_json::json!({"path": u.path, "start": u.start, "end": u.end, "name": u.name}))
