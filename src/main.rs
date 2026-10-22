@@ -8,7 +8,13 @@ use std::path::PathBuf;
 #[derive(Parser)]
 #[command(
     version,
-    about = "Local source evidence for agents. Code and documentation; no model required."
+    about = "Local source evidence for agents. Code and documentation; no model required.",
+    after_help = "Typical agent workflow:\n  \
+        graf triage \"<issue or task text>\"   likely files, then likely functions in full\n  \
+        graf outline <path>                 a file's functions with line ranges\n  \
+        graf units \"<follow-up query>\"      more whole functions\n\n\
+        The index is built on first use and lives in .graf/; run `graf index` after edits.\n\
+        For MCP clients: `claude mcp add graf -- graf mcp` (see `graf mcp --help`)."
 )]
 struct Cli {
     /// Repository root. The index lives in ROOT/.graf/.
@@ -172,6 +178,11 @@ enum Command {
         #[arg(long)]
         text: bool,
     },
+    /// Serve graf's tools to an agent over the Model Context Protocol (stdio).
+    ///
+    /// Register it once, for example `claude mcp add graf -- graf mcp`. The server
+    /// indexes the repository on first use and keeps the index current as files change.
+    Mcp,
     /// Experimental: print the query `--rewrite` would use for TEXT (the title plus code-like tokens).
     Rewrite {
         #[arg(allow_hyphen_values = true)]
@@ -252,8 +263,21 @@ fn run() -> Result<()> {
         graf::triage::indexed_units(&Index::load(&root)?)?;
         return print_json(&report);
     }
+    if let Command::Mcp = cli.command {
+        return graf::mcp::serve(&root, io::stdin().lock(), io::stdout().lock());
+    }
     if let Command::Rewrite { text } = &cli.command {
         return write_stdout(&format!("{}\n", graf::rewrite::rewrite_query(text)));
+    }
+    // Queries index on first use; stats and map describe an existing index only.
+    let queries = !matches!(
+        cli.command,
+        Command::Stats | Command::Map { .. } | Command::ExportIndex
+    );
+    if queries && !graf::index_path(&root).exists() {
+        eprintln!("graf: no index yet; indexing {} ...", root.display());
+        Index::build(&root, false)?;
+        graf::triage::indexed_units(&Index::load(&root)?)?;
     }
     let index = Index::load(&root)?;
     match cli.command {
@@ -371,7 +395,7 @@ fn run() -> Result<()> {
                 "freshness": "indexed snapshot; search and expand validate selected source hashes"
             }))
         }
-        Command::Index { .. } | Command::Rewrite { .. } => unreachable!(),
+        Command::Index { .. } | Command::Mcp | Command::Rewrite { .. } => unreachable!(),
     }
 }
 

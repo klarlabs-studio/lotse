@@ -1,6 +1,7 @@
 //! Deterministic lexical retrieval over versioned repository source excerpts.
 mod handles;
 mod index;
+pub mod mcp;
 mod pack;
 mod policy;
 mod query;

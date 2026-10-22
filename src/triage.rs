@@ -224,33 +224,50 @@ pub fn ranked_units(
     query: &str,
     budget: usize,
 ) -> Result<(Vec<Unit>, String)> {
-    ranked_from(bpe, index, indexed_units(index)?, query, budget)
+    ranked_from(bpe, index, &indexed_units(index)?, query, budget)
 }
 
-fn ranked_from(
+/// [`ranked_units`] over an already loaded function index.
+pub fn ranked_from(
     bpe: &CoreBPE,
     index: &Index,
-    indexed: IndexedUnits,
+    indexed: &IndexedUnits,
     query: &str,
     budget: usize,
 ) -> Result<(Vec<Unit>, String)> {
     let scores = unit_scores(&indexed.bm25, &indexed.edges, query);
-    // Only units that packing can reach need their text; read it from the checked source.
-    let mut units = indexed.units;
-    let mut texts: BTreeMap<String, String> = BTreeMap::new();
+    // Packing only reaches units at or above the floor; they keep their relative order,
+    // so packing this subset is identical to packing every unit.
+    let mut units = Vec::new();
+    let mut kept = Vec::new();
+    let mut texts: BTreeMap<&str, String> = BTreeMap::new();
     for i in packing_candidates(&scores) {
-        let path = units[i].path.clone();
-        if !texts.contains_key(&path) {
-            let text = index.current_text(&path)?;
-            texts.insert(path.clone(), text);
+        let unit = &indexed.units[i];
+        if !texts.contains_key(unit.path.as_str()) {
+            texts.insert(&unit.path, index.current_text(&unit.path)?);
         }
-        units[i].text = unit_text(&texts[&path], units[i].start, units[i].end);
+        units.push(Unit {
+            text: unit_text(&texts[unit.path.as_str()], unit.start, unit.end),
+            ..unit.clone()
+        });
+        kept.push(scores[i]);
     }
-    Ok(pack_units(bpe, &units, &scores, budget, FLOOR))
+    Ok(pack_units(bpe, &units, &kept, budget, FLOOR))
 }
 
 /// Likely files, then whole likely functions, within `budget` cl100k tokens in total.
 pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Result<Triage> {
+    triage_with(bpe, index, &indexed_units(index)?, issue, budget)
+}
+
+/// [`triage`] over an already loaded function index.
+pub fn triage_with(
+    bpe: &CoreBPE,
+    index: &Index,
+    indexed: &IndexedUnits,
+    issue: &str,
+    budget: usize,
+) -> Result<Triage> {
     let query = rewrite_query(issue);
     let policy = Policy {
         stop: Stop::Floor,
@@ -264,7 +281,6 @@ pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Resul
         .iter()
         .map(|h| (h.path.clone(), h.score))
         .collect();
-    let indexed = indexed_units(index)?;
     let mut files: Vec<String> = file_propagate(&scores, &indexed.units, &indexed.edges, WEIGHT)
         .into_iter()
         .take(TRIAGE_FILES)
