@@ -1,0 +1,3711 @@
+{
+ "conditions": {
+  "budget": 1500,
+  "issues_per_repo": 10,
+  "repeats": 5,
+  "process": "fresh process per call, as the agent broker invokes them; warm caches",
+  "loadavg_at_end": [
+   8.0078125,
+   18.56640625,
+   16.416015625
+  ],
+  "cpus": 10,
+  "graf_sha256": "dee599fffcc2ea9baa03976265207abb43da2326f4cac3f5dda7953d84456d86"
+ },
+ "builds": {
+  "gin": {
+   "graf_index_s": 0.04822841600253014,
+   "graf_first_units_s": 0.12127291600336321,
+   "graphify_extract_s": 0.8087966669991147,
+   "files": 108
+  },
+  "urfave-cli": {
+   "graf_index_s": 0.16554166699643247,
+   "graf_first_units_s": 0.972250457998598,
+   "graphify_extract_s": 5.105474292002327,
+   "files": 146
+  },
+  "click": {
+   "graf_index_s": 0.15641708399925847,
+   "graf_first_units_s": 0.3919791250009439,
+   "graphify_extract_s": 4.199351499999466,
+   "files": 131
+  },
+  "jinja": {
+   "graf_index_s": 0.05860345799737843,
+   "graf_first_units_s": 0.17835404100333108,
+   "graphify_extract_s": 2.0355952919999254,
+   "files": 77
+  },
+  "express": {
+   "graf_index_s": 0.054774459000327624,
+   "graf_first_units_s": 0.16461216699826764,
+   "graphify_extract_s": 1.9308199579973007,
+   "files": 156
+  },
+  "undici": {
+   "graf_index_s": 0.31448045899742283,
+   "graf_first_units_s": 0.8730984580033692,
+   "graphify_extract_s": 10.805283417001192,
+   "files": 800
+  }
+ },
+ "summary": {
+  "graf_triage": {
+   "median_s": 0.1609464585017122,
+   "median_95ci": [
+    0.14838602100280696,
+    0.20002999999996973
+   ],
+   "n": 300,
+   "by_repo": {
+    "gin": 0.2164960419977433,
+    "urfave-cli": 0.2899682289971679,
+    "click": 0.1313934159989003,
+    "jinja": 0.1275542494986439,
+    "express": 0.111836937496264,
+    "undici": 0.29346389599959366
+   }
+  },
+  "graf_units": {
+   "median_s": 0.10575043800054118,
+   "median_95ci": [
+    0.09916670799429994,
+    0.12758862500049872
+   ],
+   "n": 300,
+   "by_repo": {
+    "gin": 0.13679372850310756,
+    "urfave-cli": 0.18708145799610065,
+    "click": 0.08803587500369758,
+    "jinja": 0.08153874949493911,
+    "express": 0.07408237499839743,
+    "undici": 0.23323604150209576
+   }
+  },
+  "graphify_query": {
+   "median_s": 0.591302437500417,
+   "median_95ci": [
+    0.5341039169979922,
+    0.6720447290026641
+   ],
+   "n": 300,
+   "by_repo": {
+    "gin": 0.8811351250005828,
+    "urfave-cli": 0.9889158755031531,
+    "click": 0.44919908299925737,
+    "jinja": 0.4644215419975808,
+    "express": 0.2087720414965588,
+    "undici": 1.2142398335017788
+   }
+  }
+ },
+ "samples": {
+  "graf_triage": [
+   {
+    "repo": "gin",
+    "seconds": 0.07390783300070325
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.07734166699810885
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.07445941700279946
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.07377012500364799
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.07362024999747518
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.08208179099892732
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.12266879100207007
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.12944620799680706
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.1336122909997357
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.1438087499991525
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.16881745799764758
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.16715079200366745
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.21288274999824353
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2460088750012801
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.17867266699613538
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.16188741700170795
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.20034587499685585
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.1508801250020042
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.14416908400016837
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2516727920010453
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.24801779100380372
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.21208291700168047
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.19932395900104893
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2170116670022253
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.20994024999527028
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.37398224999924423
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2588825420025387
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2674127499994938
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.22062600000208477
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.21954945800098358
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.22738720900088083
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2159895839940873
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2979035410025972
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.23798312500002794
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2647910000014235
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.3478033330029575
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.21533812500274507
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.29154141699837055
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.20002999999996973
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.20540537500346545
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2170025000013993
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.2997457079982269
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.3893062919960357
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6996365000013611
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6566479579996667
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.847827249999682
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.0097277500026394
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.023207457998069
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.1902920829961658
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.4128175000005285
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2281487090003793
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2742896670024493
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.576150625005539
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2867272080038674
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.3568254580022767
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.5975188750016969
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.9966017499973532
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.493460708996281
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.9384940839954652
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.0896642090010573
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.282449957994686
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.32918604100268567
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.37235695900017163
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2797601670026779
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.26576416599709773
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.23377991600136738
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.17570454200176755
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2170181249966845
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2091435830006958
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.24213512500136858
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.26553733400214696
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.26339433300017845
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.29300558399700094
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2637860839968198
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2731426249956712
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3854045420011971
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.40321770800073864
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2882683329953579
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.26955570800055284
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2925510829954874
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.25472199999785516
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3364926669964916
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.4295371670013992
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3032248330055154
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2785212919989135
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2601230830041459
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.26930520899622934
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3561162499972852
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.42471004200342577
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.6399854580013198
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.5644845420029014
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2601020419970155
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3415545000025304
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2987665830005426
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.4014204580016667
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3220398749981541
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2916681249989779
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.24621999999362743
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2463595000008354
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2821886660021846
+   },
+   {
+    "repo": "click",
+    "seconds": 0.24541120800131466
+   },
+   {
+    "repo": "click",
+    "seconds": 0.18885750000481494
+   },
+   {
+    "repo": "click",
+    "seconds": 0.14469662500050617
+   },
+   {
+    "repo": "click",
+    "seconds": 0.11983541699737543
+   },
+   {
+    "repo": "click",
+    "seconds": 0.18046475000301143
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1481944589977502
+   },
+   {
+    "repo": "click",
+    "seconds": 0.14829637500224635
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13072841700341087
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1403621249992284
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13593812500039348
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13019658400298795
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13705166699946858
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1120354579979903
+   },
+   {
+    "repo": "click",
+    "seconds": 0.11451112500071758
+   },
+   {
+    "repo": "click",
+    "seconds": 0.14353425000444986
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13155791600001976
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12104487499891547
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1291280419973191
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12256933399476111
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12312129200290656
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1598529580005561
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13424775000021327
+   },
+   {
+    "repo": "click",
+    "seconds": 0.15308379199996125
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13775325000460725
+   },
+   {
+    "repo": "click",
+    "seconds": 0.15589145800186088
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12802641699818196
+   },
+   {
+    "repo": "click",
+    "seconds": 0.11910170799819753
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1365706670039799
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1294138329976704
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12716462500247872
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13570199999958277
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12366816599387676
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13122891599778086
+   },
+   {
+    "repo": "click",
+    "seconds": 0.14983479100192199
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12528929200198036
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13820858300459804
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13533212499896763
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1354388750041835
+   },
+   {
+    "repo": "click",
+    "seconds": 0.13938320799934445
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1358263750007609
+   },
+   {
+    "repo": "click",
+    "seconds": 0.11457820799842011
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1135809999977937
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12045491600292735
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1054821660000016
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10033691699936753
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10816770800011
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12619983300101012
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10889566600235412
+   },
+   {
+    "repo": "click",
+    "seconds": 0.11437391600338742
+   },
+   {
+    "repo": "click",
+    "seconds": 0.16144966700085206
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1337634169976809
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.19093858399719466
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.15219766600057483
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.13160662500013132
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.11524983299750602
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1512038750006468
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.12951016599981813
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.13327058299910277
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.14847566700336756
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.11813658400205895
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.12453324999660254
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.11290720800025156
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.13229929199587787
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10537758300051792
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10844466599519365
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1465095419989666
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10261766699841246
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10359908299869858
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10988866600382607
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10142658300173935
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1604432500025723
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.14334175000112737
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1319997919999878
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.12086804099817527
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.11684175000118557
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.15085408300365089
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.14159070800087648
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10566950000065845
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10295429200050421
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.12189495799975703
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.17260304099909263
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.11130037499970058
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.14314183299575234
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.18740304200036917
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.12301812499936204
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1233840830027475
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1211095420003403
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10559566699521383
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1065963750006631
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.14506616700236918
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1478116250000312
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1514725839952007
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.12515016600082163
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.13620074999926146
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.13027554199652513
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.12077712499740301
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1255983329974697
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.11216141699696891
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.1312054169975454
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.14434262499707984
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1450810000023921
+   },
+   {
+    "repo": "express",
+    "seconds": 0.16212212500249734
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1338969159987755
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11987904099805746
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1535123330031638
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1670582920050947
+   },
+   {
+    "repo": "express",
+    "seconds": 0.15970804200333077
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1554178750011488
+   },
+   {
+    "repo": "express",
+    "seconds": 0.14891749999515014
+   },
+   {
+    "repo": "express",
+    "seconds": 0.16548087500268593
+   },
+   {
+    "repo": "express",
+    "seconds": 0.13629687499633292
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11084241700154962
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09145600000192644
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09259245800058125
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11957466600142652
+   },
+   {
+    "repo": "express",
+    "seconds": 0.12366575000487501
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11940804199548438
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09704024999518879
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10915037499944447
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1407649999964633
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11188691699499032
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10788099999626866
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10724179200042272
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11018970800068928
+   },
+   {
+    "repo": "express",
+    "seconds": 0.12433679200330516
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10251091700047255
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11291391700069653
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1093181670003105
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10902200000418816
+   },
+   {
+    "repo": "express",
+    "seconds": 0.0985087500012014
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11174304200540064
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11178695799753768
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09658379200118361
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10742575000040233
+   },
+   {
+    "repo": "express",
+    "seconds": 0.08996395899885101
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1092690839941497
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11464270899887197
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1133672910000314
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11173108299408341
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09823845799837727
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09686787499958882
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09291400000074646
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09998866700334474
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09673695800302085
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09631020800588885
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1352011249982752
+   },
+   {
+    "repo": "express",
+    "seconds": 0.16284770800120896
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1507347920050961
+   },
+   {
+    "repo": "express",
+    "seconds": 0.17577362500014715
+   },
+   {
+    "repo": "express",
+    "seconds": 0.15229595900018467
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2851190410001436
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3245096249956987
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.27827512500516605
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.28258087500580586
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.28112004199647345
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3679915000029723
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3059746669969172
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.31566895799915073
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.30971649999992223
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.34376220800186275
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3524740409993683
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.28460120799718425
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2869098750015837
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.28350033299648203
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3094540829988546
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3282280420025927
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2943939999968279
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2710698750015581
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.29252624999935506
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.33804283399513224
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2984689580043778
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.26304529199842364
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.281837833004829
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2841937909979606
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.29623512500256766
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2976942079985747
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3570240830013063
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.33037324999895645
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.301257084000099
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.32056391699734377
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3271538330009207
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2908764579988201
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.34263095899950713
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3323726250018808
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3025845840020338
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2709654580030474
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2925337920023594
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.27659312499599764
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.27698845799750416
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3053052499963087
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3145997500032536
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.3039202500003739
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.27782820900029037
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.26106341700506164
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2215630840000813
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2552428749986575
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.25108087500120746
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.28863512499810895
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2317503750018659
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2512619160042959
+   }
+  ],
+  "graf_units": [
+   {
+    "repo": "gin",
+    "seconds": 0.049843333996250294
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.050225958999362774
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.04946112500329036
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.049867333000293
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.048899166999035515
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.05128925000462914
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.08207804200355895
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.08684041700325906
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.08524695800588233
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.09878004199708812
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.11209474999486702
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.12459116599347908
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.1340888340055244
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.13314412500039907
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.12522354099928634
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.10824162499920931
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.12055325000255834
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.09302666700386908
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.1096061659991392
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.11454699999740114
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.28422675000183517
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.1299642500016489
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.12521299999934854
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.15637745899584843
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.13752370799920755
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.16254599999956554
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.17156866699951934
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.13697066600434482
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.19404862500232412
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.13770720799948322
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.21126358300534775
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.15553095799987204
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.1366167910018703
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.26851316599640995
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.15452070799801731
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.15083454200066626
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.13464000000385568
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.15677804100414505
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.15439366600185167
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.13324195799941663
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.16573770800459897
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6093322079977952
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.6443804999944405
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.3771364589993027
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.5543123340030434
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.4578964999964228
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.3695497499938938
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.5009359169998788
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.749098000000231
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6549991669962765
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.1423045000046841
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.1446940829991945
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2844418750028126
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.15254633300355636
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.23660629100049846
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3261697499983711
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.7949680419987999
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.6799010419999831
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.37141562499891734
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.4029132080031559
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.18480145799549064
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.17138758399960352
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.239160000004631
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.18376162499771453
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.15647870900284033
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.14152191700122785
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.15713025000150083
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.14158195799973328
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.13788883300003363
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.12503120899782516
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.23896083300496684
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2209432499948889
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.21694608299731044
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2414760829997249
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.20301595899945823
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.3447310409974307
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.17360816700238502
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.1796780420045252
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.5216125830047531
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.18936145799671067
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.15403874999901745
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.16271845899609616
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.19360108300315915
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.18008591699617682
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.17530416599765886
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.41024466599628795
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.2605592079999042
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.1734401669964427
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.6785397089988692
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.23487408300570678
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.23252350000257138
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.23431395799707389
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.16067800000018906
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.36855337499582674
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.17813058300089324
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.19839058300567558
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.17747091699857265
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.15893312499974854
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.17238554199866485
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.1509897079959046
+   },
+   {
+    "repo": "click",
+    "seconds": 0.17433945800439687
+   },
+   {
+    "repo": "click",
+    "seconds": 0.20760579199850326
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0861370840066229
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08364154200535268
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09974329100077739
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10993154199968558
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09814149999874644
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0829984579977463
+   },
+   {
+    "repo": "click",
+    "seconds": 0.085836707999988
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09688241600088077
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10234100000525359
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08568495800136589
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09386033400369342
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08806537500640843
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09384395900269737
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09220058399660047
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08096274999843445
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0843075000011595
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0860505419987021
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08021841599838808
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08800637500098674
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10639487499429379
+   },
+   {
+    "repo": "click",
+    "seconds": 0.11141987500013784
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10070562500186497
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12303195799904643
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0828047079994576
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10165570800018031
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10243233299843268
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09339383299811743
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08737037500395672
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10465758400096092
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08634541699575493
+   },
+   {
+    "repo": "click",
+    "seconds": 0.10293850000016391
+   },
+   {
+    "repo": "click",
+    "seconds": 0.12093795799592044
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1039143750022049
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0870317500011879
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09840020899719093
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0863169590011239
+   },
+   {
+    "repo": "click",
+    "seconds": 0.1077351669955533
+   },
+   {
+    "repo": "click",
+    "seconds": 0.09722383299958892
+   },
+   {
+    "repo": "click",
+    "seconds": 0.0808879159958451
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08183904099860229
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08768666700052563
+   },
+   {
+    "repo": "click",
+    "seconds": 0.07669616700150073
+   },
+   {
+    "repo": "click",
+    "seconds": 0.07155933399917558
+   },
+   {
+    "repo": "click",
+    "seconds": 0.07442274999630172
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08455504100129474
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08060462499997811
+   },
+   {
+    "repo": "click",
+    "seconds": 0.07952395900065312
+   },
+   {
+    "repo": "click",
+    "seconds": 0.08168066600046586
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07413033400371205
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07391670800279826
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08401116700406419
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07321750000119209
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07362920900050085
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.06760224999743514
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09182958300516475
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.0776144579940592
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08368670799973188
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.06990241599851288
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.0727492500009248
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07596616599767003
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09011462500347989
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07315108399780001
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07403999999951338
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08672629200009396
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07782470799429575
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.0687833329939167
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07750054200005252
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08439562499552267
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.072869208001066
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08384587500040652
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09142537500156322
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09488454199890839
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07493437499942956
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09378616599860834
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08178458299516933
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07192804200167302
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07584533400222426
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10604958399926545
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10057824999967124
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08308995800325647
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09471337500144728
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09639537500333972
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10197470799903385
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08169029099371983
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07309533299849136
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.06940937499894062
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07358075000229292
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08528462500544265
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.0865393749991199
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08324183299555443
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07330208399798721
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10331037500145612
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07959320900408784
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.07640908299799776
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.09676137500355253
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.0813872079961584
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.08608087500033434
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.10545129200181691
+   },
+   {
+    "repo": "express",
+    "seconds": 0.08684245799668133
+   },
+   {
+    "repo": "express",
+    "seconds": 0.08310324999911245
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07776212499447865
+   },
+   {
+    "repo": "express",
+    "seconds": 0.08242079100455157
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09351416699792026
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09573070899932645
+   },
+   {
+    "repo": "express",
+    "seconds": 0.0974021659931168
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10306104099436197
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10124966700095683
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09916670799429994
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07633479200012516
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07696395800303435
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07264949999807868
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06439549999777228
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07240550000278745
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07301325000298675
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06945979200099828
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06207895799889229
+   },
+   {
+    "repo": "express",
+    "seconds": 0.08228795800096123
+   },
+   {
+    "repo": "express",
+    "seconds": 0.082504208003229
+   },
+   {
+    "repo": "express",
+    "seconds": 0.08839362500293646
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06970620799984317
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06990533300267998
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07395562499732478
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07496033299685223
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06530800000473391
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07810225000139326
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06430833299964434
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06351325000287034
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06079725000017788
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06927762499981327
+   },
+   {
+    "repo": "express",
+    "seconds": 0.056879749994550366
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06718770800216589
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07805650000227615
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06104008400143357
+   },
+   {
+    "repo": "express",
+    "seconds": 0.0633214580011554
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07420912499947008
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07058074999804376
+   },
+   {
+    "repo": "express",
+    "seconds": 0.07443691599473823
+   },
+   {
+    "repo": "express",
+    "seconds": 0.05896441700315336
+   },
+   {
+    "repo": "express",
+    "seconds": 0.05957066599512473
+   },
+   {
+    "repo": "express",
+    "seconds": 0.05802912500075763
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06319187500048429
+   },
+   {
+    "repo": "express",
+    "seconds": 0.0634941659955075
+   },
+   {
+    "repo": "express",
+    "seconds": 0.06276683299802244
+   },
+   {
+    "repo": "express",
+    "seconds": 0.11134024999773828
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09336233400244964
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10394795799948042
+   },
+   {
+    "repo": "express",
+    "seconds": 0.10722387499845354
+   },
+   {
+    "repo": "express",
+    "seconds": 0.09991866700147511
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2330478750009206
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.25323466699774144
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23678037500212668
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.28205016699939733
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2289440000022296
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.24435258300218266
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23474708300636848
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2851080840046052
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2764834579938906
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.24043620900192764
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22013491600228008
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2332759580021957
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2280870419999701
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.24979349999921396
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22112241700233426
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23745687500195345
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22783566699945368
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2251835420029238
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22998154199740384
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23621762500260957
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22739004200411728
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23319612500199582
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23801220799941802
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2661670419984148
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22069062499940628
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22969329199986532
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2676978340023197
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2589874589975807
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.24005166700226255
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.21919237499969313
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2309446660001413
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.26338537500123493
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23379116599971894
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2335043749990291
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2923373749945313
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2501661249989411
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22758662499836646
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22515837499668123
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.23202970800048206
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.22664416600309778
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2532902919992921
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2541574170027161
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.21158779200050049
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.19960170799458865
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.18029037499945844
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.1999032080057077
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.19033000000490574
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.20747691599535756
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.1930192919971887
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.2479672909976216
+   }
+  ],
+  "graphify_query": [
+   {
+    "repo": "gin",
+    "seconds": 0.23081800000363728
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.23753037500136998
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.230318708003324
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2216309170034947
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.2255600409989711
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.23422533299890347
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.33448658300039824
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.3740324579994194
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.3759903749960358
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.4527359159983462
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6010423340048874
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.5478645840048557
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6183920830007992
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.1811054999998305
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.4759459999986575
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6087353340044501
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.8593140410011983
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.5403992499996093
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.5510825420060428
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.8813547079989803
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.026814665994607
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.9209076249971986
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.9393275839975104
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.9973612909961957
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.857145041001786
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.0366179999982705
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.3598479169959319
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.0133690420043422
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.1699589170020772
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.0546410829992965
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.220721333003894
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.0647205409986782
+   },
+   {
+    "repo": "gin",
+    "seconds": 1.2800500829980592
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.9610559169959743
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.8809155420021852
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.7917670419992646
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.5865642499993555
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6516415000005509
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.6993491250032093
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.5285870830048225
+   },
+   {
+    "repo": "gin",
+    "seconds": 0.9237933339973097
+   },
+   {
+    "repo": "gin",
+    "seconds": 10.385081417000038
+   },
+   {
+    "repo": "gin",
+    "seconds": 6.0060186669943505
+   },
+   {
+    "repo": "gin",
+    "seconds": 3.3572956659991178
+   },
+   {
+    "repo": "gin",
+    "seconds": 3.275538541995047
+   },
+   {
+    "repo": "gin",
+    "seconds": 3.026703292001912
+   },
+   {
+    "repo": "gin",
+    "seconds": 2.227524124995398
+   },
+   {
+    "repo": "gin",
+    "seconds": 3.51046312499966
+   },
+   {
+    "repo": "gin",
+    "seconds": 4.41583716700552
+   },
+   {
+    "repo": "gin",
+    "seconds": 3.8187995000043884
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.7831486249997397
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.6536547080031596
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.1042417499993462
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.4382492500008084
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 3.882020208002359
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 2.3334565830009524
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 6.102069499997015
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 3.8120786669969675
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 3.4029818330018315
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 2.8535086670017336
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.3691504579983302
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.8079356250018463
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.8885563750009169
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.1472200829957728
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.6875048330039135
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.6027979999998934
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.5578961669962155
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.47121941699879244
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.5115259999947739
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.5395634579981561
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.890096666997124
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.7581364580037189
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.3991721669954131
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.870910041994648
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.761892208000063
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.7376787920002243
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.1094969580008183
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.8870277079986408
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.0541809170026681
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.7093142500016256
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.8241757919968222
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.3276801250030985
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 2.2422522499982733
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.0457189170047059
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.0476504580001347
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.5177917499968316
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.7895946670032572
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.27808912499313
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.3472519580027438
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.059945749999315
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.1771553330036113
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.7217713749996619
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.8487382500024978
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.3776150410049013
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.8656301250011893
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.0808850000030361
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 1.7741464159989846
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.9264466249951511
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.80345329100237
+   },
+   {
+    "repo": "urfave-cli",
+    "seconds": 0.9321128340016003
+   },
+   {
+    "repo": "click",
+    "seconds": 0.9131275830004597
+   },
+   {
+    "repo": "click",
+    "seconds": 0.927038709000044
+   },
+   {
+    "repo": "click",
+    "seconds": 0.5301331250011572
+   },
+   {
+    "repo": "click",
+    "seconds": 0.49872008400416235
+   },
+   {
+    "repo": "click",
+    "seconds": 0.6893258330019307
+   },
+   {
+    "repo": "click",
+    "seconds": 0.6488424999988638
+   },
+   {
+    "repo": "click",
+    "seconds": 0.6547636250033975
+   },
+   {
+    "repo": "click",
+    "seconds": 0.5380747089948272
+   },
+   {
+    "repo": "click",
+    "seconds": 0.599943916000484
+   },
+   {
+    "repo": "click",
+    "seconds": 0.5090794159987126
+   },
+   {
+    "repo": "click",
+    "seconds": 0.38073516599979484
+   },
+   {
+    "repo": "click",
+    "seconds": 0.35781987500377
+   },
+   {
+    "repo": "click",
+    "seconds": 0.35325687500153435
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3773724169950583
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3559492499989574
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3359544580016518
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3811423330043908
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3842352089995984
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3445934170013061
+   },
+   {
+    "repo": "click",
+    "seconds": 0.38075941699935356
+   },
+   {
+    "repo": "click",
+    "seconds": 0.6103589999984251
+   },
+   {
+    "repo": "click",
+    "seconds": 0.6274597910014563
+   },
+   {
+    "repo": "click",
+    "seconds": 0.7286024159984663
+   },
+   {
+    "repo": "click",
+    "seconds": 0.5721107909994316
+   },
+   {
+    "repo": "click",
+    "seconds": 0.7618528340026387
+   },
+   {
+    "repo": "click",
+    "seconds": 0.8006690830006846
+   },
+   {
+    "repo": "click",
+    "seconds": 0.7329960839997511
+   },
+   {
+    "repo": "click",
+    "seconds": 0.7298898750013905
+   },
+   {
+    "repo": "click",
+    "seconds": 0.7408262919998378
+   },
+   {
+    "repo": "click",
+    "seconds": 0.6018559170042863
+   },
+   {
+    "repo": "click",
+    "seconds": 0.45743408300040755
+   },
+   {
+    "repo": "click",
+    "seconds": 0.4409640829981072
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3977293749994715
+   },
+   {
+    "repo": "click",
+    "seconds": 0.6050481249985751
+   },
+   {
+    "repo": "click",
+    "seconds": 0.46196366700314684
+   },
+   {
+    "repo": "click",
+    "seconds": 0.4250922920036828
+   },
+   {
+    "repo": "click",
+    "seconds": 0.34387675000471063
+   },
+   {
+    "repo": "click",
+    "seconds": 0.37056987499818206
+   },
+   {
+    "repo": "click",
+    "seconds": 0.4610367499990389
+   },
+   {
+    "repo": "click",
+    "seconds": 0.4233627499997965
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3119769579934655
+   },
+   {
+    "repo": "click",
+    "seconds": 0.33665466699312674
+   },
+   {
+    "repo": "click",
+    "seconds": 0.28485775000444846
+   },
+   {
+    "repo": "click",
+    "seconds": 0.28803495800093515
+   },
+   {
+    "repo": "click",
+    "seconds": 0.25786845900438493
+   },
+   {
+    "repo": "click",
+    "seconds": 0.3327334999994491
+   },
+   {
+    "repo": "click",
+    "seconds": 0.40627012500044657
+   },
+   {
+    "repo": "click",
+    "seconds": 0.33200733400008176
+   },
+   {
+    "repo": "click",
+    "seconds": 0.32156837500224356
+   },
+   {
+    "repo": "click",
+    "seconds": 0.46181562499987194
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.38715974999649916
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4901444579954841
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.49229258299601497
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4281563330005156
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.3876885420031613
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4528612080030143
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.586661749999621
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.47094683299656026
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5017382910009474
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.6188119169964921
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4541562079975847
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5586222920028376
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5704924579986255
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4326087919980637
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5430585409994819
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.43597158299962757
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.3369267910020426
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.33055400000012014
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.37401733300066553
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.39731004100030987
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4037160000007134
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.49387825000303565
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4672260000006645
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.3859113750004326
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.3819805420062039
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4723010830057319
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.40337170800194144
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4749225000050501
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.3958942500030389
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5838262909965124
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5310876669973368
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4616170839944971
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.41276491699682083
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5617652919972898
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.509427125005459
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.440188708002097
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.46035783299885225
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.39939062500343425
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4042949590002536
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5226391660035006
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5120701249979902
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.41714158299873816
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4072925000000396
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.47105562499928055
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.4369680000017979
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5634684999968158
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.6190482499951031
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.595943125001213
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.6378391249963897
+   },
+   {
+    "repo": "jinja",
+    "seconds": 0.5746258750004927
+   },
+   {
+    "repo": "express",
+    "seconds": 0.26540879200183554
+   },
+   {
+    "repo": "express",
+    "seconds": 0.3087464589989395
+   },
+   {
+    "repo": "express",
+    "seconds": 0.32591012500051875
+   },
+   {
+    "repo": "express",
+    "seconds": 0.27840020899748197
+   },
+   {
+    "repo": "express",
+    "seconds": 0.27057070799492067
+   },
+   {
+    "repo": "express",
+    "seconds": 0.33547379100491526
+   },
+   {
+    "repo": "express",
+    "seconds": 0.34055070800241083
+   },
+   {
+    "repo": "express",
+    "seconds": 0.3544542080053361
+   },
+   {
+    "repo": "express",
+    "seconds": 0.28736529100569896
+   },
+   {
+    "repo": "express",
+    "seconds": 0.30575020799733466
+   },
+   {
+    "repo": "express",
+    "seconds": 0.3098891249974258
+   },
+   {
+    "repo": "express",
+    "seconds": 0.22778529200149933
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18312091699772282
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18878283300000476
+   },
+   {
+    "repo": "express",
+    "seconds": 0.19783483399805846
+   },
+   {
+    "repo": "express",
+    "seconds": 0.21671458399941912
+   },
+   {
+    "repo": "express",
+    "seconds": 0.23112295900500612
+   },
+   {
+    "repo": "express",
+    "seconds": 0.2076173329987796
+   },
+   {
+    "repo": "express",
+    "seconds": 0.28076345800218405
+   },
+   {
+    "repo": "express",
+    "seconds": 0.23965250000037486
+   },
+   {
+    "repo": "express",
+    "seconds": 0.23635591700440273
+   },
+   {
+    "repo": "express",
+    "seconds": 0.21020704099646537
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18999908400292043
+   },
+   {
+    "repo": "express",
+    "seconds": 0.21914320799987763
+   },
+   {
+    "repo": "express",
+    "seconds": 0.22582508399500512
+   },
+   {
+    "repo": "express",
+    "seconds": 0.20343666699773166
+   },
+   {
+    "repo": "express",
+    "seconds": 0.20634162499482045
+   },
+   {
+    "repo": "express",
+    "seconds": 0.17089416699309368
+   },
+   {
+    "repo": "express",
+    "seconds": 0.217801499995403
+   },
+   {
+    "repo": "express",
+    "seconds": 0.19461600000067847
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18968229099846212
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18973900000128197
+   },
+   {
+    "repo": "express",
+    "seconds": 0.19011604200204602
+   },
+   {
+    "repo": "express",
+    "seconds": 0.21795770800235914
+   },
+   {
+    "repo": "express",
+    "seconds": 0.17775229099788703
+   },
+   {
+    "repo": "express",
+    "seconds": 0.20929824999620905
+   },
+   {
+    "repo": "express",
+    "seconds": 0.20769100000325125
+   },
+   {
+    "repo": "express",
+    "seconds": 0.20824583299690858
+   },
+   {
+    "repo": "express",
+    "seconds": 0.23164062500291038
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18187058399780653
+   },
+   {
+    "repo": "express",
+    "seconds": 0.20455774999572895
+   },
+   {
+    "repo": "express",
+    "seconds": 0.19151945799967507
+   },
+   {
+    "repo": "express",
+    "seconds": 0.200347416997829
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18583116600348148
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1834252499975264
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18831291700189468
+   },
+   {
+    "repo": "express",
+    "seconds": 0.1795949160004966
+   },
+   {
+    "repo": "express",
+    "seconds": 0.22284375000162981
+   },
+   {
+    "repo": "express",
+    "seconds": 0.18692158400517656
+   },
+   {
+    "repo": "express",
+    "seconds": 0.19448158399609383
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.9578738329946646
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.9415897080034483
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.8914811669965275
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.943019499994989
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.9993925829985528
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.4621405829966534
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.470805458004179
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.5973657499998808
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.410677832995134
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.4631149589986308
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.4004494160035392
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.4708158329958678
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.4040645829954883
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.396095707998029
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.3922651250031777
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.5104375000009895
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.441211833000125
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.426851959004125
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.4604865840010461
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.359976583000389
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.0999900419992628
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.1671145000000251
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.3002725830010604
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2152695000040694
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.1985381670019706
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.292926542002533
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2313480829980108
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2749626669974532
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.3448391670026467
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2828929159950349
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.1081777500003227
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2545428749945131
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2132101669994881
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2761700830014888
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.1210031250011525
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.8802396669998416
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.8174703330005286
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.9023962919964106
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.8437622920027934
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.8616106250046869
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.2343615829959163
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.1386444169984316
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.0988635829999112
+   },
+   {
+    "repo": "undici",
+    "seconds": 1.0841887919959845
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.949794332998863
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.7234879589959746
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.7902614590057055
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.8343716250019497
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.8385166250009206
+   },
+   {
+    "repo": "undici",
+    "seconds": 0.850087540995446
+   }
+  ]
+ }
+}
