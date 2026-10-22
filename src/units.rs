@@ -397,6 +397,67 @@ pub fn file_propagate(
     raised.into_iter().map(|(f, _)| f.to_string()).collect()
 }
 
+/// A unit's term counts, sorted by term: computed once per unit and cached.
+pub fn term_counts(text: &str) -> Vec<(String, u32)> {
+    let mut counts: BTreeMap<String, u32> = BTreeMap::new();
+    for term in terms(text) {
+        *counts.entry(term).or_default() += 1;
+    }
+    counts.into_iter().collect()
+}
+
+/// [`Bm25::score`] from cached term counts: only the query's terms are looked up, in the
+/// same order and with the same arithmetic, so the scores are identical.
+pub fn bm25_from_counts(counts: &[Vec<(String, u32)>], query: &str) -> Vec<f64> {
+    let lengths: Vec<usize> = counts
+        .iter()
+        .map(|c| c.iter().map(|&(_, k)| k as usize).sum())
+        .collect();
+    let average = lengths.iter().sum::<usize>() as f64 / lengths.len().max(1) as f64;
+    let n = lengths.len() as f64;
+    let mut scores = vec![0.0f64; lengths.len()];
+    let unique: BTreeSet<String> = terms(query).into_iter().collect();
+    for term in unique {
+        let hits: Vec<(usize, usize)> = counts
+            .iter()
+            .enumerate()
+            .filter_map(|(i, c)| {
+                c.binary_search_by(|(t, _)| t.as_str().cmp(&term))
+                    .ok()
+                    .map(|j| (i, c[j].1 as usize))
+            })
+            .collect();
+        if hits.is_empty() {
+            continue;
+        }
+        let df = hits.len() as f64;
+        let idf = (1.0 + (n - df + 0.5) / (df + 0.5)).ln();
+        for (i, count) in hits {
+            let norm = 1.2 * (0.25 + 0.75 * lengths[i] as f64 / average.max(1.0));
+            scores[i] += idf * count as f64 * 2.2 / (count as f64 + norm);
+        }
+    }
+    scores
+}
+
+/// Final unit scores from cached term counts: BM25, then one-hop call propagation.
+pub fn scores_counted(units: &[Unit], counts: &[Vec<(String, u32)>], query: &str) -> Vec<f64> {
+    propagate(&bm25_from_counts(counts, query), &call_edges(units), WEIGHT)
+}
+
+/// Indexes of the units packing can consider: positive scores at or above the floor.
+pub fn packing_candidates(scores: &[f64]) -> Vec<usize> {
+    let best = scores.iter().copied().fold(0.0f64, f64::max);
+    (0..scores.len())
+        .filter(|&i| scores[i] > 0.0 && scores[i] >= FLOOR * best)
+        .collect()
+}
+
+/// A unit's text from its file's text, exactly as [`code_units`] extracts it.
+pub fn unit_text(file_text: &str, start: usize, end: usize) -> String {
+    join(&split_lines(file_text, false), start, end)
+}
+
 /// The prototype's BM25 (k1 1.2, b 0.75) over unit texts.
 pub struct Bm25 {
     postings: BTreeMap<String, Vec<(usize, usize)>>,
@@ -670,6 +731,29 @@ mod tests {
         );
         let scores = BTreeMap::from([("a.go".to_string(), 2.0), ("c.py".to_string(), 3.0)]);
         assert_eq!(file_propagate(&scores, &units, &[], 0.5), ["c.py", "a.go"]);
+    }
+
+    #[test]
+    fn cached_counts_score_exactly_like_bm25_over_texts() {
+        let mut units = code_units("x.go", GO);
+        units.extend(code_units("x.py", PY));
+        units.extend(code_units("x.ts", TS));
+        let counts: Vec<_> = units.iter().map(|u| term_counts(&u.text)).collect();
+        for query in [
+            "helper Run",
+            "second decorator box",
+            "number a b",
+            "missing",
+            "Box Box size",
+        ] {
+            let direct = Bm25::new(units.iter().map(|u| u.text.as_str())).score(query);
+            let cached = bm25_from_counts(&counts, query);
+            assert_eq!(
+                direct.iter().map(|s| s.to_bits()).collect::<Vec<_>>(),
+                cached.iter().map(|s| s.to_bits()).collect::<Vec<_>>(),
+                "{query}"
+            );
+        }
     }
 
     #[test]

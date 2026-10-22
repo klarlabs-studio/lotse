@@ -6,7 +6,10 @@
 //! with the rewritten query (`ast_graph_ids`). `outline` lists a file's function units so an agent can read
 //! one function instead of the whole file. Neither is an accepted improvement.
 use crate::rewrite::rewrite_query;
-use crate::units::{Unit, WEIGHT, call_edges, code_units, file_propagate, rank};
+use crate::units::{
+    FLOOR, Unit, WEIGHT, call_edges, code_units, file_propagate, pack_units, packing_candidates,
+    scores_counted, term_counts, unit_text,
+};
 use crate::{FileScore, Index, Policy, Stop};
 use anyhow::{Context, Result, ensure};
 use serde::{Deserialize, Serialize};
@@ -16,7 +19,7 @@ use std::io::Write;
 use tiktoken_rs::CoreBPE;
 
 /// Changes whenever unit extraction could change; a mismatching cache is rebuilt.
-const UNIT_CACHE_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "/units-2");
+const UNIT_CACHE_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "/units-3");
 
 #[derive(Default, Serialize, Deserialize)]
 struct UnitCache {
@@ -27,7 +30,16 @@ struct UnitCache {
 #[derive(Serialize, Deserialize)]
 struct CachedUnits {
     hash: String,
+    /// Units without their text, which is read from the source file when a unit is delivered.
     units: Vec<Unit>,
+    /// Each unit's sorted term counts, so queries never re-tokenize unit text.
+    counts: Vec<Vec<(String, u32)>>,
+}
+
+/// Every indexed unit in path order, with its cached term counts.
+pub struct IndexedUnits {
+    pub units: Vec<Unit>,
+    pub counts: Vec<Vec<(String, u32)>>,
 }
 
 /// Files listed before the code.
@@ -67,13 +79,13 @@ pub struct Triage {
     pub experimental: &'static str,
 }
 
-/// Every indexed file's units, in path order. Units are cached in `.graf/units.json`
+/// Every indexed file's units, in path order. Units are cached in `.graf/units.bin`
 /// by source hash, so only new or changed files are parsed.
-pub fn indexed_units(index: &Index) -> Result<Vec<Unit>> {
-    let path = index.root.join(".graf/units.json");
+pub fn indexed_units(index: &Index) -> Result<IndexedUnits> {
+    let path = index.root.join(".graf/units.bin");
     let mut cache: UnitCache = fs::read(&path)
         .ok()
-        .and_then(|bytes| serde_json::from_slice(&bytes).ok())
+        .and_then(|bytes| bincode::deserialize(&bytes).ok())
         .filter(|c: &UnitCache| c.version == UNIT_CACHE_VERSION)
         .unwrap_or_default();
     let mut fresh = BTreeMap::new();
@@ -84,18 +96,30 @@ pub fn indexed_units(index: &Index) -> Result<Vec<Unit>> {
             _ => {
                 changed = true;
                 let text = index.current_text(file)?;
+                let mut units = code_units(file, &text);
+                let counts = units.iter().map(|u| term_counts(&u.text)).collect();
+                for unit in &mut units {
+                    unit.text.clear();
+                }
                 CachedUnits {
                     hash: source.hash.clone(),
-                    units: code_units(file, &text),
+                    units,
+                    counts,
                 }
             }
         };
         fresh.insert(file.clone(), entry);
     }
-    let units = fresh
-        .values()
-        .flat_map(|c| c.units.iter().cloned())
-        .collect();
+    let indexed = IndexedUnits {
+        units: fresh
+            .values()
+            .flat_map(|c| c.units.iter().cloned())
+            .collect(),
+        counts: fresh
+            .values()
+            .flat_map(|c| c.counts.iter().cloned())
+            .collect(),
+    };
     if changed || !cache.files.is_empty() {
         save_cache(
             index,
@@ -105,7 +129,7 @@ pub fn indexed_units(index: &Index) -> Result<Vec<Unit>> {
             },
         )?;
     }
-    Ok(units)
+    Ok(indexed)
 }
 
 fn save_cache(index: &Index, cache: &UnitCache) -> Result<()> {
@@ -115,8 +139,8 @@ fn save_cache(index: &Index, cache: &UnitCache) -> Result<()> {
         ".graf must not be a symlink"
     );
     let mut temp = tempfile::NamedTempFile::new_in(&dir)?;
-    temp.write_all(&serde_json::to_vec(cache)?)?;
-    temp.persist(dir.join("units.json"))
+    temp.write_all(&bincode::serialize(cache)?)?;
+    temp.persist(dir.join("units.bin"))
         .map_err(|e| e.error)
         .context("Cannot save the unit cache")?;
     Ok(())
@@ -130,21 +154,29 @@ pub fn ranked_units(
     query: &str,
     budget: usize,
 ) -> Result<(Vec<Unit>, String)> {
-    ranked_from(bpe, index, &indexed_units(index)?, query, budget)
+    ranked_from(bpe, index, indexed_units(index)?, query, budget)
 }
 
 fn ranked_from(
     bpe: &CoreBPE,
     index: &Index,
-    units: &[Unit],
+    indexed: IndexedUnits,
     query: &str,
     budget: usize,
 ) -> Result<(Vec<Unit>, String)> {
-    let (picked, context) = rank(bpe, units, query, budget);
-    for unit in &picked {
-        index.current_text(&unit.path)?;
+    let scores = scores_counted(&indexed.units, &indexed.counts, query);
+    // Only units that packing can reach need their text; read it from the checked source.
+    let mut units = indexed.units;
+    let mut texts: BTreeMap<String, String> = BTreeMap::new();
+    for i in packing_candidates(&scores) {
+        let path = units[i].path.clone();
+        if !texts.contains_key(&path) {
+            let text = index.current_text(&path)?;
+            texts.insert(path.clone(), text);
+        }
+        units[i].text = unit_text(&texts[&path], units[i].start, units[i].end);
     }
-    Ok((picked, context))
+    Ok(pack_units(bpe, &units, &scores, budget, FLOOR))
 }
 
 /// Likely files, then whole likely functions, within `budget` cl100k tokens in total.
@@ -162,11 +194,12 @@ pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Resul
         .iter()
         .map(|h| (h.path.clone(), h.score))
         .collect();
-    let units = indexed_units(index)?;
-    let mut files: Vec<String> = file_propagate(&scores, &units, &call_edges(&units), WEIGHT)
-        .into_iter()
-        .take(TRIAGE_FILES)
-        .collect();
+    let indexed = indexed_units(index)?;
+    let mut files: Vec<String> =
+        file_propagate(&scores, &indexed.units, &call_edges(&indexed.units), WEIGHT)
+            .into_iter()
+            .take(TRIAGE_FILES)
+            .collect();
     let mut context = String::new();
     if !files.is_empty() {
         context.push_str("Likely files:\n");
@@ -185,7 +218,7 @@ pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Resul
         .saturating_sub(bpe.encode_ordinary(header).len());
     let mut cited = Vec::new();
     if remaining > 0 {
-        let (picked, code) = ranked_from(bpe, index, &units, &query, remaining)?;
+        let (picked, code) = ranked_from(bpe, index, indexed, &query, remaining)?;
         if !code.is_empty() {
             context.push_str(header);
             context.push_str(&code);

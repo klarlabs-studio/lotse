@@ -664,7 +664,7 @@ fn unit_cache_is_reused_refreshed_and_never_serves_stale_code() {
     let bpe = cl100k_base().unwrap();
     let index = Index::load(&root).unwrap();
     let cold = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
-    let cache = root.join(".graf/units.json");
+    let cache = root.join(".graf/units.bin");
     let written = fs::metadata(&cache).unwrap().modified().unwrap();
     let warm = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
     assert_eq!(cold.1, warm.1);
