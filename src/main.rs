@@ -65,6 +65,8 @@ enum FileScoreArg {
 
 #[derive(clap::Args)]
 struct QueryArgs {
+    /// Text that starts with `-` is still read as text, not as an option.
+    #[arg(allow_hyphen_values = true)]
     query: String,
     /// Exact cl100k_base cap on context with citations; JSON metadata is extra.
     #[arg(long, default_value_t = 2000)]
@@ -139,6 +141,8 @@ enum Command {
     /// Experimental: whole function units ranked by BM25 with one-hop call propagation.
     /// A port of the ast_graph screening arm; not an accepted improvement.
     Units {
+        /// Text that starts with `-` is still read as text, not as an option.
+        #[arg(allow_hyphen_values = true)]
         query: String,
         #[arg(long, default_value_t = 2000)]
         budget: usize,
@@ -152,6 +156,8 @@ enum Command {
     /// Experimental: where to start on an issue. Lists likely files, then whole likely
     /// functions, within one budget. Pass the issue text (title on the first line).
     Triage {
+        /// Text that starts with `-` is still read as text, not as an option.
+        #[arg(allow_hyphen_values = true)]
         issue: String,
         #[arg(long, default_value_t = 2000)]
         budget: usize,
@@ -167,7 +173,10 @@ enum Command {
         text: bool,
     },
     /// Experimental: print the query `--rewrite` would use for TEXT (the title plus code-like tokens).
-    Rewrite { text: String },
+    Rewrite {
+        #[arg(allow_hyphen_values = true)]
+        text: String,
+    },
     /// Read an excerpt plus nearby lines using an ID returned by search.
     Expand {
         id: String,

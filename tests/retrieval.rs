@@ -679,3 +679,49 @@ fn unit_cache_is_reused_refreshed_and_never_serves_stale_code() {
     assert!(fresh.1.contains("return String(payload)"));
     assert!(!fresh.1.contains("JSON.stringify"));
 }
+
+#[test]
+fn dash_leading_queries_are_text_not_options() {
+    let dir = agent_fixture();
+    let root = dir.path().to_str().unwrap();
+    let graf = env!("CARGO_BIN_EXE_graf");
+    assert!(
+        Command::new(graf)
+            .args(["--root", root, "index"])
+            .status()
+            .unwrap()
+            .success()
+    );
+    for args in [
+        vec!["locate", "--budget", "200", "--text", "--verbose onSend"],
+        vec!["units", "--budget", "200", "--text", "-v onSend"],
+        vec![
+            "triage",
+            "--budget",
+            "200",
+            "--text",
+            "--verbose onSend\nbody",
+        ],
+        vec!["rewrite", "--verbose onSend"],
+    ] {
+        let output = Command::new(graf)
+            .arg("--root")
+            .arg(root)
+            .args(&args)
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{args:?}: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+    let output = Command::new(graf)
+        .args([
+            "--root", root, "locate", "--text", "--budget", "100", "onSend",
+        ])
+        .output()
+        .unwrap();
+    assert!(output.status.success());
+    assert!(String::from_utf8_lossy(&output.stdout).contains("lib/reply.js"));
+}
