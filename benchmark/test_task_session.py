@@ -111,6 +111,7 @@ class TaskBrokerIntegrity(unittest.TestCase):
         units = task_session.retrieve_command("graf_orient", Path("in"), Path("out"), "-q", 900)
         self.assertEqual(units[3:], ["units", "--budget", "900", "--text", "--", "-q"])
         self.assertIn("--graphify-query", task_session.retrieve_command("graphify_orient", Path("in"), Path("out"), "q", 9))
+        self.assertEqual(units[0], str(task_session.GRAF_T5))
 
     def test_orientation_is_only_for_orient_arms_and_only_once(self):
         with patch.object(task_session, "run_tool") as run:

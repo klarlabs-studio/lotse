@@ -1,5 +1,5 @@
 {
-  "version": 22,
+  "version": 23,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -199,7 +199,7 @@
           "search_only": "as in t3 and t4: no orientation, no retrieve"
         },
         "orientation_accounting": "the orientation call is a logged broker tool event; its text is part of the first prompt, so the provider-reported usage counts it in every turn",
-        "graf_binary": "target/release/graf at the commit freezing this batch, hashed per run; triage, units, outline, and rewrite are the experimental commands of commits dba6c20, 0cd693f, and 7ccfea3",
+        "graf_binary": ".research/bin/graf-t5, a copy of target/release/graf built from commit 7ccfea3 (no Rust changes since), sha256 c95b576666d1021b21beae71d5486a660b17516453b90417d9f65d5572b51c46, hashed per run",
         "rule": "the agent_trials.rule (cost superiority, success non-inferiority margin 0.10) against each comparator; intersection-union, so alpha is not split",
         "secondary": "turns per run, turns before the first edit, tool calls by type, and the orientation's payload, reported descriptively",
         "schedule": "runs after batch t4 completes; frozen before any t4 outcome was looked at",
@@ -388,6 +388,11 @@
       "version": 22,
       "date": "2026-10-22",
       "change": "added batch t5 (graf_orient vs graphify_orient and search_only) on the t4 catalog, the user's chosen up-front orientation design; frozen before any t4 outcome was looked at; both orientations are capped at 1,500 tokens after a solver-free dry run showed Graphify's native output exceeds its requested budget"
+    },
+    {
+      "version": 23,
+      "date": "2026-10-22",
+      "change": "t5's graf binary is pinned to a copy (the same build the v22 freeze referred to) so graf development can continue; no t5 run had started"
     }
   ],
   "arms": {

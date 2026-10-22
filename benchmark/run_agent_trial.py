@@ -38,7 +38,7 @@ ORIENT_PROMPT = (" The issue report is followed by an automatically generated or
 GRAF_ORIENT_PROMPT = SYSTEM_PROMPT.replace(
     "read shows source lines, ", "read shows source lines, outline lists a file's functions, ") + ORIENT_PROMPT
 TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "target/release/graf",
-                 "graf_orient": BASE / "target/release/graf",
+                 "graf_orient": BASE / ".research/bin/graf-t5",
                  "graphify_orient": BASE / ".research/venv/bin/graphify",
                  "graphify": BASE / ".research/venv/bin/graphify",
                  "search_only": Path(shutil.which("rg") or "rg"),

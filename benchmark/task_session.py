@@ -43,6 +43,12 @@ SCRIPTS = Path(__file__).resolve().parent
 AST_BACKEND = BASE / "frozen-t4"  # The ast_graph backend as batch t4 started; see frozen-t4/README.md.
 ORIENT_BUDGET = 1500  # Batch t5: the orientation shown before the first turn (preregistration v22).
 GRAF_INDEX_ARMS = (*GRAF_QUERY_FLAGS, "graf_orient")
+# Batch t5 runs a pinned copy of graf built from commit 7ccfea3 (sha256 c95b5766...), so graf can keep changing.
+GRAF_T5 = BASE / ".research/bin/graf-t5"
+
+
+def graf_binary(arm):
+    return GRAF_T5 if arm == "graf_orient" else BASE / "target/release/graf"
 
 
 def tool_definitions(arm):
@@ -59,7 +65,7 @@ def retrieve_command(arm, input_dir, output_dir, query, budget):
     if arm == "ast_graph":
         return [sys.executable, str(AST_BACKEND / "ast_retrieve.py"), "query", str(output_dir), query, str(budget)]
     if arm == "graf_orient":
-        return [str(BASE / "target/release/graf"), "--root", str(input_dir), "units", "--budget", str(budget),
+        return [str(graf_binary(arm)), "--root", str(input_dir), "units", "--budget", str(budget),
                 "--text", "--", query]
     if arm in ("graphify", "graphify_orient"):
         return [sys.executable, str(BASE / "benchmark/compare_graphify.py"), "--graphify-query",
@@ -200,7 +206,7 @@ class Session:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
         if self.arm in GRAF_INDEX_ARMS:
-            command = [str(BASE / "target/release/graf"), "--root", str(self.input), "index", "--rebuild"]
+            command = [str(graf_binary(self.arm)), "--root", str(self.input), "index", "--rebuild"]
         elif self.arm == "ast_graph":
             command = [sys.executable, str(AST_BACKEND / "ast_retrieve.py"), "index", str(self.input), str(self.output)]
         else:
@@ -264,7 +270,7 @@ class Session:
             if self.dirty:
                 self.rebuild()
             if self.arm == "graf_orient":
-                command = [str(BASE / "target/release/graf"), "--root", str(self.input), "triage", "--budget",
+                command = [str(GRAF_T5), "--root", str(self.input), "triage", "--budget",
                            str(ORIENT_BUDGET), "--text", "--", self.task["issue"]]
             else:
                 command = retrieve_command(self.arm, self.input, self.output, self.task["issue"], ORIENT_BUDGET)
@@ -278,7 +284,7 @@ class Session:
             relative = str(self.path(args.get("path")).relative_to(self.root))
             if self.dirty:
                 self.rebuild()
-            command = [str(BASE / "target/release/graf"), "--root", str(self.input), "outline", "--text", "--", relative]
+            command = [str(GRAF_T5), "--root", str(self.input), "outline", "--text", "--", relative]
             result = run_tool(command, check=False, timeout=60, env=self.environment())
             if result.returncode:
                 raise ValueError(result.stderr.strip() or "outline failed")
