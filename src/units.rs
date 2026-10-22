@@ -358,6 +358,43 @@ pub fn propagate(scores: &[f64], edges: &[(usize, usize)], weight: f64) -> Vec<f
         .collect()
 }
 
+/// Files ranked by their score plus `weight` times the best score of a file linked to
+/// them by a cross-file call (the screened `file_graph_ids` arm); unscored files are dropped.
+pub fn file_propagate(
+    file_scores: &BTreeMap<String, f64>,
+    units: &[Unit],
+    edges: &[(usize, usize)],
+    weight: f64,
+) -> Vec<String> {
+    let mut neighbours: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
+    for &(a, b) in edges {
+        let (fa, fb) = (units[a].path.as_str(), units[b].path.as_str());
+        if fa != fb {
+            neighbours.entry(fa).or_default().insert(fb);
+            neighbours.entry(fb).or_default().insert(fa);
+        }
+    }
+    let mut candidates: BTreeSet<&str> = file_scores.keys().map(String::as_str).collect();
+    for file in file_scores.keys() {
+        if let Some(linked) = neighbours.get(file.as_str()) {
+            candidates.extend(linked);
+        }
+    }
+    let score = |f: &str| file_scores.get(f).copied().unwrap_or(0.0);
+    let mut raised: Vec<(&str, f64)> = candidates
+        .into_iter()
+        .map(|f| {
+            let best = neighbours
+                .get(f)
+                .map_or(0.0, |n| n.iter().map(|&x| score(x)).fold(0.0, f64::max));
+            (f, score(f) + weight * best)
+        })
+        .filter(|&(_, s)| s > 0.0)
+        .collect();
+    raised.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.0.cmp(b.0)));
+    raised.into_iter().map(|(f, _)| f.to_string()).collect()
+}
+
 /// The prototype's BM25 (k1 1.2, b 0.75) over unit texts.
 pub struct Bm25 {
     postings: BTreeMap<String, Vec<(usize, usize)>>,
@@ -583,6 +620,21 @@ mod tests {
             .collect();
         assert!(named.contains(&("Run".into(), "helper".into())));
         assert!(named.contains(&("onSend".into(), "wrap".into())));
+    }
+
+    #[test]
+    fn file_scores_rise_by_half_the_best_linked_file() {
+        let mut units = code_units("a.go", GO);
+        units.extend(code_units("b.js", JS));
+        units[1].calls = vec!["onSend".into()];
+        let edges = call_edges(&units);
+        let scores = BTreeMap::from([("a.go".to_string(), 2.0)]);
+        assert_eq!(
+            file_propagate(&scores, &units, &edges, 0.5),
+            ["a.go", "b.js"]
+        );
+        let scores = BTreeMap::from([("a.go".to_string(), 2.0), ("c.py".to_string(), 3.0)]);
+        assert_eq!(file_propagate(&scores, &units, &[], 0.5), ["c.py", "a.go"]);
     }
 
     #[test]

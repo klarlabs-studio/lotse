@@ -1,12 +1,12 @@
 //! Experimental agent orientation: `triage` (where to work) and `outline` (what a file holds).
 //!
 //! `triage` composes two screened arms in one answer: files ranked by `locate`
-//! with damped file scores, the floor stop, and the rewritten query
-//! (`graf_floor_ids`), then whole functions from `units` with the rewritten query
-//! (`ast_graph_ids`). `outline` lists a file's function units so an agent can read
+//! file scores (damped, floor stop, rewritten query) raised over cross-file call
+//! edges (`file_graph_ids`, preregistration v24), then whole functions from `units`
+//! with the rewritten query (`ast_graph_ids`). `outline` lists a file's function units so an agent can read
 //! one function instead of the whole file. Neither is an accepted improvement.
 use crate::rewrite::rewrite_query;
-use crate::units::{Unit, code_units, rank};
+use crate::units::{Unit, WEIGHT, call_edges, code_units, file_propagate, rank};
 use crate::{FileScore, Index, Policy, Stop};
 use anyhow::{Context, Result, ensure};
 use serde::{Deserialize, Serialize};
@@ -32,6 +32,8 @@ struct CachedUnits {
 
 /// Files listed before the code.
 pub const TRIAGE_FILES: usize = 8;
+/// The locate budget the file-ranking screen used to collect file scores.
+const LOCATE_BUDGET: usize = 2000;
 /// Characters of each signature line in an outline.
 const SIGNATURE_CHARS: usize = 120;
 
@@ -128,7 +130,17 @@ pub fn ranked_units(
     query: &str,
     budget: usize,
 ) -> Result<(Vec<Unit>, String)> {
-    let (picked, context) = rank(bpe, &indexed_units(index)?, query, budget);
+    ranked_from(bpe, index, &indexed_units(index)?, query, budget)
+}
+
+fn ranked_from(
+    bpe: &CoreBPE,
+    index: &Index,
+    units: &[Unit],
+    query: &str,
+    budget: usize,
+) -> Result<(Vec<Unit>, String)> {
+    let (picked, context) = rank(bpe, units, query, budget);
     for unit in &picked {
         index.current_text(&unit.path)?;
     }
@@ -142,11 +154,17 @@ pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Resul
         stop: Stop::Floor,
         file_score: FileScore::Damped,
     };
-    let located = index.locate_with(&query, 8000, 1000, None, None, policy)?;
-    let mut files: Vec<String> = located
+    // The screened file_graph_ids arm: damped, floor-stopped locate scores for the
+    // rewritten query, raised over cross-file call edges.
+    let located = index.locate_with(&query, LOCATE_BUDGET, 1000, None, None, policy)?;
+    let scores: BTreeMap<String, f64> = located
         .hints
         .iter()
-        .map(|h| h.path.clone())
+        .map(|h| (h.path.clone(), h.score))
+        .collect();
+    let units = indexed_units(index)?;
+    let mut files: Vec<String> = file_propagate(&scores, &units, &call_edges(&units), WEIGHT)
+        .into_iter()
         .take(TRIAGE_FILES)
         .collect();
     let mut context = String::new();
@@ -165,23 +183,23 @@ pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Resul
     let remaining = budget
         .saturating_sub(bpe.encode_ordinary(&context).len())
         .saturating_sub(bpe.encode_ordinary(header).len());
-    let mut units = Vec::new();
+    let mut cited = Vec::new();
     if remaining > 0 {
-        let (picked, code) = ranked_units(bpe, index, &query, remaining)?;
+        let (picked, code) = ranked_from(bpe, index, &units, &query, remaining)?;
         if !code.is_empty() {
             context.push_str(header);
             context.push_str(&code);
-            units = picked.iter().map(CitedUnit::from).collect();
+            cited = picked.iter().map(CitedUnit::from).collect();
         }
     }
     Ok(Triage {
         query,
         files,
-        units,
+        units: cited,
         budget,
         context_tokens: bpe.encode_ordinary(&context).len(),
         context,
-        experimental: "triage: graf_floor_ids files, then ast_graph_ids units",
+        experimental: "triage: file_graph_ids files, then ast_graph_ids units",
     })
 }
 
