@@ -5,6 +5,7 @@ mod pack;
 mod policy;
 mod query;
 mod response;
+pub mod rewrite;
 mod source;
 mod terms;
 pub mod units;

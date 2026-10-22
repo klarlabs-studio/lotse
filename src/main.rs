@@ -85,9 +85,20 @@ struct QueryArgs {
     /// Experimental file score for locate; not an accepted improvement.
     #[arg(long, value_enum, default_value = "max")]
     file_score: FileScoreArg,
+    /// Experimental: query with the issue title plus code-like tokens (see `graf rewrite`).
+    #[arg(long)]
+    rewrite: bool,
 }
 
 impl QueryArgs {
+    fn query(&self) -> String {
+        if self.rewrite {
+            graf::rewrite::rewrite_query(&self.query)
+        } else {
+            self.query.clone()
+        }
+    }
+
     fn policy(&self) -> Policy {
         Policy {
             stop: match self.stop {
@@ -134,7 +145,12 @@ enum Command {
         /// Emit only context, without JSON metadata.
         #[arg(long)]
         text: bool,
+        /// Experimental: query with the issue title plus code-like tokens.
+        #[arg(long)]
+        rewrite: bool,
     },
+    /// Experimental: print the query `--rewrite` would use for TEXT (the title plus code-like tokens).
+    Rewrite { text: String },
     /// Read an excerpt plus nearby lines using an ID returned by search.
     Expand {
         id: String,
@@ -204,6 +220,9 @@ fn run() -> Result<()> {
         };
         return print_json(&Index::build_with(&root, rebuild, analyzer)?);
     }
+    if let Command::Rewrite { text } = &cli.command {
+        return write_stdout(&format!("{}\n", graf::rewrite::rewrite_query(text)));
+    }
     let index = Index::load(&root)?;
     match cli.command {
         Command::Search(args) => {
@@ -212,7 +231,7 @@ fn run() -> Result<()> {
                 "--file-score applies to locate only"
             );
             let response = index.search_with(
-                &args.query,
+                &args.query(),
                 args.budget,
                 args.limit,
                 args.scope.as_deref(),
@@ -223,7 +242,7 @@ fn run() -> Result<()> {
         }
         Command::Locate(args) => {
             let response = index.locate_with(
-                &args.query,
+                &args.query(),
                 args.budget,
                 args.limit,
                 args.scope.as_deref(),
@@ -250,7 +269,13 @@ fn run() -> Result<()> {
             query,
             budget,
             text,
+            rewrite,
         } => {
+            let query = if rewrite {
+                graf::rewrite::rewrite_query(&query)
+            } else {
+                query
+            };
             let mut files = std::collections::BTreeMap::new();
             for path in index.files.keys() {
                 files.insert(path.clone(), index.current_text(path)?);
@@ -304,7 +329,7 @@ fn run() -> Result<()> {
                 "freshness": "indexed snapshot; search and expand validate selected source hashes"
             }))
         }
-        Command::Index { .. } => unreachable!(),
+        Command::Index { .. } | Command::Rewrite { .. } => unreachable!(),
     }
 }
 
