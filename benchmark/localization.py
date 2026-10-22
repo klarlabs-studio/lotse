@@ -26,8 +26,9 @@ import tree_sitter as ts
 import tree_sitter_go
 import tree_sitter_javascript
 import tree_sitter_python
+import tree_sitter_typescript
 
-from retrieval import BASE, BM25, load_documents, tokens
+from retrieval import BASE, BM25, EXTENSIONS, EXTENSIONS_V2, load_documents, tokens
 
 WINDOW = 24
 LANGUAGES = {".go": tree_sitter_go, ".py": tree_sitter_python, ".js": tree_sitter_javascript,
@@ -54,9 +55,15 @@ def gold_lines(pre_fix, post_fix):
     return lines
 
 
+# TypeScript screens (v25) also parse these; earlier splits keep LANGUAGES so they reproduce.
+TYPESCRIPT_GRAMMARS = {".ts": tree_sitter_typescript.language_typescript, ".tsx": tree_sitter_typescript.language_tsx,
+                       ".jsx": tree_sitter_javascript.language}
+
+
 def _parser(suffix):
     if suffix not in _PARSERS:
-        _PARSERS[suffix] = ts.Parser(ts.Language(LANGUAGES[suffix].language()))
+        grammar = LANGUAGES[suffix].language if suffix in LANGUAGES else TYPESCRIPT_GRAMMARS[suffix]
+        _PARSERS[suffix] = ts.Parser(ts.Language(grammar()))
     return _PARSERS[suffix]
 
 
@@ -120,11 +127,11 @@ def _calls(node):
     return names
 
 
-def code_units(path, text):
+def code_units(path, text, typescript=False):
     """Partition a file into function units plus module (or text) windows covering every other line."""
     lines = text.splitlines()
     suffix = Path(path).suffix
-    if suffix not in LANGUAGES:
+    if suffix not in LANGUAGES and not (typescript and suffix in TYPESCRIPT_GRAMMARS):
         return _windows(path, lines, 1, len(lines), "text")
     root = _parser(suffix).parse(text.encode()).root_node
     units, covered = [], 0
@@ -299,11 +306,21 @@ CONFIRMATION_CATALOG = BASE / "benchmark/localization-confirmation-tasks.json"
 CONFIRMATION_REPOS = ("viper", "chi", "httpx", "typer", "koa", "axios")
 FILE_SCREEN_CATALOG = BASE / "benchmark/localization-file-screen-tasks.json"
 FILE_SCREEN_REPOS = ("echo", "resty", "werkzeug", "marshmallow", "hapi", "mocha")
+TYPESCRIPT_CATALOG = BASE / "benchmark/localization-typescript-tasks.json"
+TYPESCRIPT_REPOS = ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")
 # Split -> (catalog, repositories). dev is the 18-task part of the heldout catalog.
 SPLITS = {"dev": (CATALOG, REPOS), "heldout": (CATALOG, REPOS),
           "replication": (REPLICATION_CATALOG, REPLICATION_REPOS),
           "confirmation": (CONFIRMATION_CATALOG, CONFIRMATION_REPOS),
-          "file_screen": (FILE_SCREEN_CATALOG, FILE_SCREEN_REPOS)}
+          "file_screen": (FILE_SCREEN_CATALOG, FILE_SCREEN_REPOS),
+          "typescript": (TYPESCRIPT_CATALOG, TYPESCRIPT_REPOS)}
+
+
+TYPESCRIPT_SPLITS = ("typescript",)
+
+
+def split_typescript(split):
+    return split in TYPESCRIPT_SPLITS
 
 
 def catalog_for(split):
@@ -378,6 +395,10 @@ GRAF_SPAN = re.compile(r'^"(.*?)":(\d+)-(\d+)$', re.M)
 FLOOR, WEIGHT = 0.5, 0.5
 
 
+def corpus_extensions(task):
+    return EXTENSIONS_V2 if split_typescript(task.get("split", "")) else EXTENSIONS
+
+
 def snapshot(task):
     """The pre-fix corpus, materialized once and filtered like load_documents."""
     root = WORK / "snapshots" / task["id"]
@@ -388,12 +409,12 @@ def snapshot(task):
         archive = _git(task["repo"], "archive", f"{task['commit']}^1", text=False)
         with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
             tar.extractall(raw, filter="data")
-        files = load_documents(raw)
+        files = load_documents(raw, corpus_extensions(task))
         shutil.rmtree(raw)
         for rel, text in files.items():
             (root / "input" / rel).parent.mkdir(parents=True, exist_ok=True)
             (root / "input" / rel).write_text(text)
-    return root, load_documents(root / "input")
+    return root, load_documents(root / "input", corpus_extensions(task))
 
 
 def graf_locate_command(root, arm, query, budget):
@@ -455,7 +476,8 @@ def run_ast(units, edges, query, budget, graph):
 
 ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_units", "ast_graph", "ast_bounded",
         "ast_graph_ids", "file_graph_ids")  # Later arms (v21, v24) are absent from earlier splits.
-LATER_ARMS = {"ast_graph_ids": ("confirmation", "file_screen"), "file_graph_ids": ("file_screen",)}
+LATER_ARMS = {"ast_graph_ids": ("confirmation", "file_screen", "typescript"),
+              "file_graph_ids": ("file_screen", "typescript")}
 
 
 def arms_for(split):
@@ -501,7 +523,7 @@ TRIAGE_FILE_LIMIT = 8  # Payload only; ranks are scored on the full list, as for
 
 def run_task(task, budget, split="heldout"):
     root, files = snapshot(task)
-    units_by_path = {p: code_units(p, t) for p, t in files.items()}
+    units_by_path = {p: code_units(p, t, split_typescript(split)) for p, t in files.items()}
     units = [u for p in sorted(units_by_path) for u in units_by_path[p]]
     edges = call_edges(units)
     gold, dropped = corpus_gold(task["gold"], files)
@@ -598,6 +620,20 @@ def decide(rows, structured, comparators, alpha, k=5, metric="unit_acc"):
             "arms": arms, "qualified": [a for a in structured if arms[a]["qualifies"]]}
 
 
+def decide_tests(rows, tests, comparators, alpha, k=5):
+    """Each test is one arm on one metric against every comparator; Holm across the tests."""
+    results = {}
+    for test in tests:
+        one = decide(rows, [test["arm"]], comparators, alpha, k, test["metric"])["arms"][test["arm"]]
+        results[f"{test['arm']}:{test['metric']}"] = one
+    passing = True
+    for rank, key in enumerate(sorted(results, key=lambda key: results[key]["p"])):
+        results[key]["holm_alpha"] = alpha / (len(results) - rank)
+        passing = passing and results[key]["p"] <= results[key]["holm_alpha"]
+        results[key]["qualifies"] = passing
+    return {"tasks": len(rows), "tests": results, "qualified": [key for key in results if results[key]["qualifies"]]}
+
+
 def summarize(rows):
     """Every arm's rates and payloads, overall and by repository."""
     def rates(subset):
@@ -620,7 +656,8 @@ def summarize(rows):
 def decide_split(split):
     screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
-    rule = screen[split]["decision"] if split in ("replication", "confirmation", "file_screen") else screen["decision"]
+    rule = screen[split]["decision"] if split in ("replication", "confirmation", "file_screen", "typescript") \
+        else screen["decision"]
     metric = rule.get("metric", "unit_acc")
     planned = {t["id"] for t in json.loads(catalog_for(split).read_text())["tasks"] if t["split"] == split}
     if {r["task"] for r in data["tasks"]} != planned:
@@ -630,7 +667,8 @@ def decide_split(split):
     scored = [a for a in ARMS if a in data["tasks"][0]["arms"] and a != "file_bm25"]
     result = {"excluded_tasks": excluded,
               "dropped_gold_files": {r["task"]: r["dropped_gold_files"] for r in data["tasks"] if r.get("dropped_gold_files")},"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"],
-              "decision": decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"], metric),
+              "decision": (decide_tests(data["tasks"], rule["tests"], rule["comparators"], 0.05, rule["k"]) if "tests" in rule
+                           else decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"], metric)),
               "summary": summarize(data["tasks"]),
               f"pairwise_{metric}@k": {f"{a}>{b}": mcnemar_one_sided([hit_at(r["arms"][a], rule["k"], metric) for r in data["tasks"]],
                                                                     [hit_at(r["arms"][b], rule["k"], metric) for r in data["tasks"]])

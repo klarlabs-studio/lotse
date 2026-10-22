@@ -5,7 +5,8 @@
 
 index stores tree-sitter units and call edges for the files load_documents admits; query
 scores units with BM25, adds one-hop call propagation, and prints whole units in score order.
-Parameters are those frozen in localization_screen (floor 0.5, propagation weight 0.5).
+Parameters are those frozen in localization_screen (floor 0.5, propagation weight 0.5). TypeScript, TSX,
+and JSX are parsed as in `graf units` (v25); the t4 agent backend is the frozen copy in frozen-t4/.
 """
 import json
 from pathlib import Path
@@ -19,7 +20,7 @@ INDEX = "ast-index.json"
 
 def index(input_dir, output_dir):
     files = load_documents(input_dir)
-    units = [u for path in sorted(files) for u in code_units(path, files[path])]
+    units = [u for path in sorted(files) for u in code_units(path, files[path], typescript=True)]
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / INDEX).write_text(json.dumps({"files": sorted(files), "units": units,
                                                 "edges": call_edges(units)}))

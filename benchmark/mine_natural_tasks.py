@@ -24,11 +24,13 @@ HISTORY = BASE / ".research/history"
 MAX_FILES = 10
 MAX_LINES = 400
 ISSUE_LIMIT = 4000
+TYPESCRIPT_SOURCES = (".ts", ".tsx", ".js", ".jsx")
 SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "gin": (".go",), "urfave-cli": (".go",),
                    "click": (".py",), "jinja": (".py",), "express": (".js",), "undici": (".js",),
                    "viper": (".go",), "chi": (".go",), "httpx": (".py",), "typer": (".py",), "koa": (".js",),
                    "axios": (".js",), "echo": (".go",), "resty": (".go",), "werkzeug": (".py",),
-                   "marshmallow": (".py",), "hapi": (".js",), "mocha": (".js",)}
+                   "marshmallow": (".py",), "hapi": (".js",), "mocha": (".js",),
+                   **{repo: TYPESCRIPT_SOURCES for repo in ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full"}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
@@ -47,6 +49,9 @@ def classify(repo, path):
     """test, source, or other (docs, changelog, configuration)."""
     name = Path(path).name
     suffix = SOURCE_SUFFIXES[repo]
+    if suffix == TYPESCRIPT_SOURCES and (set(Path(path).parts) & {"test", "tests", "__tests__"}
+                                         or ".test." in name or ".spec." in name):
+        return "test"
     if suffix == (".go",) and (name.endswith("_test.go") or "/testdata/" in f"/{path}"):
         return "test"
     if suffix == (".py",) and path.startswith("tests/"):
@@ -187,7 +192,8 @@ def pinned(repo):
             return r
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
     screen = prereg["localization_screen"]
-    for spec in (prereg["agent_trials"]["natural_tasks_t4"], screen["confirmation"], screen["file_screen"]):
+    for spec in (prereg["agent_trials"]["natural_tasks_t4"], screen["confirmation"], screen["file_screen"],
+                 screen["typescript"]):
         if repo in spec["repositories"]:
             return {"id": repo, **spec["repositories"][repo]}
     raise KeyError(repo)

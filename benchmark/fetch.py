@@ -50,4 +50,5 @@ def fetch(t4=False, confirmation=False, screen=None):
 if __name__ == "__main__":
     import sys
     fetch(t4="--t4" in sys.argv[1:], confirmation="--confirmation" in sys.argv[1:],
-          screen="file_screen" if "--file-screen" in sys.argv[1:] else None)
+          screen="file_screen" if "--file-screen" in sys.argv[1:] else "typescript" if "--typescript" in sys.argv[1:]
+          else None)

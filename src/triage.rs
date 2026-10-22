@@ -16,7 +16,7 @@ use std::io::Write;
 use tiktoken_rs::CoreBPE;
 
 /// Changes whenever unit extraction could change; a mismatching cache is rebuilt.
-const UNIT_CACHE_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "/units-1");
+const UNIT_CACHE_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "/units-2");
 
 #[derive(Default, Serialize, Deserialize)]
 struct UnitCache {
@@ -225,7 +225,7 @@ pub fn outline(index: &Index, path: &str) -> Result<Outline> {
     let units = code_units(path, &text);
     ensure!(
         units.iter().all(|u| u.kind != "text"),
-        "outline supports Go, Python, and JavaScript sources"
+        "outline supports Go, Python, JavaScript, and TypeScript sources"
     );
     let functions: Vec<OutlineEntry> = units
         .iter()

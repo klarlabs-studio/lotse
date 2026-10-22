@@ -16,6 +16,7 @@ os.environ["HF_HOME"] = str(BASE / ".research/huggingface")
 os.environ["HF_HUB_OFFLINE"] = "1"
 ENCODING = tiktoken.get_encoding("cl100k_base")
 EXTENSIONS = {".go", ".py", ".js", ".mjs", ".cjs", ".ts", ".md", ".mdx", ".rst", ".txt"}
+EXTENSIONS_V2 = EXTENSIONS | {".tsx", ".jsx"}  # TypeScript screens (preregistration v25); earlier corpora keep V1.
 STOP = set("a an the is are be to of for and or in on with its it this that which what where how why can as by from if should does do need find locate explain check claim against changes change implementation test tests".split())
 
 
@@ -54,11 +55,11 @@ def chunks_from(path, text):
     return result
 
 
-def load_documents(root):
+def load_documents(root, extensions=EXTENSIONS):
     files = {}
     for path in sorted(root.rglob("*")):
         rel = path.relative_to(root)
-        if path.is_symlink() or not path.is_file() or path.suffix not in EXTENSIONS:
+        if path.is_symlink() or not path.is_file() or path.suffix not in extensions:
             continue
         if any(p.startswith(".") or p in {"node_modules", "vendor", "graphify-out"} for p in rel.parts):
             continue

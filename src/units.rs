@@ -168,7 +168,9 @@ fn language(path: &str) -> Option<Language> {
     match extension {
         "go" => Some(tree_sitter_go::LANGUAGE.into()),
         "py" => Some(tree_sitter_python::LANGUAGE.into()),
-        "js" | "mjs" | "cjs" => Some(tree_sitter_javascript::LANGUAGE.into()),
+        "js" | "mjs" | "cjs" | "jsx" => Some(tree_sitter_javascript::LANGUAGE.into()),
+        "ts" => Some(tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into()),
+        "tsx" => Some(tree_sitter_typescript::LANGUAGE_TSX.into()),
         _ => None,
     }
 }
@@ -580,6 +582,39 @@ mod tests {
         assert_eq!(
             functions(&units),
             [("onSend".into(), 2, 4), ("wrap".into(), 5, 5)]
+        );
+    }
+
+    const TS: &str = "export function a(x: number): number {\n  return b(x)\n}\nexport const b = (y: number): number => y\ninterface I {\n  f(): void\n}\nclass C {\n  m(z: string): void {\n    a(1)\n  }\n}\n";
+    const TSX: &str = "const App = () => <div onClick={() => go()} />\nfunction go(): void {}\n";
+
+    #[test]
+    fn typescript_tsx_and_jsx_functions() {
+        let units = code_units("x.ts", TS);
+        assert_eq!(
+            functions(&units),
+            [("a".into(), 1, 3), ("b".into(), 4, 4), ("m".into(), 9, 11)]
+        );
+        assert!(units.iter().any(|u| u.kind == "module" && u.start == 5));
+        let named: Vec<_> = call_edges(&units)
+            .into_iter()
+            .map(|(x, y)| {
+                (
+                    units[x].name.clone().unwrap(),
+                    units[y].name.clone().unwrap(),
+                )
+            })
+            .collect();
+        assert!(
+            named.contains(&("a".into(), "b".into())) && named.contains(&("m".into(), "a".into()))
+        );
+        assert_eq!(
+            functions(&code_units("x.tsx", TSX)),
+            [("App".into(), 1, 1), ("go".into(), 2, 2)]
+        );
+        assert_eq!(
+            functions(&code_units("x.jsx", TSX.replace(": void", "").as_str())),
+            [("App".into(), 1, 1), ("go".into(), 2, 2)]
         );
     }
 

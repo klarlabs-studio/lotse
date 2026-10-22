@@ -1,5 +1,5 @@
 {
-  "version": 24,
+  "version": 25,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -398,6 +398,11 @@
       "version": 24,
       "date": "2026-10-22",
       "change": "added localization_screen.file_screen: file_graph_ids (call-graph propagation over graf's file scores) against graf_floor_ids and Graphify on file_acc@5, on six new repositories, frozen before any of their pull requests was listed"
+    },
+    {
+      "version": 25,
+      "date": "2026-10-22",
+      "change": "added localization_screen.typescript: TypeScript/TSX/JSX unit extraction and a screen of file_graph_ids (files) and ast_graph_ids (units) against graf_floor_ids and Graphify on six TypeScript repositories, frozen before any of their pull requests was listed"
     }
   ],
   "arms": {
@@ -621,6 +626,65 @@
         "test": "exact one-sided McNemar on file_acc@5 against each comparator",
         "rule": "file_graph_ids qualifies for triage's file list only if it beats both comparators (intersection-union) at alpha 0.05",
         "report": "every task and arm, by repository, with unit metrics descriptively"
+      }
+    },
+    "typescript": {
+      "purpose": "extend unit extraction to TypeScript, TSX, and JSX and test the two components of graf triage (file_graph_ids files, ast_graph_ids units) against Graphify on TypeScript repositories; offline, no solver",
+      "repositories": {
+        "zod": {
+          "repository": "colinhacks/zod",
+          "commit": "afdac65e0f80c0ccf9e8909da97c411567908b57",
+          "language": "TypeScript"
+        },
+        "hono": {
+          "repository": "honojs/hono",
+          "commit": "5ca49b0720755c585c9a9835f0a479ceea36fb52",
+          "language": "TypeScript"
+        },
+        "trpc": {
+          "repository": "trpc/trpc",
+          "commit": "1c9bf51ea572fd46fa52fb725999b8d0c6950386",
+          "language": "TypeScript"
+        },
+        "tanstack-query": {
+          "repository": "TanStack/query",
+          "commit": "b923947be4b4db414046e6a91d5e5cb2aacf3d80",
+          "language": "TypeScript"
+        },
+        "vitest": {
+          "repository": "vitest-dev/vitest",
+          "commit": "7a5c083fc9ee460c5d724b062086f1ec62132ca9",
+          "language": "TypeScript"
+        },
+        "typeorm": {
+          "repository": "typeorm/typeorm",
+          "commit": "da473df40df3933c1846f72144575d673aeef1cd",
+          "language": "TypeScript"
+        }
+      },
+      "repository_choice": "popular (over 17,000 stars) TypeScript repositories with issue-linked pull requests, never used for any arm; default branch heads resolved on 2026-10-22, before any of their pull requests was listed",
+      "extraction": "units also parse .ts (TypeScript grammar), .tsx (TSX grammar), and .jsx (JavaScript grammar) with the same node rules as JavaScript (`code_units(..., typescript=True)`, `graf units` from this version); the corpus adds .tsx and .jsx (retrieval.EXTENSIONS_V2). Earlier splits keep their v1 extraction and corpus",
+      "tasks": "the localization_screen task rules; source files are .ts, .tsx, .js, .jsx outside test paths (test/, tests/, __tests__/, *.test.*, *.spec.*); one split 'typescript'; catalog benchmark/localization-typescript-tasks.json",
+      "arms_metric": "all file-screen arms; file_acc@5 for file rankings and unit_acc@5 for units",
+      "decision": {
+        "tests": [
+          {
+            "arm": "file_graph_ids",
+            "metric": "file_acc"
+          },
+          {
+            "arm": "ast_graph_ids",
+            "metric": "unit_acc"
+          }
+        ],
+        "comparators": [
+          "graf_floor_ids",
+          "graphify"
+        ],
+        "k": 5,
+        "test": "exact one-sided McNemar per test against each comparator; intersection-union within a test",
+        "rule": "each test passes if it beats both comparators, with Holm correction across the two tests at family alpha 0.05",
+        "report": "every task and arm, by repository"
       }
     }
   }

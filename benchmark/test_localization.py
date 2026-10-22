@@ -230,8 +230,42 @@ class FileScreenTests(unittest.TestCase):
         self.assertTrue(result["arms"]["x"]["qualifies"])
         self.assertFalse(decide(rows, ["x"], ["y"], 0.05, 5)["arms"]["x"]["qualifies"])
 
+    def test_decide_tests_runs_each_metric_with_holm(self):
+        from localization import decide_tests
+        rows = [{"task": f"t{i}", "repo": "r", "arms": {
+            "f": {"unit_rank": None, "file_rank": 1}, "u": {"unit_rank": 1, "file_rank": None},
+            "c": {"unit_rank": None if i < 15 else 1, "file_rank": None if i < 15 else 1}}} for i in range(20)]
+        result = decide_tests(rows, [{"arm": "f", "metric": "file_acc"}, {"arm": "u", "metric": "unit_acc"}],
+                              ["c"], 0.05, 5)
+        self.assertEqual(result["qualified"], ["f:file_acc", "u:unit_acc"])
+        self.assertEqual(sorted(t["holm_alpha"] for t in result["tests"].values()), [0.025, 0.05])
+
     def test_file_screen_split_is_registered(self):
         self.assertTrue(catalog_for("file_screen").name.startswith("localization-file-screen"))
+
+
+TS = ("export function a(x: number): number {\n  return b(x)\n}\nexport const b = (y: number): number => y\n"
+      "interface I {\n  f(): void\n}\nclass C {\n  m(z: string): void {\n    a(1)\n  }\n}\n")
+TSX = "const App = () => <div onClick={() => go()} />\nfunction go(): void {}\n"
+
+
+class TypeScriptTests(unittest.TestCase):
+    def names(self, units):
+        return [(u["name"], u["start"], u["end"]) for u in units if u["kind"] == "function"]
+
+    def test_typescript_is_opt_in_so_earlier_screens_reproduce(self):
+        self.assertEqual(self.names(code_units("x.ts", TS)), [])
+        self.assertEqual(self.names(code_units("x.ts", TS, typescript=True)), [("a", 1, 3), ("b", 4, 4), ("m", 9, 11)])
+        self.assertEqual(self.names(code_units("x.tsx", TSX, typescript=True)), [("App", 1, 1), ("go", 2, 2)])
+        self.assertEqual(self.names(code_units("x.jsx", TSX.replace(": void", ""), typescript=True)),
+                         [("App", 1, 1), ("go", 2, 2)])
+
+    def test_typescript_splits_and_extensions(self):
+        from localization import split_typescript
+        from retrieval import EXTENSIONS, EXTENSIONS_V2
+        self.assertFalse(split_typescript("confirmation"))
+        self.assertTrue(split_typescript("typescript"))
+        self.assertTrue({".tsx", ".jsx"} <= EXTENSIONS_V2 and not {".tsx", ".jsx"} & EXTENSIONS)
 
 
 if __name__ == "__main__":

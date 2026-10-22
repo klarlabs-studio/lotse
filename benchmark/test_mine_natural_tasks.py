@@ -46,6 +46,15 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("express", "lib/response.js"), "source")
         self.assertEqual(classify("undici", "test/fetch/client.js"), "test")
 
+    def test_typescript_classification(self):
+        self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")
+        self.assertEqual(classify("tanstack-query", "packages/react-query/src/useQuery.tsx"), "source")
+        self.assertEqual(classify("zod", "packages/zod/src/v4/classic/tests/string.test.ts"), "test")
+        self.assertEqual(classify("hono", "src/hono.spec.ts"), "test")
+        self.assertEqual(classify("trpc", "packages/server/src/__tests__/x.ts"), "test")
+        self.assertEqual(classify("typeorm", "test/functional/x.ts"), "test")
+        self.assertEqual(classify("vitest", "docs/guide/index.md"), "other")
+
     def test_verify_commands_per_runner(self):
         from mine_natural_tasks import verify_command
         self.assertEqual(verify_command("gin", ["render/render_test.go"]), ["go", "test", "./render", "-count=1"])

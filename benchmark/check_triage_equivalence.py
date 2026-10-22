@@ -24,7 +24,7 @@ FILES = 8
 
 def prototype(root, files, issue, binary):
     query = rewrite_query(issue)
-    units = [u for p in sorted(files) for u in code_units(p, files[p])]
+    units = [u for p in sorted(files) for u in code_units(p, files[p], typescript=True)]
     edges = call_edges(units)
     located = json.loads(subprocess.run([str(binary), "--root", str(root), "locate", "--budget", "2000", "--limit",
                                          "1000", *GRAF_FLAGS["graf_floor_ids"], "--", query], check=True,
