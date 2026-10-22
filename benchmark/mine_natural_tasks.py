@@ -27,7 +27,8 @@ ISSUE_LIMIT = 4000
 SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "gin": (".go",), "urfave-cli": (".go",),
                    "click": (".py",), "jinja": (".py",), "express": (".js",), "undici": (".js",),
                    "viper": (".go",), "chi": (".go",), "httpx": (".py",), "typer": (".py",), "koa": (".js",),
-                   "axios": (".js",)}
+                   "axios": (".js",), "echo": (".go",), "resty": (".go",), "werkzeug": (".py",),
+                   "marshmallow": (".py",), "hapi": (".js",), "mocha": (".js",)}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full"}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
@@ -185,7 +186,8 @@ def pinned(repo):
         if r["id"] == repo:
             return r
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
-    for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["localization_screen"]["confirmation"]):
+    screen = prereg["localization_screen"]
+    for spec in (prereg["agent_trials"]["natural_tasks_t4"], screen["confirmation"], screen["file_screen"]):
         if repo in spec["repositories"]:
             return {"id": repo, **spec["repositories"][repo]}
     raise KeyError(repo)

@@ -1,5 +1,5 @@
 {
-  "version": 23,
+  "version": 24,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -393,6 +393,11 @@
       "version": 23,
       "date": "2026-10-22",
       "change": "t5's graf binary is pinned to a copy (the same build the v22 freeze referred to) so graf development can continue; no t5 run had started"
+    },
+    {
+      "version": 24,
+      "date": "2026-10-22",
+      "change": "added localization_screen.file_screen: file_graph_ids (call-graph propagation over graf's file scores) against graf_floor_ids and Graphify on file_acc@5, on six new repositories, frozen before any of their pull requests was listed"
     }
   ],
   "arms": {
@@ -561,6 +566,61 @@
         "rule": "ast_graph_ids qualifies only if it beats all three comparators (intersection-union) at alpha 0.05; one candidate, so no Holm step",
         "secondary_confirmatory": "ast_graph against Graphify, one-sided exact McNemar at alpha 0.05, a third test of the replicated result",
         "report": "every task and arm, by repository"
+      }
+    },
+    "file_screen": {
+      "purpose": "Graphify keeps the best file recall in all three localization screens (file Acc@5 0.63-0.68). Test whether propagating graf's file scores over cross-file call edges, the file-level analogue of ast_graph, closes that gap for triage's file list; offline, no solver",
+      "repositories": {
+        "echo": {
+          "repository": "labstack/echo",
+          "commit": "8fd0e184dd390ffdf082f5eda247c3ab41d5d290",
+          "language": "Go"
+        },
+        "resty": {
+          "repository": "go-resty/resty",
+          "commit": "78dfc5c1dff969d4d30313f7fde8b0987c681135",
+          "language": "Go"
+        },
+        "werkzeug": {
+          "repository": "pallets/werkzeug",
+          "commit": "665e760ca6325a348ce03e5cf780b17e4be01848",
+          "language": "Python"
+        },
+        "marshmallow": {
+          "repository": "marshmallow-code/marshmallow",
+          "commit": "b762ea2d59ca52fe5df76b90de14bed7e5ec5607",
+          "language": "Python"
+        },
+        "hapi": {
+          "repository": "hapijs/hapi",
+          "commit": "58630f377f819d3d172fcfb1c301f2aa29334f9e",
+          "language": "JavaScript"
+        },
+        "mocha": {
+          "repository": "mochajs/mocha",
+          "commit": "cb21a4eba550da665fb2c3fa1ce021777a191e23",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "two per supported language, popular (over 6,000 stars), never used for any arm; default branch heads resolved on 2026-10-22, before any of their pull requests was listed",
+      "tasks": "the localization_screen task rules, one split 'file_screen'; catalog benchmark/localization-file-screen-tasks.json, hashed in the results",
+      "new_arm": {
+        "file_graph_ids": "graf locate --file-score damped --stop floor --rewrite (graf_floor_ids) file scores s_f, raised to s_f + 0.5 x the best score among files linked to f by a cross-file call edge (ast_graph's unit call edges aggregated to files, undirected; names defined by more than 3 units not linked); files ranked by the raised score, ties by path; files with no score are not listed"
+      },
+      "arms_metric": "all arms of the confirmation screen plus file_graph_ids; primary metric file_acc@5 (a gold file among the first five cited files)",
+      "decision": {
+        "candidate_arms": [
+          "file_graph_ids"
+        ],
+        "comparators": [
+          "graf_floor_ids",
+          "graphify"
+        ],
+        "k": 5,
+        "metric": "file_acc",
+        "test": "exact one-sided McNemar on file_acc@5 against each comparator",
+        "rule": "file_graph_ids qualifies for triage's file list only if it beats both comparators (intersection-union) at alpha 0.05",
+        "report": "every task and arm, by repository, with unit metrics descriptively"
       }
     }
   }

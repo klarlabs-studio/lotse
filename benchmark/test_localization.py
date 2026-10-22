@@ -1,7 +1,7 @@
 """Localization scoring must be symmetric across arms and anchored to the real fix."""
 import unittest
 
-from localization import (graf_locate_command, catalog_for, write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+from localization import (file_propagate, graf_locate_command, catalog_for, write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
                           pack_units, score_task)
 
 GO = """package x
@@ -212,6 +212,26 @@ class ConfirmationTests(unittest.TestCase):
         self.assertEqual(set(rule["comparators"]), {"graphify", "ast_graph", "graf_floor_ids"})
         import localization
         self.assertIn("ast_graph_ids", localization.ARMS)
+
+
+class FileScreenTests(unittest.TestCase):
+    def test_file_scores_rise_by_half_the_best_linked_file(self):
+        units = code_units("a.go", GO) + code_units("b.js", JS)
+        units[1] = {**units[1], "calls": ["onSend"]}  # helper (a.go) calls onSend (b.js)
+        ranked = file_propagate({"a.go": 2.0}, units, call_edges(units), 0.5)
+        self.assertEqual(ranked, ["a.go", "b.js"])
+        self.assertEqual(file_propagate({"a.go": 2.0, "c.py": 3.0}, units, [], 0.5), ["c.py", "a.go"])
+
+    def test_decide_on_file_rank(self):
+        rows = [{"task": f"t{i}", "repo": "r", "arms": {
+            "x": {"unit_rank": None, "file_rank": 1}, "y": {"unit_rank": 1, "file_rank": None if i < 15 else 1}}}
+            for i in range(20)]
+        result = decide(rows, ["x"], ["y"], 0.05, 5, metric="file_acc")
+        self.assertTrue(result["arms"]["x"]["qualifies"])
+        self.assertFalse(decide(rows, ["x"], ["y"], 0.05, 5)["arms"]["x"]["qualifies"])
+
+    def test_file_screen_split_is_registered(self):
+        self.assertTrue(catalog_for("file_screen").name.startswith("localization-file-screen"))
 
 
 if __name__ == "__main__":

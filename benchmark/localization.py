@@ -297,10 +297,13 @@ REPLICATION_CATALOG = BASE / "benchmark/localization-replication-tasks.json"
 REPLICATION_REPOS = ("gin", "urfave-cli", "click", "jinja", "express", "undici")
 CONFIRMATION_CATALOG = BASE / "benchmark/localization-confirmation-tasks.json"
 CONFIRMATION_REPOS = ("viper", "chi", "httpx", "typer", "koa", "axios")
+FILE_SCREEN_CATALOG = BASE / "benchmark/localization-file-screen-tasks.json"
+FILE_SCREEN_REPOS = ("echo", "resty", "werkzeug", "marshmallow", "hapi", "mocha")
 # Split -> (catalog, repositories). dev is the 18-task part of the heldout catalog.
 SPLITS = {"dev": (CATALOG, REPOS), "heldout": (CATALOG, REPOS),
           "replication": (REPLICATION_CATALOG, REPLICATION_REPOS),
-          "confirmation": (CONFIRMATION_CATALOG, CONFIRMATION_REPOS)}
+          "confirmation": (CONFIRMATION_CATALOG, CONFIRMATION_REPOS),
+          "file_screen": (FILE_SCREEN_CATALOG, FILE_SCREEN_REPOS)}
 
 
 def catalog_for(split):
@@ -451,7 +454,29 @@ def run_ast(units, edges, query, budget, graph):
 
 
 ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_units", "ast_graph", "ast_bounded",
-        "ast_graph_ids")  # ast_graph_ids from v21; earlier splits were scored without it.
+        "ast_graph_ids", "file_graph_ids")  # Later arms (v21, v24) are absent from earlier splits.
+LATER_ARMS = {"ast_graph_ids": ("confirmation", "file_screen"), "file_graph_ids": ("file_screen",)}
+
+
+def arms_for(split):
+    return [a for a in ARMS if a not in LATER_ARMS or split in LATER_ARMS[a]]
+
+
+def file_propagate(file_scores, units, edges, weight):
+    """Files ranked by their score plus `weight` times the best score of a file linked by a cross-file call."""
+    neighbours = defaultdict(set)
+    for a, b in edges:
+        fa, fb = units[a]["path"], units[b]["path"]
+        if fa != fb:
+            neighbours[fa].add(fb)
+            neighbours[fb].add(fa)
+    raised = {}
+    for path in set(file_scores) | {n for f in file_scores for n in neighbours[f]}:
+        best = max((file_scores.get(n, 0.0) for n in neighbours[path]), default=0.0)
+        score = file_scores.get(path, 0.0) + weight * best
+        if score > 0:
+            raised[path] = score
+    return sorted(raised, key=lambda p: (-raised[p], p))
 RANKS = (1, 5, 10)
 
 
@@ -461,7 +486,20 @@ def corpus_gold(gold, files):
     return kept, sorted(p for p in gold if p not in files)
 
 
-def run_task(task, budget):
+def run_file_graph(root, units, edges, query, budget):
+    """graf_floor_ids file scores (JSON hints), propagated over cross-file call edges; files only."""
+    out = subprocess.run([str(GRAF), "--root", str(root / "input"), "locate", "--budget", str(budget), "--limit",
+                          "1000", *GRAF_FLAGS["graf_floor_ids"], "--", query], check=True, capture_output=True,
+                         text=True).stdout
+    scores = {h["path"]: h["score"] for h in json.loads(out)["hints"]}
+    files = file_propagate(scores, units, edges, WEIGHT)
+    return {"payload": "".join(f"{p}\n" for p in files[:TRIAGE_FILE_LIMIT]), "files": files, "spans": []}
+
+
+TRIAGE_FILE_LIMIT = 8  # Payload only; ranks are scored on the full list, as for the other arms.
+
+
+def run_task(task, budget, split="heldout"):
     root, files = snapshot(task)
     units_by_path = {p: code_units(p, t) for p, t in files.items()}
     units = [u for p in sorted(units_by_path) for u in units_by_path[p]]
@@ -472,8 +510,10 @@ def run_task(task, budget):
     gold_keys = {(p, u["start"]) for p, lines in gold.items() for u in gold_units(units_by_path[p], lines)}
     pieces = bounded_units(units)
     results = {}
-    for arm in ARMS:
-        if arm in GRAF_FLAGS:
+    for arm in arms_for(split):
+        if arm == "file_graph_ids":
+            answer = run_file_graph(root, units, edges, rewrite_query(task["query"]), budget)
+        elif arm in GRAF_FLAGS:
             query = rewrite_query(task["query"]) if arm.endswith("_ids") else task["query"]
             answer = run_graf(root, arm, query, budget)
         elif arm == "graphify":
@@ -516,7 +556,7 @@ def run(split):
     for task in [t for t in catalog["tasks"] if t["split"] == split]:
         if task["id"] in rows:
             continue
-        rows[task["id"]] = {"task": task["id"], "repo": task["repo"], **run_task(task, budget)}
+        rows[task["id"]] = {"task": task["id"], "repo": task["repo"], **run_task(task, budget, split)}
         print(task["id"], {a: r["unit_rank"] for a, r in rows[task["id"]].get("arms", {}).items()}
               or rows[task["id"]]["excluded"], flush=True)
         write_json_atomic(out, {"split": split, "catalog_sha256": digest, "graf_sha256": graf_sha,
@@ -535,12 +575,13 @@ def mcnemar_one_sided(arm, comparator):
     return sum(comb(n, k) for k in range(wins, n + 1)) / 2 ** n if n else 1.0
 
 
-def hit_at(result, k):
-    return result["unit_rank"] is not None and result["unit_rank"] <= k
+def hit_at(result, k, metric="unit_acc"):
+    rank = result["file_rank" if metric == "file_acc" else "unit_rank"]
+    return rank is not None and rank <= k
 
 
-def decide(rows, structured, comparators, alpha, k=5):
-    hit = {a: [hit_at(r["arms"][a], k) for r in rows] for a in {*structured, *comparators}}
+def decide(rows, structured, comparators, alpha, k=5, metric="unit_acc"):
+    hit = {a: [hit_at(r["arms"][a], k, metric) for r in rows] for a in {*structured, *comparators}}
     arms = {}
     for arm in structured:
         versus = {c: {"p": mcnemar_one_sided(hit[arm], hit[c]),
@@ -579,7 +620,8 @@ def summarize(rows):
 def decide_split(split):
     screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
-    rule = screen[split]["decision"] if split in ("replication", "confirmation") else screen["decision"]
+    rule = screen[split]["decision"] if split in ("replication", "confirmation", "file_screen") else screen["decision"]
+    metric = rule.get("metric", "unit_acc")
     planned = {t["id"] for t in json.loads(catalog_for(split).read_text())["tasks"] if t["split"] == split}
     if {r["task"] for r in data["tasks"]} != planned:
         raise SystemExit(f"{split}: {len(data['tasks'])} of {len(planned)} tasks run; no decision on a partial split")
@@ -588,15 +630,15 @@ def decide_split(split):
     scored = [a for a in ARMS if a in data["tasks"][0]["arms"] and a != "file_bm25"]
     result = {"excluded_tasks": excluded,
               "dropped_gold_files": {r["task"]: r["dropped_gold_files"] for r in data["tasks"] if r.get("dropped_gold_files")},"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"],
-              "decision": decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"]),
+              "decision": decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"], metric),
               "summary": summarize(data["tasks"]),
-              "pairwise_unit_acc@k": {f"{a}>{b}": mcnemar_one_sided([hit_at(r["arms"][a], rule["k"]) for r in data["tasks"]],
-                                                                    [hit_at(r["arms"][b], rule["k"]) for r in data["tasks"]])
+              f"pairwise_{metric}@k": {f"{a}>{b}": mcnemar_one_sided([hit_at(r["arms"][a], rule["k"], metric) for r in data["tasks"]],
+                                                                    [hit_at(r["arms"][b], rule["k"], metric) for r in data["tasks"]])
                                     for a in scored for b in scored if a != b}}
     out = BASE / f"results/localization-decision-{split}.json"
     out.write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps({"qualified": result["decision"]["qualified"],
-                      "unit_acc@k": {a: round(v[f"unit_acc@{rule['k']}"], 3) for a, v in result["summary"]["all"].items()}}))
+                      f"{metric}@k": {a: round(v[f"{metric}@{rule['k']}"], 3) for a, v in result["summary"]["all"].items()}}))
     return 0 if result["decision"]["qualified"] else 1
 
 
