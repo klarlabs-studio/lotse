@@ -29,19 +29,26 @@ TOOL_DEFINITIONS = [
      "parameters": {"pattern": "regex string up to 256 characters", "budget": "integer 1..8000, default 2000"}},
     {"name": "edit", "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
      "parameters": {"path": "repository-relative source path", "old": "unique nonempty string", "new": "replacement string"}},
+    {"name": "outline", "description": "List a source file's functions with line ranges, so you can read one function instead of the whole file.",
+     "parameters": {"path": "repository-relative source path (.go, .py, .js)"}},
     {"name": "test", "description": "Run the trusted behavioral verification command; nonzero exit is a failure.", "parameters": {}},
     {"name": "finish", "description": "End the attempt and independently run trusted verification again.", "parameters": {}},
 ]
 
 
 GRAF_QUERY_FLAGS = {"graf": (), "graf_floor": ("--file-score", "damped", "--stop", "floor")}
-ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph")
+ORIENT_ARMS = ("graf_orient", "graphify_orient")
+ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph", *ORIENT_ARMS)
 SCRIPTS = Path(__file__).resolve().parent
+ORIENT_BUDGET = 1500  # Batch t5: the orientation shown before the first turn (preregistration v22).
+GRAF_INDEX_ARMS = (*GRAF_QUERY_FLAGS, "graf_orient")
 
 
 def tool_definitions(arm):
-    """The operations an arm's model can request; the search-only control has no retriever."""
-    return [d for d in TOOL_DEFINITIONS if arm != "search_only" or d["name"] != "retrieve"]
+    """The operations an arm's model can request; search-only has no retriever, and only graf_orient outlines."""
+    return [d for d in TOOL_DEFINITIONS
+            if not (arm == "search_only" and d["name"] == "retrieve")
+            and not (arm != "graf_orient" and d["name"] == "outline")]
 
 
 def retrieve_command(arm, input_dir, output_dir, query, budget):
@@ -50,7 +57,10 @@ def retrieve_command(arm, input_dir, output_dir, query, budget):
                 "--budget", str(budget), "--limit", "1000", "--text", *GRAF_QUERY_FLAGS[arm], "--", query]
     if arm == "ast_graph":
         return [sys.executable, str(SCRIPTS / "ast_retrieve.py"), "query", str(output_dir), query, str(budget)]
-    if arm == "graphify":
+    if arm == "graf_orient":
+        return [str(BASE / "target/release/graf"), "--root", str(input_dir), "units", "--budget", str(budget),
+                "--text", "--", query]
+    if arm in ("graphify", "graphify_orient"):
         return [sys.executable, str(BASE / "benchmark/compare_graphify.py"), "--graphify-query",
                 str(output_dir / "graphify-out/graph.json"), query, str(budget)]
     raise ValueError("retrieve is not available in this arm")
@@ -188,7 +198,7 @@ class Session:
             path = self.input / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
-        if self.arm in GRAF_QUERY_FLAGS:
+        if self.arm in GRAF_INDEX_ARMS:
             command = [str(BASE / "target/release/graf"), "--root", str(self.input), "index", "--rebuild"]
         elif self.arm == "ast_graph":
             command = [sys.executable, str(SCRIPTS / "ast_retrieve.py"), "index", str(self.input), str(self.output)]
@@ -206,8 +216,8 @@ class Session:
             "stdout": result.stdout, "stderr": result.stderr,
             "snapshot": sha(json.dumps(files, sort_keys=True)),
         }, indent=2) + "\n")
-        if self.arm in (*GRAF_QUERY_FLAGS, "ast_graph"):
-            built = self.input / ".graf/index.json" if self.arm in GRAF_QUERY_FLAGS else self.output / "ast-index.json"
+        if self.arm in (*GRAF_INDEX_ARMS, "ast_graph"):
+            built = self.input / ".graf/index.json" if self.arm in GRAF_INDEX_ARMS else self.output / "ast-index.json"
             index = json.loads(built.read_text())
             if set(index["files"]) != set(files):
                 raise RuntimeError("graf source filters differ from the shared input set")
@@ -247,6 +257,31 @@ class Session:
             context = run_tool(command, timeout=90, env=self.environment()).stdout
             return {"content": context, "requested_budget": budget, "reference_text_tokens": len(tokens(context)),
                     "over_reference_budget": len(tokens(context)) > budget}
+        if operation == "orient":
+            if self.arm not in ORIENT_ARMS or self.tool_count != 1:
+                raise ValueError("Orientation is produced once, by the harness, before the first turn")
+            if self.dirty:
+                self.rebuild()
+            if self.arm == "graf_orient":
+                command = [str(BASE / "target/release/graf"), "--root", str(self.input), "triage", "--budget",
+                           str(ORIENT_BUDGET), "--text", "--", self.task["issue"]]
+            else:
+                command = retrieve_command(self.arm, self.input, self.output, self.task["issue"], ORIENT_BUDGET)
+            native = run_tool(command, timeout=90, env=self.environment()).stdout
+            context = bounded(native, ORIENT_BUDGET)  # The same hard cap for both backends.
+            return {"content": context, "requested_budget": ORIENT_BUDGET, "reference_text_tokens": len(tokens(context)),
+                    "native_tokens": len(tokens(native)), "truncated": context != native}
+        if operation == "outline":
+            if self.arm != "graf_orient":
+                raise ValueError("outline is not available in this arm")
+            relative = str(self.path(args.get("path")).relative_to(self.root))
+            if self.dirty:
+                self.rebuild()
+            command = [str(BASE / "target/release/graf"), "--root", str(self.input), "outline", "--text", "--", relative]
+            result = run_tool(command, check=False, timeout=60, env=self.environment())
+            if result.returncode:
+                raise ValueError(result.stderr.strip() or "outline failed")
+            return {"content": result.stdout}
         if operation == "read":
             path = self.path(args.get("path"))
             start, count = args.get("start", 1), args.get("lines", 80)

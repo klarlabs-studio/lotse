@@ -20,7 +20,7 @@ import sys
 import time
 
 from agent_trials import BASE, audit_trace, tasks
-from task_session import ARMS, Session, prepare_session
+from task_session import ARMS, ORIENT_ARMS, Session, prepare_session
 
 SYSTEM_PROMPT = (
     "You are repairing a bug in a software repository. You can act only through the "
@@ -32,14 +32,40 @@ SYSTEM_PROMPT = (
 SEARCH_ONLY_PROMPT = SYSTEM_PROMPT.replace(
     "retrieve finds relevant source locations, read shows source lines, ", "read shows source lines, ")
 TIMEOUT_SECONDS = 1200
+ORIENTATION_HEADER = "Orientation (generated automatically from the repository before your first turn):\n\n"
+ORIENT_PROMPT = (" The issue report is followed by an automatically generated orientation; use it to decide "
+                 "where to look first.")
+GRAF_ORIENT_PROMPT = SYSTEM_PROMPT.replace(
+    "read shows source lines, ", "read shows source lines, outline lists a file's functions, ") + ORIENT_PROMPT
 TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "target/release/graf",
+                 "graf_orient": BASE / "target/release/graf",
+                 "graphify_orient": BASE / ".research/venv/bin/graphify",
                  "graphify": BASE / ".research/venv/bin/graphify",
                  "search_only": Path(shutil.which("rg") or "rg"),
                  "ast_graph": [BASE / "benchmark" / name for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
 
 
 def system_prompt(arm):
+    if arm == "graf_orient":
+        return GRAF_ORIENT_PROMPT
+    if arm == "graphify_orient":
+        return SYSTEM_PROMPT + ORIENT_PROMPT
     return SEARCH_ONLY_PROMPT if arm == "search_only" else SYSTEM_PROMPT
+
+
+def issue_prompt(issue, orientation):
+    """The issue, followed by the harness-generated orientation when the arm has one."""
+    return issue if orientation is None else f"{issue}\n\n{ORIENTATION_HEADER}{orientation}"
+
+
+def orient(session):
+    """Generate the orientation before the agent starts; it is logged and counted as a tool payload."""
+    if session.arm not in ORIENT_ARMS:
+        return None
+    response = session.call("orient", {})
+    if not response["ok"]:
+        raise RuntimeError(f"Orientation failed; no agent was started: {response['error']}")
+    return response["result"]["content"]
 
 
 def preflight(arm, binary):
@@ -104,7 +130,8 @@ def run(task, trial_id, arm, catalog):
         "command": sys.executable,
         "args": [str(BASE / "benchmark/broker_mcp.py"), task["id"], trial_id, "--arm", arm,
                  "--catalog", str(catalog)]}}}, indent=2) + "\n")
-    command = claude_command(task["issue"], mcp_config, prereg["model"], prereg["max_budget_usd"], arm)
+    prompt = issue_prompt(task["issue"], orient(session))
+    command = claude_command(prompt, mcp_config, prereg["model"], prereg["max_budget_usd"], arm)
     start = time.perf_counter()
     with (directory / "agent-stream.jsonl").open("w") as stream, \
          (directory / "agent-stderr.txt").open("w") as stderr:

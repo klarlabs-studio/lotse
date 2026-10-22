@@ -1,5 +1,5 @@
 {
-  "version": 21,
+  "version": 22,
   "frozen_on": "2026-10-20",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -175,6 +175,36 @@
         "arm_definitions": "ast_graph: retrieve runs the localization-screen ast_graph arm (tree-sitter units, BM25, one-hop call propagation 0.5, floor 0.5, whole units packed within the requested budget; Python prototype in benchmark/localization.py, hashed per run). search_only and graphify as in t3",
         "secondary": "mean turns per run and turns before the first edit, reported descriptively",
         "rationale": "ast_graph was the only arm to beat both graf_floor and Graphify on the held-out localization screen (unit Acc@5 0.365 vs 0.276 and 0.291); this batch tests whether that localization gain lowers agent cost against both comparators. A pass would justify a Rust implementation, not promotion of the prototype"
+      },
+      "t5": {
+        "arms": [
+          "graf_orient",
+          "graphify_orient",
+          "search_only"
+        ],
+        "candidates": [
+          "graf_orient"
+        ],
+        "controls": [],
+        "comparators": [
+          "graphify_orient",
+          "search_only"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261023,
+        "frozen_in_version": 22,
+        "arm_definitions": {
+          "graf_orient": "before the first turn the harness runs `graf triage --budget 1500 --text` on the issue and appends its output to the prompt under a fixed header; tools: retrieve (`graf units --text`, requested budget), outline (`graf outline --text`), read, search, edit, test, finish; system prompt names outline and says an orientation follows the issue",
+          "graphify_orient": "before the first turn the harness runs the pinned Graphify query on the issue text at token_budget 1500 and appends its output the same way; tools: retrieve (Graphify, as in t3), read, search, edit, test, finish; the same orientation sentence in the system prompt",
+          "search_only": "as in t3 and t4: no orientation, no retrieve"
+        },
+        "orientation_accounting": "the orientation call is a logged broker tool event; its text is part of the first prompt, so the provider-reported usage counts it in every turn",
+        "graf_binary": "target/release/graf at the commit freezing this batch, hashed per run; triage, units, outline, and rewrite are the experimental commands of commits dba6c20, 0cd693f, and 7ccfea3",
+        "rule": "the agent_trials.rule (cost superiority, success non-inferiority margin 0.10) against each comparator; intersection-union, so alpha is not split",
+        "secondary": "turns per run, turns before the first edit, tool calls by type, and the orientation's payload, reported descriptively",
+        "schedule": "runs after batch t4 completes; frozen before any t4 outcome was looked at",
+        "rationale": "tests whether one cheap up-front orientation (likely files, then whole likely functions) and function-level reads let an agent decide faster what to work on, against the same up-front orientation from Graphify",
+        "orientation_cap": "both orientations are cut to at most 1,500 cl100k tokens at whole lines by the harness (bounded); Graphify's native output exceeded its requested budget on the dry run (mean 2,304, max 4,903 tokens), graf's triage stayed within it (mean 1,192). The native size is logged"
       }
     },
     "natural_tasks": {
@@ -353,6 +383,11 @@
       "version": 21,
       "date": "2026-10-21",
       "change": "added localization_screen.confirmation: ast_graph_ids (call graph plus query rewrite) against Graphify, ast_graph, and graf_floor_ids on six new repositories, frozen before any of their pull requests was listed"
+    },
+    {
+      "version": 22,
+      "date": "2026-10-22",
+      "change": "added batch t5 (graf_orient vs graphify_orient and search_only) on the t4 catalog, the user's chosen up-front orientation design; frozen before any t4 outcome was looked at; both orientations are capped at 1,500 tokens after a solver-free dry run showed Graphify's native output exceeds its requested budget"
     }
   ],
   "arms": {

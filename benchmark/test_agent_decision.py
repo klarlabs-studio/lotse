@@ -48,6 +48,11 @@ class AgentDecisionTests(unittest.TestCase):
         self.assertEqual({k: AGENT["batches"]["t2"][k] for k in TRIO}, TRIO)
         self.assertEqual({k: AGENT["batches"]["t3"][k] for k in NATURAL}, NATURAL)
         self.assertEqual(AGENT["batches"]["t3"]["catalog"], "benchmark/natural-tasks.json")
+        t5 = AGENT["batches"]["t5"]
+        self.assertEqual((t5["candidates"], t5["comparators"]), (["graf_orient"], ["graphify_orient", "search_only"]))
+        self.assertEqual(t5["catalog"], AGENT["batches"]["t4"]["catalog"])
+        from task_session import ARMS
+        self.assertTrue(set(t5["arms"]) <= set(ARMS))
 
     def test_a_candidate_must_beat_every_comparator(self):
         beats_one = batch(costs={"graf_floor": 0.003, "search_only": 0.002, "graphify": 0.004})

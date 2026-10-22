@@ -57,6 +57,17 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(command[command.index("--setting-sources") + 1], "")
 
 
+    def test_orient_arms_prepend_the_orientation_and_describe_it(self):
+        from run_agent_trial import ORIENTATION_HEADER, issue_prompt
+        self.assertEqual(issue_prompt("bug", None), "bug")
+        prompt = issue_prompt("bug", "Likely files:\n- a.py\n")
+        self.assertTrue(prompt.startswith("bug\n\n" + ORIENTATION_HEADER))
+        self.assertTrue(prompt.endswith("- a.py\n"))
+        for arm in ("graf_orient", "graphify_orient"):
+            self.assertIn("orientation", system_prompt(arm))
+        self.assertIn("outline", system_prompt("graf_orient"))
+        self.assertNotIn("outline", system_prompt("graphify_orient"))
+
     def test_prompt_names_only_the_arm_tools(self):
         # Batch t ran with SYSTEM_PROMPT for both arms; retrieval arms keep it unchanged.
         for arm in ("graf", "graf_floor", "graphify", "ast_graph"):

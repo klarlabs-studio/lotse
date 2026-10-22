@@ -27,6 +27,7 @@ TOOLS = {
     "edit": {"properties": {"path": {"type": "string"}, "old": {"type": "string", "minLength": 1},
                             "new": {"type": "string"}},
              "required": ["path", "old", "new"]},
+    "outline": {"properties": {"path": {"type": "string"}}, "required": ["path"]},
     "test": {"properties": {}, "required": []},
     "finish": {"properties": {}, "required": []},
 }

@@ -35,7 +35,8 @@ class BrokerMcpTests(unittest.TestCase):
 
     def test_lists_exactly_the_broker_operations(self):
         tools = self.request("tools/list")["result"]["tools"]
-        self.assertEqual([t["name"] for t in tools], [t["name"] for t in TOOL_DEFINITIONS])
+        self.assertEqual([t["name"] for t in tools], [t["name"] for t in tool_definitions("graf")])
+        self.assertNotIn("outline", [t["name"] for t in tools])
         for tool in tools:
             self.assertEqual(tool["inputSchema"]["type"], "object")
             self.assertFalse(tool["inputSchema"].get("additionalProperties", True))
@@ -65,6 +66,11 @@ class BrokerMcpTests(unittest.TestCase):
         self.assertEqual(self.request("resources/list")["error"]["code"], -32601)
         self.assertIsNone(handle({"jsonrpc": "2.0", "method": "notifications/initialized"}, self.session))
         self.assertEqual(self.request("ping")["result"], {})
+
+    def test_graf_orient_lists_outline(self):
+        self.session = FakeSession("graf_orient")
+        tools = [t["name"] for t in self.request("tools/list")["result"]["tools"]]
+        self.assertEqual(tools, ["retrieve", "read", "search", "edit", "outline", "test", "finish"])
 
     def test_schemas_cover_every_documented_parameter(self):
         for definition in TOOL_DEFINITIONS:

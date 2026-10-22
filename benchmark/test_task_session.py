@@ -102,6 +102,48 @@ class TaskBrokerIntegrity(unittest.TestCase):
         build = json.loads((session.directory / "index-build-1.json").read_text())
         self.assertEqual(build["arm"], "ast_graph")
 
+    def test_orient_arms_have_their_tools_and_commands(self):
+        names = lambda arm: [d["name"] for d in task_session.tool_definitions(arm)]
+        self.assertIn("outline", names("graf_orient"))
+        self.assertNotIn("outline", names("graphify_orient"))
+        self.assertNotIn("outline", names("graf"))
+        self.assertNotIn("orient", names("graf_orient"))
+        units = task_session.retrieve_command("graf_orient", Path("in"), Path("out"), "-q", 900)
+        self.assertEqual(units[3:], ["units", "--budget", "900", "--text", "--", "-q"])
+        self.assertIn("--graphify-query", task_session.retrieve_command("graphify_orient", Path("in"), Path("out"), "q", 9))
+
+    def test_orientation_is_only_for_orient_arms_and_only_once(self):
+        with patch.object(task_session, "run_tool") as run:
+            run.return_value.stdout = "Likely files:\n- app.py\n"
+            session = task_session.prepare_session(self.task, "orient-trial", "graf_orient")
+            session.dirty = False
+            first = session.call("orient", {})
+            self.assertTrue(first["ok"], first)
+            self.assertEqual(first["result"]["content"], "Likely files:\n- app.py\n")
+            command = run.call_args[0][0]
+            self.assertEqual(command[3:], ["triage", "--budget", str(task_session.ORIENT_BUDGET), "--text", "--",
+                                           self.task["issue"]])
+            self.assertFalse(session.call("orient", {})["ok"])
+            run.return_value.stdout = "word\n" * 5000
+            long = task_session.prepare_session(self.task, "orient-long", "graphify_orient")
+            long.dirty = False
+            capped = long.call("orient", {})["result"]
+            self.assertLessEqual(capped["reference_text_tokens"], task_session.ORIENT_BUDGET)
+            self.assertTrue(capped["truncated"])
+        self.assertFalse(self.session.call("orient", {})["ok"])
+
+    def test_outline_reads_through_the_index_of_the_workspace(self):
+        with patch.object(task_session, "run_tool") as run:
+            run.return_value.stdout = "app.py (2 lines, 1 functions)\n"
+            run.return_value.returncode = 0
+            session = task_session.prepare_session(self.task, "outline-trial", "graf_orient")
+            session.dirty = False
+            result = session.call("outline", {"path": "app.py"})
+            self.assertTrue(result["ok"], result)
+            self.assertEqual(run.call_args[0][0][3:], ["outline", "--text", "--", "app.py"])
+            self.assertFalse(session.call("outline", {"path": "../x"})["ok"])
+        self.assertFalse(self.session.call("outline", {"path": "app.py"})["ok"])
+
     def test_a_refused_second_finish_records_no_verdict(self):
         self.session.call("finish", {})
         self.assertFalse(self.session.call("finish", {})["ok"])
