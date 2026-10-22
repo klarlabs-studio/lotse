@@ -90,7 +90,7 @@ class TaskBrokerIntegrity(unittest.TestCase):
                          ["--", "--verbose"])
         self.assertIn("--graphify-query", task_session.retrieve_command("graphify", Path("in"), Path("out"), "q", 2000))
         ast = task_session.retrieve_command("ast_graph", Path("in"), Path("out"), "q", 2000)
-        self.assertEqual(ast[1:], [str(task_session.SCRIPTS / "ast_retrieve.py"), "query", "out", "q", "2000"])
+        self.assertEqual(ast[1:], [str(task_session.AST_BACKEND / "ast_retrieve.py"), "query", "out", "q", "2000"])
         with self.assertRaises(ValueError):
             task_session.retrieve_command("search_only", Path("in"), Path("out"), "q", 2000)
 

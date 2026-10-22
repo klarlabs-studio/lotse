@@ -42,7 +42,8 @@ TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "tar
                  "graphify_orient": BASE / ".research/venv/bin/graphify",
                  "graphify": BASE / ".research/venv/bin/graphify",
                  "search_only": Path(shutil.which("rg") or "rg"),
-                 "ast_graph": [BASE / "benchmark" / name for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
+                 "ast_graph": [BASE / "frozen-t4" / name
+                               for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
 
 
 def system_prompt(arm):

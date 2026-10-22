@@ -40,6 +40,7 @@ GRAF_QUERY_FLAGS = {"graf": (), "graf_floor": ("--file-score", "damped", "--stop
 ORIENT_ARMS = ("graf_orient", "graphify_orient")
 ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph", *ORIENT_ARMS)
 SCRIPTS = Path(__file__).resolve().parent
+AST_BACKEND = BASE / "frozen-t4"  # The ast_graph backend as batch t4 started; see frozen-t4/README.md.
 ORIENT_BUDGET = 1500  # Batch t5: the orientation shown before the first turn (preregistration v22).
 GRAF_INDEX_ARMS = (*GRAF_QUERY_FLAGS, "graf_orient")
 
@@ -56,7 +57,7 @@ def retrieve_command(arm, input_dir, output_dir, query, budget):
         return [str(BASE / "target/release/graf"), "--root", str(input_dir), "locate",
                 "--budget", str(budget), "--limit", "1000", "--text", *GRAF_QUERY_FLAGS[arm], "--", query]
     if arm == "ast_graph":
-        return [sys.executable, str(SCRIPTS / "ast_retrieve.py"), "query", str(output_dir), query, str(budget)]
+        return [sys.executable, str(AST_BACKEND / "ast_retrieve.py"), "query", str(output_dir), query, str(budget)]
     if arm == "graf_orient":
         return [str(BASE / "target/release/graf"), "--root", str(input_dir), "units", "--budget", str(budget),
                 "--text", "--", query]
@@ -201,7 +202,7 @@ class Session:
         if self.arm in GRAF_INDEX_ARMS:
             command = [str(BASE / "target/release/graf"), "--root", str(self.input), "index", "--rebuild"]
         elif self.arm == "ast_graph":
-            command = [sys.executable, str(SCRIPTS / "ast_retrieve.py"), "index", str(self.input), str(self.output)]
+            command = [sys.executable, str(AST_BACKEND / "ast_retrieve.py"), "index", str(self.input), str(self.output)]
         else:
             graphify_pin()
             command = [str(BASE / ".research/venv/bin/graphify"), "extract", str(self.input),

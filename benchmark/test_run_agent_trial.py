@@ -88,6 +88,12 @@ class ScoredEventTests(unittest.TestCase):
         self.assertEqual(scored_events(events[:2]), (events[:2], 0))
 
 
+class FrozenBackendTests(unittest.TestCase):
+    def test_t4_ast_graph_backend_keeps_the_hash_its_first_runs_recorded(self):
+        from run_agent_trial import TOOL_BINARIES
+        self.assertTrue(preflight("ast_graph", TOOL_BINARIES["ast_graph"]).startswith("fc85e65972d1"))
+
+
 class PreflightTests(unittest.TestCase):
     def test_missing_tool_binary_stops_before_the_agent_runs(self):
         with tempfile.TemporaryDirectory() as temp:
