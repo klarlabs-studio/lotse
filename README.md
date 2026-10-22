@@ -1,8 +1,66 @@
 # graf
 
-A Rust CLI for retrieving source evidence from code and repository documentation, with a reproducible research suite behind it. The initial implementation uses BM25, source hashes, line citations, and progressive source reads. It runs locally without a model, embedding service, or graph database.
+graf helps coding agents decide where to work without reading the whole repository. Given an issue or task, it lists the likely files and shows the likely functions in full, within a token budget. It runs locally with no model, embedding service, or graph database. A reproducible research suite benchmarks it against [Graphify](research/localization-results.md).
 
-## Use the Rust CLI
+## Quick start
+
+```sh
+cargo install --locked --path .   # from a graf checkout; puts `graf` on your PATH
+cd /path/to/repo
+graf triage "Reply hooks run twice when the payload is a stream"
+```
+
+The first query indexes the repository into `.graf/` (git-ignored automatically). Rerun `graf index` after edits; the MCP server below does this itself.
+
+The agent workflow is three commands:
+
+| Step | Command | Returns |
+|---|---|---|
+| Orient | `graf triage "<issue or task text>"` | likely files, then likely functions in full |
+| Narrow | `graf outline <path>` | a file's functions with line ranges and signatures |
+| Follow up | `graf units "<identifiers or words>"` | more whole functions, ranked |
+
+Add `--text` for plain context instead of JSON, and `--budget N` to cap the `cl100k_base` tokens returned (triage defaults to 1,500). Go, Python, JavaScript, TypeScript, TSX, and JSX are split into functions; other files are searched as line windows.
+
+## Use with agents (MCP)
+
+`graf mcp` serves the same tools over the Model Context Protocol on stdio. It keeps the index in memory, builds it on first use, and updates it when files the agent edited are returned.
+
+Claude Code:
+
+```sh
+claude mcp add graf -- graf mcp
+```
+
+Cursor, Windsurf, Claude Desktop, and other clients that read an `mcpServers` file:
+
+```json
+{
+  "mcpServers": {
+    "graf": { "command": "graf", "args": ["mcp"], "cwd": "/path/to/repo" }
+  }
+}
+```
+
+If the client cannot set a working directory, pass `"args": ["--root", "/path/to/repo", "mcp"]`.
+
+The tools are `triage`, `outline`, `units`, `locate`, `search`, `expand`, and `index`. To make agents use them first, add this to the repository's `AGENTS.md` or `CLAUDE.md`:
+
+```markdown
+## Finding code
+Before reading files, call graf `triage` with the task text. It lists likely files and the likely
+functions in full. Use `outline` to see a file's functions before opening it, and read only the
+line ranges you need. Use `units` for follow-up questions instead of reading whole files.
+```
+
+### Status of the evidence
+
+- **Offline localization screens:** `triage` combines two rankings, one for files and one for functions. Each beat pinned Graphify in preregistered tests on real issues from Go, Python, and JavaScript repositories. See the [localization results](research/localization-results.md).
+- **Agent cost:** whether agents finish tasks with fewer tokens is still being measured in preregistered agent batches.
+- **Experimental flag:** until those batches finish, `triage`, `units`, and `outline` are marked experimental, and no agent-efficiency claim is made. See [AGENTS.md](AGENTS.md) for the rules.
+- **Large repositories:** `triage` answers in about half a second on Kubernetes and VS Code; see the [scale diagnostic](research/scale-results.md).
+
+## Lower-level commands
 
 Install a current Rust toolchain, then build from the locked dependencies:
 
@@ -28,7 +86,7 @@ Expand an anchor by passing its short handle from locate or its full ID from sea
 
 Rerun `index` after changes. Unchanged files reuse their chunks; postings are rebuilt and the snapshot is saved atomically under `.graf/index.bin` (schema 2: excerpt text is not stored but read from the hash-checked source; an older `.graf/index.json` requires `index --rebuild`). Locate, search, and expansion reject stale selected files with a reindex instruction. New or unselected changed files require indexing to affect rankings. A moved checkout requires `index --rebuild`.
 
-The scanner respects ignore rules within the root plus global ignore rules, excludes hidden/generated directories and symlinks, and indexes supported UTF-8 source/document files up to 1 MB. Add `.graf/` to each target repository's `.gitignore`. Indexed source text is stored locally in `.graf/`; ignore rules and extension filtering are not a secret detector. This is an initial CLI, with no MCP server, compiler-resolved graph, semantic index, or generated summaries. See the [implementation contract](research/rust-cli.md).
+The scanner respects ignore rules within the root plus global ignore rules, excludes hidden/generated directories and symlinks, and indexes supported UTF-8 source/document files up to 1 MB. graf writes `.graf/.gitignore` so its files stay out of git. File metadata, postings, and function caches are stored locally in `.graf/`; ignore rules and extension filtering are not a secret detector. There is no compiler-resolved graph, semantic index, or generated summary; call edges come from tree-sitter names. See the [implementation contract](research/rust-cli.md).
 
 ## Validate the Rust implementation
 
