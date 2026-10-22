@@ -162,6 +162,37 @@ Each arm's p is the larger of its two one-sided McNemar tests; wins are the disc
 - **Graphify keeps the best file recall** (file Acc@5 0.627–0.684) **and wins on small, flat codebases** (koa, Fastify).
 - **These are localization screens, not efficiency results.** Agent batch t4 tests whether `ast_graph`'s lead lowers agent cost.
 
+## File-ranking screen: call-graph propagation over files beats Graphify's file recall
+
+**Outcome: `file_graph_ids` qualifies for triage's file list.** On 765 issue-closing pull requests in echo, resty, werkzeug, marshmallow, hapi, and mocha, propagating graf's file scores over cross-file call edges puts a fixed file among the first five for 78.4% of issues. That compares with 67.3% for the same scores without propagation (`graf_floor_ids`) and 61.2% for Graphify. Both paired tests give p < 0.0001: 87 wins vs 2 against `graf_floor_ids`, and 192 vs 60 against Graphify. The rule is `localization_screen.file_screen` in [preregistration v24](../benchmark/preregistration.json), frozen before any pull request in these repositories was listed. Data: [localization-decision-file_screen.json](../results/localization-decision-file_screen.json) and [localization-file_screen.json](../results/localization-file_screen.json).
+
+- **Conditions.** The catalog ([localization-file-screen-tasks.json](../benchmark/localization-file-screen-tasks.json), sha256 `987e0a6c…`) holds 767 tasks. Two were excluded because their gold is outside the corpus. The pinned graf binary is the same as in the earlier screens, and the run had no interruptions.
+- **The arm.** Each file's damped locate score (rewritten query) is raised by 0.5 × the best score among files linked to it by a cross-file call between function units. Files are ranked by the raised score. The payload is a list of eight paths, about 48 tokens.
+
+| Arm | file Acc@1 | **file Acc@5** | file Acc@10 | mean payload |
+| --- | ---: | ---: | ---: | ---: |
+| graf_floor | 0.241 | 0.590 | 0.732 | 828 |
+| graf_floor_ids | 0.344 | 0.673 | 0.808 | 645 |
+| Graphify (code-only hints) | 0.235 | 0.612 | 0.778 | 2,042 |
+| file_bm25 | 0.162 | 0.527 | 0.665 | 86 |
+| **file_graph_ids** | **0.405** | **0.784** | **0.847** | **48** |
+
+**file Acc@5 by repository:**
+
+| | graf_floor_ids | Graphify | file_graph_ids |
+| --- | ---: | ---: | ---: |
+| werkzeug (231) | 0.80 | 0.69 | **0.87** |
+| mocha (175) | 0.50 | 0.35 | **0.63** |
+| hapi (109) | 0.56 | 0.45 | **0.74** |
+| resty (95) | 0.75 | 0.79 | **0.82** |
+| marshmallow (85) | 0.74 | 0.87 | **0.92** |
+| echo (70) | 0.69 | 0.71 | **0.76** |
+
+- **The gain comes from reordering.** In 82 of the 87 wins over `graf_floor_ids`, the fixed file was already in graf's list but below fifth place. In the other 5, it was added as a neighbour.
+- **`file_graph_ids` leads in every repository.** That includes the two (resty, marshmallow) where Graphify beat graf's unpropagated ranking.
+- **Unit metrics are unchanged.** In this screen, `ast_graph_ids` again has the best unit Acc@5 (0.399, against 0.267 for Graphify), as a descriptive result.
+- **Triage's next version:** list files by `file_graph_ids`, then show whole functions from `ast_graph_ids`. Like everything here, it stays experimental until an agent batch measures its effect on cost.
+
 ## Deviations and disclosures
 
 - After the dev run (debugging only), v16 changed the primary metric from "any hit in the payload" to Acc@5. "Any hit" rewards arms that cite about 46 pointers. v16 also added `ast_bounded` and `graf_floor_ids`, motivated by the [literature review](code-representation-review.md). No held-out task had been scored at that point.
