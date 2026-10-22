@@ -28,7 +28,7 @@ import tree_sitter_javascript
 import tree_sitter_python
 import tree_sitter_typescript
 
-from retrieval import BASE, BM25, EXTENSIONS, EXTENSIONS_V2, load_documents, tokens
+from retrieval import BASE, BM25, EXTENSIONS, EXTENSIONS_V2, graf_artifact, load_documents, tokens
 
 WINDOW = 24
 LANGUAGES = {".go": tree_sitter_go, ".py": tree_sitter_python, ".js": tree_sitter_javascript,
@@ -424,7 +424,7 @@ def graf_locate_command(root, arm, query, budget):
 
 
 def run_graf(root, arm, query, budget):
-    if not (root / "input/.graf/index.json").is_file():
+    if not graf_artifact(root / "input").is_file():
         subprocess.run([str(GRAF), "--root", str(root / "input"), "index", "--rebuild"], check=True,
                        capture_output=True)
     out = subprocess.run(graf_locate_command(root / "input", arm, query, budget), check=True,

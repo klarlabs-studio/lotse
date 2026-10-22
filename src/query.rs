@@ -42,12 +42,12 @@ fn citation(path: &str, start: usize, end: usize) -> Result<String> {
 
 /// The anchor line with the most distinct query terms; ties keep source order.
 fn best_line<'a>(
-    chunk: &'a Chunk,
+    text: &'a str,
     query_terms: &BTreeSet<String>,
     analyzer: &Analyzer,
 ) -> (usize, &'a str) {
     let mut best = (0, 0, "");
-    for (offset, line) in chunk.text.lines().enumerate() {
+    for (offset, line) in text.lines().enumerate() {
         let matches = analyzer
             .terms(line)
             .into_iter()
@@ -71,7 +71,8 @@ impl Index {
         ensure!(!query.trim().is_empty(), "Query must not be empty");
         let chunks: Vec<&Chunk> = self.chunks().collect();
         let mut scores = HashMap::<usize, f64>::new();
-        let average = self.lengths.iter().sum::<usize>() as f64 / self.lengths.len().max(1) as f64;
+        let average = self.lengths.iter().map(|&l| l as usize).sum::<usize>() as f64
+            / self.lengths.len().max(1) as f64;
         for term in self
             .analyzer
             .terms(query)
@@ -86,8 +87,10 @@ impl Index {
                 .ln();
             for hit in hits {
                 let count = hit.count as f64;
-                let norm = K1 * (1.0 - B + B * self.lengths[hit.chunk] as f64 / average.max(1.0));
-                *scores.entry(hit.chunk).or_default() += idf * count * (K1 + 1.0) / (count + norm);
+                let norm =
+                    K1 * (1.0 - B + B * self.lengths[hit.chunk as usize] as f64 / average.max(1.0));
+                *scores.entry(hit.chunk as usize).or_default() +=
+                    idf * count * (K1 + 1.0) / (count + norm);
             }
         }
         let mut ranking: Vec<_> = scores
@@ -143,18 +146,18 @@ impl Index {
         let bpe = cl100k_base()?;
         let mut packer = Packer::new(&bpe, budget);
         let mut excerpts = Vec::new();
-        let mut checked = BTreeSet::new();
+        let mut texts = HashMap::<&str, String>::new();
         for (chunk, score) in candidates(ranking, policy.stop) {
             if excerpts.len() >= limit {
                 break;
             }
-            if checked.insert(chunk.path.as_str()) {
-                self.current_text(&chunk.path)?;
+            if !texts.contains_key(chunk.path.as_str()) {
+                texts.insert(&chunk.path, self.current_text(&chunk.path)?);
             }
             let section = format!(
                 "{}\n{}",
                 citation(&chunk.path, chunk.start, chunk.end)?,
-                chunk.text
+                Index::excerpt_text(&texts[chunk.path.as_str()], chunk)
             );
             if packer.try_push(&section) {
                 excerpts.push(self.excerpt(chunk, chunk.start, chunk.end, Some(score)));
@@ -208,8 +211,8 @@ impl Index {
             if hints.len() >= limit {
                 break;
             }
-            self.current_text(&chunk.path)?;
-            let (offset, line) = best_line(chunk, &query_terms, &self.analyzer);
+            let excerpt = Index::excerpt_text(&self.current_text(&chunk.path)?, chunk);
+            let (offset, line) = best_line(&excerpt, &query_terms, &self.analyzer);
             let line_number = chunk.start + offset;
             let preview: String = line.trim().chars().take(PREVIEW_CHARS).collect();
             let preview_truncated = line.trim().chars().count() > PREVIEW_CHARS;

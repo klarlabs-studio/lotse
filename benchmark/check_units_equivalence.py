@@ -17,7 +17,7 @@ import sys
 
 from ast_retrieve import index as prototype_index, query as prototype_query
 from localization import CATALOG, WORK, snapshot, write_json_atomic
-from retrieval import BASE
+from retrieval import BASE, graf_index
 
 BUDGETS = (500, 2000)
 
@@ -39,7 +39,7 @@ def check_task(task, binary):
     env = {**os.environ, "PYTHONHASHSEED": "0"}
     subprocess.run([str(binary), "--root", str(root / "input"), "index", "--rebuild"], check=True,
                    capture_output=True, env=env)
-    indexed = set(json.loads((root / "input/.graf/index.json").read_text())["files"])
+    indexed = set(graf_index(binary, root / "input")["files"])
     rows = []
     for budget in BUDGETS:
         expected = prototype_query(out, task["query"], budget)

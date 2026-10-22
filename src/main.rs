@@ -202,6 +202,9 @@ enum Command {
     },
     /// Show index size, source counts, and chunk counts (snapshot metadata).
     Stats,
+    /// Print the index in the schema 1 JSON layout (excerpt text included), for tooling.
+    #[command(hide = true)]
+    ExportIndex,
 }
 
 fn write_stdout(text: &str) -> Result<()> {
@@ -329,6 +332,7 @@ fn run() -> Result<()> {
             emit(text, &response.context, &response)
         }
         Command::Stats => print_json(&index.stats()?),
+        Command::ExportIndex => print_json(&index.export_legacy()?),
         Command::Map {
             offset,
             limit,

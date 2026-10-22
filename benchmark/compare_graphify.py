@@ -18,6 +18,8 @@ import sys
 import time
 import tomllib
 
+from retrieval import graf_artifact, graf_index
+
 BASE = Path(__file__).resolve().parents[1]
 # graf arms: (index flags, query subcommand and flags). The first two are the
 # accepted behavior; the rest are preregistered experiments
@@ -202,11 +204,10 @@ def main():
             process = subprocess.run(command, capture_output=True, text=True, timeout=180, check=True, env=env)
             elapsed = (time.perf_counter() - start) * 1000
             (logs / f"{tool}-build.txt").write_text(process.stdout + process.stderr)
-            artifact = staged / ".graf/index.json" if tool == "graf" else output / "graphify-out/graph.json"
+            artifact = graf_artifact(staged) if tool == "graf" else output / "graphify-out/graph.json"
             builds[tool] = {"elapsed_ms": elapsed, "index_bytes": artifact.stat().st_size,
                             "artifact_sha256": sha(artifact), "command": command}
-        graf_index = json.loads((staged / ".graf/index.json").read_text())
-        if set(graf_index["files"]) != set(files):
+        if set(graf_index(binary, staged)["files"]) != set(files):
             raise RuntimeError(f"{repo}: staged inputs differ from graf index; fix filters before comparing")
         # Experimental analyzers index identical copies of the staged input.
         for flags in INDEX_VARIANTS[1:]:
@@ -218,8 +219,8 @@ def main():
             start = time.perf_counter()
             subprocess.run(command, capture_output=True, text=True, timeout=180, check=True, env=env)
             elapsed = (time.perf_counter() - start) * 1000
-            artifact = root / ".graf/index.json"
-            if set(json.loads(artifact.read_text())["files"]) != set(files):
+            artifact = graf_artifact(root)
+            if set(graf_index(binary, root)["files"]) != set(files):
                 raise RuntimeError(f"{repo}: {flags} index differs from staged inputs")
             builds[variant_name(flags)] = {"elapsed_ms": elapsed, "index_bytes": artifact.stat().st_size,
                                            "artifact_sha256": sha(artifact), "command": command}
@@ -231,7 +232,7 @@ def main():
         output = scratch / repo / "graph"
         files = repository["file_hashes"]
         roots = {flags: variant_root(scratch / repo, flags) for flags in INDEX_VARIANTS}
-        graf_indexes = {flags: json.loads((root / ".graf/index.json").read_text()) for flags, root in roots.items()}
+        graf_indexes = {flags: graf_index(binary, root) for flags, root in roots.items()}
         for case in (c for c in cases if c["repo"] == repo):
             for budget in (2000, 8000):
                 commands = {

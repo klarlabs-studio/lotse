@@ -1,10 +1,12 @@
 """Exploratory retrievers. No gold annotations or task-specific query rewrites."""
 from collections import Counter, defaultdict
 import hashlib
+import json
 import math
 import os
 from pathlib import Path
 import re
+import subprocess
 import time
 
 import numpy as np
@@ -53,6 +55,21 @@ def chunks_from(path, text):
             continue
         result.append(dict(path=path, start=offset + 1, end=min(offset + 24, len(lines)), text=body))
     return result
+
+
+def graf_artifact(root):
+    """The index file graf wrote under `root`: schema 2 `.graf/index.bin`, else schema 1 JSON."""
+    compact = Path(root) / ".graf/index.bin"
+    return compact if compact.is_file() else Path(root) / ".graf/index.json"
+
+
+def graf_index(binary, root):
+    """The index under `root` in the schema 1 JSON layout, whichever schema the build wrote."""
+    artifact = graf_artifact(root)
+    if artifact.suffix == ".json":
+        return json.loads(artifact.read_text())
+    return json.loads(subprocess.run([str(binary), "--root", str(root), "export-index"], check=True,
+                                     capture_output=True, text=True).stdout)
 
 
 def load_documents(root, extensions=EXTENSIONS):

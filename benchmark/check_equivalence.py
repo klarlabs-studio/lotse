@@ -2,7 +2,10 @@
 
 Use this to guard refactors and performance changes that must not alter ranking,
 packing, handles, or the serialized index. It is a diagnostic, not a benchmark:
-it records no timings and supports no comparative efficiency claim.
+it records no timings and supports no comparative efficiency claim. The index is
+compared in the schema 1 JSON layout (`graf export-index` for schema 2 builds), and
+`index_bytes` in build reports and stats is reported separately, since a storage
+change alters it by design.
 
     python benchmark/check_equivalence.py OLD_BINARY NEW_BINARY --corpora DIR
 
@@ -17,6 +20,8 @@ import subprocess
 import sys
 import tempfile
 
+from retrieval import graf_index
+
 BASE = Path(__file__).resolve().parents[1]
 REPOS = ("cobra", "flask", "fastify")
 BUDGETS = (0, 50, 2000, 8000)
@@ -27,10 +32,20 @@ def run(binary, root, *args):
     return {"args": list(args), "code": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
 
 
-def normalized_index(root):
-    index = json.loads((root / ".graf/index.json").read_text())
+def normalized_index(binary, root):
+    index = graf_index(binary, root)
     index["root"] = "<root>"
     return index
+
+
+def without_index_bytes(result):
+    """A result with `index_bytes` removed from build-report and stats JSON."""
+    if result["code"] or result["args"][0] not in ("index", "stats"):
+        return result, None
+    body = json.loads(result["stdout"])
+    stats = body.get("stats", body)
+    size = stats.pop("index_bytes", None)
+    return {**result, "stdout": json.dumps(body, sort_keys=True).encode()}, size
 
 
 def requests(queries, repo):
@@ -69,7 +84,7 @@ def outputs(binary, root, queries, repo):
 
 def compare(old, new, corpora):
     queries = json.loads((BASE / "benchmark/queries.json").read_text())
-    failures, checked = [], 0
+    failures, checked, sizes = [], 0, {}
     with tempfile.TemporaryDirectory() as tmp:
         for repo in REPOS:
             roots = {}
@@ -81,12 +96,16 @@ def compare(old, new, corpora):
             # Arm directory names have equal length, so index_bytes in build reports is comparable.
             for a, b in zip(old_results, new_results, strict=True):
                 checked += 1
+                (a, old_size), (b, new_size) = without_index_bytes(a), without_index_bytes(b)
+                if old_size is not None:
+                    sizes.setdefault(repo, {"old": old_size, "new": new_size})
                 if a != b:
                     failures.append({"repo": repo, "args": a["args"]})
-            if normalized_index(roots["old"]) != normalized_index(roots["new"]):
+            if normalized_index(old, roots["old"]) != normalized_index(new, roots["new"]):
                 failures.append({"repo": repo, "args": ["serialized index"]})
             checked += 1
             print(repo, "checked", len(old_results), "outputs", flush=True)
+    print("index bytes", json.dumps(sizes), flush=True)
     return checked, failures
 
 

@@ -226,57 +226,52 @@ fn cli_emits_machine_readable_results_and_actionable_errors() {
     assert!(child.wait().unwrap().success());
 }
 
+fn rewrite_index(root: &std::path::Path, edit: impl FnOnce(&mut Index)) {
+    let path = graf::index_path(root);
+    let mut index: Index = bincode::deserialize(&fs::read(&path).unwrap()).unwrap();
+    edit(&mut index);
+    fs::write(&path, bincode::serialize(&index).unwrap()).unwrap();
+}
+
 #[test]
 fn incompatible_and_moved_indexes_require_explicit_rebuild() {
     let dir = fixture();
     let root = canonical_root(dir.path()).unwrap();
     Index::build(&root, false).unwrap();
-    let path = graf::index_path(&root);
-    let original = fs::read(&path).unwrap();
-    let mut value: serde_json::Value = serde_json::from_slice(&original).unwrap();
-    value["schema"] = 99.into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
+    let original = fs::read(graf::index_path(&root)).unwrap();
+    rewrite_index(&root, |index| index.schema = 99);
     assert!(Index::load(&root).is_err());
     assert!(Index::build(&root, false).is_err());
     Index::build(&root, true).unwrap();
     let current = Index::load(&root).unwrap();
     assert_eq!(current.files.len(), 3);
-    let mut value: serde_json::Value = serde_json::from_slice(&original).unwrap();
-    value["root"] = "/another-checkout".into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
+    fs::write(graf::index_path(&root), &original).unwrap();
+    rewrite_index(&root, |index| index.root = "/another-checkout".into());
     assert!(Index::load(&root).is_err());
     Index::build(&root, true).unwrap();
     assert!(Index::load(&root).is_ok());
 }
 
 #[test]
-fn corrupt_postings_and_excerpt_text_are_rejected() {
+fn corrupt_postings_and_excerpt_ranges_are_rejected() {
     let dir = fixture();
     let root = canonical_root(dir.path()).unwrap();
     Index::build(&root, false).unwrap();
-    let path = graf::index_path(&root);
-    let bytes = fs::read(&path).unwrap();
-    let mut value: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
-    let term = value["postings"]
-        .as_object()
-        .unwrap()
-        .keys()
-        .next()
-        .unwrap()
-        .clone();
-    value["postings"][&term][0]["chunk"] = 999_999.into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
+    let original = fs::read(graf::index_path(&root)).unwrap();
+    rewrite_index(&root, |index| {
+        index.postings.values_mut().next().unwrap()[0].chunk = 999_999;
+    });
     assert!(Index::load(&root).is_err());
-    let mut value: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
-    value["files"]["cache.rs"]["chunks"][0]["text"] = "invented source".into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
-    let index = Index::load(&root).unwrap();
+    fs::write(graf::index_path(&root), &original).unwrap();
+    rewrite_index(&root, |index| {
+        let chunk = &mut index.files.get_mut("cache.rs").unwrap().chunks[0];
+        chunk.end = 10_000;
+    });
     assert!(
-        index
-            .search("cache", 2000, 10, None, None)
+        Index::load(&root)
             .unwrap_err()
             .to_string()
-            .contains("Corrupt source")
+            .contains("Invalid source ranges")
     );
 }
 
@@ -553,7 +548,10 @@ fn experimental_analyzers_persist_with_the_index_and_drive_queries() {
             .unwrap()
     };
     let index_json = || -> serde_json::Value {
-        serde_json::from_slice(&fs::read(graf::index_path(dir.path())).unwrap()).unwrap()
+        Index::load(&canonical_root(dir.path()).unwrap())
+            .unwrap()
+            .export_legacy()
+            .unwrap()
     };
     let matched = |query: &str| -> u64 {
         let value: serde_json::Value =
@@ -724,4 +722,48 @@ fn dash_leading_queries_are_text_not_options() {
         .unwrap();
     assert!(output.status.success());
     assert!(String::from_utf8_lossy(&output.stdout).contains("lib/reply.js"));
+}
+
+#[test]
+fn compact_index_stores_no_excerpt_text_and_exports_legacy_json() {
+    let dir = fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    assert!(root.join(".graf/index.bin").is_file());
+    assert!(!root.join(".graf/index.json").exists());
+    let stored = fs::read(root.join(".graf/index.bin")).unwrap();
+    assert!(!String::from_utf8_lossy(&stored).contains("refreshCache() {"));
+    let index = Index::load(&root).unwrap();
+    assert!(index.files["cache.rs"].chunks[0].text.is_empty());
+    let found = index.search("refresh cache", 2000, 10, None, None).unwrap();
+    assert!(found.context.contains("pub fn refreshCache() {"));
+    let exported = index.export_legacy().unwrap();
+    assert_eq!(exported["schema"], 1);
+    assert_eq!(
+        exported["files"]["cache.rs"]["chunks"][0]["text"],
+        "pub fn refreshCache() {\n    let session = \"café 東京\";\n}"
+    );
+    assert!(exported["postings"]["refresh"].as_array().unwrap().len() >= 2);
+    let cli = Command::new(env!("CARGO_BIN_EXE_graf"))
+        .arg("--root")
+        .arg(&root)
+        .arg("export-index")
+        .output()
+        .unwrap();
+    assert!(cli.status.success());
+    let printed: serde_json::Value = serde_json::from_slice(&cli.stdout).unwrap();
+    assert_eq!(printed, exported);
+}
+
+#[test]
+fn a_legacy_json_index_asks_for_a_rebuild() {
+    let dir = fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    fs::create_dir(root.join(".graf")).unwrap();
+    fs::write(root.join(".graf/index.json"), "{\"schema\":1}").unwrap();
+    let error = Index::load(&root).unwrap_err().to_string();
+    assert!(error.contains("graf index"), "{error}");
+    Index::build(&root, false).unwrap();
+    assert!(!root.join(".graf/index.json").exists());
+    assert!(Index::load(&root).is_ok());
 }

@@ -6,7 +6,7 @@ from pathlib import Path
 import statistics
 
 from compare_graphify import ARMS, GRAF_ARMS, INDEX_VARIANTS, variant_name, variant_root, cited_paths, cited_path_order, code_hint_recall, validate_locate
-from retrieval import BASE, tokens
+from retrieval import BASE, graf_artifact, graf_index, tokens
 
 
 def sha(path):
@@ -34,14 +34,14 @@ def main():
     indexes = {}
     for repo, info in result["repositories"].items():
         root = scratch / repo / "input"
-        index_path = root / ".graf/index.json"
-        index = json.loads(index_path.read_text())
+        index_path = graf_artifact(root)
+        index = graf_index(BASE / "target/release/graf", root)
         assert set(index["files"]) == set(info["file_hashes"])
         assert sha(index_path) == info["builds"]["graf"]["artifact_sha256"]
         indexes[repo, ()] = index
         for flags in INDEX_VARIANTS[1:]:
-            variant = variant_root(root.parent, flags) / ".graf/index.json"
-            indexes[repo, flags] = json.loads(variant.read_text())
+            variant = graf_artifact(variant_root(root.parent, flags))
+            indexes[repo, flags] = graf_index(BASE / "target/release/graf", variant.parents[1])
             assert set(indexes[repo, flags]["files"]) == set(info["file_hashes"])
             assert sha(variant) == info["builds"][variant_name(flags)]["artifact_sha256"]
         graph_path = root.parent / "graph/graphify-out/graph.json"

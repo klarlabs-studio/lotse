@@ -9,7 +9,10 @@ use std::fs;
 use std::io::{BufWriter, Write};
 use std::path::{Component, Path, PathBuf};
 
-const SCHEMA: u32 = 1;
+/// Schema 2: compact binary storage without excerpt text (read from the checked source).
+const SCHEMA: u32 = 2;
+/// Schema 1 exported by [`Index::export_legacy`] for tooling that reads the old JSON layout.
+const LEGACY_SCHEMA: u32 = 1;
 const MAX_PATH_WEIGHT: u32 = 10;
 const MAX_FILE_BYTES: u64 = 1_000_000;
 const SKIPPED_DIRS: [&str; 5] = ["node_modules", "vendor", "target", "dist", "__pycache__"];
@@ -17,8 +20,8 @@ const SKIPPED_DIRS: [&str; 5] = ["node_modules", "vendor", "target", "dist", "__
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Posting {
     /// Ordinal of the chunk in [`Index::chunks`] order.
-    pub chunk: usize,
-    pub count: usize,
+    pub chunk: u32,
+    pub count: u32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -28,9 +31,9 @@ pub struct Index {
     pub files: BTreeMap<String, Source>,
     pub postings: BTreeMap<String, Vec<Posting>>,
     /// Term counts per chunk, in [`Index::chunks`] order.
-    pub lengths: Vec<usize>,
-    /// Omitted when it is the accepted analyzer, so accepted indexes are unchanged.
-    #[serde(default, skip_serializing_if = "Analyzer::is_default")]
+    pub lengths: Vec<u32>,
+    /// Always stored (bincode is not self-describing); [`Index::export_legacy`] omits the
+    /// accepted analyzer as schema 1 did.
     pub analyzer: Analyzer,
 }
 
@@ -63,6 +66,11 @@ struct Scan {
 }
 
 pub fn index_path(root: &Path) -> PathBuf {
+    root.join(".graf/index.bin")
+}
+
+/// Where schema 1 lived; removed when a schema 2 index is written.
+fn legacy_index_path(root: &Path) -> PathBuf {
     root.join(".graf/index.json")
 }
 
@@ -74,7 +82,7 @@ impl Index {
     }
 
     pub fn load(root: &Path) -> Result<Self> {
-        let index: Self = serde_json::from_slice(
+        let index: Self = bincode::deserialize(
             &fs::read(index_path(root)).context("No readable index; run `graf index` first")?,
         )
         .context("Invalid index; rebuild with `graf index --rebuild`")?;
@@ -104,7 +112,7 @@ impl Index {
             self.postings
                 .values()
                 .flatten()
-                .all(|p| p.chunk < chunk_count && p.count > 0),
+                .all(|p| (p.chunk as usize) < chunk_count && p.count > 0),
             "Invalid postings; run `graf index --rebuild`"
         );
         ensure!(
@@ -168,9 +176,9 @@ impl Index {
             // Paths contribute terms along with source text.
             let mut counts = BTreeMap::new();
             for term in analyzer.window_terms(&chunk.path, &chunk.text) {
-                *counts.entry(term).or_insert(0usize) += 1;
+                *counts.entry(term).or_insert(0u32) += 1;
             }
-            let ordinal = lengths.len();
+            let ordinal = u32::try_from(lengths.len()).expect("fewer than 2^32 chunks");
             lengths.push(counts.values().sum());
             for (term, count) in counts {
                 postings.entry(term).or_default().push(Posting {
@@ -195,13 +203,17 @@ impl Index {
         let mut temp = tempfile::NamedTempFile::new_in(&dir)?;
         {
             let mut output = BufWriter::new(temp.as_file_mut());
-            serde_json::to_writer(&mut output, self)?;
+            bincode::serialize_into(&mut output, self)?;
             output.flush()?;
         }
         temp.as_file().sync_all()?;
         temp.persist(index_path(&self.root))
             .map_err(|e| e.error)
             .context("Cannot save index atomically")?;
+        let legacy = legacy_index_path(&self.root);
+        if legacy.is_file() {
+            fs::remove_file(legacy)?; // graf's own schema 1 snapshot, superseded.
+        }
         Ok(())
     }
 
@@ -252,13 +264,49 @@ impl Index {
             digest(&text) == source.hash,
             "Stale source {path}; run `graf index`"
         );
-        let lines: Vec<_> = text.lines().collect();
+        // The hash proves the content; this guards against an index whose ranges are wrong.
+        let lines = text.lines().count();
         ensure!(
-            source.chunks.iter().all(|chunk| chunk.end <= lines.len()
-                && lines[chunk.start - 1..chunk.end].join("\n") == chunk.text),
+            source.chunks.iter().all(|chunk| chunk.end <= lines),
             "Corrupt source excerpts for {path}; run `graf index --rebuild`"
         );
         Ok(text)
+    }
+
+    /// An excerpt's text, from the snapshot-checked source text of its file.
+    pub(crate) fn excerpt_text(text: &str, chunk: &Chunk) -> String {
+        let lines: Vec<&str> = text.lines().collect();
+        lines[chunk.start - 1..chunk.end].join("\n")
+    }
+
+    /// The index in the schema 1 JSON layout, excerpt text included, for tooling and
+    /// equivalence checks against earlier builds.
+    pub fn export_legacy(&self) -> Result<serde_json::Value> {
+        let mut files = serde_json::Map::new();
+        for (path, source) in &self.files {
+            let text = self.current_text(path)?;
+            let chunks: Vec<_> = source
+                .chunks
+                .iter()
+                .map(|c| {
+                    serde_json::json!({"id": c.id, "path": c.path, "start": c.start, "end": c.end,
+                                       "text": Self::excerpt_text(&text, c)})
+                })
+                .collect();
+            files.insert(
+                path.clone(),
+                serde_json::json!({"hash": source.hash, "bytes": source.bytes, "lines": source.lines,
+                                   "kind": source.kind, "chunks": chunks}),
+            );
+        }
+        let mut value = serde_json::json!({
+            "schema": LEGACY_SCHEMA, "root": self.root, "files": files,
+            "postings": self.postings, "lengths": self.lengths,
+        });
+        if !self.analyzer.is_default() {
+            value["analyzer"] = serde_json::to_value(self.analyzer)?;
+        }
+        Ok(value)
     }
 }
 
@@ -304,8 +352,11 @@ fn scan(root: &Path, previous: Option<&Index>) -> Result<Scan> {
             .and_then(|p| p.files.get(&rel))
             .filter(|s| s.hash == hash)
         {
-            Some(old) => {
-                scan.files.insert(rel, old.clone());
+            Some(_) => {
+                // Excerpt text is not stored, so the unchanged source is re-split from the
+                // text just read; splitting is deterministic, so ids and ranges are unchanged.
+                scan.files
+                    .insert(rel.clone(), Source::new(&rel, &text, hash));
                 scan.reused += 1;
             }
             None => {

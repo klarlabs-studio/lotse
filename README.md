@@ -26,7 +26,7 @@ Expand an anchor by passing its short handle from locate or its full ID from sea
 ./target/release/graf --root /path/to/repo expand EXCERPT_ID --before 24 --after 24 --budget 2000
 ```
 
-Rerun `index` after changes. Unchanged files reuse their chunks; postings are rebuilt and the snapshot is saved atomically under `.graf/index.json`. Locate, search, and expansion reject stale selected files with a reindex instruction. New or unselected changed files require indexing to affect rankings. A moved checkout requires `index --rebuild`.
+Rerun `index` after changes. Unchanged files reuse their chunks; postings are rebuilt and the snapshot is saved atomically under `.graf/index.bin` (schema 2: excerpt text is not stored but read from the hash-checked source; an older `.graf/index.json` requires `index --rebuild`). Locate, search, and expansion reject stale selected files with a reindex instruction. New or unselected changed files require indexing to affect rankings. A moved checkout requires `index --rebuild`.
 
 The scanner respects ignore rules within the root plus global ignore rules, excludes hidden/generated directories and symlinks, and indexes supported UTF-8 source/document files up to 1 MB. Add `.graf/` to each target repository's `.gitignore`. Indexed source text is stored locally in `.graf/`; ignore rules and extension filtering are not a secret detector. This is an initial CLI, with no MCP server, compiler-resolved graph, semantic index, or generated summaries. See the [implementation contract](research/rust-cli.md).
 

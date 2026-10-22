@@ -15,6 +15,8 @@ pub struct Chunk {
     pub path: String,
     pub start: usize,
     pub end: usize,
+    /// Present while building; not stored, so empty after [`crate::Index::load`].
+    #[serde(skip)]
     pub text: String,
 }
 
