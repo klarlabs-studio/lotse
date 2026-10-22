@@ -6,9 +6,10 @@
 //! with the rewritten query (`ast_graph_ids`). `outline` lists a file's function units so an agent can read
 //! one function instead of the whole file. Neither is an accepted improvement.
 use crate::rewrite::rewrite_query;
+use crate::source::digest;
 use crate::units::{
-    FLOOR, Unit, WEIGHT, call_edges, code_units, file_propagate, pack_units, packing_candidates,
-    scores_counted, term_counts, unit_text,
+    Bm25, FLOOR, Unit, WEIGHT, call_edges, code_units, file_propagate, pack_units,
+    packing_candidates, term_counts, unit_scores, unit_text,
 };
 use crate::{FileScore, Index, Policy, Stop};
 use anyhow::{Context, Result, ensure};
@@ -19,7 +20,7 @@ use std::io::Write;
 use tiktoken_rs::CoreBPE;
 
 /// Changes whenever unit extraction could change; a mismatching cache is rebuilt.
-const UNIT_CACHE_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "/units-3");
+const UNIT_CACHE_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "/units-4");
 
 #[derive(Default, Serialize, Deserialize)]
 struct UnitCache {
@@ -36,10 +37,26 @@ struct CachedUnits {
     counts: Vec<Vec<(String, u32)>>,
 }
 
-/// Every indexed unit in path order, with its cached term counts.
+/// What a query needs, derived from the per-file cache and stored in
+/// `.graf/unit-index.bin`: every unit in path order (without text or calls), BM25
+/// postings over them, and their call edges. Valid while every source hash matches.
+#[derive(Serialize, Deserialize)]
 pub struct IndexedUnits {
+    version: String,
+    /// Digest of every indexed path and source hash.
+    sources: String,
     pub units: Vec<Unit>,
-    pub counts: Vec<Vec<(String, u32)>>,
+    pub bm25: Bm25,
+    pub edges: Vec<(usize, usize)>,
+}
+
+fn sources_digest(index: &Index) -> String {
+    let listing: String = index
+        .files
+        .iter()
+        .map(|(path, source)| format!("{path}\0{}\n", source.hash))
+        .collect();
+    digest(&listing)
 }
 
 /// Files listed before the code.
@@ -79,9 +96,19 @@ pub struct Triage {
     pub experimental: &'static str,
 }
 
-/// Every indexed file's units, in path order. Units are cached in `.graf/units.bin`
-/// by source hash, so only new or changed files are parsed.
+/// Every indexed file's units, in path order. A current `.graf/unit-index.bin` is loaded
+/// as is; otherwise units come from `.graf/units.bin`, cached by source hash so only new
+/// or changed files are parsed, and the query index is rebuilt from them.
 pub fn indexed_units(index: &Index) -> Result<IndexedUnits> {
+    let sources = sources_digest(index);
+    let query_index = index.root.join(".graf/unit-index.bin");
+    if let Some(indexed) = fs::read(&query_index)
+        .ok()
+        .and_then(|bytes| bincode::deserialize::<IndexedUnits>(&bytes).ok())
+        .filter(|i| i.version == UNIT_CACHE_VERSION && i.sources == sources)
+    {
+        return Ok(indexed);
+    }
     let path = index.root.join(".graf/units.bin");
     let mut cache: UnitCache = fs::read(&path)
         .ok()
@@ -110,29 +137,41 @@ pub fn indexed_units(index: &Index) -> Result<IndexedUnits> {
         };
         fresh.insert(file.clone(), entry);
     }
-    let indexed = IndexedUnits {
-        units: fresh
+    let bm25 = Bm25::from_counts(
+        fresh
             .values()
-            .flat_map(|c| c.units.iter().cloned())
-            .collect(),
-        counts: fresh
-            .values()
-            .flat_map(|c| c.counts.iter().cloned())
-            .collect(),
-    };
+            .flat_map(|c| c.counts.iter().map(Vec::as_slice)),
+    );
+    let mut units: Vec<Unit> = fresh
+        .values()
+        .flat_map(|c| c.units.iter().cloned())
+        .collect();
+    let edges = call_edges(&units);
+    for unit in &mut units {
+        unit.calls.clear(); // Encoded in `edges`.
+    }
     if changed || !cache.files.is_empty() {
         save_cache(
             index,
+            "units.bin",
             &UnitCache {
                 version: UNIT_CACHE_VERSION.into(),
                 files: fresh,
             },
         )?;
     }
+    let indexed = IndexedUnits {
+        version: UNIT_CACHE_VERSION.into(),
+        sources,
+        units,
+        bm25,
+        edges,
+    };
+    save_cache(index, "unit-index.bin", &indexed)?;
     Ok(indexed)
 }
 
-fn save_cache(index: &Index, cache: &UnitCache) -> Result<()> {
+fn save_cache(index: &Index, name: &str, cache: &impl Serialize) -> Result<()> {
     let dir = index.root.join(".graf");
     ensure!(
         !fs::symlink_metadata(&dir)?.file_type().is_symlink(),
@@ -140,7 +179,7 @@ fn save_cache(index: &Index, cache: &UnitCache) -> Result<()> {
     );
     let mut temp = tempfile::NamedTempFile::new_in(&dir)?;
     temp.write_all(&bincode::serialize(cache)?)?;
-    temp.persist(dir.join("units.bin"))
+    temp.persist(dir.join(name))
         .map_err(|e| e.error)
         .context("Cannot save the unit cache")?;
     Ok(())
@@ -164,7 +203,7 @@ fn ranked_from(
     query: &str,
     budget: usize,
 ) -> Result<(Vec<Unit>, String)> {
-    let scores = scores_counted(&indexed.units, &indexed.counts, query);
+    let scores = unit_scores(&indexed.bm25, &indexed.edges, query);
     // Only units that packing can reach need their text; read it from the checked source.
     let mut units = indexed.units;
     let mut texts: BTreeMap<String, String> = BTreeMap::new();
@@ -195,11 +234,10 @@ pub fn triage(bpe: &CoreBPE, index: &Index, issue: &str, budget: usize) -> Resul
         .map(|h| (h.path.clone(), h.score))
         .collect();
     let indexed = indexed_units(index)?;
-    let mut files: Vec<String> =
-        file_propagate(&scores, &indexed.units, &call_edges(&indexed.units), WEIGHT)
-            .into_iter()
-            .take(TRIAGE_FILES)
-            .collect();
+    let mut files: Vec<String> = file_propagate(&scores, &indexed.units, &indexed.edges, WEIGHT)
+        .into_iter()
+        .take(TRIAGE_FILES)
+        .collect();
     let mut context = String::new();
     if !files.is_empty() {
         context.push_str("Likely files:\n");

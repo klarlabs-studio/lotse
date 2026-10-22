@@ -4,9 +4,9 @@
 
 For each pinned large repository: download the snapshot, then measure `graf index`
 (cold), `locate`, `units` (cold, then warm), `triage`, and `outline`, each with wall time
-and peak resident memory (/usr/bin/time -l), plus the sizes of .graf/index.json and
-.graf/units.bin. Graphify's code-only extract and one query are measured the same way
-unless skipped. Results go to results/scale-check.json; snapshots are deleted afterwards.
+and peak resident memory (/usr/bin/time -l), plus the sizes of the index and
+.graf/units.bin. Graphify's code-only extract and one query are measured the same way;
+with --skip-graphify the previous Graphify measurements are kept. Results go to results/scale-check.json; snapshots are deleted afterwards.
 
 A diagnostic of whether graf works at scale, not a preregistered comparison.
 """
@@ -23,7 +23,7 @@ import tarfile
 import urllib.request
 
 from localization import write_json_atomic
-from retrieval import BASE
+from retrieval import BASE, graf_artifact
 
 GRAF = BASE / "target/release/graf"
 GRAPHIFY = BASE / ".research/venv/bin/graphify"
@@ -86,7 +86,8 @@ def check(name, skip_graphify):
     stats = json.loads(subprocess.run([str(GRAF), "--root", str(root), "stats"], capture_output=True,
                                       text=True).stdout or "{}")
     result["indexed_files"], result["chunks"] = stats.get("files"), stats.get("chunks")
-    result["index_json_mb"] = size_mb(root / ".graf/index.json")
+    result["index_file"] = graf_artifact(root).name
+    result["index_mb"] = size_mb(graf_artifact(root))
     result["locate"] = graf("locate", "--budget", "2000", "--text", "--", issue)
     result["units_cold"] = graf("units", "--budget", "2000", "--text", "--", issue)
     result["unit_cache_mb"] = size_mb(root / ".graf/units.bin")
@@ -119,9 +120,13 @@ def main():
     args = parser.parse_args()
     out = BASE / "results/scale-check.json"
     report = json.loads(out.read_text()) if out.is_file() else {}
-    report.setdefault("graf_sha256", __import__("hashlib").sha256(GRAF.read_bytes()).hexdigest())
+    graf_sha = __import__("hashlib").sha256(GRAF.read_bytes()).hexdigest()
+    report.pop("graf_sha256", None)
     for name in args.repo or list(REPOS):
-        report[name] = check(name, args.skip_graphify)
+        previous = report.get(name, {})
+        report[name] = {**check(name, args.skip_graphify), "graf_sha256": graf_sha}
+        if args.skip_graphify:
+            report[name].update({k: v for k, v in previous.items() if k.startswith("graph")})
         report[name]["loadavg"] = os.getloadavg()
         write_json_atomic(out, report)
         print(name, json.dumps(report[name])[:800], flush=True)

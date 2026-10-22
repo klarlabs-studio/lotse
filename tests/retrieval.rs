@@ -663,10 +663,17 @@ fn unit_cache_is_reused_refreshed_and_never_serves_stale_code() {
     let index = Index::load(&root).unwrap();
     let cold = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
     let cache = root.join(".graf/units.bin");
+    let query_index = root.join(".graf/unit-index.bin");
     let written = fs::metadata(&cache).unwrap().modified().unwrap();
+    let derived = fs::read(&query_index).unwrap();
     let warm = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
     assert_eq!(cold.1, warm.1);
     assert_eq!(fs::metadata(&cache).unwrap().modified().unwrap(), written);
+    assert_eq!(fs::read(&query_index).unwrap(), derived);
+    fs::remove_file(&query_index).unwrap();
+    let rebuilt = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    assert_eq!(cold.1, rebuilt.1);
+    assert_eq!(fs::read(&query_index).unwrap(), derived);
 
     let changed = "function serialize (payload) {\n  return String(payload)\n}\nmodule.exports = { serialize }\n";
     fs::write(root.join("lib/reply.js"), changed).unwrap();
@@ -676,6 +683,7 @@ fn unit_cache_is_reused_refreshed_and_never_serves_stale_code() {
     let fresh = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
     assert!(fresh.1.contains("return String(payload)"));
     assert!(!fresh.1.contains("JSON.stringify"));
+    assert_ne!(fs::read(&query_index).unwrap(), derived);
 }
 
 #[test]
