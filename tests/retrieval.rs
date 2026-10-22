@@ -775,3 +775,17 @@ fn a_legacy_json_index_asks_for_a_rebuild() {
     assert!(!root.join(".graf/index.json").exists());
     assert!(Index::load(&root).is_ok());
 }
+
+#[test]
+fn cli_index_also_builds_the_function_index() {
+    let dir = agent_fixture();
+    let status = Command::new(env!("CARGO_BIN_EXE_graf"))
+        .arg("--root")
+        .arg(dir.path())
+        .arg("index")
+        .output()
+        .unwrap();
+    assert!(status.status.success());
+    assert!(dir.path().join(".graf/unit-index.bin").is_file());
+    assert!(dir.path().join(".graf/units.bin").is_file());
+}

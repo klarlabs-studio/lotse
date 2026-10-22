@@ -11,7 +11,7 @@ use std::path::PathBuf;
     about = "Local source evidence for agents. Code and documentation; no model required."
 )]
 struct Cli {
-    /// Repository root. The index lives in ROOT/.graf/index.json.
+    /// Repository root. The index lives in ROOT/.graf/.
     #[arg(long, global = true, default_value = ".")]
     root: PathBuf,
     #[command(subcommand)]
@@ -247,7 +247,10 @@ fn run() -> Result<()> {
             full_identifiers,
             path_weight,
         };
-        return print_json(&Index::build_with(&root, rebuild, analyzer)?);
+        let report = Index::build_with(&root, rebuild, analyzer)?;
+        // Build the function index now, so the first units/triage query is fast.
+        graf::triage::indexed_units(&Index::load(&root)?)?;
+        return print_json(&report);
     }
     if let Command::Rewrite { text } = &cli.command {
         return write_stdout(&format!("{}\n", graf::rewrite::rewrite_query(text)));

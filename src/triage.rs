@@ -116,27 +116,17 @@ pub fn indexed_units(index: &Index) -> Result<IndexedUnits> {
         .filter(|c: &UnitCache| c.version == UNIT_CACHE_VERSION)
         .unwrap_or_default();
     let mut fresh = BTreeMap::new();
-    let mut changed = false;
+    let mut stale = Vec::new();
     for (file, source) in &index.files {
-        let entry = match cache.files.remove(file) {
-            Some(cached) if cached.hash == source.hash => cached,
-            _ => {
-                changed = true;
-                let text = index.current_text(file)?;
-                let mut units = code_units(file, &text);
-                let counts = units.iter().map(|u| term_counts(&u.text)).collect();
-                for unit in &mut units {
-                    unit.text.clear();
-                }
-                CachedUnits {
-                    hash: source.hash.clone(),
-                    units,
-                    counts,
-                }
+        match cache.files.remove(file) {
+            Some(cached) if cached.hash == source.hash => {
+                fresh.insert(file.clone(), cached);
             }
-        };
-        fresh.insert(file.clone(), entry);
+            _ => stale.push(file.as_str()),
+        }
     }
+    let changed = !stale.is_empty();
+    fresh.extend(parse_files(index, &stale)?);
     let bm25 = Bm25::from_counts(
         fresh
             .values()
@@ -169,6 +159,47 @@ pub fn indexed_units(index: &Index) -> Result<IndexedUnits> {
     };
     save_cache(index, "unit-index.bin", &indexed)?;
     Ok(indexed)
+}
+
+/// Units and term counts of `files`, parsed on all available cores.
+fn parse_files(index: &Index, files: &[&str]) -> Result<Vec<(String, CachedUnits)>> {
+    let threads = std::thread::available_parallelism().map_or(1, |n| n.get());
+    let size = files.len().div_ceil(threads).max(1);
+    std::thread::scope(|scope| {
+        let workers: Vec<_> = files
+            .chunks(size)
+            .map(|chunk| {
+                scope.spawn(move || {
+                    chunk
+                        .iter()
+                        .map(|file| parse_file(index, file))
+                        .collect::<Vec<_>>()
+                })
+            })
+            .collect();
+        workers
+            .into_iter()
+            .flat_map(|worker| worker.join().expect("unit parser panicked"))
+            .collect()
+    })
+}
+
+fn parse_file(index: &Index, file: &str) -> Result<(String, CachedUnits)> {
+    let text = index.current_text(file)?;
+    let mut units = code_units(file, &text);
+    let counts = units.iter().map(|u| term_counts(&u.text)).collect();
+    for unit in &mut units {
+        unit.text.clear();
+    }
+    let hash = index.files[file].hash.clone();
+    Ok((
+        file.to_string(),
+        CachedUnits {
+            hash,
+            units,
+            counts,
+        },
+    ))
 }
 
 fn save_cache(index: &Index, name: &str, cache: &impl Serialize) -> Result<()> {
