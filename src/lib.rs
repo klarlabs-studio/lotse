@@ -8,6 +8,7 @@ mod response;
 pub mod rewrite;
 mod source;
 mod terms;
+pub mod triage;
 pub mod units;
 
 pub use index::{BuildReport, Index, IndexStats, Posting, index_path};

@@ -590,3 +590,68 @@ fn experimental_analyzers_persist_with_the_index_and_drive_queries() {
     );
     assert!(!run(&["index", "--path-weight", "0"]).status.success());
 }
+
+fn agent_fixture() -> TempDir {
+    let dir = tempfile::tempdir().unwrap();
+    fs::create_dir(dir.path().join("lib")).unwrap();
+    fs::write(
+        dir.path().join("lib/reply.js"),
+        "'use strict'\nfunction onSend (reply) {\n  return serialize(reply)\n}\n\nfunction serialize (payload) {\n  return JSON.stringify(payload)\n}\nmodule.exports = { onSend }\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("lib/route.js"),
+        "function route (opts) {\n  return opts.url\n}\nmodule.exports = { route }\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("README.md"),
+        "# Demo\nRoutes and replies.\n",
+    )
+    .unwrap();
+    dir
+}
+
+#[test]
+fn triage_lists_files_then_whole_functions_within_budget() {
+    let dir = agent_fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    let index = Index::load(&root).unwrap();
+    let bpe = cl100k_base().unwrap();
+    let issue = "onSend drops the payload\n\nCalling `serialize(payload)` from onSend in lib/reply.js returns nothing.";
+    let result = graf::triage::triage(&bpe, &index, issue, 2000).unwrap();
+    assert_eq!(
+        result.files.first().map(String::as_str),
+        Some("lib/reply.js")
+    );
+    assert!(
+        result
+            .context
+            .starts_with("Likely files:\n- lib/reply.js\n")
+    );
+    assert!(result.context.contains("Likely code:\nlib/reply.js:"));
+    assert!(
+        result
+            .context
+            .contains("function serialize (payload) {\n  return JSON.stringify(payload)\n}")
+    );
+    assert!(result.context_tokens <= 2000);
+    let tiny = graf::triage::triage(&bpe, &index, issue, 5).unwrap();
+    assert!(tiny.context_tokens <= 5);
+}
+
+#[test]
+fn outline_lists_functions_with_line_ranges() {
+    let dir = agent_fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    let index = Index::load(&root).unwrap();
+    let outline = graf::triage::outline(&index, "lib/reply.js").unwrap();
+    assert_eq!(
+        outline.context,
+        "lib/reply.js (9 lines, 2 functions)\nL2-4: function onSend (reply) {\nL6-8: function serialize (payload) {\n"
+    );
+    assert!(graf::triage::outline(&index, "README.md").is_err());
+    assert!(graf::triage::outline(&index, "missing.js").is_err());
+}

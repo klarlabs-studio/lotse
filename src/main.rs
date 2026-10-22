@@ -149,6 +149,23 @@ enum Command {
         #[arg(long)]
         rewrite: bool,
     },
+    /// Experimental: where to start on an issue. Lists likely files, then whole likely
+    /// functions, within one budget. Pass the issue text (title on the first line).
+    Triage {
+        issue: String,
+        #[arg(long, default_value_t = 2000)]
+        budget: usize,
+        /// Emit only context, without JSON metadata.
+        #[arg(long)]
+        text: bool,
+    },
+    /// Experimental: a source file's functions with line ranges, to read one function, not the file.
+    Outline {
+        path: String,
+        /// Emit only context, without JSON metadata.
+        #[arg(long)]
+        text: bool,
+    },
     /// Experimental: print the query `--rewrite` would use for TEXT (the title plus code-like tokens).
     Rewrite { text: String },
     /// Read an excerpt plus nearby lines using an ID returned by search.
@@ -292,6 +309,19 @@ fn run() -> Result<()> {
                 &serde_json::json!({"context": context, "units": cited, "budget": budget,
                                     "experimental": "units: tree-sitter units with call propagation"}),
             )
+        }
+        Command::Triage {
+            issue,
+            budget,
+            text,
+        } => {
+            let bpe = tiktoken_rs::cl100k_base()?;
+            let response = graf::triage::triage(&bpe, &index, &issue, budget)?;
+            emit(text, &response.context, &response)
+        }
+        Command::Outline { path, text } => {
+            let response = graf::triage::outline(&index, &path)?;
+            emit(text, &response.context, &response)
         }
         Command::Stats => print_json(&index.stats()?),
         Command::Map {
