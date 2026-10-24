@@ -118,7 +118,13 @@ def claude_command(issue, mcp_config, model, budget, arm):
             "--model", model, "--tools", "", "--strict-mcp-config", "--mcp-config", str(mcp_config),
             "--allowedTools", "mcp__broker", "--setting-sources", "", "--disable-slash-commands",
             "--no-session-persistence", "--output-format", "stream-json", "--verbose",
-            "--max-budget-usd", str(budget), "--system-prompt", system_prompt(arm)]
+            "--max-budget-usd", str(budget), "--system-prompt", system_prompt(arm), *turn_cap()]
+
+
+def turn_cap():
+    """A batch's turn cap (SOLVER_MAX_TURNS): a looping solver stops and still reports its usage."""
+    turns = os.environ.get("SOLVER_MAX_TURNS")
+    return ["--max-turns", turns] if turns else []
 
 
 def usage_events(result):

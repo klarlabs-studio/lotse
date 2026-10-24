@@ -56,6 +56,7 @@ def configure_solver(batch):
     """Pass a batch's frozen model, price table and spend cap to its trials; clear stale ones."""
     settings = {"SOLVER_MODEL": batch.get("solver_model"),
                 "SOLVER_BUDGET_USD": batch.get("solver_budget_usd"),
+                "SOLVER_MAX_TURNS": batch.get("solver_max_turns"),
                 "SOLVER_PRICES": batch.get("solver_prices_per_million")}
     for name, value in settings.items():
         if value is None:

@@ -43,6 +43,13 @@ class UsageTests(unittest.TestCase):
         with patch.dict("os.environ", clear=True):
             self.assertEqual(usage_events(RESULT)[0]["cost_usd"], 0.0123)
 
+    def test_a_turn_cap_ends_loops_with_usage_reported(self):
+        with patch.dict("os.environ", {"SOLVER_MAX_TURNS": "80"}):
+            command = claude_command("i", Path("/x/mcp.json"), "m", 0.5, "graf")
+        self.assertEqual(command[command.index("--max-turns") + 1], "80")
+        with patch.dict("os.environ", clear=True):
+            self.assertNotIn("--max-turns", claude_command("i", Path("/x/mcp.json"), "m", 0.5, "graf"))
+
     def test_model_and_spend_cap_follow_the_batch(self):
         with patch.dict("os.environ", {"SOLVER_MODEL": "qwen/x", "SOLVER_BUDGET_USD": "25"}):
             command = claude_command("i", Path("/x/mcp.json"), solver_model("claude-haiku-5-5"), solver_budget(0.5), "graf")
