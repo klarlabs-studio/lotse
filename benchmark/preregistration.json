@@ -1,5 +1,5 @@
 {
-  "version": 76,
+  "version": 77,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -212,7 +212,7 @@
         "graf_binary": ".research/bin/graf-t5, a copy of target/release/graf built from commit 7ccfea3 (no Rust changes since), sha256 c95b576666d1021b21beae71d5486a660b17516453b90417d9f65d5572b51c46, hashed per run",
         "rule": "the agent_trials.rule (cost superiority, success non-inferiority margin 0.10) against each comparator; intersection-union, so alpha is not split",
         "secondary": "turns per run, turns before the first edit, tool calls by type, and the orientation's payload, reported descriptively",
-        "schedule": "runs after batch t4r2 completes; frozen before any t4, t4r or t4r2 outcome was looked at",
+        "schedule": "runs after batch t4r3 completes; frozen before any t4, t4r, t4r2 or t4r3 outcome was looked at",
         "rationale": "tests whether one cheap up-front orientation (likely files, then whole likely functions) and function-level reads let an agent decide faster what to work on, against the same up-front orientation from Graphify",
         "orientation_cap": "both orientations are cut to at most 1,500 cl100k tokens at whole lines by the harness (bounded); Graphify's native output exceeded its requested budget on the dry run (mean 2,304, max 4,903 tokens), graf's triage stayed within it (mean 1,192). The native size is logged",
         "solver_version": "2.1.310 (Claude Code)",
@@ -226,7 +226,14 @@
         "version_update": "v75 (before any t5 run): solver Claude Code 2.1.307 and Graphify 0.9.95 frozen, as for t4r; the graf_orient binary (graf-t5) is unchanged. Run with .research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t5",
         "solver_binary": ".research/bin/claude-2.1.310",
         "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
-        "version_update_v76": "solver pinned to Claude Code 2.1.310 (copy .research/bin/claude-2.1.310), before any t5 run"
+        "version_update_v76": "solver pinned to Claude Code 2.1.310 (copy .research/bin/claude-2.1.310), before any t5 run",
+        "solver_endpoint": {
+          "base_url": "https://openrouter.ai/api",
+          "credential": "keychain:openrouter-graf",
+          "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
+          "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
+        },
+        "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged"
       },
       "t6": {
         "arms": [
@@ -278,7 +285,14 @@
         "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
         "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
         "graphify_virtualenv": ".research/venv-graphify-0.9.95",
-        "version_update_v76": "before any t6 run: Claude Code 2.1.307 -> 2.1.310 (pinned copy) and Graphify 0.9.92 -> 0.9.95 (its own virtualenv), per the version policy; arms, binaries for graf and search_only, tasks, seed and rules unchanged. Run under .research/venv-graphify-0.9.95/bin/python; search_only moves from a Codex-bundled rg (e97d666f) to Homebrew ripgrep 15.2.0 (1c579059), the latest release and the one t4r2 and t5 use"
+        "version_update_v76": "before any t6 run: Claude Code 2.1.307 -> 2.1.310 (pinned copy) and Graphify 0.9.92 -> 0.9.95 (its own virtualenv), per the version policy; arms, binaries for graf and search_only, tasks, seed and rules unchanged. Run under .research/venv-graphify-0.9.95/bin/python; search_only moves from a Codex-bundled rg (e97d666f) to Homebrew ripgrep 15.2.0 (1c579059), the latest release and the one t4r2 and t5 use",
+        "solver_endpoint": {
+          "base_url": "https://openrouter.ai/api",
+          "credential": "keychain:openrouter-graf",
+          "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
+          "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
+        },
+        "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged"
       },
       "t4r": {
         "arms": [
@@ -347,7 +361,50 @@
         "prior_trials": "t4's 60 trials (.research/trials/t4-*) and t4r's 7 (.research/trials/t4r-*) are kept unchanged and excluded from every decision",
         "run_command": ".research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t4r2",
         "solver_binary": ".research/bin/claude-2.1.310",
-        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd"
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "superseded_by": "t4r3 (v77); do not run"
+      },
+      "t4r3": {
+        "arms": [
+          "ast_graph",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "ast_graph"
+        ],
+        "controls": [],
+        "comparators": [
+          "search_only",
+          "graphify"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261022,
+        "frozen_in_version": 77,
+        "arm_definitions": "ast_graph: retrieve runs the localization-screen ast_graph arm (tree-sitter units, BM25, one-hop call propagation 0.5, floor 0.5, whole units packed within the requested budget; Python prototype in benchmark/localization.py, hashed per run). search_only and graphify as in t3",
+        "secondary": "mean turns per run and turns before the first edit, reported descriptively",
+        "rationale": "ast_graph was the only arm to beat both graf_floor and Graphify on the held-out localization screen (unit Acc@5 0.365 vs 0.276 and 0.291); this batch tests whether that localization gain lowers agent cost against both comparators. A pass would justify a Rust implementation, not promotion of the prototype",
+        "solver_version": "2.1.310 (Claude Code)",
+        "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.95",
+        "supersedes": "t4r2",
+        "backend_sha256": {
+          "ast_graph": "fc85e65972d178c23b7bfc4e4783d6504a041866bb570841d2324178eb26143d",
+          "graphify": "b1d3eafa360f710b02aa927330985fe913018cc0d5752d012b0bc3dcee2a28a2",
+          "search_only": "1c57905960cd69dbb5b05492560957f4a57cdd4d39137e20de23981c6e1f4423"
+        },
+        "restart_reason": "the operator does not want the weekly Claude plan used for benchmarks and supplied an OpenRouter key; to avoid mixing subscription and gateway transport within one batch, t4r2 was stopped after 181 complete attempts (and 1 interrupted) and t4r3 reruns all 720 through OpenRouter. No t4r2 outcome was looked at; only completion, error and pooled cost/token totals across all arms (for the budget estimate, ~$0.0065 per attempt)",
+        "prior_trials": "t4 (60), t4r (7) and t4r2 (182) trials are kept unchanged and excluded from every decision",
+        "run_command": ".research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t4r3",
+        "solver_binary": ".research/bin/claude-2.1.310",
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "solver_endpoint": {
+          "base_url": "https://openrouter.ai/api",
+          "credential": "keychain:openrouter-graf",
+          "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
+          "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
+        },
+        "cost_basis": "the primary metric stays the Claude Code list-price estimate (modelUsage costUSD, costBasis list). OpenRouter's actual charge is recorded per chunk as a diagnostic only"
       }
     },
     "natural_tasks": {
@@ -761,6 +818,11 @@
       "version": 76,
       "date": "2026-10-24",
       "reason": "Version policy: always the latest releases, pinned per run. t4r stopped after 7 attempts because Claude Code 2.1.310 predated its freeze; batch t4r2 reruns it on 2.1.310 from a pinned copy. t5 and t6 freeze 2.1.310 too, and t6 moves to Graphify 0.9.95. No outcome of t4, t4r or t4r2 was looked at; t6's search_only moves to ripgrep 15.2.0, the same latest build as t4r2 and t5"
+    },
+    {
+      "version": 77,
+      "date": "2026-10-24",
+      "reason": "Operator budget decision: agent batches run through OpenRouter instead of the Claude subscription. t4r2 stopped at 181 attempts; batch t4r3 reruns t4r2 unchanged through OpenRouter; t5 and t6 route the same way. Model, solver binary, tools, tasks, seed and rules unchanged. No outcome looked at"
     }
   ],
   "arms": {

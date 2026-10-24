@@ -52,6 +52,19 @@ class NaturalSpecTests(unittest.TestCase):
                 run_agent_batch.main()
             run.assert_not_called()
 
+    def test_a_gateway_batch_routes_the_solver_and_never_falls_back_to_a_login(self):
+        endpoint = {"base_url": "https://openrouter.ai/api", "credential": "keychain:openrouter-graf"}
+        with patch.object(run_agent_batch, "keychain_secret", return_value="sk-test") as secret, \
+             patch.dict("os.environ", {"ANTHROPIC_API_KEY": "real"}, clear=True):
+            run_agent_batch.route_solver(endpoint)
+            secret.assert_called_once_with("openrouter-graf")
+            self.assertEqual(run_agent_batch.os.environ["ANTHROPIC_BASE_URL"], "https://openrouter.ai/api")
+            self.assertEqual(run_agent_batch.os.environ["ANTHROPIC_AUTH_TOKEN"], "sk-test")
+            self.assertEqual(run_agent_batch.os.environ["ANTHROPIC_API_KEY"], "")
+        with patch.object(run_agent_batch, "keychain_secret", return_value=""):
+            with self.assertRaisesRegex(SystemExit, "credential"):
+                run_agent_batch.route_solver(endpoint)
+
     def test_each_natural_batch_resolves_its_frozen_catalog(self):
         self.assertEqual(natural_spec(AGENT, AGENT["batches"]["t3"]["catalog"])["minimum_tasks"], 18)
         t4 = natural_spec(AGENT, AGENT["batches"]["t4"]["catalog"])

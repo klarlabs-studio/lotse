@@ -37,6 +37,21 @@ def agent_preregistration():
     return json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
 
 
+def keychain_secret(service):
+    found = subprocess.run(["security", "find-generic-password", "-s", service, "-w"], capture_output=True, text=True)
+    return found.stdout.strip() if found.returncode == 0 else ""
+
+
+def route_solver(endpoint):
+    """Send the solver to a gateway with its own key; an empty API key stops a fallback to a login."""
+    scheme, _, service = endpoint["credential"].partition(":")
+    secret = keychain_secret(service) if scheme == "keychain" else ""
+    if not secret:
+        raise SystemExit(f"No credential for the solver endpoint ({endpoint['credential']})")
+    os.environ.update({"ANTHROPIC_BASE_URL": endpoint["base_url"], "ANTHROPIC_AUTH_TOKEN": secret,
+                       "ANTHROPIC_API_KEY": ""})
+
+
 def trial_id(batch, task, k, arm):
     return f"{batch}-{task}-{arm}-{k}"
 
@@ -56,6 +71,8 @@ def main():
             if hashlib.sha256(binary.read_bytes()).hexdigest() != batch["solver_sha256"]:
                 raise SystemExit("Solver binary differs from this batch's frozen copy")
             os.environ["CLAUDE_BINARY"] = str(binary)
+        if batch.get("solver_endpoint"):
+            route_solver(batch["solver_endpoint"])
         if batch.get("solver_version"):
             version = subprocess.check_output([solver(), "--version"], text=True).strip()
             if version != batch["solver_version"]:
