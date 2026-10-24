@@ -209,12 +209,34 @@ def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
                "num_turns": (result or {}).get("num_turns"), "tool_calls": session.tool_count,
                "index_build_s": session.build_seconds,
                "spurious_verdicts_dropped": dropped,
-               "infrastructure_error": any(e.get("response", {}).get("infrastructure") for e in tool_events),
+               "infrastructure_error": any(e.get("response", {}).get("infrastructure") for e in tool_events)
+                                       or lost_reply(directory / "agent-stream.jsonl", exit_code),
                "tool_binary_sha256": binary_sha,
                "usage_complete": usage_error is None, "usage_error": usage_error,
                "audit": audit_trace(trace) if usage_error is None else None}
     (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     return summary
+
+
+def lost_reply(stream, exit_code):
+    """A timeout while a tool call had no reply: the broker transport failed, not the solver.
+
+    Legitimate broker calls are bounded far below the trial timeout, so this is an infrastructure
+    abort, rerun from scratch under the preregistered completeness rule.
+    """
+    if exit_code != "timeout" or not stream.is_file():
+        return False
+    pending = set()
+    for line in stream.read_text().splitlines():
+        event = json.loads(line)
+        for block in event.get("message", {}).get("content", []) if isinstance(event.get("message"), dict) else []:
+            if not isinstance(block, dict):
+                continue
+            if block.get("type") == "tool_use":
+                pending.add(block.get("id"))
+            elif block.get("type") == "tool_result":
+                pending.discard(block.get("tool_use_id"))
+    return bool(pending)
 
 
 def recover(task, trial_id, arm, reason):

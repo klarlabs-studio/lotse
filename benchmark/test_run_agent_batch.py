@@ -78,6 +78,21 @@ class NaturalSpecTests(unittest.TestCase):
             run_agent_batch.configure_solver({})
             self.assertNotIn("SOLVER_MODEL", run_agent_batch.os.environ)
 
+    def test_an_infrastructure_abort_is_kept_aside_and_rerun_from_scratch(self):
+        import tempfile
+        trials, aside = Path(tempfile.mkdtemp()), Path(tempfile.mkdtemp())
+        outcomes = iter([{"infrastructure_error": True}, {"infrastructure_error": False}])
+        def fake_run(identifier):
+            (trials / identifier).mkdir()
+            return next(outcomes)
+        summary = run_agent_batch.run_with_reruns("t-x", lambda: fake_run("t-x"), trials, aside)
+        self.assertFalse(summary["infrastructure_error"])
+        self.assertTrue((aside / "t-x-infrastructure-1" / "aside.json").is_file())
+        always = lambda: (trials / "t-y").mkdir() or {"infrastructure_error": True}
+        with self.assertRaisesRegex(SystemExit, "infrastructure"):
+            run_agent_batch.run_with_reruns("t-y", always, trials, aside)
+        self.assertEqual(len(list(aside.glob("t-y-infrastructure-*"))), 3)
+
     def test_each_natural_batch_resolves_its_frozen_catalog(self):
         self.assertEqual(natural_spec(AGENT, AGENT["batches"]["t3"]["catalog"])["minimum_tasks"], 18)
         t4 = natural_spec(AGENT, AGENT["batches"]["t4"]["catalog"])

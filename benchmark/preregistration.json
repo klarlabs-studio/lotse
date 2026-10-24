@@ -1,5 +1,5 @@
 {
-  "version": 80,
+  "version": 81,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -600,7 +600,10 @@
         "spend_cap": "Claude Code enforces --max-budget-usd in its default unknown-model rates, derived from the pilot as $4 input, $0.20 cache read, $5 cache write, $20 output per million (20-40x Haiku list). $20 permits at least the tokens t4's $0.50 Haiku cap did; that cap bound none of the 181 t4r2 attempts",
         "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat",
         "solver_max_turns": 80,
-        "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage"
+        "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
+        "infrastructure_incidents": [
+          "2026-10-24: t4d-urfave-cli-2418-ast_graph-4 lost a broker reply and timed out unmeasured; set aside (.research/trials-aside/) and rerun from scratch under agent_trials completeness. Its harness-run verification result was seen while diagnosing; the attempt is excluded"
+        ]
       }
     },
     "natural_tasks": {
@@ -1034,6 +1037,11 @@
       "version": 80,
       "date": "2026-10-24",
       "reason": "Solver model deepseek/deepseek-v4.1-flash (development pilot: 6/6 finished, ~7x faster than qwen3.7-flash, no timeouts). Batch t4d reruns t4q2 with it; t5 and t6 use it too. t4q2 stopped at 8 attempts on an unmeasured timeout"
+    },
+    {
+      "version": 81,
+      "date": "2026-10-24",
+      "reason": "No rule change. Implements the existing completeness rule (infrastructure aborts rerun from scratch, partial runs kept outside the plan) in the batch runner, up to 2 reruns per attempt, and classifies a trial timeout with a tool call left unanswered as an infrastructure abort (legitimate broker calls are bounded at about 270 s; max observed 140 s). Applied to one t4d attempt; solver timeouts with no pending tool call stay unmeasured and still stop the batch"
     }
   ],
   "arms": {

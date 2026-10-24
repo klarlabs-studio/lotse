@@ -65,6 +65,29 @@ def configure_solver(batch):
             os.environ[name] = json.dumps(value) if isinstance(value, dict) else str(value)
 
 
+INFRASTRUCTURE_RERUNS = 2
+
+
+def run_with_reruns(identifier, attempt, trials, aside):
+    """Run one trial; an infrastructure abort is kept aside with a note and rerun from scratch.
+
+    The preregistered completeness rule: "infrastructure aborts are rerun from scratch and their
+    partial runs are kept outside the plan". After INFRASTRUCTURE_RERUNS reruns the batch stops.
+    """
+    for number in range(1, INFRASTRUCTURE_RERUNS + 2):
+        summary = attempt()
+        if not summary["infrastructure_error"]:
+            return summary
+        target = aside / f"{identifier}-infrastructure-{number}"
+        aside.mkdir(parents=True, exist_ok=True)
+        (trials / identifier).rename(target)
+        (target / "aside.json").write_text(json.dumps({
+            "trial": identifier, "reason": "infrastructure abort (broker error or a tool call left without a reply "
+            "at the trial timeout); rerun from scratch under the preregistered completeness rule"}, indent=2) + "\n")
+        print(json.dumps({"trial": identifier, "set_aside": str(target.relative_to(aside.parent))}), flush=True)
+    raise SystemExit(f"{identifier}: infrastructure abort persisted after {INFRASTRUCTURE_RERUNS} reruns; batch stopped")
+
+
 def trial_id(batch, task, k, arm):
     return f"{batch}-{task}-{arm}-{k}"
 
@@ -119,10 +142,8 @@ def main():
             continue
         if (BASE / ".research/trials" / identifier).exists():
             raise SystemExit(f"{identifier} exists without a summary; inspect it before rerunning")
-        summary = run(by_id[task], identifier, arm, catalog)
-        if summary["infrastructure_error"]:
-            raise SystemExit(f"{identifier}: broker infrastructure error; batch stopped. Move the trial "
-                             "aside with a note, fix the environment, and rerun it from scratch")
+        summary = run_with_reruns(identifier, lambda: run(by_id[task], identifier, arm, catalog),
+                                  BASE / ".research/trials", BASE / ".research/trials-aside")
         if not summary["usage_complete"]:
             raise SystemExit(f"{identifier}: incomplete solver usage; artifacts preserved, batch stopped")
         if batch.get("stop_on_provider_error") and summary["result_subtype"] not in (

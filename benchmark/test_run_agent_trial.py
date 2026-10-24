@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from agent_trials import audit_trace
-from run_agent_trial import SYSTEM_PROMPT, claude_command, solver_budget, solver_model, preflight, scored_events, system_prompt, usage_events
+from run_agent_trial import SYSTEM_PROMPT, claude_command, lost_reply, solver_budget, solver_model, preflight, scored_events, system_prompt, usage_events
 
 RESULT = {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3,
           "total_cost_usd": 0.0123,
@@ -68,6 +68,21 @@ class UsageTests(unittest.TestCase):
             events = [*usage_events(RESULT), {"type": "verification", "passed": False}]
             trace.write_text("\n".join(json.dumps(e) for e in events))
             audit_trace(trace)
+
+
+class LostReplyTests(unittest.TestCase):
+    def stream(self, *events):
+        path = Path(tempfile.mkdtemp()) / "agent-stream.jsonl"
+        path.write_text("".join(json.dumps(e) + "\n" for e in events))
+        return path
+
+    def test_a_timeout_waiting_on_an_unanswered_tool_call_is_an_infrastructure_abort(self):
+        use = {"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "a"}, {"type": "tool_use", "id": "b"}]}}
+        answered = {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "a"}]}}
+        self.assertTrue(lost_reply(self.stream(use, answered), "timeout"))
+        both = {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "b"}]}}
+        self.assertFalse(lost_reply(self.stream(use, answered, both), "timeout"))
+        self.assertFalse(lost_reply(self.stream(use, answered), 0))
 
 
 class CommandTests(unittest.TestCase):
