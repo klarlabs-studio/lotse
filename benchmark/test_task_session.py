@@ -4,6 +4,7 @@ import io
 import json
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 from unittest.mock import patch
 
@@ -94,6 +95,48 @@ class TaskBrokerIntegrity(unittest.TestCase):
         with self.assertRaises(ValueError):
             task_session.retrieve_command("search_only", Path("in"), Path("out"), "q", 2000)
 
+    def test_adapter_persists_and_cannot_change_on_reopen(self):
+        session = task_session.prepare_session(self.task, "native-trial", "graphify_orient", "native-cli-v2")
+        reopened = task_session.Session(self.task, "native-trial", "graphify_orient")
+        self.assertEqual(reopened.graphify_adapter, "native-cli-v2")
+        with self.assertRaises(ValueError):
+            task_session.Session(self.task, "native-trial", "graphify_orient", "library-v1")
+        metadata = self.session.directory / "session.json"
+        old = json.loads(metadata.read_text())
+        old.pop('graphify_adapter')
+        metadata.write_text(json.dumps(old))
+        self.assertEqual(task_session.Session(self.task, "fixture-trial", "graf").graphify_adapter, "library-v1")
+        with self.assertRaises(ValueError):
+            task_session.Session(self.task, "fixture-trial", "graf", "native-cli-v2")
+
+    def test_native_graphify_routes_both_retrieve_and_orientation(self):
+        session = task_session.prepare_session(self.task, "native-commands", "graphify_orient", "native-cli-v2")
+        session.dirty = False
+        result = subprocess.CompletedProcess([], 0, 'native text', '')
+        with patch.object(task_session, 'run_tool', return_value=result) as run:
+            self.assertTrue(session.call('orient', {})['ok'])
+            orient_cmd = run.call_args.args[0]
+            self.assertEqual(orient_cmd[1:4], ['-m', 'graphify', 'query'])
+            self.assertEqual(orient_cmd[4], self.task['issue'])
+            self.assertTrue(session.call('retrieve', {'query': 'callee'})['ok'])
+            self.assertEqual(run.call_args.args[0][4], 'callee')
+        receipts = sorted(session.directory.glob('retrieval-command-*.json'))
+        self.assertEqual(len(receipts), 2)
+        self.assertTrue(all(json.loads(p.read_text())['stdout'] == 'native text' for p in receipts))
+
+    def test_native_no_match_is_normal_but_other_failures_are_retained(self):
+        session = task_session.prepare_session(self.task, "native-errors", "graphify", "native-cli-v2")
+        session.dirty = False
+        for code, text, success in [(4, 'No matching nodes found.\n', True), (4, 'unexpected', False), (1, 'broken', False)]:
+            with patch.object(task_session, 'run_tool', return_value=subprocess.CompletedProcess([], code, text, 'details')):
+                reply = session.call('retrieve', {'query': 'callee'})
+            self.assertEqual(reply['ok'], success)
+            if not success:
+                self.assertTrue(reply['infrastructure'])
+            receipt = json.loads((session.directory / f'retrieval-command-{session.tool_count}.json').read_text())
+            self.assertEqual(receipt['returncode'], code)
+            self.assertEqual(receipt['stderr'], 'details')
+
     def test_ast_graph_returns_whole_units_from_the_faulty_workspace(self):
         session = task_session.prepare_session(self.task, "ast-trial", "ast_graph")
         result = session.call("retrieve", {"query": "value"})
@@ -112,6 +155,22 @@ class TaskBrokerIntegrity(unittest.TestCase):
         self.assertEqual(units[3:], ["units", "--budget", "900", "--text", "--", "-q"])
         self.assertIn("--graphify-query", task_session.retrieve_command("graphify_orient", Path("in"), Path("out"), "q", 9))
         self.assertEqual(units[0], str(task_session.GRAF_T5))
+
+    def test_current_orientation_pins_every_operation_to_the_new_binary(self):
+        arm = "graf_current_orient"
+        self.assertEqual(task_session.graf_binary("graf_orient"), task_session.GRAF_T5)
+        self.assertEqual(task_session.retrieve_command(arm, Path("in"), Path("out"), "q", 90)[0],
+                         str(task_session.GRAF_T6))
+        self.assertIn("outline", [d["name"] for d in task_session.tool_definitions(arm)])
+        with patch.object(task_session, "run_tool") as run:
+            run.return_value.stdout = "app.py:1-2\n"
+            run.return_value.returncode = 0
+            session = task_session.prepare_session(self.task, "current-orient", arm)
+            session.dirty = False
+            self.assertTrue(session.call("orient", {})["ok"])
+            self.assertEqual(run.call_args[0][0][0], str(task_session.GRAF_T6))
+            self.assertTrue(session.call("outline", {"path": "app.py"})["ok"])
+            self.assertEqual(run.call_args[0][0][0], str(task_session.GRAF_T6))
 
     def test_orientation_is_only_for_orient_arms_and_only_once(self):
         with patch.object(task_session, "run_tool") as run:

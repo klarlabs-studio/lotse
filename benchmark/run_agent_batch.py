@@ -12,10 +12,12 @@ import hashlib
 import json
 from pathlib import Path
 import random
+import subprocess
 import sys
 
 from agent_trials import BASE, tasks
-from run_agent_trial import run
+from retrieval import graphify_baseline
+from run_agent_trial import TOOL_BINARIES, preflight, run
 
 def plan(task_ids, trials, arms, seed):
     """Every (task, trial, arm), shuffled deterministically."""
@@ -43,6 +45,16 @@ def main():
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
     batch_id = args.batch or list(prereg["batches"])[-1]
     batch = prereg["batches"][batch_id]
+    if not args.dry_run:
+        if batch.get("solver_version"):
+            version = subprocess.check_output(["claude", "--version"], text=True).strip()
+            if version != batch["solver_version"]:
+                raise SystemExit("Solver version differs from this batch's frozen version")
+        if batch.get("graphify_commit") and graphify_baseline()["commit"] != batch["graphify_commit"]:
+            raise SystemExit("Graphify baseline differs from this batch's frozen one; run under its virtualenv")
+        for arm, expected in batch.get("backend_sha256", {}).items():
+            if preflight(arm, TOOL_BINARIES[arm]) != expected:
+                raise SystemExit(f"{arm} differs from this batch's frozen backend")
     catalog = (BASE / batch.get("catalog", "benchmark/agent-tasks.json")).resolve()
     by_id = {t["id"]: t for t in tasks(catalog)}
     natural = natural_spec(prereg, batch.get("catalog"))
@@ -69,6 +81,11 @@ def main():
         if summary["infrastructure_error"]:
             raise SystemExit(f"{identifier}: broker infrastructure error; batch stopped. Move the trial "
                              "aside with a note, fix the environment, and rerun it from scratch")
+        if not summary["usage_complete"]:
+            raise SystemExit(f"{identifier}: incomplete solver usage; artifacts preserved, batch stopped")
+        if batch.get("stop_on_provider_error") and summary["result_subtype"] not in (
+                "success", "error_max_budget_usd", "error_max_turns"):
+            raise SystemExit(f"{identifier}: solver error; artifacts preserved, batch stopped")
         audit = summary["audit"] or {}
         print(json.dumps({"trial": identifier, "passed": summary["passed"],
                           "subtype": summary["result_subtype"], "tokens": audit.get("total_tokens"),

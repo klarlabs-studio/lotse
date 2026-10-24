@@ -1,7 +1,7 @@
 """Localization scoring must be symmetric across arms and anchored to the real fix."""
 import unittest
 
-from localization import (file_propagate, graf_locate_command, catalog_for, write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
+from localization import (check_pins, resumable_rows, file_propagate, graf_locate_command, catalog_for, write_json_atomic, corpus_gold, accuracy_at, bounded_units, cited_units, rewrite_query, decide, mcnemar_one_sided, code_units, call_edges, gold_lines, gold_units, graphify_locations, propagate,
                           pack_units, score_task)
 
 GO = """package x
@@ -266,6 +266,27 @@ class TypeScriptTests(unittest.TestCase):
         self.assertFalse(split_typescript("confirmation"))
         self.assertTrue(split_typescript("typescript"))
         self.assertTrue({".tsx", ".jsx"} <= EXTENSIONS_V2 and not {".tsx", ".jsx"} & EXTENSIONS)
+
+
+class Resume(unittest.TestCase):
+    PROVENANCE = {"catalog_sha256": "c", "graf_sha256": "g", "graphify_commit": "p"}
+
+    def test_rows_resume_only_under_the_same_catalog_and_builds(self):
+        previous = {**self.PROVENANCE, "tasks": [{"task": "a"}]}
+        self.assertEqual(resumable_rows(previous, self.PROVENANCE), {"a": {"task": "a"}})
+        self.assertEqual(resumable_rows({}, self.PROVENANCE), {})
+        for key in self.PROVENANCE:
+            with self.assertRaisesRegex(SystemExit, key):
+                resumable_rows({**previous, key: "other"}, self.PROVENANCE)
+        with self.assertRaisesRegex(SystemExit, "graphify_commit"):
+            resumable_rows({"catalog_sha256": "c", "graf_sha256": "g", "tasks": [{"task": "a"}]}, self.PROVENANCE)
+
+
+    def test_a_preregistered_run_refuses_other_builds(self):
+        check_pins({}, self.PROVENANCE)
+        check_pins({"graf_sha256": "g", "graphify_commit": "p", "command": "x"}, self.PROVENANCE)
+        with self.assertRaisesRegex(SystemExit, "graphify_commit"):
+            check_pins({"graf_sha256": "g", "graphify_commit": "other"}, self.PROVENANCE)
 
 
 if __name__ == "__main__":

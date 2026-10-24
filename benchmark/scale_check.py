@@ -23,10 +23,9 @@ import tarfile
 import urllib.request
 
 from localization import write_json_atomic
-from retrieval import BASE, graf_artifact
+from retrieval import BASE, GRAPHIFY, graf_artifact
 
 GRAF = BASE / "target/release/graf"
-GRAPHIFY = BASE / ".research/venv/bin/graphify"
 WORK = BASE / ".research/scale"
 REPOS = {
     "kubernetes": ("kubernetes/kubernetes", "2770c7b39f56a750c23d026bd311cb8d0eda8b4d",

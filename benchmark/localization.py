@@ -28,7 +28,7 @@ import tree_sitter_javascript
 import tree_sitter_python
 import tree_sitter_typescript
 
-from retrieval import BASE, BM25, EXTENSIONS, EXTENSIONS_V2, graf_artifact, load_documents, tokens
+from retrieval import BASE, BM25, EXTENSIONS, EXTENSIONS_V2, GRAPHIFY, graf_artifact, graphify_baseline, load_documents, tokens
 
 WINDOW = 24
 LANGUAGES = {".go": tree_sitter_go, ".py": tree_sitter_python, ".js": tree_sitter_javascript,
@@ -438,7 +438,7 @@ def run_graphify(root, query, budget):
     graph = root / "graphify/graphify-out/graph.json"
     if not graph.is_file():
         shutil.rmtree(root / "graphify", ignore_errors=True)
-        subprocess.run([str(BASE / ".research/venv/bin/graphify"), "extract", str(root / "input"), "--code-only",
+        subprocess.run([str(GRAPHIFY), "extract", str(root / "input"), "--code-only",
                         "--no-cluster", "--max-workers", "2", "--out", str(root / "graphify")], check=True,
                        capture_output=True, timeout=600, env={**__import__("os").environ, "PYTHONHASHSEED": "0"})
     out = _query_graph_text(_read_graph(str(graph)).to_undirected(), query, token_budget=budget)
@@ -566,23 +566,42 @@ def write_json_atomic(path, data):
         temporary.unlink(missing_ok=True)
 
 
+def resumable_rows(previous, provenance):
+    """Completed rows, only if they came from the same catalog, graf build, and Graphify baseline."""
+    if not previous.get("tasks"):
+        return {}
+    changed = [key for key, value in provenance.items() if previous.get(key) != value]
+    if changed:
+        raise SystemExit(f"Earlier results differ in {', '.join(changed)}; move them aside before rerunning")
+    return {r["task"]: r for r in previous["tasks"]}
+
+
+def check_pins(frozen, provenance):
+    """Refuse a graf build or Graphify baseline other than the ones this split's run preregistered."""
+    changed = [key for key in ("graf_sha256", "graphify_commit") if key in frozen and frozen[key] != provenance[key]]
+    if changed:
+        raise SystemExit(f"{', '.join(changed)} differs from the preregistered run; set GRAF_BINARY and the interpreter")
+
+
 def run(split):
     import hashlib
     catalog = json.loads(catalog_for(split).read_text())
-    digest = hashlib.sha256(catalog_for(split).read_bytes()).hexdigest()
     out = BASE / f"results/localization-{split}.json"
     previous = json.loads(out.read_text()) if out.is_file() else {}
-    rows = {r["task"]: r for r in previous.get("tasks", []) if previous.get("catalog_sha256") == digest}
-    budget = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]["budget_tokens"]
-    graf_sha = hashlib.sha256(GRAF.read_bytes()).hexdigest()
+    provenance = {"catalog_sha256": hashlib.sha256(catalog_for(split).read_bytes()).hexdigest(),
+                  "graf_sha256": hashlib.sha256(GRAF.read_bytes()).hexdigest(),
+                  "graphify_commit": graphify_baseline()["commit"]}
+    screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
+    check_pins(screen.get(split, {}).get("run", {}), provenance)
+    rows = resumable_rows(previous, provenance)
+    budget = screen["budget_tokens"]
     for task in [t for t in catalog["tasks"] if t["split"] == split]:
         if task["id"] in rows:
             continue
         rows[task["id"]] = {"task": task["id"], "repo": task["repo"], **run_task(task, budget, split)}
         print(task["id"], {a: r["unit_rank"] for a, r in rows[task["id"]].get("arms", {}).items()}
               or rows[task["id"]]["excluded"], flush=True)
-        write_json_atomic(out, {"split": split, "catalog_sha256": digest, "graf_sha256": graf_sha,
-                                "tasks": list(rows.values())})
+        write_json_atomic(out, {"split": split, **provenance, "tasks": list(rows.values())})
         shutil.rmtree(WORK / "snapshots" / task["id"], ignore_errors=True)  # Regenerable from git; disk is finite.
 
 
@@ -666,7 +685,7 @@ def decide_split(split):
     data["tasks"] = [r for r in data["tasks"] if "excluded" not in r]
     scored = [a for a in ARMS if a in data["tasks"][0]["arms"] and a != "file_bm25"]
     result = {"excluded_tasks": excluded,
-              "dropped_gold_files": {r["task"]: r["dropped_gold_files"] for r in data["tasks"] if r.get("dropped_gold_files")},"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"],
+              "dropped_gold_files": {r["task"]: r["dropped_gold_files"] for r in data["tasks"] if r.get("dropped_gold_files")},"split": split, "catalog_sha256": data["catalog_sha256"], "graf_sha256": data["graf_sha256"], "graphify_commit": data.get("graphify_commit"),
               "decision": (decide_tests(data["tasks"], rule["tests"], rule["comparators"], 0.05, rule["k"]) if "tests" in rule
                            else decide(data["tasks"], rule["candidate_arms"], rule["comparators"], 0.05, rule["k"], metric)),
               "summary": summarize(data["tasks"]),

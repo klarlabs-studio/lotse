@@ -20,7 +20,8 @@ import sys
 import time
 
 from agent_trials import BASE, audit_trace, tasks
-from task_session import ARMS, ORIENT_ARMS, Session, prepare_session
+from retrieval import GRAPHIFY
+from task_session import ARMS, GRAF_ORIENT_ARMS, ORIENT_ARMS, Session, prepare_session
 
 SYSTEM_PROMPT = (
     "You are repairing a bug in a software repository. You can act only through the "
@@ -39,15 +40,15 @@ GRAF_ORIENT_PROMPT = SYSTEM_PROMPT.replace(
     "read shows source lines, ", "read shows source lines, outline lists a file's functions, ") + ORIENT_PROMPT
 TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "target/release/graf",
                  "graf_orient": BASE / ".research/bin/graf-t5",
-                 "graphify_orient": BASE / ".research/venv/bin/graphify",
-                 "graphify": BASE / ".research/venv/bin/graphify",
+                 "graf_current_orient": BASE / ".research/bin/graf-t6",
+                 "graphify_orient": GRAPHIFY, "graphify": GRAPHIFY,
                  "search_only": Path(shutil.which("rg") or "rg"),
                  "ast_graph": [BASE / "frozen-t4" / name
                                for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
 
 
 def system_prompt(arm):
-    if arm == "graf_orient":
+    if arm in GRAF_ORIENT_ARMS:
         return GRAF_ORIENT_PROMPT
     if arm == "graphify_orient":
         return SYSTEM_PROMPT + ORIENT_PROMPT

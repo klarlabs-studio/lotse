@@ -63,9 +63,10 @@ class CommandTests(unittest.TestCase):
         prompt = issue_prompt("bug", "Likely files:\n- a.py\n")
         self.assertTrue(prompt.startswith("bug\n\n" + ORIENTATION_HEADER))
         self.assertTrue(prompt.endswith("- a.py\n"))
-        for arm in ("graf_orient", "graphify_orient"):
+        for arm in ("graf_orient", "graf_current_orient", "graphify_orient"):
             self.assertIn("orientation", system_prompt(arm))
         self.assertIn("outline", system_prompt("graf_orient"))
+        self.assertEqual(system_prompt("graf_current_orient"), system_prompt("graf_orient"))
         self.assertNotIn("outline", system_prompt("graphify_orient"))
 
     def test_prompt_names_only_the_arm_tools(self):

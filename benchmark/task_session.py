@@ -7,7 +7,6 @@ All model usage must be captured by a separately configured solver adapter.
 import argparse
 import contextlib
 import hashlib
-import importlib.metadata
 import io
 import json
 from pathlib import Path
@@ -15,10 +14,10 @@ import shutil
 import subprocess
 import sys
 import time
-import tomllib
 
 from agent_trials import BASE, prepare, tasks, verify
-from retrieval import load_documents, tokens
+from retrieval import GRAPHIFY, graphify_baseline, load_documents, tokens
+from compare_graphify import GRAPHIFY_ADAPTERS, graphify_command
 
 TOOL_DEFINITIONS = [
     {"name": "retrieve", "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
@@ -37,37 +36,43 @@ TOOL_DEFINITIONS = [
 
 
 GRAF_QUERY_FLAGS = {"graf": (), "graf_floor": ("--file-score", "damped", "--stop", "floor")}
-ORIENT_ARMS = ("graf_orient", "graphify_orient")
+GRAF_ORIENT_ARMS = ("graf_orient", "graf_current_orient")
+ORIENT_ARMS = (*GRAF_ORIENT_ARMS, "graphify_orient")
 ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph", *ORIENT_ARMS)
 SCRIPTS = Path(__file__).resolve().parent
 AST_BACKEND = BASE / "frozen-t4"  # The ast_graph backend as batch t4 started; see frozen-t4/README.md.
 ORIENT_BUDGET = 1500  # Batch t5: the orientation shown before the first turn (preregistration v22).
-GRAF_INDEX_ARMS = (*GRAF_QUERY_FLAGS, "graf_orient")
+GRAF_INDEX_ARMS = (*GRAF_QUERY_FLAGS, *GRAF_ORIENT_ARMS)
 # Batch t5 runs a pinned copy of graf built from commit 7ccfea3 (sha256 c95b5766...), so graf can keep changing.
 GRAF_T5 = BASE / ".research/bin/graf-t5"
+GRAF_T6 = BASE / ".research/bin/graf-t6"
 
 
 def graf_binary(arm):
-    return GRAF_T5 if arm == "graf_orient" else BASE / "target/release/graf"
+    return {"graf_orient": GRAF_T5, "graf_current_orient": GRAF_T6}.get(arm, BASE / "target/release/graf")
 
 
 def tool_definitions(arm):
     """The operations an arm's model can request; search-only has no retriever, and only graf_orient outlines."""
     return [d for d in TOOL_DEFINITIONS
             if not (arm == "search_only" and d["name"] == "retrieve")
-            and not (arm != "graf_orient" and d["name"] == "outline")]
+            and not (arm not in GRAF_ORIENT_ARMS and d["name"] == "outline")]
 
 
-def retrieve_command(arm, input_dir, output_dir, query, budget):
+def retrieve_command(arm, input_dir, output_dir, query, budget, graphify_adapter="library-v1"):
     if arm in GRAF_QUERY_FLAGS:
         return [str(BASE / "target/release/graf"), "--root", str(input_dir), "locate",
                 "--budget", str(budget), "--limit", "1000", "--text", *GRAF_QUERY_FLAGS[arm], "--", query]
     if arm == "ast_graph":
         return [sys.executable, str(AST_BACKEND / "ast_retrieve.py"), "query", str(output_dir), query, str(budget)]
-    if arm == "graf_orient":
+    if arm in GRAF_ORIENT_ARMS:
         return [str(graf_binary(arm)), "--root", str(input_dir), "units", "--budget", str(budget),
                 "--text", "--", query]
     if arm in ("graphify", "graphify_orient"):
+        if graphify_adapter == "native-cli-v2":
+            return graphify_command(output_dir / "graphify-out/graph.json", query, budget, graphify_adapter)
+        if graphify_adapter != "library-v1":
+            raise ValueError("Unknown Graphify adapter")
         return [sys.executable, str(BASE / "benchmark/compare_graphify.py"), "--graphify-query",
                 str(output_dir / "graphify-out/graph.json"), query, str(budget)]
     raise ValueError("retrieve is not available in this arm")
@@ -115,25 +120,17 @@ def is_test_path(path):
 
 
 def graphify_pin():
-    root = BASE / ".research/corpora/graphify"
-    package = tomllib.loads((root / "pyproject.toml").read_text())["project"]
-    if importlib.metadata.version(package["name"]) != package["version"]:
-        raise ValueError("Install the pinned Graphify package before starting trials")
-    import graphify
-    installed = Path(graphify.__file__).parent
-    for path in installed.rglob("*.py"):
-        original = root / "graphify" / path.relative_to(installed)
-        if not original.is_file() or path.read_bytes() != original.read_bytes():
-            raise ValueError("Installed Graphify source differs from the pinned snapshot")
-    manifest = json.loads((BASE / "benchmark/corpora.json").read_text())
-    return next(x for x in manifest["repositories"] if x["id"] == "graphify")
+    return graphify_baseline()
 
 
 class Session:
-    def __init__(self, task, trial_id, arm):
+    def __init__(self, task, trial_id, arm, graphify_adapter=None):
         if arm not in ARMS:
             raise ValueError(f"arm must be one of {', '.join(ARMS)}")
         self.task, self.arm = task, arm
+        if graphify_adapter is not None and graphify_adapter not in GRAPHIFY_ADAPTERS:
+            raise ValueError("Unknown Graphify adapter")
+        self.graphify_adapter = graphify_adapter or "library-v1"
         self.root = (BASE / ".research/trials" / trial_id / "workspace").resolve()
         self.directory = self.root.parent
         if not self.root.is_relative_to((BASE / ".research/trials").resolve()):
@@ -156,6 +153,12 @@ class Session:
             saved = json.loads(metadata.read_text())
             if saved["arm"] != arm or saved["task"] != task["id"]:
                 raise ValueError("Session arm/task cannot change between calls")
+            stored_adapter = saved.get("graphify_adapter", "library-v1")
+            if stored_adapter not in GRAPHIFY_ADAPTERS:
+                raise ValueError("Unknown stored Graphify adapter")
+            if graphify_adapter is not None and stored_adapter != graphify_adapter:
+                raise ValueError("Session Graphify adapter cannot change between calls")
+            self.graphify_adapter = stored_adapter
             self.protected = saved["protected_source_hashes"]
         else:
             for path, text in load_documents(self.root).items():
@@ -211,7 +214,7 @@ class Session:
             command = [sys.executable, str(AST_BACKEND / "ast_retrieve.py"), "index", str(self.input), str(self.output)]
         else:
             graphify_pin()
-            command = [str(BASE / ".research/venv/bin/graphify"), "extract", str(self.input),
+            command = [str(GRAPHIFY), "extract", str(self.input),
                        "--code-only", "--no-cluster", "--max-workers", "2", "--out", str(self.output)]
         result = run_tool(command, timeout=180, env=self.environment())
         seconds = time.perf_counter() - start
@@ -224,8 +227,18 @@ class Session:
             "snapshot": sha(json.dumps(files, sort_keys=True)),
         }, indent=2) + "\n")
         if self.arm in (*GRAF_INDEX_ARMS, "ast_graph"):
-            built = self.input / ".graf/index.json" if self.arm in GRAF_INDEX_ARMS else self.output / "ast-index.json"
-            index = json.loads(built.read_text())
+            if self.arm == "graf_current_orient":
+                # Schema 2 stores binary indexes; retain the exact-file-set check
+                # through the existing legacy export, without changing t5's pin.
+                inspect = [str(graf_binary(self.arm)), "--root", str(self.input), "export-index"]
+                exported = run_tool(inspect, timeout=90, env=self.environment())
+                (self.directory / f"index-export-{generation}.json").write_text(json.dumps({
+                    "command": inspect, "stdout": exported.stdout, "stderr": exported.stderr,
+                }, indent=2) + "\n")
+                index = json.loads(exported.stdout)
+            else:
+                built = self.input / ".graf/index.json" if self.arm in GRAF_INDEX_ARMS else self.output / "ast-index.json"
+                index = json.loads(built.read_text())
             if set(index["files"]) != set(files):
                 raise RuntimeError("graf source filters differ from the shared input set")
         self.dirty = False
@@ -250,6 +263,23 @@ class Session:
         return {"verification_passed": result["verification_passed"], "returncode": result["returncode"],
                 "output": bounded(result["stdout"] + result["stderr"], 2000)}
 
+    def retrieval_text(self, command):
+        if self.graphify_adapter == "library-v1":
+            return run_tool(command, timeout=90, env=self.environment()).stdout
+        started = time.perf_counter()
+        result = run_tool(command, check=False, timeout=90, env=self.environment())
+        (self.directory / f"retrieval-command-{self.tool_count}.json").write_text(json.dumps({
+            "command": command, "returncode": result.returncode,
+            "seconds": time.perf_counter() - started,
+            "stdout": result.stdout, "stderr": result.stderr,
+            "graphify_adapter": self.graphify_adapter,
+        }, indent=2) + "\n")
+        no_match = (self.arm in ("graphify", "graphify_orient") and result.returncode == 4
+                    and result.stdout == "No matching nodes found.\n")
+        if result.returncode and not no_match:
+            raise InfrastructureError(f"Retrieval command failed with exit {result.returncode}; raw output retained")
+        return result.stdout
+
     def operate(self, operation, args):
         if self.closed:
             raise ValueError("Trial is already finished")
@@ -258,10 +288,10 @@ class Session:
             query = args.get("query")
             if not isinstance(query, str) or not query.strip():
                 raise ValueError("query must be nonempty")
-            command = retrieve_command(self.arm, self.input, self.output, query, budget)
+            command = retrieve_command(self.arm, self.input, self.output, query, budget, self.graphify_adapter)
             if self.dirty:
                 self.rebuild()
-            context = run_tool(command, timeout=90, env=self.environment()).stdout
+            context = self.retrieval_text(command)
             return {"content": context, "requested_budget": budget, "reference_text_tokens": len(tokens(context)),
                     "over_reference_budget": len(tokens(context)) > budget}
         if operation == "orient":
@@ -269,22 +299,22 @@ class Session:
                 raise ValueError("Orientation is produced once, by the harness, before the first turn")
             if self.dirty:
                 self.rebuild()
-            if self.arm == "graf_orient":
-                command = [str(GRAF_T5), "--root", str(self.input), "triage", "--budget",
+            if self.arm in GRAF_ORIENT_ARMS:
+                command = [str(graf_binary(self.arm)), "--root", str(self.input), "triage", "--budget",
                            str(ORIENT_BUDGET), "--text", "--", self.task["issue"]]
             else:
-                command = retrieve_command(self.arm, self.input, self.output, self.task["issue"], ORIENT_BUDGET)
-            native = run_tool(command, timeout=90, env=self.environment()).stdout
+                command = retrieve_command(self.arm, self.input, self.output, self.task["issue"], ORIENT_BUDGET, self.graphify_adapter)
+            native = self.retrieval_text(command)
             context = bounded(native, ORIENT_BUDGET)  # The same hard cap for both backends.
             return {"content": context, "requested_budget": ORIENT_BUDGET, "reference_text_tokens": len(tokens(context)),
                     "native_tokens": len(tokens(native)), "truncated": context != native}
         if operation == "outline":
-            if self.arm != "graf_orient":
+            if self.arm not in GRAF_ORIENT_ARMS:
                 raise ValueError("outline is not available in this arm")
             relative = str(self.path(args.get("path")).relative_to(self.root))
             if self.dirty:
                 self.rebuild()
-            command = [str(GRAF_T5), "--root", str(self.input), "outline", "--text", "--", relative]
+            command = [str(graf_binary(self.arm)), "--root", str(self.input), "outline", "--text", "--", relative]
             result = run_tool(command, check=False, timeout=60, env=self.environment())
             if result.returncode:
                 raise ValueError(result.stderr.strip() or "outline failed")
@@ -367,12 +397,13 @@ class Session:
         return response
 
 
-def prepare_session(task, trial_id, arm):
+def prepare_session(task, trial_id, arm, graphify_adapter=None):
     with contextlib.redirect_stdout(io.StringIO()):
         prepare(task, trial_id)
-    session = Session(task, trial_id, arm)
+    session = Session(task, trial_id, arm, graphify_adapter)
     (session.directory / "session.json").write_text(json.dumps({
         "task": task["id"], "arm": arm, "issue": task["issue"],
+        "graphify_adapter": session.graphify_adapter,
         "tools": tool_definitions(arm), "solver_status": "not_configured",
         "protected_source_hashes": session.protected,
         "fault_metadata_exposed_to_model": False,
