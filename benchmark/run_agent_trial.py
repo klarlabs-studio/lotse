@@ -89,6 +89,30 @@ def solver():
     return os.environ.get("CLAUDE_BINARY", "claude")
 
 
+def solver_model(default):
+    """A gateway batch's model (SOLVER_MODEL), else the preregistered agent_trials.model."""
+    return os.environ.get("SOLVER_MODEL") or default
+
+
+def solver_budget(default):
+    """A gateway batch's spend cap in the solver's own cost units (SOLVER_BUDGET_USD)."""
+    return float(os.environ.get("SOLVER_BUDGET_USD") or default)
+
+
+def model_cost(usage):
+    """The batch's frozen price table (USD per million tokens), else the solver's own estimate.
+
+    Claude Code prices models it does not know at a default rate, so gateway batches freeze theirs.
+    """
+    prices = os.environ.get("SOLVER_PRICES")
+    if not prices:
+        return usage["costUSD"], "list-price estimate under a subscription"
+    rate = json.loads(prices)
+    cost = (usage["inputTokens"] * rate["input"] + usage["cacheReadInputTokens"] * rate["cache_read"]
+            + usage["cacheCreationInputTokens"] * rate["cache_write"] + usage["outputTokens"] * rate["output"]) / 1e6
+    return cost, "frozen gateway price table (preregistered)"
+
+
 def claude_command(issue, mcp_config, model, budget, arm):
     return [solver(), "-p", f"Issue report:\n\n{issue}",
             "--model", model, "--tools", "", "--strict-mcp-config", "--mcp-config", str(mcp_config),
@@ -104,11 +128,12 @@ def usage_events(result):
     events = []
     for model, usage in sorted(result["modelUsage"].items()):
         cached = usage["cacheReadInputTokens"]
+        cost, basis = model_cost(usage)
         events.append({"type": "model_usage", "component": "solver", "model": model,
                        "input_tokens": usage["inputTokens"] + usage["cacheCreationInputTokens"] + cached,
                        "cached_input_tokens": cached, "output_tokens": usage["outputTokens"],
-                       "reasoning_tokens": usage.get("thinkingTokens"), "cost_usd": usage["costUSD"],
-                       "cost_basis": "list-price estimate under a subscription"})
+                       "reasoning_tokens": usage.get("thinkingTokens"), "cost_usd": cost,
+                       "cost_basis": basis})
     return events
 
 
@@ -138,7 +163,7 @@ def run(task, trial_id, arm, catalog):
         "args": [str(BASE / "benchmark/broker_mcp.py"), task["id"], trial_id, "--arm", arm,
                  "--catalog", str(catalog)]}}}, indent=2) + "\n")
     prompt = issue_prompt(task["issue"], orient(session))
-    command = claude_command(prompt, mcp_config, prereg["model"], prereg["max_budget_usd"], arm)
+    command = claude_command(prompt, mcp_config, solver_model(prereg["model"]), solver_budget(prereg["max_budget_usd"]), arm)
     start = time.perf_counter()
     with (directory / "agent-stream.jsonl").open("w") as stream, \
          (directory / "agent-stderr.txt").open("w") as stderr:
@@ -194,7 +219,7 @@ def recover(task, trial_id, arm, reason):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
     lines = (directory / "agent-stream.jsonl").read_text().splitlines()
     result = next(json.loads(l) for l in reversed(lines) if json.loads(l).get("type") == "result")
-    command = claude_command(task["issue"], directory / "mcp.json", prereg["model"], prereg["max_budget_usd"], arm)
+    command = claude_command(task["issue"], directory / "mcp.json", solver_model(prereg["model"]), solver_budget(prereg["max_budget_usd"]), arm)
     summary = finalize(task, trial_id, arm, command, None, result["duration_ms"] / 1000,
                        preflight(arm, TOOL_BINARIES[arm]))
     summary["recovered"] = (f"{reason}; summary rebuilt from the preserved artifacts without rerunning the "

@@ -52,6 +52,18 @@ def route_solver(endpoint):
                        "ANTHROPIC_API_KEY": ""})
 
 
+def configure_solver(batch):
+    """Pass a batch's frozen model, price table and spend cap to its trials; clear stale ones."""
+    settings = {"SOLVER_MODEL": batch.get("solver_model"),
+                "SOLVER_BUDGET_USD": batch.get("solver_budget_usd"),
+                "SOLVER_PRICES": batch.get("solver_prices_per_million")}
+    for name, value in settings.items():
+        if value is None:
+            os.environ.pop(name, None)
+        else:
+            os.environ[name] = json.dumps(value) if isinstance(value, dict) else str(value)
+
+
 def trial_id(batch, task, k, arm):
     return f"{batch}-{task}-{arm}-{k}"
 
@@ -71,8 +83,6 @@ def main():
             if hashlib.sha256(binary.read_bytes()).hexdigest() != batch["solver_sha256"]:
                 raise SystemExit("Solver binary differs from this batch's frozen copy")
             os.environ["CLAUDE_BINARY"] = str(binary)
-        if batch.get("solver_endpoint"):
-            route_solver(batch["solver_endpoint"])
         if batch.get("solver_version"):
             version = subprocess.check_output([solver(), "--version"], text=True).strip()
             if version != batch["solver_version"]:
@@ -97,6 +107,10 @@ def main():
             if (BASE / ".research/trials" / trial_id(batch_id, *e) / "summary.json").is_file()]
     pending = [e for e in entries if e not in done][:args.limit]
     print(f"batch {batch_id}: {len(entries)} planned, {len(done)} done, running {len(pending)}", flush=True)
+    if pending and not args.dry_run:
+        if batch.get("solver_endpoint"):
+            route_solver(batch["solver_endpoint"])
+        configure_solver(batch)
     for task, k, arm in pending:
         identifier = trial_id(batch_id, task, k, arm)
         if args.dry_run:

@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from agent_trials import audit_trace
-from run_agent_trial import SYSTEM_PROMPT, claude_command, preflight, scored_events, system_prompt, usage_events
+from run_agent_trial import SYSTEM_PROMPT, claude_command, solver_budget, solver_model, preflight, scored_events, system_prompt, usage_events
 
 RESULT = {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3,
           "total_cost_usd": 0.0123,
@@ -33,6 +33,23 @@ class UsageTests(unittest.TestCase):
         events = usage_events(result)
         self.assertEqual({e["model"] for e in events}, {"claude-haiku-5-5", "other-model"})
         self.assertIsNone(next(e for e in events if e["model"] == "other-model")["reasoning_tokens"])
+
+    def test_a_frozen_price_table_replaces_the_solver_estimate(self):
+        prices = '{"input": 0.03, "cache_read": 0.006, "cache_write": 0.03, "output": 0.13}'
+        with patch.dict("os.environ", {"SOLVER_PRICES": prices}):
+            [event] = usage_events(RESULT)
+        self.assertAlmostEqual(event["cost_usd"], (10 * 0.03 + 3000 * 0.006 + 900 * 0.03 + 400 * 0.13) / 1e6)
+        self.assertEqual(event["cost_basis"], "frozen gateway price table (preregistered)")
+        with patch.dict("os.environ", clear=True):
+            self.assertEqual(usage_events(RESULT)[0]["cost_usd"], 0.0123)
+
+    def test_model_and_spend_cap_follow_the_batch(self):
+        with patch.dict("os.environ", {"SOLVER_MODEL": "qwen/x", "SOLVER_BUDGET_USD": "25"}):
+            command = claude_command("i", Path("/x/mcp.json"), solver_model("claude-haiku-5-5"), solver_budget(0.5), "graf")
+        self.assertIn("--model qwen/x", " ".join(command))
+        self.assertIn("--max-budget-usd 25.0", " ".join(command))
+        with patch.dict("os.environ", clear=True):
+            self.assertEqual((solver_model("m"), solver_budget(0.5)), ("m", 0.5))
 
     def test_missing_result_is_an_error_not_zero_usage(self):
         with self.assertRaises(ValueError):

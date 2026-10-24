@@ -1,5 +1,5 @@
 {
-  "version": 77,
+  "version": 78,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -212,7 +212,7 @@
         "graf_binary": ".research/bin/graf-t5, a copy of target/release/graf built from commit 7ccfea3 (no Rust changes since), sha256 c95b576666d1021b21beae71d5486a660b17516453b90417d9f65d5572b51c46, hashed per run",
         "rule": "the agent_trials.rule (cost superiority, success non-inferiority margin 0.10) against each comparator; intersection-union, so alpha is not split",
         "secondary": "turns per run, turns before the first edit, tool calls by type, and the orientation's payload, reported descriptively",
-        "schedule": "runs after batch t4r3 completes; frozen before any t4, t4r, t4r2 or t4r3 outcome was looked at",
+        "schedule": "runs after batch t4q completes; frozen before any t4-series outcome was looked at",
         "rationale": "tests whether one cheap up-front orientation (likely files, then whole likely functions) and function-level reads let an agent decide faster what to work on, against the same up-front orientation from Graphify",
         "orientation_cap": "both orientations are cut to at most 1,500 cl100k tokens at whole lines by the harness (bounded); Graphify's native output exceeded its requested budget on the dry run (mean 2,304, max 4,903 tokens), graf's triage stayed within it (mean 1,192). The native size is logged",
         "solver_version": "2.1.310 (Claude Code)",
@@ -233,7 +233,20 @@
           "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
           "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
         },
-        "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged"
+        "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged",
+        "solver_model": "qwen/qwen3.7-flash",
+        "solver_prices_per_million": {
+          "input": 0.03,
+          "cache_read": 0.006,
+          "cache_write": 0.038,
+          "output": 0.13
+        },
+        "solver_budget_usd": 20,
+        "model_choice": "operator decision 2026-10-24: OpenRouter only, cheaper non-Anthropic models. A development-task pilot (flask-response-order, search_only, outside every frozen catalog) ran qwen/qwen3.7-flash, deepseek/deepseek-v4.1-flash and z-ai/glm-5.3-flash through Claude Code 2.1.310; all three drove the tools and finished. qwen3.7-flash is the cheapest (about $0.001 per attempt at its OpenRouter prices; Haiku 5.5 about $0.0065)",
+        "cost_basis": "primary metric: tokens priced with solver_prices_per_million, the qwen/qwen3.7-flash OpenRouter prices on 2026-10-24 (Claude Code prices unknown models at a default, costBasis unknown, so its estimate is not used). OpenRouter's actual charge is recorded per chunk as a diagnostic only",
+        "spend_cap": "Claude Code enforces --max-budget-usd in its default unknown-model rates, derived from the pilot as $4 input, $0.20 cache read, $5 cache write, $20 output per million (20-40x Haiku list). $20 permits at least the tokens t4's $0.50 Haiku cap did; that cap bound none of the 181 t4r2 attempts",
+        "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat",
+        "version_update_v78": "before any run: solver model qwen/qwen3.7-flash via OpenRouter with the frozen price table and cap of t4q"
       },
       "t6": {
         "arms": [
@@ -292,7 +305,20 @@
           "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
           "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
         },
-        "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged"
+        "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged",
+        "solver_model": "qwen/qwen3.7-flash",
+        "solver_prices_per_million": {
+          "input": 0.03,
+          "cache_read": 0.006,
+          "cache_write": 0.038,
+          "output": 0.13
+        },
+        "solver_budget_usd": 20,
+        "model_choice": "operator decision 2026-10-24: OpenRouter only, cheaper non-Anthropic models. A development-task pilot (flask-response-order, search_only, outside every frozen catalog) ran qwen/qwen3.7-flash, deepseek/deepseek-v4.1-flash and z-ai/glm-5.3-flash through Claude Code 2.1.310; all three drove the tools and finished. qwen3.7-flash is the cheapest (about $0.001 per attempt at its OpenRouter prices; Haiku 5.5 about $0.0065)",
+        "cost_basis": "primary metric: tokens priced with solver_prices_per_million, the qwen/qwen3.7-flash OpenRouter prices on 2026-10-24 (Claude Code prices unknown models at a default, costBasis unknown, so its estimate is not used). OpenRouter's actual charge is recorded per chunk as a diagnostic only",
+        "spend_cap": "Claude Code enforces --max-budget-usd in its default unknown-model rates, derived from the pilot as $4 input, $0.20 cache read, $5 cache write, $20 output per million (20-40x Haiku list). $20 permits at least the tokens t4's $0.50 Haiku cap did; that cap bound none of the 181 t4r2 attempts",
+        "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat",
+        "version_update_v78": "before any run: solver model qwen/qwen3.7-flash via OpenRouter with the frozen price table and cap of t4q"
       },
       "t4r": {
         "arms": [
@@ -404,7 +430,61 @@
           "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
           "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
         },
-        "cost_basis": "the primary metric stays the Claude Code list-price estimate (modelUsage costUSD, costBasis list). OpenRouter's actual charge is recorded per chunk as a diagnostic only"
+        "cost_basis": "the primary metric stays the Claude Code list-price estimate (modelUsage costUSD, costBasis list). OpenRouter's actual charge is recorded per chunk as a diagnostic only",
+        "superseded_by": "t4q (v78); do not run"
+      },
+      "t4q": {
+        "arms": [
+          "ast_graph",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "ast_graph"
+        ],
+        "controls": [],
+        "comparators": [
+          "search_only",
+          "graphify"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261022,
+        "frozen_in_version": 78,
+        "arm_definitions": "ast_graph: retrieve runs the localization-screen ast_graph arm (tree-sitter units, BM25, one-hop call propagation 0.5, floor 0.5, whole units packed within the requested budget; Python prototype in benchmark/localization.py, hashed per run). search_only and graphify as in t3",
+        "secondary": "mean turns per run and turns before the first edit, reported descriptively",
+        "rationale": "ast_graph was the only arm to beat both graf_floor and Graphify on the held-out localization screen (unit Acc@5 0.365 vs 0.276 and 0.291); this batch tests whether that localization gain lowers agent cost against both comparators. A pass would justify a Rust implementation, not promotion of the prototype",
+        "solver_version": "2.1.310 (Claude Code)",
+        "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.95",
+        "supersedes": "t4r3",
+        "backend_sha256": {
+          "ast_graph": "fc85e65972d178c23b7bfc4e4783d6504a041866bb570841d2324178eb26143d",
+          "graphify": "b1d3eafa360f710b02aa927330985fe913018cc0d5752d012b0bc3dcee2a28a2",
+          "search_only": "1c57905960cd69dbb5b05492560957f4a57cdd4d39137e20de23981c6e1f4423"
+        },
+        "restart_reason": "operator chose a cheaper non-Anthropic solver model; t4r3 (Haiku 5.5 via OpenRouter) was stopped after 4 complete attempts and 1 interrupted. Arms, tasks, seed, tools, rules and margins are unchanged; only the model, its price table and the cap's units change. No outcome of t4, t4r, t4r2 or t4r3 was looked at",
+        "prior_trials": "t4 (60), t4r (7), t4r2 (182) and t4r3 (5) trials are kept unchanged and excluded from every decision",
+        "run_command": ".research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t4q",
+        "solver_binary": ".research/bin/claude-2.1.310",
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "solver_endpoint": {
+          "base_url": "https://openrouter.ai/api",
+          "credential": "keychain:openrouter-graf",
+          "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
+          "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
+        },
+        "cost_basis": "primary metric: tokens priced with solver_prices_per_million, the qwen/qwen3.7-flash OpenRouter prices on 2026-10-24 (Claude Code prices unknown models at a default, costBasis unknown, so its estimate is not used). OpenRouter's actual charge is recorded per chunk as a diagnostic only",
+        "solver_model": "qwen/qwen3.7-flash",
+        "solver_prices_per_million": {
+          "input": 0.03,
+          "cache_read": 0.006,
+          "cache_write": 0.038,
+          "output": 0.13
+        },
+        "solver_budget_usd": 20,
+        "model_choice": "operator decision 2026-10-24: OpenRouter only, cheaper non-Anthropic models. A development-task pilot (flask-response-order, search_only, outside every frozen catalog) ran qwen/qwen3.7-flash, deepseek/deepseek-v4.1-flash and z-ai/glm-5.3-flash through Claude Code 2.1.310; all three drove the tools and finished. qwen3.7-flash is the cheapest (about $0.001 per attempt at its OpenRouter prices; Haiku 5.5 about $0.0065)",
+        "spend_cap": "Claude Code enforces --max-budget-usd in its default unknown-model rates, derived from the pilot as $4 input, $0.20 cache read, $5 cache write, $20 output per million (20-40x Haiku list). $20 permits at least the tokens t4's $0.50 Haiku cap did; that cap bound none of the 181 t4r2 attempts",
+        "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat"
       }
     },
     "natural_tasks": {
@@ -823,6 +903,11 @@
       "version": 77,
       "date": "2026-10-24",
       "reason": "Operator budget decision: agent batches run through OpenRouter instead of the Claude subscription. t4r2 stopped at 181 attempts; batch t4r3 reruns t4r2 unchanged through OpenRouter; t5 and t6 route the same way. Model, solver binary, tools, tasks, seed and rules unchanged. No outcome looked at"
+    },
+    {
+      "version": 78,
+      "date": "2026-10-24",
+      "reason": "Operator decision: cheaper non-Anthropic solver via OpenRouter. Batch t4q reruns t4r3 with qwen/qwen3.7-flash (chosen by a development-task pilot of three cheap models), a frozen OpenRouter price table as the cost basis, and a $20 cap in Claude Code's unknown-model rates; t5 and t6 use the same. t4r3 stopped at 4 complete attempts. No outcome looked at"
     }
   ],
   "arms": {

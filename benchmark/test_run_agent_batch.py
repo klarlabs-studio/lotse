@@ -65,6 +65,18 @@ class NaturalSpecTests(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "credential"):
                 run_agent_batch.route_solver(endpoint)
 
+    def test_a_gateway_batch_freezes_its_model_prices_and_cap(self):
+        batch = {"solver_model": "qwen/x", "solver_budget_usd": 25,
+                 "solver_prices_per_million": {"input": 0.03, "cache_read": 0.006, "cache_write": 0.03, "output": 0.13}}
+        with patch.dict("os.environ", {}, clear=True):
+            run_agent_batch.configure_solver(batch)
+            self.assertEqual(run_agent_batch.os.environ["SOLVER_MODEL"], "qwen/x")
+            self.assertEqual(run_agent_batch.os.environ["SOLVER_BUDGET_USD"], "25")
+            self.assertEqual(json.loads(run_agent_batch.os.environ["SOLVER_PRICES"])["output"], 0.13)
+        with patch.dict("os.environ", {"SOLVER_MODEL": "stale"}, clear=True):
+            run_agent_batch.configure_solver({})
+            self.assertNotIn("SOLVER_MODEL", run_agent_batch.os.environ)
+
     def test_each_natural_batch_resolves_its_frozen_catalog(self):
         self.assertEqual(natural_spec(AGENT, AGENT["batches"]["t3"]["catalog"])["minimum_tasks"], 18)
         t4 = natural_spec(AGENT, AGENT["batches"]["t4"]["catalog"])
