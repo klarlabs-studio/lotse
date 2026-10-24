@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from retrieval import graphify_baseline
+from retrieval import graphify_baseline, graphify_baselines
 
 
 def pinned(corpora, ident, version, source):
@@ -42,6 +42,19 @@ class GraphifyBaseline(unittest.TestCase):
             self.baseline("0.9.95")
         with self.assertRaisesRegex(ValueError, "no pinned baseline"):
             self.baseline("0.9.93")
+
+    def test_a_frozen_manifest_can_be_passed_inline(self):
+        (self.installed / "serve.py").write_text("new\n")
+        manifest = json.loads(self.manifest.read_text())
+        self.assertEqual(graphify_baseline("0.9.95", self.installed, manifest, self.corpora)["commit"], "92741d1")
+        manifest["repositories"] = manifest["repositories"][:1]
+        with self.assertRaisesRegex(ValueError, "no pinned baseline"):
+            graphify_baseline("0.9.95", self.installed, manifest, self.corpora)
+
+    def test_every_graphify_revision_is_a_baseline_and_corpora_are_not(self):
+        manifest = json.loads(self.manifest.read_text())
+        manifest["repositories"].append({"id": "flask", "commit": "x", "role": "corpus"})
+        self.assertEqual([p["commit"] for p in graphify_baselines(manifest)], ["86c57be", "92741d1"])
 
 
 if __name__ == "__main__":

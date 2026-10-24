@@ -1,5 +1,5 @@
 {
-  "version": 75,
+  "version": 76,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -212,10 +212,10 @@
         "graf_binary": ".research/bin/graf-t5, a copy of target/release/graf built from commit 7ccfea3 (no Rust changes since), sha256 c95b576666d1021b21beae71d5486a660b17516453b90417d9f65d5572b51c46, hashed per run",
         "rule": "the agent_trials.rule (cost superiority, success non-inferiority margin 0.10) against each comparator; intersection-union, so alpha is not split",
         "secondary": "turns per run, turns before the first edit, tool calls by type, and the orientation's payload, reported descriptively",
-        "schedule": "runs after batch t4r completes; frozen before any t4 or t4r outcome was looked at",
+        "schedule": "runs after batch t4r2 completes; frozen before any t4, t4r or t4r2 outcome was looked at",
         "rationale": "tests whether one cheap up-front orientation (likely files, then whole likely functions) and function-level reads let an agent decide faster what to work on, against the same up-front orientation from Graphify",
         "orientation_cap": "both orientations are cut to at most 1,500 cl100k tokens at whole lines by the harness (bounded); Graphify's native output exceeded its requested budget on the dry run (mean 2,304, max 4,903 tokens), graf's triage stayed within it (mean 1,192). The native size is logged",
-        "solver_version": "2.1.307 (Claude Code)",
+        "solver_version": "2.1.310 (Claude Code)",
         "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
         "graphify_virtualenv": ".research/venv-graphify-0.9.95",
         "backend_sha256": {
@@ -223,7 +223,10 @@
           "search_only": "1c57905960cd69dbb5b05492560957f4a57cdd4d39137e20de23981c6e1f4423",
           "graf_orient": "c95b576666d1021b21beae71d5486a660b17516453b90417d9f65d5572b51c46"
         },
-        "version_update": "v75 (before any t5 run): solver Claude Code 2.1.307 and Graphify 0.9.95 frozen, as for t4r; the graf_orient binary (graf-t5) is unchanged. Run with .research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t5"
+        "version_update": "v75 (before any t5 run): solver Claude Code 2.1.307 and Graphify 0.9.95 frozen, as for t4r; the graf_orient binary (graf-t5) is unchanged. Run with .research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t5",
+        "solver_binary": ".research/bin/claude-2.1.310",
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "version_update_v76": "solver pinned to Claude Code 2.1.310 (copy .research/bin/claude-2.1.310), before any t5 run"
       },
       "t6": {
         "arms": [
@@ -247,12 +250,12 @@
           "graphify_orient": "Same code-only pinned Graphify orientation plus source reads as t5, rerun in this batch.",
           "search_only": "Same read/search/edit/test/finish tools and prompt as t5, rerun in this batch."
         },
-        "solver_version": "2.1.307 (Claude Code)",
+        "solver_version": "2.1.310 (Claude Code)",
         "model": "claude-haiku-5-5",
         "backend_sha256": {
           "graf_current_orient": "f827c273265ccb027a0fab332624398821aa26afb379c8b5d591d69a1796d45b",
-          "graphify_orient": "e3f9ec68898c023f9b1f2ca6770edd81a7facabb1ec1e83bef7d460e33c03f01",
-          "search_only": "e97d666f32c3e86b2bd0e047cb1398d4385ea1f05bfb791a8201d3fa98a91bb9"
+          "graphify_orient": "b1d3eafa360f710b02aa927330985fe913018cc0d5752d012b0bc3dcee2a28a2",
+          "search_only": "1c57905960cd69dbb5b05492560957f4a57cdd4d39137e20de23981c6e1f4423"
         },
         "graf_binary": ".research/bin/graf-t6; current target/release/graf, HEAD a9c9e4d plus audit repairs; exact Rust sources preserved in .research/evidence/agent-t6/source",
         "primary": "agent_trials.rule primary: task-paired mean list-price cost across all five attempts, including failures/capped attempts; one-sided paired sign flip alpha .05 against each comparator",
@@ -270,7 +273,12 @@
         "scope": "Regression diagnostic on a reused task catalog used by localization experiments. Cannot authorize product superiority or promotion; fresh held-out natural tasks and remaining retrieval gates are required.",
         "schedule": "Independent of unfinished t4 and unstarted t5; their plans and pinned binaries remain unchanged.",
         "rationale": "User requests agent evidence for current triage, outlines and targeted reads; historical t3 tests older locate and t5 pins an older build. Freeze before first t6 model call.",
-        "index_validation": "Current schema-2 index is inspected with the pinned graf export-index command; exact selected-file-set parity checked against shared staged input. Legacy t5 JSON validation unchanged. Export artifacts preserved outside model workspace. Index build timing excludes the audit export; broker orientation event includes it, with cost as primary."
+        "index_validation": "Current schema-2 index is inspected with the pinned graf export-index command; exact selected-file-set parity checked against shared staged input. Legacy t5 JSON validation unchanged. Export artifacts preserved outside model workspace. Index build timing excludes the audit export; broker orientation event includes it, with cost as primary.",
+        "solver_binary": ".research/bin/claude-2.1.310",
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.95",
+        "version_update_v76": "before any t6 run: Claude Code 2.1.307 -> 2.1.310 (pinned copy) and Graphify 0.9.92 -> 0.9.95 (its own virtualenv), per the version policy; arms, binaries for graf and search_only, tasks, seed and rules unchanged. Run under .research/venv-graphify-0.9.95/bin/python; search_only moves from a Codex-bundled rg (e97d666f) to Homebrew ripgrep 15.2.0 (1c579059), the latest release and the one t4r2 and t5 use"
       },
       "t4r": {
         "arms": [
@@ -303,7 +311,43 @@
         },
         "restart_reason": "t4 froze no solver version; its 60 completed trials ran Claude Code 2.1.303 and Graphify 0.9.92, and 2.1.303 is no longer installed. On 2026-10-24 the operator chose to rerun on the latest versions (Claude Code 2.1.307, Graphify 0.9.95, model unchanged) rather than mix versions. Tasks, arms, seed, rule and margins are unchanged. No t4 outcome was looked at before this decision",
         "prior_trials": "the 60 t4 trials (.research/trials/t4-*) are kept unchanged and excluded from every decision; t4 itself is not resumed",
-        "run_command": ".research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t4r"
+        "run_command": ".research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t4r",
+        "superseded_by": "t4r2 (v76); do not run"
+      },
+      "t4r2": {
+        "arms": [
+          "ast_graph",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "ast_graph"
+        ],
+        "controls": [],
+        "comparators": [
+          "search_only",
+          "graphify"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261022,
+        "frozen_in_version": 76,
+        "arm_definitions": "ast_graph: retrieve runs the localization-screen ast_graph arm (tree-sitter units, BM25, one-hop call propagation 0.5, floor 0.5, whole units packed within the requested budget; Python prototype in benchmark/localization.py, hashed per run). search_only and graphify as in t3",
+        "secondary": "mean turns per run and turns before the first edit, reported descriptively",
+        "rationale": "ast_graph was the only arm to beat both graf_floor and Graphify on the held-out localization screen (unit Acc@5 0.365 vs 0.276 and 0.291); this batch tests whether that localization gain lowers agent cost against both comparators. A pass would justify a Rust implementation, not promotion of the prototype",
+        "solver_version": "2.1.310 (Claude Code)",
+        "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.95",
+        "supersedes": "t4r",
+        "backend_sha256": {
+          "ast_graph": "fc85e65972d178c23b7bfc4e4783d6504a041866bb570841d2324178eb26143d",
+          "graphify": "b1d3eafa360f710b02aa927330985fe913018cc0d5752d012b0bc3dcee2a28a2",
+          "search_only": "1c57905960cd69dbb5b05492560957f4a57cdd4d39137e20de23981c6e1f4423"
+        },
+        "restart_reason": "t4r (v75) froze Claude Code 2.1.307, but 2.1.310 had been released on 2026-10-23, before that freeze; under the version policy it was stopped after 7 attempts (6 complete, 1 interrupted by the stop). No t4r outcome was looked at. Everything else is as in t4r",
+        "prior_trials": "t4's 60 trials (.research/trials/t4-*) and t4r's 7 (.research/trials/t4r-*) are kept unchanged and excluded from every decision",
+        "run_command": ".research/venv-graphify-0.9.95/bin/python benchmark/run_agent_batch.py --batch t4r2",
+        "solver_binary": ".research/bin/claude-2.1.310",
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd"
       }
     },
     "natural_tasks": {
@@ -712,6 +756,11 @@
       "version": 75,
       "date": "2026-10-24",
       "reason": "Rerun on latest versions before any new data: add agent batch t4r (t4 unchanged except Claude Code 2.1.307 and Graphify 0.9.95 frozen; t4's 60 trials kept and excluded), freeze the same versions for t5 before it runs, record Graphify 0.9.95 as a separate baseline revision, and pin the restarted TypeScript screen to graf a9c9e4d and Graphify 0.9.95. Audit note: revisions [37, 62, 69, 70, 71, 72, 73, 74] have no entry in this log; their content is in the fields they froze and in research/next-experiments.md"
+    },
+    {
+      "version": 76,
+      "date": "2026-10-24",
+      "reason": "Version policy: always the latest releases, pinned per run. t4r stopped after 7 attempts because Claude Code 2.1.310 predated its freeze; batch t4r2 reruns it on 2.1.310 from a pinned copy. t5 and t6 freeze 2.1.310 too, and t6 moves to Graphify 0.9.95. No outcome of t4, t4r or t4r2 was looked at; t6's search_only moves to ripgrep 15.2.0, the same latest build as t4r2 and t5"
     }
   ],
   "arms": {
@@ -4352,8 +4401,14 @@
       "recorded": "2026-10-24",
       "virtualenv": ".research/venv-graphify-0.9.95",
       "snapshot": ".research/corpora/graphify-0.9.95",
-      "scope": "agent batches t4r and t5 and the TypeScript localization screen restart. Every earlier result keeps Graphify 0.9.92 (.research/venv, .research/corpora/graphify); retrieval comparisons (compare_graphify.py) still accept only 0.9.92",
+      "scope": "agent batches t4r2, t5 and t6, the TypeScript localization screen restart, and every retrieval comparison frozen from v76 on (compare_graphify.py now accepts any pinned revision, verified source for source). Every earlier result keeps Graphify 0.9.92 (.research/venv, .research/corpora/graphify)",
       "environment": "same Python 3.12.15 and identical versions of every other package as .research/venv (uv pip freeze differs only in graphifyy)"
     }
-  ]
+  ],
+  "version_policy": {
+    "adopted": "2026-10-24, operator instruction: always use the latest versions",
+    "rule": "every new batch, screen or comparison is frozen on the latest release of Graphify, Claude Code and the Claude model, and the latest committed graf, checked with benchmark/check_latest.py (the model by hand) immediately before the freeze",
+    "within_a_run": "versions never change mid-run: the solver runs from a pinned copy (solver_binary) that self-updates cannot replace, Graphify from its own virtualenv, graf from a pinned binary; a version that must change makes a new preregistration version and a restarted run, with the earlier trials kept and excluded",
+    "baselines": "a newer Graphify is added as a separate baseline revision (benchmark/corpora.json, baseline_revisions); earlier results keep theirs"
+  }
 }

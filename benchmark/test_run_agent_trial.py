@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from agent_trials import audit_trace
 from run_agent_trial import SYSTEM_PROMPT, claude_command, preflight, scored_events, system_prompt, usage_events
@@ -46,6 +47,12 @@ class UsageTests(unittest.TestCase):
 
 
 class CommandTests(unittest.TestCase):
+    def test_a_pinned_solver_copy_replaces_the_self_updating_one(self):
+        with patch.dict("os.environ", {"CLAUDE_BINARY": "/pinned/claude"}):
+            self.assertEqual(claude_command("i", Path("/x/mcp.json"), "m", 0.5, "graf")[0], "/pinned/claude")
+        with patch.dict("os.environ", clear=True):
+            self.assertEqual(claude_command("i", Path("/x/mcp.json"), "m", 0.5, "graf")[0], "claude")
+
     def test_command_disables_builtin_tools_and_foreign_configuration(self):
         command = claude_command("issue text", Path("/x/mcp.json"), "claude-haiku-5-5", 0.5, "graf")
         joined = " ".join(command)

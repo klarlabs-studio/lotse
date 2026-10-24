@@ -24,6 +24,8 @@ class NaturalSpecTests(unittest.TestCase):
         frozen = AGENT["batches"]["t6"]["solver_version"]
         with patch("sys.argv", ["run_agent_batch", "--batch", "t6"]), \
              patch.object(run_agent_batch.subprocess, "check_output", return_value=frozen), \
+             patch.object(run_agent_batch, "graphify_baseline",
+                          return_value={"commit": AGENT["batches"]["t6"]["graphify_commit"]}), \
              patch.object(run_agent_batch, "preflight", return_value="changed"), \
              patch.object(run_agent_batch, "run") as run:
             with self.assertRaisesRegex(SystemExit, "frozen backend"):
@@ -37,6 +39,16 @@ class NaturalSpecTests(unittest.TestCase):
              patch.object(run_agent_batch, "graphify_baseline", return_value={"commit": "86c57be"}), \
              patch.object(run_agent_batch, "run") as run:
             with self.assertRaisesRegex(SystemExit, "Graphify baseline differs"):
+                run_agent_batch.main()
+            run.assert_not_called()
+
+    def test_a_changed_solver_copy_stops_before_any_trial_is_run(self):
+        batch = {**AGENT["batches"]["t4r"], "solver_binary": "benchmark/run_agent_batch.py", "solver_sha256": "changed"}
+        agent = {**AGENT, "batches": {**AGENT["batches"], "pinned": batch}}
+        with patch("sys.argv", ["run_agent_batch", "--batch", "pinned"]), \
+             patch.object(run_agent_batch, "agent_preregistration", return_value=agent), \
+             patch.object(run_agent_batch, "run") as run:
+            with self.assertRaisesRegex(SystemExit, "Solver binary differs"):
                 run_agent_batch.main()
             run.assert_not_called()
 

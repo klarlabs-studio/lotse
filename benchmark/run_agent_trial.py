@@ -84,8 +84,13 @@ def preflight(arm, binary):
     return hashlib.sha256(binary.read_bytes()).hexdigest()
 
 
+def solver():
+    """A batch's pinned copy of the solver (CLAUDE_BINARY), which its self-update cannot change mid-run."""
+    return os.environ.get("CLAUDE_BINARY", "claude")
+
+
 def claude_command(issue, mcp_config, model, budget, arm):
-    return ["claude", "-p", f"Issue report:\n\n{issue}",
+    return [solver(), "-p", f"Issue report:\n\n{issue}",
             "--model", model, "--tools", "", "--strict-mcp-config", "--mcp-config", str(mcp_config),
             "--allowedTools", "mcp__broker", "--setting-sources", "", "--disable-slash-commands",
             "--no-session-persistence", "--output-format", "stream-json", "--verbose",

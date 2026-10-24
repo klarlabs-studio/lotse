@@ -26,6 +26,13 @@ GRAPHIFY = Path(sys.executable).parent / "graphify"  # Each Graphify revision ha
 STOP = set("a an the is are be to of for and or in on with its it this that which what where how why can as by from if should does do need find locate explain check claim against changes change implementation test tests".split())
 
 
+def graphify_baselines(manifest=None):
+    """Every pinned Graphify revision in a corpora manifest (a dict, a path, or benchmark/corpora.json)."""
+    if not isinstance(manifest, dict):
+        manifest = json.loads((manifest or BASE / "benchmark/corpora.json").read_text())
+    return [r for r in manifest["repositories"] if r["role"] == "baseline" and r["id"].startswith("graphify")]
+
+
 def graphify_baseline(version=None, installed=None, manifest=None, corpora=None):
     """The benchmark/corpora.json baseline whose pinned snapshot this interpreter's Graphify matches.
 
@@ -37,8 +44,7 @@ def graphify_baseline(version=None, installed=None, manifest=None, corpora=None)
         installed = Path(graphify.__file__).parent
     version = version or importlib.metadata.version("graphifyy")
     corpora = corpora or BASE / ".research/corpora"
-    repositories = json.loads((manifest or BASE / "benchmark/corpora.json").read_text())["repositories"]
-    for pin in (r for r in repositories if r["role"] == "baseline" and r["id"].startswith("graphify")):
+    for pin in graphify_baselines(manifest):
         root = corpora / pin["id"]
         project = root / "pyproject.toml"
         if not project.is_file() or tomllib.loads(project.read_text())["project"]["version"] != version:

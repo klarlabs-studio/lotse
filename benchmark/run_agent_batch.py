@@ -10,6 +10,7 @@ usage windows. Every attempt is kept, including errors and capped runs.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import random
 import subprocess
@@ -17,7 +18,7 @@ import sys
 
 from agent_trials import BASE, tasks
 from retrieval import graphify_baseline
-from run_agent_trial import TOOL_BINARIES, preflight, run
+from run_agent_trial import TOOL_BINARIES, preflight, run, solver
 
 def plan(task_ids, trials, arms, seed):
     """Every (task, trial, arm), shuffled deterministically."""
@@ -32,6 +33,10 @@ def natural_spec(prereg, catalog):
                  if key.startswith("natural_tasks") and spec.get("catalog") == catalog), None)
 
 
+def agent_preregistration():
+    return json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
+
+
 def trial_id(batch, task, k, arm):
     return f"{batch}-{task}-{arm}-{k}"
 
@@ -42,12 +47,17 @@ def main():
     parser.add_argument("--limit", type=int, default=None, help="run at most N pending trials")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
-    prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
+    prereg = agent_preregistration()
     batch_id = args.batch or list(prereg["batches"])[-1]
     batch = prereg["batches"][batch_id]
     if not args.dry_run:
+        if batch.get("solver_binary"):
+            binary = BASE / batch["solver_binary"]
+            if hashlib.sha256(binary.read_bytes()).hexdigest() != batch["solver_sha256"]:
+                raise SystemExit("Solver binary differs from this batch's frozen copy")
+            os.environ["CLAUDE_BINARY"] = str(binary)
         if batch.get("solver_version"):
-            version = subprocess.check_output(["claude", "--version"], text=True).strip()
+            version = subprocess.check_output([solver(), "--version"], text=True).strip()
             if version != batch["solver_version"]:
                 raise SystemExit("Solver version differs from this batch's frozen version")
         if batch.get("graphify_commit") and graphify_baseline()["commit"] != batch["graphify_commit"]:
