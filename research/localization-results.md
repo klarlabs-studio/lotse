@@ -193,6 +193,53 @@ Each arm's p is the larger of its two one-sided McNemar tests; wins are the disc
 - **Unit metrics are unchanged.** In this screen, `ast_graph_ids` again has the best unit Acc@5 (0.399, against 0.267 for Graphify), as a descriptive result.
 - **Triage's next version:** list files by `file_graph_ids`, then show whole functions from `ast_graph_ids`. Like everything here, it stays experimental until an agent batch measures its effect on cost.
 
+## TypeScript screen: file propagation beats Graphify; units do not
+
+**Outcome: `file_graph_ids` qualifies on TypeScript, `ast_graph_ids` does not.** On 2,964 issue-closing pull requests in six TypeScript repositories, `file_graph_ids` puts a fixed file among the first five for 45.3% of issues. That compares with 35.4% for `graf_floor_ids` and 37.4% for Graphify 0.9.95. In paired tests, it won 371 tasks against 76 over `graf_floor_ids` (p < 10⁻⁴⁷) and 594 against 360 over Graphify (p < 10⁻¹³). Both pass at the Holm-adjusted alpha of 0.025.
+
+`ast_graph_ids` reaches 20.9% unit Acc@5, against 21.6% for `graf_floor_ids` and 20.1% for Graphify. It is not significantly better than either (p 0.87 and 0.19), so graf's function picks do not beat Graphify on TypeScript.
+
+The rule is `localization_screen.typescript` in [preregistration.json](../benchmark/preregistration.json): two tests, each against both comparators, Holm-corrected at family alpha 0.05. Data: [localization-decision-typescript.json](../results/localization-decision-typescript.json) and [localization-typescript.json](../results/localization-typescript.json).
+
+- **Conditions.**
+  - **Repositories:** zod, hono, trpc, tanstack-query, vitest and typeorm, at pinned heads.
+  - **Catalog:** [localization-typescript-tasks.json](../benchmark/localization-typescript-tasks.json), sha256 `2289ab26…`, with 2,968 tasks. Four are excluded because their gold files are outside the corpus (config and docs files), and 10 tasks dropped some out-of-corpus gold files.
+  - **Extraction:** units parse `.ts`, `.tsx` and `.jsx`.
+  - **Pins:** graf `.research/bin/graf-a9c9e4d` (sha256 `9d54581b…`) and Graphify 0.9.95 (commit `92741d16…`), each checked when the run resumes.
+  - **Model:** none; this is an offline screen.
+
+| Arm | file Acc@1 | **file Acc@5** | file Acc@10 | unit Acc@5 | mean payload |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| graf_floor | 0.074 | 0.202 | 0.295 | 0.125 | 1,538 |
+| graf_floor_ids | 0.159 | 0.354 | 0.460 | 0.216 | 1,356 |
+| Graphify 0.9.95 (code-only hints) | 0.123 | 0.374 | 0.472 | 0.201 | 2,215 |
+| ast_graph_ids | 0.159 | 0.278 | 0.295 | **0.209** | 1,629 |
+| **file_graph_ids** | **0.218** | **0.453** | **0.544** | — | **71** |
+
+**By repository** (file Acc@5 for the file test, unit Acc@5 for the unit test):
+
+| | tasks | file_graph_ids | Graphify | graf_floor_ids | ast_graph_ids (unit) | Graphify (unit) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| vitest | 1,131 | **0.36** | 0.22 | 0.25 | 0.17 | 0.13 |
+| typeorm | 579 | **0.41** | 0.39 | 0.31 | 0.14 | 0.11 |
+| hono | 457 | 0.57 | **0.58** | 0.53 | 0.29 | **0.37** |
+| tanstack-query | 327 | **0.51** | 0.37 | 0.38 | 0.25 | 0.21 |
+| trpc | 279 | **0.57** | 0.48 | 0.47 | 0.31 | **0.37** |
+| zod | 191 | **0.62** | 0.60 | 0.49 | 0.25 | 0.20 |
+
+- **The file gain does not hold in every repository.** Graphify edges ahead on hono (0.58 against 0.57), and typeorm and zod are close. Most of the gain comes from vitest, tanstack-query and trpc.
+- **Unit results vary by repository.** Graphify's hints beat `ast_graph_ids` on hono and trpc. `ast_graph_ids` leads on vitest, typeorm, tanstack-query and zod.
+- **TypeScript is harder than the earlier screens.** File Acc@5 is 45% here, against 78% on the six mixed-language repositories of the file screen.
+- **The run stopped and resumed twice, each time with its pins checked.**
+  - A first run was stopped because the graf binary had been rebuilt mid-run. Its 1,342 rows are kept, excluded, in `localization-typescript-82dea833-partial.json`.
+  - The pinned rerun crashed twice when the disk filled. It resumed both times, after the half-written snapshot was deleted.
+- **Interim results were seen before the decision.**
+  - The first log lines showed ranks for the first five tasks.
+  - Three rows (typeorm-3777, -4452, -4788) were printed while I diagnosed the second crash.
+  - Both are recorded in the preregistration (v75, v84). No arm, metric or rule changed.
+
+These are retrieval-only results. They do not show that graf saves agent cost; batch t6 (`graf_current_orient`) is the agent test of triage.
+
 ## Deviations and disclosures
 
 - After the dev run (debugging only), v16 changed the primary metric from "any hit in the payload" to Acc@5. "Any hit" rewards arms that cite about 46 pointers. v16 also added `ast_bounded` and `graf_floor_ids`, motivated by the [literature review](code-representation-review.md). No held-out task had been scored at that point.
