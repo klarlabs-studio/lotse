@@ -1,5 +1,5 @@
 {
-  "version": 84,
+  "version": 85,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -306,7 +306,10 @@
         "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
         "attempts_per_task_and_arm": 2,
         "role": "screen (agent_trials.staging)",
-        "solver_change_v83": "2026-10-25, operator: t5 and t6 run on claude-haiku-5-5 through the operator's (upgraded) Claude subscription instead of DeepSeek via OpenRouter. Changed before any t5/t6 attempt ran; still 2-attempt screens with the 80-turn cap, the solver binary and Graphify pins unchanged"
+        "solver_change_v83": "2026-10-25, operator: t5 and t6 run on claude-haiku-5-5 through the operator's (upgraded) Claude subscription instead of DeepSeek via OpenRouter. Changed before any t5/t6 attempt ran; still 2-attempt screens with the 80-turn cap, the solver binary and Graphify pins unchanged",
+        "infrastructure_incidents": [
+          "2026-10-25: at 159/288 the runner stopped on scoring t6-undici-5684-graf_current_orient-2. Its first finish ran the hidden tests, which timed out at 180 s, so the broker answered ok:false and the trusted verifier recorded a failed verification; the filter for verdicts written by a refused repeated finish wrongly dropped that verdict. The filter now drops only verdicts after the 'Trial is already finished' refusal, and the summary was rebuilt from the preserved artifacts without rerunning (recover). No counted t4*/t5/t6 trial had a dropped verdict. Diagnosing it exposed this attempt's outcome (failed verification); it is kept as the verifier recorded it"
+        ]
       },
       "t4r": {
         "arms": [
@@ -1051,6 +1054,11 @@
       "version": 84,
       "date": "2026-10-25",
       "reason": "No rule change. The infrastructure-abort check also treats a tool call seen only as tool_progress heartbeats at the trial timeout as a lost reply; one t5 incident recorded. Discloses three interim TypeScript localization rows seen while diagnosing an ENOSPC crash"
+    },
+    {
+      "version": 85,
+      "date": "2026-10-25",
+      "reason": "No rule change. Fixes the verdict filter so a first finish whose verifier fails (e.g. hidden tests time out) keeps its failed verdict; one t6 trial summary rebuilt from preserved artifacts; disclosure of that attempt's outcome"
     }
   ],
   "arms": {

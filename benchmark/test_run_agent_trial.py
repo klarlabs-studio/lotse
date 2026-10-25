@@ -147,6 +147,11 @@ class ScoredEventTests(unittest.TestCase):
         self.assertEqual(dropped, 1)
         self.assertEqual(scored_events(events[:2]), (events[:2], 0))
 
+    def test_a_first_finish_whose_verifier_failed_keeps_its_verdict(self):
+        failed = {"type": "tool", "operation": "finish", "response": {"ok": False, "error": "timed out after 180 seconds"}}
+        events = [failed, {"type": "verification", "passed": False}]
+        self.assertEqual(scored_events(events), (events, 0))
+
 
 class FrozenBackendTests(unittest.TestCase):
     def test_t4_ast_graph_backend_keeps_the_hash_its_first_runs_recorded(self):

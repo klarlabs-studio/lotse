@@ -149,7 +149,7 @@ def scored_events(tool_events):
     for event in tool_events:
         previous = kept[-1] if kept else {}
         if (event.get("type") == "verification" and previous.get("operation") == "finish"
-                and previous.get("response", {}).get("ok") is False):
+                and previous.get("response", {}).get("error") == "Trial is already finished"):
             dropped += 1
             continue
         kept.append(event)
