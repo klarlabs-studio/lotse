@@ -1,7 +1,7 @@
 """Reverting a real fix must be exact: every hunk maps back to the pre-fix text once."""
 import unittest
 
-from mine_natural_tasks import classify, clean_issue, revert_edits
+from mine_natural_tasks import classify, clean_issue, revert_edits, verify_command
 
 PRE = "def value():\n    return 2\n\n\nx\n" + "y\n" * 4 + "    a = 1\n    b = 2\n    return a + b\n"
 POST = PRE.replace("return 2", "return fixed()").replace("    b = 2\n", "    b = 2\n    c = 3\n")
@@ -45,6 +45,17 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("jinja", "tests/test_api.py"), "test")
         self.assertEqual(classify("express", "lib/response.js"), "source")
         self.assertEqual(classify("undici", "test/fetch/client.js"), "test")
+
+    def test_batch_t7_repositories(self):
+        self.assertEqual(classify("commander", "tests/command.name.test.js"), "test")
+        self.assertEqual(classify("commander", "lib/command.js"), "source")
+        self.assertEqual(classify("commander", "typings/index.d.ts"), "other")
+        self.assertEqual(classify("ws", "test/sender.test.js"), "test")
+        self.assertEqual(classify("black", "tests/data/cases/comments.py"), "test")
+        self.assertEqual(classify("starlette", "starlette/routing.py"), "source")
+        self.assertEqual(verify_command("ws", ["test/sender.test.js"]), ["node_modules/.bin/mocha", "test/sender.test.js"])
+        self.assertEqual(verify_command("commander", ["tests/a.test.js"]), ["node", "--test", "tests/a.test.js"])
+        self.assertEqual(verify_command("fiber", ["binder/form_test.go"]), ["go", "test", "./binder", "-count=1"])
 
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")

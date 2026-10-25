@@ -1,5 +1,5 @@
 {
-  "version": 87,
+  "version": 88,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -760,11 +760,12 @@
       "repository_choice": "two per language the unit parser supports; popular (over 12,000 stars), active, with issue-linked pull requests and a test suite that runs locally without external services; pinned to the default branch head resolved on 2026-10-25/26; chosen before any candidate pull request of these repositories was listed. pino, rich and zerolog are excluded because the retrieval confirmation v64 uses them",
       "selection": "the natural_tasks_t4 protocol unchanged (criteria, newest merge first, issue text, hidden tests, bug judgment from the issue title and body alone before any fail-to-pass check, size bound of 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, mismatch exclusion), except that the first 8 qualifying candidates per repository are accepted (48 tasks at most), to fit the operator's agreed budget",
       "test_files": "Go: *_test.go and testdata/; Python: under tests/; commander: under tests/; ws: under test/",
-      "verification": "Go: go test on the changed test files' packages; Python: pytest on the changed test files with the repository's own virtualenv (.research/task-runtime/<repo>-venv, dependencies recorded) and PYTHONPATH=src; commander: its jest on the changed test files; ws: its mocha on the changed test files",
+      "verification": "Go: go test on the changed test files' packages; Python: pytest on the changed test files with the repository's own virtualenv (.research/task-runtime/<repo>-venv, dependencies frozen in its requirements-frozen.txt) and PYTHONPATH=src; commander: node --test on the changed test files (its own runner); ws: mocha on the changed test files",
       "runtime": "JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts into .research/task-runtime/<repo>-full; Go modules downloaded into the shared module cache before mining; Python test dependencies installed into a per-repository virtualenv, so earlier batches' research virtualenv is unchanged",
       "minimum_tasks": 36,
       "if_fewer": "if fewer than 36 tasks qualify, the batch does not run on a loosened set; a new version must record any change before a solver sees a task",
-      "contamination": "as for t3/t4: fixes may be in the solver's training data; affects both arms equally, reported"
+      "contamination": "as for t3/t4: fixes may be in the solver's training data; affects both arms equally, reported",
+      "runtime_v88": "2026-10-26, before any t7 pull request was listed: commander's suite runs on node --test (v87 wrongly named jest). ws pins mocha ^8.4.0, which cannot start under the installed Node 26 (its yargs is loaded as an ES module), so ws-full uses mocha 11.8.0, recorded in its package.json; no ws test file changes. black's version module, written by hatch-vcs at build time, is absent from the source snapshot, so the black virtualenv carries a one-line _black_version.py. Runtimes are smoke-tested on pristine snapshots: starlette, black, commander, ws, fiber and testify sample suites pass"
     }
   },
   "report_every_case": true,
@@ -1158,6 +1159,11 @@
       "version": 87,
       "date": "2026-10-26",
       "reason": "New batch t7 (operator-agreed Haiku budget): a file-list-only graf orientation (graf_lean_orient, pinned latest committed graf a9c9e4d) against Graphify orientation only, on a fresh natural-task catalog from six repositories never used before (natural_tasks_t7), recorded before any pull request of those repositories was listed. No earlier rule changed"
+    },
+    {
+      "version": 88,
+      "date": "2026-10-26",
+      "reason": "No rule change. t7 runtime details (commander on node --test, ws on mocha 11.8.0 because mocha 8 cannot start on Node 26, black's build-time version module) recorded before any t7 pull request was listed"
     }
   ],
   "arms": {

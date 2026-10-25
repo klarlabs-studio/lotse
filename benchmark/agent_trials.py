@@ -65,7 +65,8 @@ def verify(task, workspace):
         raise ValueError("Verification is restricted to prepared trial workspaces")
     if json.loads((root.parent / "task.json").read_text())["task"] != task["id"]:
         raise ValueError("Task identity does not match this workspace")
-    command = [str(BASE / ".research/venv/bin/python") if a == "{python}" else a for a in task["verify"]]
+    venv = BASE / ".research/task-runtime" / task["python_runtime"] if "python_runtime" in task else BASE / ".research/venv"
+    command = [str(venv / "bin/python") if a == "{python}" else a for a in task["verify"]]
     env = dict(os.environ)
     env.update(GOCACHE=str(BASE / ".research/go-cache"), GOMODCACHE=str(BASE / ".research/go-modules"),
                PYTHONPATH=str(root / "src"), PYTHONDONTWRITEBYTECODE="1")

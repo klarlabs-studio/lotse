@@ -9,10 +9,11 @@ import urllib.request
 BASE = Path(__file__).resolve().parents[1]
 
 
-def fetch(t4=False, confirmation=False, screen=None):
+def fetch(t4=False, confirmation=False, screen=None, batch=None):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
-    if t4:  # Batch t4 task repositories, pinned in the preregistration.
-        repos = prereg["agent_trials"]["natural_tasks_t4"]
+    batch = batch or ("t4" if t4 else None)
+    if batch:  # Agent-batch task repositories (natural_tasks_<batch>), pinned in the preregistration.
+        repos = prereg["agent_trials"][f"natural_tasks_{batch}"]
         items = [{"id": k, **v, "role": "agent_tasks"} for k, v in repos["repositories"].items()]
     elif confirmation or screen:  # Localization screen repositories (v21 confirmation, v24 file_screen).
         repos = prereg["localization_screen"][screen or "confirmation"]
@@ -42,13 +43,13 @@ def fetch(t4=False, confirmation=False, screen=None):
                 count += 1
         receipts.append({**item, "archive_sha256": hashlib.sha256(data).hexdigest(), "files": count})
         print(item["id"], count, "files", flush=True)
-    out = ("results/snapshots-t4.json" if t4 else "results/snapshots-confirmation.json" if confirmation
+    out = (f"results/snapshots-{batch}.json" if batch else "results/snapshots-confirmation.json" if confirmation
            else f"results/snapshots-{screen.replace('_', '-')}.json" if screen else "results/snapshots.json")
     (BASE / out).write_text(json.dumps(receipts, indent=2) + "\n")
 
 
 if __name__ == "__main__":
     import sys
-    fetch(t4="--t4" in sys.argv[1:], confirmation="--confirmation" in sys.argv[1:],
+    fetch(t4="--t4" in sys.argv[1:], batch="t7" if "--t7" in sys.argv[1:] else None, confirmation="--confirmation" in sys.argv[1:],
           screen="file_screen" if "--file-screen" in sys.argv[1:] else "typescript" if "--typescript" in sys.argv[1:]
           else None)
