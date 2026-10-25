@@ -1,5 +1,5 @@
 {
-  "version": 86,
+  "version": 87,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -596,6 +596,50 @@
         "attempts_per_task_and_arm": 2,
         "role": "screen (agent_trials.staging)",
         "reduction_v82": "operator cost decision after 394 of 720 attempts: the design is reduced to attempts 1-2 per task and arm (288 attempts). Decided without looking at any outcome; the runner's shuffled order makes the completed attempts a random subset. Completed attempts 3-5 are kept and excluded from the decision (agent_decision reports their count). Lower power than 5 attempts: a no-pass is weaker evidence of no effect than it would have been"
+      },
+      "t7": {
+        "arms": [
+          "graf_lean_orient",
+          "graphify_orient"
+        ],
+        "candidates": [
+          "graf_lean_orient"
+        ],
+        "controls": [],
+        "comparators": [
+          "graphify_orient"
+        ],
+        "catalog": "benchmark/natural-tasks-t7.json",
+        "seed": 20261026,
+        "frozen_in_version": 87,
+        "arm_definitions": {
+          "graf_lean_orient": "before the first turn the harness runs `graf triage --budget 1500` (JSON) on the issue with the pinned binary and shows only its `files` list (file_graph_ids ranking, at most 8 paths) as 'Likely files:' lines under the same fixed header as t5/t6, under the same 1,500-token cl100k hard cap; no code excerpts. Tools, prompts and limits are those of t6 graf_current_orient (units retrieval, outline, read, search, edit, test, finish), with the same binary",
+          "graphify_orient": "unchanged from t5/t6: the pinned code-only Graphify orientation requested at 1,500 tokens and cut to the same 1,500-token hard cap, plus the same retrieval, read, search, edit, test and finish tools"
+        },
+        "budget_parity": "both orientations share the same requested budget and hard cap (1,500 cl100k); each backend returns its own output within it, as in every earlier screen. A Graphify orientation requested at a smaller budget is not tested and is reported as a limitation",
+        "graf_binary": ".research/bin/graf-a9c9e4d, built from commit a9c9e4d (the latest commit touching src/Cargo; no Rust change since), sha256 9d54581bd4eddf338b06…, the TypeScript screen's pin; hashed per run",
+        "solver_version": "2.1.310 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.310",
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "model": "claude-haiku-5-5",
+        "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.95",
+        "versions_checked": "2026-10-26 with benchmark/check_latest.py: Graphify 0.9.95, Claude Code 2.1.310 and ripgrep 15.2.0 are the latest releases; claude-haiku-5-5 is the latest Haiku (by hand)",
+        "attempts_per_task_and_arm": 2,
+        "solver_max_turns": 80,
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200,
+          "tool_budget_tokens": "requested 1..8000 cl100k; orientation hard cap 1500"
+        },
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription",
+        "rule": "the agent_trials.rule (cost superiority by one-sided paired sign flip at alpha 0.05, success non-inferiority within 0.10) against the single comparator graphify_orient",
+        "secondary": "turns, tokens, tool calls by type, orientation payload; per-task log cost ratio (exploratory, reported, not gated); every task reported",
+        "role": "screen (agent_trials.staging); a pass is evidence for the candidate, not product promotion, and leads to a stronger-model confirmation on fresh tasks frozen later",
+        "budget": "operator agreed on 2026-10-25: about 192 Haiku attempts on the subscription (48 tasks x 2 attempts x 2 arms); no search_only arm, because the operator's goal is the comparison with Graphify",
+        "rationale": "post-hoc t5/t6 diagnostic (research/agent-results.md, exploratory): both 1,500-token orientations added cost over plain search on a per-task log scale (Graphify about 15%), and graf's code excerpts came from a fixed file in only 35% of tasks, while file_graph_ids lists already carried most of its recall. A file-list-only orientation tests whether graf's compact answer costs less than Graphify's full orientation without losing success",
+        "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply, orientation failure: set aside and rerun at most twice)",
+        "schedule": "runs after the t7 catalog is frozen and its fail-to-pass checks pass; frozen before any t7 task was mined"
       }
     },
     "natural_tasks": {
@@ -677,6 +721,50 @@
       "screens": "agent batches t4d, t5 and t6 are screens: the cheap solver (deepseek/deepseek-v4.1-flash via OpenRouter) with 2 attempts per task and arm, under the unchanged agent_trials rule. A screen pass is evidence for a candidate, not product promotion",
       "confirmation": "only candidates that pass a screen go to a final confirmation batch, frozen later as its own version before it runs: a stronger solver model, the full preregistered attempt count, and fresh tasks, so the confirmation is not tuned on the screens. Only that confirmation can support an agent-efficiency claim against Graphify",
       "screens_v83": "t4d stays on deepseek/deepseek-v4.1-flash via OpenRouter; t5 and t6 screen on claude-haiku-5-5 via the subscription. Each screen is decided only within itself; screens with different solvers are not pooled or compared with each other"
+    },
+    "natural_tasks_t7": {
+      "catalog": "benchmark/natural-tasks-t7.json",
+      "purpose": "fresh natural repair tasks for batch t7 from repositories never used by any graf benchmark, localization screen, retrieval confirmation or agent batch, so neither the arm design nor the post-hoc t5/t6 diagnostic saw them",
+      "repositories": {
+        "fiber": {
+          "repository": "gofiber/fiber",
+          "commit": "f6b465f535492d10683e53ca91172b72df45a69b",
+          "language": "Go"
+        },
+        "testify": {
+          "repository": "stretchr/testify",
+          "commit": "87a7b9d57689f6579db2da795ab8deeab29cb724",
+          "language": "Go"
+        },
+        "starlette": {
+          "repository": "Kludex/starlette",
+          "commit": "8aa828ceaff764a2e57932fb42fdf105a47c4c83",
+          "language": "Python"
+        },
+        "black": {
+          "repository": "psf/black",
+          "commit": "80db630ac532f0e2f3ba33493e42cc19106eb261",
+          "language": "Python"
+        },
+        "commander": {
+          "repository": "tj/commander.js",
+          "commit": "ba6d13ddb4243e5913367734f8c159089ffe7834",
+          "language": "JavaScript"
+        },
+        "ws": {
+          "repository": "websockets/ws",
+          "commit": "b54ca101d1c6927b318f8748523e54c998cdd63e",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "two per language the unit parser supports; popular (over 12,000 stars), active, with issue-linked pull requests and a test suite that runs locally without external services; pinned to the default branch head resolved on 2026-10-25/26; chosen before any candidate pull request of these repositories was listed. pino, rich and zerolog are excluded because the retrieval confirmation v64 uses them",
+      "selection": "the natural_tasks_t4 protocol unchanged (criteria, newest merge first, issue text, hidden tests, bug judgment from the issue title and body alone before any fail-to-pass check, size bound of 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, mismatch exclusion), except that the first 8 qualifying candidates per repository are accepted (48 tasks at most), to fit the operator's agreed budget",
+      "test_files": "Go: *_test.go and testdata/; Python: under tests/; commander: under tests/; ws: under test/",
+      "verification": "Go: go test on the changed test files' packages; Python: pytest on the changed test files with the repository's own virtualenv (.research/task-runtime/<repo>-venv, dependencies recorded) and PYTHONPATH=src; commander: its jest on the changed test files; ws: its mocha on the changed test files",
+      "runtime": "JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts into .research/task-runtime/<repo>-full; Go modules downloaded into the shared module cache before mining; Python test dependencies installed into a per-repository virtualenv, so earlier batches' research virtualenv is unchanged",
+      "minimum_tasks": 36,
+      "if_fewer": "if fewer than 36 tasks qualify, the batch does not run on a loosened set; a new version must record any change before a solver sees a task",
+      "contamination": "as for t3/t4: fixes may be in the solver's training data; affects both arms equally, reported"
     }
   },
   "report_every_case": true,
@@ -1065,6 +1153,11 @@
       "version": 86,
       "date": "2026-10-25",
       "reason": "No rule change. A harness orientation failure before any model call (e.g. index build timeout) is an infrastructure abort under the completeness rule; one t6 incident and the host-load condition recorded. No outcome looked at"
+    },
+    {
+      "version": 87,
+      "date": "2026-10-26",
+      "reason": "New batch t7 (operator-agreed Haiku budget): a file-list-only graf orientation (graf_lean_orient, pinned latest committed graf a9c9e4d) against Graphify orientation only, on a fresh natural-task catalog from six repositories never used before (natural_tasks_t7), recorded before any pull request of those repositories was listed. No earlier rule changed"
     }
   ],
   "arms": {
