@@ -2,6 +2,43 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t4d: ast_graph screen (DeepSeek); no significant cost gain
+
+**Outcome: the candidate `ast_graph` fails the screen.** On average it was cheaper than both comparators, but neither difference was significant. Success non-inferiority passed against both. This is a screen (`agent_trials.staging`, preregistration v82/v83), so a pass could only have nominated `ast_graph` for the stronger-model confirmation. A failure ends that path for this candidate as tested. Every task and arm summary is in [agent-decision-t4d.json](../results/agent-decision-t4d.json).
+
+### Conditions
+
+- **Tasks.** The 48 natural tasks in [natural-tasks-t4.json](../benchmark/natural-tasks-t4.json), from gin, urfave-cli, click, jinja, express and undici. The decision file's generic `scope` line about synthetic tasks does not apply to this catalog.
+- **Arms.** `ast_graph` (candidate) is the localization-screen prototype: tree-sitter units, BM25 and one-hop call propagation (backend sha256 `fc85e659…`). The comparators are `search_only` (ripgrep 15.2.0, `1c579059…`) and code-only Graphify 0.9.95 (commit `92741d16…`). The test is intersection-union, at alpha 0.05 each.
+- **Solver.** Claude Code 2.1.310, run from the pinned copy `.research/bin/claude-2.1.310`, with `deepseek/deepseek-v4.1-flash` through OpenRouter, an 80-turn cap and a 1200 s wall timeout. Cost is tokens priced with the frozen OpenRouter price table (`solver_prices_per_million`). The price table is DeepSeek's, so cost figures are not comparable with the Claude list-price batches.
+- **Design.** 2 attempts per task and arm, 288 planned attempts in a seeded random order. t4d was planned with 5 attempts and cut to 2 in v82 for cost, without looking at outcomes. The 248 attempts 3–5 that had already run are kept and excluded.
+- **Completeness.** All 288 planned attempts are complete, with full usage accounting. 280 ended normally and 8 hit the turn cap; the turn-capped attempts are counted, with their cost, as failures if unverified. Two infrastructure aborts were set aside in `.research/trials-aside/` and rerun from scratch: a lost broker reply, and an OpenRouter 402 before any model call. One attempt interrupted by an operator pause was also set aside and rerun.
+
+### Results
+
+| Arm | Passes / attempts | Success (Wilson 95%) | Total cost (price table, USD) | Total tokens |
+| --- | ---: | --- | ---: | ---: |
+| `ast_graph` | 94 / 96 | 97.9% (92.7–99.4%) | 2.794 | 85.7M |
+| `search_only` | 92 / 96 | 95.8% (89.8–98.4%) | 3.080 | 100.3M |
+| Graphify 0.9.95 | 93 / 96 | 96.9% (91.2–98.9%) | 3.127 | 98.8M |
+
+| `ast_graph` versus | Mean cost reduction per task | Cost p (one-sided sign flip) | Cheaper tasks | Success difference (margin 0.10) | Pass |
+| --- | ---: | ---: | ---: | --- | --- |
+| `search_only` | $0.00298 | 0.135 | 24 / 48 | +0.021, non-inferior (p < 0.0001) | no |
+| Graphify | $0.00347 | 0.133 | 25 / 48 | +0.010, non-inferior (p < 0.0001) | no |
+
+The secondary token reductions are descriptive and not part of the rule. They are 152k tokens per task against `search_only` (p 0.042) and 137k against Graphify (p 0.119).
+
+Per-task results are mixed, and the mean hides losses:
+- **Cost.** `ast_graph` cost more than 50% above `search_only` on 8 tasks and above Graphify on 11; the worst was jinja-1573, at about 3.8× either comparator. It cost up to 81% less on others (click-3571 against `search_only`, jinja-2027 against Graphify).
+- **Success.** `ast_graph` passed fewer attempts than both comparators on urfave-cli-2129. It passed more than `search_only` on 3 tasks and more than Graphify on 2.
+
+### Disclosures
+
+- **Superseded batches.** These are t4 (Claude Code 2.1.303), t4r (2.1.307), t4r2 (2.1.310 on the subscription, stopped over the plan budget), t4r3 (Haiku via OpenRouter), t4q and t4q2 (qwen3.7-flash, unmeasured timeouts). Their trials are kept and excluded, and each restart is recorded in the preregistration before new data.
+- **Interim outcomes seen before completion.** Some interim outcomes were seen before t4d completed and are recorded in the preregistration: one t4d verification result during the diagnosis of a lost broker reply (that attempt was excluded and rerun), plus earlier qwen-batch log lines. No rule changed after any of them.
+- **Scope.** The solver is a cheap non-Anthropic model behind a gateway. The result says nothing about Claude-model agents, and it supports no claim that graf saves agent cost against Graphify.
+
 ## Batch t3: natural tasks; no arm separates
 
 **Outcome: the candidate `graf_floor` fails.** It was not significantly cheaper than either comparator, `search_only` or Graphify. All three arms cost the same, within noise. Every task and arm summary is in [agent-decision-t3.json](../results/agent-decision-t3.json). The batch is `t3` in [preregistration v14](../benchmark/preregistration.json).
