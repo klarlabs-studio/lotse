@@ -2,6 +2,41 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t6: current triage binary screen (Haiku); no significant difference
+
+**Outcome: the candidate `graf_current_orient` fails the screen.** It was not significantly cheaper than Graphify's orientation (p 0.48) or `search_only` (p 0.98; on average it cost more). Success was non-inferior against both. The current binary does not repeat t5's cost win over Graphify: the t5 binary (`graf-t5`) was significantly cheaper than Graphify, while the current one (`graf-t6`) is not. Every task and arm summary is in [agent-decision-t6.json](../results/agent-decision-t6.json).
+
+### Conditions
+
+- **Tasks and design.** As in t5: the 48 natural t4 tasks, 2 attempts per task and arm, 288 attempts in a seeded random order (seed 20261024). It also uses the same solver: Claude Code 2.1.310 (pinned copy), `claude-haiku-5-5` on the subscription, an 80-turn cap, a 1,200 s timeout and list-price cost.
+- **Arms.** `graf_current_orient` uses the t5 `graf_orient` protocol with the separately pinned current binary `.research/bin/graf-t6`, sha256 `f827c273…` (HEAD a9c9e4d plus audit repairs; sources in `.research/evidence/agent-t6/source`). `graphify_orient` and `search_only` are rerun in this batch, as in t5.
+- **Completeness.** All 288 planned attempts are complete, with full usage accounting.
+  - **One infrastructure abort was set aside and rerun.** Graphify's orientation index build hit its 180 s timeout before any model call, under a host load average of about 110–130 (v86).
+  - **One summary was rebuilt from preserved artifacts without a rerun (v85):** `t6-undici-5684-graf_current_orient-2`. Its first finish ran the hidden tests, which timed out, so the verifier recorded a failure. A filter bug had dropped that verdict and stopped the batch. That attempt's outcome was seen while diagnosing. The timeout may reflect host load rather than the agent's change; it is counted as the verifier recorded it.
+  - **One further counted attempt in each of `graf_current_orient` and `graphify_orient`** had a tool call time out during the run.
+
+### Results
+
+| Arm | Passes / attempts | Success (Wilson 95%) | Total cost (list, USD) | Total tokens |
+| --- | ---: | --- | ---: | ---: |
+| `graf_current_orient` | 64 / 96 | 66.7% (56.8–75.3%) | 0.862 | 21.0M |
+| Graphify 0.9.95 orientation | 66 / 96 | 68.8% (58.9–77.1%) | 0.940 | 21.9M |
+| `search_only` | 63 / 96 | 65.6% (55.7–74.4%) | 0.744 | 17.6M |
+
+| `graf_current_orient` versus | Mean cost reduction per task | Cost p (one-sided sign flip) | Cheaper tasks | Success difference (margin 0.10) | Pass |
+| --- | ---: | ---: | ---: | --- | --- |
+| Graphify orientation | $0.00082 | 0.48 | 22 / 48 | −0.021, non-inferior (p < 0.001) | no |
+| `search_only` | −$0.00123 (costs more) | 0.98 | 18 / 48 | +0.010, non-inferior (p < 0.001) | no |
+
+- **Against Graphify:**
+  - **Cost:** `graf_current_orient` cost more than 50% above Graphify on 3 tasks, the worst being gin-4033 at about 2.6×. It was up to 65% cheaper on others (urfave-cli-2248).
+  - **Success:** it passed fewer attempts on 3 tasks and more on 1.
+- **Against `search_only`:**
+  - **Cost:** it cost more than 50% above `search_only` on 10 tasks, the worst being urfave-cli-2173 at about 3.3×.
+  - **Success:** it passed fewer attempts on 3 tasks and more on 4.
+- **Tokens (secondary, descriptive):** 9k fewer per task than Graphify (p 0.43) and 36k more than `search_only` (p 0.95).
+- **What the three screens show together:** across t4d, t5 and t6, no graf candidate beat both comparators. t5's cost win over Graphify was not repeated by the current binary. No candidate is promoted to the stronger-model confirmation, and agent savings against Graphify remain unestablished.
+
 ## Batch t5: triage orientation screen (Haiku); beats Graphify, not search_only
 
 **Outcome: the candidate `graf_orient` fails the screen**, because the rule requires a win against both comparators (intersection-union).
