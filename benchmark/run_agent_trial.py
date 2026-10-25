@@ -231,6 +231,8 @@ def lost_reply(stream, exit_code):
     pending = set()
     for line in stream.read_text().splitlines():
         event = json.loads(line)
+        if event.get("type") == "tool_progress":  # A running call may surface only as heartbeats.
+            pending.add(str(event.get("tool_use_id", "")).split("-heartbeat-")[0])
         for block in event.get("message", {}).get("content", []) if isinstance(event.get("message"), dict) else []:
             if not isinstance(block, dict):
                 continue

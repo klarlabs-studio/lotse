@@ -1,5 +1,5 @@
 {
-  "version": 83,
+  "version": 84,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -239,7 +239,10 @@
         "attempts_per_task_and_arm": 2,
         "role": "screen (agent_trials.staging)",
         "model": "claude-haiku-5-5",
-        "solver_change_v83": "2026-10-25, operator: t5 and t6 run on claude-haiku-5-5 through the operator's (upgraded) Claude subscription instead of DeepSeek via OpenRouter. Changed before any t5/t6 attempt ran; still 2-attempt screens with the 80-turn cap, the solver binary and Graphify pins unchanged"
+        "solver_change_v83": "2026-10-25, operator: t5 and t6 run on claude-haiku-5-5 through the operator's (upgraded) Claude subscription instead of DeepSeek via OpenRouter. Changed before any t5/t6 attempt ran; still 2-attempt screens with the 80-turn cap, the solver binary and Graphify pins unchanged",
+        "infrastructure_incidents": [
+          "2026-10-25: t5-urfave-cli-2439-graphify_orient-2 timed out waiting on a broker search call that began as the disk filled (ENOSPC, 13:53 UTC) and was visible only as tool_progress heartbeats, so the v81 lost-reply check missed it and the batch stopped fail-closed at 106/288. The check now also counts heartbeat-only calls as pending (no other t4*/t5/t6 timeout is reclassified). Set aside and rerun; no outcome inspected"
+        ]
       },
       "t6": {
         "arms": [
@@ -1043,6 +1046,11 @@
       "version": 83,
       "date": "2026-10-25",
       "reason": "Operator decision: t5 and t6 use claude-haiku-5-5 on the Claude subscription (no t5/t6 data yet). Completeness rule now also classifies a gateway refusal (Claude Code synthetic 'API Error:' message, e.g. OpenRouter 402) as an infrastructure abort, rerun from scratch; one t4d incident recorded. No outcome looked at"
+    },
+    {
+      "version": 84,
+      "date": "2026-10-25",
+      "reason": "No rule change. The infrastructure-abort check also treats a tool call seen only as tool_progress heartbeats at the trial timeout as a lost reply; one t5 incident recorded. Discloses three interim TypeScript localization rows seen while diagnosing an ENOSPC crash"
     }
   ],
   "arms": {
@@ -1354,7 +1362,10 @@
         "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
         "command": "GRAF_BINARY=.research/bin/graf-a9c9e4d .research/venv-graphify-0.9.95/bin/python benchmark/localization.py run --split typescript",
         "restart_reason": "the first run (started 2026-10-22, graf 82dea833 unpinned at target/release/graf, Graphify 0.9.92) was paused after 1,342 of 2,968 tasks; target/release/graf was then rebuilt by other work, so resuming would have mixed binaries. On 2026-10-24 the operator chose to restart from scratch on the latest committed graf and latest Graphify. Its partial output is kept as results/localization-typescript-82dea833-partial.json and is excluded from the decision; no decision was computed from it"
-      }
+      },
+      "disclosures": [
+        "2026-10-25: the TypeScript run crashed on ENOSPC at 13:54 UTC with 2901/2968 rows saved; its half-written typeorm-3534 snapshot was deleted and the run resumed under the same pins. While diagnosing, three interim log rows (per-arm ranks for typeorm-3777, typeorm-4452, typeorm-4788) were printed and seen. No rule or arm changed"
+      ]
     }
   },
   "audit_regression": {

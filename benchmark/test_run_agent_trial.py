@@ -84,6 +84,12 @@ class LostReplyTests(unittest.TestCase):
         self.assertFalse(lost_reply(self.stream(use, answered, both), "timeout"))
         self.assertFalse(lost_reply(self.stream(use, answered), 0))
 
+    def test_a_call_seen_only_as_heartbeats_is_a_lost_reply(self):
+        beat = {"type": "tool_progress", "tool_use_id": "c-heartbeat-3", "tool_name": "mcp__broker__search"}
+        self.assertTrue(lost_reply(self.stream(beat), "timeout"))
+        done = {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "c"}]}}
+        self.assertFalse(lost_reply(self.stream(beat, done), "timeout"))
+
     def test_a_gateway_refusal_is_an_infrastructure_abort(self):
         refused = {"type": "assistant", "message": {"model": "<synthetic>", "content": [
             {"type": "text", "text": "API Error: 402 This request would exceed your available credits"}]}}
