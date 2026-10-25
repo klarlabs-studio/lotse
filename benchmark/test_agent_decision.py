@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import unittest
 
+import agent_decision
+
 from agent_decision import evaluate, pass_hat_k
 
 BASE = Path(__file__).resolve().parents[1]
@@ -35,6 +37,15 @@ def batch(graf_cost=0.003, graphify_cost=0.004, graf_pass=lambda t, k: True, cos
 
 
 class PassHatKTests(unittest.TestCase):
+    def test_a_reduced_batch_scores_only_its_planned_attempts(self):
+        spec = {"minimum_paired_trials_per_task_and_arm": 5}
+        self.assertEqual(agent_decision.attempts(spec, {}), 5)
+        self.assertEqual(agent_decision.attempts(spec, {"attempts_per_task_and_arm": 2}), 2)
+        rows = [{"trial": f"b-t-a-{k}"} for k in (1, 2, 3, 5)]
+        kept, excluded = agent_decision.planned_attempts(rows, 2)
+        self.assertEqual([r["trial"] for r in kept], ["b-t-a-1", "b-t-a-2"])
+        self.assertEqual(excluded, 2)
+
     def test_unbiased_estimator(self):
         self.assertEqual(pass_hat_k(5, 5, 5), 1.0)
         self.assertEqual(pass_hat_k(4, 5, 5), 0.0)

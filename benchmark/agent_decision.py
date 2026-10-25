@@ -26,6 +26,17 @@ def pass_hat_k(successes, n, k):
     return comb(successes, k) / comb(n, k)
 
 
+def attempts(spec, batch):
+    """Attempts per task and arm: a batch's own count (a reduced design), else the global minimum."""
+    return batch.get("attempts_per_task_and_arm") or spec["minimum_paired_trials_per_task_and_arm"]
+
+
+def planned_attempts(summaries, trials):
+    """Summaries of attempts 1..trials, and how many later attempts a reduced design excludes."""
+    kept = [s for s in summaries if int(s["trial"].rsplit("-", 1)[1]) <= trials]
+    return kept, len(summaries) - len(kept)
+
+
 def _index(summaries, task_ids, trials, arms):
     planned = {(t, a, k) for t in task_ids for a in arms for k in range(1, trials + 1)}
     table, reasons = {}, []
@@ -131,8 +142,14 @@ def main():
     task_ids = [t["id"] for t in tasks(BASE / batch.get("catalog", "benchmark/agent-tasks.json"))]
     summaries = [json.loads(p.read_text())
                  for p in sorted((BASE / ".research/trials").glob(f"{batch_id}-*/summary.json"))]
-    result = evaluate(summaries, task_ids, spec["minimum_paired_trials_per_task_and_arm"], spec["rule"], batch)
-    result = {"preregistration_version": prereg["version"], "batch": batch_id, **result}
+    trials = attempts(spec, batch)
+    summaries, excluded = planned_attempts(summaries, trials)
+    result = evaluate(summaries, task_ids, trials, spec["rule"], batch)
+    result = {"preregistration_version": prereg["version"], "batch": batch_id, "attempts_per_task_and_arm": trials,
+              "excluded_later_attempts": excluded, **result}
+    if batch.get("promotion_eligible") is False:
+        result["product_promotion_allowed"] = False
+        result["promotion_blocker"] = batch["scope"]
     out = BASE / f"results/agent-decision-{batch_id}.json"
     out.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"batch": batch_id, "passed": result["passed"], "reasons": result["reasons"][:10],

@@ -16,6 +16,7 @@ import random
 import subprocess
 import sys
 
+from agent_decision import attempts
 from agent_trials import BASE, tasks
 from retrieval import graphify_baseline
 from run_agent_trial import TOOL_BINARIES, preflight, run, solver
@@ -126,7 +127,7 @@ def main():
         digest = hashlib.sha256(catalog.read_bytes()).hexdigest()
         if digest != natural.get("frozen_catalog_sha256"):
             raise SystemExit("The natural-task catalog differs from the frozen one")
-    entries = plan(sorted(by_id), prereg["minimum_paired_trials_per_task_and_arm"], batch["arms"], batch["seed"])
+    entries = plan(sorted(by_id), attempts(prereg, batch), batch["arms"], batch["seed"])
     done = [e for e in entries
             if (BASE / ".research/trials" / trial_id(batch_id, *e) / "summary.json").is_file()]
     pending = [e for e in entries if e not in done][:args.limit]

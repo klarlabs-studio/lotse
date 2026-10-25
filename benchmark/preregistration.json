@@ -1,5 +1,5 @@
 {
-  "version": 81,
+  "version": 82,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -248,7 +248,9 @@
         "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat",
         "version_update_v78": "before any run: solver model qwen/qwen3.7-flash via OpenRouter with the frozen price table and cap of t4q",
         "solver_max_turns": 80,
-        "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage"
+        "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
+        "attempts_per_task_and_arm": 2,
+        "role": "screen (agent_trials.staging)"
       },
       "t6": {
         "arms": [
@@ -322,7 +324,9 @@
         "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat",
         "version_update_v78": "before any run: solver model qwen/qwen3.7-flash via OpenRouter with the frozen price table and cap of t4q",
         "solver_max_turns": 80,
-        "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage"
+        "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
+        "attempts_per_task_and_arm": 2,
+        "role": "screen (agent_trials.staging)"
       },
       "t4r": {
         "arms": [
@@ -603,7 +607,10 @@
         "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
         "infrastructure_incidents": [
           "2026-10-24: t4d-urfave-cli-2418-ast_graph-4 lost a broker reply and timed out unmeasured; set aside (.research/trials-aside/) and rerun from scratch under agent_trials completeness. Its harness-run verification result was seen while diagnosing; the attempt is excluded"
-        ]
+        ],
+        "attempts_per_task_and_arm": 2,
+        "role": "screen (agent_trials.staging)",
+        "reduction_v82": "operator cost decision after 394 of 720 attempts: the design is reduced to attempts 1-2 per task and arm (288 attempts). Decided without looking at any outcome; the runner's shuffled order makes the completed attempts a random subset. Completed attempts 3-5 are kept and excluded from the decision (agent_decision reports their count). Lower power than 5 attempts: a no-pass is weaker evidence of no effect than it would have been"
       }
     },
     "natural_tasks": {
@@ -679,6 +686,11 @@
         "undici": 10,
         "total": 48
       }
+    },
+    "staging": {
+      "adopted": "2026-10-24/25, operator: agent batches are getting expensive; run cheaper screens now and a stronger confirmation at the end",
+      "screens": "agent batches t4d, t5 and t6 are screens: the cheap solver (deepseek/deepseek-v4.1-flash via OpenRouter) with 2 attempts per task and arm, under the unchanged agent_trials rule. A screen pass is evidence for a candidate, not product promotion",
+      "confirmation": "only candidates that pass a screen go to a final confirmation batch, frozen later as its own version before it runs: a stronger solver model, the full preregistered attempt count, and fresh tasks, so the confirmation is not tuned on the screens. Only that confirmation can support an agent-efficiency claim against Graphify"
     }
   },
   "report_every_case": true,
@@ -1042,6 +1054,11 @@
       "version": 81,
       "date": "2026-10-24",
       "reason": "No rule change. Implements the existing completeness rule (infrastructure aborts rerun from scratch, partial runs kept outside the plan) in the batch runner, up to 2 reruns per attempt, and classifies a trial timeout with a tool call left unanswered as an infrastructure abort (legitimate broker calls are bounded at about 270 s; max observed 140 s). Applied to one t4d attempt; solver timeouts with no pending tool call stay unmeasured and still stop the batch"
+    },
+    {
+      "version": 82,
+      "date": "2026-10-25",
+      "reason": "Operator cost decision: screens then confirmation (agent_trials.staging). t4d, t5 and t6 become 2-attempt screens with the cheap solver; t4d's completed attempts 3-5 are kept and excluded. A stronger-model, full-design confirmation on fresh tasks is frozen later, before it runs, for candidates that pass a screen. No outcome looked at"
     }
   ],
   "arms": {
