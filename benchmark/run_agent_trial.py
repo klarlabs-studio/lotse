@@ -203,17 +203,19 @@ def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
     trace.write_text("".join(json.dumps(e) + "\n" for e in [*usage, *tool_events]))
     verdicts = [e for e in tool_events if e.get("type") == "verification"]
     passed = len(verdicts) == 1 and verdicts[0]["passed"] is True
+    stream = directory / "agent-stream.jsonl"
+    infrastructure = (any(e.get("response", {}).get("infrastructure") for e in tool_events)
+                      or lost_reply(stream, exit_code) or gateway_refusal(stream))
     summary = {"task": task["id"], "trial": trial_id, "arm": arm, "command": command,
                "exit_code": exit_code, "wall_s": wall, "passed": passed,
                "agent_called_finish": agent_finished, "result_subtype": (result or {}).get("subtype"),
                "num_turns": (result or {}).get("num_turns"), "tool_calls": session.tool_count,
                "index_build_s": session.build_seconds,
                "spurious_verdicts_dropped": dropped,
-               "infrastructure_error": any(e.get("response", {}).get("infrastructure") for e in tool_events)
-                                       or lost_reply(directory / "agent-stream.jsonl", exit_code),
+               "infrastructure_error": infrastructure,
                "tool_binary_sha256": binary_sha,
                "usage_complete": usage_error is None, "usage_error": usage_error,
-               "audit": audit_trace(trace) if usage_error is None else None}
+               "audit": audit_trace(trace) if usage_error is None and not infrastructure else None}
     (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     return summary
 
@@ -237,6 +239,19 @@ def lost_reply(stream, exit_code):
             elif block.get("type") == "tool_result":
                 pending.discard(block.get("tool_use_id"))
     return bool(pending)
+
+
+def gateway_refusal(stream):
+    """The gateway refused a model call (e.g. 402 out of credits): Claude Code reports it as a
+    synthetic assistant message, not a model reply, so it is an infrastructure abort."""
+    if not stream.is_file():
+        return False
+    for line in stream.read_text().splitlines():
+        message = json.loads(line).get("message")
+        if isinstance(message, dict) and message.get("model") == "<synthetic>" and any(
+                isinstance(b, dict) and str(b.get("text", "")).startswith("API Error:") for b in message.get("content", [])):
+            return True
+    return False
 
 
 def recover(task, trial_id, arm, reason):

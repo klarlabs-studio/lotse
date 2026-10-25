@@ -1,5 +1,5 @@
 {
-  "version": 82,
+  "version": 83,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -227,30 +227,19 @@
         "solver_binary": ".research/bin/claude-2.1.310",
         "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
         "version_update_v76": "solver pinned to Claude Code 2.1.310 (copy .research/bin/claude-2.1.310), before any t5 run",
-        "solver_endpoint": {
-          "base_url": "https://openrouter.ai/api",
-          "credential": "keychain:openrouter-graf",
-          "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
-          "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
-        },
         "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged",
-        "solver_model": "deepseek/deepseek-v4.1-flash",
-        "solver_prices_per_million": {
-          "input": 0.02,
-          "cache_read": 0.015,
-          "cache_write": 0.02,
-          "output": 1.0
-        },
         "solver_budget_usd": 20,
         "model_choice": "operator: keep qwen3.7-flash or deepseek-v4.1-flash. A second development-task pilot (6 tasks outside every frozen catalog, search_only, 80-turn cap) ran both: deepseek finished 6/6 (6-36 turns, mean 35 s, ~$0.005 per attempt); qwen finished 5/6 with one 1200 s timeout (mean 263 s). Qwen's runs are too slow and too often unmeasurable for one batch within the key's validity, so deepseek-v4.1-flash is used",
-        "cost_basis": "primary metric: tokens priced with solver_prices_per_million, the deepseek/deepseek-v4.1-flash OpenRouter prices on 2026-10-24 (OpenRouter lists no cache-write price; cache writes are priced as input). Claude Code's own estimate (costBasis unknown) is not used; OpenRouter's actual charge is a diagnostic only",
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription",
         "spend_cap": "Claude Code enforces --max-budget-usd in its default unknown-model rates, derived from the pilot as $4 input, $0.20 cache read, $5 cache write, $20 output per million (20-40x Haiku list). $20 permits at least the tokens t4's $0.50 Haiku cap did; that cap bound none of the 181 t4r2 attempts",
         "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat",
         "version_update_v78": "before any run: solver model qwen/qwen3.7-flash via OpenRouter with the frozen price table and cap of t4q",
         "solver_max_turns": 80,
         "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
         "attempts_per_task_and_arm": 2,
-        "role": "screen (agent_trials.staging)"
+        "role": "screen (agent_trials.staging)",
+        "model": "claude-haiku-5-5",
+        "solver_change_v83": "2026-10-25, operator: t5 and t6 run on claude-haiku-5-5 through the operator's (upgraded) Claude subscription instead of DeepSeek via OpenRouter. Changed before any t5/t6 attempt ran; still 2-attempt screens with the 80-turn cap, the solver binary and Graphify pins unchanged"
       },
       "t6": {
         "arms": [
@@ -303,30 +292,18 @@
         "graphify_commit": "92741d162b2094ffc2fed58cfbd8ee823e9da62c",
         "graphify_virtualenv": ".research/venv-graphify-0.9.95",
         "version_update_v76": "before any t6 run: Claude Code 2.1.307 -> 2.1.310 (pinned copy) and Graphify 0.9.92 -> 0.9.95 (its own virtualenv), per the version policy; arms, binaries for graf and search_only, tasks, seed and rules unchanged. Run under .research/venv-graphify-0.9.95/bin/python; search_only moves from a Codex-bundled rg (e97d666f) to Homebrew ripgrep 15.2.0 (1c579059), the latest release and the one t4r2 and t5 use",
-        "solver_endpoint": {
-          "base_url": "https://openrouter.ai/api",
-          "credential": "keychain:openrouter-graf",
-          "gateway": "OpenRouter, Anthropic-compatible endpoint; model id claude-haiku-5-5 (Claude Code then prices it at list, costBasis list, as on the subscription)",
-          "verified_2026-10-24": "probe calls billed on the OpenRouter key; an invalid token fails instead of falling back to the claude.ai login; the OpenRouter id anthropic/claude-haiku-5.5 was rejected because Claude Code prices unrecognized models with costBasis unknown"
-        },
         "version_update_v77": "before any run: solver routed through OpenRouter (operator budget decision), otherwise unchanged",
-        "solver_model": "deepseek/deepseek-v4.1-flash",
-        "solver_prices_per_million": {
-          "input": 0.02,
-          "cache_read": 0.015,
-          "cache_write": 0.02,
-          "output": 1.0
-        },
         "solver_budget_usd": 20,
         "model_choice": "operator: keep qwen3.7-flash or deepseek-v4.1-flash. A second development-task pilot (6 tasks outside every frozen catalog, search_only, 80-turn cap) ran both: deepseek finished 6/6 (6-36 turns, mean 35 s, ~$0.005 per attempt); qwen finished 5/6 with one 1200 s timeout (mean 263 s). Qwen's runs are too slow and too often unmeasurable for one batch within the key's validity, so deepseek-v4.1-flash is used",
-        "cost_basis": "primary metric: tokens priced with solver_prices_per_million, the deepseek/deepseek-v4.1-flash OpenRouter prices on 2026-10-24 (OpenRouter lists no cache-write price; cache writes are priced as input). Claude Code's own estimate (costBasis unknown) is not used; OpenRouter's actual charge is a diagnostic only",
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription",
         "spend_cap": "Claude Code enforces --max-budget-usd in its default unknown-model rates, derived from the pilot as $4 input, $0.20 cache read, $5 cache write, $20 output per million (20-40x Haiku list). $20 permits at least the tokens t4's $0.50 Haiku cap did; that cap bound none of the 181 t4r2 attempts",
         "provider_note": "OpenRouter may route the model to different hosting providers; Claude Code cannot pin one. Recorded as a caveat",
         "version_update_v78": "before any run: solver model qwen/qwen3.7-flash via OpenRouter with the frozen price table and cap of t4q",
         "solver_max_turns": 80,
         "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
         "attempts_per_task_and_arm": 2,
-        "role": "screen (agent_trials.staging)"
+        "role": "screen (agent_trials.staging)",
+        "solver_change_v83": "2026-10-25, operator: t5 and t6 run on claude-haiku-5-5 through the operator's (upgraded) Claude subscription instead of DeepSeek via OpenRouter. Changed before any t5/t6 attempt ran; still 2-attempt screens with the 80-turn cap, the solver binary and Graphify pins unchanged"
       },
       "t4r": {
         "arms": [
@@ -606,7 +583,8 @@
         "solver_max_turns": 80,
         "turn_cap": "Claude Code --max-turns 80: above every Haiku 5.5 attempt (181 pooled t4r2 attempts: median 10, p95 28, max 55 turns), so it binds only on loops; a capped attempt ends as error_max_turns with its usage reported and counts as a failed attempt at its full cost. Added because Claude Code reports usage only in its final result, so an attempt killed by the 1200 s wall-clock timeout is unmeasured and blocks the decision. A development-task probe (cap 3) confirmed error_max_turns with complete usage",
         "infrastructure_incidents": [
-          "2026-10-24: t4d-urfave-cli-2418-ast_graph-4 lost a broker reply and timed out unmeasured; set aside (.research/trials-aside/) and rerun from scratch under agent_trials completeness. Its harness-run verification result was seen while diagnosing; the attempt is excluded"
+          "2026-10-24: t4d-urfave-cli-2418-ast_graph-4 lost a broker reply and timed out unmeasured; set aside (.research/trials-aside/) and rerun from scratch under agent_trials completeness. Its harness-run verification result was seen while diagnosing; the attempt is excluded",
+          "2026-10-25: t4d-gin-4231-ast_graph-1 got an OpenRouter 402 (credits exhausted) before any model call; no usage was recorded and the runner stopped on the incomplete trace at 279/288 planned attempts. Set aside and rerun from scratch; only event types were inspected, no outcome"
         ],
         "attempts_per_task_and_arm": 2,
         "role": "screen (agent_trials.staging)",
@@ -690,7 +668,8 @@
     "staging": {
       "adopted": "2026-10-24/25, operator: agent batches are getting expensive; run cheaper screens now and a stronger confirmation at the end",
       "screens": "agent batches t4d, t5 and t6 are screens: the cheap solver (deepseek/deepseek-v4.1-flash via OpenRouter) with 2 attempts per task and arm, under the unchanged agent_trials rule. A screen pass is evidence for a candidate, not product promotion",
-      "confirmation": "only candidates that pass a screen go to a final confirmation batch, frozen later as its own version before it runs: a stronger solver model, the full preregistered attempt count, and fresh tasks, so the confirmation is not tuned on the screens. Only that confirmation can support an agent-efficiency claim against Graphify"
+      "confirmation": "only candidates that pass a screen go to a final confirmation batch, frozen later as its own version before it runs: a stronger solver model, the full preregistered attempt count, and fresh tasks, so the confirmation is not tuned on the screens. Only that confirmation can support an agent-efficiency claim against Graphify",
+      "screens_v83": "t4d stays on deepseek/deepseek-v4.1-flash via OpenRouter; t5 and t6 screen on claude-haiku-5-5 via the subscription. Each screen is decided only within itself; screens with different solvers are not pooled or compared with each other"
     }
   },
   "report_every_case": true,
@@ -1059,6 +1038,11 @@
       "version": 82,
       "date": "2026-10-25",
       "reason": "Operator cost decision: screens then confirmation (agent_trials.staging). t4d, t5 and t6 become 2-attempt screens with the cheap solver; t4d's completed attempts 3-5 are kept and excluded. A stronger-model, full-design confirmation on fresh tasks is frozen later, before it runs, for candidates that pass a screen. No outcome looked at"
+    },
+    {
+      "version": 83,
+      "date": "2026-10-25",
+      "reason": "Operator decision: t5 and t6 use claude-haiku-5-5 on the Claude subscription (no t5/t6 data yet). Completeness rule now also classifies a gateway refusal (Claude Code synthetic 'API Error:' message, e.g. OpenRouter 402) as an infrastructure abort, rerun from scratch; one t4d incident recorded. No outcome looked at"
     }
   ],
   "arms": {

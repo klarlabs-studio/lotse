@@ -83,8 +83,8 @@ def run_with_reruns(identifier, attempt, trials, aside):
         aside.mkdir(parents=True, exist_ok=True)
         (trials / identifier).rename(target)
         (target / "aside.json").write_text(json.dumps({
-            "trial": identifier, "reason": "infrastructure abort (broker error or a tool call left without a reply "
-            "at the trial timeout); rerun from scratch under the preregistered completeness rule"}, indent=2) + "\n")
+            "trial": identifier, "reason": "infrastructure abort (broker error, gateway refusal, or a tool call left "
+            "without a reply at the trial timeout); rerun from scratch under the preregistered completeness rule"}, indent=2) + "\n")
         print(json.dumps({"trial": identifier, "set_aside": str(target.relative_to(aside.parent))}), flush=True)
     raise SystemExit(f"{identifier}: infrastructure abort persisted after {INFRASTRUCTURE_RERUNS} reruns; batch stopped")
 

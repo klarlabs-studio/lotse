@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from agent_trials import audit_trace
-from run_agent_trial import SYSTEM_PROMPT, claude_command, lost_reply, solver_budget, solver_model, preflight, scored_events, system_prompt, usage_events
+from run_agent_trial import SYSTEM_PROMPT, claude_command, gateway_refusal, lost_reply, solver_budget, solver_model, preflight, scored_events, system_prompt, usage_events
 
 RESULT = {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3,
           "total_cost_usd": 0.0123,
@@ -83,6 +83,13 @@ class LostReplyTests(unittest.TestCase):
         both = {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "b"}]}}
         self.assertFalse(lost_reply(self.stream(use, answered, both), "timeout"))
         self.assertFalse(lost_reply(self.stream(use, answered), 0))
+
+    def test_a_gateway_refusal_is_an_infrastructure_abort(self):
+        refused = {"type": "assistant", "message": {"model": "<synthetic>", "content": [
+            {"type": "text", "text": "API Error: 402 This request would exceed your available credits"}]}}
+        self.assertTrue(gateway_refusal(self.stream(refused)))
+        answer = {"type": "assistant", "message": {"model": "m", "content": [{"type": "text", "text": "API Error: in a reply"}]}}
+        self.assertFalse(gateway_refusal(self.stream(answer)))
 
 
 class CommandTests(unittest.TestCase):
