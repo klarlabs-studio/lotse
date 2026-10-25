@@ -36,7 +36,7 @@ TOOL_DEFINITIONS = [
 
 
 GRAF_QUERY_FLAGS = {"graf": (), "graf_floor": ("--file-score", "damped", "--stop", "floor")}
-GRAF_ORIENT_ARMS = ("graf_orient", "graf_current_orient")
+GRAF_ORIENT_ARMS = ("graf_orient", "graf_current_orient", "graf_lean_orient")
 ORIENT_ARMS = (*GRAF_ORIENT_ARMS, "graphify_orient")
 ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph", *ORIENT_ARMS)
 SCRIPTS = Path(__file__).resolve().parent
@@ -46,10 +46,13 @@ GRAF_INDEX_ARMS = (*GRAF_QUERY_FLAGS, *GRAF_ORIENT_ARMS)
 # Batch t5 runs a pinned copy of graf built from commit 7ccfea3 (sha256 c95b5766...), so graf can keep changing.
 GRAF_T5 = BASE / ".research/bin/graf-t5"
 GRAF_T6 = BASE / ".research/bin/graf-t6"
+# Batch t7 (preregistration v87): the latest committed graf, commit a9c9e4d (sha256 9d54581b...).
+GRAF_LATEST = BASE / ".research/bin/graf-a9c9e4d"
 
 
 def graf_binary(arm):
-    return {"graf_orient": GRAF_T5, "graf_current_orient": GRAF_T6}.get(arm, BASE / "target/release/graf")
+    return {"graf_orient": GRAF_T5, "graf_current_orient": GRAF_T6,
+            "graf_lean_orient": GRAF_LATEST}.get(arm, BASE / "target/release/graf")
 
 
 def tool_definitions(arm):
@@ -227,7 +230,7 @@ class Session:
             "snapshot": sha(json.dumps(files, sort_keys=True)),
         }, indent=2) + "\n")
         if self.arm in (*GRAF_INDEX_ARMS, "ast_graph"):
-            if self.arm == "graf_current_orient":
+            if self.arm in ("graf_current_orient", "graf_lean_orient"):
                 # Schema 2 stores binary indexes; retain the exact-file-set check
                 # through the existing legacy export, without changing t5's pin.
                 inspect = [str(graf_binary(self.arm)), "--root", str(self.input), "export-index"]
@@ -299,12 +302,18 @@ class Session:
                 raise ValueError("Orientation is produced once, by the harness, before the first turn")
             if self.dirty:
                 self.rebuild()
-            if self.arm in GRAF_ORIENT_ARMS:
+            if self.arm == "graf_lean_orient":  # Batch t7: triage's file list only, no code excerpts.
+                command = [str(graf_binary(self.arm)), "--root", str(self.input), "triage", "--budget",
+                           str(ORIENT_BUDGET), "--", self.task["issue"]]
+                files = json.loads(self.retrieval_text(command))["files"]
+                native = "Likely files:\n" + "".join(f"- {path}\n" for path in files) if files else ""
+            elif self.arm in GRAF_ORIENT_ARMS:
                 command = [str(graf_binary(self.arm)), "--root", str(self.input), "triage", "--budget",
                            str(ORIENT_BUDGET), "--text", "--", self.task["issue"]]
+                native = self.retrieval_text(command)
             else:
                 command = retrieve_command(self.arm, self.input, self.output, self.task["issue"], ORIENT_BUDGET, self.graphify_adapter)
-            native = self.retrieval_text(command)
+                native = self.retrieval_text(command)
             context = bounded(native, ORIENT_BUDGET)  # The same hard cap for both backends.
             return {"content": context, "requested_budget": ORIENT_BUDGET, "reference_text_tokens": len(tokens(context)),
                     "native_tokens": len(tokens(native)), "truncated": context != native}

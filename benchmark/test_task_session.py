@@ -172,6 +172,27 @@ class TaskBrokerIntegrity(unittest.TestCase):
             self.assertTrue(session.call("outline", {"path": "app.py"})["ok"])
             self.assertEqual(run.call_args[0][0][0], str(task_session.GRAF_T6))
 
+    def test_lean_orientation_shows_only_triage_files_from_the_latest_committed_binary(self):
+        arm = "graf_lean_orient"
+        self.assertEqual(task_session.retrieve_command(arm, Path("in"), Path("out"), "q", 90)[0],
+                         str(task_session.GRAF_LATEST))
+        self.assertIn("outline", [d["name"] for d in task_session.tool_definitions(arm)])
+        with patch.object(task_session, "run_tool") as run:
+            run.return_value.stdout = json.dumps({"files": ["app.py", "lib/core.py"], "context": "Likely code:\n..."})
+            run.return_value.returncode = 0
+            session = task_session.prepare_session(self.task, "lean-orient", arm)
+            session.dirty = False
+            result = session.call("orient", {})["result"]
+            self.assertEqual(result["content"], "Likely files:\n- app.py\n- lib/core.py\n")
+            command = run.call_args[0][0]
+            self.assertEqual(command[0], str(task_session.GRAF_LATEST))
+            self.assertEqual(command[3:], ["triage", "--budget", str(task_session.ORIENT_BUDGET), "--",
+                                           self.task["issue"]])
+            run.return_value.stdout = json.dumps({"files": [], "context": ""})
+            empty = task_session.prepare_session(self.task, "lean-orient-empty", arm)
+            empty.dirty = False
+            self.assertEqual(empty.call("orient", {})["result"]["content"], "")
+
     def test_orientation_is_only_for_orient_arms_and_only_once(self):
         with patch.object(task_session, "run_tool") as run:
             run.return_value.stdout = "Likely files:\n- app.py\n"
