@@ -92,6 +92,13 @@ class NaturalSpecTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "infrastructure"):
             run_agent_batch.run_with_reruns("t-y", always, trials, aside)
         self.assertEqual(len(list(aside.glob("t-y-infrastructure-*"))), 3)
+        from run_agent_trial import OrientationError
+        def slow_index():
+            (trials / "t-z").mkdir()
+            raise OrientationError("graphify failed: timed out")
+        with self.assertRaisesRegex(SystemExit, "infrastructure"):
+            run_agent_batch.run_with_reruns("t-z", slow_index, trials, aside)
+        self.assertEqual(len(list(aside.glob("t-z-infrastructure-*"))), 3)
 
     def test_each_natural_batch_resolves_its_frozen_catalog(self):
         self.assertEqual(natural_spec(AGENT, AGENT["batches"]["t3"]["catalog"])["minimum_tasks"], 18)

@@ -1,5 +1,5 @@
 {
-  "version": 85,
+  "version": 86,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -308,7 +308,8 @@
         "role": "screen (agent_trials.staging)",
         "solver_change_v83": "2026-10-25, operator: t5 and t6 run on claude-haiku-5-5 through the operator's (upgraded) Claude subscription instead of DeepSeek via OpenRouter. Changed before any t5/t6 attempt ran; still 2-attempt screens with the 80-turn cap, the solver binary and Graphify pins unchanged",
         "infrastructure_incidents": [
-          "2026-10-25: at 159/288 the runner stopped on scoring t6-undici-5684-graf_current_orient-2. Its first finish ran the hidden tests, which timed out at 180 s, so the broker answered ok:false and the trusted verifier recorded a failed verification; the filter for verdicts written by a refused repeated finish wrongly dropped that verdict. The filter now drops only verdicts after the 'Trial is already finished' refusal, and the summary was rebuilt from the preserved artifacts without rerunning (recover). No counted t4*/t5/t6 trial had a dropped verdict. Diagnosing it exposed this attempt's outcome (failed verification); it is kept as the verifier recorded it"
+          "2026-10-25: at 159/288 the runner stopped on scoring t6-undici-5684-graf_current_orient-2. Its first finish ran the hidden tests, which timed out at 180 s, so the broker answered ok:false and the trusted verifier recorded a failed verification; the filter for verdicts written by a refused repeated finish wrongly dropped that verdict. The filter now drops only verdicts after the 'Trial is already finished' refusal, and the summary was rebuilt from the preserved artifacts without rerunning (recover). No counted t4*/t5/t6 trial had a dropped verdict. Diagnosing it exposed this attempt's outcome (failed verification); it is kept as the verifier recorded it",
+          "2026-10-25 ~17:50 UTC: at 219/288 t6-undici-5684-graphify_orient-2 stopped before any model call because graphify extract (orientation) hit its 180 s timeout; undici orientation times across t5/t6 ranged 11-184 s and the host load average was about 110-130 on 10 cores from unrelated processes. Orientation failures are now infrastructure aborts (set aside and rerun, at most 2 reruns, then the batch stops). Wall-clock limits (180 s verifier and orientation, 1200 s trial) may bind more often under such load; this is reported with the batch result"
         ]
       },
       "t4r": {
@@ -1059,6 +1060,11 @@
       "version": 85,
       "date": "2026-10-25",
       "reason": "No rule change. Fixes the verdict filter so a first finish whose verifier fails (e.g. hidden tests time out) keeps its failed verdict; one t6 trial summary rebuilt from preserved artifacts; disclosure of that attempt's outcome"
+    },
+    {
+      "version": 86,
+      "date": "2026-10-25",
+      "reason": "No rule change. A harness orientation failure before any model call (e.g. index build timeout) is an infrastructure abort under the completeness rule; one t6 incident and the host-load condition recorded. No outcome looked at"
     }
   ],
   "arms": {

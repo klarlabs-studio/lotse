@@ -60,13 +60,17 @@ def issue_prompt(issue, orientation):
     return issue if orientation is None else f"{issue}\n\n{ORIENTATION_HEADER}{orientation}"
 
 
+class OrientationError(RuntimeError):
+    """The harness orientation failed before any model call: an infrastructure abort."""
+
+
 def orient(session):
     """Generate the orientation before the agent starts; it is logged and counted as a tool payload."""
     if session.arm not in ORIENT_ARMS:
         return None
     response = session.call("orient", {})
     if not response["ok"]:
-        raise RuntimeError(f"Orientation failed; no agent was started: {response['error']}")
+        raise OrientationError(f"Orientation failed; no agent was started: {response['error']}")
     return response["result"]["content"]
 
 

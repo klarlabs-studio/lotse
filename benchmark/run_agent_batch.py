@@ -19,7 +19,7 @@ import sys
 from agent_decision import attempts
 from agent_trials import BASE, tasks
 from retrieval import graphify_baseline
-from run_agent_trial import TOOL_BINARIES, preflight, run, solver
+from run_agent_trial import TOOL_BINARIES, OrientationError, preflight, run, solver
 
 def plan(task_ids, trials, arms, seed):
     """Every (task, trial, arm), shuffled deterministically."""
@@ -76,15 +76,18 @@ def run_with_reruns(identifier, attempt, trials, aside):
     partial runs are kept outside the plan". After INFRASTRUCTURE_RERUNS reruns the batch stops.
     """
     for number in range(1, INFRASTRUCTURE_RERUNS + 2):
-        summary = attempt()
+        try:
+            summary = attempt()
+        except OrientationError as error:  # Before any model call, e.g. an index build timeout.
+            summary = {"infrastructure_error": True, "orientation_error": str(error)}
         if not summary["infrastructure_error"]:
             return summary
         target = aside / f"{identifier}-infrastructure-{number}"
         aside.mkdir(parents=True, exist_ok=True)
         (trials / identifier).rename(target)
         (target / "aside.json").write_text(json.dumps({
-            "trial": identifier, "reason": "infrastructure abort (broker error, gateway refusal, or a tool call left "
-            "without a reply at the trial timeout); rerun from scratch under the preregistered completeness rule"}, indent=2) + "\n")
+            "trial": identifier, "reason": "infrastructure abort (broker error, gateway refusal, failed orientation, or a "
+            "tool call left without a reply at the trial timeout); rerun from scratch under the preregistered completeness rule"}, indent=2) + "\n")
         print(json.dumps({"trial": identifier, "set_aside": str(target.relative_to(aside.parent))}), flush=True)
     raise SystemExit(f"{identifier}: infrastructure abort persisted after {INFRASTRUCTURE_RERUNS} reruns; batch stopped")
 
