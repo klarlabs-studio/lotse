@@ -1,0 +1,1702 @@
+{
+  "preregistration_version": 86,
+  "batch": "t5",
+  "attempts_per_task_and_arm": 2,
+  "excluded_later_attempts": 0,
+  "passed": false,
+  "reasons": [
+    "no candidate passed both the cost and success tests"
+  ],
+  "comparators": [
+    "graphify_orient",
+    "search_only"
+  ],
+  "comparisons": {
+    "graf_orient": {
+      "role": "candidate",
+      "passed": false,
+      "versus": {
+        "graphify_orient": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": 0.0024025325,
+            "p": 0.02003979960200398,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": 0.0625,
+            "margin": 0.1,
+            "p": 9.99990000099999e-06,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": true,
+          "cheaper_tasks": 28,
+          "secondary": {
+            "mean_token_reduction": 15810.822916666666,
+            "token_reduction_p": 0.26467735322646774
+          }
+        },
+        "search_only": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": -0.0009010744791666671,
+            "p": 0.6127338726612734,
+            "alpha": 0.05,
+            "passed": false
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": 0.041666666666666664,
+            "margin": 0.1,
+            "p": 1.999980000199998e-05,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": false,
+          "cheaper_tasks": 18,
+          "secondary": {
+            "mean_token_reduction": -42942.3125,
+            "token_reduction_p": 0.6681533184668154
+          }
+        }
+      }
+    }
+  },
+  "arms": {
+    "graf_orient": {
+      "attempts": 96,
+      "passes": 68,
+      "success_rate": 0.7083333333333334,
+      "success_wilson95": [
+        0.6108010969781354,
+        0.7898340747478332
+      ],
+      "pass_hat_k": [
+        0.7083333333333334,
+        0.6666666666666666
+      ],
+      "total_cost_usd": 0.91250984,
+      "total_tokens": 22434179.0
+    },
+    "graphify_orient": {
+      "attempts": 96,
+      "passes": 62,
+      "success_rate": 0.6458333333333334,
+      "success_wilson95": [
+        0.546243023422573,
+        0.734201596785605
+      ],
+      "pass_hat_k": [
+        0.6458333333333334,
+        0.625
+      ],
+      "total_cost_usd": 1.14315296,
+      "total_tokens": 23952018.0
+    },
+    "search_only": {
+      "attempts": 96,
+      "passes": 64,
+      "success_rate": 0.6666666666666666,
+      "success_wilson95": [
+        0.5675650615328802,
+        0.7529430758478945
+      ],
+      "pass_hat_k": [
+        0.6666666666666666,
+        0.625
+      ],
+      "total_cost_usd": 0.82600669,
+      "total_tokens": 18311717.0
+    }
+  },
+  "tasks": [
+    {
+      "task": "click-1884",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007828820000000002,
+        "mean_tokens": 154397.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005275185,
+        "mean_tokens": 104873.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006908065000000001,
+        "mean_tokens": 142226.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "click-2819",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0109762,
+        "mean_tokens": 230727.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.012448765000000002,
+        "mean_tokens": 281480.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.014426485,
+        "mean_tokens": 278298.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "click-2995",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00327877,
+        "mean_tokens": 52568.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0054889050000000005,
+        "mean_tokens": 97641.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00364347,
+        "mean_tokens": 58734.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "click-3298",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.001924225,
+        "mean_tokens": 38660.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002254005,
+        "mean_tokens": 38454.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.001284155,
+        "mean_tokens": 22498.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "click-3416",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.005935464999999999,
+        "mean_tokens": 87672.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.007070615000000001,
+        "mean_tokens": 102393.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.009034889999999999,
+        "mean_tokens": 160871.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "click-3571",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007219855000000001,
+        "mean_tokens": 161201.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006483165000000001,
+        "mean_tokens": 138860.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006217749999999999,
+        "mean_tokens": 125091.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "click-3572",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007289065000000001,
+        "mean_tokens": 146871.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005760454999999999,
+        "mean_tokens": 124361.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0063675300000000015,
+        "mean_tokens": 147341.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "express-7365",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00307726,
+        "mean_tokens": 53255.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003227975,
+        "mean_tokens": 58231.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00214561,
+        "mean_tokens": 38734.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "gin-2718",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.004459655,
+        "mean_tokens": 48280.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.005822465,
+        "mean_tokens": 73744.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00466522,
+        "mean_tokens": 55064.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-2959",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.010106025000000001,
+        "mean_tokens": 155213.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.009948785000000002,
+        "mean_tokens": 152429.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.011988289999999999,
+        "mean_tokens": 158260.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-3605",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.023191550000000005,
+        "mean_tokens": 550140.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.020242825,
+        "mean_tokens": 595776.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.01607188,
+        "mean_tokens": 366810.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-4033",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0050307400000000006,
+        "mean_tokens": 92947.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.008972785,
+        "mean_tokens": 159328.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00806863,
+        "mean_tokens": 127857.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-4231",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00410518,
+        "mean_tokens": 55940.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0028022100000000003,
+        "mean_tokens": 39906.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0033482500000000005,
+        "mean_tokens": 44086.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-4413",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.007144340000000001,
+        "mean_tokens": 137456.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.006322765,
+        "mean_tokens": 108564.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.005647704999999999,
+        "mean_tokens": 101601.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-4468",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.002984725,
+        "mean_tokens": 36315.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0030930050000000002,
+        "mean_tokens": 40680.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.00264311,
+        "mean_tokens": 39349.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-4622",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00325793,
+        "mean_tokens": 40294.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00294901,
+        "mean_tokens": 40804.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0030537949999999998,
+        "mean_tokens": 40441.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-4638",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.004939135,
+        "mean_tokens": 78151.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.005822885,
+        "mean_tokens": 101369.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.004760285,
+        "mean_tokens": 82796.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "gin-4851",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0032185850000000004,
+        "mean_tokens": 43464.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0038693550000000005,
+        "mean_tokens": 56709.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0030365,
+        "mean_tokens": 32868.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-1448",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002456725,
+        "mean_tokens": 50724.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0029000099999999997,
+        "mean_tokens": 60213.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00392257,
+        "mean_tokens": 91511.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-1452",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005311435,
+        "mean_tokens": 157846.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00608564,
+        "mean_tokens": 172848.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00380532,
+        "mean_tokens": 89870.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-1521",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002047285,
+        "mean_tokens": 26811.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0018849000000000001,
+        "mean_tokens": 27914.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0014239399999999998,
+        "mean_tokens": 18476.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-1573",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005927534999999999,
+        "mean_tokens": 149499.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004303980000000001,
+        "mean_tokens": 95234.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004717865,
+        "mean_tokens": 97937.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-1612",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0026552800000000003,
+        "mean_tokens": 47722.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002149875,
+        "mean_tokens": 37357.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002163565,
+        "mean_tokens": 26170.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-1701",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0037854250000000002,
+        "mean_tokens": 67687.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007056525000000001,
+        "mean_tokens": 161482.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0035444150000000004,
+        "mean_tokens": 61508.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-2021",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.001896235,
+        "mean_tokens": 26275.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0030629350000000006,
+        "mean_tokens": 61771.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0033748750000000003,
+        "mean_tokens": 61066.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-2025",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003832525,
+        "mean_tokens": 71505.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00594784,
+        "mean_tokens": 119679.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005696605,
+        "mean_tokens": 104863.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-2027",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00258505,
+        "mean_tokens": 40817.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0021395299999999997,
+        "mean_tokens": 35034.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0012562650000000001,
+        "mean_tokens": 20095.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "jinja-2032",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0015436850000000002,
+        "mean_tokens": 23711.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0028056600000000006,
+        "mean_tokens": 74973.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0017772999999999999,
+        "mean_tokens": 27781.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5520",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.017457105,
+        "mean_tokens": 491864.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.017637530000000005,
+        "mean_tokens": 488065.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.014150190000000002,
+        "mean_tokens": 345462.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5682",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00458603,
+        "mean_tokens": 111832.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00421304,
+        "mean_tokens": 88287.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0036912050000000004,
+        "mean_tokens": 67402.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5684",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002044665,
+        "mean_tokens": 36371.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002072855,
+        "mean_tokens": 35330.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.001880145,
+        "mean_tokens": 27227.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5695",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009280654999999999,
+        "mean_tokens": 246228.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008357515000000001,
+        "mean_tokens": 212383.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007463399999999999,
+        "mean_tokens": 165104.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5715",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00219292,
+        "mean_tokens": 46244.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00278078,
+        "mean_tokens": 42780.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0023903,
+        "mean_tokens": 38717.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5728",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010783555,
+        "mean_tokens": 250708.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009856255000000001,
+        "mean_tokens": 245597.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009737140000000002,
+        "mean_tokens": 240123.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5831",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0021927400000000003,
+        "mean_tokens": 35331.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00233297,
+        "mean_tokens": 41744.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00254785,
+        "mean_tokens": 44845.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5845",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0030428100000000004,
+        "mean_tokens": 41072.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0040956099999999995,
+        "mean_tokens": 78305.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0026178,
+        "mean_tokens": 41724.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5865",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005271425000000001,
+        "mean_tokens": 103038.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00485412,
+        "mean_tokens": 83592.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004353060000000001,
+        "mean_tokens": 74549.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "undici-5981",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00886805,
+        "mean_tokens": 202420.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009047665,
+        "mean_tokens": 196953.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00794099,
+        "mean_tokens": 164471.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-1993",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.017655920000000002,
+        "mean_tokens": 416998.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0195013,
+        "mean_tokens": 568192.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.019096574999999998,
+        "mean_tokens": 428151.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2126",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.020503,
+        "mean_tokens": 566593.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.0278126,
+        "mean_tokens": 813932.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.03045094,
+        "mean_tokens": 901636.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2129",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004013445,
+        "mean_tokens": 68461.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0036677050000000003,
+        "mean_tokens": 65535.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003450965,
+        "mean_tokens": 58308.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2173",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.037361580000000005,
+        "mean_tokens": 1271570.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.11067081000000002,
+        "mean_tokens": 2123577.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.088764695,
+        "mean_tokens": 2120473.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2248",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.11656309000000001,
+        "mean_tokens": 3267057.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.141251515,
+        "mean_tokens": 2607915.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.01976791,
+        "mean_tokens": 602321.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2385",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003554855,
+        "mean_tokens": 60374.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00312721,
+        "mean_tokens": 48333.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0030755650000000006,
+        "mean_tokens": 43964.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2418",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0016439150000000001,
+        "mean_tokens": 35929.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0034133650000000007,
+        "mean_tokens": 59776.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00210032,
+        "mean_tokens": 38698.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2420",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.019578605000000002,
+        "mean_tokens": 622759.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.018018185000000003,
+        "mean_tokens": 464574.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.020396434999999997,
+        "mean_tokens": 562958.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2439",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008429730000000002,
+        "mean_tokens": 235689.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006704370000000001,
+        "mean_tokens": 192615.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00542137,
+        "mean_tokens": 110445.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "urfave-cli-2459",
+      "graf_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.01322212,
+        "mean_tokens": 280387.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.015969025,
+        "mean_tokens": 356407.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.018712150000000004,
+        "mean_tokens": 457065.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ],
+  "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself"
+}

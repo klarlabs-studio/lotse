@@ -2,6 +2,51 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t5: triage orientation screen (Haiku); beats Graphify, not search_only
+
+**Outcome: the candidate `graf_orient` fails the screen**, because the rule requires a win against both comparators (intersection-union).
+- **Against Graphify orientation:** `graf_orient` passes both tests. It is significantly cheaper (p 0.020, alpha 0.05) and its success is non-inferior.
+- **Against `search_only`:** it is not cheaper; on average it costs slightly more (p 0.61).
+
+This is a screen (`agent_trials.staging`, v82/v83), so it cannot support an agent-efficiency claim either way. Every task and arm summary is in [agent-decision-t5.json](../results/agent-decision-t5.json).
+
+### Conditions
+
+- **Tasks.** The 48 natural t4 tasks ([natural-tasks-t4.json](../benchmark/natural-tasks-t4.json)), 2 attempts per task and arm, 288 attempts in a seeded random order.
+- **Arms.**
+  - `graf_orient` (candidate): `graf triage --budget 1500 --text` on the issue, appended to the prompt, plus the `retrieve` and `outline` tools. Binary `.research/bin/graf-t5`, sha256 `c95b5766…`.
+  - `graphify_orient`: the pinned Graphify 0.9.95 query at 1,500 tokens, appended the same way, plus Graphify `retrieve`.
+  - `search_only`: no orientation and no `retrieve` tool.
+  - All arms also get read, search, edit, test and finish.
+- **Solver.** Claude Code 2.1.310 (pinned copy) with `claude-haiku-5-5` on the operator's subscription, as switched in v83 before any t5 attempt ran. 80-turn cap and 1,200 s timeout. Cost is Claude Code's list-price estimate (`costUSD`).
+- **Completeness.** All 288 planned attempts are complete, with full usage accounting, and every one ended with a result event; there were no turn-cap or timeout endings.
+  - One infrastructure abort was set aside and rerun: a broker search hung while the disk was full, visible only as heartbeats (v84).
+  - No tool call in a counted attempt timed out, despite heavy unrelated load on the host during part of the batch (v86).
+
+### Results
+
+| Arm | Passes / attempts | Success (Wilson 95%) | Total cost (list, USD) | Total tokens |
+| --- | ---: | --- | ---: | ---: |
+| `graf_orient` | 68 / 96 | 70.8% (61.1–79.0%) | 0.91 | 22.4M |
+| Graphify 0.9.95 orientation | 62 / 96 | 64.6% (54.6–73.4%) | 1.14 | 24.0M |
+| `search_only` | 64 / 96 | 66.7% (56.8–75.3%) | 0.83 | 18.3M |
+
+| `graf_orient` versus | Mean cost reduction per task | Cost p (one-sided sign flip) | Cheaper tasks | Success difference (margin 0.10) | Pass |
+| --- | ---: | ---: | ---: | --- | --- |
+| Graphify orientation | $0.00240 | **0.020** | 28 / 48 | +0.063, non-inferior (p < 0.0001) | **yes** |
+| `search_only` | −$0.00090 (costs more) | 0.61 | 18 / 48 | +0.042, non-inferior (p < 0.0001) | no |
+
+- **Against Graphify, no task got worse.**
+  - **Cost:** `graf_orient` was never more than 50% more expensive; the worst case was click-1884 at +48%.
+  - **Success:** it passed fewer attempts on no task and more on 5.
+- **Against `search_only`, results are mixed.**
+  - **Cost:** `graf_orient` cost more than 50% above `search_only` on 3 tasks; the worst was urfave-cli-2248, at about 5.9×. It cost up to 58% less on others; the best was urfave-cli-2173.
+  - **Success:** it passed fewer attempts on 3 tasks and more on 6.
+- **Tokens (secondary, descriptive):**
+  - Against Graphify: 16k fewer per task (p 0.26).
+  - Against `search_only`: 43k more (p 0.67).
+- **What this says:** triage's 1,500-token orientation is a cheaper and no-worse starting point than Graphify's, but an agent with search alone was still as cheap. Success under Haiku is about 65–71% in every arm, far below the DeepSeek t4d batch (96–98%) on the same tasks. The two screens differ in solver, arms and price basis, and are not compared with each other.
+
 ## Batch t4d: ast_graph screen (DeepSeek); no significant cost gain
 
 **Outcome: the candidate `ast_graph` fails the screen.** On average it was cheaper than both comparators, but neither difference was significant. Success non-inferiority passed against both. This is a screen (`agent_trials.staging`, preregistration v82/v83), so a pass could only have nominated `ast_graph` for the stronger-model confirmation. A failure ends that path for this candidate as tested. Every task and arm summary is in [agent-decision-t4d.json](../results/agent-decision-t4d.json).
