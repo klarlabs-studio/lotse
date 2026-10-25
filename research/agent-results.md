@@ -2,6 +2,28 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Post-hoc diagnostic: why t5's cost gain over Graphify did not repeat in t6
+
+Exploratory, not preregistered, and computed after both batches finished. It cannot support or reject any claim; it only guides the next design. Both batches ran the same 48 tasks, with 2 attempts per arm and Haiku. Infrastructure-aborted attempts are excluded.
+
+- **The graf arm did not get worse; the Graphify arm got cheaper.** Summed per-task mean cost was $0.456 for graf in t5 and $0.431 in t6. For Graphify orientation it was $0.572 and $0.470; for search_only, $0.413 and $0.372. The t6 − t5 difference on the same task has a standard deviation of about $0.012 in every arm, with means between −$0.0005 and −$0.0021, so the binary change is not detectable at this size. t5's p 0.020 rested partly on an expensive Graphify draw.
+- **Power.** The paired graf-vs-Graphify saving per task was $0.0024 (sd 0.011) in t5, $0.0008 (sd 0.011) in t6, and $0.0016 pooled. A one-sided 0.05 test at 80% power on the pooled effect would need about 300 tasks at 2 attempts. Against search_only the mean saving is negative in both batches.
+- **Orientation recall.** graf's "Likely files" list contained a fixed file for 62% of tasks (t5) and 69% (t6); 52% and 60% within the first five. Only 35% of its code excerpts came from a fixed file in either batch. Graphify's BFS dump named a fixed file's full path somewhere for 94%, but it lists many more files, so this is not a matched recall metric.
+- **Where cost diverges.** Grouping tasks by whether graf's list contained a fixed file (pooled, attempts per arm in parentheses):
+
+  | Group | Arm | Turns | Tokens | Pass rate |
+  |---|---|---|---|---|
+  | hit (126) | graf | 10.0 | 102k | 0.65 |
+  | hit (126) | Graphify | 10.4 | 112k | 0.65 |
+  | hit (126) | search_only | 11.2 | 98k | 0.66 |
+  | miss (66) | graf | 19.0 | 463k | 0.76 |
+  | miss (66) | Graphify | 19.3 | 481k | 0.70 |
+  | miss (66) | search_only | 18.3 | 358k | 0.67 |
+
+  On tasks graf orients well, all three arms cost about the same, so a good orientation leaves little to save. On the tasks it misses (the harder ones), graf takes as many turns as search_only but carries about 30% more tokens, more than the 1,500-token orientation alone explains, so its tool payloads likely add context on every turn. The grouping is confounded with task difficulty.
+
+Implications for a next candidate (to be preregistered on fresh tasks before any run): make the orientation cheaper rather than larger (for example a file list without excerpts), cut graf tool payloads on long runs, and improve file recall (the TypeScript screen's file_graph_ids ranking is the strongest retrieval-only result so far). A screen sized like t5/t6 cannot detect effects of this size; the next screen needs either many more tasks or a larger expected effect.
+
 ## Batch t6: current triage binary screen (Haiku); no significant difference
 
 **Outcome: the candidate `graf_current_orient` fails the screen.** It was not significantly cheaper than Graphify's orientation (p 0.48) or `search_only` (p 0.98; on average it cost more). Success was non-inferior against both. The current binary does not repeat t5's cost win over Graphify: the t5 binary (`graf-t5`) was significantly cheaper than Graphify, while the current one (`graf-t6`) is not. Every task and arm summary is in [agent-decision-t6.json](../results/agent-decision-t6.json).
