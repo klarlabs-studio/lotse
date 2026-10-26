@@ -58,7 +58,8 @@ def configure_solver(batch):
     settings = {"SOLVER_MODEL": batch.get("solver_model"),
                 "SOLVER_BUDGET_USD": batch.get("solver_budget_usd"),
                 "SOLVER_MAX_TURNS": batch.get("solver_max_turns"),
-                "SOLVER_PRICES": batch.get("solver_prices_per_million")}
+                "SOLVER_PRICES": batch.get("solver_prices_per_million"),
+                "SOLVER_VERIFIER_DEADLINE": batch.get("verifier_deadline")}
     for name, value in settings.items():
         if value is None:
             os.environ.pop(name, None)

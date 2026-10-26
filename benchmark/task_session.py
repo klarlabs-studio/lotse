@@ -50,6 +50,9 @@ GRAF_T6 = BASE / ".research/bin/graf-t6"
 GRAF_LATEST = BASE / ".research/bin/graf-a9c9e4d"
 
 
+VERIFY_SECONDS = 180  # agent_trials.verify's full limit; every verdict gets all of it.
+DEADLINE_RESERVE_SECONDS = 120  # Batch t8 (v94): left for the solver's last turn before the trial timeout.
+MIN_TEST_SECONDS = 30
 GRAF_SKIPPED_DIRS = {"target", "dist", "__pycache__"}  # graf's index skips these beyond the shared filter.
 
 
@@ -135,7 +138,7 @@ def graphify_pin():
 
 
 class Session:
-    def __init__(self, task, trial_id, arm, graphify_adapter=None):
+    def __init__(self, task, trial_id, arm, graphify_adapter=None, deadline=None):
         if arm not in ARMS:
             raise ValueError(f"arm must be one of {', '.join(ARMS)}")
         self.task, self.arm = task, arm
@@ -150,6 +153,8 @@ class Session:
         self.output = self.directory / "retrieval-output"
         self.dirty = True
         self.closed = False
+        self.deadline = deadline  # Epoch seconds of the trial timeout; None outside a timed solver run.
+        self.deferred = None  # "pending" once finish defers its verdict, "graded" once it ran.
         self.tool_count = 0
         self.build_seconds = 0.0
         self.infrastructure_failed = False
@@ -181,6 +186,7 @@ class Session:
             self.closed, self.tool_count = saved["closed"], saved["tool_count"]
             self.build_seconds = saved["build_seconds"]
             self.infrastructure_failed = saved.get("infrastructure_failed", False)
+            self.deferred = saved.get("deferred")
 
     def path(self, name):
         if not isinstance(name, str) or not name:
@@ -260,7 +266,13 @@ class Session:
         import os
         return {**os.environ, "PYTHONHASHSEED": "0"}
 
-    def verification(self):
+    def verifier_allowance(self):
+        """Seconds a verifier run may take without the trial timeout falling inside it."""
+        if self.deadline is None:
+            return VERIFY_SECONDS
+        return min(VERIFY_SECONDS, self.deadline - time.time() - DEADLINE_RESERVE_SECONDS)
+
+    def verification(self, timeout=VERIFY_SECONDS):
         # Prevent direct edits to visible verification fixtures from becoming a passing trial.
         for name, hashed in self.protected.items():
             protected = self.root / name
@@ -268,7 +280,7 @@ class Session:
                 return {"verification_passed": False, "reason": "Protected tests changed"}
         stream = io.StringIO()
         with contextlib.redirect_stdout(stream):
-            verify(self.task, self.root)
+            verify(self.task, self.root, timeout)
         result = json.loads(stream.getvalue())
         log = self.directory / f"verification-{self.tool_count}.json"
         log.write_text(json.dumps(result, indent=2) + "\n")
@@ -293,6 +305,11 @@ class Session:
         return result.stdout
 
     def operate(self, operation, args):
+        if operation == "verdict":  # The runner's call after the solver exits; not a solver tool.
+            if self.deferred != "pending":
+                raise ValueError("No deferred verdict is pending")
+            self.deferred = "graded"
+            return self.verification()
         if self.closed:
             raise ValueError("Trial is already finished")
         if operation == "retrieve":
@@ -377,8 +394,14 @@ class Session:
             self.dirty = True
             return {"path": relative, "source_hash": sha(path.read_text()), "edited": True}
         if operation in {"test", "finish"}:
+            allowance = self.verifier_allowance()
+            if operation == "test" and allowance < MIN_TEST_SECONDS:
+                raise ValueError("Too little trial time is left to run the tests; call finish")
+            if operation == "finish" and allowance < VERIFY_SECONDS:
+                self.closed, self.deferred = True, "pending"
+                return {"finished": True, "verification": "deferred: the trusted verifier runs after you exit"}
             try:
-                result = self.verification()
+                result = self.verification(allowance)
                 if operation == "finish":
                     result["finished"] = True
                 return result
@@ -388,7 +411,7 @@ class Session:
         raise ValueError("Unknown tool operation")
 
     def call(self, operation, args):
-        already_closed = self.closed
+        already_closed, was_pending = self.closed, self.deferred == "pending"
         self.tool_count += 1
         start = time.perf_counter()
         try:
@@ -405,14 +428,22 @@ class Session:
                  "provider_usage": "unmeasured; solver adapter must record all model calls"}
         with self.events.open("a") as stream:
             stream.write(json.dumps(event) + "\n")
-            if operation == "finish" and self.closed and not already_closed:  # Only the closing call grades.
+            graded = (operation == "finish" and self.closed and not already_closed and self.deferred is None
+                      or operation == "verdict" and was_pending)
+            if graded:  # Only the closing call grades, or the verdict a deferred finish left pending.
                 stream.write(json.dumps({"type": "verification",
                     "passed": response.get("result", {}).get("verification_passed") is True,
                     "source": "trusted verifier; not a solver claim"}) + "\n")
         (self.directory / "tool-state.json").write_text(json.dumps({
             "closed": self.closed, "tool_count": self.tool_count, "build_seconds": self.build_seconds,
-            "infrastructure_failed": self.infrastructure_failed}) + "\n")
+            "infrastructure_failed": self.infrastructure_failed, "deferred": self.deferred}) + "\n")
         return response
+
+
+def trial_deadline(directory):
+    """The trial timeout the runner recorded before starting the solver (batch t8 on), else None."""
+    path = directory / "deadline.json"
+    return json.loads(path.read_text())["epoch_seconds"] if path.is_file() else None
 
 
 def prepare_session(task, trial_id, arm, graphify_adapter=None):

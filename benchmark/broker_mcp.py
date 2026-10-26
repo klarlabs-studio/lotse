@@ -12,7 +12,7 @@ from pathlib import Path
 import sys
 
 from agent_trials import BASE, tasks
-from task_session import ARMS, Session, tool_definitions
+from task_session import ARMS, Session, tool_definitions, trial_deadline
 
 BUDGET = {"type": "integer", "minimum": 1, "maximum": 8000, "default": 2000}
 TOOLS = {
@@ -79,6 +79,7 @@ def main():
     args = parser.parse_args()
     task = next(t for t in tasks(args.catalog) if t["id"] == args.task)
     session = Session(task, args.trial_id, args.arm)
+    session.deadline = trial_deadline(session.directory)
     for line in sys.stdin:
         if not line.strip():
             continue

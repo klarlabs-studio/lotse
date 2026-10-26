@@ -58,7 +58,7 @@ def prepare(task, trial_id):
     print(dest)
 
 
-def verify(task, workspace):
+def verify(task, workspace, timeout=180):
     root = workspace.resolve()
     allowed = (BASE / ".research/trials").resolve()
     if not root.is_relative_to(allowed) or not root.is_dir():
@@ -76,7 +76,7 @@ def verify(task, workspace):
     try:
         for name, path in hidden.items():
             path.write_text((BASE / ".research/corpora" / task["repo"] / name).read_text())
-        run = subprocess.run(command, cwd=root, env=env, capture_output=True, text=True, timeout=180)
+        run = subprocess.run(command, cwd=root, env=env, capture_output=True, text=True, timeout=timeout)
     finally:
         for name, path in hidden.items():
             if agent_view[name] is None:

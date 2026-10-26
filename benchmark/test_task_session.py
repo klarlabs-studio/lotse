@@ -235,6 +235,42 @@ class TaskBrokerIntegrity(unittest.TestCase):
         events = [json.loads(s) for s in self.session.events.read_text().splitlines()]
         self.assertEqual(sum(e["type"] == "verification" for e in events), 1)
 
+    def test_verifier_runs_fit_inside_the_trial_deadline(self):
+        timeouts = []
+        real_verify = task_session.verify
+        def recording_verify(task, root, timeout):
+            timeouts.append(timeout)
+            return real_verify(task, root, timeout)
+        with patch.object(task_session, "verify", recording_verify):
+            self.session.deadline = task_session.time.time() + task_session.DEADLINE_RESERVE_SECONDS + 100
+            self.assertTrue(self.session.call("test", {})["ok"])
+            self.assertLessEqual(timeouts[-1], 100)
+            self.session.deadline = task_session.time.time() + task_session.DEADLINE_RESERVE_SECONDS + 10
+            refused = self.session.call("test", {})
+            self.assertFalse(refused["ok"])
+            self.assertIn("call finish", refused["error"])
+            self.assertEqual(len(timeouts), 1)
+
+    def test_a_finish_near_the_deadline_defers_one_full_verdict_to_the_runner(self):
+        self.session.deadline = task_session.time.time() + task_session.DEADLINE_RESERVE_SECONDS + 60
+        finished = self.session.call("finish", {})
+        self.assertTrue(finished["result"]["finished"])
+        self.assertNotIn("verification_passed", finished["result"])
+        events = lambda: [json.loads(s) for s in self.session.events.read_text().splitlines()]
+        self.assertEqual(sum(e["type"] == "verification" for e in events()), 0)
+        self.assertFalse(self.session.call("test", {})["ok"])  # The solver is done.
+        runner = task_session.Session(self.task, "fixture-trial", "graf")  # A new process, no deadline.
+        self.assertEqual(runner.deferred, "pending")
+        self.assertTrue(runner.call("verdict", {})["result"]["verification_passed"])
+        self.assertFalse(runner.call("verdict", {})["ok"])
+        self.assertEqual([e["passed"] for e in events() if e["type"] == "verification"], [True])
+
+    def test_without_a_deadline_the_verdict_operation_is_refused(self):
+        self.assertFalse(self.session.call("verdict", {})["ok"])
+        self.assertTrue(self.session.call("finish", {})["result"]["verification_passed"])
+        events = [json.loads(s) for s in self.session.events.read_text().splitlines()]
+        self.assertEqual(sum(e["type"] == "verification" for e in events), 1)
+
     def test_tool_only_trace_cannot_be_scored_as_agent_usage(self):
         self.assertTrue(self.session.call("finish", {})["result"]["verification_passed"])
         events = [json.loads(s) for s in self.session.events.read_text().splitlines()]

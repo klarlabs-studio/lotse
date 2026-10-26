@@ -183,6 +183,8 @@ def run(task, trial_id, arm, catalog):
                  "--catalog", str(catalog)]}}}, indent=2) + "\n")
     prompt = issue_prompt(task["issue"], orient(session))
     command = claude_command(prompt, mcp_config, solver_model(prereg["model"]), solver_budget(prereg["max_budget_usd"]), arm)
+    if os.environ.get("SOLVER_VERIFIER_DEADLINE") == "True":  # Batch t8 (v94): the broker fits verifier runs inside it.
+        (directory / "deadline.json").write_text(json.dumps({"epoch_seconds": time.time() + TIMEOUT_SECONDS}) + "\n")
     start = time.perf_counter()
     with (directory / "agent-stream.jsonl").open("w") as stream, \
          (directory / "agent-stderr.txt").open("w") as stderr:
@@ -199,7 +201,9 @@ def run(task, trial_id, arm, catalog):
 def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
     session = Session(task, trial_id, arm)
     agent_finished = session.closed
-    if not agent_finished:
+    if session.deferred == "pending":
+        session.call("verdict", {})  # A finish near the deadline left the full verifier run for now.
+    elif not agent_finished:
         session.call("finish", {})  # The verifier decides, whatever the agent did.
     return score(session.directory, {
         "task": task["id"], "trial": trial_id, "arm": arm, "command": command, "exit_code": exit_code,
