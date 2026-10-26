@@ -1,5 +1,5 @@
 {
-  "version": 90,
+  "version": 91,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -639,7 +639,9 @@
         "budget": "operator agreed on 2026-10-25: about 192 Haiku attempts on the subscription (48 tasks x 2 attempts x 2 arms); no search_only arm, because the operator's goal is the comparison with Graphify",
         "rationale": "post-hoc t5/t6 diagnostic (research/agent-results.md, exploratory): both 1,500-token orientations added cost over plain search on a per-task log scale (Graphify about 15%), and graf's code excerpts came from a fixed file in only 35% of tasks, while file_graph_ids lists already carried most of its recall. A file-list-only orientation tests whether graf's compact answer costs less than Graphify's full orientation without losing success",
         "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply, orientation failure: set aside and rerun at most twice)",
-        "schedule": "runs after the t7 catalog is frozen and its fail-to-pass checks pass; frozen before any t7 task was mined"
+        "schedule": "runs after the t7 catalog is frozen and its fail-to-pass checks pass; frozen before any t7 task was mined",
+        "planned_runs": "46 tasks x 2 attempts x 2 arms = 184, within the operator's agreed ~192",
+        "frozen_catalog_sha256": "8e1d37a7e17d94f595b1d841a9ff37e6d38ae631423e4b5c1e68ef22168781b1"
       }
     },
     "natural_tasks": {
@@ -777,7 +779,9 @@
       "contamination": "as for t3/t4: fixes may be in the solver's training data; affects both arms equally, reported",
       "runtime_v88": "2026-10-26, before any t7 pull request was listed: commander's suite runs on node --test (v87 wrongly named jest). ws pins mocha ^8.4.0, which cannot start under the installed Node 26 (its yargs is loaded as an ES module), so ws-full uses mocha 11.8.0, recorded in its package.json; no ws test file changes. black's version module, written by hatch-vcs at build time, is absent from the source snapshot, so the black virtualenv carries a one-line _black_version.py. Runtimes are smoke-tested on pristine snapshots: starlette, black, commander, ws, fiber and testify sample suites pass",
       "javascript_replacement_v89": "2026-10-26: commander (15 issue-closing pull requests before the pin) and ws (29) yielded no candidate meeting the automatic criteria, so neither contributes a task. They are replaced by eslint/eslint and iamkun/dayjs, pinned to their default-branch heads (main, dev) on 2026-10-26 and chosen before any of their pull requests' content was listed; the choice used only a count of issue-closing pull requests among each repository's latest 100 merged ones (eslint 34, dayjs 16; node-fetch was skipped as inactive since 2023, highlight.js because its tests run on a build). eslint runs mocha on the changed test files (tests/), dayjs jest on the changed test files (test/) under the host time zone; both are installed with --ignore-scripts into .research/task-runtime/<repo>-full, without a lockfile for eslint (none upstream), and smoke-tested on pristine snapshots. Fiber's fail-to-pass checks had already run on its judged candidates; no other repository's outcome was seen",
-      "black_verification_v90": "2026-10-26, before any black fail-to-pass check: black's fixes add formatter cases under tests/data/, which are fixtures read by tests/test_format.py, not test modules; passing them to pytest would import them as modules. black's verification runs pytest on the changed tests/test_*.py modules plus tests/test_format.py whenever a tests/data/ file changed. The data files remain hidden tests, installed only during grading"
+      "black_verification_v90": "2026-10-26, before any black fail-to-pass check: black's fixes add formatter cases under tests/data/, which are fixtures read by tests/test_format.py, not test modules; passing them to pytest would import them as modules. black's verification runs pytest on the changed tests/test_*.py modules plus tests/test_format.py whenever a tests/data/ file changed. The data files remain hidden tests, installed only during grading",
+      "frozen_catalog_sha256": "8e1d37a7e17d94f595b1d841a9ff37e6d38ae631423e4b5c1e68ef22168781b1",
+      "frozen_v91": "2026-10-26: 46 tasks (fiber 8, testify 6, starlette 8, black 8, eslint 8, dayjs 8); no solver has seen any. Bug judgments (results/natural-tasks-t7-judgments.json) were made from the issue title and body alone, first 14 automatic-criteria candidates per repository, before any fail-to-pass check; fail-to-pass records are in results/natural-tasks-t7-f2p.json. Rejections: testify-1419, -1581 and -794 failed after the fix was restored, from timing-sensitive tests (TestEventuallyTrue, TestNeverTrue) under host load average about 75 on 10 cores, -1536 failed on the pinned snapshot and -1281 passed with the fix reverted; black-3372 timed out (180 s) after restoring; starlette-2295 and dayjs-1569 (passes with the fix reverted) not needed or rejected. testify has only 13 automatic-criteria candidates, so it contributes 6. The fail-to-pass checker crashed on eslint-21267, whose fix adds a file, after eslint already had 8 tasks; the checker now handles added files (commit 2f5b97b). fiber-4527's check was interrupted by a session restart after fiber already had 8 tasks. Verifier wall time on the pinned snapshot: median 1-36 s per repository; maxima testify 146 s and black 86 s, so the 180 s verifier limit can bind under load and a correct fix may then fail in either arm; reported with the result"
     }
   },
   "report_every_case": true,
@@ -1186,6 +1190,11 @@
       "version": 90,
       "date": "2026-10-26",
       "reason": "No rule change. black's verification command runs the test modules that read changed tests/data/ fixtures; recorded before any black fail-to-pass check"
+    },
+    {
+      "version": 91,
+      "date": "2026-10-26",
+      "reason": "No rule change. t7 task catalog frozen (46 tasks, sha256 8e1d37a7...) before any solver run, with judgments, fail-to-pass records and rejection reasons"
     }
   ],
   "arms": {
