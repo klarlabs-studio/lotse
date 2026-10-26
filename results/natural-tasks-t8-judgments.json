@@ -1,0 +1,302 @@
+{
+ "judged_on": "2026-10-26",
+ "judged_from": "issue title and body only (first 900 characters shown), before any solver run or fail-to-pass check; first 14 automatic-criteria candidates per repository, newest merge first",
+ "judgments": {
+  "zap-1428": {
+   "bug": true,
+   "reason": "deadlock in BufferedWriteSyncer.Stop"
+  },
+  "zap-1415": {
+   "bug": false,
+   "reason": "feature request (onPanic hook)"
+  },
+  "zap-1377": {
+   "bug": false,
+   "reason": "feature request (WithLazy for SugaredLogger)"
+  },
+  "zap-1144": {
+   "bug": false,
+   "reason": "feature request (get level)"
+  },
+  "zap-1072": {
+   "bug": false,
+   "reason": "feature request (WithOptions)"
+  },
+  "zap-1034": {
+   "bug": false,
+   "reason": "feature request (custom encoder)"
+  },
+  "zap-995": {
+   "bug": true,
+   "reason": "complex numbers encoded with +- sign"
+  },
+  "zap-929": {
+   "bug": false,
+   "reason": "usage question"
+  },
+  "zap-896": {
+   "bug": true,
+   "reason": "sugared logger panics on odd key-value pairs (crash report)"
+  },
+  "zap-810": {
+   "bug": true,
+   "reason": "increased level reset after With"
+  },
+  "zap-737": {
+   "bug": true,
+   "reason": "zero time.Time logged as wrong date"
+  },
+  "zap-798": {
+   "bug": true,
+   "reason": "zap.Times in development encoder emits invalid JSON"
+  },
+  "validator-1543": {
+   "bug": false,
+   "reason": "feature request (dns label tag)"
+  },
+  "validator-1647": {
+   "bug": true,
+   "reason": "CR postcode regex not anchored, accepts junk"
+  },
+  "validator-1641": {
+   "bug": true,
+   "reason": "valid Taiwan 6-digit postcodes rejected"
+  },
+  "validator-1632": {
+   "bug": false,
+   "reason": "feature request (port on int)"
+  },
+  "validator-1249": {
+   "bug": true,
+   "reason": "wrong English message text for max on slices"
+  },
+  "validator-1602": {
+   "bug": true,
+   "reason": "fqdn accepts names over the DNS length limit"
+  },
+  "validator-1223": {
+   "bug": false,
+   "reason": "feature request (URN validator)"
+  },
+  "validator-1167": {
+   "bug": false,
+   "reason": "missing translation, a feature request and usage question"
+  },
+  "validator-1576": {
+   "bug": true,
+   "reason": "cron regex unanchored, accepts arbitrary strings"
+  },
+  "validator-893": {
+   "bug": true,
+   "reason": "required_if panics with ValidateMap"
+  },
+  "validator-766": {
+   "bug": true,
+   "reason": "or'ed alias panics with undefined validation function"
+  },
+  "validator-1480": {
+   "bug": false,
+   "reason": "missing translation (treated as feature, as validator-1167)"
+  },
+  "validator-1306": {
+   "bug": true,
+   "reason": "required_unless and excluded_unless parse the same syntax differently"
+  },
+  "validator-1502": {
+   "bug": false,
+   "reason": "data update (currency list)"
+  },
+  "logrus-763": {
+   "bug": false,
+   "reason": "question about expected TTY-dependent formatting"
+  },
+  "logrus-1020": {
+   "bug": false,
+   "reason": "feature request (custom caller)"
+  },
+  "logrus-1272": {
+   "bug": true,
+   "reason": "concurrent map write crash when hooks change"
+  },
+  "mux-739": {
+   "bug": true,
+   "reason": "MethodNotAllowedHandler ignored in subrouter (regression)"
+  },
+  "mux-534": {
+   "bug": true,
+   "reason": "CORSMethodMiddleware adds methods of other routes"
+  },
+  "requests-7432": {
+   "bug": true,
+   "reason": "stream detection regression breaks rewind on redirect"
+  },
+  "requests-4795": {
+   "bug": true,
+   "reason": "no_proxy matches unrelated domains by suffix"
+  },
+  "tqdm-1658": {
+   "bug": true,
+   "reason": "disp_trim not applied to every format_meter return"
+  },
+  "uvicorn-3202": {
+   "bug": true,
+   "reason": "rejected websocket handshake gets no response and is never closed"
+  },
+  "uvicorn-3149": {
+   "bug": true,
+   "reason": "--workers loses TCP_NODELAY"
+  },
+  "uvicorn-3040": {
+   "bug": true,
+   "reason": "duplicate Content-Type/Content-Length in websocket denial response"
+  },
+  "uvicorn-1285": {
+   "bug": true,
+   "reason": "duplicate logs with logging.basicConfig"
+  },
+  "handlebars-1838": {
+   "bug": true,
+   "reason": "noEscape adds numbers instead of concatenating"
+  },
+  "handlebars-2164": {
+   "bug": true,
+   "reason": "strict mode throws on string .length"
+  },
+  "winston-2577": {
+   "bug": true,
+   "reason": "child logger drops the info object's prototype"
+  },
+  "winston-1504": {
+   "bug": true,
+   "reason": "File transport not flushed on end"
+  },
+  "winston-2446": {
+   "bug": true,
+   "reason": "Error.cause logged as empty object"
+  },
+  "winston-2091": {
+   "bug": false,
+   "reason": "hardening request (constructor guardrails), no wrong behavior shown"
+  },
+  "winston-1902": {
+   "bug": false,
+   "reason": "feature request (extendable Logger)"
+  },
+  "pug-3295": {
+   "bug": true,
+   "reason": "tag interpolation drops lexer plugins"
+  },
+  "pytest-15254": {
+   "bug": true,
+   "reason": "mktemp lists basetemp on every call, quadratic slowdown"
+  },
+  "pytest-15172": {
+   "bug": false,
+   "reason": "enhancement: support a new Python 3.15 type in diffs"
+  },
+  "pytest-7323": {
+   "bug": false,
+   "reason": "deprecation request"
+  },
+  "pytest-11783": {
+   "bug": true,
+   "reason": "spurious rewrite warning for editable-installed plugins"
+  },
+  "pytest-15132": {
+   "bug": true,
+   "reason": "numeric TOML faulthandler_timeout rejected"
+  },
+  "pytest-12223": {
+   "bug": true,
+   "reason": "junit-xml attribute too large with -vv"
+  },
+  "pytest-12175": {
+   "bug": true,
+   "reason": "exconly(tryshort) does not strip AssertionError for for_later"
+  },
+  "pytest-6750": {
+   "bug": true,
+   "reason": "getfuncargnames drops self twice"
+  },
+  "pytest-14912": {
+   "bug": true,
+   "reason": "shared warning instances accumulate tracebacks"
+  },
+  "pytest-9924": {
+   "bug": true,
+   "reason": "NUMBER doctest option leaks across docstrings"
+  },
+  "pytest-15043": {
+   "bug": true,
+   "reason": "cache.set raises on write errors instead of warning"
+  },
+  "pytest-15052": {
+   "bug": true,
+   "reason": "--fixtures-per-test line number off by one"
+  },
+  "pytest-14619": {
+   "bug": true,
+   "reason": "spurious comma in parametrize crashes (regression)"
+  },
+  "pytest-15005": {
+   "bug": true,
+   "reason": "approx false for in-tolerance large Decimals"
+  },
+  "prettier-14509": {
+   "bug": true,
+   "reason": "range in a type parameter list not extended to the type definition"
+  },
+  "prettier-16147": {
+   "bug": false,
+   "reason": "feature request (ignore CDATA option)"
+  },
+  "prettier-20175": {
+   "bug": true,
+   "reason": "comment between export and decorator adds a blank line on every format"
+  },
+  "prettier-5183": {
+   "bug": true,
+   "reason": "extra indent for ?? with arrays"
+  },
+  "prettier-14694": {
+   "bug": true,
+   "reason": "unwanted space after $ in less"
+  },
+  "prettier-20163": {
+   "bug": true,
+   "reason": "range formatting a for-of head inserts ; and breaks code"
+  },
+  "prettier-20172": {
+   "bug": true,
+   "reason": "prettier-ignore drops ASI-protecting ; (regression)"
+  },
+  "prettier-16184": {
+   "bug": true,
+   "reason": "strict whitespace injects >"
+  },
+  "prettier-11565": {
+   "bug": true,
+   "reason": "JSX output not idempotent"
+  },
+  "prettier-17738": {
+   "bug": true,
+   "reason": "details content in a markdown list misformatted (regression)"
+  },
+  "prettier-18939": {
+   "bug": true,
+   "reason": "bracket spacing adds a wrong space in Angular pipes"
+  },
+  "prettier-11981": {
+   "bug": true,
+   "reason": "bad inline tag formatting in Angular templates"
+  },
+  "prettier-20113": {
+   "bug": true,
+   "reason": "config files with a UTF-8 BOM rejected"
+  },
+  "prettier-18523": {
+   "bug": true,
+   "reason": "comment moved after a method call for short objects"
+  }
+ }
+}

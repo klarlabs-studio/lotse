@@ -9,6 +9,7 @@ import contextlib
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -109,11 +110,21 @@ def sha(text):
 
 
 def bounded(text, budget):
-    """Keep complete lines. The diagnostic count is not provider usage."""
+    """Keep complete lines. The diagnostic count is not provider usage.
+
+    From batch t8 (v101, SOLVER_BOUNDED_PREFIX), a first line that alone exceeds the budget keeps its
+    longest fitting prefix, so one long header cannot empty the payload.
+    """
     result = ""
     for line in text.splitlines(keepends=True):
         candidate = result + line
         if len(tokens(candidate)) > budget:
+            if not result and os.environ.get("SOLVER_BOUNDED_PREFIX") == "True":
+                low, high = 0, len(line)
+                while low < high:
+                    middle = (low + high + 1) // 2
+                    low, high = (middle, high) if len(tokens(line[:middle])) <= budget else (low, middle - 1)
+                result = line[:low]
             break
         result = candidate
     return result

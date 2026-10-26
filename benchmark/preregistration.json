@@ -1,5 +1,5 @@
 {
-  "version": 100,
+  "version": 101,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -666,9 +666,9 @@
         },
         "budget_parity": "both orientations share the same requested budget and hard cap (1,500 cl100k); each backend returns its own output within it, as in every earlier screen. A Graphify orientation requested at a smaller budget is not tested and is reported as a limitation",
         "graf_binary": ".research/bin/graf-a9c9e4d, built from commit a9c9e4d (the latest commit touching src/Cargo; no Rust change since), sha256 9d54581bd4eddf338b06\u2026, the TypeScript screen's pin; hashed per run",
-        "solver_version": "2.1.310 (Claude Code)",
-        "solver_binary": ".research/bin/claude-2.1.310",
-        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "solver_version": "2.1.311 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.311",
+        "solver_sha256": "85d8c08707fcfd1e78ffa0204eefbc6ec9e4fe22f375fb2767ef85d957ed3161",
         "model": "claude-haiku-5-5",
         "graphify_commit": "dac063456bc1f5d92354ec3936fd9dd1513a83f3",
         "graphify_virtualenv": ".research/venv-graphify-0.9.96",
@@ -688,11 +688,14 @@
         "rationale": "t7 failed under v93's least-favorable accounting: graf_lean_orient was not cheaper (mean -$0.00089 per task, p 0.50) while using 32% fewer tokens with non-inferior success. One bounded solver timeout counted at the $0.50 cap decided it; with bounded attempts at their lower bounds the exploratory p was 0.003 and on fully measured attempts graf cost about 23% less (post hoc, not a pass). t8 tests the same candidate again on fresh tasks with the deadline rule, so that no attempt's cost need be bounded",
         "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply under v93, orientation failure: set aside and rerun at most twice); index parity as v92",
         "schedule": "runs after the t8 catalog is frozen and its fail-to-pass checks pass; frozen before any t8 candidate pull request was listed",
-        "planned_runs": "at most 48 tasks x 2 attempts x 2 arms = 192, within the operator's agreed ~200",
+        "planned_runs": "36 tasks x 2 attempts x 2 arms = 144, within the operator's agreed ~200",
         "verifier_deadline": true,
         "deadline_rule": "new in t8 (benchmark commit 5f0c72b): the runner records the 1,200 s trial deadline before the solver starts; the broker caps every test run at the time left minus a 120 s reserve for the solver's last turn and refuses it with under 30 s left ('call finish'); a finish that cannot get the verifier's full 180 s closes the attempt at once and the runner grades it with the full 180 s verifier after the solver exits. Every verdict therefore still gets the full verifier, and a solver whose edits hang the tests is no longer killed mid-call without its usage report. The same rule applies to both arms",
         "solver_timeout": "the v93 rule stays in force as a fallback for any timeout the deadline rule cannot prevent (for example a slow final model turn): such an attempt is scored by the verifier and its cost is bounded and counted least favorably to the candidate",
-        "comparator_version_change": "the comparator is Graphify 0.9.96, not t7's 0.9.95, because the latest-versions policy requires the newest release at freeze time; t7 keeps 0.9.95. The orientation protocol (1,500-token request and hard cap, code-only) is unchanged"
+        "comparator_version_change": "the comparator is Graphify 0.9.96, not t7's 0.9.95, because the latest-versions policy requires the newest release at freeze time; t7 keeps 0.9.95. The orientation protocol (1,500-token request and hard cap, code-only) is unchanged",
+        "solver_update_v101": "2026-10-26, before any t8 trial: check_latest showed Claude Code 2.1.311 (released after v94 froze 2.1.310); under the latest-version rule t8 runs 2.1.311 from its own pinned copy (.research/bin/claude-2.1.311). Earlier batches keep 2.1.310. The cost reconstruction's price table (v93) comes from 2.1.310's built-in catalog; 2.1.311's catalog carries the identical haiku_55 entry (0.1/0.5/0.125/0.2/0.01; above 1e5 prompt tokens 0.5/2.5/0.625/1/0.05), checked before any t8 trial, so the v93 table applies unchanged",
+        "bounded_prefix": true,
+        "bounded_prefix_rule_v101": "2026-10-26, from the no-model orientation dry run, before any t8 trial: every tool payload is cut to its budget by complete lines, so a first line that alone exceeds the budget empties it. Graphify 0.9.96's orientation for pytest-15254 starts with a 7,078-character traversal header and was delivered empty (native 6,473 tokens). From t8, such a first line keeps its longest prefix within the budget (task_session.bounded, SOLVER_BOUNDED_PREFIX), for both arms and every bounded payload; the budget and tokenizer are unchanged. It can only add comparator context. Earlier batches are unaffected: no t7 orientation was empty, and the only earlier truncated-to-empty bounded payloads were two exploratory codex orientations, which stay reproducible because the rule is off without the batch setting"
       }
     },
     "natural_tasks": {
@@ -946,7 +949,11 @@
         "runners": "handlebars: vitest run --project node on changed spec/*.js (its node project imports lib/ directly; no build); winston and pug: jest on changed test files; prettier: jest --ci on the runner (format.test.js) of each directory with changed fixtures or snapshots, so a missing or changed snapshot fails rather than being written"
       },
       "runtime_v99": "2026-10-26, after the first fail-to-pass check (no solver run) and before any re-check: v98 wrongly said pytest runs without src/_pytest/_version.py and reports version 'unknown'; _pytest/assertion/rewrite.py and terminal.py import it unconditionally, so all 12 pytest candidates failed on the unmodified base with ModuleNotFoundError. The pytest virtualenv now provides the module the setuptools-scm build writes (version 9.2.0.dev422+g41d12cdbb, from git describe at the pin), through a .pth file in its site-packages, as t7 did for black's _black_version.py; nothing in the workspace changes. Only the 12 pytest candidates are re-checked, under the unchanged fail-to-pass rule; every other first-check verdict stands (rejections for an expired certificate fixture, a port in use, a conftest-only test change, a cross-package pug import and a prettier timeout are kept, not retried)",
-      "runtime_v100": "2026-10-26, after the v99 re-check (no solver run): v99's module was placed in sys.modules but not bound as an attribute of the _pytest package, so terminal.py's `_pytest._version.version` raised AttributeError and all 12 pytest candidates again failed on the unmodified base. The .pth file now installs a meta path finder (appended last, so a real file would win) that serves the same module through the import system, which binds it like the generated file. The 12 pytest candidates are re-checked once more under the unchanged fail-to-pass rule; if any base still fails, that candidate is rejected and the runtime is not changed again"
+      "runtime_v100": "2026-10-26, after the v99 re-check (no solver run): v99's module was placed in sys.modules but not bound as an attribute of the _pytest package, so terminal.py's `_pytest._version.version` raised AttributeError and all 12 pytest candidates again failed on the unmodified base. The .pth file now installs a meta path finder (appended last, so a real file would win) that serves the same module through the import system, which binds it like the generated file. The 12 pytest candidates are re-checked once more under the unchanged fail-to-pass rule; if any base still fails, that candidate is rejected and the runtime is not changed again",
+      "frozen_catalog_sha256": "9a4f0b3553f7ab269306e30d705c24eda4f3068851daec6b6db12e95ca16fd9c",
+      "frozen_v101": "2026-10-26: 36 tasks (Go: zap 5, validator 7, mux 2; Python: requests 1, tqdm 1, uvicorn 2, pytest 8; JavaScript: handlebars 2, prettier 8); no solver has seen any. Bug judgments (results/natural-tasks-t8-judgments.json) from the issue title and body alone, first 14 automatic-criteria candidates per repository, before any fail-to-pass check: 55 bugs after dropping tqdm's older duplicate pull request for the same issue. Fail-to-pass (results/natural-tasks-t8-f2p.json): 44 of 55 pass (pytest's after the v100 runtime). Rejected: zap 1, validator 1, logrus 1, requests 1 (expired certificate fixture), uvicorn 2 (port in use; conftest-only change), winston 3, pug 1 (cross-package import), prettier 1 (timeout). Filled by the v95 rule: newest merge first, at most 8 per repository and 16 per language; Python and JavaScript fall short of 16. 36 tasks x 2 attempts x 2 arms = 144 runs",
+      "minimum_tasks": 36,
+      "minimum_tasks_note": "v101: the field was missing from v94-v100; the batch runner requires one. Set to natural_tasks_t7's 36 under 'the natural_tasks_t7 protocol unchanged', recorded at the freeze, when the yield (36) was already known; disclosed in the write-up. No task set was loosened to reach it"
     }
   },
   "report_every_case": true,
@@ -1405,6 +1412,11 @@
       "version": 100,
       "date": "2026-10-26",
       "reason": "No rule change. Fix v99's pytest version module binding; re-check pytest's candidates a final time"
+    },
+    {
+      "version": 101,
+      "date": "2026-10-26",
+      "reason": "Freeze the batch t8 catalog: 36 natural tasks, 144 planned runs"
     }
   ],
   "arms": {

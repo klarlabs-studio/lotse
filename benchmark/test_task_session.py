@@ -281,5 +281,24 @@ class TaskBrokerIntegrity(unittest.TestCase):
         self.assertFalse(self.session.call("read", {"path": "app.py"})["ok"])
 
 
+class BoundedText(unittest.TestCase):
+    def test_keeps_complete_lines_within_the_budget(self):
+        text = "alpha beta\ngamma delta\nepsilon zeta\n"
+        kept = task_session.bounded(text, len(task_session.tokens("alpha beta\ngamma delta\n")))
+        self.assertEqual(kept, "alpha beta\ngamma delta\n")
+
+    def test_a_first_line_over_the_budget_keeps_its_longest_fitting_prefix(self):
+        line = " ".join(f"word{i}" for i in range(400))
+        with patch.dict(task_session.os.environ, {"SOLVER_BOUNDED_PREFIX": "True"}):
+            kept = task_session.bounded(line + "\nsecond line\n", 50)
+        self.assertTrue(kept and line.startswith(kept))
+        self.assertLessEqual(len(task_session.tokens(kept)), 50)
+        self.assertGreater(len(task_session.tokens(line[:len(kept) + 8])), 50)
+
+    def test_earlier_batches_keep_complete_lines_only(self):
+        with patch.dict(task_session.os.environ, {}, clear=True):
+            self.assertEqual(task_session.bounded("x " * 400 + "\n", 50), "")
+
+
 if __name__ == "__main__":
     unittest.main()
