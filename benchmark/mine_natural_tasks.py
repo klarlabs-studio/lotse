@@ -199,6 +199,17 @@ def verify_command(repo, tests):
         return ["node_modules/.bin/mocha", *sorted(t for t in tests if t.endswith(".js"))]
     if repo in ("dayjs", "winston", "pug"):
         return ["node_modules/.bin/jest", *sorted(t for t in tests if t.endswith(".js"))]
+    if repo == "prettier":  # Fixtures and snapshots run through their directory's runner; --ci never writes snapshots.
+        runners = set()
+        for test in tests:
+            folder = Path(test).parent
+            if folder.name == "__snapshots__":
+                runners.add(str(folder.parent / Path(test).name.removesuffix(".snap")))
+            elif test.endswith(".test.js"):
+                runners.add(test)
+            elif test.startswith("tests/format/"):
+                runners.add(str(folder / "format.test.js"))
+        return ["node_modules/.bin/jest", "--ci", *sorted(runners)]
     if repo == "handlebars":  # Its node project runs spec/*.js against lib/ directly, without a build.
         return ["node_modules/.bin/vitest", "run", "--project", "node",
                 *sorted(t for t in tests if t.startswith("spec/") and t.endswith(".js"))]

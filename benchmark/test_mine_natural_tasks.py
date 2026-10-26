@@ -80,6 +80,10 @@ class MinerTests(unittest.TestCase):
                          ["node_modules/.bin/vitest", "run", "--project", "node", "spec/helpers.js"])
         self.assertEqual(verify_command("winston", ["test/a.test.js"]), ["node_modules/.bin/jest", "test/a.test.js"])
         self.assertEqual(verify_command("tqdm", ["tests/tests_tqdm.py"])[-1], "tests/tests_tqdm.py")
+        self.assertEqual(verify_command("prettier", ["tests/format/ts/range/__snapshots__/format.test.js.snap",
+                                                     "tests/format/ts/range/a.ts", "tests/format/js/x/b.js"]),
+                         ["node_modules/.bin/jest", "--ci", "tests/format/js/x/format.test.js",
+                          "tests/format/ts/range/format.test.js"])
 
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")
