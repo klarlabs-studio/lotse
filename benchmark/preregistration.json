@@ -1,5 +1,5 @@
 {
-  "version": 99,
+  "version": 100,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -945,7 +945,8 @@
         "javascript": "node v26.10.0; node_modules from the pinned package.json with --ignore-scripts: winston via npm ci on its lockfile, handlebars and prettier via npm install (pnpm and yarn lockfiles unused; prettier with --legacy-peer-deps), pug installed in a full copy of its workspace monorepo so workspace packages resolve to that copy (a fix whose test reaches another package through node_modules would not see the edit; the fail-to-pass check rejects such a task)",
         "runners": "handlebars: vitest run --project node on changed spec/*.js (its node project imports lib/ directly; no build); winston and pug: jest on changed test files; prettier: jest --ci on the runner (format.test.js) of each directory with changed fixtures or snapshots, so a missing or changed snapshot fails rather than being written"
       },
-      "runtime_v99": "2026-10-26, after the first fail-to-pass check (no solver run) and before any re-check: v98 wrongly said pytest runs without src/_pytest/_version.py and reports version 'unknown'; _pytest/assertion/rewrite.py and terminal.py import it unconditionally, so all 12 pytest candidates failed on the unmodified base with ModuleNotFoundError. The pytest virtualenv now provides the module the setuptools-scm build writes (version 9.2.0.dev422+g41d12cdbb, from git describe at the pin), through a .pth file in its site-packages, as t7 did for black's _black_version.py; nothing in the workspace changes. Only the 12 pytest candidates are re-checked, under the unchanged fail-to-pass rule; every other first-check verdict stands (rejections for an expired certificate fixture, a port in use, a conftest-only test change, a cross-package pug import and a prettier timeout are kept, not retried)"
+      "runtime_v99": "2026-10-26, after the first fail-to-pass check (no solver run) and before any re-check: v98 wrongly said pytest runs without src/_pytest/_version.py and reports version 'unknown'; _pytest/assertion/rewrite.py and terminal.py import it unconditionally, so all 12 pytest candidates failed on the unmodified base with ModuleNotFoundError. The pytest virtualenv now provides the module the setuptools-scm build writes (version 9.2.0.dev422+g41d12cdbb, from git describe at the pin), through a .pth file in its site-packages, as t7 did for black's _black_version.py; nothing in the workspace changes. Only the 12 pytest candidates are re-checked, under the unchanged fail-to-pass rule; every other first-check verdict stands (rejections for an expired certificate fixture, a port in use, a conftest-only test change, a cross-package pug import and a prettier timeout are kept, not retried)",
+      "runtime_v100": "2026-10-26, after the v99 re-check (no solver run): v99's module was placed in sys.modules but not bound as an attribute of the _pytest package, so terminal.py's `_pytest._version.version` raised AttributeError and all 12 pytest candidates again failed on the unmodified base. The .pth file now installs a meta path finder (appended last, so a real file would win) that serves the same module through the import system, which binds it like the generated file. The 12 pytest candidates are re-checked once more under the unchanged fail-to-pass rule; if any base still fails, that candidate is rejected and the runtime is not changed again"
     }
   },
   "report_every_case": true,
@@ -1399,6 +1400,11 @@
       "version": 99,
       "date": "2026-10-26",
       "reason": "No rule change. Correct v98's pytest runtime (missing generated _version.py) and re-check only pytest's candidates"
+    },
+    {
+      "version": 100,
+      "date": "2026-10-26",
+      "reason": "No rule change. Fix v99's pytest version module binding; re-check pytest's candidates a final time"
     }
   ],
   "arms": {
