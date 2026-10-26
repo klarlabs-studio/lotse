@@ -2,6 +2,71 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t7: lean file-list orientation versus Graphify (Haiku, fresh tasks); fails on cost
+
+**Outcome: the candidate `graf_lean_orient` fails the preregistered rule.** Under the v93 accounting it was not significantly cheaper than Graphify's orientation (mean −$0.00089 per task, p 0.50). Success was non-inferior: 65/92 against 63/92, p < 0.001. It used 32% fewer tokens (secondary, p < 0.001), but cache reads make up most of that saving, and at Haiku 5.5's cache-read price ($0.01 per million) they cost almost nothing. The failure turns on one bounded attempt (see "Sensitivity" below), so this is a close fail, not evidence of no effect. It does not establish agent savings against Graphify. Every task and arm summary is in [agent-decision-t7.json](../results/agent-decision-t7.json).
+
+### Conditions
+
+- **Tasks.** 46 fresh natural tasks mined after the design was frozen (v87–v91), none of them used in any earlier batch: fiber 8, testify 6, starlette 8, black 8, eslint 8 and dayjs 8. Selection followed the t4 protocol: issue-only bug judgment, then a fail-to-pass check (base passes, fault fails without timing out, restored passes). Rejections are disclosed in the preregistration. Catalog sha256 `8e1d37a7…`.
+- **Design.** 2 attempts per task and arm, 184 attempts in a seeded random order (seed 20261026). The solver was Claude Code 2.1.310 (pinned copy) running `claude-haiku-5-5` on the subscription, with an 80-turn cap, a $0.50 cap per attempt, a 1,200 s trial timeout and list-price cost.
+- **Arms.**
+  - `graf_lean_orient` gives only the file list from `graf triage --budget 1500` (binary `graf-a9c9e4d`, sha256 `9d54581b…`) as "Likely files", with no code excerpts. That is 34–83 tokens in a dry run.
+  - `graphify_orient` is unchanged: Graphify 0.9.95 orientation capped at 1,500 tokens.
+  - Graphify is the only comparator, by the operator's choice for this batch.
+- **Completeness.** All 184 attempts are complete.
+  - **Rule change, v93.** The batch stopped after 108 runs because three runs of `starlette-1102-graphify_orient-1` were classed as infrastructure aborts. The agent's edits had made starlette's streaming tests hang, so each broker test call ran to the verifier's 180 s limit, and the trial timeout fell during one of them. The broker answered every call, so these were the solver's own timeouts.
+  - **What v93 does.** It scores such timeouts by the verifier, the same way for both arms. It was recorded before the remaining 76 runs, but it is a rule change after data had been seen. While diagnosing, it was seen that those Graphify attempts failed.
+  - **Which runs count.** The first run of each attempt is the trial of record. The later reruns are kept in `.research/trials-aside`.
+  - **Bounded cost.** These timeouts end without Claude Code's usage report, so their cost is only bounded: between the exactly streamed input and cache cost and the $0.50 cap. The decision counts Graphify's at the lower bound and graf's at the upper bound. Three attempts are bounded this way, all on starlette-1102: both Graphify attempts and graf's attempt 2.
+- **Host.** Tool-call timeouts occurred in 4 attempts. Load was unusually high for part of the run (load average ~70, from another project's job).
+
+### Results
+
+| Arm | Passes / attempts | Success (Wilson 95%) | Total cost (list, USD) | Total tokens |
+| --- | ---: | --- | ---: | ---: |
+| `graf_lean_orient` | 65 / 92 | 70.7% (60.7–79.0%) | 1.271 | 18.6M |
+| Graphify 0.9.95 orientation | 63 / 92 | 68.5% (58.4–77.1%) | 1.189 | 27.3M |
+
+Total cost counts the bounded timeouts as the decision does: graf's at $0.50, and Graphify's at $0.127 and $0.058.
+
+| `graf_lean_orient` versus | Mean cost reduction per task | Cost p (one-sided sign flip) | Cheaper tasks | Success difference (margin 0.10) | Pass |
+| --- | ---: | ---: | ---: | --- | --- |
+| Graphify orientation | −$0.00089 (costs more) | 0.50 | 29 / 46 | +0.022, non-inferior (p < 0.001) | no |
+
+- **Per task.**
+  - **Cost:** `graf_lean_orient` was at least a third cheaper than Graphify on 9 tasks, with eslint-21421 the cheapest at 0.27×. It was more than 1.5× dearer only on starlette-1102 (2.7×, the bounded attempt), and at most 1.36× dearer on all other tasks.
+  - **Success:** it passed fewer attempts on 3 tasks and more on 6.
+- **Per repository.** Summed cost was lower for graf in every repository except starlette. The largest difference was eslint, at $0.179 against $0.311. Starlette was $0.565 against $0.249, and that gap comes almost entirely from starlette-1102.
+- **Where the token saving goes.** Across complete runs, the two arms used:
+
+  | Token type | graf | Graphify | Price (USD per million) |
+  |---|---|---|---|
+  | Cache reads | 14.4M | 21.2M | 0.01 |
+  | Cache writes | 1.9M | 2.2M | 0.20 |
+  | Output | 0.49M | 0.57M | 0.50 |
+
+  So most of the token reduction is in the cheapest kind of token.
+
+### Sensitivity (exploratory, not preregistered)
+
+These checks were computed after the decision, and they cannot turn the fail into a pass.
+
+- With every bounded timeout at its lower bound, graf's mean saving is +$0.0033 per task (p 0.003).
+- Without starlette-1102, it is +$0.0027 (p 0.006).
+
+Graf's starlette-1102 attempt 2 cost between $0.115 and $0.50, and the preregistered rule counts it at $0.50. Its true cost is unknown, because thinking tokens are not in the stream. The result is therefore fragile in both directions: the candidate failed because of how one timeout is costed, and a repeat on fresh tasks would be needed before any claim.
+
+### What this means for the goal against Graphify
+
+- A file list without excerpts is the first graf orientation to show a large, consistent token reduction against Graphify at non-inferior success.
+- On Haiku 5.5 the dollar saving is small, because the saving falls on cheap cache reads. Here the saving is also not significant under the conservative accounting.
+- A next step that would test the claim properly:
+  - repeat this arm on fresh tasks with a trial timeout that cannot fall inside a verifier call (or a verifier limit shorter than the remaining trial time);
+  - or use a model whose cache reads are priced closer to input, where the token reduction would matter more in dollars.
+
+  Either needs a new budget agreement.
+
 ## Post-hoc diagnostic: why t5's cost gain over Graphify did not repeat in t6
 
 Exploratory, not preregistered, and computed after both batches finished. It cannot support or reject any claim; it only guides the next design. Both batches ran the same 48 tasks, with 2 attempts per arm and Haiku. Infrastructure-aborted attempts are excluded.
