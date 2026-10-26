@@ -172,6 +172,10 @@ class TaskBrokerIntegrity(unittest.TestCase):
             self.assertTrue(session.call("outline", {"path": "app.py"})["ok"])
             self.assertEqual(run.call_args[0][0][0], str(task_session.GRAF_T6))
 
+    def test_graf_indexable_drops_only_files_below_directories_graf_skips(self):
+        paths = {"lib/a.js", "tests/fixtures/app/src/dist/2.js", "dist.js", "pkg/target/x.go", "lib/dist"}
+        self.assertEqual(task_session.graf_indexable(paths), {"lib/a.js", "dist.js", "lib/dist"})
+
     def test_lean_orientation_shows_only_triage_files_from_the_latest_committed_binary(self):
         arm = "graf_lean_orient"
         self.assertEqual(task_session.retrieve_command(arm, Path("in"), Path("out"), "q", 90)[0],

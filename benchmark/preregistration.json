@@ -1,5 +1,5 @@
 {
-  "version": 91,
+  "version": 92,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -641,7 +641,8 @@
         "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply, orientation failure: set aside and rerun at most twice)",
         "schedule": "runs after the t7 catalog is frozen and its fail-to-pass checks pass; frozen before any t7 task was mined",
         "planned_runs": "46 tasks x 2 attempts x 2 arms = 184, within the operator's agreed ~192",
-        "frozen_catalog_sha256": "8e1d37a7e17d94f595b1d841a9ff37e6d38ae631423e4b5c1e68ef22168781b1"
+        "frozen_catalog_sha256": "8e1d37a7e17d94f595b1d841a9ff37e6d38ae631423e4b5c1e68ef22168781b1",
+        "index_file_set_v92": "2026-10-26, from a no-model dry run of one task per repository and arm before any t7 model call: graf's indexer skips directories named target, dist and __pycache__, which the shared input filter keeps; in t7 this is exactly one file, eslint's tests/fixtures/example-app3/src/dist/2.js (a lint fixture), and the harness's file-set parity check aborted graf orientation on every eslint task. The check now expects the shared input set minus files below those directories for graf arms (benchmark/task_session.py graf_indexable); Graphify and the agent's read/search tools still see every shared file. No earlier batch had such a file in a graf arm (their parity check would have aborted). The dry run also showed both arms working on the other five repositories: lean graf orientation 34-83 cl100k tokens, Graphify 1,473-1,493 after the 1,500 cap (native up to 2,214); Graphify extract took at most 14 s"
       }
     },
     "natural_tasks": {
@@ -1195,6 +1196,11 @@
       "version": 91,
       "date": "2026-10-26",
       "reason": "No rule change. t7 task catalog frozen (46 tasks, sha256 8e1d37a7...) before any solver run, with judgments, fail-to-pass records and rejection reasons"
+    },
+    {
+      "version": 92,
+      "date": "2026-10-26",
+      "reason": "No rule change. graf arms' index parity check allows graf's documented skipped directories (one eslint fixture file in t7); found by a no-model dry run before any t7 model call"
     }
   ],
   "arms": {

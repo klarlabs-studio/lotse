@@ -50,6 +50,14 @@ GRAF_T6 = BASE / ".research/bin/graf-t6"
 GRAF_LATEST = BASE / ".research/bin/graf-a9c9e4d"
 
 
+GRAF_SKIPPED_DIRS = {"target", "dist", "__pycache__"}  # graf's index skips these beyond the shared filter.
+
+
+def graf_indexable(paths):
+    """The shared input files graf indexes: none below a directory graf skips (preregistration v92)."""
+    return {p for p in paths if not GRAF_SKIPPED_DIRS & set(Path(p).parts[:-1])}
+
+
 def graf_binary(arm):
     return {"graf_orient": GRAF_T5, "graf_current_orient": GRAF_T6,
             "graf_lean_orient": GRAF_LATEST}.get(arm, BASE / "target/release/graf")
@@ -242,7 +250,8 @@ class Session:
             else:
                 built = self.input / ".graf/index.json" if self.arm in GRAF_INDEX_ARMS else self.output / "ast-index.json"
                 index = json.loads(built.read_text())
-            if set(index["files"]) != set(files):
+            expected = graf_indexable(files) if self.arm in GRAF_INDEX_ARMS else set(files)
+            if set(index["files"]) != expected:
                 raise RuntimeError("graf source filters differ from the shared input set")
         self.dirty = False
 
