@@ -1,5 +1,5 @@
 {
-  "version": 98,
+  "version": 99,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -944,7 +944,8 @@
         "python": "uv virtualenvs on Python 3.12.15 with dependencies only (the package itself comes from the workspace via PYTHONPATH=src or the working directory), each with requirements-frozen.txt: requests (runtime deps, PySocks, pytest-httpbin 2.1.0, httpbin 0.10, pytest-mock, pytest-xdist, trustme), tqdm (pytest, pytest-timeout, pytest-asyncio>=0.24, numpy, pandas, pyarrow, rich, requests, slack-sdk, envwrap, ipywidgets; dask, matplotlib and tensorflow omitted, their tests skip), uvicorn (its dev group without linters and docs tools), pytest (its dev extra; src/_pytest/_version.py is absent at the pin, so pytest reports version 'unknown' as in a source checkout)",
         "javascript": "node v26.10.0; node_modules from the pinned package.json with --ignore-scripts: winston via npm ci on its lockfile, handlebars and prettier via npm install (pnpm and yarn lockfiles unused; prettier with --legacy-peer-deps), pug installed in a full copy of its workspace monorepo so workspace packages resolve to that copy (a fix whose test reaches another package through node_modules would not see the edit; the fail-to-pass check rejects such a task)",
         "runners": "handlebars: vitest run --project node on changed spec/*.js (its node project imports lib/ directly; no build); winston and pug: jest on changed test files; prettier: jest --ci on the runner (format.test.js) of each directory with changed fixtures or snapshots, so a missing or changed snapshot fails rather than being written"
-      }
+      },
+      "runtime_v99": "2026-10-26, after the first fail-to-pass check (no solver run) and before any re-check: v98 wrongly said pytest runs without src/_pytest/_version.py and reports version 'unknown'; _pytest/assertion/rewrite.py and terminal.py import it unconditionally, so all 12 pytest candidates failed on the unmodified base with ModuleNotFoundError. The pytest virtualenv now provides the module the setuptools-scm build writes (version 9.2.0.dev422+g41d12cdbb, from git describe at the pin), through a .pth file in its site-packages, as t7 did for black's _black_version.py; nothing in the workspace changes. Only the 12 pytest candidates are re-checked, under the unchanged fail-to-pass rule; every other first-check verdict stands (rejections for an expired certificate fixture, a port in use, a conftest-only test change, a cross-package pug import and a prettier timeout are kept, not retried)"
     }
   },
   "report_every_case": true,
@@ -1393,6 +1394,11 @@
       "version": 98,
       "date": "2026-10-26",
       "reason": "No rule change. t8 runtime and test-runner details recorded before any fail-to-pass check"
+    },
+    {
+      "version": 99,
+      "date": "2026-10-26",
+      "reason": "No rule change. Correct v98's pytest runtime (missing generated _version.py) and re-check only pytest's candidates"
     }
   ],
   "arms": {
