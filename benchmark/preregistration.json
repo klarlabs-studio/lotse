@@ -1,5 +1,5 @@
 {
-  "version": 94,
+  "version": 95,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -897,6 +897,16 @@
           "repository": "ladjs/superagent",
           "commit": "d73b68f942c96cb8f61fe1d53600ceadc6d381b6",
           "language": "JavaScript"
+        },
+        "pytest": {
+          "repository": "pytest-dev/pytest",
+          "commit": "41d12cdbb4a35a7877768d93d8dc50a9117a8d8c",
+          "language": "Python"
+        },
+        "prettier": {
+          "repository": "prettier/prettier",
+          "commit": "7664e36875350ad0f309287391858de19ed13eb7",
+          "language": "JavaScript"
         }
       },
       "repository_order": {
@@ -910,20 +920,23 @@
           "requests",
           "tqdm",
           "httpie",
-          "uvicorn"
+          "uvicorn",
+          "pytest"
         ],
         "JavaScript": [
           "handlebars",
           "winston",
           "pug",
-          "superagent"
+          "superagent",
+          "prettier"
         ]
       },
       "repository_choice": "all twelve pinned to their default-branch head resolved on 2026-10-26 before any candidate pull request was listed; widely used (over 11,000 GitHub stars each), not archived. JavaScript candidates are restricted to repositories whose source is mainly JavaScript by GitHub's language bytes (marked, markdown-it, yargs and nodemailer were considered and left out as largely TypeScript). Per language, the first two repositories in repository_order are used; a repository is replaced by the next in its order only if it has no candidate meeting the automatic criteria, or if its pinned test suite cannot run offline in the task runtime (judged on the pinned snapshot before any candidate's fail-to-pass check). Every replacement and its reason is recorded before the catalog is frozen",
       "selection": "the natural_tasks_t7 protocol unchanged: natural_tasks_t4 criteria, newest merge first, issue text only, hidden tests, bug judgment from the issue title and body alone (first 900 characters) before any fail-to-pass check, size bound of 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, mismatch exclusion; the first 8 qualifying candidates per repository are accepted (48 tasks at most)",
       "test_files": "Go: *_test.go and testdata/; Python: under tests/; JavaScript: each repository's own test directory, recorded with its runner before any candidate is judged",
       "verification": "as t7. Go: go test on the changed test files' packages; Python: pytest on the changed test files with the repository's own virtualenv (.research/task-runtime/<repo>-venv, frozen requirements) and PYTHONPATH=src; JavaScript: the repository's own test runner on the changed test files from .research/task-runtime/<repo>-full",
-      "runtime": "as t7: JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts; Go modules downloaded into the shared module cache before mining; Python test dependencies in a per-repository uv virtualenv on Python 3.12; any repository-specific runtime detail is recorded in a later preregistration version before the catalog is frozen"
+      "runtime": "as t7: JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts; Go modules downloaded into the shared module cache before mining; Python test dependencies in a per-repository uv virtualenv on Python 3.12; any repository-specific runtime detail is recorded in a later preregistration version before the catalog is frozen",
+      "fill_rule_v95": "2026-10-26, after mining every v94 repository (candidate counts only; no bug judgment, fail-to-pass check or solver run yet). Automatic-criteria candidates per repository: zap 12, validator 19, logrus 3, mux 2; requests 2, tqdm 2, httpie 0, uvicorn 4; handlebars 2, winston 5, pug 1, superagent 0. v94's rule (two repositories per language, replaced only when one has no candidate) would leave Python and JavaScript with at most 4 and 7 candidates before judgment. Rule from v95, replacing v94's two-per-language choice: per language, repositories are taken in repository_order, at most 8 accepted tasks each (newest merge first, as before), until the language has 16 accepted tasks or its list is exhausted; pytest (Python) and prettier (JavaScript), pinned 2026-10-26 to their default-branch heads before any of their pull requests was listed, never used by any earlier benchmark, are appended to the end of their languages' orders because they are large, pure-language projects that link issues to fixing pull requests. The runtime condition of v94 still applies per repository. At most 48 tasks; fewer if the lists are exhausted, in which case planned runs shrink accordingly. Test files: pytest under testing/; prettier its jest test directories, recorded before any candidate is judged"
     }
   },
   "report_every_case": true,
@@ -1352,6 +1365,11 @@
       "version": 94,
       "date": "2026-10-26",
       "reason": "Batch t8 frozen before any of its tasks were mined: a replication screen of t7's graf_lean_orient against Graphify 0.9.96 orientation on fresh tasks from twelve pinned, ordered repositories (natural_tasks_t8), with the new verifier-deadline rule; Graphify 0.9.96 added as baseline revision graphify-0.9.96"
+    },
+    {
+      "version": 95,
+      "date": "2026-10-26",
+      "reason": "t8 task sources: fill each language to 16 tasks from its ordered repository list (at most 8 per repository) instead of two fixed repositories, and append pytest and prettier; decided from candidate counts only, before any judgment, fail-to-pass check or solver run"
     }
   ],
   "arms": {

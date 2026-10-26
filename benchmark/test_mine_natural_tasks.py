@@ -64,6 +64,23 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(verify_command("black", ["tests/data/cases/x.py", "tests/test_black.py"])[6:],
                          ["tests/test_black.py", "tests/test_format.py"])
 
+    def test_batch_t8_repositories(self):
+        self.assertEqual(classify("handlebars", "spec/helpers.js"), "test")
+        self.assertEqual(classify("handlebars", "lib/handlebars/runtime.js"), "source")
+        self.assertEqual(classify("pug", "packages/pug-lexer/test/index.test.js"), "test")
+        self.assertEqual(classify("pug", "packages/pug-lexer/index.js"), "source")
+        self.assertEqual(classify("winston", "test/unit/winston/logger.test.js"), "test")
+        self.assertEqual(classify("httpie", "tests/test_cli.py"), "test")
+        self.assertEqual(classify("zap", "zapcore/entry_test.go"), "test")
+        self.assertEqual(classify("pytest", "testing/test_assertion.py"), "test")
+        self.assertEqual(classify("pytest", "src/_pytest/assertion/util.py"), "source")
+        self.assertEqual(classify("prettier", "tests/format/js/arrows/jsfmt.spec.js"), "test")
+        self.assertEqual(classify("prettier", "src/language-js/print/arrow-function.js"), "source")
+        self.assertEqual(verify_command("handlebars", ["spec/helpers.js", "spec/expected/x.html"]),
+                         ["node_modules/.bin/vitest", "run", "--project", "node", "spec/helpers.js"])
+        self.assertEqual(verify_command("winston", ["test/a.test.js"]), ["node_modules/.bin/jest", "test/a.test.js"])
+        self.assertEqual(verify_command("tqdm", ["tests/tests_tqdm.py"])[-1], "tests/tests_tqdm.py")
+
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")
         self.assertEqual(classify("tanstack-query", "packages/react-query/src/useQuery.tsx"), "source")

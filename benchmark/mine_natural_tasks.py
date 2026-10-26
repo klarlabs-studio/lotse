@@ -32,10 +32,15 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    "marshmallow": (".py",), "hapi": (".js",), "mocha": (".js",),
                    "fiber": (".go",), "testify": (".go",), "starlette": (".py",), "black": (".py",),
                    "commander": (".js",), "ws": (".js",), "eslint": (".js",), "dayjs": (".js",),
+                   **{repo: (".go",) for repo in ("zap", "validator", "logrus", "mux")},
+                   **{repo: (".py",) for repo in ("requests", "tqdm", "httpie", "uvicorn", "pytest")},
+                   **{repo: (".js",) for repo in ("handlebars", "winston", "pug", "superagent", "prettier")},
                    **{repo: TYPESCRIPT_SOURCES for repo in ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
-              "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full"}
-PYTHON_RUNTIME = {"starlette": "starlette-venv", "black": "black-venv"}  # Batch t7: own virtualenvs.
+              "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
+              **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent")}}
+PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
+                                                     "requests", "tqdm", "httpie", "uvicorn")}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
 QUERY = """query($owner: String!, $name: String!, $cursor: String) {
@@ -61,6 +66,12 @@ def classify(repo, path):
     if suffix == (".py",) and path.startswith("tests/"):
         return "test"
     if repo in ("commander", "eslint") and path.startswith("tests/"):
+        return "test"
+    if (repo == "pytest" and path.startswith("testing/")) or (repo == "prettier" and path.startswith("tests/")):
+        return "test"
+    if repo == "handlebars" and path.startswith(("spec/", "tests/", "tasks/tests/")):
+        return "test"
+    if repo == "pug" and len(Path(path).parts) > 3 and Path(path).parts[0] == "packages" and Path(path).parts[2] == "test":
         return "test"
     if suffix == (".js",) and path.startswith("test/"):
         return "test"
@@ -186,8 +197,11 @@ def verify_command(repo, tests):
                 *sorted(t for t in tests if t.endswith(".js") and "/support/" not in t)]
     if repo in ("ws", "eslint"):
         return ["node_modules/.bin/mocha", *sorted(t for t in tests if t.endswith(".js"))]
-    if repo == "dayjs":
+    if repo in ("dayjs", "winston", "pug"):
         return ["node_modules/.bin/jest", *sorted(t for t in tests if t.endswith(".js"))]
+    if repo == "handlebars":  # Its node project runs spec/*.js against lib/ directly, without a build.
+        return ["node_modules/.bin/vitest", "run", "--project", "node",
+                *sorted(t for t in tests if t.startswith("spec/") and t.endswith(".js"))]
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
@@ -202,13 +216,14 @@ def verify_command(repo, tests):
 
 
 def pinned(repo):
-    """The pinned snapshot: the benchmark corpora, the batch t4/t7 repositories, or the localization ones."""
+    """The pinned snapshot: the benchmark corpora, the batch t4/t7/t8 repositories, or the localization ones."""
     for r in json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]:
         if r["id"] == repo:
             return r
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
     screen = prereg["localization_screen"]
-    for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["agent_trials"]["natural_tasks_t7"], screen["confirmation"], screen["file_screen"],
+    for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["agent_trials"]["natural_tasks_t7"],
+                 prereg["agent_trials"]["natural_tasks_t8"], screen["confirmation"], screen["file_screen"],
                  screen["typescript"]):
         if repo in spec["repositories"]:
             return {"id": repo, **spec["repositories"][repo]}
