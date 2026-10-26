@@ -1,5 +1,5 @@
 {
-  "version": 93,
+  "version": 94,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -644,6 +644,55 @@
         "frozen_catalog_sha256": "8e1d37a7e17d94f595b1d841a9ff37e6d38ae631423e4b5c1e68ef22168781b1",
         "index_file_set_v92": "2026-10-26, from a no-model dry run of one task per repository and arm before any t7 model call: graf's indexer skips directories named target, dist and __pycache__, which the shared input filter keeps; in t7 this is exactly one file, eslint's tests/fixtures/example-app3/src/dist/2.js (a lint fixture), and the harness's file-set parity check aborted graf orientation on every eslint task. The check now expects the shared input set minus files below those directories for graf arms (benchmark/task_session.py graf_indexable); Graphify and the agent's read/search tools still see every shared file. No earlier batch had such a file in a graf arm (their parity check would have aborted). The dry run also showed both arms working on the other five repositories: lean graf orientation 34-83 cl100k tokens, Graphify 1,473-1,493 after the 1,500 cap (native up to 2,214); Graphify extract took at most 14 s",
         "solver_timeout_v93": "2026-10-26, after 108 of 184 t7 runs and before the remaining 76: the batch stopped when t7-starlette-1102-graphify_orient-1 was classed an infrastructure abort three times (and attempt 2 once). Diagnosis from errors and tool timings only: the solver's edits made starlette's streaming tests hang, so each broker test call ran to the verifier's 180 s limit and returned a timeout; the 1,200 s trial limit then fell during such a call, and lost_reply read the pending call as a lost broker reply although the broker answered every call. While diagnosing, the operator's agent saw that these Graphify-arm attempts failed verification. Rule from v93, the same for every arm: a trial timeout whose pending calls are only broker test or finish calls within the verifier's 180 s limit plus 60 s is a solver timeout, not infrastructure; the verifier's verdict scores it. Claude Code emits no result event then, so usage comes from the stream: input and cache tokens per model call exactly (validated: they equal the result totals on every completed t6 run), output only partially and thinking not at all (the stream's output counts understate the result's by 12-51% of cost on t6). Its cost is therefore bounded, below by the streamed counts at the pinned Claude Code 2.1.310 catalog's Haiku 5.5 prices (USD/MTok 0.10 input, 0.50 output, 0.125/0.20 5-minute/1-hour cache write, 0.01 cache read; 0.50/2.50/0.625/1.00/0.05 above 100K prompt tokens), above by the attempt's $0.50 budget cap. The decision counts a comparator's timeout at its lower bound and a candidate's or control's at its upper bound (least favorable to the candidate); reasoning tokens of such trials are unmeasured and no other field may be. The first run of each planned attempt is the trial of record: the set-aside first runs of starlette-1102 graphify_orient attempts 1 and 2 are re-scored from their preserved artifacts (run_agent_trial.py --rescore) and return to the plan; the later reruns (attempt 1 reruns 2-3, attempt 2's completed rerun) stay outside it in trials-aside. No completed t7 run changes: an unscored timeout always stopped the batch. Earlier batches are not re-scored. The remaining runs then resume unchanged."
+      },
+      "t8": {
+        "arms": [
+          "graf_lean_orient",
+          "graphify_orient"
+        ],
+        "candidates": [
+          "graf_lean_orient"
+        ],
+        "controls": [],
+        "comparators": [
+          "graphify_orient"
+        ],
+        "catalog": "benchmark/natural-tasks-t8.json",
+        "seed": 20261027,
+        "frozen_in_version": 94,
+        "arm_definitions": {
+          "graf_lean_orient": "before the first turn the harness runs `graf triage --budget 1500` (JSON) on the issue with the pinned binary and shows only its `files` list (file_graph_ids ranking, at most 8 paths) as 'Likely files:' lines under the same fixed header as t5/t6, under the same 1,500-token cl100k hard cap; no code excerpts. Tools, prompts and limits are those of t6 graf_current_orient (units retrieval, outline, read, search, edit, test, finish), with the same binary",
+          "graphify_orient": "unchanged from t5/t6: the pinned code-only Graphify orientation requested at 1,500 tokens and cut to the same 1,500-token hard cap, plus the same retrieval, read, search, edit, test and finish tools"
+        },
+        "budget_parity": "both orientations share the same requested budget and hard cap (1,500 cl100k); each backend returns its own output within it, as in every earlier screen. A Graphify orientation requested at a smaller budget is not tested and is reported as a limitation",
+        "graf_binary": ".research/bin/graf-a9c9e4d, built from commit a9c9e4d (the latest commit touching src/Cargo; no Rust change since), sha256 9d54581bd4eddf338b06\u2026, the TypeScript screen's pin; hashed per run",
+        "solver_version": "2.1.310 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.310",
+        "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
+        "model": "claude-haiku-5-5",
+        "graphify_commit": "dac063456bc1f5d92354ec3936fd9dd1513a83f3",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.96",
+        "versions_checked": "2026-10-26 with benchmark/check_latest.py: Graphify 0.9.96 (released 2026-10-26, added as baseline revision graphify-0.9.96), Claude Code 2.1.310 and ripgrep 15.2.0 are the latest releases; claude-haiku-5-5 is the latest Haiku (by hand); graf binary graf-a9c9e4d is built from the latest commit touching src/Cargo (b633727, no Rust change since)",
+        "attempts_per_task_and_arm": 2,
+        "solver_max_turns": 80,
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200,
+          "tool_budget_tokens": "requested 1..8000 cl100k; orientation hard cap 1500"
+        },
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription",
+        "rule": "the agent_trials.rule (cost superiority by one-sided paired sign flip at alpha 0.05, success non-inferiority within 0.10) against the single comparator graphify_orient",
+        "secondary": "turns, tokens, tool calls by type, orientation payload; per-task log cost ratio (exploratory, reported, not gated); every task reported",
+        "role": "replication screen of t7's candidate on fresh tasks: the same arm, graf binary, prompts, tools, rule and limits; a pass is evidence for the candidate, not product promotion, and leads to the stronger-model confirmation on fresh tasks frozen later",
+        "budget": "operator agreed on 2026-10-26: about 200 Haiku attempts on the subscription (48 tasks x 2 attempts x 2 arms = 192)",
+        "rationale": "t7 failed under v93's least-favorable accounting: graf_lean_orient was not cheaper (mean -$0.00089 per task, p 0.50) while using 32% fewer tokens with non-inferior success. One bounded solver timeout counted at the $0.50 cap decided it; with bounded attempts at their lower bounds the exploratory p was 0.003 and on fully measured attempts graf cost about 23% less (post hoc, not a pass). t8 tests the same candidate again on fresh tasks with the deadline rule, so that no attempt's cost need be bounded",
+        "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply under v93, orientation failure: set aside and rerun at most twice); index parity as v92",
+        "schedule": "runs after the t8 catalog is frozen and its fail-to-pass checks pass; frozen before any t8 candidate pull request was listed",
+        "planned_runs": "at most 48 tasks x 2 attempts x 2 arms = 192, within the operator's agreed ~200",
+        "verifier_deadline": true,
+        "deadline_rule": "new in t8 (benchmark commit 5f0c72b): the runner records the 1,200 s trial deadline before the solver starts; the broker caps every test run at the time left minus a 120 s reserve for the solver's last turn and refuses it with under 30 s left ('call finish'); a finish that cannot get the verifier's full 180 s closes the attempt at once and the runner grades it with the full 180 s verifier after the solver exits. Every verdict therefore still gets the full verifier, and a solver whose edits hang the tests is no longer killed mid-call without its usage report. The same rule applies to both arms",
+        "solver_timeout": "the v93 rule stays in force as a fallback for any timeout the deadline rule cannot prevent (for example a slow final model turn): such an attempt is scored by the verifier and its cost is bounded and counted least favorably to the candidate",
+        "comparator_version_change": "the comparator is Graphify 0.9.96, not t7's 0.9.95, because the latest-versions policy requires the newest release at freeze time; t7 keeps 0.9.95. The orientation protocol (1,500-token request and hard cap, code-only) is unchanged"
       }
     },
     "natural_tasks": {
@@ -784,6 +833,97 @@
       "black_verification_v90": "2026-10-26, before any black fail-to-pass check: black's fixes add formatter cases under tests/data/, which are fixtures read by tests/test_format.py, not test modules; passing them to pytest would import them as modules. black's verification runs pytest on the changed tests/test_*.py modules plus tests/test_format.py whenever a tests/data/ file changed. The data files remain hidden tests, installed only during grading",
       "frozen_catalog_sha256": "8e1d37a7e17d94f595b1d841a9ff37e6d38ae631423e4b5c1e68ef22168781b1",
       "frozen_v91": "2026-10-26: 46 tasks (fiber 8, testify 6, starlette 8, black 8, eslint 8, dayjs 8); no solver has seen any. Bug judgments (results/natural-tasks-t7-judgments.json) were made from the issue title and body alone, first 14 automatic-criteria candidates per repository, before any fail-to-pass check; fail-to-pass records are in results/natural-tasks-t7-f2p.json. Rejections: testify-1419, -1581 and -794 failed after the fix was restored, from timing-sensitive tests (TestEventuallyTrue, TestNeverTrue) under host load average about 75 on 10 cores, -1536 failed on the pinned snapshot and -1281 passed with the fix reverted; black-3372 timed out (180 s) after restoring; starlette-2295 and dayjs-1569 (passes with the fix reverted) not needed or rejected. testify has only 13 automatic-criteria candidates, so it contributes 6. The fail-to-pass checker crashed on eslint-21267, whose fix adds a file, after eslint already had 8 tasks; the checker now handles added files (commit 2f5b97b). fiber-4527's check was interrupted by a session restart after fiber already had 8 tasks. Verifier wall time on the pinned snapshot: median 1-36 s per repository; maxima testify 146 s and black 86 s, so the 180 s verifier limit can bind under load and a correct fix may then fail in either arm; reported with the result"
+    },
+    "natural_tasks_t8": {
+      "catalog": "benchmark/natural-tasks-t8.json",
+      "purpose": "fresh natural repair tasks for batch t8 from repositories never used by any graf benchmark corpus, localization screen, retrieval confirmation or agent batch (checked against benchmark/*.json, research/*.md and .research/corpora on 2026-10-26; mentions inside other repositories' issue text do not count)",
+      "repositories": {
+        "zap": {
+          "repository": "uber-go/zap",
+          "commit": "4892335e05f14bce8a98a69a577fcf3844a42623",
+          "language": "Go"
+        },
+        "validator": {
+          "repository": "go-playground/validator",
+          "commit": "c9cfe75c16a69156f67eaaa5229b3b5100794553",
+          "language": "Go"
+        },
+        "logrus": {
+          "repository": "sirupsen/logrus",
+          "commit": "6ef0748d1177dadaeee9aa79ffef604570f487d7",
+          "language": "Go"
+        },
+        "mux": {
+          "repository": "gorilla/mux",
+          "commit": "db9d1d0073d27a0a2d9a8c1bc52aa0af4374d265",
+          "language": "Go"
+        },
+        "requests": {
+          "repository": "psf/requests",
+          "commit": "3c7baaa05ab4aa49cc819ce3a819d260de19c157",
+          "language": "Python"
+        },
+        "tqdm": {
+          "repository": "tqdm/tqdm",
+          "commit": "9cf5a12b1f955468a17f0ba3c59092b23e4258ac",
+          "language": "Python"
+        },
+        "httpie": {
+          "repository": "httpie/cli",
+          "commit": "5b604c37c6c67e18e7c3e9aee6c88a8c22b98345",
+          "language": "Python"
+        },
+        "uvicorn": {
+          "repository": "encode/uvicorn",
+          "commit": "9d81c12a2c411d3bf104368472b708a3218d9b4e",
+          "language": "Python"
+        },
+        "handlebars": {
+          "repository": "handlebars-lang/handlebars.js",
+          "commit": "13a7a679910d2adbfe7f6fad61ce8f98426b0378",
+          "language": "JavaScript"
+        },
+        "winston": {
+          "repository": "winstonjs/winston",
+          "commit": "ff0b79de8562bb322c390fbc82fe71c11f373428",
+          "language": "JavaScript"
+        },
+        "pug": {
+          "repository": "pugjs/pug",
+          "commit": "c323ed3e630b931bc04790efb509d34ac5927040",
+          "language": "JavaScript"
+        },
+        "superagent": {
+          "repository": "ladjs/superagent",
+          "commit": "d73b68f942c96cb8f61fe1d53600ceadc6d381b6",
+          "language": "JavaScript"
+        }
+      },
+      "repository_order": {
+        "Go": [
+          "zap",
+          "validator",
+          "logrus",
+          "mux"
+        ],
+        "Python": [
+          "requests",
+          "tqdm",
+          "httpie",
+          "uvicorn"
+        ],
+        "JavaScript": [
+          "handlebars",
+          "winston",
+          "pug",
+          "superagent"
+        ]
+      },
+      "repository_choice": "all twelve pinned to their default-branch head resolved on 2026-10-26 before any candidate pull request was listed; widely used (over 11,000 GitHub stars each), not archived. JavaScript candidates are restricted to repositories whose source is mainly JavaScript by GitHub's language bytes (marked, markdown-it, yargs and nodemailer were considered and left out as largely TypeScript). Per language, the first two repositories in repository_order are used; a repository is replaced by the next in its order only if it has no candidate meeting the automatic criteria, or if its pinned test suite cannot run offline in the task runtime (judged on the pinned snapshot before any candidate's fail-to-pass check). Every replacement and its reason is recorded before the catalog is frozen",
+      "selection": "the natural_tasks_t7 protocol unchanged: natural_tasks_t4 criteria, newest merge first, issue text only, hidden tests, bug judgment from the issue title and body alone (first 900 characters) before any fail-to-pass check, size bound of 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, mismatch exclusion; the first 8 qualifying candidates per repository are accepted (48 tasks at most)",
+      "test_files": "Go: *_test.go and testdata/; Python: under tests/; JavaScript: each repository's own test directory, recorded with its runner before any candidate is judged",
+      "verification": "as t7. Go: go test on the changed test files' packages; Python: pytest on the changed test files with the repository's own virtualenv (.research/task-runtime/<repo>-venv, frozen requirements) and PYTHONPATH=src; JavaScript: the repository's own test runner on the changed test files from .research/task-runtime/<repo>-full",
+      "runtime": "as t7: JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts; Go modules downloaded into the shared module cache before mining; Python test dependencies in a per-repository uv virtualenv on Python 3.12; any repository-specific runtime detail is recorded in a later preregistration version before the catalog is frozen"
     }
   },
   "report_every_case": true,
@@ -1207,6 +1347,11 @@
       "version": 93,
       "date": "2026-10-26",
       "reason": "Rule change mid-batch, recorded before the remaining 76 t7 runs: a trial timeout during a bounded verifier call is a solver timeout scored by the verifier, with cost bounded and counted least favorably to the candidate; found when t7 stopped on a misclassified abort (details in agent_trials.batches.t7.solver_timeout_v93)"
+    },
+    {
+      "version": 94,
+      "date": "2026-10-26",
+      "reason": "Batch t8 frozen before any of its tasks were mined: a replication screen of t7's graf_lean_orient against Graphify 0.9.96 orientation on fresh tasks from twelve pinned, ordered repositories (natural_tasks_t8), with the new verifier-deadline rule; Graphify 0.9.96 added as baseline revision graphify-0.9.96"
     }
   ],
   "arms": {
@@ -4852,6 +4997,18 @@
       "snapshot": ".research/corpora/graphify-0.9.95",
       "scope": "agent batches t4r2, t5 and t6, the TypeScript localization screen restart, and every retrieval comparison frozen from v76 on (compare_graphify.py now accepts any pinned revision, verified source for source). Every earlier result keeps Graphify 0.9.92 (.research/venv, .research/corpora/graphify)",
       "environment": "same Python 3.12.15 and identical versions of every other package as .research/venv (uv pip freeze differs only in graphifyy)"
+    },
+    {
+      "id": "graphify-0.9.96",
+      "revision_of": "graphify",
+      "commit": "dac063456bc1f5d92354ec3936fd9dd1513a83f3",
+      "version": "0.9.96",
+      "recorded": "2026-10-26",
+      "virtualenv": ".research/venv-graphify-0.9.96",
+      "snapshot": ".research/corpora/graphify-0.9.96",
+      "snapshot_receipt": "results/snapshots-graphify-0.9.96.json (archive sha256 4dc2e136...)",
+      "scope": "agent batch t8 and every batch, screen or comparison frozen from v94 on. Earlier results keep 0.9.92 or 0.9.95",
+      "environment": "same Python 3.12.15 and identical versions of every other package as .research/venv-graphify-0.9.95 (uv pip freeze differs only in graphifyy; uv pip check passes)"
     }
   ],
   "version_policy": {

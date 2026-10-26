@@ -9,7 +9,7 @@ import urllib.request
 BASE = Path(__file__).resolve().parents[1]
 
 
-def fetch(t4=False, confirmation=False, screen=None, batch=None):
+def fetch(t4=False, confirmation=False, screen=None, batch=None, baseline=None):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
     batch = batch or ("t4" if t4 else None)
     if batch:  # Agent-batch task repositories (natural_tasks_<batch>), pinned in the preregistration.
@@ -20,6 +20,10 @@ def fetch(t4=False, confirmation=False, screen=None, batch=None):
         items = [{"id": k, **v, "role": "localization"} for k, v in repos["repositories"].items()]
     else:
         items = json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]
+        if baseline:  # One new baseline revision, beside the snapshots earlier results use.
+            items = [item for item in items if item["id"] == baseline]
+            if not items:
+                raise KeyError(baseline)
     receipts = []
     for item in items:
         url = f"https://codeload.github.com/{item['repository']}/tar.gz/{item['commit']}"
@@ -43,13 +47,15 @@ def fetch(t4=False, confirmation=False, screen=None, batch=None):
                 count += 1
         receipts.append({**item, "archive_sha256": hashlib.sha256(data).hexdigest(), "files": count})
         print(item["id"], count, "files", flush=True)
-    out = (f"results/snapshots-{batch}.json" if batch else "results/snapshots-confirmation.json" if confirmation
+    out = (f"results/snapshots-{batch}.json" if batch else f"results/snapshots-{baseline}.json" if baseline else "results/snapshots-confirmation.json" if confirmation
            else f"results/snapshots-{screen.replace('_', '-')}.json" if screen else "results/snapshots.json")
     (BASE / out).write_text(json.dumps(receipts, indent=2) + "\n")
 
 
 if __name__ == "__main__":
     import sys
-    fetch(t4="--t4" in sys.argv[1:], batch="t7" if "--t7" in sys.argv[1:] else None, confirmation="--confirmation" in sys.argv[1:],
-          screen="file_screen" if "--file-screen" in sys.argv[1:] else "typescript" if "--typescript" in sys.argv[1:]
-          else None)
+    args = sys.argv[1:]
+    fetch(t4="--t4" in args, batch=next((b for b in ("t7", "t8") if f"--{b}" in args), None),
+          confirmation="--confirmation" in args,
+          screen="file_screen" if "--file-screen" in args else "typescript" if "--typescript" in args else None,
+          baseline=args[args.index("--baseline") + 1] if "--baseline" in args else None)
