@@ -38,9 +38,9 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    **{repo: TYPESCRIPT_SOURCES for repo in ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
-              **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent")}}
+              **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier")}}
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
-                                                     "requests", "tqdm", "httpie", "uvicorn")}
+                                                     "requests", "tqdm", "httpie", "uvicorn", "pytest")}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
 QUERY = """query($owner: String!, $name: String!, $cursor: String) {
