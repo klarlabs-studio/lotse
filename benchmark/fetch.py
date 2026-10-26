@@ -9,12 +9,13 @@ import urllib.request
 BASE = Path(__file__).resolve().parents[1]
 
 
-def fetch(t4=False, confirmation=False, screen=None, batch=None, baseline=None):
+def fetch(t4=False, confirmation=False, screen=None, batch=None, baseline=None, only=None):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())
     batch = batch or ("t4" if t4 else None)
     if batch:  # Agent-batch task repositories (natural_tasks_<batch>), pinned in the preregistration.
         repos = prereg["agent_trials"][f"natural_tasks_{batch}"]
-        items = [{"id": k, **v, "role": "agent_tasks"} for k, v in repos["repositories"].items()]
+        items = [{"id": k, **v, "role": "agent_tasks"} for k, v in repos["repositories"].items()
+                 if not only or k in only]  # Repositories a later version added beside the fetched ones.
     elif confirmation or screen:  # Localization screen repositories (v21 confirmation, v24 file_screen).
         repos = prereg["localization_screen"][screen or "confirmation"]
         items = [{"id": k, **v, "role": "localization"} for k, v in repos["repositories"].items()]
@@ -49,6 +50,8 @@ def fetch(t4=False, confirmation=False, screen=None, batch=None, baseline=None):
         print(item["id"], count, "files", flush=True)
     out = (f"results/snapshots-{batch}.json" if batch else f"results/snapshots-{baseline}.json" if baseline else "results/snapshots-confirmation.json" if confirmation
            else f"results/snapshots-{screen.replace('_', '-')}.json" if screen else "results/snapshots.json")
+    if only and (BASE / out).is_file():
+        receipts = [r for r in json.loads((BASE / out).read_text()) if r["id"] not in only] + receipts
     (BASE / out).write_text(json.dumps(receipts, indent=2) + "\n")
 
 
@@ -58,4 +61,5 @@ if __name__ == "__main__":
     fetch(t4="--t4" in args, batch=next((b for b in ("t7", "t8") if f"--{b}" in args), None),
           confirmation="--confirmation" in args,
           screen="file_screen" if "--file-screen" in args else "typescript" if "--typescript" in args else None,
-          baseline=args[args.index("--baseline") + 1] if "--baseline" in args else None)
+          baseline=args[args.index("--baseline") + 1] if "--baseline" in args else None,
+          only=set(args[args.index("--only") + 1].split(",")) if "--only" in args else None)
