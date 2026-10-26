@@ -31,10 +31,10 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    "axios": (".js",), "echo": (".go",), "resty": (".go",), "werkzeug": (".py",),
                    "marshmallow": (".py",), "hapi": (".js",), "mocha": (".js",),
                    "fiber": (".go",), "testify": (".go",), "starlette": (".py",), "black": (".py",),
-                   "commander": (".js",), "ws": (".js",),
+                   "commander": (".js",), "ws": (".js",), "eslint": (".js",), "dayjs": (".js",),
                    **{repo: TYPESCRIPT_SOURCES for repo in ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
-              "commander": "commander-full", "ws": "ws-full"}
+              "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full"}
 PYTHON_RUNTIME = {"starlette": "starlette-venv", "black": "black-venv"}  # Batch t7: own virtualenvs.
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
@@ -60,7 +60,7 @@ def classify(repo, path):
         return "test"
     if suffix == (".py",) and path.startswith("tests/"):
         return "test"
-    if repo == "commander" and path.startswith("tests/"):
+    if repo in ("commander", "eslint") and path.startswith("tests/"):
         return "test"
     if suffix == (".js",) and path.startswith("test/"):
         return "test"
@@ -184,8 +184,10 @@ def verify_command(repo, tests):
     if repo == "express":
         return ["node_modules/.bin/mocha", "--require", "test/support/env", "--check-leaks",
                 *sorted(t for t in tests if t.endswith(".js") and "/support/" not in t)]
-    if repo == "ws":
+    if repo in ("ws", "eslint"):
         return ["node_modules/.bin/mocha", *sorted(t for t in tests if t.endswith(".js"))]
+    if repo == "dayjs":
+        return ["node_modules/.bin/jest", *sorted(t for t in tests if t.endswith(".js"))]
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]

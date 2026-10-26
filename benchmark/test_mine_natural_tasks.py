@@ -56,6 +56,11 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(verify_command("ws", ["test/sender.test.js"]), ["node_modules/.bin/mocha", "test/sender.test.js"])
         self.assertEqual(verify_command("commander", ["tests/a.test.js"]), ["node", "--test", "tests/a.test.js"])
         self.assertEqual(verify_command("fiber", ["binder/form_test.go"]), ["go", "test", "./binder", "-count=1"])
+        self.assertEqual(classify("eslint", "tests/lib/rules/no-unused-vars.js"), "test")
+        self.assertEqual(classify("eslint", "lib/rules/no-unused-vars.js"), "source")
+        self.assertEqual(classify("dayjs", "test/plugin/utc.test.js"), "test")
+        self.assertEqual(verify_command("dayjs", ["test/a.test.js"]), ["node_modules/.bin/jest", "test/a.test.js"])
+        self.assertEqual(verify_command("eslint", ["tests/lib/a.js"]), ["node_modules/.bin/mocha", "tests/lib/a.js"])
 
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")
