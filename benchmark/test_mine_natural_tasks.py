@@ -61,6 +61,8 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("dayjs", "test/plugin/utc.test.js"), "test")
         self.assertEqual(verify_command("dayjs", ["test/a.test.js"]), ["node_modules/.bin/jest", "test/a.test.js"])
         self.assertEqual(verify_command("eslint", ["tests/lib/a.js"]), ["node_modules/.bin/mocha", "tests/lib/a.js"])
+        self.assertEqual(verify_command("black", ["tests/data/cases/x.py", "tests/test_black.py"])[6:],
+                         ["tests/test_black.py", "tests/test_format.py"])
 
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")

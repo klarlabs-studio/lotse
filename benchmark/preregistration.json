@@ -1,5 +1,5 @@
 {
-  "version": 89,
+  "version": 90,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -776,7 +776,8 @@
       "if_fewer": "if fewer than 36 tasks qualify, the batch does not run on a loosened set; a new version must record any change before a solver sees a task",
       "contamination": "as for t3/t4: fixes may be in the solver's training data; affects both arms equally, reported",
       "runtime_v88": "2026-10-26, before any t7 pull request was listed: commander's suite runs on node --test (v87 wrongly named jest). ws pins mocha ^8.4.0, which cannot start under the installed Node 26 (its yargs is loaded as an ES module), so ws-full uses mocha 11.8.0, recorded in its package.json; no ws test file changes. black's version module, written by hatch-vcs at build time, is absent from the source snapshot, so the black virtualenv carries a one-line _black_version.py. Runtimes are smoke-tested on pristine snapshots: starlette, black, commander, ws, fiber and testify sample suites pass",
-      "javascript_replacement_v89": "2026-10-26: commander (15 issue-closing pull requests before the pin) and ws (29) yielded no candidate meeting the automatic criteria, so neither contributes a task. They are replaced by eslint/eslint and iamkun/dayjs, pinned to their default-branch heads (main, dev) on 2026-10-26 and chosen before any of their pull requests' content was listed; the choice used only a count of issue-closing pull requests among each repository's latest 100 merged ones (eslint 34, dayjs 16; node-fetch was skipped as inactive since 2023, highlight.js because its tests run on a build). eslint runs mocha on the changed test files (tests/), dayjs jest on the changed test files (test/) under the host time zone; both are installed with --ignore-scripts into .research/task-runtime/<repo>-full, without a lockfile for eslint (none upstream), and smoke-tested on pristine snapshots. Fiber's fail-to-pass checks had already run on its judged candidates; no other repository's outcome was seen"
+      "javascript_replacement_v89": "2026-10-26: commander (15 issue-closing pull requests before the pin) and ws (29) yielded no candidate meeting the automatic criteria, so neither contributes a task. They are replaced by eslint/eslint and iamkun/dayjs, pinned to their default-branch heads (main, dev) on 2026-10-26 and chosen before any of their pull requests' content was listed; the choice used only a count of issue-closing pull requests among each repository's latest 100 merged ones (eslint 34, dayjs 16; node-fetch was skipped as inactive since 2023, highlight.js because its tests run on a build). eslint runs mocha on the changed test files (tests/), dayjs jest on the changed test files (test/) under the host time zone; both are installed with --ignore-scripts into .research/task-runtime/<repo>-full, without a lockfile for eslint (none upstream), and smoke-tested on pristine snapshots. Fiber's fail-to-pass checks had already run on its judged candidates; no other repository's outcome was seen",
+      "black_verification_v90": "2026-10-26, before any black fail-to-pass check: black's fixes add formatter cases under tests/data/, which are fixtures read by tests/test_format.py, not test modules; passing them to pytest would import them as modules. black's verification runs pytest on the changed tests/test_*.py modules plus tests/test_format.py whenever a tests/data/ file changed. The data files remain hidden tests, installed only during grading"
     }
   },
   "report_every_case": true,
@@ -1180,6 +1181,11 @@
       "version": 89,
       "date": "2026-10-26",
       "reason": "No rule change. t7's JavaScript repositories commander and ws produced no candidates; replaced by eslint and dayjs before any of their pull requests' content was listed"
+    },
+    {
+      "version": 90,
+      "date": "2026-10-26",
+      "reason": "No rule change. black's verification command runs the test modules that read changed tests/data/ fixtures; recorded before any black fail-to-pass check"
     }
   ],
   "arms": {

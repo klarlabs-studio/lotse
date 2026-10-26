@@ -191,6 +191,11 @@ def verify_command(repo, tests):
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
+    if repo == "black":  # Case files under tests/data/ are fixtures that tests/test_format.py runs.
+        modules = {t for t in tests if t.startswith("tests/test_") and t.endswith(".py")}
+        if any(t.startswith("tests/data/") for t in tests):
+            modules.add("tests/test_format.py")
+        return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(modules)]
     if SOURCE_SUFFIXES[repo] == (".py",):
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(t for t in tests if t.endswith(".py"))]
     return ["node", "--test", *sorted(t for t in tests if t.endswith(".js"))]
