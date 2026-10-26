@@ -41,6 +41,9 @@ JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "u
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent")}}
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
                                                      "requests", "tqdm", "httpie", "uvicorn")}
+# Projects whose every fix adds changelog fragments or edits AUTHORS (t8, v96): such non-code files stay as
+# pinned instead of being reverted; no test reads them.
+PINNED_OTHER_FILES = {"pytest", "prettier"}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
 QUERY = """query($owner: String!, $name: String!, $cursor: String) {
@@ -172,6 +175,8 @@ def candidate(repo, pr, pin):
         return {**record, "outcome": "rejected", "reason": f"fix too large ({len(fixed)} files, {lines} lines)"}
     faults, hidden = [], []
     for path, kind in kinds.items():
+        if kind == "other" and repo in PINNED_OTHER_FILES:
+            continue
         added = next(s[0] for s in status if s[-1] == path) == "A"
         target = hidden if kind == "test" else faults
         if added:

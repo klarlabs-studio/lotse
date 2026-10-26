@@ -1,5 +1,5 @@
 {
-  "version": 95,
+  "version": 96,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -936,7 +936,8 @@
       "test_files": "Go: *_test.go and testdata/; Python: under tests/; JavaScript: each repository's own test directory, recorded with its runner before any candidate is judged",
       "verification": "as t7. Go: go test on the changed test files' packages; Python: pytest on the changed test files with the repository's own virtualenv (.research/task-runtime/<repo>-venv, frozen requirements) and PYTHONPATH=src; JavaScript: the repository's own test runner on the changed test files from .research/task-runtime/<repo>-full",
       "runtime": "as t7: JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts; Go modules downloaded into the shared module cache before mining; Python test dependencies in a per-repository uv virtualenv on Python 3.12; any repository-specific runtime detail is recorded in a later preregistration version before the catalog is frozen",
-      "fill_rule_v95": "2026-10-26, after mining every v94 repository (candidate counts only; no bug judgment, fail-to-pass check or solver run yet). Automatic-criteria candidates per repository: zap 12, validator 19, logrus 3, mux 2; requests 2, tqdm 2, httpie 0, uvicorn 4; handlebars 2, winston 5, pug 1, superagent 0. v94's rule (two repositories per language, replaced only when one has no candidate) would leave Python and JavaScript with at most 4 and 7 candidates before judgment. Rule from v95, replacing v94's two-per-language choice: per language, repositories are taken in repository_order, at most 8 accepted tasks each (newest merge first, as before), until the language has 16 accepted tasks or its list is exhausted; pytest (Python) and prettier (JavaScript), pinned 2026-10-26 to their default-branch heads before any of their pull requests was listed, never used by any earlier benchmark, are appended to the end of their languages' orders because they are large, pure-language projects that link issues to fixing pull requests. The runtime condition of v94 still applies per repository. At most 48 tasks; fewer if the lists are exhausted, in which case planned runs shrink accordingly. Test files: pytest under testing/; prettier its jest test directories, recorded before any candidate is judged"
+      "fill_rule_v95": "2026-10-26, after mining every v94 repository (candidate counts only; no bug judgment, fail-to-pass check or solver run yet). Automatic-criteria candidates per repository: zap 12, validator 19, logrus 3, mux 2; requests 2, tqdm 2, httpie 0, uvicorn 4; handlebars 2, winston 5, pug 1, superagent 0. v94's rule (two repositories per language, replaced only when one has no candidate) would leave Python and JavaScript with at most 4 and 7 candidates before judgment. Rule from v95, replacing v94's two-per-language choice: per language, repositories are taken in repository_order, at most 8 accepted tasks each (newest merge first, as before), until the language has 16 accepted tasks or its list is exhausted; pytest (Python) and prettier (JavaScript), pinned 2026-10-26 to their default-branch heads before any of their pull requests was listed, never used by any earlier benchmark, are appended to the end of their languages' orders because they are large, pure-language projects that link issues to fixing pull requests. The runtime condition of v94 still applies per repository. At most 48 tasks; fewer if the lists are exhausted, in which case planned runs shrink accordingly. Test files: pytest under testing/; prettier its jest test directories, recorded before any candidate is judged",
+      "pinned_other_files_v96": "2026-10-26, from candidate counts and rejection reasons only (no judgment, check or solver run for these repositories): pytest and prettier yielded 0 automatic-criteria candidates of 755 and 485, mostly because each fix also edits AUTHORS or adds changelog fragments, which the protocol required to revert uniquely on the pin. For these two repositories only, changed files classified 'other' (neither source nor test) stay as pinned and are not reverted; no test reads them. The size bound still counts them. Repositories already judged are unaffected (benchmark/mine_natural_tasks.py PINNED_OTHER_FILES)"
     }
   },
   "report_every_case": true,
@@ -1370,6 +1371,11 @@
       "version": 95,
       "date": "2026-10-26",
       "reason": "t8 task sources: fill each language to 16 tasks from its ordered repository list (at most 8 per repository) instead of two fixed repositories, and append pytest and prettier; decided from candidate counts only, before any judgment, fail-to-pass check or solver run"
+    },
+    {
+      "version": 96,
+      "date": "2026-10-26",
+      "reason": "t8: for pytest and prettier, non-code files of a fix (AUTHORS, changelog fragments) stay as pinned rather than being reverted; decided from rejection reasons only"
     }
   ],
   "arms": {
