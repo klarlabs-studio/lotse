@@ -150,7 +150,7 @@ def main():
                                   BASE / ".research/trials", BASE / ".research/trials-aside")
         if not summary["usage_complete"]:
             raise SystemExit(f"{identifier}: incomplete solver usage; artifacts preserved, batch stopped")
-        if batch.get("stop_on_provider_error") and summary["result_subtype"] not in (
+        if batch.get("stop_on_provider_error") and not summary.get("solver_timeout") and summary["result_subtype"] not in (
                 "success", "error_max_budget_usd", "error_max_turns"):
             raise SystemExit(f"{identifier}: solver error; artifacts preserved, batch stopped")
         audit = summary["audit"] or {}

@@ -1,5 +1,5 @@
 {
-  "version": 92,
+  "version": 93,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -617,7 +617,7 @@
           "graphify_orient": "unchanged from t5/t6: the pinned code-only Graphify orientation requested at 1,500 tokens and cut to the same 1,500-token hard cap, plus the same retrieval, read, search, edit, test and finish tools"
         },
         "budget_parity": "both orientations share the same requested budget and hard cap (1,500 cl100k); each backend returns its own output within it, as in every earlier screen. A Graphify orientation requested at a smaller budget is not tested and is reported as a limitation",
-        "graf_binary": ".research/bin/graf-a9c9e4d, built from commit a9c9e4d (the latest commit touching src/Cargo; no Rust change since), sha256 9d54581bd4eddf338b06…, the TypeScript screen's pin; hashed per run",
+        "graf_binary": ".research/bin/graf-a9c9e4d, built from commit a9c9e4d (the latest commit touching src/Cargo; no Rust change since), sha256 9d54581bd4eddf338b06\u2026, the TypeScript screen's pin; hashed per run",
         "solver_version": "2.1.310 (Claude Code)",
         "solver_binary": ".research/bin/claude-2.1.310",
         "solver_sha256": "ffb64331bc0ee1b69efb7c2c428bd3ab516bc31b75bf60886b356c97c1c25ffd",
@@ -642,7 +642,8 @@
         "schedule": "runs after the t7 catalog is frozen and its fail-to-pass checks pass; frozen before any t7 task was mined",
         "planned_runs": "46 tasks x 2 attempts x 2 arms = 184, within the operator's agreed ~192",
         "frozen_catalog_sha256": "8e1d37a7e17d94f595b1d841a9ff37e6d38ae631423e4b5c1e68ef22168781b1",
-        "index_file_set_v92": "2026-10-26, from a no-model dry run of one task per repository and arm before any t7 model call: graf's indexer skips directories named target, dist and __pycache__, which the shared input filter keeps; in t7 this is exactly one file, eslint's tests/fixtures/example-app3/src/dist/2.js (a lint fixture), and the harness's file-set parity check aborted graf orientation on every eslint task. The check now expects the shared input set minus files below those directories for graf arms (benchmark/task_session.py graf_indexable); Graphify and the agent's read/search tools still see every shared file. No earlier batch had such a file in a graf arm (their parity check would have aborted). The dry run also showed both arms working on the other five repositories: lean graf orientation 34-83 cl100k tokens, Graphify 1,473-1,493 after the 1,500 cap (native up to 2,214); Graphify extract took at most 14 s"
+        "index_file_set_v92": "2026-10-26, from a no-model dry run of one task per repository and arm before any t7 model call: graf's indexer skips directories named target, dist and __pycache__, which the shared input filter keeps; in t7 this is exactly one file, eslint's tests/fixtures/example-app3/src/dist/2.js (a lint fixture), and the harness's file-set parity check aborted graf orientation on every eslint task. The check now expects the shared input set minus files below those directories for graf arms (benchmark/task_session.py graf_indexable); Graphify and the agent's read/search tools still see every shared file. No earlier batch had such a file in a graf arm (their parity check would have aborted). The dry run also showed both arms working on the other five repositories: lean graf orientation 34-83 cl100k tokens, Graphify 1,473-1,493 after the 1,500 cap (native up to 2,214); Graphify extract took at most 14 s",
+        "solver_timeout_v93": "2026-10-26, after 108 of 184 t7 runs and before the remaining 76: the batch stopped when t7-starlette-1102-graphify_orient-1 was classed an infrastructure abort three times (and attempt 2 once). Diagnosis from errors and tool timings only: the solver's edits made starlette's streaming tests hang, so each broker test call ran to the verifier's 180 s limit and returned a timeout; the 1,200 s trial limit then fell during such a call, and lost_reply read the pending call as a lost broker reply although the broker answered every call. While diagnosing, the operator's agent saw that these Graphify-arm attempts failed verification. Rule from v93, the same for every arm: a trial timeout whose pending calls are only broker test or finish calls within the verifier's 180 s limit plus 60 s is a solver timeout, not infrastructure; the verifier's verdict scores it. Claude Code emits no result event then, so usage comes from the stream: input and cache tokens per model call exactly (validated: they equal the result totals on every completed t6 run), output only partially and thinking not at all (the stream's output counts understate the result's by 12-51% of cost on t6). Its cost is therefore bounded, below by the streamed counts at the pinned Claude Code 2.1.310 catalog's Haiku 5.5 prices (USD/MTok 0.10 input, 0.50 output, 0.125/0.20 5-minute/1-hour cache write, 0.01 cache read; 0.50/2.50/0.625/1.00/0.05 above 100K prompt tokens), above by the attempt's $0.50 budget cap. The decision counts a comparator's timeout at its lower bound and a candidate's or control's at its upper bound (least favorable to the candidate); reasoning tokens of such trials are unmeasured and no other field may be. The first run of each planned attempt is the trial of record: the set-aside first runs of starlette-1102 graphify_orient attempts 1 and 2 are re-scored from their preserved artifacts (run_agent_trial.py --rescore) and return to the plan; the later reruns (attempt 1 reruns 2-3, attempt 2's completed rerun) stay outside it in trials-aside. No completed t7 run changes: an unscored timeout always stopped the batch. Earlier batches are not re-scored. The remaining runs then resume unchanged."
       }
     },
     "natural_tasks": {
@@ -1201,6 +1202,11 @@
       "version": 92,
       "date": "2026-10-26",
       "reason": "No rule change. graf arms' index parity check allows graf's documented skipped directories (one eslint fixture file in t7); found by a no-model dry run before any t7 model call"
+    },
+    {
+      "version": 93,
+      "date": "2026-10-26",
+      "reason": "Rule change mid-batch, recorded before the remaining 76 t7 runs: a trial timeout during a bounded verifier call is a solver timeout scored by the verifier, with cost bounded and counted least favorably to the candidate; found when t7 stopped on a misclassified abort (details in agent_trials.batches.t7.solver_timeout_v93)"
     }
   ],
   "arms": {

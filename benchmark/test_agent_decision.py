@@ -116,6 +116,26 @@ class AgentDecisionTests(unittest.TestCase):
         self.assertAlmostEqual(result["comparisons"]["graf_floor"]["versus"]["graphify"]["success"]["alpha"],
                                RULE["success"]["alpha"] / 2)
 
+    def test_a_solver_timeout_counts_at_its_least_favorable_cost_bound(self):
+        def timed_out(row):
+            return {**row, "passed": False, "cost_bounds_usd": [0.001, 0.5],
+                    "audit": {**row["audit"], "cost_usd": 0.001, "unmeasured_fields": ["reasoning_tokens"]}}
+        rows = batch()
+        rows[0], rows[1] = timed_out(rows[0]), timed_out(rows[1])  # task00 attempt 1 of graf, then graphify
+        result = evaluate(rows, TASKS, 5, RULE, PAIR)
+        self.assertFalse(any("usage" in r for r in result["reasons"]), result["reasons"])
+        task = next(t for t in result["tasks"] if t["task"] == TASKS[0])
+        self.assertAlmostEqual(task["graf"]["mean_cost_usd"], (0.5 + 4 * 0.003) / 5)
+        self.assertAlmostEqual(task["graphify"]["mean_cost_usd"], (0.001 + 4 * 0.004) / 5)
+        self.assertEqual([b["counted_usd"] for b in result["solver_timeouts_least_favorable"]], [0.5, 0.001])
+
+    def test_only_reasoning_may_be_unmeasured_in_a_bounded_timeout(self):
+        rows = batch()
+        rows[0] = {**rows[0], "cost_bounds_usd": [0.001, 0.5],
+                   "audit": {**rows[0]["audit"], "unmeasured_fields": ["cached_input_tokens", "reasoning_tokens"]}}
+        result = evaluate(rows, TASKS, 5, RULE, PAIR)
+        self.assertTrue(any("usage" in r for r in result["reasons"]))
+
     def test_missing_trial_or_incomplete_usage_blocks(self):
         result = evaluate(batch()[1:], TASKS, 5, RULE, PAIR)
         self.assertFalse(result["passed"])

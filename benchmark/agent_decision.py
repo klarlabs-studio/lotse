@@ -48,7 +48,9 @@ def _index(summaries, task_ids, trials, arms):
         audit = s.get("audit") or {}
         if s.get("infrastructure_error") is not False:
             reasons.append(f"infrastructure error or unaudited backend in {s['trial']}")
-        if not s.get("usage_complete") or audit.get("unmeasured_fields") or audit.get("cost_usd") is None:
+        bounded = s.get("cost_bounds_usd") is not None and audit.get("unmeasured_fields") == ["reasoning_tokens"]
+        if (not s.get("usage_complete") or (audit.get("unmeasured_fields") and not bounded)
+                or audit.get("cost_usd") is None):
             reasons.append(f"incomplete usage for {s['trial']}")
         table[key] = s
     reasons += [f"missing trial {t}/{a}/{k}" for t, a, k in sorted(planned - set(table))]
@@ -57,6 +59,21 @@ def _index(summaries, task_ids, trials, arms):
         if len(hashes) > 1 or None in hashes:
             reasons.append(f"{arm} backend binary missing from or changed within the batch")
     return table, reasons
+
+
+def least_favorable(summaries, comparators):
+    """Cost of a solver timeout (v93) is only bounded: count a comparator's at its lower bound and
+    any other arm's at its upper bound, so a timeout can never help a candidate pass."""
+    priced, bounded = [], []
+    for s in summaries:
+        if s.get("cost_bounds_usd") is None or not s.get("audit"):
+            priced.append(s)
+            continue
+        lower, upper = s["cost_bounds_usd"]
+        cost = lower if s.get("arm") in comparators else upper
+        priced.append({**s, "audit": {**s["audit"], "cost_usd": cost}})
+        bounded.append({"trial": s["trial"], "arm": s["arm"], "bounds_usd": [lower, upper], "counted_usd": cost})
+    return priced, bounded
 
 
 def _arm_task(rows, trials):
@@ -109,6 +126,7 @@ def evaluate(summaries, task_ids, trials, rule, batch):
     by passing against every comparator (intersection-union, so comparators do not split alpha)."""
     arms = batch["arms"]
     comparators = batch.get("comparators") or [batch["comparator"]]
+    summaries, bounded = least_favorable(summaries, comparators)
     table, reasons = _index(summaries, task_ids, trials, arms)
     per_task = []
     for task in sorted(task_ids):
@@ -126,7 +144,7 @@ def evaluate(summaries, task_ids, trials, rule, batch):
     if not any(comparisons[arm]["passed"] for arm in batch["candidates"]):
         reasons.append("no candidate passed both the cost and success tests")
     return {"passed": not reasons, "reasons": reasons, "comparators": comparators,
-            "comparisons": comparisons,
+            "comparisons": comparisons, "solver_timeouts_least_favorable": bounded,
             "arms": {arm: _arm_summary(per_task, arm, trials) for arm in arms},
             "tasks": per_task, "scope": rule["scope"]}
 

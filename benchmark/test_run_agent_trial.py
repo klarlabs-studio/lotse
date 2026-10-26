@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from agent_trials import audit_trace
-from run_agent_trial import SYSTEM_PROMPT, claude_command, gateway_refusal, lost_reply, solver_budget, solver_model, preflight, scored_events, system_prompt, usage_events
+from run_agent_trial import SYSTEM_PROMPT, attempt_budget, claude_command, gateway_refusal, lost_reply, solver_budget, solver_model, preflight, scored_events, system_prompt, timeout_usage, usage_events
 
 RESULT = {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3,
           "total_cost_usd": 0.0123,
@@ -89,6 +89,34 @@ class LostReplyTests(unittest.TestCase):
         self.assertTrue(lost_reply(self.stream(beat), "timeout"))
         done = {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "c"}]}}
         self.assertFalse(lost_reply(self.stream(beat, done), "timeout"))
+
+    def test_a_timeout_during_a_verifier_call_within_its_limit_is_the_solvers(self):
+        for tool in ("mcp__broker__test", "mcp__broker__finish"):
+            use = {"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "t", "name": tool}]}}
+            beat = {"type": "tool_progress", "tool_use_id": "t-heartbeat-4", "tool_name": tool, "elapsed_time_seconds": 150}
+            self.assertFalse(lost_reply(self.stream(use, beat), "timeout"))
+            hung = {**beat, "elapsed_time_seconds": 300}  # Past the verifier's own limit: the reply was lost.
+            self.assertTrue(lost_reply(self.stream(use, hung), "timeout"))
+        beat = {"type": "tool_progress", "tool_use_id": "v-heartbeat-0", "tool_name": "mcp__broker__test", "elapsed_time_seconds": 30}
+        self.assertFalse(lost_reply(self.stream(beat), "timeout"))
+
+    def test_a_solver_timeout_bounds_its_cost_from_the_streamed_calls(self):
+        def call(ident, output, read, write_1h, cached_input=0):
+            return {"type": "assistant", "message": {"id": ident, "model": "claude-haiku-5-5", "content": [], "usage": {
+                "input_tokens": 2, "output_tokens": output, "cache_read_input_tokens": read + cached_input,
+                "cache_creation_input_tokens": write_1h,
+                "cache_creation": {"ephemeral_5m_input_tokens": 0, "ephemeral_1h_input_tokens": write_1h}}}}
+        stream = self.stream(call("m1", 5, 1000, 4000), call("m1", 5, 1000, 4000), call("m2", 7, 120_000, 0))
+        events, (lower, upper) = timeout_usage(stream, 0.5)
+        short = (2 * 0.1 + 5 * 0.5 + 4000 * 0.2 + 1000 * 0.01) / 1e6  # m1 once: repeated message ids are one call
+        long = (2 * 0.5 + 7 * 2.5 + 120_000 * 0.05) / 1e6  # Above 100K prompt tokens: the long-prompt rates
+        self.assertAlmostEqual(lower, short + long)
+        self.assertEqual(upper, 0.5)
+        self.assertEqual(events[0]["input_tokens"], 5002 + 120_002)
+        self.assertIsNone(events[0]["reasoning_tokens"])
+        with self.assertRaises(ValueError):
+            timeout_usage(self.stream({"type": "user", "message": {"content": []}}), 0.5)
+        self.assertEqual(attempt_budget(["claude", "--max-budget-usd", "0.5", "--model", "m"]), 0.5)
 
     def test_a_gateway_refusal_is_an_infrastructure_abort(self):
         refused = {"type": "assistant", "message": {"model": "<synthetic>", "content": [
