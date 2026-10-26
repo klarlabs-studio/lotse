@@ -19,12 +19,16 @@ def main(run_id, catalog, report):
         with contextlib.redirect_stdout(io.StringIO()):
             prepare(task, trial_id)
         names = sorted({f["path"] for f in task_faults(task)})
-        faulty = {name: (root / name).read_text() for name in names}
+        # A file the fix added is absent in the faulty state (None).
+        faulty = {name: (root / name).read_text() if (root / name).is_file() else None for name in names}
         original = {name: (BASE / ".research/corpora" / task["repo"] / name).read_text() for name in names}
         codes = {}
         for phase, texts in [("base", original), ("fault", faulty), ("restored", original)]:
             for name, text in texts.items():
-                (root / name).write_text(text)
+                if text is None:
+                    (root / name).unlink(missing_ok=True)
+                else:
+                    (root / name).write_text(text)
             stream = io.StringIO()
             try:
                 with contextlib.redirect_stdout(stream):
