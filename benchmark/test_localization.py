@@ -222,6 +222,29 @@ class FileScreenTests(unittest.TestCase):
         self.assertEqual(ranked, ["a.go", "b.js"])
         self.assertEqual(file_propagate({"a.go": 2.0, "c.py": 3.0}, units, [], 0.5), ["c.py", "a.go"])
 
+    def test_file_kind_matches_graf_index_kinds(self):
+        from localization import file_kind
+        cases = {"README.md": "docs", "docs/guide.rst": "docs", "notes.adoc": "docs", "lib/reply.js": "code",
+                 "test/reply.js": "test", "pkg/tests/x.py": "test", "src/__tests__/a.ts": "test",
+                 "src/a.test.ts": "test", "src/a.spec.tsx": "test", "x_test.go": "test", "test_app.py": "test",
+                 "src/helper/testing/index.ts": "code", "src/contest.py": "code"}
+        for path, kind in cases.items():
+            self.assertEqual(file_kind(path), kind, path)
+
+    def test_code_first_keeps_each_groups_order(self):
+        from localization import code_first
+        ranked = ["tests/a_test.go", "b.go", "README.md", "a.go"]
+        self.assertEqual(code_first(ranked), ["b.go", "a.go", "tests/a_test.go", "README.md"])
+
+    def test_file_code_screen_runs_only_its_preregistered_arms(self):
+        from localization import arms_for, split_typescript
+        self.assertEqual(arms_for("file_code_screen"), ["graf_floor_ids", "graphify", "file_graph_ids", "file_graph_code"])
+        self.assertTrue(split_typescript("file_code_screen"))
+
+    def test_file_graph_code_is_never_run_on_a_tuning_split(self):
+        from localization import SPLITS, arms_for
+        self.assertFalse(any("file_graph_code" in arms_for(split) for split in SPLITS if split != "file_code_screen"))
+
     def test_decide_on_file_rank(self):
         rows = [{"task": f"t{i}", "repo": "r", "arms": {
             "x": {"unit_rank": None, "file_rank": 1}, "y": {"unit_rank": 1, "file_rank": None if i < 15 else 1}}}

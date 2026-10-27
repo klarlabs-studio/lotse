@@ -85,6 +85,23 @@ class MinerTests(unittest.TestCase):
                          ["node_modules/.bin/jest", "--ci", "tests/format/js/x/format.test.js",
                           "tests/format/ts/range/format.test.js"])
 
+    def test_file_code_screen_repositories(self):
+        self.assertEqual(classify("gorm", "tests/query_test.go"), "test")
+        self.assertEqual(classify("gorm", "tests/helper.go"), "test")
+        self.assertEqual(classify("gorm", "callbacks/query.go"), "source")
+        self.assertEqual(classify("go-redis", "internal/pool/pool.go"), "source")
+        self.assertEqual(classify("aiohttp", "tests/test_web.py"), "test")
+        self.assertEqual(classify("poetry", "src/poetry/factory.py"), "source")
+        self.assertEqual(classify("lodash", "test/isEqual.spec.js"), "test")
+        self.assertEqual(classify("lodash", "lodash.js"), "source")
+        self.assertEqual(classify("leaflet", "spec/suites/map/MapSpec.js"), "test")
+        self.assertEqual(classify("leaflet", "src/map/Map.js"), "source")
+        self.assertEqual(classify("xstate", "packages/core/test/actions.test.ts"), "test")
+        self.assertEqual(classify("zustand", "src/vanilla.ts"), "source")
+        self.assertEqual(classify("zustand", "tests/basic.test.tsx"), "test")
+        from mine_natural_tasks import pinned
+        self.assertEqual(pinned("leaflet")["repository"], "Leaflet/Leaflet")
+
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")
         self.assertEqual(classify("tanstack-query", "packages/react-query/src/useQuery.tsx"), "source")

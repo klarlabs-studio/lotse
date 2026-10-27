@@ -308,15 +308,18 @@ FILE_SCREEN_CATALOG = BASE / "benchmark/localization-file-screen-tasks.json"
 FILE_SCREEN_REPOS = ("echo", "resty", "werkzeug", "marshmallow", "hapi", "mocha")
 TYPESCRIPT_CATALOG = BASE / "benchmark/localization-typescript-tasks.json"
 TYPESCRIPT_REPOS = ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")
+FILE_CODE_SCREEN_CATALOG = BASE / "benchmark/localization-file-code-screen-tasks.json"
+FILE_CODE_SCREEN_REPOS = ("gorm", "go-redis", "aiohttp", "poetry", "lodash", "leaflet", "xstate", "zustand")
 # Split -> (catalog, repositories). dev is the 18-task part of the heldout catalog.
 SPLITS = {"dev": (CATALOG, REPOS), "heldout": (CATALOG, REPOS),
           "replication": (REPLICATION_CATALOG, REPLICATION_REPOS),
           "confirmation": (CONFIRMATION_CATALOG, CONFIRMATION_REPOS),
           "file_screen": (FILE_SCREEN_CATALOG, FILE_SCREEN_REPOS),
-          "typescript": (TYPESCRIPT_CATALOG, TYPESCRIPT_REPOS)}
+          "typescript": (TYPESCRIPT_CATALOG, TYPESCRIPT_REPOS),
+          "file_code_screen": (FILE_CODE_SCREEN_CATALOG, FILE_CODE_SCREEN_REPOS)}
 
 
-TYPESCRIPT_SPLITS = ("typescript",)
+TYPESCRIPT_SPLITS = ("typescript", "file_code_screen")  # v2 extraction and corpus (v102 for file_code_screen).
 
 
 def split_typescript(split):
@@ -475,13 +478,16 @@ def run_ast(units, edges, query, budget, graph):
 
 
 ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_units", "ast_graph", "ast_bounded",
-        "ast_graph_ids", "file_graph_ids")  # Later arms (v21, v24) are absent from earlier splits.
+        "ast_graph_ids", "file_graph_ids", "file_graph_code")  # Later arms (v21, v24) are absent from earlier splits.
+# file_graph_code was tuned on every earlier split; only its held-out split (v102) runs it.
 LATER_ARMS = {"ast_graph_ids": ("confirmation", "file_screen", "typescript"),
-              "file_graph_ids": ("file_screen", "typescript")}
+              "file_graph_ids": ("file_screen", "typescript", "file_code_screen"), "file_graph_code": ("file_code_screen",)}
+# A split that names its arms runs only those (v102: bounds run time).
+SPLIT_ARMS = {"file_code_screen": ("graf_floor_ids", "graphify", "file_graph_ids", "file_graph_code")}
 
 
 def arms_for(split):
-    return [a for a in ARMS if a not in LATER_ARMS or split in LATER_ARMS[a]]
+    return [a for a in ARMS if (a not in LATER_ARMS or split in LATER_ARMS[a]) and a in SPLIT_ARMS.get(split, ARMS)]
 
 
 def file_propagate(file_scores, units, edges, weight):
@@ -519,6 +525,39 @@ def run_file_graph(root, units, edges, query, budget):
 
 
 TRIAGE_FILE_LIMIT = 8  # Payload only; ranks are scored on the full list, as for the other arms.
+# Unstopped locate: a budget no candidate list can fill, so hints are every candidate file (graf caps them at 100).
+UNSTOPPED_FLAGS = ["--budget", "100000000", "--limit", "1000", "--file-score", "damped", "--stop", "full"]
+DOCS_SUFFIXES = {".md", ".mdx", ".rst", ".txt", ".adoc"}
+
+
+def file_kind(path):
+    """graf's index kind for a path (src/source.rs kind): docs, test, or code."""
+    p = Path(path)
+    if p.suffix in DOCS_SUFFIXES:
+        return "docs"
+    if any(part in ("test", "tests", "__tests__") for part in path.split("/")) or ".test." in path \
+            or ".spec." in path or path.endswith("_test.go") or p.name.startswith("test_"):
+        return "test"
+    return "code"
+
+
+def code_first(ranked):
+    """Code files first, then tests and docs; each group keeps its order."""
+    return [p for p in ranked if file_kind(p) == "code"] + [p for p in ranked if file_kind(p) != "code"]
+
+
+def file_graph_code(binary, root, units, edges, query):
+    """Development-set change to file_graph_ids: every candidate file's damped score (no floor or budget cut),
+    raised over cross-file call edges, code files first. Triage's file list."""
+    out = subprocess.run([str(binary), "--root", str(root), "locate", *UNSTOPPED_FLAGS, "--", query], check=True,
+                         capture_output=True, text=True).stdout
+    scores = {h["path"]: h["score"] for h in json.loads(out)["hints"]}
+    return code_first(file_propagate(scores, units, edges, WEIGHT))
+
+
+def run_file_graph_code(root, units, edges, query):
+    files = file_graph_code(GRAF, root / "input", units, edges, query)
+    return {"payload": "".join(f"{p}\n" for p in files[:TRIAGE_FILE_LIMIT]), "files": files, "spans": []}
 
 
 def run_task(task, budget, split="heldout"):
@@ -535,6 +574,8 @@ def run_task(task, budget, split="heldout"):
     for arm in arms_for(split):
         if arm == "file_graph_ids":
             answer = run_file_graph(root, units, edges, rewrite_query(task["query"]), budget)
+        elif arm == "file_graph_code":
+            answer = run_file_graph_code(root, units, edges, rewrite_query(task["query"]))
         elif arm in GRAF_FLAGS:
             query = rewrite_query(task["query"]) if arm.endswith("_ids") else task["query"]
             answer = run_graf(root, arm, query, budget)
@@ -675,7 +716,7 @@ def summarize(rows):
 def decide_split(split):
     screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
-    rule = screen[split]["decision"] if split in ("replication", "confirmation", "file_screen", "typescript") \
+    rule = screen[split]["decision"] if split in ("replication", "confirmation", "file_screen", "typescript", "file_code_screen") \
         else screen["decision"]
     metric = rule.get("metric", "unit_acc")
     planned = {t["id"] for t in json.loads(catalog_for(split).read_text())["tasks"] if t["split"] == split}

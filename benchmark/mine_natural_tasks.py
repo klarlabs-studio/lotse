@@ -35,7 +35,10 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    **{repo: (".go",) for repo in ("zap", "validator", "logrus", "mux")},
                    **{repo: (".py",) for repo in ("requests", "tqdm", "httpie", "uvicorn", "pytest")},
                    **{repo: (".js",) for repo in ("handlebars", "winston", "pug", "superagent", "prettier")},
-                   **{repo: TYPESCRIPT_SOURCES for repo in ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")}}
+                   **{repo: TYPESCRIPT_SOURCES for repo in ("zod", "hono", "trpc", "tanstack-query", "vitest", "typeorm")},
+                   # file_code_screen (v102): every source suffix graf indexes, per language.
+                   "gorm": (".go",), "go-redis": (".go",), "aiohttp": (".py",), "poetry": (".py",),
+                   **{repo: TYPESCRIPT_SOURCES for repo in ("lodash", "leaflet", "xstate", "zustand")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier")}}
@@ -60,6 +63,8 @@ def classify(repo, path):
     suffix = SOURCE_SUFFIXES[repo]
     if suffix == TYPESCRIPT_SOURCES and (set(Path(path).parts) & {"test", "tests", "__tests__"}
                                          or ".test." in name or ".spec." in name):
+        return "test"
+    if repo == "gorm" and path.startswith("tests/") or repo == "leaflet" and path.startswith("spec/"):
         return "test"
     if suffix == (".go",) and (name.endswith("_test.go") or "/testdata/" in f"/{path}"):
         return "test"
@@ -235,7 +240,7 @@ def pinned(repo):
     screen = prereg["localization_screen"]
     for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["agent_trials"]["natural_tasks_t7"],
                  prereg["agent_trials"]["natural_tasks_t8"], screen["confirmation"], screen["file_screen"],
-                 screen["typescript"]):
+                 screen["typescript"], screen["file_code_screen"]):
         if repo in spec["repositories"]:
             return {"id": repo, **spec["repositories"][repo]}
     raise KeyError(repo)
