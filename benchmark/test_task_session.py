@@ -197,6 +197,22 @@ class TaskBrokerIntegrity(unittest.TestCase):
             empty.dirty = False
             self.assertEqual(empty.call("orient", {})["result"]["content"], "")
 
+    def test_pointer_orientation_shows_lean_triage_from_the_pointer_binary(self):
+        arm = "graf_pointer_orient"
+        self.assertEqual(task_session.graf_binary(arm), task_session.GRAF_POINTERS)
+        self.assertIn("outline", [d["name"] for d in task_session.tool_definitions(arm)])
+        with patch.object(task_session, "run_tool") as run:
+            run.return_value.stdout = "Likely files:\n- app.py: value L1-2\n- lib/core.py\n"
+            run.return_value.returncode = 0
+            session = task_session.prepare_session(self.task, "pointer-orient", arm)
+            session.dirty = False
+            result = session.call("orient", {})["result"]
+            self.assertEqual(result["content"], "Likely files:\n- app.py: value L1-2\n- lib/core.py\n")
+            command = run.call_args[0][0]
+            self.assertEqual(command[0], str(task_session.GRAF_POINTERS))
+            self.assertEqual(command[3:], ["triage", "--lean", "--text", "--budget", str(task_session.ORIENT_BUDGET),
+                                           "--", self.task["issue"]])
+
     def test_orientation_is_only_for_orient_arms_and_only_once(self):
         with patch.object(task_session, "run_tool") as run:
             run.return_value.stdout = "Likely files:\n- app.py\n"

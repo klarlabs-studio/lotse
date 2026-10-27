@@ -50,6 +50,7 @@ TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "tar
                  "graf_orient": BASE / ".research/bin/graf-t5",
                  "graf_current_orient": BASE / ".research/bin/graf-t6",
                  "graf_lean_orient": BASE / ".research/bin/graf-a9c9e4d",
+                 "graf_pointer_orient": BASE / ".research/bin/graf-c3fee50",
                  "graphify_orient": GRAPHIFY, "graphify": GRAPHIFY,
                  "search_only": Path(shutil.which("rg") or "rg"),
                  "ast_graph": [BASE / "frozen-t4" / name
