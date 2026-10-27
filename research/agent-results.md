@@ -2,6 +2,67 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t8: replication of the lean file-list orientation versus Graphify (Haiku, fresh tasks); fails on cost
+
+**Outcome: the candidate `graf_lean_orient` fails the preregistered rule again.** It was not cheaper than Graphify's orientation (mean −$0.00021 per task, p 0.66). Success was non-inferior: 61/72 against 62/72, p 0.005. t7's 32% token saving did not replicate: graf used 14.32M tokens against Graphify's 14.41M (secondary, p 0.47). No attempt hit the trial timeout, so no cost was bounded and the v93 rule never applied. On these tasks, a file-list orientation does not establish agent savings against Graphify. Every task and arm summary is in [agent-decision-t8.json](../results/agent-decision-t8.json).
+
+### Conditions
+
+- **Tasks.** 36 fresh natural tasks from nine repositories never used by any graf benchmark, frozen in v94–v101 before any solver saw them:
+
+  | Language | Tasks |
+  |---|---|
+  | Go | 14 (zap 5, validator 7, mux 2) |
+  | Python | 12 (requests 1, tqdm 1, uvicorn 2, pytest 8) |
+  | JavaScript | 10 (handlebars 2, prettier 8) |
+
+  - **Selection.** The t7 protocol, filled per language under the v95 rule: newest merge first, at most 8 per repository and 16 per language. Python and JavaScript ran out of candidates before 16.
+  - **Yield.** 55 of the candidates were judged bugs from the issue text alone, and 44 passed the fail-to-pass check. The rejections are listed in the preregistration.
+  - **Duplicate.** Two tqdm pull requests close the same issue; only the newer one was kept.
+  - **Catalog.** sha256 `9a4f0b35…`.
+- **Pre-run corrections (no solver had run):**
+  - **pytest runtime (v99, v100).** pytest's runtime lacked the generated `_version.py`, so every pytest candidate failed on unmodified code. The v99 fix still failed, because the module was not bound to the package. The v100 fix serves it through the import system. Only pytest's candidates were re-checked.
+  - **Minimum task count (v101).** It was missing and set to t7's 36 at the freeze, when the yield of 36 was already known.
+  - **Payload prefix (v101).** A no-model dry run found Graphify's pytest orientation empty: its first line, a 7,078-character traversal header, alone exceeded the 1,500-token budget, and payloads keep only complete lines. From t8, such a first line keeps its longest prefix within the budget, for both arms. This can only add comparator context.
+- **Design.** 2 attempts per task and arm, 144 attempts in a seeded random order (seed 20261027).
+  - **Solver.** Claude Code 2.1.311 (pinned copy; it came out after v94 froze 2.1.310) running `claude-haiku-5-5` on the subscription. 80-turn cap, $0.50 per attempt, 1,200 s trial timeout, list-price cost.
+  - **Prices.** 2.1.311's built-in Haiku 5.5 prices are identical to 2.1.310's.
+  - **Verifier deadline.** On (v94): the broker fits verifier runs inside the trial timeout.
+- **Arms.**
+  - `graf_lean_orient`: as in t7, the file list from `graf triage --budget 1500` (binary `graf-a9c9e4d`) and nothing else.
+  - `graphify_orient`: Graphify 0.9.96 orientation, a new baseline revision with its own virtualenv and snapshot, capped at 1,500 tokens.
+- **Completeness.** All 144 attempts are complete. Three runs were infrastructure aborts, set aside and rerun from scratch under the completeness rule:
+  - one Graphify index rebuild on prettier exceeded its 180 s limit under host load;
+  - two pytest runs, one per arm, were interrupted when the disk filled. The batch stopped after 61 attempts and was resumed once space was freed.
+- **Host.** Another project's jobs kept the load high (load average up to about 60) for part of the run.
+
+### Results
+
+| Arm | Passes / attempts | Success (Wilson 95%) | Total cost (list, USD) | Total tokens |
+| --- | ---: | --- | ---: | ---: |
+| `graf_lean_orient` | 61 / 72 | 84.7% (74.7–91.2%) | 0.664 | 14.32M |
+| Graphify 0.9.96 orientation | 62 / 72 | 86.1% (76.3–92.3%) | 0.649 | 14.41M |
+
+| `graf_lean_orient` versus | Mean cost reduction per task | Cost p (one-sided sign flip) | Cheaper tasks | Success difference (margin 0.10) | Pass |
+| --- | ---: | ---: | ---: | --- | --- |
+| Graphify orientation | −$0.00021 (costs more) | 0.66 | 20 / 36 | −0.014, non-inferior (p 0.005) | no |
+
+**By language (exploratory, not preregistered):**
+
+| Language | `graf_lean_orient` passes, cost, tokens | Graphify passes, cost, tokens |
+| --- | --- | --- |
+| Go | 23/28, $0.223, 4.71M | 23/28, $0.226, 5.29M |
+| Python | 20/24, $0.229, 4.85M | 20/24, $0.234, 5.44M |
+| JavaScript | 18/20, $0.212, 4.77M | 19/20, $0.189, 3.68M |
+
+graf used about 11% fewer tokens on Go and Python. On JavaScript it used 30% more, which offsets that saving; the extra came mainly from prettier tasks.
+
+### Reading
+
+- **Two batches, no cost advantage.** t7 and t8 both fail on cost, and t8 does not reproduce t7's token saving, so that saving was not robust. At Haiku 5.5 prices most tokens are cache reads, so the orientation's size barely moves cost.
+- **Orientation length alone is unlikely to win.** A file list of a few dozen tokens cost about the same as Graphify's 1,500-token orientation.
+- **Next.** A better file list (a development screen on branch `feat/triage-file-recall` raised triage's top-5 file accuracy from 0.584 to 0.731 on the spent localization catalogs) needs its own held-out screen and agent batch before any claim.
+
 ## Batch t7: lean file-list orientation versus Graphify (Haiku, fresh tasks); fails on cost
 
 **Outcome: the candidate `graf_lean_orient` fails the preregistered rule.** Under the v93 accounting it was not significantly cheaper than Graphify's orientation (mean −$0.00089 per task, p 0.50). Success was non-inferior: 65/92 against 63/92, p < 0.001. It used 32% fewer tokens (secondary, p < 0.001), but cache reads make up most of that saving, and at Haiku 5.5's cache-read price ($0.01 per million) they cost almost nothing. The failure turns on one bounded attempt (see "Sensitivity" below), so this is a close fail, not evidence of no effect. It does not establish agent savings against Graphify. Every task and arm summary is in [agent-decision-t7.json](../results/agent-decision-t7.json).

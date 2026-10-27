@@ -1,0 +1,908 @@
+{
+  "preregistration_version": 101,
+  "batch": "t8",
+  "attempts_per_task_and_arm": 2,
+  "excluded_later_attempts": 0,
+  "passed": false,
+  "reasons": [
+    "no candidate passed both the cost and success tests"
+  ],
+  "comparators": [
+    "graphify_orient"
+  ],
+  "comparisons": {
+    "graf_lean_orient": {
+      "role": "candidate",
+      "passed": false,
+      "versus": {
+        "graphify_orient": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": -0.00020583138888888893,
+            "p": 0.6586434135658643,
+            "alpha": 0.05,
+            "passed": false
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": -0.013888888888888888,
+            "margin": 0.1,
+            "p": 0.0047199528004719955,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": false,
+          "cheaper_tasks": 20,
+          "secondary": {
+            "mean_token_reduction": 1194.8333333333333,
+            "token_reduction_p": 0.47275527244727555
+          }
+        }
+      }
+    }
+  },
+  "solver_timeouts_least_favorable": [],
+  "arms": {
+    "graf_lean_orient": {
+      "attempts": 72,
+      "passes": 61,
+      "success_rate": 0.8472222222222222,
+      "success_wilson95": [
+        0.7467771063249946,
+        0.912492912705243
+      ],
+      "pass_hat_k": [
+        0.8472222222222222,
+        0.8333333333333334
+      ],
+      "total_cost_usd": 0.66398302,
+      "total_tokens": 14322945.0
+    },
+    "graphify_orient": {
+      "attempts": 72,
+      "passes": 62,
+      "success_rate": 0.8611111111111112,
+      "success_wilson95": [
+        0.762868127494437,
+        0.9227726922970102
+      ],
+      "pass_hat_k": [
+        0.8611111111111112,
+        0.7777777777777778
+      ],
+      "total_cost_usd": 0.6491631600000001,
+      "total_tokens": 14408973.0
+    }
+  },
+  "tasks": [
+    {
+      "task": "handlebars-1838",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005298125,
+        "mean_tokens": 84100.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005089405,
+        "mean_tokens": 92501.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "handlebars-2164",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0035112250000000006,
+        "mean_tokens": 78183.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00367204,
+        "mean_tokens": 70260.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mux-534",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00848,
+        "mean_tokens": 131503.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00464317,
+        "mean_tokens": 76562.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mux-739",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.02246547,
+        "mean_tokens": 383475.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.023240475,
+        "mean_tokens": 542902.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-11565",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00744419,
+        "mean_tokens": 86858.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00982527,
+        "mean_tokens": 144613.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-14509",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0032946800000000004,
+        "mean_tokens": 45675.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00433743,
+        "mean_tokens": 85689.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-14694",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.018358214999999997,
+        "mean_tokens": 434931.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.012698830000000001,
+        "mean_tokens": 300852.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-16184",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.011307130000000002,
+        "mean_tokens": 291112.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009749175,
+        "mean_tokens": 238210.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-20163",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005665374999999999,
+        "mean_tokens": 103562.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00816309,
+        "mean_tokens": 151236.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-20172",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.020072685,
+        "mean_tokens": 467944.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01182991,
+        "mean_tokens": 182576.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-20175",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.024921005,
+        "mean_tokens": 694890.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.02099264,
+        "mean_tokens": 426791.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "prettier-5183",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005977795,
+        "mean_tokens": 96245.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008357955,
+        "mean_tokens": 145724.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-11783",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01502301,
+        "mean_tokens": 365434.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.012234305,
+        "mean_tokens": 308442.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-12175",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00677363,
+        "mean_tokens": 134023.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.006556775000000001,
+        "mean_tokens": 122389.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-12223",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.017901624999999997,
+        "mean_tokens": 480261.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01569822,
+        "mean_tokens": 423250.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-14912",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.012358355000000001,
+        "mean_tokens": 215329.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.014117830000000001,
+        "mean_tokens": 261423.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-15132",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00682272,
+        "mean_tokens": 148063.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00596137,
+        "mean_tokens": 132125.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-15254",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.027562635000000002,
+        "mean_tokens": 605023.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.024729355,
+        "mean_tokens": 675417.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-6750",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00285847,
+        "mean_tokens": 47466.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0039046849999999998,
+        "mean_tokens": 77706.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pytest-9924",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006109295,
+        "mean_tokens": 120294.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010076545000000001,
+        "mean_tokens": 267906.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "requests-4795",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0031294450000000002,
+        "mean_tokens": 45761.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0039400649999999995,
+        "mean_tokens": 71015.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "tqdm-1658",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00246731,
+        "mean_tokens": 40695.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0028719749999999997,
+        "mean_tokens": 44040.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "uvicorn-3040",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0061741,
+        "mean_tokens": 86109.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.009159730000000001,
+        "mean_tokens": 183305.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "uvicorn-3202",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00725225,
+        "mean_tokens": 134880.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0076108700000000005,
+        "mean_tokens": 153803.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "validator-1249",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00540235,
+        "mean_tokens": 83264.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.006358994999999999,
+        "mean_tokens": 139221.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "validator-1576",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007679490000000001,
+        "mean_tokens": 124925.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0065818149999999995,
+        "mean_tokens": 80945.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "validator-1602",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002270225,
+        "mean_tokens": 40010.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0028122600000000005,
+        "mean_tokens": 56806.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "validator-1641",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002180495,
+        "mean_tokens": 38568.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00213546,
+        "mean_tokens": 35529.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "validator-1647",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.007785580000000001,
+        "mean_tokens": 187179.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.00696338,
+        "mean_tokens": 172870.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "validator-766",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006707015,
+        "mean_tokens": 101787.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006450135000000001,
+        "mean_tokens": 114547.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "validator-893",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.028000220000000006,
+        "mean_tokens": 857566.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.022142345,
+        "mean_tokens": 659261.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "zap-737",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005037905,
+        "mean_tokens": 89554.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006805420000000001,
+        "mean_tokens": 136348.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "zap-798",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0027980999999999995,
+        "mean_tokens": 48773.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003105005,
+        "mean_tokens": 65144.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "zap-810",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0018646449999999998,
+        "mean_tokens": 28987.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.001968835,
+        "mean_tokens": 28299.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "zap-896",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008613655000000001,
+        "mean_tokens": 191633.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.016562,
+        "mean_tokens": 467814.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "zap-995",
+      "graf_lean_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00242309,
+        "mean_tokens": 47402.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_orient": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003234815,
+        "mean_tokens": 68958.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself"
+}
