@@ -15,6 +15,8 @@ import shutil
 import signal
 import subprocess
 import sys
+import tempfile
+import threading
 import time
 
 BASE = Path(__file__).resolve().parents[1]
@@ -91,20 +93,29 @@ def verify(task, workspace, timeout=180):
     return run.returncode
 
 
+SAMPLE_SECONDS = 0.25
+
+
 def run_group(command, cwd, env, timeout):
-    """Run a test command in its own process group and kill the whole group when it ends or times out, so test
-    runners' worker processes (jest, mocha) never outlive the verdict."""
-    process = subprocess.Popen(command, cwd=cwd, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-                               start_new_session=True)
-    try:
-        stdout, stderr = process.communicate(timeout=timeout)
-    except subprocess.TimeoutExpired:
-        _kill_group(process.pid)
-        process.communicate()
-        raise
-    finally:
-        _kill_group(process.pid)
-    return subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
+    """Run a test or tool command and, when it ends or times out, kill everything it started: its process group,
+    then every descendant seen while it ran. Playwright detaches its browser into a new session, which killpg
+    never reaches; the browser is a descendant until its launcher dies. Output goes to files, so a detached
+    descendant holding a pipe cannot stall the run."""
+    with tempfile.TemporaryFile() as out, tempfile.TemporaryFile() as err:
+        process = subprocess.Popen(command, cwd=cwd, env=env, stdout=out, stderr=err, start_new_session=True)
+        watcher = _DescendantWatcher(process.pid)
+        watcher.start()
+        try:
+            process.wait(timeout=timeout)
+        finally:
+            watcher.stop()
+            _kill_group(process.pid)
+            _kill_seen(watcher.seen)
+            process.wait()
+        out.seek(0)
+        err.seek(0)
+        return subprocess.CompletedProcess(command, process.returncode, out.read().decode(errors="replace"),
+                                           err.read().decode(errors="replace"))
 
 
 def _kill_group(pid):
@@ -112,6 +123,63 @@ def _kill_group(pid):
         os.killpg(pid, signal.SIGKILL)
     except (ProcessLookupError, PermissionError):
         pass
+
+
+def _process_table():
+    """{pid: (ppid, start time)} for every process (macOS no longer shows other processes' environments)."""
+    listing = subprocess.run(["ps", "-A", "-o", "pid=,ppid=,lstart="], capture_output=True, text=True).stdout
+    table = {}
+    for line in listing.splitlines():
+        pid, ppid, start = line.split(None, 2)
+        table[int(pid)] = (int(ppid), start)
+    return table
+
+
+def _descendants(root, table):
+    children = {}
+    for pid, (ppid, _) in table.items():
+        children.setdefault(ppid, []).append(pid)
+    found, stack = {}, [root]
+    while stack:
+        for child in children.get(stack.pop(), []):
+            found[child] = table[child][1]
+            stack.append(child)
+    return found
+
+
+class _DescendantWatcher(threading.Thread):
+    def __init__(self, root):
+        super().__init__(daemon=True)
+        self.root, self.seen, self.done = root, {}, threading.Event()
+
+    def sample(self):
+        self.seen.update(_descendants(self.root, _process_table()))
+
+    def run(self):
+        while not self.done.wait(SAMPLE_SECONDS):
+            self.sample()
+
+    def stop(self):
+        self.done.set()
+        self.join()
+        self.sample()  # The tree as it stands at the end, before anything is killed.
+
+
+def _kill_seen(seen, grace=2.0):
+    """Kill recorded descendants that still run with the same start time (a reused pid is left alone)."""
+    def alive():
+        table = _process_table()
+        return [pid for pid, start in seen.items() if pid in table and table[pid][1] == start]
+    for sig in (signal.SIGTERM, signal.SIGKILL):
+        pids = alive()
+        for pid in pids:
+            try:
+                os.kill(pid, sig)
+            except (ProcessLookupError, PermissionError):
+                pass
+        deadline = time.monotonic() + grace
+        while pids and time.monotonic() < deadline and alive():
+            time.sleep(0.1)
 
 
 def audit_trace(path):

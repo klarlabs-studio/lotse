@@ -3,6 +3,7 @@ import contextlib
 import io
 import json
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -22,6 +23,29 @@ class NaturalTaskTests(unittest.TestCase):
             child = int(marker.read_text())
             with self.assertRaises(ProcessLookupError):
                 agent_trials.os.kill(child, 0)
+
+    def assert_detached_grandchild_is_gone(self, run):
+        # Like Playwright's browser: a new session escapes the test command's process group, and its launcher
+        # (a test worker) exits while the browser lives on.
+        with tempfile.TemporaryDirectory() as temp:
+            marker = Path(temp) / "child.pid"
+            spawn = ("import subprocess, time; p = subprocess.Popen(['sleep', '30'], start_new_session=True); "
+                     f"open({str(marker)!r}, 'w').write(str(p.pid)); time.sleep(1)")
+            run([sys.executable, "-c", spawn], temp)
+            child = int(marker.read_text())
+            with self.assertRaises(ProcessLookupError):
+                agent_trials.os.kill(child, 0)
+
+    def test_a_verifier_leaves_no_detached_process_behind(self):
+        self.assert_detached_grandchild_is_gone(lambda command, cwd: agent_trials.run_group(command, cwd, None, 30))
+
+    def test_a_broker_tool_leaves_no_detached_process_behind(self):
+        self.assert_detached_grandchild_is_gone(lambda command, cwd: task_session.run_tool(command, cwd=cwd, timeout=30))
+
+    def test_a_failing_broker_tool_still_raises_for_check(self):
+        with self.assertRaises(task_session.InfrastructureError):
+            task_session.run_tool(["sh", "-c", "exit 3"], timeout=30)
+        self.assertEqual(task_session.run_tool(["sh", "-c", "echo hi; exit 3"], check=False, timeout=30).stdout, "hi\n")
 
     def test_a_file_the_fix_added_and_upstream_later_removed_is_already_faulty(self):
         with tempfile.TemporaryDirectory() as temp:

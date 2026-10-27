@@ -16,7 +16,7 @@ import subprocess
 import sys
 import time
 
-from agent_trials import BASE, prepare, tasks, verify
+from agent_trials import BASE, prepare, run_group, tasks, verify
 from retrieval import GRAPHIFY, graphify_baseline, load_documents, tokens
 from compare_graphify import GRAPHIFY_ADAPTERS, graphify_command
 
@@ -101,8 +101,11 @@ class InfrastructureError(RuntimeError):
 
 def run_tool(command, check=True, **kwargs):
     """Run a broker backend; a missing or failing executable is infrastructure, not the agent."""
-    try:
-        return subprocess.run(command, capture_output=True, text=True, check=check, **kwargs)
+    try:  # Everything the backend starts is killed when it ends, like the verifier's test runs.
+        result = run_group(command, kwargs.get("cwd"), kwargs.get("env"), kwargs.get("timeout"))
+        if check:
+            result.check_returncode()
+        return result
     except (OSError, subprocess.SubprocessError) as error:
         raise InfrastructureError(f"{Path(command[0]).name} failed: {error}") from error
 
