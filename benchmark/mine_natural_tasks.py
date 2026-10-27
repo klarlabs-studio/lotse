@@ -41,7 +41,7 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    **{repo: TYPESCRIPT_SOURCES for repo in ("lodash", "leaflet", "xstate", "zustand")},
                    **{repo: (".go",) for repo in ("websocket", "lo", "sqlx", "fasthttp")},  # natural_tasks_t9 (v105).
                    **{repo: (".py",) for repo in ("loguru", "pydantic", "drf", "sqlmodel")},
-                   **{repo: (".js",) for repo in ("moment", "ramda", "jsdom", "nock")}}
+                   **{repo: (".js",) for repo in ("moment", "ramda", "jsdom", "nock", "async", "nodemon", "webpack")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
