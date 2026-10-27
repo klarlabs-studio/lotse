@@ -1,5 +1,5 @@
 {
-  "version": 101,
+  "version": 102,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1417,6 +1417,11 @@
       "version": 101,
       "date": "2026-10-26",
       "reason": "Freeze the batch t8 catalog: 36 natural tasks, 144 planned runs"
+    },
+    {
+      "version": 102,
+      "date": "2026-10-27",
+      "reason": "Preregister the held-out file_code_screen for file_graph_code on eight unused repositories, before any of their pull requests is listed"
     }
   ],
   "arms": {
@@ -1732,6 +1737,88 @@
       "disclosures": [
         "2026-10-25: the TypeScript run crashed on ENOSPC at 13:54 UTC with 2901/2968 rows saved; its half-written typeorm-3534 snapshot was deleted and the run resumed under the same pins. While diagnosing, three interim log rows (per-arm ranks for typeorm-3777, typeorm-4452, typeorm-4788) were printed and seen. No rule or arm changed"
       ]
+    },
+    "file_code_screen": {
+      "purpose": "held-out test of file_graph_code (branch feat/triage-file-recall, 19fcf82), the triage file list developed on all six earlier localization catalogs (development file Acc@5 0.584 -> 0.731). Decides whether it earns an agent batch; offline, no solver. It cannot by itself support an efficiency or promotion claim",
+      "repositories": {
+        "gorm": {
+          "repository": "go-gorm/gorm",
+          "commit": "ead4e04ba7c6a49654649131e587133b1d9f3eca",
+          "language": "Go"
+        },
+        "go-redis": {
+          "repository": "redis/go-redis",
+          "commit": "c9092ec492bbb5e51f550e72776034a19686aa14",
+          "language": "Go"
+        },
+        "aiohttp": {
+          "repository": "aio-libs/aiohttp",
+          "commit": "79675d55fbc5899acdeb2cb4480ca24180e97720",
+          "language": "Python"
+        },
+        "poetry": {
+          "repository": "python-poetry/poetry",
+          "commit": "1fe5e0a57928572eb1d08f83b0cf0179043280dd",
+          "language": "Python"
+        },
+        "lodash": {
+          "repository": "lodash/lodash",
+          "commit": "2b5e6f7399a7b48005140b5d5c6bc6c0e62919a8",
+          "language": "JavaScript"
+        },
+        "leaflet": {
+          "repository": "Leaflet/Leaflet",
+          "commit": "95874808720543c8ed75881516c68d1cad7869b1",
+          "language": "JavaScript"
+        },
+        "xstate": {
+          "repository": "statelyai/xstate",
+          "commit": "060cd63378b46b32e7559d569ed3ad112ee60084",
+          "language": "TypeScript"
+        },
+        "zustand": {
+          "repository": "pmndrs/zustand",
+          "commit": "382d29c485e67018c06e75ec7235130d0968522c",
+          "language": "TypeScript"
+        }
+      },
+      "repository_choice": "two per language graf indexes (Go, Python, JavaScript, TypeScript), popular (over 10,000 stars), not archived, never used as a repository by any graf benchmark, screen or agent batch (mentions inside other repositories' issue text do not count); JavaScript and TypeScript chosen by GitHub's largest language. Default-branch heads resolved on 2026-10-27, before any of their pull requests was listed. Chosen after batch t8's result and the development screen were known; no task of these repositories had been seen",
+      "tasks": "the localization_screen task rules, one split 'file_code_screen'; source files .go, .py, .js, .jsx, .ts, .tsx outside test paths, with the TypeScript screen's v2 extraction and corpus (EXTENSIONS_V2) for every repository; catalog benchmark/localization-file-code-screen-tasks.json, hashed in the results",
+      "new_arm": {
+        "file_graph_code": "graf locate --budget 100000000 --limit 1000 --file-score damped --stop full on the rewritten query (every candidate file's damped score, graf caps hints at 100; no floor or budget cut), raised over cross-file call edges exactly as file_graph_ids (weight 0.5), then code files before test and docs files (graf's index file kind), each group in score order. Its first 8 files are triage's list"
+      },
+      "arms": [
+        "graf_floor_ids",
+        "file_graph_ids",
+        "file_graph_code",
+        "graphify"
+      ],
+      "arms_note": "only these four arms run on this split, to bound run time; file_graph_ids is the current triage file list (the binary every t7/t8 trial used) and graf_floor_ids its unpropagated input",
+      "run": {
+        "graf_binary": ".research/bin/graf-a9c9e4d",
+        "graf_commit": "a9c9e4d",
+        "graf_sha256": "9d54581bd4eddf338b060edfeac6836cf1e44d3a4b671e65007f2bb0b2c9436e",
+        "graphify": "0.9.96 (baseline revision graphify-0.9.96, commit dac063456bc1f5d92354ec3936fd9dd1513a83f3)",
+        "command": "GRAF_BINARY=.research/bin/graf-a9c9e4d .research/venv-graphify-0.9.96/bin/python benchmark/localization.py run --split file_code_screen",
+        "note": "file_graph_code is computed in benchmark/localization.py from the pinned binary's locate output; src/triage.rs on the branch implements the same list and matched the Python arm on 767/767 file_screen and 300/300 TypeScript tasks"
+      },
+      "decision": {
+        "candidate_arms": [
+          "file_graph_code"
+        ],
+        "comparators": [
+          "file_graph_ids",
+          "graphify"
+        ],
+        "k": 5,
+        "metric": "file_acc",
+        "test": "exact one-sided McNemar on file_acc@5 against each comparator",
+        "rule": "file_graph_code qualifies for an agent batch only if it beats both comparators (intersection-union) at alpha 0.05",
+        "guardrails_descriptive": "file_acc@1 and @10, paired wins and losses, payload tokens, and the share of listed files that are tests, per arm and by repository; every task reported",
+        "completeness": "the decision runs only on the complete split; excluded tasks are reported"
+      },
+      "minimum_tasks": 200,
+      "if_fewer": "if fewer than 200 tasks meet the criteria, no decision is computed; any added repository is recorded in a new version before its pull requests are listed"
     }
   },
   "audit_regression": {
