@@ -1,5 +1,5 @@
 {
-  "version": 110,
+  "version": 111,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -696,6 +696,59 @@
         "solver_update_v101": "2026-10-26, before any t8 trial: check_latest showed Claude Code 2.1.311 (released after v94 froze 2.1.310); under the latest-version rule t8 runs 2.1.311 from its own pinned copy (.research/bin/claude-2.1.311). Earlier batches keep 2.1.310. The cost reconstruction's price table (v93) comes from 2.1.310's built-in catalog; 2.1.311's catalog carries the identical haiku_55 entry (0.1/0.5/0.125/0.2/0.01; above 1e5 prompt tokens 0.5/2.5/0.625/1/0.05), checked before any t8 trial, so the v93 table applies unchanged",
         "bounded_prefix": true,
         "bounded_prefix_rule_v101": "2026-10-26, from the no-model orientation dry run, before any t8 trial: every tool payload is cut to its budget by complete lines, so a first line that alone exceeds the budget empties it. Graphify 0.9.96's orientation for pytest-15254 starts with a 7,078-character traversal header and was delivered empty (native 6,473 tokens). From t8, such a first line keeps its longest prefix within the budget (task_session.bounded, SOLVER_BOUNDED_PREFIX), for both arms and every bounded payload; the budget and tokenizer are unchanged. It can only add comparator context. Earlier batches are unaffected: no t7 orientation was empty, and the only earlier truncated-to-empty bounded payloads were two exploratory codex orientations, which stay reproducible because the rule is off without the batch setting"
+      },
+      "t9": {
+        "arms": [
+          "graf_pointer_orient",
+          "graphify_orient"
+        ],
+        "candidates": [
+          "graf_pointer_orient"
+        ],
+        "controls": [],
+        "comparators": [
+          "graphify_orient"
+        ],
+        "catalog": "benchmark/natural-tasks-t9.json",
+        "seed": 20261028,
+        "frozen_in_version": 111,
+        "arm_definitions": {
+          "graf_pointer_orient": "before the first turn the harness runs `graf triage --lean --text --budget 1500` on the issue with the pinned binary and shows its output: triage's file list (file_graph_code ranking, at most 8 paths) with, under its first three files, the best-scored functions as name and line range (2, 1 and 1 pointers), and no code; under the same 1,500-token cl100k hard cap. This is the file_pointers payload that qualified in file_pointer_screen (v104), whose file list is the file_graph_code ranking that qualified in file_code_screen (v102). Tools, prompts and limits are those of t8 graf_lean_orient (units retrieval, outline, read, search, edit, test, finish), all served by the same pinned binary",
+          "graphify_orient": "unchanged from t5-t8: the pinned code-only Graphify orientation requested at 1,500 tokens and cut to the same 1,500-token hard cap, plus the same retrieval, read, search, edit, test and finish tools"
+        },
+        "budget_parity": "both orientations share the same requested budget and hard cap (1,500 cl100k); each backend returns its own output within it, as in every earlier screen. A Graphify orientation requested at a smaller budget is not tested and is reported as a limitation",
+        "graf_binary": ".research/bin/graf-c3fee50, built from commit c3fee50 (branch feat/triage-file-pointers), sha256 813a33072303d320..., hashed per run",
+        "solver_version": "2.1.312 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.312",
+        "solver_sha256": "6b5ec691195e551b02c41df9f7d723f4ea61eaa03c2df90acefe3736f1aeb620",
+        "model": "claude-haiku-5-5",
+        "graphify_commit": "0a8cd4e1e342235fe53e881fb5d591bf0460071f",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.97",
+        "versions_checked": "2026-10-27/28 with benchmark/check_latest.py: Graphify 0.9.97 and Claude Code 2.1.312 are the latest releases (both newer than t8's 0.9.96 and 2.1.311) and ripgrep 15.2.0; claude-haiku-5-5 is the latest Haiku (by hand). Graphify 0.9.97 is baseline revision graphify-0.9.97 (benchmark/corpora.json, results/snapshots-graphify-0.9.97.json); its virtualenv is 0.9.96's frozen package set with only graphifyy changed (0.9.97 adds an anyio>=4.14.2 floor to its mcp extra; the set already has anyio 4.15.1). Claude Code 2.1.312 is the darwin-arm64 binary from the npm package @anthropic-ai/claude-code-darwin-arm64@2.1.312; the same package's 2.1.311 binary is byte-identical to t8's pinned copy. 2.1.312's built-in haiku_55 price entry is identical to 2.1.311's (checked before any t9 trial), so the v93 cost table applies unchanged",
+        "attempts_per_task_and_arm": 2,
+        "solver_max_turns": 80,
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200,
+          "tool_budget_tokens": "requested 1..8000 cl100k; orientation hard cap 1500"
+        },
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription",
+        "rule": "the agent_trials.rule (cost superiority by one-sided paired sign flip at alpha 0.05, success non-inferiority within 0.10) against the single comparator graphify_orient",
+        "secondary": "turns, tokens, tool calls by type, orientation payload; per-task log cost ratio (exploratory, reported, not gated); every task reported",
+        "role": "first agent test of the screen-qualified orientation (file_graph_code files with file_pointers) against Graphify on fresh tasks; a pass is evidence for the candidate, not product promotion, and leads to a confirmation on fresh tasks frozen later",
+        "budget": "operator agreed on 2026-10-27: 144 Haiku attempts on the subscription (36 tasks x 2 attempts x 2 arms)",
+        "rationale": "t8 replicated neither a cost saving nor a loss for graf_lean_orient (mean -$0.00021 per task, p 0.66; success non-inferior). Exploratory t7+t8 cost analysis: when the gold file was ranked first, trials cost less (median $0.0040 vs $0.0073 when absent) and the costliest tenth of trials made about three times the navigation calls. Two held-out offline screens then qualified a sharper orientation: file_graph_code (file Acc@5 0.733 vs Graphify 0.517, file_code_screen) and file_pointers (unit Acc@3 0.340 vs Graphify 0.127 and ast_graph_ids 0.238, file_pointer_screen), at about 60-100 tokens against Graphify's ~2,200. t9 tests whether that orientation lowers agent cost at non-inferior success",
+        "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply under v93, orientation failure: set aside and rerun at most twice); index parity as v92",
+        "schedule": "runs after the t9 catalog is frozen (v110) and after the no-model dry run; frozen before any t9 model call",
+        "planned_runs": "36 tasks x 2 attempts x 2 arms = 144, as agreed",
+        "verifier_deadline": true,
+        "deadline_rule": "new in t8 (benchmark commit 5f0c72b): the runner records the 1,200 s trial deadline before the solver starts; the broker caps every test run at the time left minus a 120 s reserve for the solver's last turn and refuses it with under 30 s left ('call finish'); a finish that cannot get the verifier's full 180 s closes the attempt at once and the runner grades it with the full 180 s verifier after the solver exits. Every verdict therefore still gets the full verifier, and a solver whose edits hang the tests is no longer killed mid-call without its usage report. The same rule applies to both arms",
+        "solver_timeout": "the v93 rule stays in force as a fallback for any timeout the deadline rule cannot prevent (for example a slow final model turn): such an attempt is scored by the verifier and its cost is bounded and counted least favorably to the candidate",
+        "bounded_prefix": true,
+        "comparator_version_change": "the comparator is Graphify 0.9.97, not t8's 0.9.96, because the latest-versions policy requires the newest release at freeze time; t8 keeps 0.9.96, the screens keep 0.9.96. The orientation protocol (1,500-token request and hard cap, code-only) is unchanged",
+        "harness_changes_since_t8": "fail-to-pass and task tooling fixes that change no task or pass rule (4c44837, cb48ae8, 324a5ea, 0c137a5, 34b9d8b); a verifier's process group is killed when it ends (70fa209); and from 27f8c59 (issue #1) every verifier and broker-tool command runs under agent_trials.run_group, which records the command's descendants by sampling the process tree every 0.25 s and terminates every one still running when it ends (Playwright's browser leaves the process group), with output written to files instead of pipes. This applies to both arms alike; it adds about 0.1-0.3 s of wall time to each tool call, and tool wall time is diagnostic, not a gated metric. No t9 runtime launches a browser",
+        "payload_parity": "graf_pointer_orient's payload against the payload file_pointer_screen scored (localization.py file_pointers from graf-a9c9e4d's locate output), compared before any t9 model call and without gold: identical on 1,449 of 1,459 file_code_screen tasks (the 10 differences are leaflet tasks with identical file lists and one different lower-ranked pointer, where Rust and the prototype order units of object-literal methods differently) and on 30 of 36 t9 tasks (6 moment tasks: on 5 the eighth file differs, and on moment-6116 the two split moment's 4,500-line UMD bundles into units differently). t9 tests the shipped binary as defined; the differences are reported, not repaired",
+        "dry_run_v111": "2026-10-28, no model: each of the 36 tasks x 2 arms prepared and oriented with bounded_prefix on: 72 of 72 orientations ok and nonempty; graf_pointer_orient median 94 cl100k tokens, none truncated; graphify_orient median 1,490, truncated to the cap on 30 of 36. No outcome was graded"
       }
     },
     "natural_tasks": {
@@ -1584,6 +1637,11 @@
       "version": 110,
       "date": "2026-10-27",
       "reason": "Freeze the natural_tasks_t9 catalog: 36 tasks; batch t9 not yet preregistered"
+    },
+    {
+      "version": 111,
+      "date": "2026-10-28",
+      "reason": "Freeze batch t9: graf_pointer_orient against Graphify 0.9.97 orientation on the 36 natural_tasks_t9 tasks, 144 runs on Claude Code 2.1.312"
     }
   ],
   "arms": {
