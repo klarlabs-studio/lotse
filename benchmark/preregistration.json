@@ -1,5 +1,5 @@
 {
-  "version": 106,
+  "version": 107,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1018,6 +1018,11 @@
           "repository": "nock/nock",
           "commit": "415fc645e663aa79d3f9aaa8abbb82f4229ee524",
           "language": "JavaScript"
+        },
+        "async": {
+          "repository": "caolan/async",
+          "commit": "3921e54bd0704157dbea238fdfcc0c3619abde1a",
+          "language": "JavaScript"
         }
       },
       "repository_order": {
@@ -1037,7 +1042,8 @@
           "moment",
           "ramda",
           "jsdom",
-          "nock"
+          "nock",
+          "async"
         ]
       },
       "repository_choice": "four per language the agent harness runs (Go, Python, JavaScript), popular (over 11,000 GitHub stars), not archived, main language by GitHub; default-branch heads resolved on 2026-10-27 before any of their pull requests was listed; ordered by expected local test runnability",
@@ -1052,7 +1058,8 @@
         "python": "uv virtualenvs on Python 3.12.15 with test dependencies only, each with requirements-frozen.txt; the package comes from the workspace (working directory): loguru (pytest 9.1.1, freezegun 1.5.0, colorama, pytest-mypy-plugins 4.0.3, mypy 2.3.1), pydantic (its pinned pydantic-core 2.50.0 from PyPI plus the dev group's pytest plugins, faker, jsonschema, time-machine; a fix that edits pydantic-core's Rust source cannot be verified and fails the check), drf (Django 6.1.2, pytest 9, pytest-django, dj-database-url)",
         "javascript": "node v26.10.0; node_modules from the pinned package.json via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full: moment (its runner scripts/test.js bundles src/ with rollup and runs the named qunit files: node scripts/test.js --only=<group/name,...>), ramda (mocha --require @babel/register with BABEL_ENV=cjs on the changed test files, as its spec script). jsdom has no runtime: its tests need a code-generation build (npm run prepare) that the harness does not run, so its candidates are not checked and it contributes no task. nock has no qualifying candidate",
         "sqlmodel_nock": "no automatic-criteria candidate (0 of 9 and 0 of 82)"
-      }
+      },
+      "added_v107": "2026-10-27, after the fail-to-pass checks: under the v95 fill rule the checked candidates give Go 10 (lo 2, fasthttp 8), Python 16 (loguru 7, pydantic 4, drf 5) and JavaScript 8 (moment 8) = 34 tasks, below the minimum of 36. Base-state failures, kept as rejections and not retried: ramda 5 (under Node 26 its mocha + @babel/register runner loads ES-module sources natively, and with module detection off an ES-module-only dependency fails), websocket 2 (TestProxyDial fails locally with no proxy set), pydantic 8 (no runnable changed test module), sqlx 1 and drf 1 (fault not detected). As if_fewer requires, one JavaScript repository is added before any of its pull requests is listed: caolan/async (28,000+ stars, mainly JavaScript, never used), pinned to its default-branch head, appended to the JavaScript order; selection, judgment and fail-to-pass rules unchanged; its runtime is recorded before its fail-to-pass check"
     }
   },
   "report_every_case": true,
@@ -1541,6 +1548,11 @@
       "version": 106,
       "date": "2026-10-27",
       "reason": "No rule change. t9 runtimes and runners recorded before any fail-to-pass check; jsdom has no runtime"
+    },
+    {
+      "version": 107,
+      "date": "2026-10-27",
+      "reason": "t9 yields 34 of the required 36 tasks; add caolan/async to the JavaScript order before listing its pull requests"
     }
   ],
   "arms": {
