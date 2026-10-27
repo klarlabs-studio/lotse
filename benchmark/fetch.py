@@ -58,7 +58,7 @@ def fetch(t4=False, confirmation=False, screen=None, batch=None, baseline=None, 
 if __name__ == "__main__":
     import sys
     args = sys.argv[1:]
-    fetch(t4="--t4" in args, batch=next((b for b in ("t7", "t8") if f"--{b}" in args), None),
+    fetch(t4="--t4" in args, batch=next((b for b in ("t7", "t8", "t9") if f"--{b}" in args), None),
           confirmation="--confirmation" in args,
           screen="file_screen" if "--file-screen" in args else "typescript" if "--typescript" in args else None,
           baseline=args[args.index("--baseline") + 1] if "--baseline" in args else None,

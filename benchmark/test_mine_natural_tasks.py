@@ -102,6 +102,20 @@ class MinerTests(unittest.TestCase):
         from mine_natural_tasks import pinned
         self.assertEqual(pinned("leaflet")["repository"], "Leaflet/Leaflet")
 
+    def test_batch_t9_repositories(self):
+        self.assertEqual(classify("websocket", "conn_test.go"), "test")
+        self.assertEqual(classify("lo", "slice.go"), "source")
+        self.assertEqual(classify("loguru", "tests/test_add_option.py"), "test")
+        self.assertEqual(classify("drf", "rest_framework/fields.py"), "source")
+        self.assertEqual(classify("moment", "src/test/moment/format.js"), "test")
+        self.assertEqual(classify("moment", "src/lib/format/format.js"), "source")
+        self.assertEqual(classify("ramda", "test/map.js"), "test")
+        self.assertEqual(classify("jsdom", "test/api/from-file.js"), "test")
+        self.assertEqual(classify("nock", "tests/test_intercept.js"), "test")
+        self.assertEqual(classify("nock", "lib/intercept.js"), "source")
+        from mine_natural_tasks import pinned
+        self.assertEqual(pinned("drf")["repository"], "encode/django-rest-framework")
+
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")
         self.assertEqual(classify("tanstack-query", "packages/react-query/src/useQuery.tsx"), "source")
