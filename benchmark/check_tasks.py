@@ -27,7 +27,8 @@ def main(run_id, catalog, report):
             for name, text in texts.items():
                 if text is None:
                     (root / name).unlink(missing_ok=True)
-                else:
+                else:  # A file the fix added may sit in a directory the faulty state lacks.
+                    (root / name).parent.mkdir(parents=True, exist_ok=True)
                     (root / name).write_text(text)
             stream = io.StringIO()
             try:
