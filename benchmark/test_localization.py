@@ -243,6 +243,46 @@ class FileScreenTests(unittest.TestCase):
                          "L.tileLayer(url, {accessToken: 'pk.<redacted>'})")
         self.assertEqual(redact_tokens("pk.json and sk.yaml stay"), "pk.json and sk.yaml stay")
 
+    def test_file_pointers_are_the_best_scored_functions_of_the_first_files(self):
+        from localization import file_pointers
+        units = [{"path": "a.go", "kind": "module", "name": None, "start": 1, "end": 2},
+                 {"path": "a.go", "kind": "function", "name": "low", "start": 3, "end": 9},
+                 {"path": "a.go", "kind": "function", "name": "high", "start": 10, "end": 20},
+                 {"path": "a.go", "kind": "function", "name": "mid", "start": 21, "end": 30},
+                 {"path": "b.go", "kind": "function", "name": "zero", "start": 1, "end": 5},
+                 {"path": "c.go", "kind": "function", "name": "only", "start": 1, "end": 4},
+                 {"path": "d.go", "kind": "function", "name": "unlisted", "start": 1, "end": 4}]
+        scores = [9.0, 1.0, 5.0, 3.0, 0.0, 2.0, 8.0]
+        picked = file_pointers(["a.go", "b.go", "c.go", "d.go"], units, scores, (2, 1, 1))
+        self.assertEqual([(u["path"], u["name"]) for u in picked], [("a.go", "high"), ("a.go", "mid"), ("c.go", "only")])
+        tie = [{**units[2], "name": "second", "start": 10}, {**units[2], "name": "first", "start": 1}]
+        self.assertEqual(file_pointers(["a.go"], tie, [1.0, 1.0], (1,))[0]["name"], "first")
+
+    def test_lean_context_matches_graf(self):
+        from localization import lean_context
+        pointers = [{"path": "a.go", "name": "high", "start": 10, "end": 20},
+                    {"path": "a.go", "name": None, "start": 21, "end": 30},
+                    {"path": "c.go", "name": "only", "start": 1, "end": 4}]
+        self.assertEqual(lean_context(["a.go", "b.go", "c.go"], pointers),
+                         "Likely files:\n- a.go: high L10-20, L21-30\n- b.go\n- c.go: only L1-4\n")
+        self.assertEqual(lean_context([], []), "")
+
+    def test_file_pointers_run_only_on_their_held_out_split(self):
+        from localization import SPLITS, arms_for, task_split, catalog_for
+        self.assertFalse(any("file_pointers" in arms_for(split) for split in SPLITS if split != "file_pointer_screen"))
+        self.assertEqual(arms_for("file_pointer_screen"), ["ast_graph_ids", "file_pointers"])
+        self.assertEqual(task_split("file_pointer_screen"), "file_code_screen")
+        self.assertEqual(task_split("typescript"), "typescript")
+        self.assertEqual(catalog_for("file_pointer_screen"), catalog_for("file_code_screen"))
+
+    def test_borrowed_graphify_rows_join_by_task(self):
+        from localization import borrow_arm
+        rows = [{"task": "a", "arms": {"x": 1}}, {"task": "b", "arms": {"x": 2}}]
+        missing = borrow_arm(rows, [{"task": "a", "arms": {"graphify": "g"}}], "graphify")
+        self.assertEqual(rows[0]["arms"]["graphify"], "g")
+        self.assertNotIn("graphify", rows[1]["arms"])
+        self.assertEqual(missing, ["b"])
+
     def test_file_code_screen_runs_only_its_preregistered_arms(self):
         from localization import arms_for, split_typescript
         self.assertEqual(arms_for("file_code_screen"), ["graf_floor_ids", "graphify", "file_graph_ids", "file_graph_code"])
@@ -250,7 +290,7 @@ class FileScreenTests(unittest.TestCase):
 
     def test_file_graph_code_is_never_run_on_a_tuning_split(self):
         from localization import SPLITS, arms_for
-        self.assertFalse(any("file_graph_code" in arms_for(split) for split in SPLITS if split != "file_code_screen"))
+        self.assertFalse(any("file_graph_code" in arms_for(split) for split in SPLITS if split not in ("file_code_screen", "file_pointer_screen")))
 
     def test_decide_on_file_rank(self):
         rows = [{"task": f"t{i}", "repo": "r", "arms": {

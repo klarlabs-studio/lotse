@@ -316,10 +316,18 @@ SPLITS = {"dev": (CATALOG, REPOS), "heldout": (CATALOG, REPOS),
           "confirmation": (CONFIRMATION_CATALOG, CONFIRMATION_REPOS),
           "file_screen": (FILE_SCREEN_CATALOG, FILE_SCREEN_REPOS),
           "typescript": (TYPESCRIPT_CATALOG, TYPESCRIPT_REPOS),
-          "file_code_screen": (FILE_CODE_SCREEN_CATALOG, FILE_CODE_SCREEN_REPOS)}
+          "file_code_screen": (FILE_CODE_SCREEN_CATALOG, FILE_CODE_SCREEN_REPOS),
+          "file_pointer_screen": (FILE_CODE_SCREEN_CATALOG, FILE_CODE_SCREEN_REPOS)}
+# A split that runs another split's tasks under new arms (v104); its Graphify rows come from that split's run.
+TASKS_OF = {"file_pointer_screen": "file_code_screen"}
 
 
-TYPESCRIPT_SPLITS = ("typescript", "file_code_screen")  # v2 extraction and corpus (v102 for file_code_screen).
+def task_split(split):
+    """The catalog split whose tasks this split runs."""
+    return TASKS_OF.get(split, split)
+
+
+TYPESCRIPT_SPLITS = ("typescript", "file_code_screen", "file_pointer_screen")  # v2 extraction and corpus (v102 for file_code_screen).
 
 
 def split_typescript(split):
@@ -486,12 +494,14 @@ def run_ast(units, edges, query, budget, graph):
 
 
 ARMS = ("graf", "graf_floor", "graf_floor_ids", "graphify", "file_bm25", "ast_units", "ast_graph", "ast_bounded",
-        "ast_graph_ids", "file_graph_ids", "file_graph_code")  # Later arms (v21, v24) are absent from earlier splits.
-# file_graph_code was tuned on every earlier split; only its held-out split (v102) runs it.
-LATER_ARMS = {"ast_graph_ids": ("confirmation", "file_screen", "typescript"),
-              "file_graph_ids": ("file_screen", "typescript", "file_code_screen"), "file_graph_code": ("file_code_screen",)}
+        "ast_graph_ids", "file_graph_ids", "file_graph_code", "file_pointers")  # Later arms (v21, v24) are absent from earlier splits.
+# file_graph_code and file_pointers were tuned on every earlier split; only their held-out splits (v102, v104) run them.
+LATER_ARMS = {"ast_graph_ids": ("confirmation", "file_screen", "typescript", "file_pointer_screen"),
+              "file_graph_ids": ("file_screen", "typescript", "file_code_screen"), "file_graph_code": ("file_code_screen",),
+              "file_pointers": ("file_pointer_screen",)}
 # A split that names its arms runs only those (v102: bounds run time).
-SPLIT_ARMS = {"file_code_screen": ("graf_floor_ids", "graphify", "file_graph_ids", "file_graph_code")}
+SPLIT_ARMS = {"file_code_screen": ("graf_floor_ids", "graphify", "file_graph_ids", "file_graph_code"),
+              "file_pointer_screen": ("ast_graph_ids", "file_pointers")}
 
 
 def arms_for(split):
@@ -568,6 +578,51 @@ def run_file_graph_code(root, units, edges, query):
     return {"payload": "".join(f"{p}\n" for p in files[:TRIAGE_FILE_LIMIT]), "files": files, "spans": []}
 
 
+POINTERS = (2, 1, 1)  # Pointers per listed file, first file first (graf triage POINTERS).
+
+
+def file_pointers(files, units, scores, per_file=POINTERS):
+    """The best-scored function units of the first listed files: per_file[i] for files[i], each file's in score
+    order (ties: the earlier function); module windows and units without a positive score are never pointers."""
+    picked = []
+    for path, wanted in zip(files, per_file):
+        candidates = [i for i, u in enumerate(units) if u["path"] == path and u["kind"] == "function" and scores[i] > 0]
+        candidates.sort(key=lambda i: (-scores[i], units[i]["start"]))
+        picked += [units[i] for i in candidates[:wanted]]
+    return picked
+
+
+def lean_context(files, pointers):
+    """graf's lean triage context: the listed files, each followed by its pointers."""
+    if not files:
+        return ""
+    lines = ["Likely files:"]
+    for path in files:
+        here = [f"{p['name']} L{p['start']}-{p['end']}" if p["name"] else f"L{p['start']}-{p['end']}"
+                for p in pointers if p["path"] == path]
+        lines.append(f"- {path}: {', '.join(here)}" if here else f"- {path}")
+    return "\n".join(lines) + "\n"
+
+
+def run_file_pointers(root, units, edges, query):
+    """file_graph_code's file list with pointers to the ast_graph_ids-scored functions of its first files, and no
+    code (v104). Cited spans are the pointers, in order."""
+    files = file_graph_code(GRAF, root / "input", units, edges, query)
+    scores = propagate(list(BM25([u["text"] for u in units]).score(query)), edges, WEIGHT)
+    pointers = file_pointers(files[:TRIAGE_FILE_LIMIT], units, scores)
+    return {"payload": lean_context(files[:TRIAGE_FILE_LIMIT], pointers), "files": files,
+            "spans": [(u["path"], u["start"], u["end"]) for u in pointers]}
+
+
+def borrow_arm(rows, source_rows, arm):
+    """Copy one arm's rows from another run of the same tasks; return the tasks that run lacks."""
+    source = {r["task"]: r["arms"][arm] for r in source_rows if arm in r.get("arms", {})}
+    for row in rows:
+        if row["task"] in source:
+            row["arms"][arm] = source[row["task"]]
+    return [row["task"] for row in rows if arm not in row["arms"]]
+
+
 def run_task(task, budget, split="heldout"):
     root, files = snapshot(task)
     units_by_path = {p: code_units(p, t, split_typescript(split)) for p, t in files.items()}
@@ -584,6 +639,8 @@ def run_task(task, budget, split="heldout"):
             answer = run_file_graph(root, units, edges, rewrite_query(task["query"]), budget)
         elif arm == "file_graph_code":
             answer = run_file_graph_code(root, units, edges, rewrite_query(task["query"]))
+        elif arm == "file_pointers":
+            answer = run_file_pointers(root, units, edges, rewrite_query(task["query"]))
         elif arm in GRAF_FLAGS:
             query = rewrite_query(task["query"]) if arm.endswith("_ids") else task["query"]
             answer = run_graf(root, arm, query, budget)
@@ -644,7 +701,7 @@ def run(split):
     check_pins(screen.get(split, {}).get("run", {}), provenance)
     rows = resumable_rows(previous, provenance)
     budget = screen["budget_tokens"]
-    for task in [t for t in catalog["tasks"] if t["split"] == split]:
+    for task in [t for t in catalog["tasks"] if t["split"] == task_split(split)]:
         if task["id"] in rows:
             continue
         rows[task["id"]] = {"task": task["id"], "repo": task["repo"], **run_task(task, budget, split)}
@@ -724,12 +781,16 @@ def summarize(rows):
 def decide_split(split):
     screen = json.loads((BASE / "benchmark/preregistration.json").read_text())["localization_screen"]
     data = json.loads((BASE / f"results/localization-{split}.json").read_text())
-    rule = screen[split]["decision"] if split in ("replication", "confirmation", "file_screen", "typescript", "file_code_screen") \
+    rule = screen[split]["decision"] if split in ("replication", "confirmation", "file_screen", "typescript", "file_code_screen", "file_pointer_screen") \
         else screen["decision"]
     metric = rule.get("metric", "unit_acc")
-    planned = {t["id"] for t in json.loads(catalog_for(split).read_text())["tasks"] if t["split"] == split}
+    planned = {t["id"] for t in json.loads(catalog_for(split).read_text())["tasks"] if t["split"] == task_split(split)}
     if {r["task"] for r in data["tasks"]} != planned:
         raise SystemExit(f"{split}: {len(data['tasks'])} of {len(planned)} tasks run; no decision on a partial split")
+    if split in TASKS_OF:  # v104: Graphify's rows come from the run of the same tasks.
+        source = json.loads((BASE / f"results/localization-{TASKS_OF[split]}.json").read_text())["tasks"]
+        for task in borrow_arm([r for r in data["tasks"] if "excluded" not in r], source, "graphify"):
+            next(r for r in data["tasks"] if r["task"] == task)["excluded"] = f"no Graphify row in {TASKS_OF[split]}"
     excluded = {r["task"]: r["excluded"] for r in data["tasks"] if "excluded" in r}
     data["tasks"] = [r for r in data["tasks"] if "excluded" not in r]
     scored = [a for a in ARMS if a in data["tasks"][0]["arms"] and a != "file_bm25"]
