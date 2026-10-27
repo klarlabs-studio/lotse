@@ -7,6 +7,7 @@ import unittest
 from unittest.mock import patch
 
 import agent_trials
+import check_tasks
 import task_session
 
 
@@ -27,6 +28,13 @@ class NaturalTaskTests(unittest.TestCase):
             (root / "kept.md").write_text("added by the fix\n")
             agent_trials._apply(root, [{"path": "kept.md", "added": True}, {"path": ".changeset/gone.md", "added": True}])
             self.assertFalse((root / "kept.md").exists())
+
+    def test_a_fix_added_file_absent_from_the_corpus_reads_as_absent(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "kept.md").write_text("added by the fix\n")
+            self.assertEqual(check_tasks.texts(root, ["kept.md", ".changeset/gone.md"]),
+                             {"kept.md": "added by the fix\n", ".changeset/gone.md": None})
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()

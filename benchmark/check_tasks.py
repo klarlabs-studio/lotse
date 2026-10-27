@@ -9,6 +9,12 @@ import subprocess
 from agent_trials import BASE, prepare, task_faults, tasks, verify
 
 
+def texts(root, names):
+    """A file's text, or None when absent: a file the fix added is absent in the faulty state, and one upstream
+    later removed (e.g. a consumed changeset) is absent at the pin too."""
+    return {name: (root / name).read_text() if (root / name).is_file() else None for name in names}
+
+
 def main(run_id, catalog, report):
     results = []
     for task in tasks(catalog):
@@ -19,9 +25,8 @@ def main(run_id, catalog, report):
         with contextlib.redirect_stdout(io.StringIO()):
             prepare(task, trial_id)
         names = sorted({f["path"] for f in task_faults(task)})
-        # A file the fix added is absent in the faulty state (None).
-        faulty = {name: (root / name).read_text() if (root / name).is_file() else None for name in names}
-        original = {name: (BASE / ".research/corpora" / task["repo"] / name).read_text() for name in names}
+        faulty = texts(root, names)
+        original = texts(BASE / ".research/corpora" / task["repo"], names)
         codes = {}
         for phase, texts in [("base", original), ("fault", faulty), ("restored", original)]:
             for name, text in texts.items():
