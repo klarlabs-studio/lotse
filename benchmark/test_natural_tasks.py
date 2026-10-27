@@ -82,6 +82,7 @@ class NaturalTaskTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             check_tasks.main("check", catalog, report)
         self.assertTrue(json.loads(report.read_text())[0]["sanity_passed"])
+        self.assertFalse((self.base / ".research/trials/check-natural").exists())  # Build output can be gigabytes.
 
     def test_prepare_reverts_every_place_and_hides_the_fix_tests(self):
         workspace = self.prepare()

@@ -4,6 +4,7 @@ import argparse
 import io
 import json
 from pathlib import Path
+import shutil
 import subprocess
 
 from agent_trials import BASE, prepare, task_faults, tasks, verify
@@ -50,6 +51,7 @@ def main(run_id, catalog, report):
         results.append(dict(task=task["id"], returncodes=codes,
                             sanity_passed=codes["base"] == 0 and codes["fault"] not in (0, "timeout") and codes["restored"] == 0,
                             kind="fixture_validation_not_agent_repair"))
+        shutil.rmtree(root.parent)  # The logs are the record; a workspace's build output can be gigabytes.
     Path(report).write_text(json.dumps(results, indent=2) + "\n")
     if not all(r["sanity_passed"] for r in results):
         raise SystemExit("Some task fixtures need repair; inspect .research/task-logs")
