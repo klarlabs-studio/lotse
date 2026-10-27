@@ -28,8 +28,8 @@ def main(run_id, catalog, report):
         faulty = texts(root, names)
         original = texts(BASE / ".research/corpora" / task["repo"], names)
         codes = {}
-        for phase, texts in [("base", original), ("fault", faulty), ("restored", original)]:
-            for name, text in texts.items():
+        for phase, state in [("base", original), ("fault", faulty), ("restored", original)]:
+            for name, text in state.items():
                 if text is None:
                     (root / name).unlink(missing_ok=True)
                 else:  # A file the fix added may sit in a directory the faulty state lacks.

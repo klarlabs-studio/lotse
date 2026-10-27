@@ -1,6 +1,7 @@
 """Natural tasks revert a real fix in several places and hide the fix's tests until grading."""
 import contextlib
 import io
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -39,7 +40,8 @@ class NaturalTaskTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.base = Path(self.temp.name)
-        self.patches = [patch.object(agent_trials, "BASE", self.base), patch.object(task_session, "BASE", self.base)]
+        self.patches = [patch.object(agent_trials, "BASE", self.base), patch.object(task_session, "BASE", self.base),
+                        patch.object(check_tasks, "BASE", self.base)]
         for p in self.patches:
             p.start()
         root = self.base / ".research/corpora/fixture"
@@ -72,6 +74,14 @@ class NaturalTaskTests(unittest.TestCase):
     def verify(self, workspace):
         with contextlib.redirect_stdout(io.StringIO()):
             return agent_trials.verify(self.task, workspace)
+
+    def test_a_fault_check_passes_base_fails_fault_and_passes_restored(self):
+        self.task["faults"].append({"path": ".changeset/gone.md", "added": True})
+        catalog, report = self.base / "catalog.json", self.base / "report.json"
+        catalog.write_text(json.dumps([self.task]))
+        with contextlib.redirect_stdout(io.StringIO()):
+            check_tasks.main("check", catalog, report)
+        self.assertTrue(json.loads(report.read_text())[0]["sanity_passed"])
 
     def test_prepare_reverts_every_place_and_hides_the_fix_tests(self):
         workspace = self.prepare()
