@@ -236,6 +236,13 @@ class FileScreenTests(unittest.TestCase):
         ranked = ["tests/a_test.go", "b.go", "README.md", "a.go"]
         self.assertEqual(code_first(ranked), ["b.go", "a.go", "tests/a_test.go", "README.md"])
 
+    def test_issue_text_redacts_access_tokens(self):
+        from localization import redact_tokens
+        token = "pk.eyJ1Ijoi" + "a" * 40 + ".b" + "c" * 20
+        self.assertEqual(redact_tokens(f"L.tileLayer(url, {{accessToken: '{token}'}})"),
+                         "L.tileLayer(url, {accessToken: 'pk.<redacted>'})")
+        self.assertEqual(redact_tokens("pk.json and sk.yaml stay"), "pk.json and sk.yaml stay")
+
     def test_file_code_screen_runs_only_its_preregistered_arms(self):
         from localization import arms_for, split_typescript
         self.assertEqual(arms_for("file_code_screen"), ["graf_floor_ids", "graphify", "file_graph_ids", "file_graph_code"])

@@ -1,5 +1,5 @@
 {
-  "version": 102,
+  "version": 103,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1422,6 +1422,11 @@
       "version": 102,
       "date": "2026-10-27",
       "reason": "Preregister the held-out file_code_screen for file_graph_code on eight unused repositories, before any of their pull requests is listed"
+    },
+    {
+      "version": 103,
+      "date": "2026-10-27",
+      "reason": "No rule change. Redact an access token quoted in one file_code_screen issue before any arm runs"
     }
   ],
   "arms": {
@@ -1818,7 +1823,8 @@
         "completeness": "the decision runs only on the complete split; excluded tasks are reported"
       },
       "minimum_tasks": 200,
-      "if_fewer": "if fewer than 200 tasks meet the criteria, no decision is computed; any added repository is recorded in a new version before its pull requests are listed"
+      "if_fewer": "if fewer than 200 tasks meet the criteria, no decision is computed; any added repository is recorded in a new version before its pull requests are listed",
+      "token_redaction_v103": "2026-10-27, after the catalog was built and before any arm ran: one leaflet issue quotes a Mapbox access token, which GitHub's push protection refuses to publish. Catalog queries replace strings shaped like such tokens ((pk|sk|tk).eyJ... with two dot-separated parts) by '<prefix>.<redacted>' (benchmark/localization.py redact_tokens, applied in build_task); 1 of 1,459 tasks changed. The token is random text with no code signal; all arms see the same query"
     }
   },
   "audit_regression": {

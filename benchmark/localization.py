@@ -337,6 +337,14 @@ def _git(repo, *args, text=True):
                           check=True).stdout
 
 
+# Mapbox-style access tokens quoted in issue text (v103): never republished; the token carries no code signal.
+TOKEN = re.compile(r"\b(pk|sk|tk)\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}")
+
+
+def redact_tokens(text):
+    return TOKEN.sub(lambda m: f"{m.group(1)}.<redacted>", text)
+
+
 def build_task(repo, record, issue, dev_ids, split="heldout"):
     """One catalog entry, or a rejection reason, for a mined pull request."""
     from mine_natural_tasks import classify, clean_issue
@@ -355,7 +363,7 @@ def build_task(repo, record, issue, dev_ids, split="heldout"):
         return None, "no modified non-test source file"
     if len(fixed) > MAX_FILES or lines > MAX_LINES:
         return None, f"fix too large ({len(fixed)} files, {lines} lines)"
-    query = clean_issue(issue["title"], issue["body"])
+    query = redact_tokens(clean_issue(issue["title"], issue["body"]))
     if not issue["body"] and not issue["title"].strip():
         return None, "empty issue"
     gold = {path: sorted(gold_lines(_git(repo, "show", f"{commit}^1:{path}"), _git(repo, "show", f"{commit}:{path}")))
