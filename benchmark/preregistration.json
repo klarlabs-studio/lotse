@@ -1,5 +1,5 @@
 {
-  "version": 109,
+  "version": 110,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1073,7 +1073,9 @@
       },
       "added_v107": "2026-10-27, after the fail-to-pass checks: under the v95 fill rule the checked candidates give Go 10 (lo 2, fasthttp 8), Python 16 (loguru 7, pydantic 4, drf 5) and JavaScript 8 (moment 8) = 34 tasks, below the minimum of 36. Base-state failures, kept as rejections and not retried: ramda 5 (under Node 26 its mocha + @babel/register runner loads ES-module sources natively, and with module detection off an ES-module-only dependency fails), websocket 2 (TestProxyDial fails locally with no proxy set), pydantic 8 (no runnable changed test module), sqlx 1 and drf 1 (fault not detected). As if_fewer requires, one JavaScript repository is added before any of its pull requests is listed: caolan/async (28,000+ stars, mainly JavaScript, never used), pinned to its default-branch head, appended to the JavaScript order; selection, judgment and fail-to-pass rules unchanged; its runtime is recorded before its fail-to-pass check",
       "added_v108": "2026-10-27: caolan/async (v107) has no automatic-criteria candidate (0 of 25), so t9 still has 34 of 36 tasks. Under if_fewer, remy/nodemon and webpack/webpack (26,000+ and 65,000+ stars, mainly JavaScript, never used) are added, pinned to their default-branch heads before any of their pull requests is listed, and appended in that order to the JavaScript order; rules unchanged; runtimes recorded before their fail-to-pass checks",
-      "runtime_v109": "2026-10-27, after the issue-only judgments of nodemon (2 bugs of 2) and webpack (14 of 14) and before their fail-to-pass checks: node_modules from each pinned package.json and lockfile via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full. nodemon: its spec script, TEST=1 mocha --exit --timeout 30000 on the changed *.test.js files. webpack: its test:base invocation (node --expose-gc --max-old-space-size=4096 --experimental-vm-modules jest-cli) on the changed top-level test/*.test.js, *.basictest.js, *.unittest.js and *.longtest.js files; webpack's setup step (linking itself into node_modules) is not run. A fix whose tests are only fixtures under test/*Cases/ names no runnable file and fails the check, since those runners exceed the 180 s verifier"
+      "runtime_v109": "2026-10-27, after the issue-only judgments of nodemon (2 bugs of 2) and webpack (14 of 14) and before their fail-to-pass checks: node_modules from each pinned package.json and lockfile via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full. nodemon: its spec script, TEST=1 mocha --exit --timeout 30000 on the changed *.test.js files. webpack: its test:base invocation (node --expose-gc --max-old-space-size=4096 --experimental-vm-modules jest-cli) on the changed top-level test/*.test.js, *.basictest.js, *.unittest.js and *.longtest.js files; webpack's setup step (linking itself into node_modules) is not run. A fix whose tests are only fixtures under test/*Cases/ names no runnable file and fails the check, since those runners exceed the 180 s verifier",
+      "frozen_catalog_sha256": "2f0847b9750a793dc2bf7cd6f4ec2e260d965c043957b1c635f448b46b6b5887",
+      "frozen_v110": "2026-10-27: 36 tasks (Go: lo 2, fasthttp 8; Python: loguru 7, pydantic 4, drf 5; JavaScript: moment 8, nodemon 2); no solver has seen any. Bug judgments (results/natural-tasks-t9-judgments.json, 109) from the issue title and body alone, first 14 automatic-criteria candidates per repository, before any fail-to-pass check. Fail-to-pass (results/natural-tasks-t9-f2p.json): 50 of 81 bugs pass. Rejected: websocket 2, sqlx 1, pydantic 8, drf 1, ramda 5 (the v107 reasons) and webpack 14: every webpack fix's tests are config or unit case fixtures under test/*Cases/, which v109 named no runnable file for, so jest ran its whole suite and all three phases of all 14 timed out at 180 s, as v109 stated beforehand; the runner was not changed after seeing this. Filled by the v95 rule, newest merge first (checked against each repository's mined merge dates): at most 8 per repository and 16 per language; Go and JavaScript fall short of 16, and the total equals minimum_tasks (36), so if_fewer does not apply. Disclosed harness repairs during the checks, none changing a task or the pass rule: a restored file's directory is created (4c44837); a fix-added file that upstream later removed counts as absent at the pin (cb48ae8, 324a5ea, 0c137a5); a verifier's process group is killed when it ends (70fa209); each check workspace is removed once its phases are logged (34b9d8b). Runs that crashed on those faults or on a full disk were set aside unscored (.research/task-logs/t9*-crashed, t9*-aside, t9g-diskfull) and every affected candidate was re-checked from scratch. Batch t9 itself is not preregistered: it needs a qualifying screen and an agreed budget"
     }
   },
   "report_every_case": true,
@@ -1577,6 +1579,11 @@
       "version": 109,
       "date": "2026-10-27",
       "reason": "No rule change. nodemon and webpack runtimes and runners recorded before their fail-to-pass checks"
+    },
+    {
+      "version": 110,
+      "date": "2026-10-27",
+      "reason": "Freeze the natural_tasks_t9 catalog: 36 tasks; batch t9 not yet preregistered"
     }
   ],
   "arms": {

@@ -1,0 +1,443 @@
+{
+  "judged_on": "2026-10-27",
+  "judged_from": "issue title and body only (first 900 characters shown), before any solver run or fail-to-pass check; first 14 automatic-criteria candidates per repository, newest merge first",
+  "judgments": {
+    "websocket-895": {
+      "bug": true,
+      "reason": "undocumented 1000h fallback for zero deadline"
+    },
+    "websocket-822": {
+      "bug": true,
+      "reason": "subprotocol chosen by server order, violates RFC"
+    },
+    "websocket-760": {
+      "bug": false,
+      "reason": "feature request (report bad NextProtos)"
+    },
+    "lo-959": {
+      "bug": true,
+      "reason": "over-restrictive constraint causes compile error"
+    },
+    "lo-798": {
+      "bug": true,
+      "reason": "shared counter breaks re-iteration"
+    },
+    "sqlx-366": {
+      "bug": true,
+      "reason": "connection leaked when Ping fails"
+    },
+    "fasthttp-2504": {
+      "bug": true,
+      "reason": "regression: 404 for compressed file root"
+    },
+    "fasthttp-2067": {
+      "bug": false,
+      "reason": "feature request (deadline support in adaptor)"
+    },
+    "fasthttp-1667": {
+      "bug": false,
+      "reason": "question/feature (KeepAlive config)"
+    },
+    "fasthttp-2456": {
+      "bug": true,
+      "reason": "forbidden Transfer-Encoding on 204"
+    },
+    "fasthttp-1765": {
+      "bug": true,
+      "reason": "body size limit not enforced on stream read"
+    },
+    "fasthttp-2454": {
+      "bug": true,
+      "reason": "NoDefaultContentType flag reset by Do"
+    },
+    "fasthttp-37": {
+      "bug": true,
+      "reason": "connection closed on 204 keep-alive"
+    },
+    "fasthttp-1724": {
+      "bug": false,
+      "reason": "feature request (partial body read size)"
+    },
+    "fasthttp-872": {
+      "bug": true,
+      "reason": "Peek fails after SetCanonical"
+    },
+    "fasthttp-1754": {
+      "bug": true,
+      "reason": "adaptor does not set status code"
+    },
+    "fasthttp-2258": {
+      "bug": true,
+      "reason": "pprof prefix matching exposes handlers"
+    },
+    "fasthttp-873": {
+      "bug": true,
+      "reason": "unwanted content-type on DELETE"
+    },
+    "fasthttp-2248": {
+      "bug": true,
+      "reason": "nil DialFunc causes panic"
+    },
+    "fasthttp-2238": {
+      "bug": true,
+      "reason": "concurrency counter leak"
+    },
+    "loguru-1532": {
+      "bug": true,
+      "reason": "catch=True not honored on remove"
+    },
+    "loguru-1527": {
+      "bug": true,
+      "reason": "wrong thread info with enqueue"
+    },
+    "loguru-1503": {
+      "bug": true,
+      "reason": "athrow exceptions bypass catch"
+    },
+    "loguru-1502": {
+      "bug": true,
+      "reason": "OverflowError leaks from duration parsing"
+    },
+    "loguru-1501": {
+      "bug": true,
+      "reason": "wrong {time:x} for negative timestamps"
+    },
+    "loguru-1500": {
+      "bug": true,
+      "reason": "negative offset formatted one minute off"
+    },
+    "loguru-1409": {
+      "bug": true,
+      "reason": "handler level ignored"
+    },
+    "loguru-1084": {
+      "bug": false,
+      "reason": "feature request (async catch)"
+    },
+    "loguru-1083": {
+      "bug": false,
+      "reason": "test addition"
+    },
+    "loguru-988": {
+      "bug": false,
+      "reason": "usage question (escaping)"
+    },
+    "pydantic-14064": {
+      "bug": true,
+      "reason": "regression: Self in generic dataclass fails"
+    },
+    "pydantic-14041": {
+      "bug": true,
+      "reason": "nested docstrings overwrite descriptions"
+    },
+    "pydantic-11454": {
+      "bug": true,
+      "reason": "mypy plugin AssertionError"
+    },
+    "pydantic-13993": {
+      "bug": true,
+      "reason": "by_alias ignored in json schema"
+    },
+    "pydantic-13985": {
+      "bug": false,
+      "reason": "performance wish"
+    },
+    "pydantic-13971": {
+      "bug": true,
+      "reason": "wrong nested schema depending on order"
+    },
+    "pydantic-13976": {
+      "bug": true,
+      "reason": "named tuples reconstructed incorrectly"
+    },
+    "pydantic-13965": {
+      "bug": true,
+      "reason": "max_digits not enforced"
+    },
+    "pydantic-13919": {
+      "bug": true,
+      "reason": "PEP 728 options not inherited / errors"
+    },
+    "pydantic-13950": {
+      "bug": true,
+      "reason": "regression: overridden generate_definitions ignored"
+    },
+    "pydantic-11709": {
+      "bug": false,
+      "reason": "feature request (computed fields in create_model)"
+    },
+    "pydantic-13845": {
+      "bug": true,
+      "reason": "json schema ignores propagated config"
+    },
+    "pydantic-13833": {
+      "bug": true,
+      "reason": "init=False not reflected in metadata"
+    },
+    "pydantic-13840": {
+      "bug": true,
+      "reason": "contradictory default in schema"
+    },
+    "drf-9707": {
+      "bug": true,
+      "reason": "unique constraint validation fails wrongly"
+    },
+    "drf-9750": {
+      "bug": true,
+      "reason": "regression: required error on blank fields"
+    },
+    "drf-9645": {
+      "bug": true,
+      "reason": "duplicated validation errors"
+    },
+    "drf-6234": {
+      "bug": true,
+      "reason": "DictField returns empty dict when absent"
+    },
+    "drf-6202": {
+      "bug": true,
+      "reason": "ListField ignores ordered form data"
+    },
+    "drf-9927": {
+      "bug": true,
+      "reason": "regression: ValueError on empty datetime"
+    },
+    "drf-9596": {
+      "bug": false,
+      "reason": "question/enhancement on decorator ordering"
+    },
+    "drf-9700": {
+      "bug": true,
+      "reason": "SerializerMethodField broken after fix"
+    },
+    "drf-9378": {
+      "bug": true,
+      "reason": "regression: required error on nullable fields"
+    },
+    "drf-9433": {
+      "bug": true,
+      "reason": "parser AttributeError silently swallowed"
+    },
+    "drf-9209": {
+      "bug": true,
+      "reason": "StaticHTMLRenderer crashes on ValidationError"
+    },
+    "drf-9334": {
+      "bug": true,
+      "reason": "regression: unexpected 404 for default version"
+    },
+    "drf-9306": {
+      "bug": true,
+      "reason": "regression: AssertionError without queryset"
+    },
+    "drf-9206": {
+      "bug": true,
+      "reason": "logout broken with Django 5"
+    },
+    "moment-6071": {
+      "bug": false,
+      "reason": "feature request (stack trace)"
+    },
+    "moment-5935": {
+      "bug": true,
+      "reason": "postformat not applied to relativeTime"
+    },
+    "moment-6439": {
+      "bug": true,
+      "reason": "out-of-range offsets considered valid"
+    },
+    "moment-6440": {
+      "bug": true,
+      "reason": "__proto__ locale corrupts global locale"
+    },
+    "moment-6228": {
+      "bug": true,
+      "reason": "valid format parsed as invalid"
+    },
+    "moment-6435": {
+      "bug": true,
+      "reason": "stale parsing after updateLocale"
+    },
+    "moment-5381": {
+      "bug": false,
+      "reason": "enhancement request (locale inheritance)"
+    },
+    "moment-6143": {
+      "bug": true,
+      "reason": "min/max return invalid input"
+    },
+    "moment-6116": {
+      "bug": true,
+      "reason": "e token parse inconsistent with format"
+    },
+    "moment-6182": {
+      "bug": true,
+      "reason": "wrong apostrophe in uk locale"
+    },
+    "moment-3988": {
+      "bug": true,
+      "reason": "wrong preposition in pt-br locale"
+    },
+    "moment-6294": {
+      "bug": true,
+      "reason": "hu relative time missing number"
+    },
+    "moment-6295": {
+      "bug": true,
+      "reason": "format misbehaves on prototype keys"
+    },
+    "moment-3944": {
+      "bug": true,
+      "reason": "weekYear shifts day of week"
+    },
+    "ramda-3150": {
+      "bug": true,
+      "reason": "toString invokes equals function"
+    },
+    "ramda-3478": {
+      "bug": false,
+      "reason": "feature wish (negative index in lensPath)"
+    },
+    "ramda-3393": {
+      "bug": true,
+      "reason": "swap wrong for nested arrays"
+    },
+    "ramda-3258": {
+      "bug": true,
+      "reason": "clone fails on null-prototype object"
+    },
+    "ramda-2586": {
+      "bug": true,
+      "reason": "mergeWith TypeError on null"
+    },
+    "ramda-2533": {
+      "bug": true,
+      "reason": "identical throws on cross-origin window"
+    },
+    "ramda-1690": {
+      "bug": false,
+      "reason": "feature request (until)"
+    },
+    "jsdom-3672": {
+      "bug": true,
+      "reason": "template content removed in xhtml"
+    },
+    "jsdom-3640": {
+      "bug": false,
+      "reason": "feature request (getName)"
+    },
+    "jsdom-3915": {
+      "bug": true,
+      "reason": "baseURI not updated after reconfigure"
+    },
+    "jsdom-3709": {
+      "bug": true,
+      "reason": "TypeError parsing <constructor>"
+    },
+    "jsdom-3513": {
+      "bug": true,
+      "reason": "pushState empty URL drops hash"
+    },
+    "jsdom-3395": {
+      "bug": true,
+      "reason": "getRandomValues rejects subclasses"
+    },
+    "jsdom-2968": {
+      "bug": true,
+      "reason": "wrong nodeLocation for dynamic nodes"
+    },
+    "jsdom-3272": {
+      "bug": true,
+      "reason": "range not updated on child removal"
+    },
+    "jsdom-3247": {
+      "bug": true,
+      "reason": "invalid forms submitted"
+    },
+    "jsdom-3096": {
+      "bug": true,
+      "reason": "MutationObserver infinite loop"
+    },
+    "jsdom-2979": {
+      "bug": true,
+      "reason": "form-associated controls not validated"
+    },
+    "jsdom-3150": {
+      "bug": true,
+      "reason": "TypeError parsing template"
+    },
+    "jsdom-3133": {
+      "bug": true,
+      "reason": "regression: customElements.get undefined"
+    },
+    "jsdom-2553": {
+      "bug": true,
+      "reason": "TypeError fetching @import"
+    },
+    "nodemon-1320": {
+      "bug": true,
+      "reason": "restarts for unwatched files, regression"
+    },
+    "nodemon-1330": {
+      "bug": true,
+      "reason": "placeholder substituted only once"
+    },
+    "webpack-22929": {
+      "bug": true,
+      "reason": "export not found regression"
+    },
+    "webpack-22910": {
+      "bug": true,
+      "reason": "native html compiles no src entries"
+    },
+    "webpack-22877": {
+      "bug": true,
+      "reason": "minifier breaks declaration"
+    },
+    "webpack-22863": {
+      "bug": true,
+      "reason": "importModule returns empty object"
+    },
+    "webpack-22832": {
+      "bug": true,
+      "reason": "ReferenceError at runtime"
+    },
+    "webpack-22797": {
+      "bug": true,
+      "reason": "dependencies omitted"
+    },
+    "webpack-22788": {
+      "bug": true,
+      "reason": "production build crash regression"
+    },
+    "webpack-22694": {
+      "bug": true,
+      "reason": "nondeterministic concatenation output"
+    },
+    "webpack-22636": {
+      "bug": true,
+      "reason": "semver ranges match nothing"
+    },
+    "webpack-21882": {
+      "bug": true,
+      "reason": "require returns wrong value regression"
+    },
+    "webpack-15668": {
+      "bug": true,
+      "reason": "dll plugin fails to resolve"
+    },
+    "webpack-17105": {
+      "bug": true,
+      "reason": "crash with worker import"
+    },
+    "webpack-19950": {
+      "bug": true,
+      "reason": "default import returns undefined"
+    },
+    "webpack-19664": {
+      "bug": true,
+      "reason": "syntactically invalid bundle"
+    }
+  },
+  "added_v108": "nodemon and webpack judged 2026-10-27 under the same rule"
+}
