@@ -30,8 +30,8 @@ def task_faults(task):
 def _apply(root, edits):
     for edit in edits:
         path = root / edit["path"]
-        if edit.get("added"):
-            path.unlink()
+        if edit.get("added"):  # Absent at the pin when upstream later removed it (e.g. a consumed changeset).
+            path.unlink(missing_ok=True)
             continue
         text = path.read_text()
         if text.count(edit["before"]) != 1:

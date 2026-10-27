@@ -11,6 +11,13 @@ import task_session
 
 
 class NaturalTaskTests(unittest.TestCase):
+    def test_a_file_the_fix_added_and_upstream_later_removed_is_already_faulty(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "kept.md").write_text("added by the fix\n")
+            agent_trials._apply(root, [{"path": "kept.md", "added": True}, {"path": ".changeset/gone.md", "added": True}])
+            self.assertFalse((root / "kept.md").exists())
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.base = Path(self.temp.name)
