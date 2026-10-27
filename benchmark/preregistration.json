@@ -1,5 +1,5 @@
 {
-  "version": 108,
+  "version": 109,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1072,7 +1072,8 @@
         "sqlmodel_nock": "no automatic-criteria candidate (0 of 9 and 0 of 82)"
       },
       "added_v107": "2026-10-27, after the fail-to-pass checks: under the v95 fill rule the checked candidates give Go 10 (lo 2, fasthttp 8), Python 16 (loguru 7, pydantic 4, drf 5) and JavaScript 8 (moment 8) = 34 tasks, below the minimum of 36. Base-state failures, kept as rejections and not retried: ramda 5 (under Node 26 its mocha + @babel/register runner loads ES-module sources natively, and with module detection off an ES-module-only dependency fails), websocket 2 (TestProxyDial fails locally with no proxy set), pydantic 8 (no runnable changed test module), sqlx 1 and drf 1 (fault not detected). As if_fewer requires, one JavaScript repository is added before any of its pull requests is listed: caolan/async (28,000+ stars, mainly JavaScript, never used), pinned to its default-branch head, appended to the JavaScript order; selection, judgment and fail-to-pass rules unchanged; its runtime is recorded before its fail-to-pass check",
-      "added_v108": "2026-10-27: caolan/async (v107) has no automatic-criteria candidate (0 of 25), so t9 still has 34 of 36 tasks. Under if_fewer, remy/nodemon and webpack/webpack (26,000+ and 65,000+ stars, mainly JavaScript, never used) are added, pinned to their default-branch heads before any of their pull requests is listed, and appended in that order to the JavaScript order; rules unchanged; runtimes recorded before their fail-to-pass checks"
+      "added_v108": "2026-10-27: caolan/async (v107) has no automatic-criteria candidate (0 of 25), so t9 still has 34 of 36 tasks. Under if_fewer, remy/nodemon and webpack/webpack (26,000+ and 65,000+ stars, mainly JavaScript, never used) are added, pinned to their default-branch heads before any of their pull requests is listed, and appended in that order to the JavaScript order; rules unchanged; runtimes recorded before their fail-to-pass checks",
+      "runtime_v109": "2026-10-27, after the issue-only judgments of nodemon (2 bugs of 2) and webpack (14 of 14) and before their fail-to-pass checks: node_modules from each pinned package.json and lockfile via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full. nodemon: its spec script, TEST=1 mocha --exit --timeout 30000 on the changed *.test.js files. webpack: its test:base invocation (node --expose-gc --max-old-space-size=4096 --experimental-vm-modules jest-cli) on the changed top-level test/*.test.js, *.basictest.js, *.unittest.js and *.longtest.js files; webpack's setup step (linking itself into node_modules) is not run. A fix whose tests are only fixtures under test/*Cases/ names no runnable file and fails the check, since those runners exceed the 180 s verifier"
     }
   },
   "report_every_case": true,
@@ -1571,6 +1572,11 @@
       "version": 108,
       "date": "2026-10-27",
       "reason": "async yields no candidate; add nodemon and webpack to the t9 JavaScript order before listing their pull requests"
+    },
+    {
+      "version": 109,
+      "date": "2026-10-27",
+      "reason": "No rule change. nodemon and webpack runtimes and runners recorded before their fail-to-pass checks"
     }
   ],
   "arms": {

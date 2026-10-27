@@ -45,7 +45,7 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
-                                                    "moment", "ramda")}}
+                                                    "moment", "ramda", "nodemon", "webpack")}}
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
                                                      "requests", "tqdm", "httpie", "uvicorn", "pytest",
                                                      "loguru", "pydantic", "drf")}
@@ -201,6 +201,9 @@ def candidate(repo, pr, pin):
                      **({"python_runtime": PYTHON_RUNTIME[repo]} if repo in PYTHON_RUNTIME else {})}}
 
 
+WEBPACK_RUNNERS = (".test.js", ".basictest.js", ".unittest.js", ".longtest.js")
+
+
 def verify_command(repo, tests):
     if repo == "express":
         return ["node_modules/.bin/mocha", "--require", "test/support/env", "--check-leaks",
@@ -230,6 +233,13 @@ def verify_command(repo, tests):
     if repo == "ramda":  # Its spec script: mocha over source/ through @babel/register.
         return ["env", "BABEL_ENV=cjs", "node_modules/.bin/mocha", "--require", "@babel/register",
                 *sorted(t for t in tests if t.endswith(".js") and "/helpers/" not in t and "/shared/" not in t)]
+    if repo == "nodemon":  # Its spec script: mocha per test file with TEST=1.
+        return ["env", "TEST=1", "node_modules/.bin/mocha", "--exit", "--timeout", "30000",
+                *sorted(t for t in tests if t.endswith(".test.js"))]
+    if repo == "webpack":  # Its test:base jest invocation on changed runnable test files; fixtures alone run nothing.
+        return ["node", "--expose-gc", "--max-old-space-size=4096", "--experimental-vm-modules",
+                "node_modules/jest-cli/bin/jest", *sorted(t for t in tests if t.startswith("test/") and "/" not in
+                                                           t[len("test/"):] and t.endswith(WEBPACK_RUNNERS))]
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]

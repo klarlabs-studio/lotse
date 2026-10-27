@@ -120,8 +120,15 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(verify_command("ramda", ["test/map.js", "test/helpers/listXf.js"]),
                          ["env", "BABEL_ENV=cjs", "node_modules/.bin/mocha", "--require", "@babel/register", "test/map.js"])
         self.assertEqual(verify_command("pydantic", ["tests/test_main.py"])[-1], "tests/test_main.py")
+        self.assertEqual(verify_command("nodemon", ["test/cli/parse.test.js", "test/fixtures/app.js"]),
+                         ["env", "TEST=1", "node_modules/.bin/mocha", "--exit", "--timeout", "30000", "test/cli/parse.test.js"])
+        self.assertEqual(verify_command("webpack", ["test/Compiler.test.js", "test/configCases/a/b/index.js",
+                                                    "test/NormalModule.unittest.js"])[-2:],
+                         ["test/Compiler.test.js", "test/NormalModule.unittest.js"])
+        self.assertEqual(classify("webpack", "lib/Compiler.js"), "source")
         from mine_natural_tasks import JS_RUNTIME, PYTHON_RUNTIME
-        self.assertEqual((JS_RUNTIME["moment"], JS_RUNTIME["ramda"]), ("moment-full", "ramda-full"))
+        self.assertEqual([JS_RUNTIME[r] for r in ("moment", "ramda", "nodemon", "webpack")],
+                         ["moment-full", "ramda-full", "nodemon-full", "webpack-full"])
         self.assertEqual([PYTHON_RUNTIME[r] for r in ("loguru", "pydantic", "drf")], ["loguru-venv", "pydantic-venv", "drf-venv"])
 
     def test_typescript_classification(self):
