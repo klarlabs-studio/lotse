@@ -1,5 +1,5 @@
 {
-  "version": 103,
+  "version": 104,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1427,6 +1427,11 @@
       "version": 103,
       "date": "2026-10-27",
       "reason": "No rule change. Redact an access token quoted in one file_code_screen issue before any arm runs"
+    },
+    {
+      "version": 104,
+      "date": "2026-10-27",
+      "reason": "Preregister the held-out file_pointer_screen on the file_code_screen catalog before the pointer arm runs on it"
     }
   ],
   "arms": {
@@ -1825,6 +1830,41 @@
       "minimum_tasks": 200,
       "if_fewer": "if fewer than 200 tasks meet the criteria, no decision is computed; any added repository is recorded in a new version before its pull requests are listed",
       "token_redaction_v103": "2026-10-27, after the catalog was built and before any arm ran: one leaflet issue quotes a Mapbox access token, which GitHub's push protection refuses to publish. Catalog queries replace strings shaped like such tokens ((pk|sk|tk).eyJ... with two dot-separated parts) by '<prefix>.<redacted>' (benchmark/localization.py redact_tokens, applied in build_task); 1 of 1,459 tasks changed. The token is random text with no code signal; all arms see the same query"
+    },
+    "file_pointer_screen": {
+      "purpose": "held-out test of file_pointers (branch feat/triage-file-pointers, 55bdbfe), a lean orientation that names the best-scored functions with line ranges in triage's first three files (2, 1, 1 pointers) and no code, developed on all six earlier localization catalogs (development unit Acc@1 0.274, @5 0.441 at about 102 tokens). Decides whether it earns an agent batch; offline, no solver; no efficiency or promotion claim",
+      "recorded": "2026-10-27, while file_code_screen runs; the file_pointers and ast_graph_ids arms had not run on any file_code_screen task. One file_code_screen log row (gorm-7790's file ranks for four arms) had been seen while checking the run's output path; it holds no unit result",
+      "tasks": "exactly the file_code_screen catalog (benchmark/localization-file-code-screen-tasks.json, v103) and its extraction; split name 'file_pointer_screen' with its own results file",
+      "arms": [
+        "ast_graph_ids",
+        "file_pointers"
+      ],
+      "graphify_rows": "Graphify's unit_acc is read from the file_code_screen results (same pinned Graphify 0.9.96 run, same tasks, same unit scoring) instead of a second Graphify run; a task missing there is excluded from the comparison with Graphify and reported",
+      "new_arm": {
+        "file_pointers": "file_graph_code's list (first 8 files) and, for its first three files, the function units with the highest ast_graph_ids score (BM25 on the rewritten query plus call propagation, weight 0.5): 2, 1 and 1; module windows and units with no positive score are never pointers; ties go to the earlier function. Cited spans are the pointers in that order"
+      },
+      "run": {
+        "graf_binary": ".research/bin/graf-a9c9e4d",
+        "graf_sha256": "9d54581bd4eddf338b060edfeac6836cf1e44d3a4b671e65007f2bb0b2c9436e",
+        "command": "GRAF_BINARY=.research/bin/graf-a9c9e4d .research/venv-graphify-0.9.96/bin/python benchmark/localization.py run --split file_pointer_screen",
+        "note": "file_pointers is computed in benchmark/localization.py from the pinned binary's locate output; graf triage --lean on the branch matched it on 767/767 file_screen, 200/200 TypeScript and 18/18 dev tasks"
+      },
+      "decision": {
+        "candidate_arms": [
+          "file_pointers"
+        ],
+        "comparators": [
+          "ast_graph_ids",
+          "graphify"
+        ],
+        "k": 3,
+        "metric": "unit_acc",
+        "test": "exact one-sided McNemar on unit_acc@3 (a gold unit among the first 3 cited units) against each comparator",
+        "rule": "file_pointers qualifies for an agent batch only if it beats both comparators (intersection-union) at alpha 0.05",
+        "descriptive": "unit_acc@1 and @5, file_acc@1/5, payload tokens, pointer span lengths, per repository and every task",
+        "caveat": "ast_graph_ids and Graphify return more text than file_pointers; this compares where each points first, not payload efficiency",
+        "completeness": "the decision runs only on the complete split"
+      }
     }
   },
   "audit_regression": {
