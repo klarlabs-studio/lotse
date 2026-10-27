@@ -805,7 +805,8 @@ def decide_split(split):
     out = BASE / f"results/localization-decision-{split}.json"
     out.write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps({"qualified": result["decision"]["qualified"],
-                      f"{metric}@k": {a: round(v[f"{metric}@{rule['k']}"], 3) for a, v in result["summary"]["all"].items()}}))
+                      f"{metric}@k": {a: round(sum(hit_at(r["arms"][a], rule["k"], metric) for r in data["tasks"])
+                                               / len(data["tasks"]), 3) for a in result["summary"]["all"]}}))
     return 0 if result["decision"]["qualified"] else 1
 
 
