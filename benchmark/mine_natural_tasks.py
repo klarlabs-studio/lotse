@@ -44,9 +44,11 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    **{repo: (".js",) for repo in ("moment", "ramda", "jsdom", "nock")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
-              **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier")}}
+              **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
+                                                    "moment", "ramda")}}
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
-                                                     "requests", "tqdm", "httpie", "uvicorn", "pytest")}
+                                                     "requests", "tqdm", "httpie", "uvicorn", "pytest",
+                                                     "loguru", "pydantic", "drf")}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
 QUERY = """query($owner: String!, $name: String!, $cursor: String) {
@@ -221,6 +223,13 @@ def verify_command(repo, tests):
     if repo == "handlebars":  # Its node project runs spec/*.js against lib/ directly, without a build.
         return ["node_modules/.bin/vitest", "run", "--project", "node",
                 *sorted(t for t in tests if t.startswith("spec/") and t.endswith(".js"))]
+    if repo == "moment":  # Its runner bundles src/ with rollup, then runs the named qunit files.
+        names = sorted(t.removeprefix("src/test/").removesuffix(".js") for t in tests
+                       if t.startswith(("src/test/moment/", "src/test/locale/")) and t.endswith(".js"))
+        return ["node", "scripts/test.js", "--only=" + ",".join(names)]
+    if repo == "ramda":  # Its spec script: mocha over source/ through @babel/register.
+        return ["env", "BABEL_ENV=cjs", "node_modules/.bin/mocha", "--require", "@babel/register",
+                *sorted(t for t in tests if t.endswith(".js") and "/helpers/" not in t and "/shared/" not in t)]
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]

@@ -1,5 +1,5 @@
 {
-  "version": 105,
+  "version": 106,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1045,7 +1045,14 @@
       "test_files": "Go: *_test.go and testdata/; Python: under tests/; JavaScript: each repository's own test directory, recorded with its runner before any candidate is judged",
       "runtime": "as t8; repository-specific runtime and runner details are recorded in a later version before any fail-to-pass check",
       "minimum_tasks": 36,
-      "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed"
+      "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
+      "runtime_v106": {
+        "recorded": "2026-10-27, after the issue-only bug judgments (.research/history/bug-judgments-t9.json: 78 bugs among 93 judged) and before any fail-to-pass check or test run",
+        "go": "websocket, lo (with exp/simd), sqlx and fasthttp modules downloaded into .research/go-modules from temporary copies; go test on the changed test files' packages",
+        "python": "uv virtualenvs on Python 3.12.15 with test dependencies only, each with requirements-frozen.txt; the package comes from the workspace (working directory): loguru (pytest 9.1.1, freezegun 1.5.0, colorama, pytest-mypy-plugins 4.0.3, mypy 2.3.1), pydantic (its pinned pydantic-core 2.50.0 from PyPI plus the dev group's pytest plugins, faker, jsonschema, time-machine; a fix that edits pydantic-core's Rust source cannot be verified and fails the check), drf (Django 6.1.2, pytest 9, pytest-django, dj-database-url)",
+        "javascript": "node v26.10.0; node_modules from the pinned package.json via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full: moment (its runner scripts/test.js bundles src/ with rollup and runs the named qunit files: node scripts/test.js --only=<group/name,...>), ramda (mocha --require @babel/register with BABEL_ENV=cjs on the changed test files, as its spec script). jsdom has no runtime: its tests need a code-generation build (npm run prepare) that the harness does not run, so its candidates are not checked and it contributes no task. nock has no qualifying candidate",
+        "sqlmodel_nock": "no automatic-criteria candidate (0 of 9 and 0 of 82)"
+      }
     }
   },
   "report_every_case": true,
@@ -1529,6 +1536,11 @@
       "version": 105,
       "date": "2026-10-27",
       "reason": "Pin twelve unused repositories for a fresh natural-task catalog (t9) before any of their pull requests is listed; graf_pointer_orient arm available"
+    },
+    {
+      "version": 106,
+      "date": "2026-10-27",
+      "reason": "No rule change. t9 runtimes and runners recorded before any fail-to-pass check; jsdom has no runtime"
     }
   ],
   "arms": {

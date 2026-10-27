@@ -115,6 +115,14 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("nock", "lib/intercept.js"), "source")
         from mine_natural_tasks import pinned
         self.assertEqual(pinned("drf")["repository"], "encode/django-rest-framework")
+        self.assertEqual(verify_command("moment", ["src/test/moment/format.js", "src/test/locale/de.js", "src/lib/x.js"]),
+                         ["node", "scripts/test.js", "--only=locale/de,moment/format"])
+        self.assertEqual(verify_command("ramda", ["test/map.js", "test/helpers/listXf.js"]),
+                         ["env", "BABEL_ENV=cjs", "node_modules/.bin/mocha", "--require", "@babel/register", "test/map.js"])
+        self.assertEqual(verify_command("pydantic", ["tests/test_main.py"])[-1], "tests/test_main.py")
+        from mine_natural_tasks import JS_RUNTIME, PYTHON_RUNTIME
+        self.assertEqual((JS_RUNTIME["moment"], JS_RUNTIME["ramda"]), ("moment-full", "ramda-full"))
+        self.assertEqual([PYTHON_RUNTIME[r] for r in ("loguru", "pydantic", "drf")], ["loguru-venv", "pydantic-venv", "drf-venv"])
 
     def test_typescript_classification(self):
         self.assertEqual(classify("zod", "packages/zod/src/v4/core/schemas.ts"), "source")
