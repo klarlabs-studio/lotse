@@ -1,5 +1,5 @@
 {
-  "version": 104,
+  "version": 105,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -954,6 +954,98 @@
       "frozen_v101": "2026-10-26: 36 tasks (Go: zap 5, validator 7, mux 2; Python: requests 1, tqdm 1, uvicorn 2, pytest 8; JavaScript: handlebars 2, prettier 8); no solver has seen any. Bug judgments (results/natural-tasks-t8-judgments.json) from the issue title and body alone, first 14 automatic-criteria candidates per repository, before any fail-to-pass check: 55 bugs after dropping tqdm's older duplicate pull request for the same issue. Fail-to-pass (results/natural-tasks-t8-f2p.json): 44 of 55 pass (pytest's after the v100 runtime). Rejected: zap 1, validator 1, logrus 1, requests 1 (expired certificate fixture), uvicorn 2 (port in use; conftest-only change), winston 3, pug 1 (cross-package import), prettier 1 (timeout). Filled by the v95 rule: newest merge first, at most 8 per repository and 16 per language; Python and JavaScript fall short of 16. 36 tasks x 2 attempts x 2 arms = 144 runs",
       "minimum_tasks": 36,
       "minimum_tasks_note": "v101: the field was missing from v94-v100; the batch runner requires one. Set to natural_tasks_t7's 36 under 'the natural_tasks_t7 protocol unchanged', recorded at the freeze, when the yield (36) was already known; disclosed in the write-up. No task set was loosened to reach it"
+    },
+    "natural_tasks_t9": {
+      "catalog": "benchmark/natural-tasks-t9.json",
+      "purpose": "fresh natural repair tasks for a possible batch t9 (graf_pointer_orient against Graphify), from repositories never used as a repository by any graf benchmark, screen or agent batch (mentions inside other repositories' issue text do not count). Prepared before the file_code_screen and file_pointer_screen decisions; batch t9 itself is preregistered separately, only if a screen qualifies and the operator agrees a budget",
+      "repositories": {
+        "websocket": {
+          "repository": "gorilla/websocket",
+          "commit": "e064f32e3674d9d79a8fd417b5bc06fa5c6cad8f",
+          "language": "Go"
+        },
+        "lo": {
+          "repository": "samber/lo",
+          "commit": "5c6ddcb7063c9908031340db03f27ba7483d1ece",
+          "language": "Go"
+        },
+        "sqlx": {
+          "repository": "jmoiron/sqlx",
+          "commit": "41dac167fdad5e3fd81d66cafba0951dc6823a30",
+          "language": "Go"
+        },
+        "fasthttp": {
+          "repository": "valyala/fasthttp",
+          "commit": "9dba778dc590e442cbbc45ba45c570802ed8a406",
+          "language": "Go"
+        },
+        "loguru": {
+          "repository": "Delgan/loguru",
+          "commit": "874aa41019f8a9f943647a0c74445fb7844157da",
+          "language": "Python"
+        },
+        "pydantic": {
+          "repository": "pydantic/pydantic",
+          "commit": "08d49ca97c113f4890d77471872de4f43d05c71f",
+          "language": "Python"
+        },
+        "drf": {
+          "repository": "encode/django-rest-framework",
+          "commit": "14998d0a735f8ed6abd86751fd6984a9277a1d40",
+          "language": "Python"
+        },
+        "sqlmodel": {
+          "repository": "fastapi/sqlmodel",
+          "commit": "462b59d9cd1cc3d9072735435330ef9ab6d15cbf",
+          "language": "Python"
+        },
+        "moment": {
+          "repository": "moment/moment",
+          "commit": "c2a703a4d84aa57ee2722ff8fb4a8016279fb3c4",
+          "language": "JavaScript"
+        },
+        "ramda": {
+          "repository": "ramda/ramda",
+          "commit": "f4b2e35ff433e18c751326b82acc3c6ab3585e18",
+          "language": "JavaScript"
+        },
+        "jsdom": {
+          "repository": "jsdom/jsdom",
+          "commit": "7952588d9cf8a4939924a22537bb4e5ab2abad42",
+          "language": "JavaScript"
+        },
+        "nock": {
+          "repository": "nock/nock",
+          "commit": "415fc645e663aa79d3f9aaa8abbb82f4229ee524",
+          "language": "JavaScript"
+        }
+      },
+      "repository_order": {
+        "Go": [
+          "websocket",
+          "lo",
+          "sqlx",
+          "fasthttp"
+        ],
+        "Python": [
+          "loguru",
+          "pydantic",
+          "drf",
+          "sqlmodel"
+        ],
+        "JavaScript": [
+          "moment",
+          "ramda",
+          "jsdom",
+          "nock"
+        ]
+      },
+      "repository_choice": "four per language the agent harness runs (Go, Python, JavaScript), popular (over 11,000 GitHub stars), not archived, main language by GitHub; default-branch heads resolved on 2026-10-27 before any of their pull requests was listed; ordered by expected local test runnability",
+      "selection": "the natural_tasks_t8 protocol unchanged (t4 criteria, newest merge first, issue text only, hidden tests, bug judgment from the issue title and body alone (first 900 characters) of the first 14 automatic-criteria candidates per repository before any fail-to-pass check, size bound 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, duplicate issues keep the newest merge) and the v95 fill rule: per language, repositories in repository_order, at most 8 tasks each, until 16 per language",
+      "test_files": "Go: *_test.go and testdata/; Python: under tests/; JavaScript: each repository's own test directory, recorded with its runner before any candidate is judged",
+      "runtime": "as t8; repository-specific runtime and runner details are recorded in a later version before any fail-to-pass check",
+      "minimum_tasks": 36,
+      "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed"
     }
   },
   "report_every_case": true,
@@ -1432,6 +1524,11 @@
       "version": 104,
       "date": "2026-10-27",
       "reason": "Preregister the held-out file_pointer_screen on the file_code_screen catalog before the pointer arm runs on it"
+    },
+    {
+      "version": 105,
+      "date": "2026-10-27",
+      "reason": "Pin twelve unused repositories for a fresh natural-task catalog (t9) before any of their pull requests is listed; graf_pointer_orient arm available"
     }
   ],
   "arms": {
