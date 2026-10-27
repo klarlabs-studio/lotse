@@ -11,6 +11,16 @@ import task_session
 
 
 class NaturalTaskTests(unittest.TestCase):
+    def test_a_timed_out_verifier_leaves_no_process_behind(self):
+        with tempfile.TemporaryDirectory() as temp:
+            marker = Path(temp) / "child.pid"
+            command = ["sh", "-c", f"sleep 30 & echo $! > {marker}; sleep 30"]
+            with self.assertRaises(agent_trials.subprocess.TimeoutExpired):
+                agent_trials.run_group(command, temp, None, timeout=1)
+            child = int(marker.read_text())
+            with self.assertRaises(ProcessLookupError):
+                agent_trials.os.kill(child, 0)
+
     def test_a_file_the_fix_added_and_upstream_later_removed_is_already_faulty(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

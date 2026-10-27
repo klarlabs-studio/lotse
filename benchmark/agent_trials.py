@@ -12,6 +12,7 @@ import math
 import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
 import time
@@ -76,7 +77,7 @@ def verify(task, workspace, timeout=180):
     try:
         for name, path in hidden.items():
             path.write_text((BASE / ".research/corpora" / task["repo"] / name).read_text())
-        run = subprocess.run(command, cwd=root, env=env, capture_output=True, text=True, timeout=timeout)
+        run = run_group(command, root, env, timeout)
     finally:
         for name, path in hidden.items():
             if agent_view[name] is None:
@@ -88,6 +89,29 @@ def verify(task, workspace, timeout=180):
                   stdout=run.stdout, stderr=run.stderr)
     print(json.dumps(result, indent=2))
     return run.returncode
+
+
+def run_group(command, cwd, env, timeout):
+    """Run a test command in its own process group and kill the whole group when it ends or times out, so test
+    runners' worker processes (jest, mocha) never outlive the verdict."""
+    process = subprocess.Popen(command, cwd=cwd, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                               start_new_session=True)
+    try:
+        stdout, stderr = process.communicate(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        _kill_group(process.pid)
+        process.communicate()
+        raise
+    finally:
+        _kill_group(process.pid)
+    return subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
+
+
+def _kill_group(pid):
+    try:
+        os.killpg(pid, signal.SIGKILL)
+    except (ProcessLookupError, PermissionError):
+        pass
 
 
 def audit_trace(path):
