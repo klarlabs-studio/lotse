@@ -2,6 +2,17 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Offline screen: `graf find` replayed on t7–t9 search-then-read pairs; fails, no batch
+
+**Outcome: `graf find` fails the v112 readiness screen, so no agent batch runs.** `graf find` is a regex search that returns each match's enclosing function (branch `feat/find-units`, commit 95c9106). The screen tested whether one `find` call would have delivered the code agents read right after a search, so it could replace the search-and-read pair. It would have made only 14.4% of the following reads redundant (rule: at least 40%). Its output was not smaller than the search plus reads it would replace (median token ratio 1.05; rule: at most 1.0). Every agent pattern was valid for graf's regex engine. `find` stays experimental. Rows are in [find-replay-screen.json](../results/find-replay-screen.json).
+
+- **Data.** Development data only: 462 search-then-read pairs with 652 following reads, before the first edit, in every attempt of t7, t8 and t9 (both arms). The script is `benchmark/find_replay.py`. The tasks' faulty states were rebuilt without a model, and no pair was skipped.
+- **By batch and arm:** 10–21% of reads redundant and median token ratio 0.93–1.13. The screen is not close to passing in any group.
+- **Why (post-hoc, from the rows):**
+  - **Broad patterns.** Agents' searches are often wide alternations, such as `^class |max_string_width|…`. Within the budget, `find` fills its output with earlier files' functions before it reaches the file the agent then read; 69 pairs had zero recall.
+  - **Wide reads.** Agents typically read 80–140-line windows, more than one function, so even a correct block covers only part of the read.
+- **Scope.** This is a replay of recorded sessions. An agent given `find` might search differently, and this screen cannot measure that. Under the preregistered rule, that possibility does not justify a batch.
+
 ## Post-hoc diagnostic: where t8's and t9's cost gaps come from
 
 Exploratory and not preregistered. It was run after both decisions were recorded, using `benchmark/agent_cost_diagnostic.py` on the preserved trial logs, with no model calls. Rows are in [agent-cost-diagnostic-t9.json](../results/agent-cost-diagnostic-t9.json) and [agent-cost-diagnostic-t8.json](../results/agent-cost-diagnostic-t8.json).
