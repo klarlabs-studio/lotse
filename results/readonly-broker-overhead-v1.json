@@ -1,0 +1,4766 @@
+{
+  "scope": "snapshot and broker setup diagnostic; no model calls; no promotion claim",
+  "status": "completed",
+  "plan_sha256": "dddfe5a95e3a3ef530231798905104d2937199cc20b465140a65da1e183d22cb",
+  "comparison_sha256": "cb545c3717728a517a135a038be32c235880b560c2ecd3130d6ebb731d35ebb5",
+  "sessions": [
+    {
+      "session": "r01-p00-cobra-01-2000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 367.3432499927003,
+        "broker_init_wall_ms": 29.937915998743847,
+        "retrieve_wall_ms": 297.17708300449885,
+        "source_read_wall_ms": 0.4267499898560345,
+        "broker_close_wall_ms": 0.00929099041968584,
+        "snapshot_cleanup_wall_ms": 6.407707987818867
+      },
+      "native_child_samples_ms": [
+        245.10704100248404
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1555,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-cfjmxb75/input",
+        "removed": true
+      },
+      "actual_wall_ms": 711.9912909984123,
+      "native_child_ms": 245.10704100248404,
+      "total_ms": 701.3019979640376,
+      "overhead_total_minus_native_ms": 456.19495696155354,
+      "serialized_payload_tokens": 2644,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-cobra-01-2000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 349.63933398830704,
+        "broker_init_wall_ms": 29.25595798296854,
+        "retrieve_wall_ms": 260.3559999843128,
+        "source_read_wall_ms": 0.395249982830137,
+        "broker_close_wall_ms": 0.01058299676515162,
+        "snapshot_cleanup_wall_ms": 6.310833006864414
+      },
+      "native_child_samples_ms": [
+        208.4958750056103
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1472,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-gmkmrsph/input",
+        "removed": true
+      },
+      "actual_wall_ms": 661.3612080109306,
+      "native_child_ms": 208.4958750056103,
+      "total_ms": 645.9679579420481,
+      "overhead_total_minus_native_ms": 437.4720829364378,
+      "serialized_payload_tokens": 2520,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-cobra-01-2000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 35.26754199992865,
+        "broker_init_wall_ms": 14.44987501599826,
+        "retrieve_wall_ms": 331.42999999108724,
+        "source_read_wall_ms": 0.4930830036755651,
+        "broker_close_wall_ms": 0.007459020707756281,
+        "snapshot_cleanup_wall_ms": 6.1059170111548156
+      },
+      "native_child_samples_ms": [
+        297.6020839996636
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1819,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-k4x08b3s/input",
+        "removed": true
+      },
+      "actual_wall_ms": 389.3582080199849,
+      "native_child_ms": 297.6020839996636,
+      "total_ms": 387.7538760425523,
+      "overhead_total_minus_native_ms": 90.1517920428887,
+      "serialized_payload_tokens": 2387,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-cobra-01-8000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 340.1501670014113,
+        "broker_init_wall_ms": 26.599542004987597,
+        "retrieve_wall_ms": 284.64199998416007,
+        "source_read_wall_ms": 0.5808330024592578,
+        "broker_close_wall_ms": 0.008333008736371994,
+        "snapshot_cleanup_wall_ms": 8.028833981370553
+      },
+      "native_child_samples_ms": [
+        225.08541599381715
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3821,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-kubci_40/input",
+        "removed": true
+      },
+      "actual_wall_ms": 672.0616669917945,
+      "native_child_ms": 225.08541599381715,
+      "total_ms": 660.0097089831252,
+      "overhead_total_minus_native_ms": 434.924292989308,
+      "serialized_payload_tokens": 5700,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-cobra-01-8000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 34.11949999281205,
+        "broker_init_wall_ms": 10.867459001019597,
+        "retrieve_wall_ms": 320.20670900237747,
+        "source_read_wall_ms": 0.7033750007394701,
+        "broker_close_wall_ms": 0.010042014764621854,
+        "snapshot_cleanup_wall_ms": 6.92874999367632
+      },
+      "native_child_samples_ms": [
+        264.27604199852794
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 21175,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-bjzt_18v/input",
+        "removed": true
+      },
+      "actual_wall_ms": 384.33683398761787,
+      "native_child_ms": 264.27604199852794,
+      "total_ms": 372.8358350053895,
+      "overhead_total_minus_native_ms": 108.55979300686158,
+      "serialized_payload_tokens": 22412,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-cobra-01-8000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 353.608041012194,
+        "broker_init_wall_ms": 26.62162500200793,
+        "retrieve_wall_ms": 228.66499997326173,
+        "source_read_wall_ms": 0.46383298467844725,
+        "broker_close_wall_ms": 0.00504200579598546,
+        "snapshot_cleanup_wall_ms": 6.48854099563323
+      },
+      "native_child_samples_ms": [
+        175.93766597565264
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3738,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-8829q5ev/input",
+        "removed": true
+      },
+      "actual_wall_ms": 627.6472079916857,
+      "native_child_ms": 175.93766597565264,
+      "total_ms": 615.8520819735713,
+      "overhead_total_minus_native_ms": 439.9144159979187,
+      "serialized_payload_tokens": 5577,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-cobra-02-2000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 307.52549998578615,
+        "broker_init_wall_ms": 28.841207997174934,
+        "retrieve_wall_ms": 226.87045799102634,
+        "source_read_wall_ms": 0.40991700370796025,
+        "broker_close_wall_ms": 0.008499977411702275,
+        "snapshot_cleanup_wall_ms": 6.342874985421076
+      },
+      "native_child_samples_ms": [
+        172.88366600405425
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1269,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-33eb2bnq/input",
+        "removed": true
+      },
+      "actual_wall_ms": 580.6032919790596,
+      "native_child_ms": 172.88366600405425,
+      "total_ms": 569.9984579405282,
+      "overhead_total_minus_native_ms": 397.1147919364739,
+      "serialized_payload_tokens": 2334,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-cobra-02-2000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 346.6807090153452,
+        "broker_init_wall_ms": 31.60270897205919,
+        "retrieve_wall_ms": 306.9986250193324,
+        "source_read_wall_ms": 0.41887498809956014,
+        "broker_close_wall_ms": 0.008500006515532732,
+        "snapshot_cleanup_wall_ms": 8.067542017670348
+      },
+      "native_child_samples_ms": [
+        246.43762499908917
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1301,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-oe4prqah/input",
+        "removed": true
+      },
+      "actual_wall_ms": 705.6526669766754,
+      "native_child_ms": 246.43762499908917,
+      "total_ms": 693.7769600190222,
+      "overhead_total_minus_native_ms": 447.33933501993306,
+      "serialized_payload_tokens": 2380,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-cobra-02-2000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 40.47570898546837,
+        "broker_init_wall_ms": 12.614625011337921,
+        "retrieve_wall_ms": 344.0831670013722,
+        "source_read_wall_ms": 0.6405829917639494,
+        "broker_close_wall_ms": 0.0103750207927078,
+        "snapshot_cleanup_wall_ms": 7.0867909817025065
+      },
+      "native_child_samples_ms": [
+        295.2260000165552
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 10283,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-khoq8efe/input",
+        "removed": true
+      },
+      "actual_wall_ms": 411.12274999613874,
+      "native_child_ms": 295.2260000165552,
+      "total_ms": 404.91124999243766,
+      "overhead_total_minus_native_ms": 109.68524997588247,
+      "serialized_payload_tokens": 11148,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-cobra-02-8000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 360.0178339984268,
+        "broker_init_wall_ms": 29.74795800400898,
+        "retrieve_wall_ms": 236.6096670157276,
+        "source_read_wall_ms": 0.43337501119822264,
+        "broker_close_wall_ms": 0.008709001122042537,
+        "snapshot_cleanup_wall_ms": 6.868208001833409
+      },
+      "native_child_samples_ms": [
+        177.07870801677927
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 2759,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-yvij8nrs/input",
+        "removed": true
+      },
+      "actual_wall_ms": 646.7805000138469,
+      "native_child_ms": 177.07870801677927,
+      "total_ms": 633.6857510323171,
+      "overhead_total_minus_native_ms": 456.6070430155378,
+      "serialized_payload_tokens": 4324,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-cobra-02-8000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 37.32404197216965,
+        "broker_init_wall_ms": 13.310750015079975,
+        "retrieve_wall_ms": 296.19020799873397,
+        "source_read_wall_ms": 0.4589589952956885,
+        "broker_close_wall_ms": 0.008625007467344403,
+        "snapshot_cleanup_wall_ms": 7.150374993216246
+      },
+      "native_child_samples_ms": [
+        253.26454199966975
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 10284,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-qqz1tx29/input",
+        "removed": true
+      },
+      "actual_wall_ms": 360.10637498111464,
+      "native_child_ms": 253.26454199966975,
+      "total_ms": 354.4429589819629,
+      "overhead_total_minus_native_ms": 101.17841698229313,
+      "serialized_payload_tokens": 11150,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-cobra-02-8000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 370.25974999414757,
+        "broker_init_wall_ms": 28.593875002115965,
+        "retrieve_wall_ms": 303.7083750241436,
+        "source_read_wall_ms": 0.5780829815194011,
+        "broker_close_wall_ms": 0.009790994226932526,
+        "snapshot_cleanup_wall_ms": 7.69100000616163
+      },
+      "native_child_samples_ms": [
+        243.89974999940023
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 2791,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-flbgguqj/input",
+        "removed": true
+      },
+      "actual_wall_ms": 724.7748749796301,
+      "native_child_ms": 243.89974999940023,
+      "total_ms": 710.8408740023151,
+      "overhead_total_minus_native_ms": 466.9411240029149,
+      "serialized_payload_tokens": 4369,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-flask-01-2000-graphify",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 155.78141700825654,
+        "broker_init_wall_ms": 50.719708000542596,
+        "retrieve_wall_ms": 512.2012500069104,
+        "source_read_wall_ms": 0.7237500103656203,
+        "broker_close_wall_ms": 0.00866700429469347,
+        "snapshot_cleanup_wall_ms": 24.794166994979605
+      },
+      "native_child_samples_ms": [
+        360.5886670120526
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1834,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-fk87e70c/input",
+        "removed": true
+      },
+      "actual_wall_ms": 746.5062499977648,
+      "native_child_ms": 360.5886670120526,
+      "total_ms": 744.2289590253495,
+      "overhead_total_minus_native_ms": 383.64029201329686,
+      "serialized_payload_tokens": 2408,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-flask-01-2000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 589.7110419755336,
+        "broker_init_wall_ms": 76.70145799056627,
+        "retrieve_wall_ms": 381.4211669960059,
+        "source_read_wall_ms": 0.6777920061722398,
+        "broker_close_wall_ms": 0.007208989700302482,
+        "snapshot_cleanup_wall_ms": 23.158750002039596
+      },
+      "native_child_samples_ms": [
+        234.182750020409
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1601,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-dix7nvan/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1092.2739999950863,
+      "native_child_ms": 234.182750020409,
+      "total_ms": 1071.677417960018,
+      "overhead_total_minus_native_ms": 837.4946679396089,
+      "serialized_payload_tokens": 2620,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-flask-01-2000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 563.6472499754746,
+        "broker_init_wall_ms": 52.60099997394718,
+        "retrieve_wall_ms": 289.7460000240244,
+        "source_read_wall_ms": 0.5482079868670553,
+        "broker_close_wall_ms": 0.007417023880407214,
+        "snapshot_cleanup_wall_ms": 22.346915997331962
+      },
+      "native_child_samples_ms": [
+        160.55758300353773
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1573,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-mfip3x3o/input",
+        "removed": true
+      },
+      "actual_wall_ms": 948.3565419795923,
+      "native_child_ms": 160.55758300353773,
+      "total_ms": 928.8967909815256,
+      "overhead_total_minus_native_ms": 768.3392079779878,
+      "serialized_payload_tokens": 2580,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-flask-01-8000-graphify",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 110.3628329874482,
+        "broker_init_wall_ms": 36.195666005369276,
+        "retrieve_wall_ms": 397.2704170155339,
+        "source_read_wall_ms": 0.8864160045050085,
+        "broker_close_wall_ms": 0.011041993275284767,
+        "snapshot_cleanup_wall_ms": 25.622874993132427
+      },
+      "native_child_samples_ms": [
+        274.82087499811314
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 11038,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-tuog3wlk/input",
+        "removed": true
+      },
+      "actual_wall_ms": 577.290583983995,
+      "native_child_ms": 274.82087499811314,
+      "total_ms": 570.3492489992641,
+      "overhead_total_minus_native_ms": 295.52837400115095,
+      "serialized_payload_tokens": 11963,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-flask-01-8000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 531.0251659830101,
+        "broker_init_wall_ms": 50.278249982511625,
+        "retrieve_wall_ms": 280.6326669815462,
+        "source_read_wall_ms": 0.8040829852689058,
+        "broker_close_wall_ms": 0.007833004929125309,
+        "snapshot_cleanup_wall_ms": 24.045958009082824
+      },
+      "native_child_samples_ms": [
+        157.53104101167992
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3439,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-5oevuuim/input",
+        "removed": true
+      },
+      "actual_wall_ms": 905.7441250188276,
+      "native_child_ms": 157.53104101167992,
+      "total_ms": 886.7939569463488,
+      "overhead_total_minus_native_ms": 729.2629159346689,
+      "serialized_payload_tokens": 4921,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-flask-01-8000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 522.7598340134136,
+        "broker_init_wall_ms": 52.85816700779833,
+        "retrieve_wall_ms": 341.2386249983683,
+        "source_read_wall_ms": 0.8402910025324672,
+        "broker_close_wall_ms": 0.012458011042326689,
+        "snapshot_cleanup_wall_ms": 26.573000010102987
+      },
+      "native_child_samples_ms": [
+        209.41279199905694
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3619,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-qh79o3ta/input",
+        "removed": true
+      },
+      "actual_wall_ms": 963.6357080016751,
+      "native_child_ms": 209.41279199905694,
+      "total_ms": 944.2823750432581,
+      "overhead_total_minus_native_ms": 734.8695830442011,
+      "serialized_payload_tokens": 5156,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-flask-02-2000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 517.786917014746,
+        "broker_init_wall_ms": 49.366083985660225,
+        "retrieve_wall_ms": 320.11733300169,
+        "source_read_wall_ms": 0.564665999263525,
+        "broker_close_wall_ms": 0.007541995728388429,
+        "snapshot_cleanup_wall_ms": 21.51966601377353
+      },
+      "native_child_samples_ms": [
+        200.996125000529
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1914,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-6a2njejg/input",
+        "removed": true
+      },
+      "actual_wall_ms": 924.0508330112789,
+      "native_child_ms": 200.996125000529,
+      "total_ms": 909.3622080108617,
+      "overhead_total_minus_native_ms": 708.3660830103327,
+      "serialized_payload_tokens": 3051,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-flask-02-2000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 481.72341598547064,
+        "broker_init_wall_ms": 50.302333023864776,
+        "retrieve_wall_ms": 288.6245000117924,
+        "source_read_wall_ms": 0.6209159910213202,
+        "broker_close_wall_ms": 0.007875001756474376,
+        "snapshot_cleanup_wall_ms": 23.62241697846912
+      },
+      "native_child_samples_ms": [
+        166.72949999338016
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1799,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-0xe5soxh/input",
+        "removed": true
+      },
+      "actual_wall_ms": 862.4530829838477,
+      "native_child_ms": 166.72949999338016,
+      "total_ms": 844.9014569923747,
+      "overhead_total_minus_native_ms": 678.1719569989946,
+      "serialized_payload_tokens": 2896,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-flask-02-2000-graphify",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 98.43991699744947,
+        "broker_init_wall_ms": 34.80629200930707,
+        "retrieve_wall_ms": 397.43837498826906,
+        "source_read_wall_ms": 0.6715840136166662,
+        "broker_close_wall_ms": 0.007499998901039362,
+        "snapshot_cleanup_wall_ms": 21.764334000181407
+      },
+      "native_child_samples_ms": [
+        286.4067500049714
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1898,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-lybhlkbw/input",
+        "removed": true
+      },
+      "actual_wall_ms": 555.4028750048019,
+      "native_child_ms": 286.4067500049714,
+      "total_ms": 553.1280020077247,
+      "overhead_total_minus_native_ms": 266.7212520027533,
+      "serialized_payload_tokens": 2486,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-flask-02-8000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 555.4985410126392,
+        "broker_init_wall_ms": 70.29479101765901,
+        "retrieve_wall_ms": 349.77020902442746,
+        "source_read_wall_ms": 0.8291660051327199,
+        "broker_close_wall_ms": 0.010249990737065673,
+        "snapshot_cleanup_wall_ms": 24.061707983491942
+      },
+      "native_child_samples_ms": [
+        205.42183300131
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 5883,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-j_i2bj_o/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1022.3184160131495,
+      "native_child_ms": 205.42183300131,
+      "total_ms": 1000.4646650340874,
+      "overhead_total_minus_native_ms": 795.0428320327774,
+      "serialized_payload_tokens": 7883,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-flask-02-8000-graphify",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 104.81083299964666,
+        "broker_init_wall_ms": 36.4611670083832,
+        "retrieve_wall_ms": 388.6950000014622,
+        "source_read_wall_ms": 0.6553339771926403,
+        "broker_close_wall_ms": 0.0077500008046627045,
+        "snapshot_cleanup_wall_ms": 21.882040979107842
+      },
+      "native_child_samples_ms": [
+        276.3404999859631
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 16821,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-6a11ivnd/input",
+        "removed": true
+      },
+      "actual_wall_ms": 560.0648749968968,
+      "native_child_ms": 276.3404999859631,
+      "total_ms": 552.5121249665972,
+      "overhead_total_minus_native_ms": 276.1716249806341,
+      "serialized_payload_tokens": 17962,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-flask-02-8000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 487.79508398729376,
+        "broker_init_wall_ms": 46.85433299164288,
+        "retrieve_wall_ms": 266.5958750003483,
+        "source_read_wall_ms": 0.6220419891178608,
+        "broker_close_wall_ms": 0.008125003660097718,
+        "snapshot_cleanup_wall_ms": 23.117416014429182
+      },
+      "native_child_samples_ms": [
+        145.2209999843035
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 5835,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-iaw3npko/input",
+        "removed": true
+      },
+      "actual_wall_ms": 845.3685409913305,
+      "native_child_ms": 145.2209999843035,
+      "total_ms": 824.9928749864921,
+      "overhead_total_minus_native_ms": 679.7718750021886,
+      "serialized_payload_tokens": 7815,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-fastify-01-2000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 1095.1199580158573,
+        "broker_init_wall_ms": 74.96525000897236,
+        "retrieve_wall_ms": 383.5194160055835,
+        "source_read_wall_ms": 0.5196659767534584,
+        "broker_close_wall_ms": 0.007667025784030557,
+        "snapshot_cleanup_wall_ms": 38.18216599756852
+      },
+      "native_child_samples_ms": [
+        193.00583301810548
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1546,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-njq54qau/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1645.7039579981938,
+      "native_child_ms": 193.00583301810548,
+      "total_ms": 1592.314123030519,
+      "overhead_total_minus_native_ms": 1399.3082900124136,
+      "serialized_payload_tokens": 2439,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-fastify-01-2000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 1074.21554098255,
+        "broker_init_wall_ms": 67.3120419960469,
+        "retrieve_wall_ms": 415.26058298768476,
+        "source_read_wall_ms": 0.3539999888744205,
+        "broker_close_wall_ms": 0.011166994227096438,
+        "snapshot_cleanup_wall_ms": 33.10220901039429
+      },
+      "native_child_samples_ms": [
+        230.66279100021347
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1730,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-0evdsstn/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1647.1075000008568,
+      "native_child_ms": 230.66279100021347,
+      "total_ms": 1590.2555419597775,
+      "overhead_total_minus_native_ms": 1359.592750959564,
+      "serialized_payload_tokens": 2664,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-fastify-01-2000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 161.5146249823738,
+        "broker_init_wall_ms": 58.924124983605,
+        "retrieve_wall_ms": 427.53924999851733,
+        "source_read_wall_ms": 0.4133750044275075,
+        "broker_close_wall_ms": 0.007375027053058147,
+        "snapshot_cleanup_wall_ms": 35.3189590096008
+      },
+      "native_child_samples_ms": [
+        254.75858300342225
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1846,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-7kgac3x0/input",
+        "removed": true
+      },
+      "actual_wall_ms": 685.6207920063753,
+      "native_child_ms": 254.75858300342225,
+      "total_ms": 683.7177090055775,
+      "overhead_total_minus_native_ms": 428.95912600215524,
+      "serialized_payload_tokens": 2429,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-fastify-01-8000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 1133.5575410048477,
+        "broker_init_wall_ms": 77.07341699278913,
+        "retrieve_wall_ms": 351.45804201602004,
+        "source_read_wall_ms": 0.5380419897846878,
+        "broker_close_wall_ms": 0.007417023880407214,
+        "snapshot_cleanup_wall_ms": 34.57616601372138
+      },
+      "native_child_samples_ms": [
+        157.9340839816723
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3148,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-wqz6k8y1/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1650.9058749943506,
+      "native_child_ms": 157.9340839816723,
+      "total_ms": 1597.2106250410434,
+      "overhead_total_minus_native_ms": 1439.276541059371,
+      "serialized_payload_tokens": 4510,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-fastify-01-8000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 173.14429199905135,
+        "broker_init_wall_ms": 70.84658302483149,
+        "retrieve_wall_ms": 480.8155420178082,
+        "source_read_wall_ms": 0.3809169866144657,
+        "broker_close_wall_ms": 0.010459014447405934,
+        "snapshot_cleanup_wall_ms": 38.005458016414195
+      },
+      "native_child_samples_ms": [
+        292.814249987714
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 7627,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-q6i2lpxh/input",
+        "removed": true
+      },
+      "actual_wall_ms": 767.7888750040438,
+      "native_child_ms": 292.814249987714,
+      "total_ms": 763.2032510591671,
+      "overhead_total_minus_native_ms": 470.3890010714531,
+      "serialized_payload_tokens": 8420,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-fastify-01-8000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 1130.2277909999248,
+        "broker_init_wall_ms": 84.26158397924155,
+        "retrieve_wall_ms": 421.31404200335965,
+        "source_read_wall_ms": 0.41237499681301415,
+        "broker_close_wall_ms": 0.007416994776576757,
+        "snapshot_cleanup_wall_ms": 34.95991698582657
+      },
+      "native_child_samples_ms": [
+        208.99883299716748
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3148,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-l_ttes0_/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1729.2337079998106,
+      "native_child_ms": 208.99883299716748,
+      "total_ms": 1671.1831259599421,
+      "overhead_total_minus_native_ms": 1462.1842929627746,
+      "serialized_payload_tokens": 4507,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-fastify-02-2000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 160.5612499988638,
+        "broker_init_wall_ms": 59.209207975072786,
+        "retrieve_wall_ms": 440.9177089983132,
+        "source_read_wall_ms": 0.4880419874098152,
+        "broker_close_wall_ms": 0.008332979632541537,
+        "snapshot_cleanup_wall_ms": 35.40854199673049
+      },
+      "native_child_samples_ms": [
+        257.74170897784643
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3547,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-zlvfio7u/input",
+        "removed": true
+      },
+      "actual_wall_ms": 699.0790409909096,
+      "native_child_ms": 257.74170897784643,
+      "total_ms": 696.5930839360226,
+      "overhead_total_minus_native_ms": 438.85137495817617,
+      "serialized_payload_tokens": 4188,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-fastify-02-2000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 1045.3759169904515,
+        "broker_init_wall_ms": 69.92358400020748,
+        "retrieve_wall_ms": 393.8047919946257,
+        "source_read_wall_ms": 0.3167910035699606,
+        "broker_close_wall_ms": 0.012917007552459836,
+        "snapshot_cleanup_wall_ms": 32.43883402319625
+      },
+      "native_child_samples_ms": [
+        213.80666599725373
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1773,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-g5zhhtdo/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1592.3135000048205,
+      "native_child_ms": 213.80666599725373,
+      "total_ms": 1541.8728350196034,
+      "overhead_total_minus_native_ms": 1328.0661690223496,
+      "serialized_payload_tokens": 2725,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-fastify-02-2000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 1003.5578340175562,
+        "broker_init_wall_ms": 74.4694999884814,
+        "retrieve_wall_ms": 360.0461670139339,
+        "source_read_wall_ms": 0.48591700033284724,
+        "broker_close_wall_ms": 0.0077500008046627045,
+        "snapshot_cleanup_wall_ms": 35.27558399946429
+      },
+      "native_child_samples_ms": [
+        175.776499992935
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1633,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-kwxvqfcn/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1527.077584003564,
+      "native_child_ms": 175.776499992935,
+      "total_ms": 1473.8427520205732,
+      "overhead_total_minus_native_ms": 1298.0662520276383,
+      "serialized_payload_tokens": 2547,
+      "ok": true
+    },
+    {
+      "session": "r01-p00-fastify-02-8000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 1,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 160.56566601037048,
+        "broker_init_wall_ms": 59.49962500017136,
+        "retrieve_wall_ms": 436.1750420066528,
+        "source_read_wall_ms": 0.4384579951874912,
+        "broker_close_wall_ms": 0.0075830030255019665,
+        "snapshot_cleanup_wall_ms": 33.958999993046746
+      },
+      "native_child_samples_ms": [
+        257.480416999897
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3471,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-hne43d2j/input",
+        "removed": true
+      },
+      "actual_wall_ms": 692.9442909895442,
+      "native_child_ms": 257.480416999897,
+      "total_ms": 690.6453740084544,
+      "overhead_total_minus_native_ms": 433.1649570085574,
+      "serialized_payload_tokens": 4108,
+      "ok": true
+    },
+    {
+      "session": "r01-p01-fastify-02-8000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 1,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 1035.4523329879157,
+        "broker_init_wall_ms": 69.92279100813903,
+        "retrieve_wall_ms": 402.53229200607166,
+        "source_read_wall_ms": 0.6550419784616679,
+        "broker_close_wall_ms": 0.019291997887194157,
+        "snapshot_cleanup_wall_ms": 42.084625019924715
+      },
+      "native_child_samples_ms": [
+        177.89095800253563
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3869,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-mzcx6e_5/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1602.806791983312,
+      "native_child_ms": 177.89095800253563,
+      "total_ms": 1550.6663749984,
+      "overhead_total_minus_native_ms": 1372.7754169958644,
+      "serialized_payload_tokens": 5247,
+      "ok": true
+    },
+    {
+      "session": "r01-p02-fastify-02-8000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 1,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 1208.7877079902682,
+        "broker_init_wall_ms": 74.82645902200602,
+        "retrieve_wall_ms": 393.28712501446716,
+        "source_read_wall_ms": 0.39237499004229903,
+        "broker_close_wall_ms": 0.0069160014390945435,
+        "snapshot_cleanup_wall_ms": 34.35562501545064
+      },
+      "native_child_samples_ms": [
+        199.7493330272846
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 4009,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-0yrbyr43/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1781.669249990955,
+      "native_child_ms": 199.7493330272846,
+      "total_ms": 1711.6562080336735,
+      "overhead_total_minus_native_ms": 1511.9068750063889,
+      "serialized_payload_tokens": 5424,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-cobra-01-2000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 277.6458750013262,
+        "broker_init_wall_ms": 22.12899998994544,
+        "retrieve_wall_ms": 251.40554099925794,
+        "source_read_wall_ms": 0.5472500051837415,
+        "broker_close_wall_ms": 0.006208021659404039,
+        "snapshot_cleanup_wall_ms": 7.151875004637986
+      },
+      "native_child_samples_ms": [
+        206.26016601454467
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1555,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-k691pauz/input",
+        "removed": true
+      },
+      "actual_wall_ms": 570.5273329804186,
+      "native_child_ms": 206.26016601454467,
+      "total_ms": 558.8857490220107,
+      "overhead_total_minus_native_ms": 352.62558300746605,
+      "serialized_payload_tokens": 2644,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-cobra-01-2000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 287.4577499751467,
+        "broker_init_wall_ms": 24.216624995460734,
+        "retrieve_wall_ms": 200.68325000465848,
+        "source_read_wall_ms": 0.43679200462065637,
+        "broker_close_wall_ms": 0.0074160052463412285,
+        "snapshot_cleanup_wall_ms": 5.616458016447723
+      },
+      "native_child_samples_ms": [
+        157.26962499320507
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1472,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-bqxyg1pe/input",
+        "removed": true
+      },
+      "actual_wall_ms": 527.3654159973375,
+      "native_child_ms": 157.26962499320507,
+      "total_ms": 518.4182910015807,
+      "overhead_total_minus_native_ms": 361.1486660083756,
+      "serialized_payload_tokens": 2521,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-cobra-01-2000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 28.17920799134299,
+        "broker_init_wall_ms": 9.452291007619351,
+        "retrieve_wall_ms": 248.71941699529998,
+        "source_read_wall_ms": 0.5710830155294389,
+        "broker_close_wall_ms": 0.007916998583823442,
+        "snapshot_cleanup_wall_ms": 6.2615420029032975
+      },
+      "native_child_samples_ms": [
+        218.54854197590612
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1817,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-_zgmiiiy/input",
+        "removed": true
+      },
+      "actual_wall_ms": 294.60649998509325,
+      "native_child_ms": 218.54854197590612,
+      "total_ms": 293.1914580112789,
+      "overhead_total_minus_native_ms": 74.64291603537276,
+      "serialized_payload_tokens": 2383,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-cobra-01-8000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 331.3195409718901,
+        "broker_init_wall_ms": 29.572792001999915,
+        "retrieve_wall_ms": 285.48808401683345,
+        "source_read_wall_ms": 0.6485420162789524,
+        "broker_close_wall_ms": 0.008041999535635114,
+        "snapshot_cleanup_wall_ms": 7.4498329777270555
+      },
+      "native_child_samples_ms": [
+        227.5636249978561
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3821,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-0y3a6krl/input",
+        "removed": true
+      },
+      "actual_wall_ms": 668.1738330225926,
+      "native_child_ms": 227.5636249978561,
+      "total_ms": 654.4868339842651,
+      "overhead_total_minus_native_ms": 426.923208986409,
+      "serialized_payload_tokens": 5703,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-cobra-01-8000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 32.503041002200916,
+        "broker_init_wall_ms": 14.52983298804611,
+        "retrieve_wall_ms": 291.683916002512,
+        "source_read_wall_ms": 0.6046250055078417,
+        "broker_close_wall_ms": 0.008708011591807008,
+        "snapshot_cleanup_wall_ms": 9.121584007516503
+      },
+      "native_child_samples_ms": [
+        249.24129198188893
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 21174,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-42rod2nf/input",
+        "removed": true
+      },
+      "actual_wall_ms": 359.559625008842,
+      "native_child_ms": 249.24129198188893,
+      "total_ms": 348.45170701737516,
+      "overhead_total_minus_native_ms": 99.21041503548622,
+      "serialized_payload_tokens": 22410,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-cobra-01-8000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 313.9614580140915,
+        "broker_init_wall_ms": 26.004959014244378,
+        "retrieve_wall_ms": 214.82204101630487,
+        "source_read_wall_ms": 0.5114999949000776,
+        "broker_close_wall_ms": 0.007833004929125309,
+        "snapshot_cleanup_wall_ms": 6.924500019522384
+      },
+      "native_child_samples_ms": [
+        162.70679200533777
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3738,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-yv94qqtj/input",
+        "removed": true
+      },
+      "actual_wall_ms": 574.6480000088923,
+      "native_child_ms": 162.70679200533777,
+      "total_ms": 562.2322910639923,
+      "overhead_total_minus_native_ms": 399.52549905865453,
+      "serialized_payload_tokens": 5577,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-cobra-02-2000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 301.0097499936819,
+        "broker_init_wall_ms": 27.241208008490503,
+        "retrieve_wall_ms": 191.83054199675098,
+        "source_read_wall_ms": 0.41591699118725955,
+        "broker_close_wall_ms": 0.004917004844173789,
+        "snapshot_cleanup_wall_ms": 7.129375007934868
+      },
+      "native_child_samples_ms": [
+        145.2022499870509
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1269,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-eg13v70e/input",
+        "removed": true
+      },
+      "actual_wall_ms": 539.7922080010176,
+      "native_child_ms": 145.2022499870509,
+      "total_ms": 527.6317090028897,
+      "overhead_total_minus_native_ms": 382.4294590158388,
+      "serialized_payload_tokens": 2334,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-cobra-02-2000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 283.51695800665766,
+        "broker_init_wall_ms": 22.66695801517926,
+        "retrieve_wall_ms": 228.54179100249894,
+        "source_read_wall_ms": 0.3667919954750687,
+        "broker_close_wall_ms": 0.007458002073690295,
+        "snapshot_cleanup_wall_ms": 6.4935419941321015
+      },
+      "native_child_samples_ms": [
+        185.3432499920018
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1301,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-3sw_3dk5/input",
+        "removed": true
+      },
+      "actual_wall_ms": 556.4476660219952,
+      "native_child_ms": 185.3432499920018,
+      "total_ms": 541.5934990160167,
+      "overhead_total_minus_native_ms": 356.2502490240149,
+      "serialized_payload_tokens": 2381,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-cobra-02-2000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 30.21525000804104,
+        "broker_init_wall_ms": 9.554083982948214,
+        "retrieve_wall_ms": 294.94616700685583,
+        "source_read_wall_ms": 0.5232919938862324,
+        "broker_close_wall_ms": 0.00795800588093698,
+        "snapshot_cleanup_wall_ms": 6.91433300380595
+      },
+      "native_child_samples_ms": [
+        258.39845900190994
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 10284,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-2sly226a/input",
+        "removed": true
+      },
+      "actual_wall_ms": 347.6046659925487,
+      "native_child_ms": 258.39845900190994,
+      "total_ms": 342.1610840014182,
+      "overhead_total_minus_native_ms": 83.76262499950826,
+      "serialized_payload_tokens": 11150,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-cobra-02-8000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 319.4130419869907,
+        "broker_init_wall_ms": 27.498874987941235,
+        "retrieve_wall_ms": 224.91704201092944,
+        "source_read_wall_ms": 0.48991700168699026,
+        "broker_close_wall_ms": 0.007833994459360838,
+        "snapshot_cleanup_wall_ms": 8.935750025557354
+      },
+      "native_child_samples_ms": [
+        173.00949999480508
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 2759,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-k420x0p6/input",
+        "removed": true
+      },
+      "actual_wall_ms": 593.5037079907488,
+      "native_child_ms": 173.00949999480508,
+      "total_ms": 581.2624600075651,
+      "overhead_total_minus_native_ms": 408.25296001276,
+      "serialized_payload_tokens": 4324,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-cobra-02-8000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 38.48462499445304,
+        "broker_init_wall_ms": 11.98679200024344,
+        "retrieve_wall_ms": 279.50937501736917,
+        "source_read_wall_ms": 0.44408300891518593,
+        "broker_close_wall_ms": 0.008624978363513947,
+        "snapshot_cleanup_wall_ms": 6.052584009012207
+      },
+      "native_child_samples_ms": [
+        238.79725000006147
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 10284,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-m_a8r0fb/input",
+        "removed": true
+      },
+      "actual_wall_ms": 342.1332080033608,
+      "native_child_ms": 238.79725000006147,
+      "total_ms": 336.48608400835656,
+      "overhead_total_minus_native_ms": 97.68883400829509,
+      "serialized_payload_tokens": 11150,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-cobra-02-8000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 305.57237498578615,
+        "broker_init_wall_ms": 25.045249989489093,
+        "retrieve_wall_ms": 253.92504199407995,
+        "source_read_wall_ms": 0.39941701106727123,
+        "broker_close_wall_ms": 0.010499992640689015,
+        "snapshot_cleanup_wall_ms": 7.328707986744121
+      },
+      "native_child_samples_ms": [
+        204.54429101664573
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 2791,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-gzidemyh/input",
+        "removed": true
+      },
+      "actual_wall_ms": 603.9365000033285,
+      "native_child_ms": 204.54429101664573,
+      "total_ms": 592.2812919598073,
+      "overhead_total_minus_native_ms": 387.73700094316155,
+      "serialized_payload_tokens": 4369,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-flask-01-2000-graphify",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 132.1619579975959,
+        "broker_init_wall_ms": 45.00591699616052,
+        "retrieve_wall_ms": 503.49937498685904,
+        "source_read_wall_ms": 0.7315830152947456,
+        "broker_close_wall_ms": 0.007791008101776242,
+        "snapshot_cleanup_wall_ms": 24.494999990565702
+      },
+      "native_child_samples_ms": [
+        354.9276659905445
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1833,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-r3954xpu/input",
+        "removed": true
+      },
+      "actual_wall_ms": 707.6442920078989,
+      "native_child_ms": 354.9276659905445,
+      "total_ms": 705.9016239945777,
+      "overhead_total_minus_native_ms": 350.9739580040332,
+      "serialized_payload_tokens": 2406,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-flask-01-2000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 579.1909169929568,
+        "broker_init_wall_ms": 55.077790981158614,
+        "retrieve_wall_ms": 362.1447080222424,
+        "source_read_wall_ms": 0.7280409918166697,
+        "broker_close_wall_ms": 0.009042007150128484,
+        "snapshot_cleanup_wall_ms": 22.783458000048995
+      },
+      "native_child_samples_ms": [
+        220.66904199891724
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1601,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-14zkb59j/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1042.2003749990836,
+      "native_child_ms": 220.66904199891724,
+      "total_ms": 1019.9339569953736,
+      "overhead_total_minus_native_ms": 799.2649149964564,
+      "serialized_payload_tokens": 2621,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-flask-01-2000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 646.3314580032602,
+        "broker_init_wall_ms": 63.10899998061359,
+        "retrieve_wall_ms": 342.7035420027096,
+        "source_read_wall_ms": 0.7455830054823309,
+        "broker_close_wall_ms": 0.01329201040789485,
+        "snapshot_cleanup_wall_ms": 24.129666009685025
+      },
+      "native_child_samples_ms": [
+        201.2888750177808
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1573,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-n1ss_u6k/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1105.1724999852013,
+      "native_child_ms": 201.2888750177808,
+      "total_ms": 1077.0325410121586,
+      "overhead_total_minus_native_ms": 875.7436659943778,
+      "serialized_payload_tokens": 2580,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-flask-01-8000-graphify",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 124.83475002227351,
+        "broker_init_wall_ms": 47.74991699378006,
+        "retrieve_wall_ms": 478.4916669887025,
+        "source_read_wall_ms": 0.76374999480322,
+        "broker_close_wall_ms": 0.009292009053751826,
+        "snapshot_cleanup_wall_ms": 22.782749991165474
+      },
+      "native_child_samples_ms": [
+        349.79141599615104
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 11039,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-cqz8t1_u/input",
+        "removed": true
+      },
+      "actual_wall_ms": 680.5507910030428,
+      "native_child_ms": 349.79141599615104,
+      "total_ms": 674.6321259997785,
+      "overhead_total_minus_native_ms": 324.84071000362746,
+      "serialized_payload_tokens": 11965,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-flask-01-8000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 611.9429589889478,
+        "broker_init_wall_ms": 55.28220802079886,
+        "retrieve_wall_ms": 334.74704102263786,
+        "source_read_wall_ms": 1.1489999887999147,
+        "broker_close_wall_ms": 0.01270900247618556,
+        "snapshot_cleanup_wall_ms": 29.564333002781495
+      },
+      "native_child_samples_ms": [
+        180.1229999982752
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3439,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-t3zrzuni/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1055.2232089976314,
+      "native_child_ms": 180.1229999982752,
+      "total_ms": 1032.698250026442,
+      "overhead_total_minus_native_ms": 852.5752500281669,
+      "serialized_payload_tokens": 4920,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-flask-01-8000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 653.0904170067515,
+        "broker_init_wall_ms": 65.64891699235886,
+        "retrieve_wall_ms": 437.3139999806881,
+        "source_read_wall_ms": 0.9505829948466271,
+        "broker_close_wall_ms": 0.018999999156221747,
+        "snapshot_cleanup_wall_ms": 28.237000020453706
+      },
+      "native_child_samples_ms": [
+        264.9260839971248
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3619,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-6vqjwqy6/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1207.9169579956215,
+      "native_child_ms": 264.9260839971248,
+      "total_ms": 1185.259916994255,
+      "overhead_total_minus_native_ms": 920.3338329971302,
+      "serialized_payload_tokens": 5159,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-flask-02-2000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 637.7145420119632,
+        "broker_init_wall_ms": 55.429792002541944,
+        "retrieve_wall_ms": 397.78699999442324,
+        "source_read_wall_ms": 1.1964169971179217,
+        "broker_close_wall_ms": 0.008916977094486356,
+        "snapshot_cleanup_wall_ms": 31.406041991431266
+      },
+      "native_child_samples_ms": [
+        229.60883399355225
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1914,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-829vvqxr/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1143.793208990246,
+      "native_child_ms": 229.60883399355225,
+      "total_ms": 1123.542709974572,
+      "overhead_total_minus_native_ms": 893.9338759810198,
+      "serialized_payload_tokens": 3049,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-flask-02-2000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 845.095875003608,
+        "broker_init_wall_ms": 83.22704100282863,
+        "retrieve_wall_ms": 450.2274170226883,
+        "source_read_wall_ms": 0.6751659966539592,
+        "broker_close_wall_ms": 0.008917006198316813,
+        "snapshot_cleanup_wall_ms": 32.506791001651436
+      },
+      "native_child_samples_ms": [
+        254.25699999323115
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1799,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-7mr5d2vx/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1437.554917007219,
+      "native_child_ms": 254.25699999323115,
+      "total_ms": 1411.7412070336286,
+      "overhead_total_minus_native_ms": 1157.4842070403975,
+      "serialized_payload_tokens": 2896,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-flask-02-2000-graphify",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 170.39991699857637,
+        "broker_init_wall_ms": 52.909916994394735,
+        "retrieve_wall_ms": 727.1275839884765,
+        "source_read_wall_ms": 0.9028750064317137,
+        "broker_close_wall_ms": 0.007791008101776242,
+        "snapshot_cleanup_wall_ms": 31.51199998683296
+      },
+      "native_child_samples_ms": [
+        547.8134589793626
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1900,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-ghk1h0zr/input",
+        "removed": true
+      },
+      "actual_wall_ms": 984.9770000146236,
+      "native_child_ms": 547.8134589793626,
+      "total_ms": 982.8600839828141,
+      "overhead_total_minus_native_ms": 435.0466250034515,
+      "serialized_payload_tokens": 2490,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-flask-02-8000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 1045.8430419967044,
+        "broker_init_wall_ms": 114.54629199579358,
+        "retrieve_wall_ms": 704.7341660072561,
+        "source_read_wall_ms": 1.8490419897716492,
+        "broker_close_wall_ms": 0.014374993043020368,
+        "snapshot_cleanup_wall_ms": 47.930708999047056
+      },
+      "native_child_samples_ms": [
+        425.50258300616406
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 5883,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-sesctczz/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1956.8284589913674,
+      "native_child_ms": 425.50258300616406,
+      "total_ms": 1914.9176259816159,
+      "overhead_total_minus_native_ms": 1489.4150429754518,
+      "serialized_payload_tokens": 7883,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-flask-02-8000-graphify",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 215.6037499953527,
+        "broker_init_wall_ms": 73.36245902115479,
+        "retrieve_wall_ms": 780.5310839903541,
+        "source_read_wall_ms": 1.2557079899124801,
+        "broker_close_wall_ms": 0.012958014849573374,
+        "snapshot_cleanup_wall_ms": 48.38762502186
+      },
+      "native_child_samples_ms": [
+        562.3124170233496
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 16820,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-38enkxkh/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1134.778625011677,
+      "native_child_ms": 562.3124170233496,
+      "total_ms": 1119.1535840334836,
+      "overhead_total_minus_native_ms": 556.8411670101341,
+      "serialized_payload_tokens": 17960,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-flask-02-8000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 1050.1689169905148,
+        "broker_init_wall_ms": 87.83904201118276,
+        "retrieve_wall_ms": 859.1785420139786,
+        "source_read_wall_ms": 1.172708987724036,
+        "broker_close_wall_ms": 0.015416007954627275,
+        "snapshot_cleanup_wall_ms": 51.74941700533964
+      },
+      "native_child_samples_ms": [
+        374.06862500938587
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 5835,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-z9zf84ob/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2082.867791992612,
+      "native_child_ms": 374.06862500938587,
+      "total_ms": 2050.1240430166945,
+      "overhead_total_minus_native_ms": 1676.0554180073086,
+      "serialized_payload_tokens": 7815,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-fastify-01-2000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 4136.940249998588,
+        "broker_init_wall_ms": 503.1463750055991,
+        "retrieve_wall_ms": 1582.4821249989327,
+        "source_read_wall_ms": 7.6683750085067,
+        "broker_close_wall_ms": 0.006875023245811462,
+        "snapshot_cleanup_wall_ms": 93.55029198923148
+      },
+      "native_child_samples_ms": [
+        813.3796670008451
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1546,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-osrgfwtc/input",
+        "removed": true
+      },
+      "actual_wall_ms": 6577.454209007556,
+      "native_child_ms": 813.3796670008451,
+      "total_ms": 6323.794292024104,
+      "overhead_total_minus_native_ms": 5510.414625023259,
+      "serialized_payload_tokens": 2439,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-fastify-01-2000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 4617.476332990918,
+        "broker_init_wall_ms": 313.32600000314415,
+        "retrieve_wall_ms": 1741.9610840152018,
+        "source_read_wall_ms": 0.5476250080391765,
+        "broker_close_wall_ms": 0.008083006832748652,
+        "snapshot_cleanup_wall_ms": 190.36691600922495
+      },
+      "native_child_samples_ms": [
+        893.7717499793507
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1730,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-aa22hk6_/input",
+        "removed": true
+      },
+      "actual_wall_ms": 7049.583291984163,
+      "native_child_ms": 893.7717499793507,
+      "total_ms": 6863.686041033361,
+      "overhead_total_minus_native_ms": 5969.91429105401,
+      "serialized_payload_tokens": 2664,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-fastify-01-2000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 767.9044579854235,
+        "broker_init_wall_ms": 178.87241701828316,
+        "retrieve_wall_ms": 2396.898165985476,
+        "source_read_wall_ms": 1.00579098216258,
+        "broker_close_wall_ms": 0.009624985978007317,
+        "snapshot_cleanup_wall_ms": 89.19829098158516
+      },
+      "native_child_samples_ms": [
+        1733.7658330216072
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1845,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-_9fv6dyc/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3437.202958011767,
+      "native_child_ms": 1733.7658330216072,
+      "total_ms": 3433.8887479389086,
+      "overhead_total_minus_native_ms": 1700.1229149173014,
+      "serialized_payload_tokens": 2427,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-fastify-01-8000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 3331.6027499968186,
+        "broker_init_wall_ms": 168.43970902846195,
+        "retrieve_wall_ms": 1115.7402080134489,
+        "source_read_wall_ms": 3.5993749916087836,
+        "broker_close_wall_ms": 0.010082992957904935,
+        "snapshot_cleanup_wall_ms": 76.4207920001354
+      },
+      "native_child_samples_ms": [
+        457.1313330088742
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3148,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-x__rreip/input",
+        "removed": true
+      },
+      "actual_wall_ms": 4822.522917005699,
+      "native_child_ms": 457.1313330088742,
+      "total_ms": 4695.8129170234315,
+      "overhead_total_minus_native_ms": 4238.681584014557,
+      "serialized_payload_tokens": 4507,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-fastify-01-8000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 414.0770419908222,
+        "broker_init_wall_ms": 158.59125001588836,
+        "retrieve_wall_ms": 1277.4781660118606,
+        "source_read_wall_ms": 0.6807079771533608,
+        "broker_close_wall_ms": 0.012250005966052413,
+        "snapshot_cleanup_wall_ms": 136.1559170181863
+      },
+      "native_child_samples_ms": [
+        844.6726670081262
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 7626,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-1ebmoo29/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1994.068416999653,
+      "native_child_ms": 844.6726670081262,
+      "total_ms": 1986.9953330198769,
+      "overhead_total_minus_native_ms": 1142.3226660117507,
+      "serialized_payload_tokens": 8418,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-fastify-01-8000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 5127.655916992808,
+        "broker_init_wall_ms": 382.4985840183217,
+        "retrieve_wall_ms": 1683.3644580037799,
+        "source_read_wall_ms": 0.7318749849218875,
+        "broker_close_wall_ms": 0.012333999620750546,
+        "snapshot_cleanup_wall_ms": 78.22687501902692
+      },
+      "native_child_samples_ms": [
+        994.3494169856422
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3148,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-hxx7z5rh/input",
+        "removed": true
+      },
+      "actual_wall_ms": 7481.200415990315,
+      "native_child_ms": 994.3494169856422,
+      "total_ms": 7272.490043018479,
+      "overhead_total_minus_native_ms": 6278.140626032837,
+      "serialized_payload_tokens": 4508,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-fastify-02-2000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 688.1211250147317,
+        "broker_init_wall_ms": 193.88374997652136,
+        "retrieve_wall_ms": 1711.5217499958817,
+        "source_read_wall_ms": 0.7003750069998205,
+        "broker_close_wall_ms": 0.012416014214977622,
+        "snapshot_cleanup_wall_ms": 103.31533299176954
+      },
+      "native_child_samples_ms": [
+        1058.4500000113621
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3549,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-8j3a8nxz/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2708.8398750056513,
+      "native_child_ms": 1058.4500000113621,
+      "total_ms": 2697.554749000119,
+      "overhead_total_minus_native_ms": 1639.104748988757,
+      "serialized_payload_tokens": 4192,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-fastify-02-2000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 3368.4961250110064,
+        "broker_init_wall_ms": 390.9662499791011,
+        "retrieve_wall_ms": 1253.809292014921,
+        "source_read_wall_ms": 0.5619589937850833,
+        "broker_close_wall_ms": 0.010207993909716606,
+        "snapshot_cleanup_wall_ms": 72.25900000776164
+      },
+      "native_child_samples_ms": [
+        622.9529170086607
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1773,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-90c1bwhu/input",
+        "removed": true
+      },
+      "actual_wall_ms": 5220.5812909814995,
+      "native_child_ms": 622.9529170086607,
+      "total_ms": 5086.102834000485,
+      "overhead_total_minus_native_ms": 4463.149916991824,
+      "serialized_payload_tokens": 2727,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-fastify-02-2000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 4324.478333001025,
+        "broker_init_wall_ms": 366.8725000170525,
+        "retrieve_wall_ms": 1157.9059579817113,
+        "source_read_wall_ms": 0.9677079797256738,
+        "broker_close_wall_ms": 0.008167000487446785,
+        "snapshot_cleanup_wall_ms": 72.13187500019558
+      },
+      "native_child_samples_ms": [
+        570.5046659859363
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1633,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-8moh997p/input",
+        "removed": true
+      },
+      "actual_wall_ms": 6047.122749994742,
+      "native_child_ms": 570.5046659859363,
+      "total_ms": 5922.3645409801975,
+      "overhead_total_minus_native_ms": 5351.859874994261,
+      "serialized_payload_tokens": 2548,
+      "ok": true
+    },
+    {
+      "session": "r02-p00-fastify-02-8000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 2,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 504.24375000875443,
+        "broker_init_wall_ms": 172.0725000195671,
+        "retrieve_wall_ms": 1666.3588340161368,
+        "source_read_wall_ms": 0.5687499942723662,
+        "broker_close_wall_ms": 0.0076669966802001,
+        "snapshot_cleanup_wall_ms": 75.84800000768155
+      },
+      "native_child_samples_ms": [
+        1105.2812919951975
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3471,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-9xdff03z/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2422.581541002728,
+      "native_child_ms": 1105.2812919951975,
+      "total_ms": 2419.0995010430925,
+      "overhead_total_minus_native_ms": 1313.818209047895,
+      "serialized_payload_tokens": 4108,
+      "ok": true
+    },
+    {
+      "session": "r02-p01-fastify-02-8000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 2,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 4555.600000021514,
+        "broker_init_wall_ms": 365.15466700075194,
+        "retrieve_wall_ms": 2255.2095419960096,
+        "source_read_wall_ms": 0.5626670026686043,
+        "broker_close_wall_ms": 0.008417002391070127,
+        "snapshot_cleanup_wall_ms": 92.14054202311672
+      },
+      "native_child_samples_ms": [
+        1071.6396250063553
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3869,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-nx7imm6k/input",
+        "removed": true
+      },
+      "actual_wall_ms": 7513.864167005522,
+      "native_child_ms": 1071.6396250063553,
+      "total_ms": 7268.6758350464515,
+      "overhead_total_minus_native_ms": 6197.036210040096,
+      "serialized_payload_tokens": 5246,
+      "ok": true
+    },
+    {
+      "session": "r02-p02-fastify-02-8000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 2,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 5697.280583000975,
+        "broker_init_wall_ms": 300.9689589962363,
+        "retrieve_wall_ms": 1861.9888329994865,
+        "source_read_wall_ms": 0.5507089954335243,
+        "broker_close_wall_ms": 0.011333992006257176,
+        "snapshot_cleanup_wall_ms": 135.20412502111867
+      },
+      "native_child_samples_ms": [
+        1185.8269170043059
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 4009,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-d6tniakj/input",
+        "removed": true
+      },
+      "actual_wall_ms": 8150.441749981837,
+      "native_child_ms": 1185.8269170043059,
+      "total_ms": 7996.004543005256,
+      "overhead_total_minus_native_ms": 6810.17762600095,
+      "serialized_payload_tokens": 5424,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-cobra-01-2000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 1431.531417008955,
+        "broker_init_wall_ms": 51.344042003620416,
+        "retrieve_wall_ms": 1376.782249979442,
+        "source_read_wall_ms": 5.884083017008379,
+        "broker_close_wall_ms": 0.011416996130719781,
+        "snapshot_cleanup_wall_ms": 11.997041990980506
+      },
+      "native_child_samples_ms": [
+        1133.26341699576
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1555,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-jd41cre6/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2922.7728330006357,
+      "native_child_ms": 1133.26341699576,
+      "total_ms": 2877.550250996137,
+      "overhead_total_minus_native_ms": 1744.286834000377,
+      "serialized_payload_tokens": 2644,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-cobra-01-2000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 1204.8005420074333,
+        "broker_init_wall_ms": 43.10308300773613,
+        "retrieve_wall_ms": 870.2239579870366,
+        "source_read_wall_ms": 0.8762090001255274,
+        "broker_close_wall_ms": 0.008000002708286047,
+        "snapshot_cleanup_wall_ms": 9.968583995942026
+      },
+      "native_child_samples_ms": [
+        737.1624590014108
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1472,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-vv44k7w4/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2141.761749982834,
+      "native_child_ms": 737.1624590014108,
+      "total_ms": 2128.980376000982,
+      "overhead_total_minus_native_ms": 1391.817916999571,
+      "serialized_payload_tokens": 2522,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-cobra-01-2000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 161.1910840147175,
+        "broker_init_wall_ms": 49.66804198920727,
+        "retrieve_wall_ms": 1782.5795829994604,
+        "source_read_wall_ms": 3.0355420021805912,
+        "broker_close_wall_ms": 0.010624993592500687,
+        "snapshot_cleanup_wall_ms": 20.739707979373634
+      },
+      "native_child_samples_ms": [
+        1706.4648749947082
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1818,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-c9ihqa4r/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2031.968916009646,
+      "native_child_ms": 1706.4648749947082,
+      "total_ms": 2017.2245839785319,
+      "overhead_total_minus_native_ms": 310.75970898382366,
+      "serialized_payload_tokens": 2385,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-cobra-01-8000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 1305.1653750007972,
+        "broker_init_wall_ms": 64.66866700793616,
+        "retrieve_wall_ms": 1243.5672910069115,
+        "source_read_wall_ms": 7.014292001258582,
+        "broker_close_wall_ms": 0.009000010322779417,
+        "snapshot_cleanup_wall_ms": 21.244333998765796
+      },
+      "native_child_samples_ms": [
+        1084.3818749999627
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3821,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-8_l0m9vb/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2747.413291974226,
+      "native_child_ms": 1084.3818749999627,
+      "total_ms": 2641.668959025992,
+      "overhead_total_minus_native_ms": 1557.2870840260293,
+      "serialized_payload_tokens": 5702,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-cobra-01-8000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 144.00791699881665,
+        "broker_init_wall_ms": 28.725917014526203,
+        "retrieve_wall_ms": 1216.233207989717,
+        "source_read_wall_ms": 0.9735419880598783,
+        "broker_close_wall_ms": 0.012917007552459836,
+        "snapshot_cleanup_wall_ms": 19.553582998923957
+      },
+      "native_child_samples_ms": [
+        1139.5236249954905
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 21175,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-tdqs1whp/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1441.5337500104215,
+      "native_child_ms": 1139.5236249954905,
+      "total_ms": 1409.507083997596,
+      "overhead_total_minus_native_ms": 269.9834590021055,
+      "serialized_payload_tokens": 22412,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-cobra-01-8000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 1393.2683340099175,
+        "broker_init_wall_ms": 252.32554200920276,
+        "retrieve_wall_ms": 985.714333015494,
+        "source_read_wall_ms": 0.5021659890189767,
+        "broker_close_wall_ms": 0.0103750207927078,
+        "snapshot_cleanup_wall_ms": 18.906666984548792
+      },
+      "native_child_samples_ms": [
+        854.5207919960376
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3738,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-djox1koo/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2684.7125420172233,
+      "native_child_ms": 854.5207919960376,
+      "total_ms": 2650.7274170289747,
+      "overhead_total_minus_native_ms": 1796.2066250329372,
+      "serialized_payload_tokens": 5577,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-cobra-02-2000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 1184.9004160030745,
+        "broker_init_wall_ms": 52.67154099419713,
+        "retrieve_wall_ms": 669.1852079820819,
+        "source_read_wall_ms": 0.7218339887913316,
+        "broker_close_wall_ms": 0.008874980267137289,
+        "snapshot_cleanup_wall_ms": 12.301249982556328
+      },
+      "native_child_samples_ms": [
+        516.6132079903036
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1269,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-o9e6rp8x/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1936.9024579937104,
+      "native_child_ms": 516.6132079903036,
+      "total_ms": 1919.7891239309683,
+      "overhead_total_minus_native_ms": 1403.1759159406647,
+      "serialized_payload_tokens": 2335,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-cobra-02-2000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 1194.998958002543,
+        "broker_init_wall_ms": 199.93716702447273,
+        "retrieve_wall_ms": 1663.672750000842,
+        "source_read_wall_ms": 15.689207997638732,
+        "broker_close_wall_ms": 0.00895900302566588,
+        "snapshot_cleanup_wall_ms": 9.715583990328014
+      },
+      "native_child_samples_ms": [
+        1427.0641670154873
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1301,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-3w11a9cb/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3112.1924170001876,
+      "native_child_ms": 1427.0641670154873,
+      "total_ms": 3084.02262601885,
+      "overhead_total_minus_native_ms": 1656.9584590033628,
+      "serialized_payload_tokens": 2381,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-cobra-02-2000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 196.5424579975661,
+        "broker_init_wall_ms": 46.223999990615994,
+        "retrieve_wall_ms": 1379.737833980471,
+        "source_read_wall_ms": 1.0789170046336949,
+        "broker_close_wall_ms": 0.013458979083225131,
+        "snapshot_cleanup_wall_ms": 23.61400000518188
+      },
+      "native_child_samples_ms": [
+        1270.8512500103097
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 10286,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-7k3g4hw_/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1659.1284169990104,
+      "native_child_ms": 1270.8512500103097,
+      "total_ms": 1647.2106679575518,
+      "overhead_total_minus_native_ms": 376.35941794724204,
+      "serialized_payload_tokens": 11154,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-cobra-02-8000-graf_v59",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 788.08874997776,
+        "broker_init_wall_ms": 67.84179201349616,
+        "retrieve_wall_ms": 1213.129082985688,
+        "source_read_wall_ms": 0.864707981236279,
+        "broker_close_wall_ms": 0.010666000889614224,
+        "snapshot_cleanup_wall_ms": 58.53629199555144
+      },
+      "native_child_samples_ms": [
+        1099.1454999893904
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 2759,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-7lmrpztt/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2156.5180409816094,
+      "native_child_ms": 1099.1454999893904,
+      "total_ms": 2128.4712909546215,
+      "overhead_total_minus_native_ms": 1029.3257909652311,
+      "serialized_payload_tokens": 4324,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-cobra-02-8000-graphify",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 174.18600001838058,
+        "broker_init_wall_ms": 20.603833021596074,
+        "retrieve_wall_ms": 1024.124625022523,
+        "source_read_wall_ms": 0.7037089962977916,
+        "broker_close_wall_ms": 0.013167009456083179,
+        "snapshot_cleanup_wall_ms": 11.919042008230463
+      },
+      "native_child_samples_ms": [
+        945.3097079822328
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 10285,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-hedw2s7w/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1255.0079579814337,
+      "native_child_ms": 945.3097079822328,
+      "total_ms": 1231.550376076484,
+      "overhead_total_minus_native_ms": 286.2406680942513,
+      "serialized_payload_tokens": 11152,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-cobra-02-8000-graf_v61",
+      "repo": "cobra",
+      "query_id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 599.7743750049267,
+        "broker_init_wall_ms": 37.80891699716449,
+        "retrieve_wall_ms": 601.1829579947516,
+        "source_read_wall_ms": 0.7328339852392673,
+        "broker_close_wall_ms": 0.009665993275120854,
+        "snapshot_cleanup_wall_ms": 13.011125003686175
+      },
+      "native_child_samples_ms": [
+        512.6678750093561
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 2791,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-e6ywm2q9/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1278.5453330143355,
+      "native_child_ms": 512.6678750093561,
+      "total_ms": 1252.5198749790434,
+      "overhead_total_minus_native_ms": 739.8519999696873,
+      "serialized_payload_tokens": 4371,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-flask-01-2000-graphify",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 387.8670840058476,
+        "broker_init_wall_ms": 90.09599999990314,
+        "retrieve_wall_ms": 868.4118750097696,
+        "source_read_wall_ms": 1.0053330042865127,
+        "broker_close_wall_ms": 0.011416996130719781,
+        "snapshot_cleanup_wall_ms": 33.35579202394001
+      },
+      "native_child_samples_ms": [
+        678.0856669938657
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1834,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-ejmfkmz9/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1383.7960840028245,
+      "native_child_ms": 678.0856669938657,
+      "total_ms": 1380.7475010398775,
+      "overhead_total_minus_native_ms": 702.6618340460118,
+      "serialized_payload_tokens": 2408,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-flask-01-2000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 968.8597499916796,
+        "broker_init_wall_ms": 148.08000001357868,
+        "retrieve_wall_ms": 755.9391250251792,
+        "source_read_wall_ms": 0.9525830100756139,
+        "broker_close_wall_ms": 0.009124982170760632,
+        "snapshot_cleanup_wall_ms": 45.3223749937024
+      },
+      "native_child_samples_ms": [
+        447.58304199785925
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1601,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-hz_ta5dn/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2018.9364580146503,
+      "native_child_ms": 447.58304199785925,
+      "total_ms": 1919.1629580163863,
+      "overhead_total_minus_native_ms": 1471.579916018527,
+      "serialized_payload_tokens": 2620,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-flask-01-2000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 1620.0588339997921,
+        "broker_init_wall_ms": 212.76658299029805,
+        "retrieve_wall_ms": 843.9591669884976,
+        "source_read_wall_ms": 1.5437080000992864,
+        "broker_close_wall_ms": 0.012333010090515018,
+        "snapshot_cleanup_wall_ms": 58.1983330193907
+      },
+      "native_child_samples_ms": [
+        535.0887500098906
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1573,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-td8fech6/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2771.3894170010462,
+      "native_child_ms": 535.0887500098906,
+      "total_ms": 2736.5389580081683,
+      "overhead_total_minus_native_ms": 2201.4502079982776,
+      "serialized_payload_tokens": 2580,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-flask-01-8000-graphify",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 291.1117500043474,
+        "broker_init_wall_ms": 89.57583300070837,
+        "retrieve_wall_ms": 1529.5977909991052,
+        "source_read_wall_ms": 2.9289170051924884,
+        "broker_close_wall_ms": 0.012708012945950031,
+        "snapshot_cleanup_wall_ms": 112.18570798519067
+      },
+      "native_child_samples_ms": [
+        1100.3234590170905
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 11039,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-6rpyq40c/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2055.1394170033745,
+      "native_child_ms": 1100.3234590170905,
+      "total_ms": 2025.41270700749,
+      "overhead_total_minus_native_ms": 925.0892479903996,
+      "serialized_payload_tokens": 11965,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-flask-01-8000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 1996.8663750041742,
+        "broker_init_wall_ms": 124.3052079807967,
+        "retrieve_wall_ms": 1314.2300830222666,
+        "source_read_wall_ms": 1.0546669946052134,
+        "broker_close_wall_ms": 0.012667005648836493,
+        "snapshot_cleanup_wall_ms": 98.16220900393091
+      },
+      "native_child_samples_ms": [
+        722.0927920134272
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3439,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-sv59h4e8/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3656.431874987902,
+      "native_child_ms": 722.0927920134272,
+      "total_ms": 3534.6312090114225,
+      "overhead_total_minus_native_ms": 2812.5384169979952,
+      "serialized_payload_tokens": 4922,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-flask-01-8000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 1878.2287500216626,
+        "broker_init_wall_ms": 166.21591700823046,
+        "retrieve_wall_ms": 1674.201499990886,
+        "source_read_wall_ms": 15.864666987909004,
+        "broker_close_wall_ms": 0.012625008821487427,
+        "snapshot_cleanup_wall_ms": 69.12191602168605
+      },
+      "native_child_samples_ms": [
+        907.0875000033993
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3619,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-gyh21ras/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3838.9934170118067,
+      "native_child_ms": 907.0875000033993,
+      "total_ms": 3803.6453750391956,
+      "overhead_total_minus_native_ms": 2896.5578750357963,
+      "serialized_payload_tokens": 5154,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-flask-02-2000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 1388.1084169843234,
+        "broker_init_wall_ms": 118.86262500775047,
+        "retrieve_wall_ms": 727.6072080130689,
+        "source_read_wall_ms": 1.1135840031784028,
+        "broker_close_wall_ms": 0.00995901064015925,
+        "snapshot_cleanup_wall_ms": 42.339916981291026
+      },
+      "native_child_samples_ms": [
+        478.99858400342055
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1914,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-b_jafk1r/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2323.546500003431,
+      "native_child_ms": 478.99858400342055,
+      "total_ms": 2278.0417100002524,
+      "overhead_total_minus_native_ms": 1799.0431259968318,
+      "serialized_payload_tokens": 3050,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-flask-02-2000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 907.79883399955,
+        "broker_init_wall_ms": 115.9485410025809,
+        "retrieve_wall_ms": 516.4726669900119,
+        "source_read_wall_ms": 1.0552499734330922,
+        "broker_close_wall_ms": 0.00916598946787417,
+        "snapshot_cleanup_wall_ms": 34.72374999546446
+      },
+      "native_child_samples_ms": [
+        289.64558299048804
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1799,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-mwsucp6w/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1605.3337499906775,
+      "native_child_ms": 289.64558299048804,
+      "total_ms": 1576.0082079505082,
+      "overhead_total_minus_native_ms": 1286.3626249600202,
+      "serialized_payload_tokens": 2895,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-flask-02-2000-graphify",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 169.4920840091072,
+        "broker_init_wall_ms": 65.07137499283999,
+        "retrieve_wall_ms": 1361.6002920025494,
+        "source_read_wall_ms": 1.1062920093536377,
+        "broker_close_wall_ms": 0.010541989468038082,
+        "snapshot_cleanup_wall_ms": 36.299459025030956
+      },
+      "native_child_samples_ms": [
+        1085.1177499862388
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1898,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-tz87cw4y/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1635.9694579732604,
+      "native_child_ms": 1085.1177499862388,
+      "total_ms": 1633.5800440283492,
+      "overhead_total_minus_native_ms": 548.4622940421104,
+      "serialized_payload_tokens": 2486,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-flask-02-8000-graf_v61",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 2939.414749998832,
+        "broker_init_wall_ms": 647.5788749812637,
+        "retrieve_wall_ms": 5539.885957987281,
+        "source_read_wall_ms": 18.659082998055965,
+        "broker_close_wall_ms": 0.01662501017563045,
+        "snapshot_cleanup_wall_ms": 497.6056249870453
+      },
+      "native_child_samples_ms": [
+        3370.5713749805
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 5883,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-wuh74qux/input",
+        "removed": true
+      },
+      "actual_wall_ms": 10254.171542008407,
+      "native_child_ms": 3370.5713749805,
+      "total_ms": 9643.160915962653,
+      "overhead_total_minus_native_ms": 6272.589540982153,
+      "serialized_payload_tokens": 7883,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-flask-02-8000-graphify",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 1948.8061250012834,
+        "broker_init_wall_ms": 907.9465830000117,
+        "retrieve_wall_ms": 4425.948541000253,
+        "source_read_wall_ms": 3.057833993807435,
+        "broker_close_wall_ms": 0.01987497671507299,
+        "snapshot_cleanup_wall_ms": 50.674666999839246
+      },
+      "native_child_samples_ms": [
+        3041.6125830088276
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 16820,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-of6bzyir/input",
+        "removed": true
+      },
+      "actual_wall_ms": 7362.510750012007,
+      "native_child_ms": 3041.6125830088276,
+      "total_ms": 7336.453624971909,
+      "overhead_total_minus_native_ms": 4294.841041963082,
+      "serialized_payload_tokens": 17960,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-flask-02-8000-graf_v59",
+      "repo": "flask",
+      "query_id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 2661.9996249792166,
+        "broker_init_wall_ms": 202.2995000006631,
+        "retrieve_wall_ms": 989.7798329766374,
+        "source_read_wall_ms": 2.1017499966546893,
+        "broker_close_wall_ms": 0.01329201040789485,
+        "snapshot_cleanup_wall_ms": 47.660584008554
+      },
+      "native_child_samples_ms": [
+        382.12879200000316
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 5835,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-vnsk8ksd/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3946.4587080001365,
+      "native_child_ms": 382.12879200000316,
+      "total_ms": 3903.8545839721337,
+      "overhead_total_minus_native_ms": 3521.7257919721305,
+      "serialized_payload_tokens": 7816,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-fastify-01-2000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 2329.0039589919616,
+        "broker_init_wall_ms": 153.7325000099372,
+        "retrieve_wall_ms": 1000.6349580071401,
+        "source_read_wall_ms": 1.376958010951057,
+        "broker_close_wall_ms": 0.01087499549612403,
+        "snapshot_cleanup_wall_ms": 73.217166995164
+      },
+      "native_child_samples_ms": [
+        497.78608401538804
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1546,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-2ug13got/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3640.346917003626,
+      "native_child_ms": 497.78608401538804,
+      "total_ms": 3557.97641701065,
+      "overhead_total_minus_native_ms": 3060.190332995262,
+      "serialized_payload_tokens": 2439,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-fastify-01-2000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 2769.532957987394,
+        "broker_init_wall_ms": 163.46062501543202,
+        "retrieve_wall_ms": 1274.3407500092871,
+        "source_read_wall_ms": 1.7672080139163882,
+        "broker_close_wall_ms": 0.022541993530467153,
+        "snapshot_cleanup_wall_ms": 117.31683398829773
+      },
+      "native_child_samples_ms": [
+        719.1099589981604
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1730,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-cyj8xehw/input",
+        "removed": true
+      },
+      "actual_wall_ms": 4444.043124996824,
+      "native_child_ms": 719.1099589981604,
+      "total_ms": 4326.440917007858,
+      "overhead_total_minus_native_ms": 3607.3309580096975,
+      "serialized_payload_tokens": 2665,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-fastify-01-2000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 856.937000004109,
+        "broker_init_wall_ms": 255.18945799558423,
+        "retrieve_wall_ms": 4303.362875012681,
+        "source_read_wall_ms": 4.084249987499788,
+        "broker_close_wall_ms": 0.010709016351029277,
+        "snapshot_cleanup_wall_ms": 152.37037499900907
+      },
+      "native_child_samples_ms": [
+        2976.485249993857
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1845,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-88d8gvhi/input",
+        "removed": true
+      },
+      "actual_wall_ms": 5591.7117499921005,
+      "native_child_ms": 2976.485249993857,
+      "total_ms": 5571.954667015234,
+      "overhead_total_minus_native_ms": 2595.469417021377,
+      "serialized_payload_tokens": 2427,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-fastify-01-8000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 4221.136417007074,
+        "broker_init_wall_ms": 161.25670800101943,
+        "retrieve_wall_ms": 1097.9021249804646,
+        "source_read_wall_ms": 0.8453750051558018,
+        "broker_close_wall_ms": 0.013542012311518192,
+        "snapshot_cleanup_wall_ms": 83.5628749919124
+      },
+      "native_child_samples_ms": [
+        574.1029159980826
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3148,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-axxl2u1u/input",
+        "removed": true
+      },
+      "actual_wall_ms": 5654.015333013376,
+      "native_child_ms": 574.1029159980826,
+      "total_ms": 5564.7170419979375,
+      "overhead_total_minus_native_ms": 4990.614125999855,
+      "serialized_payload_tokens": 4509,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-fastify-01-8000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 792.8697500028647,
+        "broker_init_wall_ms": 158.47425002721138,
+        "retrieve_wall_ms": 1317.5212909991387,
+        "source_read_wall_ms": 0.7484579982701689,
+        "broker_close_wall_ms": 0.02054200740531087,
+        "snapshot_cleanup_wall_ms": 65.41558299795724
+      },
+      "native_child_samples_ms": [
+        855.0957089755684
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 7627,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-mkglw8qk/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2344.6035830129404,
+      "native_child_ms": 855.0957089755684,
+      "total_ms": 2335.0498740328476,
+      "overhead_total_minus_native_ms": 1479.9541650572792,
+      "serialized_payload_tokens": 8420,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-fastify-01-8000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 2484.1085000080056,
+        "broker_init_wall_ms": 155.44012500322424,
+        "retrieve_wall_ms": 869.3630000052508,
+        "source_read_wall_ms": 0.9848749905359,
+        "broker_close_wall_ms": 0.012833974324166775,
+        "snapshot_cleanup_wall_ms": 81.15262500359677
+      },
+      "native_child_samples_ms": [
+        474.85354100354016
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3148,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-4jibzhdu/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3780.523333000019,
+      "native_child_ms": 474.85354100354016,
+      "total_ms": 3591.0619589849375,
+      "overhead_total_minus_native_ms": 3116.2084179813974,
+      "serialized_payload_tokens": 4508,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-fastify-02-2000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 394.06245801365003,
+        "broker_init_wall_ms": 141.84783300152048,
+        "retrieve_wall_ms": 1098.6742079840042,
+        "source_read_wall_ms": 0.796334003098309,
+        "broker_close_wall_ms": 0.015416997484862804,
+        "snapshot_cleanup_wall_ms": 106.8728749814909
+      },
+      "native_child_samples_ms": [
+        648.7253340019379
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3545,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-vma693nm/input",
+        "removed": true
+      },
+      "actual_wall_ms": 1747.4677500140388,
+      "native_child_ms": 648.7253340019379,
+      "total_ms": 1742.2691249812488,
+      "overhead_total_minus_native_ms": 1093.5437909793109,
+      "serialized_payload_tokens": 4184,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-fastify-02-2000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 2346.1253749846946,
+        "broker_init_wall_ms": 184.47900001774542,
+        "retrieve_wall_ms": 978.3889579994138,
+        "source_read_wall_ms": 1.7296660225838423,
+        "broker_close_wall_ms": 0.011000025551766157,
+        "snapshot_cleanup_wall_ms": 80.867250013398
+      },
+      "native_child_samples_ms": [
+        500.6045420013834
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1773,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-r71tg1ls/input",
+        "removed": true
+      },
+      "actual_wall_ms": 3713.4483749978244,
+      "native_child_ms": 500.6045420013834,
+      "total_ms": 3591.6012490633875,
+      "overhead_total_minus_native_ms": 3090.996707062004,
+      "serialized_payload_tokens": 2725,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-fastify-02-2000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 2658.650375000434,
+        "broker_init_wall_ms": 255.11845899745822,
+        "retrieve_wall_ms": 1190.9509999968577,
+        "source_read_wall_ms": 1.0601250105537474,
+        "broker_close_wall_ms": 0.011375028407201171,
+        "snapshot_cleanup_wall_ms": 93.58125002472661
+      },
+      "native_child_samples_ms": [
+        635.8850830001757
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 1633,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-wqq47kp1/input",
+        "removed": true
+      },
+      "actual_wall_ms": 4341.6547079978045,
+      "native_child_ms": 635.8850830001757,
+      "total_ms": 4199.3725840584375,
+      "overhead_total_minus_native_ms": 3563.487501058262,
+      "serialized_payload_tokens": 2547,
+      "ok": true
+    },
+    {
+      "session": "r03-p00-fastify-02-8000-graphify",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graphify",
+      "repetition": 3,
+      "counterbalance_position": 0,
+      "phases": {
+        "snapshot_enter_wall_ms": 649.9392919940874,
+        "broker_init_wall_ms": 180.47470800229348,
+        "retrieve_wall_ms": 2001.0236249945592,
+        "source_read_wall_ms": 2.0184580062050372,
+        "broker_close_wall_ms": 0.01912500010803342,
+        "snapshot_cleanup_wall_ms": 78.61883300938644
+      },
+      "native_child_samples_ms": [
+        1390.4211249900982
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3472,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-6uiyjdyz/input",
+        "removed": true
+      },
+      "actual_wall_ms": 2919.1803749999963,
+      "native_child_ms": 1390.4211249900982,
+      "total_ms": 2912.0940410066396,
+      "overhead_total_minus_native_ms": 1521.6729160165414,
+      "serialized_payload_tokens": 4110,
+      "ok": true
+    },
+    {
+      "session": "r03-p01-fastify-02-8000-graf_v59",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_v59",
+      "repetition": 3,
+      "counterbalance_position": 1,
+      "phases": {
+        "snapshot_enter_wall_ms": 3216.1708750063553,
+        "broker_init_wall_ms": 278.1841669930145,
+        "retrieve_wall_ms": 1255.7912500051316,
+        "source_read_wall_ms": 2.6729170058388263,
+        "broker_close_wall_ms": 0.02029098686762154,
+        "snapshot_cleanup_wall_ms": 217.37604201189242
+      },
+      "native_child_samples_ms": [
+        475.8525000070222
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 3869,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-qcdfgv7t/input",
+        "removed": true
+      },
+      "actual_wall_ms": 5162.340916984249,
+      "native_child_ms": 475.8525000070222,
+      "total_ms": 4970.2155420091,
+      "overhead_total_minus_native_ms": 4494.363042002078,
+      "serialized_payload_tokens": 5245,
+      "ok": true
+    },
+    {
+      "session": "r03-p02-fastify-02-8000-graf_v61",
+      "repo": "fastify",
+      "query_id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_v61",
+      "repetition": 3,
+      "counterbalance_position": 2,
+      "phases": {
+        "snapshot_enter_wall_ms": 6482.791916991118,
+        "broker_init_wall_ms": 483.58624998945743,
+        "retrieve_wall_ms": 966.116541007068,
+        "source_read_wall_ms": 5.2972499979659915,
+        "broker_close_wall_ms": 0.01620801049284637,
+        "snapshot_cleanup_wall_ms": 1287.599582981784
+      },
+      "native_child_samples_ms": [
+        380.0270840001758
+      ],
+      "errors": [],
+      "payload_parity": {
+        "stdout": true,
+        "stderr": true,
+        "returncode": true,
+        "diagnostic_tokens": true
+      },
+      "retrieve_success": true,
+      "payload_tokens": 4009,
+      "source_parity": {
+        "success": true,
+        "text": true,
+        "sha256": true
+      },
+      "snapshot_cleanup": {
+        "root": "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/readonly-broker-overhead-v1/exchanges/graf-snapshot-8t730ayc/input",
+        "removed": true
+      },
+      "actual_wall_ms": 9897.34562500962,
+      "native_child_ms": 380.0270840001758,
+      "total_ms": 9225.407748977887,
+      "overhead_total_minus_native_ms": 8845.38066497771,
+      "serialized_payload_tokens": 5424,
+      "ok": true
+    }
+  ],
+  "session_count": 108,
+  "model_calls": 0,
+  "cache_conditions": "sequential within counterbalanced six-permutation blocks; OS caches uncontrolled",
+  "timing_scope": "total_ms is the sum of the six named phase wall times; actual_wall_ms is the surrounding elapsed time and includes serialization, payload checks, plan setup and other gaps",
+  "product_promotion_allowed": false,
+  "agent_savings": "unmeasured"
+}

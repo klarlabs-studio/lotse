@@ -1,0 +1,26 @@
+{
+  "id": "codex-installed-telemetry-audit-v1",
+  "scope": "binary-string/integrity diagnostic; strings do not prove executed control flow",
+  "binary_sha256": "0196e89fe5a7598f816ee54232c3d7c26d75e502ab5cfe2c9240e81d90f7255a",
+  "binary_path": "/Users/felixgeelhaar/.codex/packages/standalone/releases/0.156.1-aarch64-apple-darwin/bin/codex",
+  "string_presence": {
+    "otel/src/provider.rs": true,
+    "Could not create otel exporter:": true,
+    "failed to finish interactive telemetry shutdown": true,
+    "BatchLogProcessor.ExportingDueToShutdown": true,
+    "BatchLogProcessor.ExportingDueToTimer": true,
+    "OTEL_BLRP_SCHEDULE_DELAY": true,
+    "failed to install telemetry exporters after account change": true
+  },
+  "local_source_available": false,
+  "source_availability_scope": "Installed standalone package contains executable/resources; no matching Rust source found in that package.",
+  "official_reference": "https://learn.chatgpt.com/docs/config-file/config-advanced",
+  "documented_behavior": "Exporters batch asynchronously and flush on shutdown; metrics independent of OTel log/trace export.",
+  "failure_request_windows_seconds": {
+    "analytics_disabled": 0.609826,
+    "analytics_enabled": 0.487807
+  },
+  "hypothesis": "Fast CLI failure may exit before export; immediate/delayed failure control needed. Not established cause.",
+  "complete_agent_accounting_pass": false,
+  "agent_savings": "unmeasured"
+}

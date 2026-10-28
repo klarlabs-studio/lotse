@@ -1,0 +1,583 @@
+{
+  "scope": "Exposed development per-request diagnostic; instrumented costs and observer perturbation, no performance or promotion inference",
+  "passed": true,
+  "arms": {
+    "graf_v61": {
+      "plain": {
+        "groups": 9,
+        "failures": 0,
+        "median_four_pair_phase_ms": 7435.202665918041,
+        "median_four_pair_actual_ms": 7641.072833997896,
+        "median_amortized_pair_phase_ms": 1607.827155981795,
+        "median_retrieve_ms": 1130.600416508969,
+        "median_read_ms": 1.0668124887160957,
+        "median_native_child_ms": 887.4837920011487
+      },
+      "profiled": {
+        "groups": 9,
+        "failures": 0,
+        "median_four_pair_phase_ms": 4956.223625020357,
+        "median_four_pair_actual_ms": 5104.45204100688,
+        "median_amortized_pair_phase_ms": 1261.1164325026039,
+        "median_retrieve_ms": 927.448271002504,
+        "median_read_ms": 1.35337449319195,
+        "median_native_child_ms": 523.2005419966299,
+        "retrieve_profile": {
+          "requests": 36,
+          "categories": {
+            "_check_pins": {
+              "count": 72,
+              "total_exclusive_ms": 55.880991,
+              "median_exclusive_ms": 1.0239785000000001,
+              "median_inclusive_ms": 204.3261665
+            },
+            "_verify_inventory": {
+              "count": 108,
+              "total_exclusive_ms": 5209.63033,
+              "median_exclusive_ms": 81.7586185,
+              "median_inclusive_ms": 278.2746045
+            },
+            "journal_persistence": {
+              "count": 72,
+              "total_exclusive_ms": 14.312784,
+              "median_exclusive_ms": 0.3437075,
+              "median_inclusive_ms": 0.5276885
+            },
+            "native_child": {
+              "count": 36,
+              "total_exclusive_ms": 27117.121336,
+              "median_exclusive_ms": 523.250313,
+              "median_inclusive_ms": 523.250313
+            },
+            "serialization": {
+              "count": 180,
+              "total_exclusive_ms": 21.478706,
+              "median_exclusive_ms": 0.394312,
+              "median_inclusive_ms": 0.394312
+            },
+            "sha_artifact": {
+              "count": 72,
+              "total_exclusive_ms": 177.640883,
+              "median_exclusive_ms": 1.9577715,
+              "median_inclusive_ms": 1.9577715
+            },
+            "sha_binary": {
+              "count": 72,
+              "total_exclusive_ms": 858.82425,
+              "median_exclusive_ms": 21.617645500000002,
+              "median_inclusive_ms": 21.617645500000002
+            },
+            "source_validation": {
+              "count": 20916,
+              "total_exclusive_ms": 11090.022711,
+              "median_exclusive_ms": 183.72230150000001,
+              "median_inclusive_ms": 183.72230150000001
+            },
+            "tokenization": {
+              "count": 108,
+              "total_exclusive_ms": 358.09538,
+              "median_exclusive_ms": 3.530355,
+              "median_inclusive_ms": 3.530355
+            }
+          },
+          "median_profile_root_ms": 927.3893755,
+          "median_unattributed_ms": 0.5591250000000514,
+          "accounting": "Exclusive categories disjoint. Inventory inclusive contains source_validation; do not add inclusive rows. Root residue includes wrapper/setup/restore overhead and unwrapped work."
+        },
+        "read_profile": {
+          "requests": 36,
+          "categories": {
+            "journal_persistence": {
+              "count": 72,
+              "total_exclusive_ms": 41.929001,
+              "median_exclusive_ms": 0.228438,
+              "median_inclusive_ms": 0.2977295
+            },
+            "serialization": {
+              "count": 180,
+              "total_exclusive_ms": 4.470544,
+              "median_exclusive_ms": 0.0958745,
+              "median_inclusive_ms": 0.0958745
+            },
+            "source_validation": {
+              "count": 36,
+              "total_exclusive_ms": 13.259167,
+              "median_exclusive_ms": 0.3059585,
+              "median_inclusive_ms": 0.3059585
+            },
+            "tokenization": {
+              "count": 180,
+              "total_exclusive_ms": 9.282708,
+              "median_exclusive_ms": 0.20874949999999998,
+              "median_inclusive_ms": 0.20874949999999998
+            }
+          },
+          "median_profile_root_ms": 1.2804585,
+          "median_unattributed_ms": 0.250771,
+          "accounting": "Exclusive categories disjoint. Inventory inclusive contains source_validation; do not add inclusive rows. Root residue includes wrapper/setup/restore overhead and unwrapped work."
+        }
+      }
+    },
+    "graf_v59": {
+      "plain": {
+        "groups": 9,
+        "failures": 0,
+        "median_four_pair_phase_ms": 4877.214126958279,
+        "median_four_pair_actual_ms": 5049.41829200834,
+        "median_amortized_pair_phase_ms": 1197.1453337246203,
+        "median_retrieve_ms": 701.6845625039423,
+        "median_read_ms": 0.9971249965019524,
+        "median_native_child_ms": 363.7159584905021
+      },
+      "profiled": {
+        "groups": 9,
+        "failures": 0,
+        "median_four_pair_phase_ms": 5078.800038987538,
+        "median_four_pair_actual_ms": 5122.252207976999,
+        "median_amortized_pair_phase_ms": 1290.2652444936393,
+        "median_retrieve_ms": 800.2174584980821,
+        "median_read_ms": 1.3110415020491928,
+        "median_native_child_ms": 400.3927290032152,
+        "retrieve_profile": {
+          "requests": 36,
+          "categories": {
+            "_check_pins": {
+              "count": 72,
+              "total_exclusive_ms": 45.995668,
+              "median_exclusive_ms": 0.9704165,
+              "median_inclusive_ms": 217.724021
+            },
+            "_verify_inventory": {
+              "count": 108,
+              "total_exclusive_ms": 4229.571867,
+              "median_exclusive_ms": 95.8216845,
+              "median_inclusive_ms": 281.9855
+            },
+            "journal_persistence": {
+              "count": 72,
+              "total_exclusive_ms": 16.788413,
+              "median_exclusive_ms": 0.34575049999999996,
+              "median_inclusive_ms": 0.5501039999999999
+            },
+            "native_child": {
+              "count": 36,
+              "total_exclusive_ms": 21990.410003,
+              "median_exclusive_ms": 400.432271,
+              "median_inclusive_ms": 400.432271
+            },
+            "serialization": {
+              "count": 180,
+              "total_exclusive_ms": 21.461923,
+              "median_exclusive_ms": 0.41125,
+              "median_inclusive_ms": 0.41125
+            },
+            "sha_artifact": {
+              "count": 72,
+              "total_exclusive_ms": 130.628747,
+              "median_exclusive_ms": 1.7935625,
+              "median_inclusive_ms": 1.7935625
+            },
+            "sha_binary": {
+              "count": 72,
+              "total_exclusive_ms": 849.35146,
+              "median_exclusive_ms": 20.4868125,
+              "median_inclusive_ms": 20.4868125
+            },
+            "source_validation": {
+              "count": 20916,
+              "total_exclusive_ms": 9172.189262,
+              "median_exclusive_ms": 193.2351205,
+              "median_inclusive_ms": 193.2351205
+            },
+            "tokenization": {
+              "count": 108,
+              "total_exclusive_ms": 174.283661,
+              "median_exclusive_ms": 3.553021,
+              "median_inclusive_ms": 3.553021
+            }
+          },
+          "median_profile_root_ms": 800.0381255,
+          "median_unattributed_ms": 0.5438740000000166,
+          "accounting": "Exclusive categories disjoint. Inventory inclusive contains source_validation; do not add inclusive rows. Root residue includes wrapper/setup/restore overhead and unwrapped work."
+        },
+        "read_profile": {
+          "requests": 36,
+          "categories": {
+            "journal_persistence": {
+              "count": 72,
+              "total_exclusive_ms": 23.228126,
+              "median_exclusive_ms": 0.256458,
+              "median_inclusive_ms": 0.307812
+            },
+            "serialization": {
+              "count": 180,
+              "total_exclusive_ms": 7.836834,
+              "median_exclusive_ms": 0.09089549999999999,
+              "median_inclusive_ms": 0.09089549999999999
+            },
+            "source_validation": {
+              "count": 36,
+              "total_exclusive_ms": 19.400452,
+              "median_exclusive_ms": 0.33629149999999997,
+              "median_inclusive_ms": 0.33629149999999997
+            },
+            "tokenization": {
+              "count": 180,
+              "total_exclusive_ms": 9.035249,
+              "median_exclusive_ms": 0.20027,
+              "median_inclusive_ms": 0.20027
+            }
+          },
+          "median_profile_root_ms": 1.2731249999999998,
+          "median_unattributed_ms": 0.1408315,
+          "accounting": "Exclusive categories disjoint. Inventory inclusive contains source_validation; do not add inclusive rows. Root residue includes wrapper/setup/restore overhead and unwrapped work."
+        }
+      }
+    },
+    "graphify": {
+      "plain": {
+        "groups": 9,
+        "failures": 0,
+        "median_four_pair_phase_ms": 5221.267583052395,
+        "median_four_pair_actual_ms": 5244.326041982276,
+        "median_amortized_pair_phase_ms": 1264.4247185016866,
+        "median_retrieve_ms": 1105.588791993796,
+        "median_read_ms": 0.996291491901502,
+        "median_native_child_ms": 754.1773540142458
+      },
+      "profiled": {
+        "groups": 9,
+        "failures": 0,
+        "median_four_pair_phase_ms": 6423.212748108199,
+        "median_four_pair_actual_ms": 6460.505082999589,
+        "median_amortized_pair_phase_ms": 1465.6342655216577,
+        "median_retrieve_ms": 1259.8969790124102,
+        "median_read_ms": 1.3912085123592988,
+        "median_native_child_ms": 829.2532914929325,
+        "retrieve_profile": {
+          "requests": 36,
+          "categories": {
+            "_check_pins": {
+              "count": 72,
+              "total_exclusive_ms": 54.787959,
+              "median_exclusive_ms": 0.952896,
+              "median_inclusive_ms": 263.0222495
+            },
+            "_verify_inventory": {
+              "count": 108,
+              "total_exclusive_ms": 3899.845714,
+              "median_exclusive_ms": 94.7510645,
+              "median_inclusive_ms": 400.3459165
+            },
+            "journal_persistence": {
+              "count": 72,
+              "total_exclusive_ms": 21.269674,
+              "median_exclusive_ms": 0.37639599999999995,
+              "median_inclusive_ms": 0.6490625000000001
+            },
+            "native_child": {
+              "count": 36,
+              "total_exclusive_ms": 37350.201625,
+              "median_exclusive_ms": 829.3015835,
+              "median_inclusive_ms": 829.3015835
+            },
+            "serialization": {
+              "count": 180,
+              "total_exclusive_ms": 48.407701,
+              "median_exclusive_ms": 0.6916875,
+              "median_inclusive_ms": 0.6916875
+            },
+            "sha_artifact": {
+              "count": 72,
+              "total_exclusive_ms": 120.010118,
+              "median_exclusive_ms": 2.6813124999999998,
+              "median_inclusive_ms": 2.6813124999999998
+            },
+            "sha_binary": {
+              "count": 72,
+              "total_exclusive_ms": 8.188045,
+              "median_exclusive_ms": 0.17275000000000001,
+              "median_inclusive_ms": 0.17275000000000001
+            },
+            "source_validation": {
+              "count": 20916,
+              "total_exclusive_ms": 10338.48099,
+              "median_exclusive_ms": 299.65186,
+              "median_inclusive_ms": 299.65186
+            },
+            "tokenization": {
+              "count": 108,
+              "total_exclusive_ms": 320.529497,
+              "median_exclusive_ms": 6.1626460000000005,
+              "median_inclusive_ms": 6.1626460000000005
+            }
+          },
+          "median_profile_root_ms": 1259.797188,
+          "median_unattributed_ms": 0.8549370000000636,
+          "accounting": "Exclusive categories disjoint. Inventory inclusive contains source_validation; do not add inclusive rows. Root residue includes wrapper/setup/restore overhead and unwrapped work."
+        },
+        "read_profile": {
+          "requests": 36,
+          "categories": {
+            "journal_persistence": {
+              "count": 72,
+              "total_exclusive_ms": 16.84721,
+              "median_exclusive_ms": 0.2324375,
+              "median_inclusive_ms": 0.28108350000000004
+            },
+            "serialization": {
+              "count": 180,
+              "total_exclusive_ms": 4.268536,
+              "median_exclusive_ms": 0.0927075,
+              "median_inclusive_ms": 0.0927075
+            },
+            "source_validation": {
+              "count": 36,
+              "total_exclusive_ms": 23.380167,
+              "median_exclusive_ms": 0.3356455,
+              "median_inclusive_ms": 0.3356455
+            },
+            "tokenization": {
+              "count": 180,
+              "total_exclusive_ms": 8.987997,
+              "median_exclusive_ms": 0.21560449999999998,
+              "median_inclusive_ms": 0.21560449999999998
+            }
+          },
+          "median_profile_root_ms": 1.3433125,
+          "median_unattributed_ms": 0.24297999999999997,
+          "accounting": "Exclusive categories disjoint. Inventory inclusive contains source_validation; do not add inclusive rows. Root residue includes wrapper/setup/restore overhead and unwrapped work."
+        }
+      }
+    }
+  },
+  "paired_observer_samples": [
+    {
+      "arm": "graf_v61",
+      "repo": "cobra",
+      "repetition": 1,
+      "plain_phase_ms": 9346.161748981103,
+      "profiled_phase_ms": 4887.97333399998,
+      "profiled_minus_plain_phase_ms": -4458.188414981123
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "cobra",
+      "repetition": 2,
+      "plain_phase_ms": 4104.056668933481,
+      "profiled_phase_ms": 3578.6784179799724,
+      "profiled_minus_plain_phase_ms": -525.3782509535085
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "cobra",
+      "repetition": 3,
+      "plain_phase_ms": 2670.0623750512023,
+      "profiled_phase_ms": 2705.0016679568216,
+      "profiled_minus_plain_phase_ms": 34.93929290561937
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "fastify",
+      "repetition": 1,
+      "plain_phase_ms": 17177.78608307708,
+      "profiled_phase_ms": 23239.616460021352,
+      "profiled_minus_plain_phase_ms": 6061.830376944272
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "fastify",
+      "repetition": 2,
+      "plain_phase_ms": 23742.663500044728,
+      "profiled_phase_ms": 7064.541084022494,
+      "profiled_minus_plain_phase_ms": -16678.122416022234
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "fastify",
+      "repetition": 3,
+      "plain_phase_ms": 15185.875750990817,
+      "profiled_phase_ms": 8748.098582029343,
+      "profiled_minus_plain_phase_ms": -6437.777168961475
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "flask",
+      "repetition": 1,
+      "plain_phase_ms": 7435.202665918041,
+      "profiled_phase_ms": 6266.241916047875,
+      "profiled_minus_plain_phase_ms": -1168.9607498701662
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "flask",
+      "repetition": 2,
+      "plain_phase_ms": 4039.8564590432215,
+      "profiled_phase_ms": 4956.223625020357,
+      "profiled_minus_plain_phase_ms": 916.3671659771353
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "flask",
+      "repetition": 3,
+      "plain_phase_ms": 4660.327749996213,
+      "profiled_phase_ms": 4620.283251017099,
+      "profiled_minus_plain_phase_ms": -40.044498979113996
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "cobra",
+      "repetition": 1,
+      "plain_phase_ms": 5567.431706964271,
+      "profiled_phase_ms": 7693.740334012546,
+      "profiled_minus_plain_phase_ms": 2126.3086270482745
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "cobra",
+      "repetition": 2,
+      "plain_phase_ms": 7397.67966789077,
+      "profiled_phase_ms": 5078.800038987538,
+      "profiled_minus_plain_phase_ms": -2318.8796289032325
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "cobra",
+      "repetition": 3,
+      "plain_phase_ms": 2231.740544026252,
+      "profiled_phase_ms": 2186.989333073143,
+      "profiled_minus_plain_phase_ms": -44.751210953108966
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "fastify",
+      "repetition": 1,
+      "plain_phase_ms": 4877.214126958279,
+      "profiled_phase_ms": 14688.32975300029,
+      "profiled_minus_plain_phase_ms": 9811.11562604201
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "fastify",
+      "repetition": 2,
+      "plain_phase_ms": 24262.73666700581,
+      "profiled_phase_ms": 6039.52899997239,
+      "profiled_minus_plain_phase_ms": -18223.20766703342
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "fastify",
+      "repetition": 3,
+      "plain_phase_ms": 7151.570583024295,
+      "profiled_phase_ms": 5692.137790989364,
+      "profiled_minus_plain_phase_ms": -1459.4327920349315
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "flask",
+      "repetition": 1,
+      "plain_phase_ms": 3574.746375961695,
+      "profiled_phase_ms": 4386.153041035868,
+      "profiled_minus_plain_phase_ms": 811.4066650741734
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "flask",
+      "repetition": 2,
+      "plain_phase_ms": 3472.3339150077663,
+      "profiled_phase_ms": 4653.175874002045,
+      "profiled_minus_plain_phase_ms": 1180.8419589942787
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "flask",
+      "repetition": 3,
+      "plain_phase_ms": 3797.3697499837726,
+      "profiled_phase_ms": 3900.857917033136,
+      "profiled_minus_plain_phase_ms": 103.48816704936326
+    },
+    {
+      "arm": "graphify",
+      "repo": "cobra",
+      "repetition": 1,
+      "plain_phase_ms": 3165.968500979943,
+      "profiled_phase_ms": 5682.5329999264795,
+      "profiled_minus_plain_phase_ms": 2516.5644989465363
+    },
+    {
+      "arm": "graphify",
+      "repo": "cobra",
+      "repetition": 2,
+      "plain_phase_ms": 6147.340043011354,
+      "profiled_phase_ms": 4401.773122983286,
+      "profiled_minus_plain_phase_ms": -1745.5669200280681
+    },
+    {
+      "arm": "graphify",
+      "repo": "cobra",
+      "repetition": 3,
+      "plain_phase_ms": 2416.0842079436406,
+      "profiled_phase_ms": 2418.2182059739716,
+      "profiled_minus_plain_phase_ms": 2.133998030330986
+    },
+    {
+      "arm": "graphify",
+      "repo": "fastify",
+      "repetition": 1,
+      "plain_phase_ms": 9603.3891250554,
+      "profiled_phase_ms": 6685.244540072745,
+      "profiled_minus_plain_phase_ms": -2918.144584982656
+    },
+    {
+      "arm": "graphify",
+      "repo": "fastify",
+      "repetition": 2,
+      "plain_phase_ms": 8943.829040974379,
+      "profiled_phase_ms": 6423.212748108199,
+      "profiled_minus_plain_phase_ms": -2520.6162928661797
+    },
+    {
+      "arm": "graphify",
+      "repo": "fastify",
+      "repetition": 3,
+      "plain_phase_ms": 5221.267583052395,
+      "profiled_phase_ms": 10208.030710957246,
+      "profiled_minus_plain_phase_ms": 4986.763127904851
+    },
+    {
+      "arm": "graphify",
+      "repo": "flask",
+      "repetition": 1,
+      "plain_phase_ms": 9244.513249897864,
+      "profiled_phase_ms": 9328.16879200982,
+      "profiled_minus_plain_phase_ms": 83.65554211195558
+    },
+    {
+      "arm": "graphify",
+      "repo": "flask",
+      "repetition": 2,
+      "plain_phase_ms": 4696.867624035804,
+      "profiled_phase_ms": 6197.355996933766,
+      "profiled_minus_plain_phase_ms": 1500.488372897962
+    },
+    {
+      "arm": "graphify",
+      "repo": "flask",
+      "repetition": 3,
+      "plain_phase_ms": 4514.383875008207,
+      "profiled_phase_ms": 6781.550792016787,
+      "profiled_minus_plain_phase_ms": 2267.1669170085806
+    }
+  ],
+  "benchmark_solver_calls": 0,
+  "agent_savings": "unmeasured",
+  "product_promotion_allowed": false,
+  "limitations": [
+    "OS caches and external system load uncontrolled; arms/modes sequential with rotated order, no cold-cache claim.",
+    "Profiling patches imported broker functions only during a request; no production change. Instrumentation overhead remains in samples; plain/profiled deltas are descriptive, not causal overhead estimates.",
+    "Binary/artifact hashing includes file read and digest; source_validation includes path traversal, read and hash; inventory exclusive is traversal and dispatch residue.",
+    "Fresh index builds/imports/authentication/provider solving excluded. Graf snapshot rebuild remains.",
+    "First native comparison timing excluded because early test overlap could not be certified; clean repeat frozen at prereg72 used as reference.",
+    "Code-only Graphify hints do not establish source-anchor or documentation outcomes. Native subset gates exit1, no accepted Graf baseline, v59 experimental."
+  ]
+}

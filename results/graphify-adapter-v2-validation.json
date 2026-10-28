@@ -1,0 +1,277 @@
+{
+  "mode": "offline_native_cli_contract_diagnostic",
+  "adapter": "native-cli-v2",
+  "pin": {
+    "id": "graphify",
+    "repository": "Graphify-Labs/graphify",
+    "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+    "language": "Python",
+    "role": "baseline"
+  },
+  "baseline_python_files_checked": 95,
+  "all_baseline_python_hashes_match": true,
+  "environment": {
+    "PYTHONHASHSEED": "0",
+    "GRAPHIFY_QUERY_LOG_DISABLE": "1"
+  },
+  "invocation": [
+    "benchmark/audit_graphify_adapter.py",
+    "--output",
+    "results/graphify-adapter-v2-validation.json",
+    "--evidence",
+    ".research/evidence/graphify-adapter-v2-validation"
+  ],
+  "cases": [
+    {
+      "id": "direction-and-depth",
+      "fixture_sha256": "a3df885273d869bef92637774b196e93bfb835d39c3ee8533d16878a4f584ac9",
+      "runs": {
+        "adapter": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "origin",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/direction-and-depth.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/direction-and-depth.json (4 nodes) | Traversal: BFS depth=2 | Start: ['origin'] | 3 nodes found\n\nNODE origin [src=caller.py loc=L1 community=]\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nEDGE origin --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\n",
+          "stderr": ""
+        },
+        "reference": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "origin",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/direction-and-depth.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/direction-and-depth.json (4 nodes) | Traversal: BFS depth=2 | Start: ['origin'] | 3 nodes found\n\nNODE origin [src=caller.py loc=L1 community=]\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nEDGE origin --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\n",
+          "stderr": ""
+        }
+      },
+      "parity_pass": true,
+      "semantic_pass": true
+    },
+    {
+      "id": "incoming-call",
+      "fixture_sha256": "606e3ce7cd91b957a1251890b67c2156f083c4775bb05e8b85fe764ea26f6e5e",
+      "runs": {
+        "adapter": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/incoming-call.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/incoming-call.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nNODE caller [src=caller.py loc=L1 community=]\nNODE fourth [src=fourth.py loc=L1 community=]\nEDGE caller --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\nEDGE third --calls [EXTRACTED]--> fourth\n",
+          "stderr": ""
+        },
+        "reference": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/incoming-call.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/incoming-call.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nNODE caller [src=caller.py loc=L1 community=]\nNODE fourth [src=fourth.py loc=L1 community=]\nEDGE caller --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\nEDGE third --calls [EXTRACTED]--> fourth\n",
+          "stderr": ""
+        }
+      },
+      "parity_pass": true,
+      "semantic_pass": true
+    },
+    {
+      "id": "preserved-markers",
+      "fixture_sha256": "9b465cbe259156123d6160b0d520cd8416b0b0488082155dbc54f72b3d8af5a5",
+      "runs": {
+        "adapter": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/preserved-markers.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/preserved-markers.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nNODE caller [src=caller.py loc=L1 community=]\nNODE fourth [src=fourth.py loc=L1 community=]\nEDGE caller --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\nEDGE third --calls [EXTRACTED]--> fourth\n",
+          "stderr": ""
+        },
+        "reference": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/preserved-markers.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/preserved-markers.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nNODE caller [src=caller.py loc=L1 community=]\nNODE fourth [src=fourth.py loc=L1 community=]\nEDGE caller --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\nEDGE third --calls [EXTRACTED]--> fourth\n",
+          "stderr": ""
+        }
+      },
+      "parity_pass": true,
+      "semantic_pass": true
+    },
+    {
+      "id": "edges-key",
+      "fixture_sha256": "1d86c4019d6046af0caa17a035121f40ac7bf86e82d34624fbedfbb1898bd67a",
+      "runs": {
+        "adapter": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/edges-key.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/edges-key.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nNODE caller [src=caller.py loc=L1 community=]\nNODE fourth [src=fourth.py loc=L1 community=]\nEDGE caller --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\nEDGE third --calls [EXTRACTED]--> fourth\n",
+          "stderr": ""
+        },
+        "reference": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/edges-key.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/edges-key.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\nNODE callee [src=callee.py loc=L1 community=]\nNODE third [src=third.py loc=L1 community=]\nNODE caller [src=caller.py loc=L1 community=]\nNODE fourth [src=fourth.py loc=L1 community=]\nEDGE caller --calls [EXTRACTED]--> callee\nEDGE callee --calls [EXTRACTED]--> third\nEDGE third --calls [EXTRACTED]--> fourth\n",
+          "stderr": ""
+        }
+      },
+      "parity_pass": true,
+      "semantic_pass": true
+    },
+    {
+      "id": "small-budget",
+      "fixture_sha256": "606e3ce7cd91b957a1251890b67c2156f083c4775bb05e8b85fe764ea26f6e5e",
+      "runs": {
+        "adapter": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/small-budget.json",
+            "--budget",
+            "1"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/small-budget.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\n[!] TRUNCATED: showing 1 of 4 nodes (~1-token budget). The answer may be among the 3 cut nodes \u2014 raise the token budget to 61 to get all 4 (CLI: --budget 61, MCP: token_budget=61) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE callee [src=callee.py loc=L1 community=]\n... (truncated \u2014 3 more nodes cut by ~1-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
+          "stderr": ""
+        },
+        "reference": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "callee",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/small-budget.json",
+            "--budget",
+            "1"
+          ],
+          "returncode": 0,
+          "stdout": "Graph: .research/evidence/graphify-adapter-v2-validation/small-budget.json (4 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 4 nodes found\n\n[!] TRUNCATED: showing 1 of 4 nodes (~1-token budget). The answer may be among the 3 cut nodes \u2014 raise the token budget to 61 to get all 4 (CLI: --budget 61, MCP: token_budget=61) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE callee [src=callee.py loc=L1 community=]\n... (truncated \u2014 3 more nodes cut by ~1-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
+          "stderr": ""
+        }
+      },
+      "parity_pass": true,
+      "semantic_pass": true
+    },
+    {
+      "id": "no-match",
+      "fixture_sha256": "606e3ce7cd91b957a1251890b67c2156f083c4775bb05e8b85fe764ea26f6e5e",
+      "runs": {
+        "adapter": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "unmatchable_xyz987",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/no-match.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 4,
+          "stdout": "No matching nodes found.\n",
+          "stderr": ""
+        },
+        "reference": {
+          "command": [
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+            "-m",
+            "graphify",
+            "query",
+            "unmatchable_xyz987",
+            "--graph",
+            "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-adapter-v2-validation/no-match.json",
+            "--budget",
+            "2000"
+          ],
+          "returncode": 4,
+          "stdout": "No matching nodes found.\n",
+          "stderr": ""
+        }
+      },
+      "parity_pass": true,
+      "semantic_pass": true
+    }
+  ],
+  "native_cli_parity_pass": true,
+  "source_sha256": {
+    "benchmark/audit_graphify_adapter.py": "0767cadfc952d1cfa746e4aa95f32533ceca5a9aab6366d07e18beeeb0cab511",
+    "benchmark/compare_graphify.py": "4b10ed92dc6bf6ee8f38e46040ff2e1b49b5de99207d0fe606f04168ba21e72f",
+    "benchmark/graphify-adapters.json": "a64d3592b6eb9a8407c717398383ab6a48717545b4addcc5dfceafd6245d7d58",
+    "benchmark/test_graphify_adapter.py": "bdacb0ec057ac9b8071e1a0b088339aa48c326e5485684cee79cdc55fab8549a"
+  },
+  "model_calls": 0,
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "limitation": "Mechanical CLI contract only. No retrieval quality, latency or agent savings measured. Historical trials unchanged; new comparative runs require a new freeze."
+}

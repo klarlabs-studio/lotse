@@ -1,0 +1,412 @@
+{
+  "h-pino-31": {
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "Module-link tests exercise transport target loading and provide no assertion about the streamWrite hook or logger write transformation [sources/test/transport/module-link.test.js:1]."
+    },
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "The logging helper formats arguments and invokes the logger write symbol, but the streamWrite hook is invoked later in the prototype write path, so this file cannot establish hook execution [sources/lib/tools.js:40]."
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "Level methods dispatch records through the write symbol, but this file does not run or assert the streamWrite hook [sources/lib/levels.js:1]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "These integration tests verify transport target delivery and formatter routing, with no streamWrite hook setup or assertion [sources/test/transport/core.test.js:1]."
+    },
+    "test/internals/version.test.js": {
+      "relevant": false,
+      "reason": "Version metadata tests do not exercise the hook or logger write path [sources/test/internals/version.test.js:1]."
+    },
+    "lib/multistream.js": {
+      "relevant": false,
+      "reason": "This module routes already-written records to streams and does not invoke the logger streamWrite hook [sources/lib/multistream.js:1]."
+    },
+    "test/browser-child.test.js": {
+      "relevant": false,
+      "reason": "This suite checks browser child logger behavior, not the Node streamWrite hook [sources/test/browser-child.test.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The type only declares the hook signature; it does not assert execution or the logger write-path order requested here [sources/pino.d.ts:688]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper supplies test streams and utilities but makes no hook invocation assertion [sources/test/helper.js:1]."
+    },
+    "test/multistream.test.js": {
+      "relevant": false,
+      "reason": "These tests assert multistream destination selection, not whether a logger hook runs before writing [sources/test/multistream.test.js:1]."
+    },
+    "lib/worker.js": {
+      "relevant": false,
+      "reason": "Worker code parses and routes transport input after the application logger has produced a record, not the logger streamWrite hook [sources/lib/worker.js:76]."
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "The basic logging tests exercise ordinary output but do not configure or assert streamWrite hook behavior [sources/test/basic.test.js:1]."
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type test only checks that the streamWrite option is accepted; it cannot establish hook execution order or write-path assertions [sources/test/types/pino.tst.ts:343]."
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "Asynchronous flush tests cover destination lifecycle rather than streamWrite hook execution [sources/test/syncfalse.test.js:1]."
+    }
+  },
+  "h-pino-32": {
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "This module normalizes logger options and creates destination streams, but the child-level redact override ordering and rebuilt serializer state live in child construction [sources/lib/tools.js:328]."
+    },
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark measures parent/child log throughput and does not verify redaction override ordering or serializer state [sources/benchmarks/internal/parent-vs-child.bench.js:1]."
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor builds the initial redact stringifiers and formatter options from the effective redact setting, defining the state a child override must replace [sources/pino.js:134]."
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "Browser child creation handles child serializer overrides and constructs the merged binding object before child log setup, making the binding/serializer ordering concrete for an override review [sources/browser.js:217]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "Transport integration tests cover destinations and routing, not child-level redaction overrides [sources/test/transport/core.test.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations expose redact and serializer option types but do not specify child override ordering or state rebuilding [sources/pino.d.ts:1]."
+    },
+    "lib/redaction.js": {
+      "relevant": true,
+      "reason": "This module constructs the redactor function and its serialized formatter from redaction paths, the state that must be rebuilt after a child override [sources/lib/redaction.js:12]."
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "General logger tests do not assert the child redact override ordering or refreshed serializer state [sources/test/basic.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Test helpers do not implement or assert child redaction setup [sources/test/helper.js:1]."
+    },
+    "test/serializers.test.js": {
+      "relevant": true,
+      "reason": "The child serializer tests show that a child uses its own serializer map while the parent retains its own, directly covering serializer state that must remain correct during child option changes [sources/test/serializers.test.js:107]."
+    },
+    "test/browser-bindings.test.js": {
+      "relevant": false,
+      "reason": "These cases cover browser binding storage and do not test redaction overrides or serializer rebuilding [sources/test/browser-bindings.test.js:1]."
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "Custom-level behavior is independent of child redaction option merging [sources/test/custom-levels.test.js:1]."
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": true,
+      "reason": "Browser redaction tests assert redaction output and child behavior, providing direct behavioral coverage for an override change [sources/test/browser-redaction.test.js:1]."
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type test checks the option surface, not redaction merge order or runtime state [sources/test/types/pino.tst.ts:1]."
+    }
+  },
+  "h-pino-33": {
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations expose dedupe and stream entries but do not establish equal-level versus different-level delivery behavior [sources/pino.d.ts:270]."
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "These tests check logger custom levels, not the multistream ordering or delivery invariant [sources/test/custom-levels.test.js:1]."
+    },
+    "test/types/pino-multistream.tst.ts": {
+      "relevant": false,
+      "reason": "The type tests validate multistream API typing but do not execute dedupe routing [sources/test/types/pino-multistream.tst.ts:1]."
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "Transport setup carries dedupe and level mapping into worker options, the configuration stage that must preserve the routing rule [sources/lib/transport.js:193]."
+    },
+    "lib/worker.js": {
+      "relevant": true,
+      "reason": "The worker passes target streams, levels, and dedupe to pino.multistream, directly connecting sorted routing to destination delivery [sources/lib/worker.js:154]."
+    },
+    "test/transport/core.transpiled.test.ts": {
+      "relevant": false,
+      "reason": "The transpiled integration test exercises transport compatibility but not the dedupe equal-level routing invariant [sources/test/transport/core.transpiled.test.ts:1]."
+    },
+    "lib/constants.js": {
+      "relevant": false,
+      "reason": "Constants define standard level numbers but do not define multistream sorting or equal-level destination behavior [sources/lib/constants.js:1]."
+    },
+    "benchmarks/multistream.js": {
+      "relevant": false,
+      "reason": "The benchmark measures multistream throughput rather than asserting routing correctness for equal and different levels [sources/benchmarks/multistream.js:1]."
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module compares logger thresholds and maps level labels, but it does not define multistream\u2019s sorting or equal-level destination routing [sources/lib/levels.js:144]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "Core tests configure target levels and assert the records received by each destination, serving as delivery regression coverage [sources/test/transport/core.test.js:322]."
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This file checks types, not destination delivery under dedupe sorting [sources/test/types/pino.ts:1]."
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor creates logger-level mappings but does not implement multistream dedupe ordering or stream delivery [sources/pino.js:169]."
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Logger write methods serialize each record but do not implement multistream destination sorting [sources/lib/proto.js:200]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper offers stream/file utilities but no assertions about equal-level dedupe routing [sources/test/helper.js:1]."
+    }
+  },
+  "h-pino-34": {
+    "benchmarks/deep-object.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark builds nested data for logging and does not import or identify the redaction implementation dependency [sources/benchmarks/deep-object.bench.js:1]."
+    },
+    "lib/worker.js": {
+      "relevant": false,
+      "reason": "Worker code loads transport targets and is unrelated to which package implements redaction [sources/lib/worker.js:1]."
+    },
+    "benchmarks/multi-arg.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark compares log argument forms and contains no redactor import [sources/benchmarks/multi-arg.bench.js:1]."
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "The tests assert browser redaction output but do not identify the dependency imported by this source revision [sources/test/browser-redaction.test.js:1]."
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Logger prototype code calls configured serializers and stringifiers but does not import the redaction dependency [sources/lib/proto.js:1]."
+    },
+    "benchmarks/child.bench.js": {
+      "relevant": false,
+      "reason": "The child-logger benchmark does not import or identify a redaction package [sources/benchmarks/child.bench.js:1]."
+    },
+    "benchmarks/object.bench.js": {
+      "relevant": false,
+      "reason": "This object logging benchmark has no redaction dependency import [sources/benchmarks/object.bench.js:1]."
+    },
+    "benchmarks/child-creation.bench.js": {
+      "relevant": false,
+      "reason": "Child creation timing does not identify the package imported by redaction source [sources/benchmarks/child-creation.bench.js:1]."
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "This suite validates redaction results, but does not state which package the implementation imports [sources/test/redact.test.js:1]."
+    },
+    "benchmarks/child-child.bench.js": {
+      "relevant": false,
+      "reason": "This nested-child benchmark has no redaction import or dependency declaration [sources/benchmarks/child-child.bench.js:1]."
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser implementation imports @pinojs/redact directly, giving source-level evidence of the dependency used in this revision [sources/browser.js:4]."
+    },
+    "test/fixtures/transport-uses-pino-config.js": {
+      "relevant": false,
+      "reason": "This fixture checks worker configuration transfer and does not identify the redaction package [sources/test/fixtures/transport-uses-pino-config.js:1]."
+    },
+    "test/fixtures/ts/transpile.cjs": {
+      "relevant": false,
+      "reason": "The fixture tests TypeScript transpilation and has no redaction dependency import [sources/test/fixtures/ts/transpile.cjs:1]."
+    },
+    "benchmarks/long-string.bench.js": {
+      "relevant": false,
+      "reason": "Long-string serialization benchmarking does not identify the redactor dependency [sources/benchmarks/long-string.bench.js:1]."
+    },
+    "benchmarks/basic.bench.js": {
+      "relevant": false,
+      "reason": "The basic throughput benchmark does not establish the package imported for redaction [sources/benchmarks/basic.bench.js:1]."
+    },
+    "lib/transport-stream.js": {
+      "relevant": false,
+      "reason": "Transport module loading does not identify the package used by redaction [sources/lib/transport-stream.js:1]."
+    },
+    "test/fixtures/transport-transform.js": {
+      "relevant": false,
+      "reason": "This fixture transforms transport records and does not import or name the redaction dependency [sources/test/fixtures/transport-transform.js:1]."
+    }
+  },
+  "h-pino-35": {
+    "test/escaping.test.js": {
+      "relevant": false,
+      "reason": "These tests cover JSON escaping and do not inspect the omitted redact option\u2019s normalized value or conditional [sources/test/escaping.test.js:1]."
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "Browser redaction output tests do not establish the Node option-normalization default asked here [sources/test/browser-redaction.test.js:1]."
+    },
+    "test/caller.test.js": {
+      "relevant": false,
+      "reason": "Caller metadata tests do not inspect redact defaults or redactor initialization [sources/test/caller.test.js:1]."
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "Transport setup does not merge logger redact defaults or construct the logger redactor [sources/lib/transport.js:192]."
+    },
+    "test/fixtures/default-exit.js": {
+      "relevant": false,
+      "reason": "This fixture exercises process exit behavior, not normalized redact options [sources/test/fixtures/default-exit.js:1]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "Worker option tests concern transport thread setup, not the logger redact default [sources/test/transport/node-options.test.js:1]."
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "These tests cover logger levels and do not assert the omitted redact option [sources/test/levels.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared test utilities do not establish the redact option default or its redactor branch [sources/test/helper.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration makes redact optional but does not state an undefined default, so it cannot establish the API-to-internal-default comparison [sources/pino.d.ts:427]."
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "The cases cover invalid and explicitly configured redact paths; they do not test the omitted option\u2019s normalized value [sources/test/redact.test.js:9]."
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "Browser option initialization is a separate backend and does not establish the Node default merged by the core normalizer [sources/browser.js:1]."
+    },
+    "lib/redaction.js": {
+      "relevant": true,
+      "reason": "This file imports the redactor and defines its setup function, but the truthy branch decision is in the logger constructor; it clarifies the behavior once entered [sources/lib/redaction.js:12]."
+    }
+  },
+  "h-pino-36": {
+    "test/types/pino-transport.tst.ts": {
+      "relevant": false,
+      "reason": "This type test checks the transport API shape; it does not establish worker routing for a single target with a level [sources/test/types/pino-transport.tst.ts:1]."
+    },
+    "test/transport/crash.test.js": {
+      "relevant": false,
+      "reason": "Crash-path tests cover worker failure handling and do not assert whether one configured target\u2019s level is honored [sources/test/transport/crash.test.js:1]."
+    },
+    "test/transport/targets.test.js": {
+      "relevant": true,
+      "reason": "Target integration tests exercise target transport setup and delivery, relevant to checking level filtering at a target [sources/test/transport/targets.test.js:1]."
+    },
+    "lib/transport-stream.js": {
+      "relevant": false,
+      "reason": "This loader resolves the target stream builder but does not decide whether a target\u2019s level triggers worker-side routing [sources/lib/transport-stream.js:13]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "The core test explicitly covers a single target with a level and asserts filtered delivery, the regression behavior in question [sources/test/transport/core.test.js:322]."
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The transport target declaration exposes its optional level property, identifying the configured value passed into worker handling [sources/pino.d.ts:270]."
+    },
+    "test/transport/bundlers-support.test.js": {
+      "relevant": false,
+      "reason": "Bundler support cases verify target module path resolution, not the worker\u2019s per-target level handling [sources/test/transport/bundlers-support.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Test helpers provide file and stream utilities but do not assert target-level filtering [sources/test/helper.js:1]."
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "Transport setup preserves each target\u2019s level in the worker options, enabling the worker to decide whether to build a routing stream [sources/lib/transport.js:218]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "These tests configure thread-stream options and do not cover target level routing [sources/test/transport/node-options.test.js:1]."
+    },
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "Option normalization selects/builds a transport stream but does not implement the worker\u2019s single-target level branch [sources/lib/tools.js:337]."
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "General Pino type tests do not check worker behavior for one target with a level [sources/test/types/pino.tst.ts:1]."
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example demonstrates transport configuration but does not assert the worker\u2019s single-target level behavior [sources/examples/transport.js:1]."
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor stores the built transport stream on the logger, while the worker decides whether a single target level requires a routing stream [sources/pino.js:204]."
+    }
+  },
+  "h-pino-37": {
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "The optional default argument here belongs to level-map construction, not the normalized logger options object asked about [sources/lib/levels.js:152]."
+    },
+    "test/fixtures/default-exit.js": {
+      "relevant": false,
+      "reason": "This fixture checks process exit behavior and does not inspect customLevels normalization [sources/test/fixtures/default-exit.js:1]."
+    },
+    "lib/worker.js": {
+      "relevant": false,
+      "reason": "The worker consumes already-normalized transport levels and has no role in setting the logger customLevels default [sources/lib/worker.js:76]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "Worker option tests do not assert the logger\u2019s omitted customLevels option [sources/test/transport/node-options.test.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration makes customLevels optional but does not state the normalized internal default value [sources/pino.d.ts:385]."
+    },
+    "test/serializers.test.js": {
+      "relevant": false,
+      "reason": "Serializer configuration tests do not examine customLevels defaults [sources/test/serializers.test.js:1]."
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This type test checks compile-time usage, not runtime normalized defaults [sources/test/types/pino.ts:1]."
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "The transport example does not inspect the customLevels value after option normalization [sources/examples/transport.js:1]."
+    },
+    "test/browser-is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "Browser level-enabled tests exercise threshold checks rather than the core logger option merge [sources/test/browser-is-level-enabled.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Test helpers do not expose or assert normalized customLevels state [sources/test/helper.js:1]."
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "This suite focuses on level methods and thresholds, not the customLevels default in normalized logger options [sources/test/levels.test.js:1]."
+    },
+    "test/escaping.test.js": {
+      "relevant": false,
+      "reason": "Escaping tests do not cover level option normalization [sources/test/escaping.test.js:1]."
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Prototype behavior consumes the logger\u2019s configured levels but does not create the normalized customLevels option value [sources/lib/proto.js:1]."
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "These tests check behavior of explicitly supplied custom levels, but do not assert the normalized value when customLevels is omitted [sources/test/custom-levels.test.js:186]."
+    }
+  }
+}

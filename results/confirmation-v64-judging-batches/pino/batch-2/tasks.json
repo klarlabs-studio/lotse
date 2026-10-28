@@ -1,0 +1,197 @@
+{
+  "h-pino-11": {
+    "repo": "pino",
+    "query": "What distinction does Pino make between an Error passed as the log object and an ordinary object with an error field?",
+    "files": [
+      "lib/tools.js",
+      "pino.js",
+      "test/browser.test.js",
+      "benchmarks/deep-object.bench.js",
+      "lib/levels.js",
+      "test/basic.test.js",
+      "test/browser-transmit.test.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts",
+      "benchmarks/object.bench.js",
+      "test/error-key.test.js",
+      "benchmarks/utils/runbench.js",
+      "browser.js"
+    ]
+  },
+  "h-pino-12": {
+    "repo": "pino",
+    "query": "How do child bindings become part of output, and why can repeated binding names appear in the serialized line?",
+    "files": [
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "benchmarks/formatters.bench.js",
+      "test/browser-serializers.test.js",
+      "pino.d.ts",
+      "test/browser-bindings.test.js",
+      "lib/constants.js",
+      "test/transport/pipeline.test.js",
+      "test/syncfalse.test.js",
+      "test/browser-transmit.test.js",
+      "test/types/pino.tst.ts",
+      "lib/levels.js",
+      "browser.js",
+      "pino.js",
+      "test/helper.js",
+      "test/browser-set-bindings.test.js"
+    ]
+  },
+  "h-pino-13": {
+    "repo": "pino",
+    "query": "What is the distinction between logger-level gating and per-destination level filtering for a multistream?",
+    "files": [
+      "examples/transport.js",
+      "test/custom-levels.test.js",
+      "pino.d.ts",
+      "test/transport/module-link.test.js",
+      "test/helper.js",
+      "test/multistream.test.js",
+      "test/types/pino.ts",
+      "pino.js",
+      "test/browser-transmit.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino-type-only.tst.ts",
+      "lib/worker.js",
+      "test/syncfalse.test.js",
+      "benchmarks/multistream.js"
+    ]
+  },
+  "h-pino-14": {
+    "repo": "pino",
+    "query": "How does Pino preserve redaction when an object is interpolated into the message string?",
+    "files": [
+      "lib/tools.js",
+      "test/redact.test.js",
+      "test/browser-redaction.test.js",
+      "browser.js",
+      "benchmarks/object.bench.js",
+      "test/error.test.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts",
+      "test/serializers.test.js",
+      "lib/proto.js",
+      "test/types/pino.ts",
+      "lib/symbols.js",
+      "test/types/pino-import.tst.js",
+      "test/browser-transmit.test.js"
+    ]
+  },
+  "h-pino-15": {
+    "repo": "pino",
+    "query": "Why does a no-options child creation take a separate fast path, and what does it still reset or invoke?",
+    "files": [
+      "test/browser-child.test.js",
+      "benchmarks/internal/just-pino.bench.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "test/redact.test.js",
+      "test/types/pino.tst.ts",
+      "benchmarks/internal/custom-levels.js",
+      "test/basic.test.js",
+      "test/internals/version.test.js",
+      "test/transport/node-options.test.js",
+      "benchmarks/child-creation.bench.js",
+      "test/browser-bindings.test.js",
+      "browser.js",
+      "lib/transport.js"
+    ]
+  },
+  "h-pino-16": {
+    "repo": "pino",
+    "query": "How are standard level methods disabled or generated when the level threshold changes?",
+    "files": [
+      "pino.d.ts",
+      "test/browser-serializers.test.js",
+      "test/custom-levels.test.js",
+      "test/transport/core.test.js",
+      "lib/proto.js",
+      "lib/tools.js",
+      "test/browser-disabled.test.js",
+      "pino.js",
+      "test/helper.js",
+      "test/is-level-enabled.test.js",
+      "browser.js"
+    ]
+  },
+  "h-pino-17": {
+    "repo": "pino",
+    "query": "Trace the path from calling logger.info(object, message) to bytes written, including the mixin and streamWrite hook.",
+    "files": [
+      "test/internals/version.test.js",
+      "benchmarks/deep-object.bench.js",
+      "test/multistream.test.js",
+      "test/hooks.test.js",
+      "lib/caller.js",
+      "benchmarks/long-string.bench.js",
+      "lib/symbols.js",
+      "test/types/pino.tst.ts",
+      "examples/transport.js",
+      "test/mixin.test.js",
+      "test/mixin-merge-strategy.test.js",
+      "benchmarks/object.bench.js",
+      "test/levels.test.js",
+      "test/helper.js"
+    ]
+  },
+  "h-pino-18": {
+    "repo": "pino",
+    "query": "Trace how a custom level added at logger construction becomes a callable method and how changing logger.level updates that method set.",
+    "files": [
+      "pino.d.ts",
+      "lib/proto.js",
+      "pino.js",
+      "test/custom-levels.test.js",
+      "lib/caller.js",
+      "test/browser-transmit.test.js",
+      "test/types/pino.tst.ts",
+      "test/transport/core.test.js",
+      "examples/transport.js",
+      "test/browser.test.js",
+      "browser.js",
+      "test/is-level-enabled.test.js",
+      "test/helper.js",
+      "test/levels.test.js"
+    ]
+  },
+  "h-pino-19": {
+    "repo": "pino",
+    "query": "Follow a redact path from logger initialization into serialization and identify where redaction is applied.",
+    "files": [
+      "lib/levels.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts",
+      "test/timestamp-nano.test.js",
+      "test/redact.test.js",
+      "test/browser-redaction.test.js",
+      "browser.js",
+      "lib/tools.js",
+      "test/hooks.test.js",
+      "examples/transport.js",
+      "lib/redaction.js",
+      "lib/symbols.js",
+      "test/internals/version.test.js"
+    ]
+  },
+  "h-pino-20": {
+    "repo": "pino",
+    "query": "Trace how a child logger with new bindings and a custom serializer option is assembled.",
+    "files": [
+      "pino.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "test/types/pino.tst.ts",
+      "test/browser-bindings.test.js",
+      "test/transport/node-options.test.js",
+      "test/browser-set-bindings.test.js",
+      "test/browser-transmit.test.js",
+      "browser.js",
+      "pino.d.ts",
+      "examples/transport.js",
+      "lib/caller.js",
+      "test/helper.js",
+      "test/custom-levels.test.js",
+      "test/serializers.test.js"
+    ]
+  }
+}

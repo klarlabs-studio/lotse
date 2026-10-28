@@ -1,0 +1,214 @@
+{
+  "h-rich-21": {
+    "repo": "rich",
+    "query": "Trace Live.update when passed a string with refresh=True. What conversion and synchronization occur?",
+    "files": [
+      "rich/traceback.py",
+      "rich/control.py",
+      "tests/test_live_render.py",
+      "tests/test_console.py",
+      "rich/status.py",
+      "tests/test_progress.py",
+      "rich/color.py",
+      "rich/jupyter.py",
+      "rich/repr.py",
+      "tests/test_color.py",
+      "examples/top_lite_simulator.py",
+      "tests/test_pretty.py",
+      "rich/console.py",
+      "rich/color_triplet.py",
+      "rich/progress.py",
+      "tests/test_live.py"
+    ]
+  },
+  "h-rich-22": {
+    "repo": "rich",
+    "query": "What is the sequence for parsing markup into styled text, including the fast path when no opening bracket exists?",
+    "files": [
+      "rich/styled.py",
+      "rich/progress.py",
+      "tests/test_console.py",
+      "tests/test_markup.py",
+      "rich/style.py",
+      "tests/test_traceback.py",
+      "rich/table.py",
+      "rich/text.py",
+      "tests/test_pretty.py",
+      "tests/test_text.py",
+      "rich/console.py",
+      "rich/logging.py",
+      "rich/segment.py",
+      "tests/test_ansi.py",
+      "rich/traceback.py",
+      "rich/syntax.py"
+    ]
+  },
+  "h-rich-23": {
+    "repo": "rich",
+    "query": "Trace a Layout render from terminal dimensions to leaf renderables and final output rows.",
+    "files": [
+      "tests/test_console.py",
+      "rich/table.py",
+      "rich/live.py",
+      "rich/traceback.py",
+      "tests/test_live_render.py",
+      "rich/console.py",
+      "tests/test_markdown.py",
+      "rich/style.py",
+      "tests/test_markdown_no_hyperlinks.py",
+      "tests/test_layout.py",
+      "tests/render.py",
+      "rich/terminal_theme.py",
+      "rich/segment.py",
+      "rich/containers.py"
+    ]
+  },
+  "h-rich-24": {
+    "repo": "rich",
+    "query": "How does Segment.split_and_crop_lines treat newline characters inside a normal text segment?",
+    "files": [
+      "tests/test_segment.py",
+      "rich/console.py",
+      "rich/containers.py",
+      "rich/live_render.py",
+      "rich/style.py",
+      "tests/test_panel.py",
+      "rich/layout.py",
+      "tests/test_text.py",
+      "tests/test_pretty.py",
+      "rich/syntax.py",
+      "tests/test_console.py",
+      "rich/text.py",
+      "tests/test_cells.py",
+      "tests/test_rule.py",
+      "rich/logging.py"
+    ]
+  },
+  "h-rich-25": {
+    "repo": "rich",
+    "query": "Which rendering protocol hooks let a custom object either return one renderable or yield several, and what parameters does the multi-render hook receive?",
+    "files": [
+      "tests/test_inspect.py",
+      "rich/traceback.py",
+      "tests/test_pretty.py",
+      "rich/prompt.py",
+      "rich/layout.py",
+      "rich/table.py",
+      "tests/render.py",
+      "rich/live.py",
+      "rich/protocol.py",
+      "rich/color.py",
+      "tests/test_text.py",
+      "tests/test_console.py",
+      "rich/markup.py",
+      "rich/pretty.py"
+    ]
+  },
+  "h-rich-26": {
+    "repo": "rich",
+    "query": "How does the Layout subsystem divide responsibility between region allocation and leaf rendering?",
+    "files": [
+      "rich/region.py",
+      "tests/test_table.py",
+      "tests/test_text.py",
+      "tests/test_segment.py",
+      "rich/logging.py",
+      "rich/text.py",
+      "rich/pretty.py",
+      "tests/test_layout.py",
+      "rich/segment.py",
+      "rich/measure.py",
+      "rich/table.py",
+      "rich/live.py",
+      "rich/console.py",
+      "tests/test_console.py",
+      "rich/_ratio.py"
+    ]
+  },
+  "h-rich-27": {
+    "repo": "rich",
+    "query": "What does the table rendering pipeline delegate to _measure_column and _render after its public Rich console hook?",
+    "files": [
+      "rich/prompt.py",
+      "rich/columns.py",
+      "tests/render.py",
+      "rich/text.py",
+      "rich/live.py",
+      "rich/syntax.py",
+      "rich/console.py",
+      "tests/test_table.py",
+      "tests/test_text.py",
+      "rich/_inspect.py",
+      "tests/test_spinner.py",
+      "rich/style.py",
+      "tests/test_pretty.py",
+      "tests/test_block_bar.py",
+      "rich/progress.py",
+      "tests/test_rule_in_table.py"
+    ]
+  },
+  "h-rich-28": {
+    "repo": "rich",
+    "query": "How does make_tasks_table convert string column specs and ProgressColumn specs into the columns passed to Table.grid?",
+    "files": [
+      "rich/columns.py",
+      "rich/segment.py",
+      "tests/test_progress.py",
+      "tests/test_rule_in_table.py",
+      "tests/test_table.py",
+      "tests/test_columns.py",
+      "rich/text.py",
+      "examples/live_progress.py",
+      "rich/measure.py",
+      "tools/make_width_tables.py",
+      "rich/__main__.py",
+      "tests/test_columns_align.py",
+      "rich/prompt.py",
+      "rich/table.py",
+      "rich/style.py",
+      "rich/console.py",
+      "examples/fullscreen.py"
+    ]
+  },
+  "h-rich-29": {
+    "repo": "rich",
+    "query": "If soft_wrap=True is used while no_wrap=False and overflow='fold' are explicitly supplied, which settings survive, and how does cropping change?",
+    "files": [
+      "tests/test_text.py",
+      "examples/overflow.py",
+      "tests/test_syntax.py",
+      "rich/traceback.py",
+      "tests/render.py",
+      "rich/pretty.py",
+      "tests/test_console.py",
+      "rich/text.py",
+      "tests/test_table.py",
+      "rich/progress.py",
+      "rich/segment.py",
+      "rich/prompt.py",
+      "benchmarks/benchmarks.py",
+      "rich/__init__.py"
+    ]
+  },
+  "h-rich-30": {
+    "repo": "rich",
+    "query": "If a table exceeds the available width, which columns are initially eligible for width collapse and what happens if it still does not fit?",
+    "files": [
+      "tests/test_table.py",
+      "rich/columns.py",
+      "rich/markdown.py",
+      "tests/test_rule.py",
+      "rich/progress.py",
+      "rich/text.py",
+      "tests/test_text.py",
+      "tests/test_console.py",
+      "rich/panel.py",
+      "tests/test_columns_align.py",
+      "tests/test_rule_in_table.py",
+      "rich/style.py",
+      "rich/segment.py",
+      "rich/measure.py",
+      "rich/console.py"
+    ]
+  }
+}

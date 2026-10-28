@@ -1,0 +1,598 @@
+{
+  "h-rich-01": {
+    "tests/test_prompt.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_prompt.py:7, the file tests interactive Prompt validation and input parsing; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_text.py:13, the file tests Text spans and text-specific behavior; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "rich/pretty.py": {
+      "relevant": false,
+      "reason": "At sources/rich/pretty.py:60, the module formats arbitrary Python objects through Rich pretty representations; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "At sources/rich/status.py:45, Status.renderable supplies its Spinner renderable; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_inspect.py:58, the tests exercise Inspect output and object introspection; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "At sources/rich/text.py:719, Text.render yields rendered segments and is a separate Text rendering path; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "tests/test_progress.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_progress.py:36, the tests exercise Progress task tracking and its renderable columns; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_console.py:650, test_out invokes Console.out with multiple positional values, a custom separator, and terminator, so it directly exercises the output path asked about."
+    },
+    "tests/test_repr.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_repr.py:12, the tests cover Rich repr protocol implementations; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_table.py:16, the tests cover Table rendering and width behavior; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "rich/_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/rich/_inspect.py:21, the module builds Inspect renderables for introspection; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "rich/markup.py": {
+      "relevant": false,
+      "reason": "At sources/rich/markup.py:106, the module parses markup into styled Text; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "rich/_win32_console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/_win32_console.py:29, the module wraps Windows console API structures and calls; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "At sources/rich/__init__.py:23, package helpers retrieve or reconfigure the default Console; it does not establish the requested behavior. That subject does not show Console.out's positional-object string joining or the print flags that disable markup and wrapping and set crop=False."
+    }
+  },
+  "h-rich-02": {
+    "tests/test_rule_in_table.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_rule_in_table.py:35-76, expanded and ratio-table cases render rows with Rule content, exercising table width allocation when ratios are involved."
+    },
+    "rich/_ratio.py": {
+      "relevant": true,
+      "reason": "At sources/rich/_ratio.py:107, ratio_distribute computes parts from ratios, while sources/rich/table.py:537-550 calls it with flexible columns and their minimum widths to allocate remaining table width. This names and connects the helper to the requested behavior."
+    },
+    "tests/test_table.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_table.py:117-128, table measurement and min-width assertions exercise width calculations; the file also tests table rendering whose widths are determined by that path."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/console.py:1277, Console.measure measures a single renderable using Measurement; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "tests/test_ratio.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_ratio.py:28-54, cases assert ratio allocation outputs for several flexible edges, directly testing the width distribution helper used by tables."
+    },
+    "rich/layout.py": {
+      "relevant": false,
+      "reason": "At sources/rich/layout.py:90, layout splitters distribute screen dimensions among child Layout objects; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "benchmarks/snippets.py": {
+      "relevant": false,
+      "reason": "At sources/benchmarks/snippets.py:2, the benchmark snippet implements layout edge resolution; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "rich/columns.py": {
+      "relevant": false,
+      "reason": "At sources/rich/columns.py:62, Columns.__rich_console__ renders a grid unrelated to Table columns; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "At sources/rich/segment.py:61, Segment represents styled console output and cell spans; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "At sources/rich/text.py:719, Text.render yields rendered segments and is a separate Text rendering path; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "examples/fullscreen.py": {
+      "relevant": false,
+      "reason": "At sources/examples/fullscreen.py:20, the example builds a fullscreen Layout hierarchy; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "tools/make_width_tables.py": {
+      "relevant": false,
+      "reason": "At sources/tools/make_width_tables.py:1, the tool generates Unicode width lookup tables; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "tests/test_rule.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_rule.py:10, the tests exercise standalone Rule rendering; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "At sources/rich/style.py:40, Style stores and combines terminal style attributes; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_text.py:13, the file tests Text spans and text-specific behavior; it does not establish the requested behavior. That subject does not allocate a Table's flexible column widths by ratios; the requested helper and its table call site are in the allocation path."
+    }
+  },
+  "h-rich-03": {
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "At sources/rich/status.py:45, Status.renderable supplies its Spinner renderable; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "tests/test_windows_renderer.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_windows_renderer.py:19, the tests cover legacy Windows terminal rendering; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "At sources/rich/progress.py:1562, Progress.make_tasks_table builds a Table from an iterable of Task values; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/pretty.py": {
+      "relevant": false,
+      "reason": "At sources/rich/pretty.py:60, the module formats arbitrary Python objects through Rich pretty representations; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "tests/test_pretty.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_pretty.py:47, the tests cover pretty-printer installation and repr output; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "At sources/rich/segment.py:61, Segment represents styled console output and cell spans; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/protocol.py": {
+      "relevant": false,
+      "reason": "At sources/rich/protocol.py:9, the protocol helpers identify and cast renderables; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_console.py:650, the tests exercise Console.out directly; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "tests/test_panel.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_panel.py:32, the tests render Panel borders and inner content; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/console.py:1277, Console.measure measures a single renderable using Measurement; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/_wrap.py": {
+      "relevant": false,
+      "reason": "At sources/rich/_wrap.py:26, divide_line computes wrap offsets for text lines; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "tests/test_segment.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_segment.py:52, the tests assert Segment line splitting and crop behavior; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "At sources/rich/style.py:40, Style stores and combines terminal style attributes; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_inspect.py:58, the tests exercise Inspect output and object introspection; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "At sources/rich/table.py:475, Table.__rich_console__ measures column ranges and renders the table; it does not establish the requested behavior. That subject does not define or directly test Text.render's Segment iterator and its optional end string."
+    }
+  },
+  "h-rich-04": {
+    "rich/__main__.py": {
+      "relevant": false,
+      "reason": "At sources/rich/__main__.py:18, the CLI defines a colored test-card renderable; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "At sources/rich/table.py:475, Table.__rich_console__ measures column ranges and renders the table; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/console.py:1277, Console.measure measures a single renderable using Measurement; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "tests/test_windows_renderer.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_windows_renderer.py:19, the tests cover legacy Windows terminal rendering; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "tests/test_pretty.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_pretty.py:47, the tests cover pretty-printer installation and repr output; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "tests/test_progress.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_progress.py:273-309 and 444 onward, tests render Progress displays and manipulate tasks, directly covering the display-table path made by make_tasks_table."
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "At sources/rich/live.py:230, Live.update replaces the active displayed renderable and may refresh; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "At sources/rich/jupyter.py:18, the module adapts HTML and text output for Jupyter; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_table.py:16, the tests cover Table rendering and width behavior; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "tools/make_width_tables.py": {
+      "relevant": false,
+      "reason": "At sources/tools/make_width_tables.py:1, the tool generates Unicode width lookup tables; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_inspect.py:58, the tests exercise Inspect output and object introspection; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "examples/live_progress.py": {
+      "relevant": false,
+      "reason": "At sources/examples/live_progress.py:1, the example demonstrates a live progress workflow; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    },
+    "tests/test_ansi.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_ansi.py:9, the tests decode ANSI escape sequences; it does not establish the requested behavior. That subject does not build the Progress display table from Task values or identify the method used for that conversion."
+    }
+  },
+  "h-rich-05": {
+    "tests/test_text.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_text.py:95, test_from_markup exercises conversion of markup into Text, and the surrounding assertions check parsed text/spans."
+    },
+    "rich/pretty.py": {
+      "relevant": false,
+      "reason": "At sources/rich/pretty.py:60, the module formats arbitrary Python objects through Rich pretty representations; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "At sources/rich/__init__.py:23, package helpers retrieve or reconfigure the default Console; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "tests/test_cells.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_cells.py:29, the tests check Unicode cell-width calculation; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/console.py:1277, Console.measure measures a single renderable using Measurement; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "rich/text.py": {
+      "relevant": true,
+      "reason": "At sources/rich/text.py:258-287, Text.from_markup delegates to markup.render with its emoji parameter defaulting to True and returns the resulting Text object."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_inspect.py:58, the tests exercise Inspect output and object introspection; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_console.py:650, the tests exercise Console.out directly; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "rich/emoji.py": {
+      "relevant": false,
+      "reason": "At sources/rich/emoji.py:53, Emoji.replace substitutes emoji codes in text; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "At sources/rich/segment.py:61, Segment represents styled console output and cell spans; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "tests/test_prompt.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_prompt.py:7, the file tests interactive Prompt validation and input parsing; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "tests/test_emoji.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_emoji.py:8, the tests cover emoji replacement and rendering; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "At sources/rich/style.py:40, Style stores and combines terminal style attributes; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    },
+    "rich/prompt.py": {
+      "relevant": false,
+      "reason": "At sources/rich/prompt.py:11, the module implements interactive input prompts; it does not establish the requested behavior. That subject does not establish the markup-to-Text conversion function or its default emoji-replacement behavior."
+    }
+  },
+  "h-rich-06": {
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "At sources/rich/text.py:719, the file concerns Text rendering and measurement; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "tests/test_logging.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_logging.py:35, the file concerns logging exception and stream tests; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "At sources/rich/status.py:45, the file concerns Status spinner rendering; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "At sources/rich/segment.py:307, the file concerns Segment line operations; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "At sources/rich/style.py:40, the file concerns terminal style operations; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/terminal_theme.py": {
+      "relevant": false,
+      "reason": "At sources/rich/terminal_theme.py:9, the file concerns terminal color themes; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "At sources/rich/table.py:475, the file concerns Table render path; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/containers.py": {
+      "relevant": false,
+      "reason": "At sources/rich/containers.py:30, the file concerns renderable grouping; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_inspect.py:58, the file concerns object inspection output; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/protocol.py": {
+      "relevant": false,
+      "reason": "At sources/rich/protocol.py:9, the file concerns renderable recognition and conversion; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/console.py:1277, the file concerns Console measurement; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "examples/fullscreen.py": {
+      "relevant": false,
+      "reason": "At sources/examples/fullscreen.py:20, the file concerns fullscreen layout example; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "tests/test_segment.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_segment.py:52, the file concerns Segment split and crop assertions; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_console.py:650, the file concerns Console output API tests; that does not answer this query. It does not calculate the association from leaf Layout objects to both rendered lines and terminal Regions."
+    },
+    "tests/test_layout.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_layout.py:35-64, tests build nested row/column layouts, render them, and check the visible content in their assigned regions; this directly supports the question about layout rendering."
+    }
+  },
+  "h-rich-07": {
+    "rich/containers.py": {
+      "relevant": false,
+      "reason": "At sources/rich/containers.py:30, the file concerns renderable grouping; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_console.py:650, the file concerns Console output API tests; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "tests/test_segment.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_segment.py:52-76, assertions show split_and_crop_lines dividing at newlines, truncating to four cells, and padding a shorter result to length four."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_inspect.py:58, the file concerns object inspection output; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_text.py:681, the file concerns Text rendering and wrapping tests; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/syntax.py": {
+      "relevant": false,
+      "reason": "At sources/rich/syntax.py:127, the file concerns syntax token styling; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/control.py": {
+      "relevant": false,
+      "reason": "At sources/rich/control.py:48, the file concerns terminal control codes; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/console.py:1277, the file concerns Console measurement; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/cells.py": {
+      "relevant": false,
+      "reason": "At sources/rich/cells.py:98, the file concerns Unicode cell-width calculation; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/align.py": {
+      "relevant": false,
+      "reason": "At sources/rich/align.py:17, the file concerns renderable alignment; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/protocol.py": {
+      "relevant": false,
+      "reason": "At sources/rich/protocol.py:9, the file concerns renderable recognition and conversion; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/screen.py": {
+      "relevant": false,
+      "reason": "At sources/rich/screen.py:18, the file concerns alternate screen rendering; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/layout.py": {
+      "relevant": false,
+      "reason": "At sources/rich/layout.py:90, the file concerns Layout child splitting; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "tests/test_windows_renderer.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_windows_renderer.py:23, the file concerns legacy Windows segment rendering; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "At sources/rich/text.py:719, the file concerns Text rendering and measurement; that does not answer this query. It does not provide the Segment line-splitting, optional cropping, and padding method asked for."
+    }
+  },
+  "h-rich-08": {
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_console.py:650, the file concerns Console output API tests; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "rich/control.py": {
+      "relevant": false,
+      "reason": "At sources/rich/control.py:48, the file concerns terminal control codes; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "At sources/rich/progress.py:1562, the file concerns Progress task-table construction; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "At sources/rich/console.py:1277, the file concerns Console measurement; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "examples/fullscreen.py": {
+      "relevant": false,
+      "reason": "At sources/examples/fullscreen.py:20, the file concerns fullscreen layout example; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "At sources/rich/__init__.py:53, the file concerns package print wrapper; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "tests/test_layout.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_layout.py:35, the file concerns nested Layout rendering; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "At sources/rich/jupyter.py:25, the file concerns Jupyter MIME output; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "tests/test_live_render.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_live_render.py:13, the file concerns LiveRender frame and cursor tests; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "rich/live_render.py": {
+      "relevant": false,
+      "reason": "At sources/rich/live_render.py:43, the file concerns low-level live frame state; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "tests/test_live.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_live.py:38-50, growing display tests repeatedly call live.update(..., refresh=True) and inspect the refreshed output."
+    },
+    "tests/test_progress.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_progress.py:273, the file concerns Progress task behavior; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_inspect.py:58, the file concerns object inspection output; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    },
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "At sources/rich/status.py:45, the file concerns Status spinner rendering; that does not answer this query. It does not implement Live's public method for replacing the displayed renderable and optionally refreshing immediately."
+    }
+  },
+  "h-rich-09": {
+    "tests/test_win32_console.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_win32_console.py:30, the file concerns Windows console coordinates; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "At sources/rich/style.py:40, the file concerns terminal style operations; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "tests/test_traceback.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_traceback.py:13, the file concerns traceback presentation; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "rich/markup.py": {
+      "relevant": true,
+      "reason": "At sources/rich/markup.py:106-157, render converts bracket markup into Text and applies emoji replacement when enabled; Console.print uses this parser while Console.out supplies markup=False."
+    },
+    "tests/test_box.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_box.py:19, the file concerns Box glyph helpers; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "At sources/rich/progress.py:1562, the file concerns Progress task-table construction; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_text.py:681, the file concerns Text rendering and wrapping tests; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "tests/test_logging.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_logging.py:35, the file concerns logging exception and stream tests; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_console.py:650-655, test_out calls Console.out with five positional strings plus a custom separator/end and checks the joined result."
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "At sources/rich/text.py:719, the file concerns Text rendering and measurement; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "At sources/rich/segment.py:307, the file concerns Segment line operations; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "At sources/rich/__init__.py:53, the file concerns package print wrapper; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    },
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "At sources/rich/status.py:45, the file concerns Status spinner rendering; that does not answer this query. It does not establish the Console.out versus Console.print behavior for arbitrary objects and markup."
+    }
+  },
+  "h-rich-10": {
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_console.py:650, the file concerns Console output API tests; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    },
+    "tests/test_progress.py": {
+      "relevant": false,
+      "reason": "At sources/tests/test_progress.py:273, the file concerns Progress task behavior; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    },
+    "tests/test_rule_in_table.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_rule_in_table.py:13-76, tests render Rule rows in tables in unexpanded, expanded, and ratio modes, directly checking output within table-assigned columns."
+    },
+    "rich/_wrap.py": {
+      "relevant": true,
+      "reason": "At sources/rich/_wrap.py:26-53, divide_line computes break offsets for a target width; Text wrapping applies those offsets when a table renders the cell within its allocated width."
+    },
+    "rich/segment.py": {
+      "relevant": true,
+      "reason": "At sources/rich/segment.py:307-350, split_and_crop_lines splits on newline boundaries and applies adjust_line_length with target length and padding, the line-level output step after Table chooses column widths."
+    },
+    "rich/cells.py": {
+      "relevant": true,
+      "reason": "At sources/rich/cells.py:98-111, cell_len measures terminal cells including wide Unicode glyphs, which Text uses to report table cell width."
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "At sources/rich/progress.py:1562, the file concerns Progress task-table construction; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    },
+    "rich/text.py": {
+      "relevant": true,
+      "reason": "At sources/rich/text.py:707-716, Text.__rich_measure__ reports a min width from the longest word and a max width from the widest line using display-cell lengths, which Table uses for cells."
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "At sources/rich/jupyter.py:25, the file concerns Jupyter MIME output; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    },
+    "rich/measure.py": {
+      "relevant": true,
+      "reason": "At sources/rich/measure.py:80-114, Measurement.get obtains a renderable minimum/maximum width, normalizes it and caps maximum at available width; Table uses it to measure cell content."
+    },
+    "rich/box.py": {
+      "relevant": false,
+      "reason": "At sources/rich/box.py:10, the file concerns border glyph definitions; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    },
+    "tests/test_text.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_text.py:316-345, tests assert Text display-cell widths used by Table cell measurement; nearby cases check wrapping at a width limit."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "At sources/rich/style.py:40, the file concerns terminal style operations; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    },
+    "tests/test_table.py": {
+      "relevant": true,
+      "reason": "At sources/tests/test_table.py:18-64, tests check Table measurement and render the fixture over widths 10–55, directly exercising how a table fits changing available widths."
+    },
+    "rich/panel.py": {
+      "relevant": false,
+      "reason": "At sources/rich/panel.py:17, the file concerns bordered Panel rendering; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    },
+    "rich/columns.py": {
+      "relevant": false,
+      "reason": "At sources/rich/columns.py:62, the file concerns Columns grid rendering; that does not answer this query. It does not measure Table cells or constrain column widths to fit the available table width."
+    }
+  }
+}

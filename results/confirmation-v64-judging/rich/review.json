@@ -1,0 +1,192 @@
+{
+  "judge_id": "blind-v64-rich-certified-batches",
+  "model": "gpt-6-luna requested; backend identity not independently verified",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "d641b2c35108553b8d20be9a30da2f0e5d013a0df726839c143098efdc80f8e0",
+  "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+  "judgments_sha256": "582c1dd1ee0b67c8f295a6dff0661ce5ed2c7ff86505433723aa9df3b99b7ecf",
+  "reviewed_query_ids": [
+    "h-rich-01",
+    "h-rich-02",
+    "h-rich-03",
+    "h-rich-04",
+    "h-rich-05",
+    "h-rich-06",
+    "h-rich-07",
+    "h-rich-08",
+    "h-rich-09",
+    "h-rich-10",
+    "h-rich-11",
+    "h-rich-12",
+    "h-rich-13",
+    "h-rich-14",
+    "h-rich-15",
+    "h-rich-16",
+    "h-rich-17",
+    "h-rich-18",
+    "h-rich-19",
+    "h-rich-20",
+    "h-rich-21",
+    "h-rich-22",
+    "h-rich-23",
+    "h-rich-24",
+    "h-rich-25",
+    "h-rich-26",
+    "h-rich-27",
+    "h-rich-28",
+    "h-rich-29",
+    "h-rich-30",
+    "h-rich-31",
+    "h-rich-32",
+    "h-rich-33",
+    "h-rich-34",
+    "h-rich-35",
+    "h-rich-36",
+    "h-rich-37"
+  ],
+  "pair_count": 549,
+  "unresolved_issues": [],
+  "batch_provenance": [
+    {
+      "directory": ".research/blind-v64-retry/rich-1",
+      "selected_partial_review": false,
+      "review": {
+        "judge_id": "rich-1-independent-blind-review",
+        "model": "gpt-6-luna",
+        "independent_of_tuning": true,
+        "independent_of_authoring": true,
+        "blind_to_retriever": true,
+        "source_only": true,
+        "tasks_sha256": "f1a3bfbcb99a347a1446c9ba95440d7d609c7ffe2794a4297bb558c3429c3810",
+        "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+        "judgments_sha256": "f7bcde88512cd649a94aafa238ba81cca557c64d345210608ed48f47873ac496",
+        "reviewed_query_ids": [
+          "h-rich-01",
+          "h-rich-02",
+          "h-rich-03",
+          "h-rich-04",
+          "h-rich-05",
+          "h-rich-06",
+          "h-rich-07",
+          "h-rich-08",
+          "h-rich-09",
+          "h-rich-10"
+        ],
+        "pair_count": 144,
+        "unresolved_issues": [],
+        "limitations": [
+          "No measured API cost or token counts are available. The judgment set evaluates only the provided source pools; some query implementation files are absent from the pool, so direct test evidence supports relevance where applicable."
+        ]
+      }
+    },
+    {
+      "directory": ".research/blind-v64-retry/rich-2",
+      "selected_partial_review": false,
+      "review": {
+        "judge_id": "rich-2-independent-blind-review",
+        "model": "gpt-6-luna",
+        "independent_of_tuning": true,
+        "independent_of_authoring": true,
+        "blind_to_retriever": true,
+        "source_only": true,
+        "tasks_sha256": "d8a9e8e0f6e51f8692485da9fe7507542af7258443258bbe393acce767349abb",
+        "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+        "judgments_sha256": "18a675569740f127f2a8fbcac06f4960d86d9a05b47a70d967b00a41a73842bc",
+        "reviewed_query_ids": [
+          "h-rich-11",
+          "h-rich-12",
+          "h-rich-13",
+          "h-rich-14",
+          "h-rich-15",
+          "h-rich-16",
+          "h-rich-17",
+          "h-rich-18",
+          "h-rich-19",
+          "h-rich-20"
+        ],
+        "pair_count": 152,
+        "unresolved_issues": [],
+        "limitations": [
+          "No API cost or token accounting is exposed by the review session.",
+          "The h-rich-15 and h-rich-20 pools omit rich/progress.py, so the implementation\u2019s exact task-to-Table conversion is unavailable among the supplied pairs; the reviewed tests and examples still support the verdicts on those pairs.",
+          "The h-rich-17 pool omits rich/console.py, so Console.out\u2019s own argument preparation cannot be inspected among the supplied pairs; tests and other supplied rendering sources support the individual relevance judgments."
+        ]
+      }
+    },
+    {
+      "directory": ".research/blind-v64-retry/rich-3",
+      "selected_partial_review": false,
+      "review": {
+        "judge_id": "blind-v64-retry-rich-3-independent-source-review",
+        "model": "gpt-6-luna",
+        "independent_of_tuning": true,
+        "independent_of_authoring": true,
+        "blind_to_retriever": true,
+        "source_only": true,
+        "tasks_sha256": "3f9dac45792d99f2301da32b4712d392b4b7846a48349b7acaf582c672c2c64d",
+        "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+        "judgments_sha256": "e27493d6daae9ca63cb98679ccbe93fce52c0d0599e0ce0e21f4d8b8419f4e75",
+        "reviewed_query_ids": [
+          "h-rich-21",
+          "h-rich-22",
+          "h-rich-23",
+          "h-rich-24",
+          "h-rich-25",
+          "h-rich-26",
+          "h-rich-27",
+          "h-rich-28",
+          "h-rich-29",
+          "h-rich-30"
+        ],
+        "pair_count": 152,
+        "unresolved_issues": [],
+        "limitations": [
+          "The supplied pairs omit rich/live.py for h-rich-21, rich/markup.py for h-rich-22, rich/layout.py for h-rich-23 and h-rich-26, rich/segment.py for h-rich-24, rich/table.py for h-rich-27 and h-rich-30, rich/progress.py for h-rich-28, and rich/console.py for h-rich-29. These absences limit how fully the candidate set can answer those queries; verdicts still judge only the supplied pairs.",
+          "Some tests establish public behavior without directly asserting the named internal helper. I used their concrete rendered output only as evidence for those public-path pairs."
+        ]
+      }
+    },
+    {
+      "directory": ".research/blind-v64-retry/rich-4",
+      "selected_partial_review": false,
+      "review": {
+        "judge_id": "blind-v64-rich-4-independent",
+        "model": "gpt-6-luna",
+        "independent_of_tuning": true,
+        "independent_of_authoring": true,
+        "blind_to_retriever": true,
+        "source_only": true,
+        "tasks_sha256": "4247a446312388e6274ed12226baf583f724705457f01745797ba87ac93be6d0",
+        "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+        "judgments_sha256": "4d50fc68fcb2bb9ddd3846d9a539c4fea2a1dec30a932114254ae0112dcfd5a3",
+        "reviewed_query_ids": [
+          "h-rich-31",
+          "h-rich-32",
+          "h-rich-33",
+          "h-rich-34",
+          "h-rich-35",
+          "h-rich-36",
+          "h-rich-37"
+        ],
+        "pair_count": 101,
+        "unresolved_issues": [],
+        "limitations": [
+          "The supplied h-rich-32 and h-rich-33 pairs omit rich/progress.py, which contains Progress task-table filtering and update/reset/sample implementation. The included tests and examples support the supplied pair judgments, but do not provide the full implementation context.",
+          "The supplied h-rich-34 and h-rich-35 pairs omit rich/console.py, the implementation that passes Console.print/out flags. Their relevance judgments are limited to the evidence present in the supplied files; exact argument values for Console.out cannot be recovered from this pool.",
+          "The supplied h-rich-36 pairs omit rich/live.py, which defines Live.update. The included auto-refresh test does not assert the method\u2019s default refresh behavior, so this pool does not establish that default.",
+          "The supplied h-rich-37 pairs omit rich/text.py and rich/console.py, the implementations of Text.wrap and Console.print soft_wrap. The included tests establish output behavior but not the complete internal option path.",
+          "No API cost or token-count measurement is available in this review session."
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "AI source review, not independent human labels.",
+    "Original generic/incomplete attempts rejected and preserved.",
+    "Source-only judges reviewed disjoint small query batches sequentially.",
+    "No measured provider usage or agent-efficiency outcome."
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "batch": "codex-d2",
+  "planned_trials": 9,
+  "completed_trials": 2,
+  "arms": {
+    "graf_current_orient": {
+      "completed_trials": 0,
+      "verifier_passes": 0,
+      "recorded_tokens": null,
+      "all_invocations_have_usage": false
+    },
+    "graphify_orient": {
+      "completed_trials": 1,
+      "verifier_passes": 0,
+      "recorded_tokens": 69708,
+      "all_invocations_have_usage": true
+    },
+    "search_only": {
+      "completed_trials": 1,
+      "verifier_passes": 0,
+      "recorded_tokens": 50678,
+      "all_invocations_have_usage": true
+    }
+  },
+  "cases": [
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "trial": "codex-d2-gin-2718-search_only-1",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached; final invocation may overshoot",
+      "passed": false,
+      "agent_called_finish": false,
+      "wall_s": 31.92065141600324,
+      "invocations": 4,
+      "completed_usage_records": 4,
+      "reported_usage_complete": true,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 50678,
+        "cached_input_tokens": 16896,
+        "reasoning_tokens": 22,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 4,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-d2-click-1884-graphify_orient-1",
+      "arm": "graphify_orient",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached; final invocation may overshoot",
+      "passed": false,
+      "agent_called_finish": false,
+      "wall_s": 30.771686374995625,
+      "invocations": 4,
+      "completed_usage_records": 4,
+      "reported_usage_complete": true,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 69708,
+        "cached_input_tokens": 26752,
+        "reasoning_tokens": 120,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 5,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    }
+  ],
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "blockers": [
+    "Reused three-task diagnostic, insufficient for promotion or statistical inference",
+    "Internal provider request counts and subscription charges unmeasured",
+    "Missing trials",
+    "Protocol defect: adapter selected last action; an interrupted third trial has incomplete usage. Never interpret d2 as retrieval comparison."
+  ],
+  "status": "aborted: multiple action messages could skip an edit; invalid comparison",
+  "partial_trial": "codex-d2-gin-2718-graf_current_orient-1"
+}

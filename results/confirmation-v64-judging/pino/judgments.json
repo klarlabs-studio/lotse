@@ -1,0 +1,2176 @@
+{
+  "h-pino-01": {
+    "test/types/pino.tst.ts": {
+      "relevant": true,
+      "reason": "The type test constructs Pino with depthLimit and edgeLimit options directly (lines 190-196), establishing that these are supported option names. [source: test/types/pino.tst.ts:190]"
+    },
+    "test/browser.test.js": {
+      "relevant": false,
+      "reason": "This suite tests browser logger behavior and browser serializers (for example lines 97-104); it does not exercise the server fallback serializer limits asked about. [source: test/browser.test.js:97]"
+    },
+    "test/types/pino-import.tst.js": {
+      "relevant": false,
+      "reason": "This import-surface test checks that the package can be imported and called (lines 1-20); it does not assert fallback serialization controls. [source: test/types/pino-import.tst.js:1]"
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "This module creates worker transports and forwards transport options (lines 1-35); it does not configure serialization depth or breadth. [source: lib/transport.js:1]"
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "The browser implementation applies configured serializers to browser log arguments (lines 473-501) and has no server JSON fallback depth/breadth option handling. [source: browser.js:473]"
+    },
+    "test/serializers.test.js": {
+      "relevant": false,
+      "reason": "The tests here cover configured field serializers and serializer output (lines 1-30); they do not test the circular-value fallback limits. [source: test/serializers.test.js:1]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper defines test sinks and output assertions (lines 1-40); it supplies test plumbing without specifying fallback serializer options. [source: test/helper.js:1]"
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "This suite checks Node runtime options passed to transport workers (lines 1-20), unrelated to the logger's fallback serialization limits. [source: test/transport/node-options.test.js:1]"
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "The suite verifies redaction paths and censor behavior (for example lines 835-849); those cases do not establish fallback serializer depth or breadth controls. [source: test/redact.test.js:835]"
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "This suite checks level values, labels, and level methods; its circular-reference mention at lines 739-743 concerns preserving logger scope, not serializer limits. [source: test/levels.test.js:739]"
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "The stringify helper first uses JSON.stringify and, when that throws, calls the supplied safe stringifier (or the logger\u2019s configured safe stringifier), making this the fallback call path whose depth/breadth limits the query asks about. [source: lib/tools.js:375]"
+    },
+    "test/fixtures/transport-invalid-node-options.js": {
+      "relevant": false,
+      "reason": "This fixture is a transport worker used to trigger invalid Node options; it does not create a logger value for fallback serialization. [source: test/fixtures/transport-invalid-node-options.js:8]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "LoggerOptions documents depthLimit as fallback maximum nesting depth (default 5) and edgeLimit as maximum per-object/array properties (default 100), at lines 691-701. [source: pino.d.ts:691]"
+    },
+    "test/types/pino-type-only.tst.ts": {
+      "relevant": false,
+      "reason": "This file checks type-only imports, logger types, and metadata stream narrowing (lines 1-55); it does not declare or exercise the fallback limits. [source: test/types/pino-type-only.tst.ts:1]"
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This type fixture focuses on import forms, transports, and custom level typing (lines 1-98); it provides no fallback serialization behavior evidence. [source: test/types/pino.ts:1]"
+    }
+  },
+  "h-pino-02": {
+    "test/multistream.test.js": {
+      "relevant": true,
+      "reason": "The string-lastLevel test explains that label-formatted levels reach multistream routing through metadata and verifies routing at lines 715-742. [source: test/multistream.test.js:715]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The typing fixture demonstrates logger option types and log calls (lines 1-18, 455-477), but it neither tests warning emission nor multi-target routing. [source: test/types/pino.tst.ts:1]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "This file provides generic sink, once, and assertion helpers (lines 1-45); it does not create a formatter or inspect warning codes. [source: test/helper.js:1]"
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "This module builds the worker transport and resolves targets (lines 1-50); the queried warning is emitted by logger initialization, not by transport construction here. [source: lib/transport.js:1]"
+    },
+    "test/browser-is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "These cases test browser isLevelEnabled behavior (lines 1-40); they do not exercise server transport routing or formatters. [source: test/browser-is-level-enabled.test.js:1]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "The tests at lines 229-263 verify custom-level formatter values and labels, but do not set up multi-target transport or assert the warning code. [source: test/custom-levels.test.js:229]"
+    },
+    "lib/transport-stream.js": {
+      "relevant": false,
+      "reason": "This file adapts a stream interface for transport workers; it does not emit the logger's custom-level-formatter warning. [source: lib/transport-stream.js:13]"
+    },
+    "test/transport/targets.test.js": {
+      "relevant": false,
+      "reason": "This suite verifies target transport construction and outputs (lines 1-30); it contains no assertion about custom formatter warning codes. [source: test/transport/targets.test.js:1]"
+    },
+    "lib/deprecations.js": {
+      "relevant": false,
+      "reason": "This module initializes process-warning for deprecation notices (lines 1-8), while the queried runtime warning is emitted directly with process.emitWarning. [source: lib/deprecations.js:1]"
+    },
+    "lib/multistream.js": {
+      "relevant": true,
+      "reason": "The routing write path resolves string lastLevel labels into numeric levels before comparing target thresholds (lines 49-57), the failure mode the formatter warning describes. [source: lib/multistream.js:49]"
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "The logger prototype defines child creation, level accessors, and write methods (lines 55-75); it does not inspect multi-target formatters or emit this warning. [source: lib/proto.js:55]"
+    },
+    "benchmarks/utils/wrap-log-level.js": {
+      "relevant": false,
+      "reason": "This benchmark helper wraps logger level methods for timing and does not configure transport targets or capture warning output. [source: benchmarks/utils/wrap-log-level.js:11]"
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This type fixture checks supported transport and multistream type shapes (lines 19-58, 77-93), not runtime formatter warnings. [source: test/types/pino.ts:19]"
+    },
+    "test/formatters.test.js": {
+      "relevant": true,
+      "reason": "Its final test explicitly exercises a custom level formatter with transport.targets and asserts the configuration failure (lines 342-363), establishing the adjacent routing constraint. [source: test/formatters.test.js:342]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "The test captures the warning from an incompatible custom level formatter with a multi-target transport and asserts code PINO_TRANSPORT_MULTI_TARGETS_LEVEL_FORMATTER (lines 552-582). [source: test/transport/core.test.js:552]"
+    }
+  },
+  "h-pino-03": {
+    "pino.js": {
+      "relevant": true,
+      "reason": "Logger construction sets the instance prototype to proto() (lines 200-234), which is the inheritance mechanism used by child loggers. [source: pino.js:200]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example demonstrates creating a transport and logging through it (lines 1-30); it does not inspect version or levelVal on a child. [source: examples/transport.js:1]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser logger defines a levelVal getter at lines 130-132, and child creation sets Child.prototype to the parent logger at line 256, so this supplies partial evidence for exposing the numeric value on children even though the server version property is handled elsewhere. [source: browser.js:130] [source: browser.js:256]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "LoggerExtras declares the readonly version property and documents the numeric levelVal property (lines 58-73), while Logger includes the child method. [source: pino.d.ts:58]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "This suite checks custom level mappings and child inheritance of custom methods (lines 85-110); it does not test child version exposure or levelVal immutability. [source: test/custom-levels.test.js:85]"
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "These tests assert browser formatter output fields levelLabel and levelValue (lines 226-258), not the server child logger version or readonly levelVal API. [source: test/browser-redaction.test.js:226]"
+    },
+    "lib/levels.js": {
+      "relevant": true,
+      "reason": "setLevel writes the numeric threshold into the internal levelValSym state at line 85, supplying the numeric-value mechanism used by the public levelVal getter. [source: lib/levels.js:85]"
+    },
+    "test/types/pino-type-only.tst.ts": {
+      "relevant": false,
+      "reason": "This type-only test validates imported logger and metadata types (lines 1-55), without checking child version or levelVal access. [source: test/types/pino-type-only.tst.ts:1]"
+    },
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark compares parent and child logger performance; its timed operations do not assert the requested API exposure. [source: benchmarks/internal/parent-vs-child.bench.js:6]"
+    },
+    "test/basic.test.js": {
+      "relevant": true,
+      "reason": "The tests explicitly assert that a child instance exposes the Pino version at lines 23-26. [source: test/basic.test.js:23]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": true,
+      "reason": "The type fixture exercises child creation and accesses levelVal after setting a level (lines 237-245, 278-280), confirming those members are available through a child/logger type. [source: test/types/pino.tst.ts:237]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper file creates test streams and utility assertions (lines 1-45); it has no test for logger instance properties. [source: test/helper.js:1]"
+    },
+    "benchmarks/utils/wrap-log-level.js": {
+      "relevant": false,
+      "reason": "This helper instruments level methods for benchmark timing and has no child-property or version assertions. [source: benchmarks/utils/wrap-log-level.js:11]"
+    },
+    "test/levels.test.js": {
+      "relevant": true,
+      "reason": "It checks levelVal numeric values and separately verifies assignment throws because levelVal is read-only (lines 225-250). [source: test/levels.test.js:225]"
+    }
+  },
+  "h-pino-04": {
+    "lib/symbols.js": {
+      "relevant": false,
+      "reason": "This module exports the logger\u2019s internal symbols (lines 1-30); it does not define a censor value. [source: lib/symbols.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type fixture covers redaction option shapes and callable typings (lines 163-188), but it does not assert the default censor text. [source: test/types/pino.tst.ts:163]"
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "The prototype handles child creation and log writing (lines 85-177, 206-228); the default censor constant is defined in the redaction module. [source: lib/proto.js:85]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper contains test stream utilities and assertions (lines 1-45); it does not configure or assert redaction censor defaults. [source: test/helper.js:1]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "Logger construction passes the redact configuration and stringify function into the redaction builder, the call step that installs the censor behavior asked about; this file does not itself choose the censor text. [source: pino.js:134]"
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "These tests cover browser redact behavior and browser formatter output (lines 226-258), not the built-in server censor constant asked about. [source: test/browser-redaction.test.js:226]"
+    },
+    "test/redact.test.js": {
+      "relevant": true,
+      "reason": "The redaction tests assert the default replacement text [Redacted] for redacted values, for example lines 623-635 and 901-922. [source: test/redact.test.js:623]"
+    },
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "The serializer consumes stringifiers while building output (lines 147-175); it does not select or define the default censor. [source: lib/tools.js:147]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module manages level mappings, methods, and comparison logic (lines 80-117), not redaction configuration. [source: lib/levels.js:80]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "This suite exercises custom logging levels and their formatter labels (lines 15-70, 229-263); it does not assert redact censor defaults. [source: test/custom-levels.test.js:15]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The redact option documentation explicitly states the optional censor default is [Redacted] at lines 421-426. [source: pino.d.ts:421]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser implementation defines CENSOR as [Redacted] and uses it when array redaction or missing censor options are normalized (lines 8-18). [source: browser.js:8]"
+    },
+    "test/formatters.test.js": {
+      "relevant": false,
+      "reason": "This suite checks level, binding, and log formatter output (lines 14-44, 265-309); its assertions do not concern censor behavior. [source: test/formatters.test.js:14]"
+    }
+  },
+  "h-pino-05": {
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "The relevant custom-level use in this module only forwards configured levels to transport construction (lines 344-350); it does not handle absent customLevels for the explicit option. [source: lib/tools.js:344]"
+    },
+    "test/browser-is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "These tests verify browser level enablement against browser logger levels (lines 1-40); they do not exercise useOnlyCustomLevels without customLevels. [source: test/browser-is-level-enabled.test.js:1]"
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Child creation remaps customLevels when child options explicitly contain them (lines 151-155), but this is distinct from constructor validation of useOnlyCustomLevels without that map. [source: lib/proto.js:151]"
+    },
+    "test/is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "The tests set both customLevels and useOnlyCustomLevels to check level comparisons (lines 69-105); they do not test the missing-customLevels configuration. [source: test/is-level-enabled.test.js:69]"
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "The browser code normalizes browser log formatting and child configuration (lines 99-105, 217-264); it does not validate the server constructor option combination. [source: browser.js:99]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This file builds mappings and asserts valid level names (lines 150-195); the explicit absent-map error is checked earlier by pino constructor code. [source: lib/levels.js:150]"
+    },
+    "lib/symbols.js": {
+      "relevant": false,
+      "reason": "This file only defines symbols used internally, including useOnlyCustomLevelsSym (lines 1-30); it contains no validation behavior. [source: lib/symbols.js:1]"
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "Transport setup resolves targets and worker options (lines 1-50); it receives already-selected level mappings rather than validating this logger option pair. [source: lib/transport.js:1]"
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "This suite tests level mapping and selection, including custom levels supplied to logger configuration (lines 351-448); it does not assert the missing customLevels option error. [source: test/levels.test.js:351]"
+    },
+    "test/browser.test.js": {
+      "relevant": false,
+      "reason": "The browser suite tests console methods, serializers, and browser logging (lines 1-20, 97-104); it has no missing custom-level configuration case. [source: test/browser.test.js:1]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The option documentation says useOnlyCustomLevels omits built-in levels and requires the default level to be changed to a value in customLevels (lines 387-392). [source: pino.d.ts:387]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": true,
+      "reason": "This suite includes configuration validation for useOnlyCustomLevels without a customLevels map around lines 170-184, directly testing the error case. [source: test/custom-levels.test.js:170]"
+    },
+    "lib/redaction.js": {
+      "relevant": false,
+      "reason": "The module normalizes redaction paths and censor settings (lines 107-116), unrelated to custom-level option validation. [source: lib/redaction.js:107]"
+    },
+    "test/basic.test.js": {
+      "relevant": true,
+      "reason": "The basic suite explicitly expects construction with useOnlyCustomLevels true and no customLevels to throw the required-customLevels error at lines 690-698. [source: test/basic.test.js:690]"
+    }
+  },
+  "h-pino-06": {
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "This file tests level names, values, and comparisons (for example lines 225-250); it does not assert messageKey or errorKey defaults. [source: test/levels.test.js:225]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "LoggerOptions documents messageKey default \"msg\" and errorKey default \"err\" at lines 433-440. [source: pino.d.ts:433]"
+    },
+    "test/error-key.test.js": {
+      "relevant": false,
+      "reason": "The error-key cases explicitly override errorKey with \"error\" (lines 10-36); they do not establish its default or messageKey default. [source: test/error-key.test.js:10]"
+    },
+    "test/serializers.test.js": {
+      "relevant": false,
+      "reason": "These tests exercise configured serializers for fields and errors (lines 1-30); they do not state the default message and error field keys. [source: test/serializers.test.js:1]"
+    },
+    "test/fixtures/default-exit.js": {
+      "relevant": false,
+      "reason": "This fixture configures process exit behavior for a default-exit test and does not inspect JSON message/error field names. [source: test/fixtures/default-exit.js:5]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "This file supplies generic test sinks and utility functions (lines 1-45), not Pino configuration defaults. [source: test/helper.js:1]"
+    },
+    "test/types/pino-import.tst.js": {
+      "relevant": false,
+      "reason": "This fixture checks import/call typing (lines 1-20); it has no assertions about default output keys. [source: test/types/pino-import.tst.js:1]"
+    },
+    "test/transport/uses-pino-config.test.js": {
+      "relevant": false,
+      "reason": "This integration test constructs a default logger and asserts transformed transport output fields (body and error), but those assertions do not expose the logger\u2019s JSON messageKey/errorKey names or identify their default string values. [source: test/transport/uses-pino-config.test.js:80]"
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This type fixture validates imports, transports, and custom level typings (lines 19-93); it does not exercise message/error key defaults. [source: test/types/pino.ts:19]"
+    },
+    "lib/symbols.js": {
+      "relevant": false,
+      "reason": "The module names messageKeySym and errorKeySym as internal symbols (lines 1-30), but contains no default values for them. [source: lib/symbols.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type test includes a custom message field and serializer options (lines 128-136), but does not assert defaults for either key. [source: test/types/pino.tst.ts:128]"
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "The JSON serializer reads messageKey and errorKey from logger state and uses them to serialize the message and error fields, providing direct implementation context for the queried keys though not their defaults. [source: lib/tools.js:152]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module implements level mapping and logger methods (lines 80-117); it has no messageKey or errorKey default logic. [source: lib/levels.js:80]"
+    },
+    "test/error.test.js": {
+      "relevant": false,
+      "reason": "The test at lines 385-391 explicitly supplies messageKey \"message\" to test message precedence alongside an error; it does not identify default values. [source: test/error.test.js:385]"
+    },
+    "lib/proto.js": {
+      "relevant": true,
+      "reason": "The write path reads the configured messageKey and errorKey to identify message/error values, providing direct evidence for how those queried keys function even though defaults are set elsewhere. [source: lib/proto.js:209]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser path explicitly falls back to \"msg\" when messageKey is absent, providing direct partial evidence for one of the queried defaults; it does not cover errorKey. [source: browser.js:149]"
+    },
+    "test/basic.test.js": {
+      "relevant": true,
+      "reason": "The basic tests verify the default PINO_CONFIG messageKey and errorKey values at lines 238-260 and exercise default message output near lines 297-305. [source: test/basic.test.js:238]"
+    }
+  },
+  "h-pino-07": {
+    "benchmarks/basic.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark measures basic logging throughput and does not configure child msgPrefix behavior. [source: benchmarks/basic.bench.js:75]"
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "The transport module configures worker threads and targets (lines 1-50); it does not derive child logger message prefixes. [source: lib/transport.js:1]"
+    },
+    "test/multistream.test.js": {
+      "relevant": false,
+      "reason": "This suite exercises stream routing and level metadata (lines 715-742), but it does not create children with msgPrefix. [source: test/multistream.test.js:715]"
+    },
+    "test/browser-serializers.test.js": {
+      "relevant": false,
+      "reason": "These tests check browser serializer application to logged values; they do not assert how a child prefix is derived. [source: test/browser-serializers.test.js:17]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type fixture exercises logger/child calls and other options (lines 237-259), but does not test msgPrefix inheritance. [source: test/types/pino.tst.ts:237]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "It describes msgPrefix as prefixing every message and child message, and exposes it on child logger options (lines 217-221, 666-669, 714-725). [source: pino.d.ts:217]"
+    },
+    "lib/symbols.js": {
+      "relevant": false,
+      "reason": "This file only declares msgPrefixSym among the logger's symbols; it does not specify how a child prefix is constructed. [source: lib/symbols.js:31]"
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "The log-method path prepends this[msgPrefixSym] to a non-null message before writing it (lines 63-78), which applies the prefix stored on a child. [source: lib/tools.js:63]"
+    },
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark compares performance of parent and child calls without setting msgPrefix or asserting its value. [source: benchmarks/internal/parent-vs-child.bench.js:6]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor stores the supplied msgPrefix in the logger msgPrefix symbol (lines 117 and 200-225), the value inherited by a child. [source: pino.js:117]"
+    },
+    "test/serializers.test.js": {
+      "relevant": false,
+      "reason": "The suite verifies serializer transformations on bindings and logged values (lines 1-30); it does not exercise child message prefixes. [source: test/serializers.test.js:1]"
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "The browser child implementation handles bindings, serializers, and child levels (lines 217-264), with no msgPrefix storage or concatenation path. [source: browser.js:217]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module sets level methods and numeric mappings (lines 80-117), not message prefixes. [source: lib/levels.js:80]"
+    },
+    "test/basic.test.js": {
+      "relevant": true,
+      "reason": "Tests show that the child prefix is appended to the parent prefix and that a child without its own prefix inherits the parent value (lines 855-884). [source: test/basic.test.js:855]"
+    }
+  },
+  "h-pino-08": {
+    "browser.js": {
+      "relevant": false,
+      "reason": "This is the browser logging implementation and has no needsMetadata destination write protocol; its logger formatting path is separate (lines 426-465). [source: browser.js:426]"
+    },
+    "test/browser.test.js": {
+      "relevant": false,
+      "reason": "These tests validate browser console and serializer behavior (lines 1-20, 97-104); they do not mark a destination metadata-aware. [source: test/browser.test.js:1]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example shows transport creation and logging, but its output does not inspect destination metadata fields. [source: examples/transport.js:9]"
+    },
+    "test/transport/pipeline.test.js": {
+      "relevant": false,
+      "reason": "This suite checks transport pipeline delivery and output records; it does not assert metadata fields on the destination. [source: test/transport/pipeline.test.js:16]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Although this type fixture includes ordinary write destinations (lines 138-140), it does not mark one metadata-aware or inspect metadata fields. [source: test/types/pino.tst.ts:138]"
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor sets up logger configuration and stream state (lines 200-234), but the metadata fields are assigned in the log write implementation. [source: pino.js:200]"
+    },
+    "test/metadata.test.js": {
+      "relevant": true,
+      "reason": "The tests mark destinations with pino.metadata and inspect lastLevel, lastObj, lastMsg, lastTime, and lastLogger before parsing the written chunk (lines 12-33 and 41-60). [source: test/metadata.test.js:12]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "DestinationStreamHasMetadata declares the fields on a metadata-aware destination: lastLevel, lastTime, lastMsg, lastObj, and lastLogger (lines 285-294). [source: pino.d.ts:285]"
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This type fixture uses transports, multistream, and custom levels (lines 19-93); it does not inspect metadata-enabled destination fields. [source: test/types/pino.ts:19]"
+    },
+    "test/multistream.test.js": {
+      "relevant": true,
+      "reason": "The metadata-aware multistream case asserts propagation of lastLogger, lastLevel, lastObj, and lastMsg to a destination before it receives the serialized chunk (lines 309-315). [source: test/multistream.test.js:309]"
+    },
+    "test/types/pino-type-only.tst.ts": {
+      "relevant": true,
+      "reason": "It narrows a DestinationStreamWithMetadata using the metadata symbol and type-checks lastLevel as a number (lines 45-55), directly supporting the metadata contract. [source: test/types/pino-type-only.tst.ts:45]"
+    },
+    "lib/multistream.js": {
+      "relevant": true,
+      "reason": "For metadata-aware child streams, the routing code copies lastLevel, lastTime, lastMsg, lastObj, and lastLogger onto the destination immediately before write (lines 72-80). [source: lib/multistream.js:72]"
+    }
+  },
+  "h-pino-09": {
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module maps levels and installs log methods (lines 80-117); it does not construct base bindings or add pid/hostname. [source: lib/levels.js:80]"
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The LoggerOptions documentation says base contains bindings and that null disables the base child logger (lines 632-635). [source: pino.d.ts:632]"
+    },
+    "test/formatters.test.js": {
+      "relevant": true,
+      "reason": "The bindings formatter test checks the shape of the initial bindings passed to the formatter (lines 37-64), providing direct evidence for default initial bindings. [source: test/formatters.test.js:37]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "This test helper creates stream sinks and utility assertions (lines 1-45); it does not initialize logger base bindings. [source: test/helper.js:1]"
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "The browser logger setup tracks browser-specific bindings and formatting (lines 99-151); it does not add the server process pid/hostname base defaults. [source: browser.js:99]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "This suite covers worker transport setup, warnings, and output delivery (lines 552-582); it has no base:null or initial pid/hostname case. [source: test/transport/core.test.js:552]"
+    },
+    "test/basic.test.js": {
+      "relevant": true,
+      "reason": "The base:null tests verify omission of default base fields (lines 377-407), while ordinary logger tests assert pid and hostname in output (lines 80-92). [source: test/basic.test.js:377]"
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "The prototype child method merges child bindings (lines 84-112), but initial base bindings are assembled during the top-level constructor. [source: lib/proto.js:84]"
+    },
+    "test/fixtures/pretty/null-prototype.js": {
+      "relevant": false,
+      "reason": "This fixture exercises a null-prototype object with a pretty transport; it does not configure logger base or inspect pid/hostname defaults. [source: test/fixtures/pretty/null-prototype.js:5]"
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "These tests check asynchronous destination flushing and exit behavior, not the initial logger bindings. [source: test/syncfalse.test.js:21]"
+    },
+    "test/internals/version.test.js": {
+      "relevant": false,
+      "reason": "This test verifies package/logger version exposure (lines 1-26); it does not cover base fields or base:null. [source: test/internals/version.test.js:1]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example demonstrates transport configuration and logging; it does not alter or explain base bindings. [source: examples/transport.js:9]"
+    },
+    "benchmarks/formatters.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark measures formatter performance and does not verify pid/hostname behavior or null base handling. [source: benchmarks/formatters.bench.js:3]"
+    },
+    "benchmarks/internal/custom-levels.js": {
+      "relevant": false,
+      "reason": "This benchmark configures custom level mappings; it does not examine initial logger bindings. [source: benchmarks/internal/custom-levels.js:7]"
+    }
+  },
+  "h-pino-10": {
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations explain when mixin and mixinMergeStrategy run and their parameter roles (lines 402-414), but do not specify which duplicate key wins under the default merge. [source: pino.d.ts:402]"
+    },
+    "test/diagnostics.test.js": {
+      "relevant": false,
+      "reason": "This suite checks diagnostics channel publication and subscriptions; it does not compare colliding mixin and call-object values. [source: test/diagnostics.test.js:39]"
+    },
+    "test/fixtures/default-exit.js": {
+      "relevant": false,
+      "reason": "This fixture is used to test process exit behavior and does not exercise mixin merging. [source: test/fixtures/default-exit.js:5]"
+    },
+    "benchmarks/basic.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark measures general logger throughput and does not test duplicate keys between mixin output and call data. [source: benchmarks/basic.bench.js:75]"
+    },
+    "lib/symbols.js": {
+      "relevant": false,
+      "reason": "The module declares mixinSym and mixinMergeStrategySym (lines 1-30), but contains no merge order or overwrite behavior. [source: lib/symbols.js:1]"
+    },
+    "benchmarks/utils/runbench.js": {
+      "relevant": false,
+      "reason": "This file runs benchmark cases and records timing; it does not configure or inspect logger mixin values. [source: benchmarks/utils/runbench.js:40]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor carries the optional mixinMergeStrategy into the logger\u2019s internal state; when omitted, this leaves the write path to select its default strategy, a necessary setup step for the queried precedence. [source: pino.js:218]"
+    },
+    "test/mixin-merge-strategy.test.js": {
+      "relevant": true,
+      "reason": "The default-strategy case supplies the same tag in the log object and mixin and asserts the output is the call value local (lines 12-31). [source: test/mixin-merge-strategy.test.js:12]"
+    },
+    "test/mixin.test.js": {
+      "relevant": false,
+      "reason": "The suite tests mixin inclusion, invocation, and context (lines 16-35, 70-100), but its examples do not supply the same key from both sources. [source: test/mixin.test.js:16]"
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "This suite validates redaction paths, censoring, and removal (lines 623-635, 851-892); it does not test mixin merge conflicts. [source: test/redact.test.js:623]"
+    },
+    "test/error-key.test.js": {
+      "relevant": false,
+      "reason": "The tests validate custom error key serialization (lines 10-36), not collisions between mixin and log-call objects. [source: test/error-key.test.js:10]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper contains output sinks and assertions, without a mixin merge test or merge implementation. [source: test/helper.js:31]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type test includes mixin function shape examples (lines 142-160), but it does not exercise runtime duplicate-key resolution. [source: test/types/pino.tst.ts:142]"
+    }
+  },
+  "h-pino-11": {
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "The logger argument dispatcher distinguishes object-first calls from message-only calls, then passes the object through serialization; lines 47\u201369 and 144\u2013173 show where an Error object is normalized and where an ordinary error-key field reaches the serializer. [sources/lib/tools.js:1]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor installs the standard error serializer under `err` and records the configurable `errorKey`; this is the configuration behind Error normalization versus an ordinary field, though the call-shape distinction itself is in lib/tools.js. [sources/pino.js:62]"
+    },
+    "test/browser.test.js": {
+      "relevant": true,
+      "reason": "The browser tests separately pass an Error directly and an object carrying `err`, checking the console arguments and serializer behavior (lines 605\u2013627). [sources/test/browser.test.js:605]"
+    },
+    "benchmarks/deep-object.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark measures logging a nested package metadata object at line 46; it contains no Error-object versus error-field assertion. [sources/benchmarks/deep-object.bench.js:46]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This file changes enabled methods when the level threshold changes (lines 77\u2013105), not how Error values or error fields are represented. [sources/lib/levels.js:77]"
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "This test section configures custom serializers and checks general serialization; it does not compare an Error supplied as the log object with an `error` property (lines 174\u2013239). [sources/test/basic.test.js:174]"
+    },
+    "test/browser-transmit.test.js": {
+      "relevant": false,
+      "reason": "The file tests browser log-event transmission and bindings; it does not exercise the Node object serialization distinction asked here (see its event setup at line 1). [sources/test/browser-transmit.test.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type suite checks compile-time API shapes; it cannot establish runtime treatment of Error objects versus ordinary error fields (line 1). [sources/test/types/pino.tst.ts:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration file describes logger method types, not the runtime Error normalization or error-key serializer behavior. [sources/pino.d.ts:1]"
+    },
+    "benchmarks/object.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark compares ordinary object logging throughput and does not assert how Error objects differ from an object with an error field. [sources/benchmarks/object.bench.js:1]"
+    },
+    "test/error-key.test.js": {
+      "relevant": true,
+      "reason": "The two tests show Error values passed to the error-level method are serialized at the configured error key, including with and without a custom serializer (lines 10\u201336); this is direct partial evidence about the field route. [sources/test/error-key.test.js:10]"
+    },
+    "benchmarks/utils/runbench.js": {
+      "relevant": false,
+      "reason": "The runner lists generic object and deep-object benchmark cases (lines 19\u201320, 44\u201345), not an Error-shape behavior test. [sources/benchmarks/utils/runbench.js:19]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "Browser serialization selects configured serializers and has an explicit Error serializer path; lines 473\u2013490 apply serializers to object fields, which supports the browser distinction at runtime. [sources/browser.js:80]"
+    }
+  },
+  "h-pino-12": {
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "This is a parent-versus-child performance benchmark; it measures calls but does not explain binding serialization or duplicate keys in output. [sources/benchmarks/internal/parent-vs-child.bench.js:1]"
+    },
+    "benchmarks/formatters.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark compares formatter call performance and supplies no child-binding output semantics. [sources/benchmarks/formatters.bench.js:1]"
+    },
+    "test/browser-serializers.test.js": {
+      "relevant": false,
+      "reason": "These tests concern browser serializers, not how child bindings are accumulated or why duplicate names can remain in a serialized line. [sources/test/browser-serializers.test.js:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The types expose child/bindings API shapes but do not describe output assembly or duplicate-key serialization. [sources/pino.d.ts:1]"
+    },
+    "test/browser-bindings.test.js": {
+      "relevant": true,
+      "reason": "These tests establish how browser child binding objects merge and overwrite in the returned bindings view (lines 14\u201342); they are relevant to binding accumulation, but do not establish duplicate keys in a serialized line. [sources/test/browser-bindings.test.js:14]"
+    },
+    "lib/constants.js": {
+      "relevant": false,
+      "reason": "This file defines standard level constants, which do not assemble child bindings or explain serialized duplicate names. [sources/lib/constants.js:1]"
+    },
+    "test/transport/pipeline.test.js": {
+      "relevant": false,
+      "reason": "This suite exercises transport pipeline behavior; it does not establish child-binding serialization or repeated binding names. [sources/test/transport/pipeline.test.js:1]"
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "This suite checks asynchronous destination writes and process behavior, not binding composition or duplicate serialized keys. [sources/test/syncfalse.test.js:1]"
+    },
+    "test/browser-transmit.test.js": {
+      "relevant": false,
+      "reason": "Browser transmit event tests cover event payload delivery, not Node JSON-line chindings and duplicate-key ordering. [sources/test/browser-transmit.test.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time API assertions do not show how runtime bindings enter serialized output. [sources/test/types/pino.tst.ts:1]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module handles levels and enabled logger methods, not child-binding assembly. [sources/lib/levels.js:1]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "Browser child creation merges parent and new binding objects at lines 217\u2013253 and prepends the binding chain to subsequent calls at lines 314\u2013365; relevant to how bindings accompany records, though this browser path does not emit serialized JSON lines. [sources/browser.js:217]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor computes base bindings into `chindings` at lines 141\u2013157 and stores them on the logger at line 220; this is part of output assembly, though the child binding serializer is implemented in a different module. [sources/pino.js:141]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "This is shared test utility setup; it does not test child binding merge behavior or duplicate names in output. [sources/test/helper.js:1]"
+    },
+    "test/browser-set-bindings.test.js": {
+      "relevant": false,
+      "reason": "This suite tests browser `setBindings` state updates, not serialized child output with repeated names. [sources/test/browser-set-bindings.test.js:1]"
+    }
+  },
+  "h-pino-13": {
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "The example demonstrates transport setup and logging, but does not show logger-level gating versus independent per-stream thresholds. [sources/examples/transport.js:1]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "These tests exercise custom level creation and threshold behavior, not multistream per-destination filtering. [sources/test/custom-levels.test.js:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "Types describe multistream and logger APIs but do not establish the two runtime filtering stages. [sources/pino.d.ts:1]"
+    },
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "This test covers transport module linking and loading, not level filtering. [sources/test/transport/module-link.test.js:1]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared test utilities do not establish either logger gating or destination filtering. [sources/test/helper.js:1]"
+    },
+    "test/multistream.test.js": {
+      "relevant": true,
+      "reason": "These tests configure logger levels and independently assign stream levels (for example lines 121\u2013129 and 206\u2013216), directly exercising the per-destination filter after logger calls are admitted. [sources/test/multistream.test.js:121]"
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This type test checks API typing, not the logger and destination filtering behavior. [sources/test/types/pino.ts:1]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "Construction applies the configured logger level through `setLevel` at line 232 and attaches the output stream at lines 200\u2013205; this establishes logger-side gating and output connection, but not multistream filtering itself. [sources/pino.js:232]"
+    },
+    "test/browser-transmit.test.js": {
+      "relevant": false,
+      "reason": "Browser transmit event behavior is not the Node multistream destination-filter behavior. [sources/test/browser-transmit.test.js:1]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "These transport tests distinguish target-level filtering from logger-level gating: lines 270\u2013294 configure a target threshold, while lines 298\u2013320 show that without one the logger threshold controls admitted records. [sources/test/transport/core.test.js:270]"
+    },
+    "test/types/pino-type-only.tst.ts": {
+      "relevant": false,
+      "reason": "Type-only compile assertions cannot establish runtime filtering stages. [sources/test/types/pino-type-only.tst.ts:1]"
+    },
+    "lib/worker.js": {
+      "relevant": false,
+      "reason": "The worker handles transport worker initialization and message plumbing; its setup does not establish multistream logger-versus-destination threshold semantics. [sources/lib/worker.js:1]"
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "This suite tests asynchronous writes, not level filtering. [sources/test/syncfalse.test.js:1]"
+    },
+    "benchmarks/multistream.js": {
+      "relevant": false,
+      "reason": "This benchmark constructs multistreams with different stream thresholds and logger levels (lines 15\u201331), so it shows the setup being measured but not the semantics or results of filtering. [sources/benchmarks/multistream.js:15]"
+    }
+  },
+  "h-pino-14": {
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "The call dispatcher formats interpolation arguments before serialization (lines 47\u201369), then applies the message-key stringifier in `_asJson` (lines 202\u2013225); that path explains redaction of an interpolated object. [sources/lib/tools.js:69]"
+    },
+    "test/redact.test.js": {
+      "relevant": true,
+      "reason": "The explicit interpolated-object tests pass `%j` with a nested cookie and assert the serialized message contains the redacted value (lines 117\u2013137 and 181\u2013200). [sources/test/redact.test.js:117]"
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "These tests cover redaction of browser object fields (for example lines 43\u201357), but do not exercise object interpolation into a message string. [sources/test/browser-redaction.test.js:43]"
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "Browser serializer application at lines 473\u2013490 handles object arguments and fields; it does not explain Node message-string interpolation redaction. [sources/browser.js:473]"
+    },
+    "benchmarks/object.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark times ordinary object logging and contains no redact path or interpolated message assertion. [sources/benchmarks/object.bench.js:1]"
+    },
+    "test/error.test.js": {
+      "relevant": false,
+      "reason": "The tests here concern Error serialization and logging; they do not test redaction of an interpolated object in the message. [sources/test/error.test.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time type assertions cannot establish the runtime redaction and interpolation path. [sources/test/types/pino.tst.ts:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations specify API types and do not describe runtime redaction during message interpolation. [sources/pino.d.ts:1]"
+    },
+    "test/serializers.test.js": {
+      "relevant": false,
+      "reason": "This suite checks serializer inheritance and execution, not redaction applied to a `%j` message argument. [sources/test/serializers.test.js:1]"
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Child option redaction is configured here, but the asked path is interpolation during logging; lines 157\u2013165 only replace redaction state when a child is configured. [sources/lib/proto.js:157]"
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This is a type test and contains no runtime redaction or interpolation assertion. [sources/test/types/pino.ts:1]"
+    },
+    "lib/symbols.js": {
+      "relevant": false,
+      "reason": "The file only declares the redaction-format symbol at line 16; the symbol declaration alone does not show how interpolation gets redacted. [sources/lib/symbols.js:16]"
+    },
+    "test/types/pino-import.tst.js": {
+      "relevant": false,
+      "reason": "This checks import/type usage rather than the runtime serialization path. [sources/test/types/pino-import.tst.js:1]"
+    },
+    "test/browser-transmit.test.js": {
+      "relevant": false,
+      "reason": "Browser transmit event tests do not establish Node redaction during formatted message interpolation. [sources/test/browser-transmit.test.js:1]"
+    }
+  },
+  "h-pino-15": {
+    "test/browser-child.test.js": {
+      "relevant": false,
+      "reason": "The browser child test exercises creating a child with an explicit level option (line 23), not the Node no-options fast path or its formatter reset/onChild call. [sources/test/browser-child.test.js:23]"
+    },
+    "benchmarks/internal/just-pino.bench.js": {
+      "relevant": false,
+      "reason": "This benchmarks base logger creation/logging without comparing child creation paths. [sources/benchmarks/internal/just-pino.bench.js:1]"
+    },
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark compares parent and child logging throughput; it does not inspect child construction internals or the no-options fast path. [sources/benchmarks/internal/parent-vs-child.bench.js:1]"
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "This test verifies redaction on child bindings (lines 96\u2013115), not why empty-options child creation uses a separate path. [sources/test/redact.test.js:96]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time declarations do not establish the runtime child fast path. [sources/test/types/pino.tst.ts:1]"
+    },
+    "benchmarks/internal/custom-levels.js": {
+      "relevant": false,
+      "reason": "This benchmark configures custom levels and does not measure or explain no-options child creation. [sources/benchmarks/internal/custom-levels.js:1]"
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "These tests validate missing child bindings and message-prefix behavior, not the no-options fast path internals. [sources/test/basic.test.js:413]"
+    },
+    "test/internals/version.test.js": {
+      "relevant": false,
+      "reason": "This suite checks version metadata, not child construction. [sources/test/internals/version.test.js:1]"
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "These tests cover Node options passed to transport workers, unrelated to child logger fast-path state. [sources/test/transport/node-options.test.js:1]"
+    },
+    "benchmarks/child-creation.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark times child creation variants but provides no implementation explanation of formatter reset or the onChild hook. [sources/benchmarks/child-creation.bench.js:1]"
+    },
+    "test/browser-bindings.test.js": {
+      "relevant": false,
+      "reason": "This checks browser binding merge/read results; it does not establish the Node child fast path behavior. [sources/test/browser-bindings.test.js:14]"
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "Browser child creation accepts bindings/options and assembles browser-specific hierarchy; it does not contain the Node `options == null` optimization or its formatter reset/onChild callback. [sources/browser.js:217]"
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "This module creates transport streams and does not implement child logger creation. [sources/lib/transport.js:1]"
+    }
+  },
+  "h-pino-16": {
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration file types level methods but does not show runtime disabling or regeneration when thresholds change. [sources/pino.d.ts:1]"
+    },
+    "test/browser-serializers.test.js": {
+      "relevant": false,
+      "reason": "Serializer tests do not cover enabled/disabled level methods. [sources/test/browser-serializers.test.js:1]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": true,
+      "reason": "The custom-level threshold tests verify methods are disabled below threshold and enabled after changing `level` (lines 193\u2013212), corroborating method updates for the custom method set. [sources/test/custom-levels.test.js:193]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "These tests focus on transport target filtering; they do not show how logger methods are disabled or regenerated. [sources/test/transport/core.test.js:270]"
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "This prototype exposes the level setter/getter (lines 59\u201374) but the actual method regeneration loop is in the level implementation, not this file. [sources/lib/proto.js:59]"
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "`genLog` supplies a real log function and returns through the hook wrapper (lines 40\u201345); it is the generated callable used for custom levels, though threshold selection is elsewhere. [sources/lib/tools.js:40]"
+    },
+    "test/browser-disabled.test.js": {
+      "relevant": true,
+      "reason": "This suite tests that browser logger methods become no-ops when disabled, directly establishing the disabled-method behavior. [sources/test/browser-disabled.test.js:1]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "Logger initialization invokes `setLevel` after creating the instance and its level cache (lines 228\u2013234), showing where the initial method set is established. [sources/pino.js:230]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared test utilities do not establish level method generation or disabling. [sources/test/helper.js:1]"
+    },
+    "test/is-level-enabled.test.js": {
+      "relevant": true,
+      "reason": "These tests assert whether logger methods are enabled under configured and changed thresholds (lines 41\u201362), giving direct evidence for gating behavior. [sources/test/is-level-enabled.test.js:41]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser `setLevel` implementation at lines 199 onward updates the browser logger\u2019s level and method functions, directly covering the browser method-set behavior. [sources/browser.js:199]"
+    }
+  },
+  "h-pino-17": {
+    "test/internals/version.test.js": {
+      "relevant": false,
+      "reason": "This suite checks version metadata and has no logging-call or stream-write path. [sources/test/internals/version.test.js:1]"
+    },
+    "benchmarks/deep-object.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark logs a deep object for throughput comparison; it does not trace mixin and streamWrite hook stages. [sources/benchmarks/deep-object.bench.js:46]"
+    },
+    "test/multistream.test.js": {
+      "relevant": false,
+      "reason": "This suite exercises multistream routing, not the complete logger.info(object, message) path with mixin and streamWrite. [sources/test/multistream.test.js:1]"
+    },
+    "test/hooks.test.js": {
+      "relevant": true,
+      "reason": "The streamWrite test checks a transformed serialized string reaches the sink (lines 99\u2013113); earlier tests cover the logMethod wrapper, giving direct evidence for hook placement and output. [sources/test/hooks.test.js:99]"
+    },
+    "lib/caller.js": {
+      "relevant": false,
+      "reason": "This helper gathers call-site filenames for transport target resolution; it does not handle ordinary logger.info serialization. [sources/lib/caller.js:13]"
+    },
+    "benchmarks/long-string.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark times long string messages and does not describe object/mixin/hook processing. [sources/benchmarks/long-string.bench.js:1]"
+    },
+    "lib/symbols.js": {
+      "relevant": true,
+      "reason": "The symbols identify the mixin, asJson, write, and hooks state used across this call path (lines 9, 14\u201316, 39), giving partial evidence for the handoff between stages. [sources/lib/symbols.js:9]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time type tests do not trace runtime writes or hook order. [sources/test/types/pino.tst.ts:1]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example configures transport output but does not exercise the specified mixin and streamWrite path. [sources/examples/transport.js:1]"
+    },
+    "test/mixin.test.js": {
+      "relevant": true,
+      "reason": "The tests show the mixin object merged with a user object and verify the emitted record (lines 81\u2013100), and other cases verify mixin invocation and logger context. [sources/test/mixin.test.js:81]"
+    },
+    "test/mixin-merge-strategy.test.js": {
+      "relevant": true,
+      "reason": "This suite verifies how the mixin merge strategy combines logged and mixin objects, a direct stage in the requested call flow. [sources/test/mixin-merge-strategy.test.js:1]"
+    },
+    "benchmarks/object.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark measures object logging performance without explaining the mixin or streamWrite stages. [sources/benchmarks/object.bench.js:1]"
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "The tests cover threshold changes and logged levels, not object argument serialization or hooks. [sources/test/levels.test.js:16]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared sink/parse helpers provide test infrastructure but do not establish the requested execution path. [sources/test/helper.js:1]"
+    }
+  },
+  "h-pino-18": {
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration file types custom logger properties but cannot show runtime method creation or regeneration. [sources/pino.d.ts:1]"
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "The prototype delegates child construction, but custom level creation and method updates are implemented elsewhere; this section does not itself trace the requested construction-to-method path. [sources/lib/proto.js:85]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "Construction builds the level mapping from `customLevels` and installs the logger state (lines 168\u2013170, 200\u2013232), showing how configured levels become available before initial method setup. [sources/pino.js:168]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": true,
+      "reason": "These tests call a custom method created at construction and verify its emitted numeric level (lines 15\u201327), test `useOnlyCustomLevels`, and later change thresholds to verify custom method gating (lines 195\u2013212). [sources/test/custom-levels.test.js:15]"
+    },
+    "lib/caller.js": {
+      "relevant": false,
+      "reason": "This utility gathers call-site paths and has no level-method generation behavior. [sources/lib/caller.js:13]"
+    },
+    "test/browser-transmit.test.js": {
+      "relevant": false,
+      "reason": "Browser transmit tests concern event delivery, not custom level method generation. [sources/test/browser-transmit.test.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time types do not establish runtime custom method generation or threshold updates. [sources/test/types/pino.tst.ts:1]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "This section checks custom-level transport pipeline output; it does not trace logger method installation or changes to the method set. [sources/test/transport/core.test.js:171]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "The transport example does not configure or demonstrate custom level method generation. [sources/examples/transport.js:1]"
+    },
+    "test/browser.test.js": {
+      "relevant": false,
+      "reason": "General browser behavior tests do not directly demonstrate construction-time custom levels and changed method sets. [sources/test/browser.test.js:1]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser backend maps configured levels to methods and its `setLevel` rebuilds enabled methods (lines 199\u2013215 and 217 onward), directly supporting method creation/update behavior. [sources/browser.js:199]"
+    },
+    "test/is-level-enabled.test.js": {
+      "relevant": true,
+      "reason": "These cases verify custom-level threshold checks at construction and with child loggers (lines 89\u201396 and 135\u2013142), supporting how a changed level gates a custom callable. [sources/test/is-level-enabled.test.js:89]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared test utilities do not establish custom level creation or method regeneration. [sources/test/helper.js:1]"
+    },
+    "test/levels.test.js": {
+      "relevant": true,
+      "reason": "The suite verifies that changing `logger.level` disables below-threshold methods and preserves enabled methods (lines 16\u201333), directly testing method set behavior. [sources/test/levels.test.js:16]"
+    }
+  },
+  "h-pino-19": {
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module handles levels and method generation; it does not initialize redaction paths or apply a redactor during serialization. [sources/lib/levels.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time tests do not trace redaction setup through runtime serialization. [sources/test/types/pino.tst.ts:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations only type the redact option; they do not identify where redaction is applied. [sources/pino.d.ts:1]"
+    },
+    "test/timestamp-nano.test.js": {
+      "relevant": false,
+      "reason": "This suite concerns timestamp formatting and does not test redact path handling. [sources/test/timestamp-nano.test.js:1]"
+    },
+    "test/redact.test.js": {
+      "relevant": true,
+      "reason": "The tests assert redacted output for logged objects, child bindings, and interpolated objects (lines 45\u2013137), directly establishing application points during serialization. [sources/test/redact.test.js:45]"
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": true,
+      "reason": "The browser tests verify configured top-level and nested paths are redacted before output (lines 8\u201322 and 43\u201357), covering the browser side. [sources/test/browser-redaction.test.js:8]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "Browser logger initialization reads the redact option and configures serializers (lines 102\u2013145); the logging path applies redaction before writing, so the file supports initialization through output. [sources/browser.js:102]"
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "`_asJson` retrieves the stringifier map and applies the selected path stringifier to each serialized property (lines 144\u2013195), the Node serialization application point. [sources/lib/tools.js:144]"
+    },
+    "test/hooks.test.js": {
+      "relevant": false,
+      "reason": "The hook test replaces text in the final serialized string; it does not trace redaction-path initialization or built-in redactor application. [sources/test/hooks.test.js:99]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "The example concerns transport configuration and has no redact path. [sources/examples/transport.js:1]"
+    },
+    "lib/redaction.js": {
+      "relevant": true,
+      "reason": "The redaction function turns configured paths into top-level or nested stringifiers and stores a formatter redactor for message interpolation (lines 12\u201318 and 72\u2013104). [sources/lib/redaction.js:12]"
+    },
+    "lib/symbols.js": {
+      "relevant": true,
+      "reason": "This declares the redaction-format symbol used to carry the interpolated-message redactor (lines 14\u201316), a small but necessary link in the initialization-to-serialization route. [sources/lib/symbols.js:16]"
+    },
+    "test/internals/version.test.js": {
+      "relevant": false,
+      "reason": "This suite tests version internals and does not exercise redaction. [sources/test/internals/version.test.js:1]"
+    }
+  },
+  "h-pino-20": {
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor merges configured serializers with defaults and stores the serializer/formatter state on the logger (lines 88\u2013128 and 217\u2013222), providing the parent configuration a child inherits. [sources/pino.js:88]"
+    },
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark compares parent and child call throughput and does not explain child binding/serializer assembly. [sources/benchmarks/internal/parent-vs-child.bench.js:1]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Type assertions do not show how a child instance is assembled at runtime. [sources/test/types/pino.tst.ts:1]"
+    },
+    "test/browser-bindings.test.js": {
+      "relevant": true,
+      "reason": "These tests establish browser child binding accumulation and overwrite behavior (lines 14\u201342), which is a direct part of assembling the child logger, though they do not cover serializer options. [sources/test/browser-bindings.test.js:14]"
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "This test suite covers worker options passed to transports, not child binding/serializer assembly. [sources/test/transport/node-options.test.js:1]"
+    },
+    "test/browser-set-bindings.test.js": {
+      "relevant": true,
+      "reason": "The tests exercise how browser logger bindings are replaced or merged (lines 1 onward), directly supporting the binding portion of child state assembly. [sources/test/browser-set-bindings.test.js:1]"
+    },
+    "test/browser-transmit.test.js": {
+      "relevant": false,
+      "reason": "Browser transmit tests cover event transport and do not show child serializer option assembly. [sources/test/browser-transmit.test.js:1]"
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser `child` function reads binding serializers, merges parent and child serializer maps, and combines binding state (lines 217\u2013253); this directly shows child assembly in the browser implementation. [sources/browser.js:217]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations describe child option types but not runtime child assembly. [sources/pino.d.ts:1]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example sets up a transport and does not construct a child with a serializer override. [sources/examples/transport.js:1]"
+    },
+    "lib/caller.js": {
+      "relevant": false,
+      "reason": "Call-site collection is used for transport target resolution and is unrelated to child bindings or serializers. [sources/lib/caller.js:13]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared test utilities provide sinks and helpers but do not demonstrate child assembly. [sources/test/helper.js:1]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "These child tests concern custom level options and filtered bindings, not serializer-option assembly. [sources/test/custom-levels.test.js:100]"
+    },
+    "test/serializers.test.js": {
+      "relevant": true,
+      "reason": "The suite verifies child serializers overriding, inheriting, and being invoked on child data (lines 97\u2013118 and 191\u2013216), directly establishing serializer option assembly behavior. [sources/test/serializers.test.js:97]"
+    }
+  },
+  "h-pino-21": {
+    "test/multistream.test.js": {
+      "relevant": false,
+      "reason": "These tests compare stream thresholds for records including `fatal` and `info`, but they do not test the post-write synchronous flush that distinguishes fatal from info. [sources/test/multistream.test.js:121]"
+    },
+    "test/transport/pipeline.test.js": {
+      "relevant": false,
+      "reason": "Pipeline tests exercise transport processing and do not test the fatal method\u2019s post-emission flush behavior. [sources/test/transport/pipeline.test.js:1]"
+    },
+    "test/browser.test.js": {
+      "relevant": false,
+      "reason": "The browser maps fatal to the console error method (line 122), but that is browser console routing and does not establish the Node destination flush after emission. [sources/test/browser.test.js:122]"
+    },
+    "test/is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "These tests check whether a level is enabled before logging; they do not trace what fatal does after writing. [sources/test/is-level-enabled.test.js:1]"
+    },
+    "lib/caller.js": {
+      "relevant": false,
+      "reason": "The helper collects call-site paths for transport resolution and is unrelated to fatal post-write handling. [sources/lib/caller.js:13]"
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "This test confirms a fatal call serializes an object, but it makes no comparison with info or destination flushing after the line is emitted. [sources/test/basic.test.js:507]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "This section tests transport target thresholds and emitted record content, not fatal\u2019s extra flush step. [sources/test/transport/core.test.js:270]"
+    },
+    "lib/constants.js": {
+      "relevant": false,
+      "reason": "This file defines numeric level values, which explain severity ordering but not fatal\u2019s special post-write action. [sources/lib/constants.js:1]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "The example sets up transport output and does not demonstrate a fatal-specific flush after the write. [sources/examples/transport.js:1]"
+    },
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "This suite tests worker module loading; it does not exercise fatal versus info after emission. [sources/test/transport/module-link.test.js:1]"
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared stream helpers do not encode fatal-specific behavior. [sources/test/helper.js:1]"
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor installs the initial level methods, but the post-write fatal flush is implemented in the level method factory, not this construction path. [sources/pino.js:232]"
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "These tests verify explicit flush behavior for sync and async destinations; they do not compare the automatic fatal flush with info. [sources/test/syncfalse.test.js:129]"
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "The browser child method setup assigns browser methods, but browser logging does not perform the Node destination `flushSync` action at issue. [sources/browser.js:206]"
+    },
+    "benchmarks/multistream.js": {
+      "relevant": false,
+      "reason": "This benchmark measures multistream throughput with several thresholds; it does not inspect fatal\u2019s post-emission flush. [sources/benchmarks/multistream.js:15]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Type assertions cannot establish the runtime difference in fatal\u2019s post-emission behavior. [sources/test/types/pino.tst.ts:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration types fatal and info call signatures, not their runtime flush difference. [sources/pino.d.ts:1]"
+    }
+  },
+  "h-pino-22": {
+    "test/is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "This suite evaluates logger-level enabled checks, not multistream destination selection when dedupe is active. [sources/test/is-level-enabled.test.js:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The type declaration exposes the dedupe option but contains no routing algorithm or destination-selection evidence. [sources/pino.d.ts:1]"
+    },
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "Worker module-link tests do not exercise dedupe routing among destinations. [sources/test/transport/module-link.test.js:1]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module enables or disables logger methods based on the logger threshold; it does not select destinations inside a multistream. [sources/lib/levels.js:77]"
+    },
+    "test/types/pino-multistream.tst.ts": {
+      "relevant": false,
+      "reason": "This is a type-only check of the multistream API and does not establish which streams receive a record. [sources/test/types/pino-multistream.tst.ts:1]"
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "The suite checks asynchronous writes and explicit flush, not dedupe selection. [sources/test/syncfalse.test.js:1]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "The multi-target transport tests configure dedupe and verify records reach the selected targets (lines 232\u2013269), providing behavioral evidence for the worker-side routing choice. [sources/test/transport/core.test.js:232]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time logger tests do not establish dedupe routing behavior. [sources/test/types/pino.tst.ts:1]"
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor detects whether a target stream needs multistream metadata and warns about level formatters, but it does not choose destinations for each deduped record. [sources/pino.js:171]"
+    },
+    "test/multistream.test.js": {
+      "relevant": true,
+      "reason": "The `dedupe` cases configure multiple destination levels and check which destinations receive records, including distinct record levels and equal thresholds (lines 466\u2013569). [sources/test/multistream.test.js:466]"
+    },
+    "benchmarks/multistream.js": {
+      "relevant": false,
+      "reason": "This benchmark sets up multistream sizes and levels for timing, but contains no evidence of the dedupe selection rule. [sources/benchmarks/multistream.js:15]"
+    },
+    "lib/caller.js": {
+      "relevant": false,
+      "reason": "Call-site discovery resolves transport target modules; it does not route one log record across deduped streams. [sources/lib/caller.js:13]"
+    },
+    "test/browser-is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "Browser level-enabled checks do not cover Node multistream routing. [sources/test/browser-is-level-enabled.test.js:1]"
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "This module packs target and dedupe configuration into worker options (lines 218\u2013255), but the per-record destination decision is performed by the worker multistream and is not present in this file. [sources/lib/transport.js:218]"
+    }
+  },
+  "h-pino-23": {
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "This file provides test utilities and does not construct the worker-side routing stream. [sources/test/helper.js:1]"
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor normalizes transport options into a stream (lines 86\u201390) and recognizes multi-target transport metadata to validate numeric level output (lines 171\u2013194), connecting application logger setup to transport construction. [sources/pino.js:86]"
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "The transport builder consumes target/pipeline configuration, normalizes paths, packages worker options, and creates the worker stream (lines 192\u2013265); this is the core setup path. [sources/lib/transport.js:192]"
+    },
+    "test/transport/targets.test.js": {
+      "relevant": true,
+      "reason": "The tests create a transport with a target and verify worker errors and routing behavior (lines 34\u201347); the rest of this suite covers target configurations. [sources/test/transport/targets.test.js:34]"
+    },
+    "lib/transport-stream.js": {
+      "relevant": false,
+      "reason": "This module loads one transport worker function by path; it does not assemble a multi-target worker routing stream. [sources/lib/transport-stream.js:13]"
+    },
+    "lib/caller.js": {
+      "relevant": true,
+      "reason": "The caller helper supplies application call-site paths so transport target names can be resolved relative to the consumer (lines 13\u201339). [sources/lib/caller.js:13]"
+    },
+    "test/transport/bundlers-support.test.js": {
+      "relevant": false,
+      "reason": "These tests cover bundler target path resolution support, not how targets become the worker routing stream. [sources/test/transport/bundlers-support.test.js:1]"
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "This suite tests worker Node option sanitization and leaves multi-target routing construction untouched. [sources/test/transport/node-options.test.js:1]"
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "Argument normalization recognizes `opts.transport` and calls the transport builder with normalized level options (lines 323\u2013353), the entry point from logger construction into the transport setup. [sources/lib/tools.js:323]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "The example shows a consumer transport configuration but does not explain how multiple targets are transformed into worker routing state. [sources/examples/transport.js:1]"
+    },
+    "test/transport/native-type-stripping.test.mjs": {
+      "relevant": false,
+      "reason": "This test checks TypeScript transport loading, not multi-target routing stream construction. [sources/test/transport/native-type-stripping.test.mjs:1]"
+    },
+    "test/transport/big.test.js": {
+      "relevant": false,
+      "reason": "Large transport workload tests exercise throughput/volume and do not document target-to-router assembly. [sources/test/transport/big.test.js:1]"
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "The core tests build transports with multiple target definitions and observe records from those outputs (lines 135\u2013168), directly validating multi-target routing setup. [sources/test/transport/core.test.js:135]"
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "Type checks describe the transport API surface but not worker routing assembly. [sources/test/types/pino.tst.ts:1]"
+    }
+  },
+  "h-pino-24": {
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "This suite focuses on level methods and events, not logger flush when a destination has no flush method. [sources/test/levels.test.js:1]"
+    },
+    "test/esm/named-exports.mjs": {
+      "relevant": false,
+      "reason": "The ESM test checks named exports and cannot establish flush fallback behavior. [sources/test/esm/named-exports.mjs:1]"
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor creates the logger prototype but the flush fallback implementation resides on that prototype, not in constructor setup. [sources/pino.js:228]"
+    },
+    "test/stdout-protection.test.js": {
+      "relevant": false,
+      "reason": "Stdout protection tests concern safe destination writes, not behavior when `flush` is absent. [sources/test/stdout-protection.test.js:1]"
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "These flush functions are transport lifecycle callbacks that call the worker stream\u2019s `flushSync`; they do not implement the logger\u2019s destination `flush` fallback. [sources/lib/transport.js:188]"
+    },
+    "test/browser.test.js": {
+      "relevant": false,
+      "reason": "The browser test only checks that a stub flush method exists; it does not test behavior when the destination lacks `flush`. [sources/test/browser.test.js:50]"
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "Level method generation does not implement logger.flush. [sources/lib/levels.js:1]"
+    },
+    "test/multistream.test.js": {
+      "relevant": false,
+      "reason": "These tests exercise multistream `flushSync` fan-out, not the logger flush method\u2019s missing-destination-method callback behavior. [sources/test/multistream.test.js:745]"
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "Type assertions define flush signatures but not the runtime fallback. [sources/test/types/pino.ts:1]"
+    },
+    "test/transport/native-type-stripping.test.mjs": {
+      "relevant": false,
+      "reason": "This checks TypeScript transport loading and does not exercise the logger flush fallback. [sources/test/transport/native-type-stripping.test.mjs:1]"
+    },
+    "test/syncfalse.test.js": {
+      "relevant": true,
+      "reason": "The tests verify logger flush on the default synchronous destination, including the no-op return and callback behavior (lines 129\u2013148), directly relevant when a destination lacks flush. [sources/test/syncfalse.test.js:129]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "Transport usage example does not demonstrate the no-flush destination fallback. [sources/examples/transport.js:1]"
+    },
+    "test/browser-transmit.test.js": {
+      "relevant": false,
+      "reason": "Browser transmit event behavior does not test logger flush fallback. [sources/test/browser-transmit.test.js:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration exposes the flush method type but does not explain the runtime fallback. [sources/pino.d.ts:1]"
+    },
+    "test/types/pino-top-export.tst.ts": {
+      "relevant": false,
+      "reason": "This compile-time export test does not establish flush behavior. [sources/test/types/pino-top-export.tst.ts:1]"
+    },
+    "test/types/pino-import.tst.js": {
+      "relevant": false,
+      "reason": "This tests import typing and not logger flush behavior. [sources/test/types/pino-import.tst.js:1]"
+    },
+    "lib/caller.js": {
+      "relevant": false,
+      "reason": "Caller collection for transport paths is unrelated to logger flush. [sources/lib/caller.js:13]"
+    }
+  },
+  "h-pino-25": {
+    "test/esm/named-exports.mjs": {
+      "relevant": false,
+      "reason": "This checks ESM export names and does not describe module responsibility boundaries. [sources/test/esm/named-exports.mjs:1]"
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This consumer example demonstrates transport configuration, not the division between logger construction, behavior, level mapping, and redaction modules. [sources/examples/transport.js:1]"
+    },
+    "test/types/pino-top-export.tst.ts": {
+      "relevant": false,
+      "reason": "Export type assertions cannot establish internal module responsibilities. [sources/test/types/pino-top-export.tst.ts:1]"
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "These tests demonstrate custom level behavior but do not identify which source module owns level mapping. [sources/test/custom-levels.test.js:15]"
+    },
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "Transport module-link tests concern worker loading, not the logger/levels/redaction responsibility split. [sources/test/transport/module-link.test.js:1]"
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "Public types describe the surface API and do not identify internal source module responsibilities. [sources/pino.d.ts:1]"
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "This module implements argument normalization, formatting, serialization, and binding helpers (lines 123\u2013225 and 323\u2013394), showing the shared logger-behavior utility layer. [sources/lib/tools.js:323]"
+    },
+    "test/types/pino-type-only.tst.ts": {
+      "relevant": false,
+      "reason": "Compile-time type-only checks do not identify implementation module boundaries. [sources/test/types/pino-type-only.tst.ts:1]"
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "This test establishes browser redaction behavior but does not show module ownership or the Node logger module division. [sources/test/browser-redaction.test.js:8]"
+    },
+    "test/browser-child.test.js": {
+      "relevant": false,
+      "reason": "Browser child behavior tests do not identify Node construction, level mapping, or redaction module responsibilities. [sources/test/browser-child.test.js:1]"
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "These tests verify level changes but do not identify the source module responsible for level mapping. [sources/test/levels.test.js:16]"
+    },
+    "lib/transport-stream.js": {
+      "relevant": false,
+      "reason": "This is a transport module loader, not one of the construction, logger behavior, level mapping, or redaction responsibilities named in the question. [sources/lib/transport-stream.js:13]"
+    }
+  },
+  "h-pino-26": {
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations describe logger APIs, but do not define EventEmitter inheritance or the shared runtime prototype factory [sources/pino.d.ts:112]."
+    },
+    "benchmarks/utils/wrap-log-level.js": {
+      "relevant": false,
+      "reason": "This benchmark wrapper measures log-level calls and does not construct logger prototypes or exercise emitter methods [sources/benchmarks/utils/wrap-log-level.js:1]."
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "These cases exercise emitted log output and logger basics, not EventEmitter membership or prototype-factory behavior [sources/test/basic.test.js:1]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "The event listeners here are attached to transport-backed logger error paths; they do not establish the logger prototype factory or EventEmitter base [sources/test/transport/core.test.js:81]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "Its EventEmitter subclass is a fake thread stream used to test transport options, so it says nothing about logger instances [sources/test/transport/node-options.test.js:5]."
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example configures a transport and writes log records; it does not address logger instance inheritance [sources/examples/transport.js:1]."
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "These tests cover asynchronous destination flush behavior rather than logger EventEmitter/prototype construction [sources/test/syncfalse.test.js:1]."
+    },
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "This test checks module linking for transport targets and never asserts logger inheritance or emitter behavior [sources/test/transport/module-link.test.js:1]."
+    },
+    "test/transport/sync-false.test.js": {
+      "relevant": false,
+      "reason": "This file tests asynchronous transport flushing and shutdown, unrelated to the logger prototype factory [sources/test/transport/sync-false.test.js:1]."
+    },
+    "test/diagnostics.test.js": {
+      "relevant": false,
+      "reason": "The diagnostics-channel tests observe publish/subscribe logging hooks, not EventEmitter methods inherited by logger instances [sources/test/diagnostics.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper\u2019s process-level lifecycle and stream utilities do not describe logger prototype inheritance [sources/test/helper.js:1]."
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "These tests assert redacted output content, without testing emitter methods or the prototype factory [sources/test/redact.test.js:1]."
+    },
+    "test/formatters.test.js": {
+      "relevant": false,
+      "reason": "This suite asserts formatter transformations and their transport restriction, not logger EventEmitter behavior [sources/test/formatters.test.js:14]."
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser backend builds each logger with Object.create(proto) and defines its child/prototype behavior, useful for comparing the factory-based logger construction even though this backend is browser-specific [sources/browser.js:110]."
+    },
+    "lib/levels.js": {
+      "relevant": true,
+      "reason": "Level changes call this.emit for the level-change event, providing a concrete logger method that depends on emitter behavior [sources/lib/levels.js:98]."
+    },
+    "test/transport/pipeline.test.js": {
+      "relevant": false,
+      "reason": "Pipeline tests verify transport processing, not the logger\u2019s EventEmitter ancestry or prototype factory [sources/test/transport/pipeline.test.js:1]."
+    }
+  },
+  "h-pino-27": {
+    "pino.js": {
+      "relevant": true,
+      "reason": "The logger constructor normalizes options, associates the selected stream with the logger, and routes writes through its behavior, defining the application-thread side [sources/pino.js:90]."
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "Argument normalization invokes the transport builder for transport options and returns the stream used by logger construction, marking the handoff from application setup [sources/lib/tools.js:328]."
+    },
+    "test/transport/native-type-stripping.test.mjs": {
+      "relevant": false,
+      "reason": "This checks TypeScript/native syntax compatibility for a transport target, not the application-thread versus target-processing boundary [sources/test/transport/native-type-stripping.test.mjs:1]."
+    },
+    "lib/symbols.js": {
+      "relevant": true,
+      "reason": "The transportUsesMultistream symbol is the marker shared with logger construction to identify a multi-target transport stream [sources/lib/symbols.js:1]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "These tests configure thread-stream worker options, without describing the application-thread logger write boundary [sources/test/transport/node-options.test.js:1]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "Core integration tests create loggers with worker transports and verify target outputs, directly covering logging-to-target processing [sources/test/transport/core.test.js:1]."
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "This file checks TypeScript API compatibility and has no runtime evidence about where transport target processing occurs [sources/test/types/pino.tst.ts:1]."
+    },
+    "examples/transport.js": {
+      "relevant": true,
+      "reason": "The example constructs a transport and passes it into Pino before issuing logger calls, illustrating the application/transport split [sources/examples/transport.js:1]."
+    },
+    "test/types/pino-top-export.tst.ts": {
+      "relevant": false,
+      "reason": "This is a type-only export check and does not test the runtime architecture boundary [sources/test/types/pino-top-export.tst.ts:1]."
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "The transport builder creates worker streams, packages target or pipeline configuration, and marks multistream use before returning the stream to the logger [sources/lib/transport.js:192]."
+    },
+    "test/transport/sync-false.test.js": {
+      "relevant": true,
+      "reason": "This test exercises the worker transport\u2019s asynchronous write/flush lifecycle, evidence on the target-stream side of the boundary [sources/test/transport/sync-false.test.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations expose transport configuration types but do not explain which thread performs logging versus target work [sources/pino.d.ts:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Generic test helpers do not establish the transport architecture boundary [sources/test/helper.js:1]."
+    },
+    "lib/transport-stream.js": {
+      "relevant": true,
+      "reason": "This module loads the configured transport target export and returns its stream-builder function, the seam where target processing is loaded [sources/lib/transport-stream.js:13]."
+    },
+    "test/transport/targets.test.js": {
+      "relevant": true,
+      "reason": "The target tests configure pino.transport with worker-side target modules and verify resulting behavior [sources/test/transport/targets.test.js:34]."
+    }
+  },
+  "h-pino-28": {
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type tests cover public API typing and do not verify runtime routing state or shutdown [sources/test/types/pino.tst.ts:1]."
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "The builder records targets and pipelines in worker options, derives whether multistream routing is required, and returns the worker stream used for shutdown [sources/lib/transport.js:218]."
+    },
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "This checks target module linking, not the representation of routing state or its shutdown lifecycle [sources/test/transport/module-link.test.js:1]."
+    },
+    "test/transport/targets.test.js": {
+      "relevant": true,
+      "reason": "These integration tests instantiate target transports and verify their completion/error behavior, directly relevant to configured target routing [sources/test/transport/targets.test.js:34]."
+    },
+    "test/transport/sync-false.test.js": {
+      "relevant": true,
+      "reason": "This suite exercises asynchronous worker transport ending and flushing, directly covering shutdown behavior [sources/test/transport/sync-false.test.js:1]."
+    },
+    "examples/transport.js": {
+      "relevant": true,
+      "reason": "The example shows target arrays and the logger\u2019s transport stream setup, useful evidence for how multi-target routing is configured [sources/examples/transport.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared utilities here do not specifically establish multi-target routing state or transport shutdown [sources/test/helper.js:1]."
+    },
+    "test/multistream.test.js": {
+      "relevant": true,
+      "reason": "The multistream tests exercise destination selection and stream end/flush behavior, which is the routing/shutdown mechanism used for multiple destinations [sources/test/multistream.test.js:1]."
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "The browser backend writes through console methods and does not create worker target routes or their shutdown state [sources/browser.js:1]."
+    },
+    "test/transport/pipeline.test.js": {
+      "relevant": true,
+      "reason": "Pipeline integration tests verify configured transport stages and completion behavior, relevant to multi-target transport setup [sources/test/transport/pipeline.test.js:1]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "Core transport cases exercise multiple targets and logger transport completion, so they directly test routing behavior [sources/test/transport/core.test.js:1]."
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The public constructor normalizes transport options into the stream attached to the logger, connecting multi-target transport setup to logger lifecycle [sources/pino.js:90]."
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The public declarations document the transport target/pipeline configuration surface that represents routing choices [sources/pino.d.ts:1]."
+    },
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "This file supplies generic logger normalization and stream helpers, but the target list\u2019s routing-state encoding and end handling are implemented in the transport code [sources/lib/tools.js:328]."
+    }
+  },
+  "h-pino-29": {
+    "test/formatters.test.js": {
+      "relevant": true,
+      "reason": "The test explicitly asserts the rejection of a custom level formatter with transport.targets, one behavior affected by changing the numeric level field [sources/test/formatters.test.js:342]."
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Logger prototype methods include output and level operations, but do not implement the multi-target numeric-level warning path [sources/lib/proto.js:1]."
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "Normalization rejects custom level formatters when targets are configured, which is the guard path to review alongside the warning [sources/lib/tools.js:341]."
+    },
+    "test/multistream.test.js": {
+      "relevant": false,
+      "reason": "These tests exercise generic per-destination level filtering/dedupe, not formatter output or the numeric-level warning [sources/test/multistream.test.js:1]."
+    },
+    "test/transport/targets.test.js": {
+      "relevant": false,
+      "reason": "These tests cover target loading and target errors but do not assert formatter numeric-level handling [sources/test/transport/targets.test.js:1]."
+    },
+    "test/internals/version.test.js": {
+      "relevant": false,
+      "reason": "This test verifies version metadata only and has no multi-target formatter behavior [sources/test/internals/version.test.js:1]."
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "Transport setup marks multi-target streams so logger construction can check whether the formatted numeric level is preserved [sources/lib/transport.js:236]."
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The declaration documents both multi-target options and the level formatter\u2019s default numeric { level } shape, clarifying the contract affected by renaming that field [sources/pino.d.ts:270]."
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "The suite tests destination synchronization and flush behavior, unrelated to formatter-level warnings [sources/test/syncfalse.test.js:1]."
+    },
+    "lib/deprecations.js": {
+      "relevant": false,
+      "reason": "This module handles deprecation warnings, not the multi-target formatter warning or numeric-level routing behavior [sources/lib/deprecations.js:1]."
+    },
+    "test/transport/sync-false.test.js": {
+      "relevant": false,
+      "reason": "This suite tests worker flush lifecycle, not formatter output or level-field warnings [sources/test/transport/sync-false.test.js:1]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "Core integration coverage exercises routing through multiple targets and is useful to verify whether changing the level field affects target delivery [sources/test/transport/core.test.js:1]."
+    },
+    "test/transport/sync-true.test.js": {
+      "relevant": false,
+      "reason": "This suite checks synchronous transport behavior rather than multi-target formatter warnings [sources/test/transport/sync-true.test.js:1]."
+    },
+    "benchmarks/multi-arg.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark compares logging-call argument forms and does not exercise transport target formatter validation [sources/benchmarks/multi-arg.bench.js:1]."
+    }
+  },
+  "h-pino-30": {
+    "test/browser-child.test.js": {
+      "relevant": true,
+      "reason": "These cases exercise browser child creation and the merged child bindings in emitted browser log objects, relevant to checking child-binding behavior [sources/test/browser-child.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared test utilities do not assert duplicate keys or child-binding serialization [sources/test/helper.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The API documentation explicitly says setBindings does not overwrite and can produce duplicate keys in log lines, the documented behavior named in the question [sources/pino.d.ts:118]."
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "This suite checks redacted browser output and does not cover binding merge or duplicate-key semantics [sources/test/browser-redaction.test.js:1]."
+    },
+    "lib/proto.js": {
+      "relevant": true,
+      "reason": "The child logger path extends its inherited chindings with newly serialized bindings, so it is central to a change from append to object merge [sources/lib/proto.js:84]."
+    },
+    "lib/tools.js": {
+      "relevant": true,
+      "reason": "asChindings serializes bindings into a string and log construction prepends that string before per-record fields, explicitly permitting repeated JSON keys [sources/lib/tools.js:156]."
+    },
+    "test/mixin-merge-strategy.test.js": {
+      "relevant": false,
+      "reason": "These tests concern merging mixin-produced log objects, a separate feature from child logger binding accumulation [sources/test/mixin-merge-strategy.test.js:1]."
+    },
+    "test/transport/core.transpiled.test.ts": {
+      "relevant": false,
+      "reason": "This transpiled transport test checks worker logging integration but does not assert child-binding duplicate keys [sources/test/transport/core.transpiled.test.ts:1]."
+    },
+    "test/browser-set-bindings.test.js": {
+      "relevant": true,
+      "reason": "The browser setBindings tests exercise how added binding values combine with existing logger bindings; this is directly useful for the analogous child-binding merge change [sources/test/browser-set-bindings.test.js:12]."
+    },
+    "lib/symbols.js": {
+      "relevant": false,
+      "reason": "The symbols module only names internal state keys such as chindingsSym; it does not implement or test their append/duplicate behavior [sources/lib/symbols.js:1]."
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "Browser child construction merges binding objects and tracks own versus inherited bindings, a platform-specific implementation that could be affected by changing child binding semantics [sources/browser.js:64]."
+    },
+    "test/complex-objects.test.js": {
+      "relevant": false,
+      "reason": "These tests cover serialization of complex object values, not repeated keys from child logger bindings [sources/test/complex-objects.test.js:1]."
+    },
+    "test/error-key.test.js": {
+      "relevant": false,
+      "reason": "These cases configure the error field name and serialization; they do not test child binding collisions [sources/test/error-key.test.js:1]."
+    },
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark compares parent and child logging throughput, not the duplicate-key output contract or merge correctness [sources/benchmarks/internal/parent-vs-child.bench.js:1]."
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "Logger construction initializes the chindings string and wires it into each instance, so a move away from append-based binding storage affects this construction path [sources/pino.js:141]."
+    },
+    "test/browser-bindings.test.js": {
+      "relevant": true,
+      "reason": "The browser binding tests assert setBindings and child binding object behavior, providing direct coverage of binding collision/overwrite semantics in that backend [sources/test/browser-bindings.test.js:45]."
+    },
+    "test/browser-serializers.test.js": {
+      "relevant": false,
+      "reason": "This suite tests serializer application to browser log objects, not duplicate keys caused by child binding accumulation [sources/test/browser-serializers.test.js:1]."
+    }
+  },
+  "h-pino-31": {
+    "test/transport/module-link.test.js": {
+      "relevant": false,
+      "reason": "Module-link tests exercise transport target loading and provide no assertion about the streamWrite hook or logger write transformation [sources/test/transport/module-link.test.js:1]."
+    },
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "The logging helper formats arguments and invokes the logger write symbol, but the streamWrite hook is invoked later in the prototype write path, so this file cannot establish hook execution [sources/lib/tools.js:40]."
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "Level methods dispatch records through the write symbol, but this file does not run or assert the streamWrite hook [sources/lib/levels.js:1]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "These integration tests verify transport target delivery and formatter routing, with no streamWrite hook setup or assertion [sources/test/transport/core.test.js:1]."
+    },
+    "test/internals/version.test.js": {
+      "relevant": false,
+      "reason": "Version metadata tests do not exercise the hook or logger write path [sources/test/internals/version.test.js:1]."
+    },
+    "lib/multistream.js": {
+      "relevant": false,
+      "reason": "This module routes already-written records to streams and does not invoke the logger streamWrite hook [sources/lib/multistream.js:1]."
+    },
+    "test/browser-child.test.js": {
+      "relevant": false,
+      "reason": "This suite checks browser child logger behavior, not the Node streamWrite hook [sources/test/browser-child.test.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The type only declares the hook signature; it does not assert execution or the logger write-path order requested here [sources/pino.d.ts:688]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper supplies test streams and utilities but makes no hook invocation assertion [sources/test/helper.js:1]."
+    },
+    "test/multistream.test.js": {
+      "relevant": false,
+      "reason": "These tests assert multistream destination selection, not whether a logger hook runs before writing [sources/test/multistream.test.js:1]."
+    },
+    "lib/worker.js": {
+      "relevant": false,
+      "reason": "Worker code parses and routes transport input after the application logger has produced a record, not the logger streamWrite hook [sources/lib/worker.js:76]."
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "The basic logging tests exercise ordinary output but do not configure or assert streamWrite hook behavior [sources/test/basic.test.js:1]."
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type test only checks that the streamWrite option is accepted; it cannot establish hook execution order or write-path assertions [sources/test/types/pino.tst.ts:343]."
+    },
+    "test/syncfalse.test.js": {
+      "relevant": false,
+      "reason": "Asynchronous flush tests cover destination lifecycle rather than streamWrite hook execution [sources/test/syncfalse.test.js:1]."
+    }
+  },
+  "h-pino-32": {
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "This module normalizes logger options and creates destination streams, but the child-level redact override ordering and rebuilt serializer state live in child construction [sources/lib/tools.js:328]."
+    },
+    "benchmarks/internal/parent-vs-child.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark measures parent/child log throughput and does not verify redaction override ordering or serializer state [sources/benchmarks/internal/parent-vs-child.bench.js:1]."
+    },
+    "pino.js": {
+      "relevant": true,
+      "reason": "The constructor builds the initial redact stringifiers and formatter options from the effective redact setting, defining the state a child override must replace [sources/pino.js:134]."
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "Browser child creation handles child serializer overrides and constructs the merged binding object before child log setup, making the binding/serializer ordering concrete for an override review [sources/browser.js:217]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": false,
+      "reason": "Transport integration tests cover destinations and routing, not child-level redaction overrides [sources/test/transport/core.test.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations expose redact and serializer option types but do not specify child override ordering or state rebuilding [sources/pino.d.ts:1]."
+    },
+    "lib/redaction.js": {
+      "relevant": true,
+      "reason": "This module constructs the redactor function and its serialized formatter from redaction paths, the state that must be rebuilt after a child override [sources/lib/redaction.js:12]."
+    },
+    "test/basic.test.js": {
+      "relevant": false,
+      "reason": "General logger tests do not assert the child redact override ordering or refreshed serializer state [sources/test/basic.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Test helpers do not implement or assert child redaction setup [sources/test/helper.js:1]."
+    },
+    "test/serializers.test.js": {
+      "relevant": true,
+      "reason": "The child serializer tests show that a child uses its own serializer map while the parent retains its own, directly covering serializer state that must remain correct during child option changes [sources/test/serializers.test.js:107]."
+    },
+    "test/browser-bindings.test.js": {
+      "relevant": false,
+      "reason": "These cases cover browser binding storage and do not test redaction overrides or serializer rebuilding [sources/test/browser-bindings.test.js:1]."
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "Custom-level behavior is independent of child redaction option merging [sources/test/custom-levels.test.js:1]."
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": true,
+      "reason": "Browser redaction tests assert redaction output and child behavior, providing direct behavioral coverage for an override change [sources/test/browser-redaction.test.js:1]."
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "The type test checks the option surface, not redaction merge order or runtime state [sources/test/types/pino.tst.ts:1]."
+    }
+  },
+  "h-pino-33": {
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declarations expose dedupe and stream entries but do not establish equal-level versus different-level delivery behavior [sources/pino.d.ts:270]."
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "These tests check logger custom levels, not the multistream ordering or delivery invariant [sources/test/custom-levels.test.js:1]."
+    },
+    "test/types/pino-multistream.tst.ts": {
+      "relevant": false,
+      "reason": "The type tests validate multistream API typing but do not execute dedupe routing [sources/test/types/pino-multistream.tst.ts:1]."
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "Transport setup carries dedupe and level mapping into worker options, the configuration stage that must preserve the routing rule [sources/lib/transport.js:193]."
+    },
+    "lib/worker.js": {
+      "relevant": true,
+      "reason": "The worker passes target streams, levels, and dedupe to pino.multistream, directly connecting sorted routing to destination delivery [sources/lib/worker.js:154]."
+    },
+    "test/transport/core.transpiled.test.ts": {
+      "relevant": false,
+      "reason": "The transpiled integration test exercises transport compatibility but not the dedupe equal-level routing invariant [sources/test/transport/core.transpiled.test.ts:1]."
+    },
+    "lib/constants.js": {
+      "relevant": false,
+      "reason": "Constants define standard level numbers but do not define multistream sorting or equal-level destination behavior [sources/lib/constants.js:1]."
+    },
+    "benchmarks/multistream.js": {
+      "relevant": false,
+      "reason": "The benchmark measures multistream throughput rather than asserting routing correctness for equal and different levels [sources/benchmarks/multistream.js:1]."
+    },
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "This module compares logger thresholds and maps level labels, but it does not define multistream\u2019s sorting or equal-level destination routing [sources/lib/levels.js:144]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "Core tests configure target levels and assert the records received by each destination, serving as delivery regression coverage [sources/test/transport/core.test.js:322]."
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This file checks types, not destination delivery under dedupe sorting [sources/test/types/pino.ts:1]."
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor creates logger-level mappings but does not implement multistream dedupe ordering or stream delivery [sources/pino.js:169]."
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Logger write methods serialize each record but do not implement multistream destination sorting [sources/lib/proto.js:200]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "The helper offers stream/file utilities but no assertions about equal-level dedupe routing [sources/test/helper.js:1]."
+    }
+  },
+  "h-pino-34": {
+    "benchmarks/deep-object.bench.js": {
+      "relevant": false,
+      "reason": "This benchmark builds nested data for logging and does not import or identify the redaction implementation dependency [sources/benchmarks/deep-object.bench.js:1]."
+    },
+    "lib/worker.js": {
+      "relevant": false,
+      "reason": "Worker code loads transport targets and is unrelated to which package implements redaction [sources/lib/worker.js:1]."
+    },
+    "benchmarks/multi-arg.bench.js": {
+      "relevant": false,
+      "reason": "The benchmark compares log argument forms and contains no redactor import [sources/benchmarks/multi-arg.bench.js:1]."
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "The tests assert browser redaction output but do not identify the dependency imported by this source revision [sources/test/browser-redaction.test.js:1]."
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Logger prototype code calls configured serializers and stringifiers but does not import the redaction dependency [sources/lib/proto.js:1]."
+    },
+    "benchmarks/child.bench.js": {
+      "relevant": false,
+      "reason": "The child-logger benchmark does not import or identify a redaction package [sources/benchmarks/child.bench.js:1]."
+    },
+    "benchmarks/object.bench.js": {
+      "relevant": false,
+      "reason": "This object logging benchmark has no redaction dependency import [sources/benchmarks/object.bench.js:1]."
+    },
+    "benchmarks/child-creation.bench.js": {
+      "relevant": false,
+      "reason": "Child creation timing does not identify the package imported by redaction source [sources/benchmarks/child-creation.bench.js:1]."
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "This suite validates redaction results, but does not state which package the implementation imports [sources/test/redact.test.js:1]."
+    },
+    "benchmarks/child-child.bench.js": {
+      "relevant": false,
+      "reason": "This nested-child benchmark has no redaction import or dependency declaration [sources/benchmarks/child-child.bench.js:1]."
+    },
+    "browser.js": {
+      "relevant": true,
+      "reason": "The browser implementation imports @pinojs/redact directly, giving source-level evidence of the dependency used in this revision [sources/browser.js:4]."
+    },
+    "test/fixtures/transport-uses-pino-config.js": {
+      "relevant": false,
+      "reason": "This fixture checks worker configuration transfer and does not identify the redaction package [sources/test/fixtures/transport-uses-pino-config.js:1]."
+    },
+    "test/fixtures/ts/transpile.cjs": {
+      "relevant": false,
+      "reason": "The fixture tests TypeScript transpilation and has no redaction dependency import [sources/test/fixtures/ts/transpile.cjs:1]."
+    },
+    "benchmarks/long-string.bench.js": {
+      "relevant": false,
+      "reason": "Long-string serialization benchmarking does not identify the redactor dependency [sources/benchmarks/long-string.bench.js:1]."
+    },
+    "benchmarks/basic.bench.js": {
+      "relevant": false,
+      "reason": "The basic throughput benchmark does not establish the package imported for redaction [sources/benchmarks/basic.bench.js:1]."
+    },
+    "lib/transport-stream.js": {
+      "relevant": false,
+      "reason": "Transport module loading does not identify the package used by redaction [sources/lib/transport-stream.js:1]."
+    },
+    "test/fixtures/transport-transform.js": {
+      "relevant": false,
+      "reason": "This fixture transforms transport records and does not import or name the redaction dependency [sources/test/fixtures/transport-transform.js:1]."
+    }
+  },
+  "h-pino-35": {
+    "test/escaping.test.js": {
+      "relevant": false,
+      "reason": "These tests cover JSON escaping and do not inspect the omitted redact option\u2019s normalized value or conditional [sources/test/escaping.test.js:1]."
+    },
+    "test/browser-redaction.test.js": {
+      "relevant": false,
+      "reason": "Browser redaction output tests do not establish the Node option-normalization default asked here [sources/test/browser-redaction.test.js:1]."
+    },
+    "test/caller.test.js": {
+      "relevant": false,
+      "reason": "Caller metadata tests do not inspect redact defaults or redactor initialization [sources/test/caller.test.js:1]."
+    },
+    "lib/transport.js": {
+      "relevant": false,
+      "reason": "Transport setup does not merge logger redact defaults or construct the logger redactor [sources/lib/transport.js:192]."
+    },
+    "test/fixtures/default-exit.js": {
+      "relevant": false,
+      "reason": "This fixture exercises process exit behavior, not normalized redact options [sources/test/fixtures/default-exit.js:1]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "Worker option tests concern transport thread setup, not the logger redact default [sources/test/transport/node-options.test.js:1]."
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "These tests cover logger levels and do not assert the omitted redact option [sources/test/levels.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Shared test utilities do not establish the redact option default or its redactor branch [sources/test/helper.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration makes redact optional but does not state an undefined default, so it cannot establish the API-to-internal-default comparison [sources/pino.d.ts:427]."
+    },
+    "test/redact.test.js": {
+      "relevant": false,
+      "reason": "The cases cover invalid and explicitly configured redact paths; they do not test the omitted option\u2019s normalized value [sources/test/redact.test.js:9]."
+    },
+    "browser.js": {
+      "relevant": false,
+      "reason": "Browser option initialization is a separate backend and does not establish the Node default merged by the core normalizer [sources/browser.js:1]."
+    },
+    "lib/redaction.js": {
+      "relevant": true,
+      "reason": "This file imports the redactor and defines its setup function, but the truthy branch decision is in the logger constructor; it clarifies the behavior once entered [sources/lib/redaction.js:12]."
+    }
+  },
+  "h-pino-36": {
+    "test/types/pino-transport.tst.ts": {
+      "relevant": false,
+      "reason": "This type test checks the transport API shape; it does not establish worker routing for a single target with a level [sources/test/types/pino-transport.tst.ts:1]."
+    },
+    "test/transport/crash.test.js": {
+      "relevant": false,
+      "reason": "Crash-path tests cover worker failure handling and do not assert whether one configured target\u2019s level is honored [sources/test/transport/crash.test.js:1]."
+    },
+    "test/transport/targets.test.js": {
+      "relevant": true,
+      "reason": "Target integration tests exercise target transport setup and delivery, relevant to checking level filtering at a target [sources/test/transport/targets.test.js:1]."
+    },
+    "lib/transport-stream.js": {
+      "relevant": false,
+      "reason": "This loader resolves the target stream builder but does not decide whether a target\u2019s level triggers worker-side routing [sources/lib/transport-stream.js:13]."
+    },
+    "test/transport/core.test.js": {
+      "relevant": true,
+      "reason": "The core test explicitly covers a single target with a level and asserts filtered delivery, the regression behavior in question [sources/test/transport/core.test.js:322]."
+    },
+    "pino.d.ts": {
+      "relevant": true,
+      "reason": "The transport target declaration exposes its optional level property, identifying the configured value passed into worker handling [sources/pino.d.ts:270]."
+    },
+    "test/transport/bundlers-support.test.js": {
+      "relevant": false,
+      "reason": "Bundler support cases verify target module path resolution, not the worker\u2019s per-target level handling [sources/test/transport/bundlers-support.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Test helpers provide file and stream utilities but do not assert target-level filtering [sources/test/helper.js:1]."
+    },
+    "lib/transport.js": {
+      "relevant": true,
+      "reason": "Transport setup preserves each target\u2019s level in the worker options, enabling the worker to decide whether to build a routing stream [sources/lib/transport.js:218]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "These tests configure thread-stream options and do not cover target level routing [sources/test/transport/node-options.test.js:1]."
+    },
+    "lib/tools.js": {
+      "relevant": false,
+      "reason": "Option normalization selects/builds a transport stream but does not implement the worker\u2019s single-target level branch [sources/lib/tools.js:337]."
+    },
+    "test/types/pino.tst.ts": {
+      "relevant": false,
+      "reason": "General Pino type tests do not check worker behavior for one target with a level [sources/test/types/pino.tst.ts:1]."
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "This example demonstrates transport configuration but does not assert the worker\u2019s single-target level behavior [sources/examples/transport.js:1]."
+    },
+    "pino.js": {
+      "relevant": false,
+      "reason": "The constructor stores the built transport stream on the logger, while the worker decides whether a single target level requires a routing stream [sources/pino.js:204]."
+    }
+  },
+  "h-pino-37": {
+    "lib/levels.js": {
+      "relevant": false,
+      "reason": "The optional default argument here belongs to level-map construction, not the normalized logger options object asked about [sources/lib/levels.js:152]."
+    },
+    "test/fixtures/default-exit.js": {
+      "relevant": false,
+      "reason": "This fixture checks process exit behavior and does not inspect customLevels normalization [sources/test/fixtures/default-exit.js:1]."
+    },
+    "lib/worker.js": {
+      "relevant": false,
+      "reason": "The worker consumes already-normalized transport levels and has no role in setting the logger customLevels default [sources/lib/worker.js:76]."
+    },
+    "test/transport/node-options.test.js": {
+      "relevant": false,
+      "reason": "Worker option tests do not assert the logger\u2019s omitted customLevels option [sources/test/transport/node-options.test.js:1]."
+    },
+    "pino.d.ts": {
+      "relevant": false,
+      "reason": "The declaration makes customLevels optional but does not state the normalized internal default value [sources/pino.d.ts:385]."
+    },
+    "test/serializers.test.js": {
+      "relevant": false,
+      "reason": "Serializer configuration tests do not examine customLevels defaults [sources/test/serializers.test.js:1]."
+    },
+    "test/types/pino.ts": {
+      "relevant": false,
+      "reason": "This type test checks compile-time usage, not runtime normalized defaults [sources/test/types/pino.ts:1]."
+    },
+    "examples/transport.js": {
+      "relevant": false,
+      "reason": "The transport example does not inspect the customLevels value after option normalization [sources/examples/transport.js:1]."
+    },
+    "test/browser-is-level-enabled.test.js": {
+      "relevant": false,
+      "reason": "Browser level-enabled tests exercise threshold checks rather than the core logger option merge [sources/test/browser-is-level-enabled.test.js:1]."
+    },
+    "test/helper.js": {
+      "relevant": false,
+      "reason": "Test helpers do not expose or assert normalized customLevels state [sources/test/helper.js:1]."
+    },
+    "test/levels.test.js": {
+      "relevant": false,
+      "reason": "This suite focuses on level methods and thresholds, not the customLevels default in normalized logger options [sources/test/levels.test.js:1]."
+    },
+    "test/escaping.test.js": {
+      "relevant": false,
+      "reason": "Escaping tests do not cover level option normalization [sources/test/escaping.test.js:1]."
+    },
+    "lib/proto.js": {
+      "relevant": false,
+      "reason": "Prototype behavior consumes the logger\u2019s configured levels but does not create the normalized customLevels option value [sources/lib/proto.js:1]."
+    },
+    "test/custom-levels.test.js": {
+      "relevant": false,
+      "reason": "These tests check behavior of explicitly supplied custom levels, but do not assert the normalized value when customLevels is omitted [sources/test/custom-levels.test.js:186]."
+    }
+  }
+}

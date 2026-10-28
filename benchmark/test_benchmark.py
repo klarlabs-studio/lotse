@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from agent_trials import audit_trace, tasks
+from agent_trials import audit_trace, task_faults, tasks
 from retrieval import BASE, chunks_from, pack, score_evidence, tokens
 
 
@@ -44,8 +44,8 @@ class MeasurementIntegrity(unittest.TestCase):
     def test_faults_are_unique_and_validation_files_exist(self):
         for task in tasks():
             root = BASE / ".research/corpora" / task["repo"]
-            f = task["fault"]
-            self.assertEqual((root / f["path"]).read_text().count(f["before"]), 1)
+            for f in task_faults(task):
+                self.assertEqual((root / f["path"]).read_text().count(f["before"]), 1)
             if task["repo"] == "fastify":
                 self.assertTrue((root / task["verify"][-1]).is_file())
             if task["repo"] == "flask":
@@ -56,6 +56,17 @@ class MeasurementIntegrity(unittest.TestCase):
             path = Path(tmp) / "trace.jsonl"
             path.write_text("\n".join(json.dumps(e) for e in events))
             return audit_trace(path)
+
+    def test_refused_calls_after_finish_keep_the_verdict(self):
+        usage = dict(type="model_usage", component="solver", model="m", input_tokens=10,
+                     cached_input_tokens=0, output_tokens=5, reasoning_tokens=0, cost_usd=.01)
+        verdict = dict(type="verification", passed=False)
+        refused = dict(type="tool", response={"ok": False, "error": "Trial is already finished"})
+        self.assertFalse(self.trace([usage, verdict, refused, refused])["verification_passed"])
+        with self.assertRaises(ValueError):
+            self.trace([usage, verdict, dict(type="tool", response={"ok": True})])
+        with self.assertRaises(ValueError):
+            self.trace([usage, verdict, refused, dict(verdict, passed=True)])
 
     def test_usage_does_not_double_count_reasoning_or_cache(self):
         usage = dict(type="model_usage", component="solver", model="fixed-model",

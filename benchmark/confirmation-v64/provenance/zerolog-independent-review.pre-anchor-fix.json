@@ -1,0 +1,361 @@
+{
+  "reviewer_id": "codex-independent-source-review-zerolog-02",
+  "source_only": true,
+  "independent_of_tuning": true,
+  "independent_of_author": true,
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+  "queries_sha256": "575e1d180759ae2f82022e664713fc673f69b1ead42d9c9e182487380f3f2d5d",
+  "verified_case_ids": [
+    "h-zerolog-exact-warning-level",
+    "h-zerolog-exact-update-context",
+    "h-zerolog-exact-msgfunc",
+    "h-zerolog-exact-levelwriter",
+    "h-zerolog-exact-diode-selection",
+    "h-zerolog-exact-sanitize-prefix",
+    "h-zerolog-exact-context-array",
+    "h-zerolog-exact-log-level-names",
+    "h-zerolog-conceptual-msg-completion",
+    "h-zerolog-conceptual-field-input-shapes",
+    "h-zerolog-conceptual-sampler-count",
+    "h-zerolog-conceptual-burst-sampling",
+    "h-zerolog-conceptual-slog-groups",
+    "h-zerolog-conceptual-console-pipeline",
+    "h-zerolog-conceptual-context-fallback",
+    "h-zerolog-conceptual-interface-reflection",
+    "h-zerolog-trace-warning-parse-test",
+    "h-zerolog-trace-print-event",
+    "h-zerolog-trace-event-send-hooks",
+    "h-zerolog-trace-context-roundtrip",
+    "h-zerolog-trace-diode-lifecycle",
+    "h-zerolog-trace-slog-handle",
+    "h-zerolog-trace-journald-write",
+    "h-zerolog-trace-dict-array",
+    "h-zerolog-arch-logger-event-encoder",
+    "h-zerolog-arch-context-builders",
+    "h-zerolog-arch-diode-components",
+    "h-zerolog-arch-slog-adapter",
+    "h-zerolog-impact-warning-alias",
+    "h-zerolog-impact-field-name",
+    "h-zerolog-impact-slog-disabled",
+    "h-zerolog-impact-diode-pool-cap",
+    "h-zerolog-impact-global-level",
+    "h-zerolog-disc-print-level",
+    "h-zerolog-disc-msgf-disabled-allocation",
+    "h-zerolog-disc-slog-group-shape",
+    "h-zerolog-disc-write-method",
+    "h-zerolog-no-midnight-rotation",
+    "h-zerolog-no-at-rest-encryption",
+    "h-zerolog-no-http-ingest",
+    "h-zerolog-no-config-watcher"
+  ],
+  "per_case_findings": [
+    {
+      "case_id": "h-zerolog-exact-warning-level",
+      "review_result": "verified",
+      "finding": "Re-authored as a distinct numeric ParseLevel boundary task. The parser accepts -128 through 127; the out-of-range test expects an error and NoLevel."
+    },
+    {
+      "case_id": "h-zerolog-exact-update-context",
+      "review_result": "verified",
+      "finding": "Verified UpdateContext is the mutating callback API and its comments warn it is not concurrency safe, recommending a child logger for concurrent updates."
+    },
+    {
+      "case_id": "h-zerolog-exact-msgfunc",
+      "review_result": "verified",
+      "finding": "Verified MsgFunc returns immediately for a nil Event; the cited test now includes the callback flag and nil-receiver invocation."
+    },
+    {
+      "case_id": "h-zerolog-exact-levelwriter",
+      "review_result": "verified",
+      "finding": "Verified LevelWriter embeds io.Writer and adds WriteLevel(level, payload)."
+    },
+    {
+      "case_id": "h-zerolog-exact-diode-selection",
+      "review_result": "verified",
+      "finding": "Verified positive poll interval selects Poller with interval/context options; zero or negative selects Waiter."
+    },
+    {
+      "case_id": "h-zerolog-exact-sanitize-prefix",
+      "review_result": "verified",
+      "finding": "Verified empty, digit-leading, and underscore-leading normalized journald keys are prefixed with X; the cited test includes empty and digit cases."
+    },
+    {
+      "case_id": "h-zerolog-exact-context-array",
+      "review_result": "verified",
+      "finding": "Verified CreateArray copies stack, context, and hooks from the context logger."
+    },
+    {
+      "case_id": "h-zerolog-exact-log-level-names",
+      "review_result": "verified",
+      "finding": "Verified the enum ordering and explicit TraceLevel=-1 from the complete cited constant block."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-msg-completion",
+      "review_result": "verified",
+      "finding": "Verified the API comment requires Msg to send the event; Msg also nil-guards its receiver."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-field-input-shapes",
+      "review_result": "verified",
+      "finding": "Verified Fields accepts map[string]interface{} or alternating key/value []interface{} and ignores extras."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-sampler-count",
+      "review_result": "verified",
+      "finding": "Verified N=0 rejects, N=1 passes, and N>1 passes calls where the atomically incremented counter modulo N equals 1."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-burst-sampling",
+      "review_result": "verified",
+      "finding": "Verified the BurstSampler contract and code: after the burst it delegates to NextSampler, and returns false when none is configured."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-slog-groups",
+      "review_result": "verified",
+      "finding": "Re-authored to avoid duplicating the separate documentation/implementation group-shape discrepancy. Verified WithAttrs clones and appends attributes; Handle adds pre-attached attributes before record attributes."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-console-pipeline",
+      "review_result": "verified",
+      "finding": "Verified Write decodes JSON/CBOR input, runs optional preparation, writes ordered parts and remaining fields, applies extra formatting, then writes a newline to Out."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-context-fallback",
+      "review_result": "verified",
+      "finding": "Verified Ctx returns an attached logger, then DefaultContextLogger when set, otherwise the disabled logger."
+    },
+    {
+      "case_id": "h-zerolog-conceptual-interface-reflection",
+      "review_result": "verified",
+      "finding": "Verified Interface dispatches LogObjectMarshaler values through Object and all other values through encoder reflection."
+    },
+    {
+      "case_id": "h-zerolog-trace-warning-parse-test",
+      "review_result": "verified",
+      "finding": "Verified case-insensitive WARNING parsing resolves to WarnLevel without error, and the regression test exercises it."
+    },
+    {
+      "case_id": "h-zerolog-trace-print-event",
+      "review_result": "verified",
+      "finding": "Verified package Logger.Print uses Debug, adjusts caller skip by one frame, and sends fmt.Sprint(v...)."
+    },
+    {
+      "case_id": "h-zerolog-trace-event-send-hooks",
+      "review_result": "verified",
+      "finding": "Evidence now includes hook execution, optional message-field encoding, and the downstream write path; hooks run before message insertion and writing."
+    },
+    {
+      "case_id": "h-zerolog-trace-context-roundtrip",
+      "review_result": "verified",
+      "finding": "Verified WithContext stores a pointer to a logger under the private key and Ctx returns that logger when present."
+    },
+    {
+      "case_id": "h-zerolog-trace-diode-lifecycle",
+      "review_result": "verified",
+      "finding": "Evidence now traces NewWriter selection and consumer startup, producer buffer-copy/enqueue, poll consumption and destination Write, then Close cancellation, drain wait, and optional destination Close."
+    },
+    {
+      "case_id": "h-zerolog-trace-slog-handle",
+      "review_result": "verified",
+      "finding": "Evidence now includes level mapping, event creation, context propagation, pre-attached and record attributes, timestamp handling, and final message emission."
+    },
+    {
+      "case_id": "h-zerolog-trace-journald-write",
+      "review_result": "verified",
+      "finding": "Evidence now includes priority conversion, field filtering and value conversion, original JSON argument, and the SendFunc/journal.Send call."
+    },
+    {
+      "case_id": "h-zerolog-trace-dict-array",
+      "review_result": "verified",
+      "finding": "Verified Dict appends the end marker and nested bytes, then returns the temporary Event to the pool."
+    },
+    {
+      "case_id": "h-zerolog-arch-logger-event-encoder",
+      "review_result": "verified",
+      "finding": "Evidence covers Info creation, Logger.should filtering, newEvent level/context setup, message encoding, and Event.write destination call."
+    },
+    {
+      "case_id": "h-zerolog-arch-context-builders",
+      "review_result": "verified",
+      "finding": "Reworded for precision: these builders copy logger-associated context, stack, and hooks into temporary values; the evidence includes those fields."
+    },
+    {
+      "case_id": "h-zerolog-arch-diode-components",
+      "review_result": "verified",
+      "finding": "Evidence now shows the many-to-one diode, interval-based Poller/Waiter choice, launched consumer, and consumer writes to the wrapped destination."
+    },
+    {
+      "case_id": "h-zerolog-arch-slog-adapter",
+      "review_result": "verified",
+      "finding": "Evidence now covers handler construction, the full level conversion switch, and attribute resolution/group/type-specific field conversion."
+    },
+    {
+      "case_id": "h-zerolog-impact-warning-alias",
+      "review_result": "verified",
+      "finding": "Re-authored to remove the duplicate warning-alias hypothetical. Verified the Object dispatch path and the Interface(Object) test case that exercises a marshaler value."
+    },
+    {
+      "case_id": "h-zerolog-impact-field-name",
+      "review_result": "verified",
+      "finding": "Verified the shared timestamp key is configurable and Event.Time uses it when encoding the timestamp field."
+    },
+    {
+      "case_id": "h-zerolog-impact-slog-disabled",
+      "review_result": "verified",
+      "finding": "Verified disabled event construction returns nil and MsgFunc nil-guards; the cited test setup now shows the callback is not invoked."
+    },
+    {
+      "case_id": "h-zerolog-impact-diode-pool-cap",
+      "review_result": "verified",
+      "finding": "Verified only buffers with capacity at most 64 KiB return to the pool; raising/removing the cap permits larger retained buffers."
+    },
+    {
+      "case_id": "h-zerolog-impact-global-level",
+      "review_result": "verified",
+      "finding": "Verified Logger.should enforces both local and global thresholds; added README evidence for the user-facing global-minimum guarantee."
+    },
+    {
+      "case_id": "h-zerolog-disc-print-level",
+      "review_result": "verified",
+      "finding": "Verified the README says trace while package log.Print calls Debug; evidence directly supports the discrepancy."
+    },
+    {
+      "case_id": "h-zerolog-disc-msgf-disabled-allocation",
+      "review_result": "verified",
+      "finding": "Verified Msgf returns immediately for a nil Event while the README retains its allocation warning; this is a valid source-level tension because caller-side argument evaluation/allocation is not ruled out by the nil guard."
+    },
+    {
+      "case_id": "h-zerolog-disc-slog-group-shape",
+      "review_result": "verified",
+      "finding": "Verified docs describe nesting while implementation joins group/key with dots and the test asserts request.method as a flat key."
+    },
+    {
+      "case_id": "h-zerolog-disc-write-method",
+      "review_result": "verified",
+      "finding": "Verified New documents the LevelWriter exception to the generic Write comment and the interface specifies WriteLevel."
+    },
+    {
+      "case_id": "h-zerolog-no-midnight-rotation",
+      "review_result": "verified",
+      "finding": "Negative control verified: no rotation, retention, rolling-file, or midnight implementation terms occur in the packet source search."
+    },
+    {
+      "case_id": "h-zerolog-no-at-rest-encryption",
+      "review_result": "verified",
+      "finding": "Negative control verified: no encryption/cipher/at-rest implementation occurs in the packet source search."
+    },
+    {
+      "case_id": "h-zerolog-no-http-ingest",
+      "review_result": "verified",
+      "finding": "Negative control verified: source exposes local journald SendFunc/journal.Send and no HTTP upload/ingestion client or endpoint."
+    },
+    {
+      "case_id": "h-zerolog-no-config-watcher",
+      "review_result": "verified",
+      "finding": "Negative control verified: YAML is referenced only for level text marshaling; no watcher, reload, or filesystem notification implementation occurs."
+    }
+  ],
+  "searches_for_negatives": [
+    {
+      "case_id": "h-zerolog-no-midnight-rotation",
+      "patterns": [
+        "rotate",
+        "rotation",
+        "retention",
+        "rolling.?file",
+        "midnight"
+      ],
+      "result": "No matches in sources/zerolog.",
+      "conclusion": "No file rotation or retention feature is evidenced."
+    },
+    {
+      "case_id": "h-zerolog-no-at-rest-encryption",
+      "patterns": [
+        "encrypt",
+        "encryption",
+        "cipher",
+        "aes",
+        "chacha",
+        "at.?rest"
+      ],
+      "result": "No matches in sources/zerolog.",
+      "conclusion": "No built-in record encryption stage is evidenced."
+    },
+    {
+      "case_id": "h-zerolog-no-http-ingest",
+      "patterns": [
+        "http\\.Post",
+        "http\\.NewRequest",
+        "upload",
+        "ingest",
+        "endpoint",
+        "journal\\.Send",
+        "SendFunc"
+      ],
+      "result": "Only local journald SendFunc/journal.Send matches; no HTTP request, upload, or ingestion endpoint matches.",
+      "conclusion": "NewJournalDWriter sends to the journald integration, not a source-evidenced remote HTTP endpoint."
+    },
+    {
+      "case_id": "h-zerolog-no-config-watcher",
+      "patterns": [
+        "fsnotify",
+        "watcher",
+        "watch\\(",
+        "yaml",
+        "reload",
+        "config"
+      ],
+      "result": "YAML matches only level MarshalText/UnmarshalText comments; other config matches are unrelated options/docs. No watcher or reload implementation matches.",
+      "conclusion": "The packet does not evidence automatic YAML configuration reload."
+    }
+  ],
+  "changes": [
+    {
+      "case_ids": [
+        "h-zerolog-exact-warning-level"
+      ],
+      "change": "Replaced repeated warning-alias lookup with a distinct numeric ParseLevel range/bounds question."
+    },
+    {
+      "case_ids": [
+        "h-zerolog-conceptual-slog-groups"
+      ],
+      "change": "Replaced duplicated group-flattening behavior with WithAttrs accumulation and record-application behavior."
+    },
+    {
+      "case_ids": [
+        "h-zerolog-impact-warning-alias"
+      ],
+      "change": "Replaced repeated warning-alias impact hypothetical with Event.Interface marshaler dispatch impact."
+    },
+    {
+      "case_ids": [
+        "h-zerolog-arch-context-builders"
+      ],
+      "change": "Clarified the question to ask which logger-associated state is copied into temporary values."
+    },
+    {
+      "case_ids": [
+        "h-zerolog-exact-msgfunc",
+        "h-zerolog-conceptual-sampler-count",
+        "h-zerolog-conceptual-console-pipeline",
+        "h-zerolog-conceptual-interface-reflection",
+        "h-zerolog-trace-diode-lifecycle",
+        "h-zerolog-trace-event-send-hooks",
+        "h-zerolog-trace-slog-handle",
+        "h-zerolog-trace-journald-write",
+        "h-zerolog-arch-logger-event-encoder",
+        "h-zerolog-arch-context-builders",
+        "h-zerolog-arch-diode-components",
+        "h-zerolog-arch-slog-adapter",
+        "h-zerolog-impact-slog-disabled",
+        "h-zerolog-impact-global-level"
+      ],
+      "change": "Expanded cited evidence to include implementation steps, regression setup, or user-facing guarantee needed to answer the question."
+    },
+    {
+      "change": "Saved the pre-review question file as submission/zerolog-questions.before-review.json and updated zerolog-review.json queries_sha256; negative rationales were unchanged."
+    }
+  ],
+  "unresolved_issues": []
+}

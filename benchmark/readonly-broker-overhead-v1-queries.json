@@ -1,0 +1,146 @@
+[
+  {
+    "id": "cobra-01",
+    "repo": "cobra",
+    "category": "exact",
+    "query": "Locate the ExactArgs implementation and its invalid-count test.",
+    "evidence": [
+      {
+        "path": "args.go",
+        "start": 107,
+        "end": 107,
+        "anchor": "func ExactArgs(",
+        "file_sha256": "15b870d1e8a0a10341675ddee8e20bef92a21883257b6b3b11110944a573a2e7"
+      },
+      {
+        "path": "args_test.go",
+        "start": 345,
+        "end": 345,
+        "anchor": "func TestExactArgs_WithInvalidCount(",
+        "file_sha256": "37058f718eb5ffc7d70f917d694c04aa11fc39ba32ad8d1db9766e9d8eb009ae"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "cobra-02",
+    "repo": "cobra",
+    "category": "exact",
+    "query": "Locate ExecuteContext and the test for executing with a context.",
+    "evidence": [
+      {
+        "path": "command.go",
+        "start": 1062,
+        "end": 1062,
+        "anchor": "func (c *Command) ExecuteContext(",
+        "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+      },
+      {
+        "path": "command_test.go",
+        "start": 177,
+        "end": 177,
+        "anchor": "func TestExecuteContext(",
+        "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-01",
+    "repo": "fastify",
+    "category": "exact",
+    "query": "Locate decorate and the duplicate decorator error it raises.",
+    "evidence": [
+      {
+        "path": "lib/decorate.js",
+        "start": 19,
+        "end": 19,
+        "anchor": "function decorate (",
+        "file_sha256": "8b33c5fb73b04c6c95483277c5aad87ede9257af040e273f9b0df6ea1b7ab339"
+      },
+      {
+        "path": "lib/decorate.js",
+        "start": 21,
+        "end": 21,
+        "anchor": "    throw new FST_ERR_DEC_ALREADY_PRESENT(name)",
+        "file_sha256": "8b33c5fb73b04c6c95483277c5aad87ede9257af040e273f9b0df6ea1b7ab339"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "fastify-02",
+    "repo": "fastify",
+    "category": "exact",
+    "query": "Locate validateBodyLimitOption and its invalid bodyLimit error.",
+    "evidence": [
+      {
+        "path": "lib/route.js",
+        "start": 631,
+        "end": 631,
+        "anchor": "function validateBodyLimitOption (",
+        "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+      },
+      {
+        "path": "lib/route.js",
+        "start": 634,
+        "end": 634,
+        "anchor": "    throw new FST_ERR_ROUTE_BODY_LIMIT_OPTION_NOT_INT(bodyLimit)",
+        "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-01",
+    "repo": "flask",
+    "category": "exact",
+    "query": "Locate ensure_sync and the async route test.",
+    "evidence": [
+      {
+        "path": "src/flask/app.py",
+        "start": 1065,
+        "end": 1065,
+        "anchor": "    def ensure_sync(",
+        "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+      },
+      {
+        "path": "tests/test_async.py",
+        "start": 82,
+        "end": 82,
+        "anchor": "def test_async_route(",
+        "file_sha256": "0a6a50bfd651581478abe8cda5c94aba6d70df35567a220aabc7ba08202d471c"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  },
+  {
+    "id": "flask-02",
+    "repo": "flask",
+    "category": "exact",
+    "query": "Locate SecureCookieSessionInterface.get_signing_serializer and the secret key fallback test.",
+    "evidence": [
+      {
+        "path": "src/flask/sessions.py",
+        "start": 303,
+        "end": 303,
+        "anchor": "    def get_signing_serializer(",
+        "file_sha256": "26fa7cc311b841f8409ad93933d3a3a52b068150c6f15fc3cd0c107e7a9aaf9d"
+      },
+      {
+        "path": "tests/test_basic.py",
+        "start": 396,
+        "end": 396,
+        "anchor": "def test_session_secret_key_fallbacks(",
+        "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "author_selected_exploratory"
+  }
+]

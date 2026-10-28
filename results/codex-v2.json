@@ -1,0 +1,556 @@
+{
+  "batch": "codex-v2",
+  "planned_trials": 18,
+  "completed_trials": 13,
+  "arms": {
+    "graf_current_orient": {
+      "completed_trials": 4,
+      "verifier_passes": 1,
+      "recorded_tokens": 892301,
+      "all_invocations_have_usage": true
+    },
+    "graphify_orient": {
+      "completed_trials": 4,
+      "verifier_passes": 2,
+      "recorded_tokens": 1034234,
+      "all_invocations_have_usage": true
+    },
+    "search_only": {
+      "completed_trials": 5,
+      "verifier_passes": 3,
+      "recorded_tokens": 841462,
+      "all_invocations_have_usage": true
+    }
+  },
+  "cases": [
+    {
+      "task": "undici-5520",
+      "attempt": 2,
+      "trial": "codex-v2-undici-5520-graphify_orient-2",
+      "arm": "graphify_orient",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 50.62308458301413,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 16602,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 290045,
+        "cached_input_tokens": 260352,
+        "reasoning_tokens": 75,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 16,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 2,
+      "trial": "codex-v2-undici-5520-graf_current_orient-2",
+      "arm": "graf_current_orient",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 30.60541041599936,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 14721,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 291935,
+        "cached_input_tokens": 262656,
+        "reasoning_tokens": 120,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 16,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 2,
+      "trial": "codex-v2-undici-5520-search_only-2",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 30.238334875000874,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 11872,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 221176,
+        "cached_input_tokens": 178048,
+        "reasoning_tokens": 539,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 15,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-v2-click-1884-search_only-1",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": true,
+      "agent_called_finish": true,
+      "wall_s": 31.39533745800145,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 13,
+      "broker_requests": 13,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 5306,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 163621,
+        "cached_input_tokens": 132480,
+        "reasoning_tokens": 457,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 13,
+        "verification_passed": true
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-v2-click-1884-graphify_orient-1",
+      "arm": "graphify_orient",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": true,
+      "agent_called_finish": true,
+      "wall_s": 36.27019612499862,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 13,
+      "broker_requests": 13,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 9619,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 228700,
+        "cached_input_tokens": 207360,
+        "reasoning_tokens": 613,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 14,
+        "verification_passed": true
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-v2-click-1884-graf_current_orient-1",
+      "arm": "graf_current_orient",
+      "model": "gpt-6-luna",
+      "error": null,
+      "passed": false,
+      "agent_called_finish": false,
+      "wall_s": 18.56585595899378,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 5,
+      "broker_requests": 5,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 7214,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 97808,
+        "cached_input_tokens": 57984,
+        "reasoning_tokens": 0,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 7,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 2,
+      "trial": "codex-v2-click-1884-graf_current_orient-2",
+      "arm": "graf_current_orient",
+      "model": "gpt-6-luna",
+      "error": null,
+      "passed": true,
+      "agent_called_finish": true,
+      "wall_s": 23.37134787499963,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 9,
+      "broker_requests": 9,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 7495,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 145265,
+        "cached_input_tokens": 107008,
+        "reasoning_tokens": 343,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 10,
+        "verification_passed": true
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 2,
+      "trial": "codex-v2-click-1884-graphify_orient-2",
+      "arm": "graphify_orient",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": true,
+      "agent_called_finish": true,
+      "wall_s": 37.06968266700278,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 14,
+      "broker_requests": 14,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 9375,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 242429,
+        "cached_input_tokens": 204160,
+        "reasoning_tokens": 451,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 15,
+        "verification_passed": true
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 2,
+      "trial": "codex-v2-click-1884-search_only-2",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": true,
+      "agent_called_finish": true,
+      "wall_s": 30.630390499994974,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 11,
+      "broker_requests": 11,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 6245,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 171958,
+        "cached_input_tokens": 155520,
+        "reasoning_tokens": 497,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 11,
+        "verification_passed": true
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 1,
+      "trial": "codex-v2-undici-5520-graf_current_orient-1",
+      "arm": "graf_current_orient",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 31.21205720900616,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 16,
+      "broker_requests": 16,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 21511,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 357293,
+        "cached_input_tokens": 320000,
+        "reasoning_tokens": 246,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 17,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 1,
+      "trial": "codex-v2-undici-5520-search_only-1",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 24.55195629199443,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 13,
+      "broker_requests": 13,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 1,
+      "native_reply_content_tokens_cl100k": 12381,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 199413,
+        "cached_input_tokens": 172416,
+        "reasoning_tokens": 356,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 13,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 1,
+      "trial": "codex-v2-undici-5520-graphify_orient-1",
+      "arm": "graphify_orient",
+      "model": "gpt-6-luna",
+      "error": "observed token stop threshold reached after native turn; may overshoot",
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 42.74615754200204,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 14326,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 273060,
+        "cached_input_tokens": 247296,
+        "reasoning_tokens": 428,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 16,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 2,
+      "trial": "codex-v2-gin-2718-search_only-2",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": null,
+      "passed": true,
+      "agent_called_finish": true,
+      "wall_s": 21.76188337500207,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 7,
+      "broker_requests": 7,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "failed_broker_requests": 0,
+      "native_reply_content_tokens_cl100k": 3618,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 85294,
+        "cached_input_tokens": 74624,
+        "reasoning_tokens": 264,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 7,
+        "verification_passed": true
+      },
+      "promotion_eligible": false
+    }
+  ],
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "blockers": [
+    "3 reused task(s), insufficient for promotion or statistical inference",
+    "Internal provider request counts and subscription charges unmeasured",
+    "Missing trials"
+  ],
+  "solver_validation": {
+    "expected_trials": 18,
+    "complete_unique_workload": false,
+    "arms": {
+      "graf_current_orient": {
+        "completed": 4,
+        "protocol_complete": 1,
+        "verifier_passes": 1,
+        "task_passes": {
+          "gin-2718": 0,
+          "click-1884": 1,
+          "undici-5520": 0
+        }
+      },
+      "graphify_orient": {
+        "completed": 4,
+        "protocol_complete": 0,
+        "verifier_passes": 2,
+        "task_passes": {
+          "gin-2718": 0,
+          "click-1884": 2,
+          "undici-5520": 0
+        }
+      },
+      "search_only": {
+        "completed": 5,
+        "protocol_complete": 1,
+        "verifier_passes": 3,
+        "task_passes": {
+          "gin-2718": 1,
+          "click-1884": 2,
+          "undici-5520": 0
+        }
+      }
+    },
+    "protocol_validation_pass": false,
+    "behavioral_validation_pass": false,
+    "solver_readiness_pass": false,
+    "severe_quality_losses": [
+      {
+        "task": "click-1884",
+        "attempt": 1,
+        "comparator": "graphify_orient"
+      },
+      {
+        "task": "click-1884",
+        "attempt": 1,
+        "comparator": "search_only"
+      }
+    ],
+    "product_promotion_pass": false,
+    "agent_efficiency_acceptance_pass": false,
+    "interpretation": "Development solver validation only. Readiness does not establish superiority, statistical significance, held-out quality or agent token savings."
+  }
+}

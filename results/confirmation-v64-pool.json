@@ -1,0 +1,2249 @@
+{
+ "depth": 10,
+ "seed": 20261018,
+ "comparison_sha256": "1cd731799f390e6e7053c63ff3a606b59175118fe6c9d380833bd5c27b3c2f90",
+ "query_sha256": "cbbdef34c9d16d5e9ffbfda1969914ff0fbaa8f5953a2408ca3b096b0d8d9f29",
+ "queries": {
+  "h-pino-01": {
+   "repo": "pino",
+   "query": "Which option controls Pino\u2019s maximum depth and breadth when its fallback serializer handles a value?",
+   "files": [
+    "test/types/pino.tst.ts",
+    "test/browser.test.js",
+    "test/types/pino-import.tst.js",
+    "lib/transport.js",
+    "browser.js",
+    "test/serializers.test.js",
+    "test/helper.js",
+    "test/transport/node-options.test.js",
+    "test/redact.test.js",
+    "test/levels.test.js",
+    "lib/tools.js",
+    "test/fixtures/transport-invalid-node-options.js",
+    "pino.d.ts",
+    "test/types/pino-type-only.tst.ts",
+    "test/types/pino.ts"
+   ]
+  },
+  "h-pino-02": {
+   "repo": "pino",
+   "query": "What exact warning code is emitted when a custom level formatter may break multi-target routing?",
+   "files": [
+    "test/multistream.test.js",
+    "test/types/pino.tst.ts",
+    "test/helper.js",
+    "lib/transport.js",
+    "test/browser-is-level-enabled.test.js",
+    "test/custom-levels.test.js",
+    "lib/transport-stream.js",
+    "test/transport/targets.test.js",
+    "lib/deprecations.js",
+    "lib/multistream.js",
+    "lib/proto.js",
+    "benchmarks/utils/wrap-log-level.js",
+    "test/types/pino.ts",
+    "test/formatters.test.js",
+    "test/transport/core.test.js"
+   ]
+  },
+  "h-pino-03": {
+   "repo": "pino",
+   "query": "How does a child logger expose the logger version and read-only numeric level value?",
+   "files": [
+    "pino.js",
+    "examples/transport.js",
+    "browser.js",
+    "pino.d.ts",
+    "test/custom-levels.test.js",
+    "test/browser-redaction.test.js",
+    "lib/levels.js",
+    "test/types/pino-type-only.tst.ts",
+    "benchmarks/internal/parent-vs-child.bench.js",
+    "test/basic.test.js",
+    "test/types/pino.tst.ts",
+    "test/helper.js",
+    "benchmarks/utils/wrap-log-level.js",
+    "test/levels.test.js"
+   ]
+  },
+  "h-pino-04": {
+   "repo": "pino",
+   "query": "What is the built-in censor text used when redaction does not specify a censor?",
+   "files": [
+    "lib/symbols.js",
+    "test/types/pino.tst.ts",
+    "lib/proto.js",
+    "test/helper.js",
+    "pino.js",
+    "test/browser-redaction.test.js",
+    "test/redact.test.js",
+    "lib/tools.js",
+    "lib/levels.js",
+    "test/custom-levels.test.js",
+    "pino.d.ts",
+    "browser.js",
+    "test/formatters.test.js"
+   ]
+  },
+  "h-pino-05": {
+   "repo": "pino",
+   "query": "How does the library handle an explicit useOnlyCustomLevels setting when customLevels is absent?",
+   "files": [
+    "lib/tools.js",
+    "test/browser-is-level-enabled.test.js",
+    "lib/proto.js",
+    "test/is-level-enabled.test.js",
+    "browser.js",
+    "lib/levels.js",
+    "lib/symbols.js",
+    "lib/transport.js",
+    "test/levels.test.js",
+    "test/browser.test.js",
+    "pino.d.ts",
+    "test/custom-levels.test.js",
+    "lib/redaction.js",
+    "test/basic.test.js"
+   ]
+  },
+  "h-pino-06": {
+   "repo": "pino",
+   "query": "What default values does Pino use for messageKey and errorKey?",
+   "files": [
+    "test/levels.test.js",
+    "pino.d.ts",
+    "test/error-key.test.js",
+    "test/serializers.test.js",
+    "test/fixtures/default-exit.js",
+    "test/helper.js",
+    "test/types/pino-import.tst.js",
+    "test/transport/uses-pino-config.test.js",
+    "test/types/pino.ts",
+    "lib/symbols.js",
+    "test/types/pino.tst.ts",
+    "lib/tools.js",
+    "lib/levels.js",
+    "test/error.test.js",
+    "lib/proto.js",
+    "browser.js",
+    "test/basic.test.js"
+   ]
+  },
+  "h-pino-07": {
+   "repo": "pino",
+   "query": "When a child receives msgPrefix, how is its prefix derived from the parent?",
+   "files": [
+    "benchmarks/basic.bench.js",
+    "lib/transport.js",
+    "test/multistream.test.js",
+    "test/browser-serializers.test.js",
+    "test/types/pino.tst.ts",
+    "pino.d.ts",
+    "lib/symbols.js",
+    "lib/tools.js",
+    "benchmarks/internal/parent-vs-child.bench.js",
+    "pino.js",
+    "test/serializers.test.js",
+    "browser.js",
+    "lib/levels.js",
+    "test/basic.test.js"
+   ]
+  },
+  "h-pino-08": {
+   "repo": "pino",
+   "query": "What metadata fields does a logger write onto a metadata-aware destination before writing the serialized line?",
+   "files": [
+    "browser.js",
+    "test/browser.test.js",
+    "examples/transport.js",
+    "test/transport/pipeline.test.js",
+    "test/types/pino.tst.ts",
+    "pino.js",
+    "test/metadata.test.js",
+    "pino.d.ts",
+    "test/types/pino.ts",
+    "test/multistream.test.js",
+    "test/types/pino-type-only.tst.ts",
+    "lib/multistream.js"
+   ]
+  },
+  "h-pino-09": {
+   "repo": "pino",
+   "query": "Why can a logger created with base:null omit pid and hostname, and what path adds its initial bindings otherwise?",
+   "files": [
+    "lib/levels.js",
+    "pino.d.ts",
+    "test/formatters.test.js",
+    "test/helper.js",
+    "browser.js",
+    "test/transport/core.test.js",
+    "test/basic.test.js",
+    "lib/proto.js",
+    "test/fixtures/pretty/null-prototype.js",
+    "test/syncfalse.test.js",
+    "test/internals/version.test.js",
+    "examples/transport.js",
+    "benchmarks/formatters.bench.js",
+    "benchmarks/internal/custom-levels.js"
+   ]
+  },
+  "h-pino-10": {
+   "repo": "pino",
+   "query": "How does the default mixin merge resolve a key supplied by both the log call and mixin?",
+   "files": [
+    "pino.d.ts",
+    "test/diagnostics.test.js",
+    "test/fixtures/default-exit.js",
+    "benchmarks/basic.bench.js",
+    "lib/symbols.js",
+    "benchmarks/utils/runbench.js",
+    "pino.js",
+    "test/mixin-merge-strategy.test.js",
+    "test/mixin.test.js",
+    "test/redact.test.js",
+    "test/error-key.test.js",
+    "test/helper.js",
+    "test/types/pino.tst.ts"
+   ]
+  },
+  "h-pino-11": {
+   "repo": "pino",
+   "query": "What distinction does Pino make between an Error passed as the log object and an ordinary object with an error field?",
+   "files": [
+    "lib/tools.js",
+    "pino.js",
+    "test/browser.test.js",
+    "benchmarks/deep-object.bench.js",
+    "lib/levels.js",
+    "test/basic.test.js",
+    "test/browser-transmit.test.js",
+    "test/types/pino.tst.ts",
+    "pino.d.ts",
+    "benchmarks/object.bench.js",
+    "test/error-key.test.js",
+    "benchmarks/utils/runbench.js",
+    "browser.js"
+   ]
+  },
+  "h-pino-12": {
+   "repo": "pino",
+   "query": "How do child bindings become part of output, and why can repeated binding names appear in the serialized line?",
+   "files": [
+    "benchmarks/internal/parent-vs-child.bench.js",
+    "benchmarks/formatters.bench.js",
+    "test/browser-serializers.test.js",
+    "pino.d.ts",
+    "test/browser-bindings.test.js",
+    "lib/constants.js",
+    "test/transport/pipeline.test.js",
+    "test/syncfalse.test.js",
+    "test/browser-transmit.test.js",
+    "test/types/pino.tst.ts",
+    "lib/levels.js",
+    "browser.js",
+    "pino.js",
+    "test/helper.js",
+    "test/browser-set-bindings.test.js"
+   ]
+  },
+  "h-pino-13": {
+   "repo": "pino",
+   "query": "What is the distinction between logger-level gating and per-destination level filtering for a multistream?",
+   "files": [
+    "examples/transport.js",
+    "test/custom-levels.test.js",
+    "pino.d.ts",
+    "test/transport/module-link.test.js",
+    "test/helper.js",
+    "test/multistream.test.js",
+    "test/types/pino.ts",
+    "pino.js",
+    "test/browser-transmit.test.js",
+    "test/transport/core.test.js",
+    "test/types/pino-type-only.tst.ts",
+    "lib/worker.js",
+    "test/syncfalse.test.js",
+    "benchmarks/multistream.js"
+   ]
+  },
+  "h-pino-14": {
+   "repo": "pino",
+   "query": "How does Pino preserve redaction when an object is interpolated into the message string?",
+   "files": [
+    "lib/tools.js",
+    "test/redact.test.js",
+    "test/browser-redaction.test.js",
+    "browser.js",
+    "benchmarks/object.bench.js",
+    "test/error.test.js",
+    "test/types/pino.tst.ts",
+    "pino.d.ts",
+    "test/serializers.test.js",
+    "lib/proto.js",
+    "test/types/pino.ts",
+    "lib/symbols.js",
+    "test/types/pino-import.tst.js",
+    "test/browser-transmit.test.js"
+   ]
+  },
+  "h-pino-15": {
+   "repo": "pino",
+   "query": "Why does a no-options child creation take a separate fast path, and what does it still reset or invoke?",
+   "files": [
+    "test/browser-child.test.js",
+    "benchmarks/internal/just-pino.bench.js",
+    "benchmarks/internal/parent-vs-child.bench.js",
+    "test/redact.test.js",
+    "test/types/pino.tst.ts",
+    "benchmarks/internal/custom-levels.js",
+    "test/basic.test.js",
+    "test/internals/version.test.js",
+    "test/transport/node-options.test.js",
+    "benchmarks/child-creation.bench.js",
+    "test/browser-bindings.test.js",
+    "browser.js",
+    "lib/transport.js"
+   ]
+  },
+  "h-pino-16": {
+   "repo": "pino",
+   "query": "How are standard level methods disabled or generated when the level threshold changes?",
+   "files": [
+    "pino.d.ts",
+    "test/browser-serializers.test.js",
+    "test/custom-levels.test.js",
+    "test/transport/core.test.js",
+    "lib/proto.js",
+    "lib/tools.js",
+    "test/browser-disabled.test.js",
+    "pino.js",
+    "test/helper.js",
+    "test/is-level-enabled.test.js",
+    "browser.js"
+   ]
+  },
+  "h-pino-17": {
+   "repo": "pino",
+   "query": "Trace the path from calling logger.info(object, message) to bytes written, including the mixin and streamWrite hook.",
+   "files": [
+    "test/internals/version.test.js",
+    "benchmarks/deep-object.bench.js",
+    "test/multistream.test.js",
+    "test/hooks.test.js",
+    "lib/caller.js",
+    "benchmarks/long-string.bench.js",
+    "lib/symbols.js",
+    "test/types/pino.tst.ts",
+    "examples/transport.js",
+    "test/mixin.test.js",
+    "test/mixin-merge-strategy.test.js",
+    "benchmarks/object.bench.js",
+    "test/levels.test.js",
+    "test/helper.js"
+   ]
+  },
+  "h-pino-18": {
+   "repo": "pino",
+   "query": "Trace how a custom level added at logger construction becomes a callable method and how changing logger.level updates that method set.",
+   "files": [
+    "pino.d.ts",
+    "lib/proto.js",
+    "pino.js",
+    "test/custom-levels.test.js",
+    "lib/caller.js",
+    "test/browser-transmit.test.js",
+    "test/types/pino.tst.ts",
+    "test/transport/core.test.js",
+    "examples/transport.js",
+    "test/browser.test.js",
+    "browser.js",
+    "test/is-level-enabled.test.js",
+    "test/helper.js",
+    "test/levels.test.js"
+   ]
+  },
+  "h-pino-19": {
+   "repo": "pino",
+   "query": "Follow a redact path from logger initialization into serialization and identify where redaction is applied.",
+   "files": [
+    "lib/levels.js",
+    "test/types/pino.tst.ts",
+    "pino.d.ts",
+    "test/timestamp-nano.test.js",
+    "test/redact.test.js",
+    "test/browser-redaction.test.js",
+    "browser.js",
+    "lib/tools.js",
+    "test/hooks.test.js",
+    "examples/transport.js",
+    "lib/redaction.js",
+    "lib/symbols.js",
+    "test/internals/version.test.js"
+   ]
+  },
+  "h-pino-20": {
+   "repo": "pino",
+   "query": "Trace how a child logger with new bindings and a custom serializer option is assembled.",
+   "files": [
+    "pino.js",
+    "benchmarks/internal/parent-vs-child.bench.js",
+    "test/types/pino.tst.ts",
+    "test/browser-bindings.test.js",
+    "test/transport/node-options.test.js",
+    "test/browser-set-bindings.test.js",
+    "test/browser-transmit.test.js",
+    "browser.js",
+    "pino.d.ts",
+    "examples/transport.js",
+    "lib/caller.js",
+    "test/helper.js",
+    "test/custom-levels.test.js",
+    "test/serializers.test.js"
+   ]
+  },
+  "h-pino-21": {
+   "repo": "pino",
+   "query": "Trace how fatal logging differs from info after the line is emitted.",
+   "files": [
+    "test/multistream.test.js",
+    "test/transport/pipeline.test.js",
+    "test/browser.test.js",
+    "test/is-level-enabled.test.js",
+    "lib/caller.js",
+    "test/basic.test.js",
+    "test/transport/core.test.js",
+    "lib/constants.js",
+    "examples/transport.js",
+    "test/transport/module-link.test.js",
+    "test/helper.js",
+    "pino.js",
+    "test/syncfalse.test.js",
+    "browser.js",
+    "benchmarks/multistream.js",
+    "test/types/pino.tst.ts",
+    "pino.d.ts"
+   ]
+  },
+  "h-pino-22": {
+   "repo": "pino",
+   "query": "Trace how a multistream determines which destinations receive one record when dedupe is enabled.",
+   "files": [
+    "test/is-level-enabled.test.js",
+    "pino.d.ts",
+    "test/transport/module-link.test.js",
+    "lib/levels.js",
+    "test/types/pino-multistream.tst.ts",
+    "test/syncfalse.test.js",
+    "test/transport/core.test.js",
+    "test/types/pino.tst.ts",
+    "pino.js",
+    "test/multistream.test.js",
+    "benchmarks/multistream.js",
+    "lib/caller.js",
+    "test/browser-is-level-enabled.test.js",
+    "lib/transport.js"
+   ]
+  },
+  "h-pino-23": {
+   "repo": "pino",
+   "query": "Trace how a transport configured with multiple targets builds its worker-side routing stream.",
+   "files": [
+    "test/helper.js",
+    "pino.js",
+    "lib/transport.js",
+    "test/transport/targets.test.js",
+    "lib/transport-stream.js",
+    "lib/caller.js",
+    "test/transport/bundlers-support.test.js",
+    "test/transport/node-options.test.js",
+    "lib/tools.js",
+    "examples/transport.js",
+    "test/transport/native-type-stripping.test.mjs",
+    "test/transport/big.test.js",
+    "test/transport/core.test.js",
+    "test/types/pino.tst.ts"
+   ]
+  },
+  "h-pino-24": {
+   "repo": "pino",
+   "query": "Trace how the logger\u2019s flush method behaves when its destination has no flush method.",
+   "files": [
+    "test/levels.test.js",
+    "test/esm/named-exports.mjs",
+    "pino.js",
+    "test/stdout-protection.test.js",
+    "lib/transport.js",
+    "test/browser.test.js",
+    "lib/levels.js",
+    "test/multistream.test.js",
+    "test/types/pino.ts",
+    "test/transport/native-type-stripping.test.mjs",
+    "test/syncfalse.test.js",
+    "examples/transport.js",
+    "test/browser-transmit.test.js",
+    "pino.d.ts",
+    "test/types/pino-top-export.tst.ts",
+    "test/types/pino-import.tst.js",
+    "lib/caller.js"
+   ]
+  },
+  "h-pino-25": {
+   "repo": "pino",
+   "query": "Which modules divide responsibility for logger construction, logger behavior, level mapping, and redaction?",
+   "files": [
+    "test/esm/named-exports.mjs",
+    "examples/transport.js",
+    "test/types/pino-top-export.tst.ts",
+    "test/custom-levels.test.js",
+    "test/transport/module-link.test.js",
+    "pino.d.ts",
+    "lib/tools.js",
+    "test/types/pino-type-only.tst.ts",
+    "test/browser-redaction.test.js",
+    "test/browser-child.test.js",
+    "test/levels.test.js",
+    "lib/transport-stream.js"
+   ]
+  },
+  "h-pino-26": {
+   "repo": "pino",
+   "query": "How are logger instances tied to EventEmitter behavior while sharing a prototype created by a factory?",
+   "files": [
+    "pino.d.ts",
+    "benchmarks/utils/wrap-log-level.js",
+    "test/basic.test.js",
+    "test/transport/core.test.js",
+    "test/transport/node-options.test.js",
+    "examples/transport.js",
+    "test/syncfalse.test.js",
+    "test/transport/module-link.test.js",
+    "test/transport/sync-false.test.js",
+    "test/diagnostics.test.js",
+    "test/helper.js",
+    "test/redact.test.js",
+    "test/formatters.test.js",
+    "browser.js",
+    "lib/levels.js",
+    "test/transport/pipeline.test.js"
+   ]
+  },
+  "h-pino-27": {
+   "repo": "pino",
+   "query": "What is the transport architecture boundary between application-thread logging and target processing?",
+   "files": [
+    "pino.js",
+    "lib/tools.js",
+    "test/transport/native-type-stripping.test.mjs",
+    "lib/symbols.js",
+    "test/transport/node-options.test.js",
+    "test/transport/core.test.js",
+    "test/types/pino.tst.ts",
+    "examples/transport.js",
+    "test/types/pino-top-export.tst.ts",
+    "lib/transport.js",
+    "test/transport/sync-false.test.js",
+    "pino.d.ts",
+    "test/helper.js",
+    "lib/transport-stream.js",
+    "test/transport/targets.test.js"
+   ]
+  },
+  "h-pino-28": {
+   "repo": "pino",
+   "query": "How does multi-target transport setup represent target routing state and shutdown behavior?",
+   "files": [
+    "test/types/pino.tst.ts",
+    "lib/transport.js",
+    "test/transport/module-link.test.js",
+    "test/transport/targets.test.js",
+    "test/transport/sync-false.test.js",
+    "examples/transport.js",
+    "test/helper.js",
+    "test/multistream.test.js",
+    "browser.js",
+    "test/transport/pipeline.test.js",
+    "test/transport/core.test.js",
+    "pino.js",
+    "pino.d.ts",
+    "lib/tools.js"
+   ]
+  },
+  "h-pino-29": {
+   "repo": "pino",
+   "query": "If a change renames the numeric level property in formatter output, what multi-target behavior and warning path should be reviewed?",
+   "files": [
+    "test/formatters.test.js",
+    "lib/proto.js",
+    "lib/tools.js",
+    "test/multistream.test.js",
+    "test/transport/targets.test.js",
+    "test/internals/version.test.js",
+    "lib/transport.js",
+    "pino.d.ts",
+    "test/syncfalse.test.js",
+    "lib/deprecations.js",
+    "test/transport/sync-false.test.js",
+    "test/transport/core.test.js",
+    "test/transport/sync-true.test.js",
+    "benchmarks/multi-arg.bench.js"
+   ]
+  },
+  "h-pino-30": {
+   "repo": "pino",
+   "query": "If child loggers are changed to merge bindings into objects instead of appending chindings, which documented duplicate-key behavior and tests are affected?",
+   "files": [
+    "test/browser-child.test.js",
+    "test/helper.js",
+    "pino.d.ts",
+    "test/browser-redaction.test.js",
+    "lib/proto.js",
+    "lib/tools.js",
+    "test/mixin-merge-strategy.test.js",
+    "test/transport/core.transpiled.test.ts",
+    "test/browser-set-bindings.test.js",
+    "lib/symbols.js",
+    "browser.js",
+    "test/complex-objects.test.js",
+    "test/error-key.test.js",
+    "benchmarks/internal/parent-vs-child.bench.js",
+    "pino.js",
+    "test/browser-bindings.test.js",
+    "test/browser-serializers.test.js"
+   ]
+  },
+  "h-pino-31": {
+   "repo": "pino",
+   "query": "If streamWrite hook behavior changes, what assertions should be checked about hook execution and the write path?",
+   "files": [
+    "test/transport/module-link.test.js",
+    "lib/tools.js",
+    "lib/levels.js",
+    "test/transport/core.test.js",
+    "test/internals/version.test.js",
+    "lib/multistream.js",
+    "test/browser-child.test.js",
+    "pino.d.ts",
+    "test/helper.js",
+    "test/multistream.test.js",
+    "lib/worker.js",
+    "test/basic.test.js",
+    "test/types/pino.tst.ts",
+    "test/syncfalse.test.js"
+   ]
+  },
+  "h-pino-32": {
+   "repo": "pino",
+   "query": "If a child-level redact override changes, which ordering constraint protects bindings and what serializer state must be rebuilt?",
+   "files": [
+    "lib/tools.js",
+    "benchmarks/internal/parent-vs-child.bench.js",
+    "pino.js",
+    "browser.js",
+    "test/transport/core.test.js",
+    "pino.d.ts",
+    "lib/redaction.js",
+    "test/basic.test.js",
+    "test/helper.js",
+    "test/serializers.test.js",
+    "test/browser-bindings.test.js",
+    "test/custom-levels.test.js",
+    "test/browser-redaction.test.js",
+    "test/types/pino.tst.ts"
+   ]
+  },
+  "h-pino-33": {
+   "repo": "pino",
+   "query": "If multistream dedupe sorting changes, which routing invariant and tests should guard delivery to streams at equal versus different levels?",
+   "files": [
+    "pino.d.ts",
+    "test/custom-levels.test.js",
+    "test/types/pino-multistream.tst.ts",
+    "lib/transport.js",
+    "lib/worker.js",
+    "test/transport/core.transpiled.test.ts",
+    "lib/constants.js",
+    "benchmarks/multistream.js",
+    "lib/levels.js",
+    "test/transport/core.test.js",
+    "test/types/pino.ts",
+    "pino.js",
+    "lib/proto.js",
+    "test/helper.js"
+   ]
+  },
+  "h-pino-34": {
+   "repo": "pino",
+   "query": "The redaction guide says the implementation is built on fast-redact. What dependency does this source revision actually import?",
+   "files": [
+    "benchmarks/deep-object.bench.js",
+    "lib/worker.js",
+    "benchmarks/multi-arg.bench.js",
+    "test/browser-redaction.test.js",
+    "lib/proto.js",
+    "benchmarks/child.bench.js",
+    "benchmarks/object.bench.js",
+    "benchmarks/child-creation.bench.js",
+    "test/redact.test.js",
+    "benchmarks/child-child.bench.js",
+    "browser.js",
+    "test/fixtures/transport-uses-pino-config.js",
+    "test/fixtures/ts/transpile.cjs",
+    "benchmarks/long-string.bench.js",
+    "benchmarks/basic.bench.js",
+    "lib/transport-stream.js",
+    "test/fixtures/transport-transform.js"
+   ]
+  },
+  "h-pino-35": {
+   "repo": "pino",
+   "query": "The API lists `redact` default as `undefined`. When callers omit it, what value is merged into options internally, and does that value enter the redactor setup branch?",
+   "files": [
+    "test/escaping.test.js",
+    "test/browser-redaction.test.js",
+    "test/caller.test.js",
+    "lib/transport.js",
+    "test/fixtures/default-exit.js",
+    "test/transport/node-options.test.js",
+    "test/levels.test.js",
+    "test/helper.js",
+    "pino.d.ts",
+    "test/redact.test.js",
+    "browser.js",
+    "lib/redaction.js"
+   ]
+  },
+  "h-pino-36": {
+   "repo": "pino",
+   "query": "The transport guide says transport.level is ignored with a single target. What does the worker do when that target has a level?",
+   "files": [
+    "test/types/pino-transport.tst.ts",
+    "test/transport/crash.test.js",
+    "test/transport/targets.test.js",
+    "lib/transport-stream.js",
+    "test/transport/core.test.js",
+    "pino.d.ts",
+    "test/transport/bundlers-support.test.js",
+    "test/helper.js",
+    "lib/transport.js",
+    "test/transport/node-options.test.js",
+    "lib/tools.js",
+    "test/types/pino.tst.ts",
+    "examples/transport.js",
+    "pino.js"
+   ]
+  },
+  "h-pino-37": {
+   "repo": "pino",
+   "query": "The API reference lists the default for `customLevels` as `undefined`. For an omitted option, what default enters normalized logger options?",
+   "files": [
+    "lib/levels.js",
+    "test/fixtures/default-exit.js",
+    "lib/worker.js",
+    "test/transport/node-options.test.js",
+    "pino.d.ts",
+    "test/serializers.test.js",
+    "test/types/pino.ts",
+    "examples/transport.js",
+    "test/browser-is-level-enabled.test.js",
+    "test/helper.js",
+    "test/levels.test.js",
+    "test/escaping.test.js",
+    "lib/proto.js",
+    "test/custom-levels.test.js"
+   ]
+  },
+  "h-rich-01": {
+   "repo": "rich",
+   "query": "Which Console method writes positional objects as strings with a separator, disables markup and wrapping, and calls print with crop=False?",
+   "files": [
+    "tests/test_prompt.py",
+    "tests/test_text.py",
+    "rich/pretty.py",
+    "rich/status.py",
+    "tests/test_inspect.py",
+    "rich/text.py",
+    "tests/test_progress.py",
+    "tests/test_console.py",
+    "tests/test_repr.py",
+    "tests/test_table.py",
+    "rich/_inspect.py",
+    "rich/markup.py",
+    "rich/_win32_console.py",
+    "rich/__init__.py"
+   ]
+  },
+  "h-rich-02": {
+   "repo": "rich",
+   "query": "What is the named helper that divides available table width among flexible columns by their ratios?",
+   "files": [
+    "tests/test_rule_in_table.py",
+    "rich/_ratio.py",
+    "tests/test_table.py",
+    "rich/console.py",
+    "tests/test_ratio.py",
+    "rich/layout.py",
+    "benchmarks/snippets.py",
+    "rich/columns.py",
+    "rich/segment.py",
+    "rich/text.py",
+    "examples/fullscreen.py",
+    "tools/make_width_tables.py",
+    "tests/test_rule.py",
+    "rich/style.py",
+    "tests/test_text.py"
+   ]
+  },
+  "h-rich-03": {
+   "repo": "rich",
+   "query": "Which Text method yields rendered Segment objects and accepts an optional ending string?",
+   "files": [
+    "rich/status.py",
+    "tests/test_windows_renderer.py",
+    "rich/progress.py",
+    "rich/pretty.py",
+    "tests/test_pretty.py",
+    "rich/segment.py",
+    "rich/protocol.py",
+    "tests/test_console.py",
+    "tests/test_panel.py",
+    "rich/console.py",
+    "rich/_wrap.py",
+    "tests/test_segment.py",
+    "rich/style.py",
+    "tests/test_inspect.py",
+    "rich/table.py"
+   ]
+  },
+  "h-rich-04": {
+   "repo": "rich",
+   "query": "What method is called to make a Progress display table from a sequence of Task values?",
+   "files": [
+    "rich/__main__.py",
+    "rich/table.py",
+    "rich/console.py",
+    "tests/test_windows_renderer.py",
+    "tests/test_pretty.py",
+    "tests/test_progress.py",
+    "rich/live.py",
+    "rich/jupyter.py",
+    "tests/test_table.py",
+    "tools/make_width_tables.py",
+    "tests/test_inspect.py",
+    "examples/live_progress.py",
+    "tests/test_ansi.py"
+   ]
+  },
+  "h-rich-05": {
+   "repo": "rich",
+   "query": "Which function turns markup input into a Text instance and defaults emoji replacement on?",
+   "files": [
+    "tests/test_text.py",
+    "rich/pretty.py",
+    "rich/__init__.py",
+    "tests/test_cells.py",
+    "rich/console.py",
+    "rich/text.py",
+    "tests/test_inspect.py",
+    "tests/test_console.py",
+    "rich/emoji.py",
+    "rich/segment.py",
+    "tests/test_prompt.py",
+    "tests/test_emoji.py",
+    "rich/style.py",
+    "rich/prompt.py"
+   ]
+  },
+  "h-rich-06": {
+   "repo": "rich",
+   "query": "What method calculates the map from leaf Layout objects to rendered lines and terminal regions?",
+   "files": [
+    "rich/text.py",
+    "tests/test_logging.py",
+    "rich/status.py",
+    "rich/segment.py",
+    "rich/style.py",
+    "rich/terminal_theme.py",
+    "rich/table.py",
+    "rich/containers.py",
+    "tests/test_inspect.py",
+    "rich/protocol.py",
+    "rich/console.py",
+    "examples/fullscreen.py",
+    "tests/test_segment.py",
+    "tests/test_console.py",
+    "tests/test_layout.py"
+   ]
+  },
+  "h-rich-07": {
+   "repo": "rich",
+   "query": "Which Segment class method splits rendered segments into lines and optionally crops and pads each line to a target length?",
+   "files": [
+    "rich/containers.py",
+    "tests/test_console.py",
+    "tests/test_segment.py",
+    "tests/test_inspect.py",
+    "tests/test_text.py",
+    "rich/syntax.py",
+    "rich/control.py",
+    "rich/console.py",
+    "rich/cells.py",
+    "rich/align.py",
+    "rich/protocol.py",
+    "rich/screen.py",
+    "rich/layout.py",
+    "tests/test_windows_renderer.py",
+    "rich/text.py"
+   ]
+  },
+  "h-rich-08": {
+   "repo": "rich",
+   "query": "What is the Live method for replacing the displayed renderable, with an optional immediate refresh?",
+   "files": [
+    "tests/test_console.py",
+    "rich/control.py",
+    "rich/progress.py",
+    "rich/console.py",
+    "examples/fullscreen.py",
+    "rich/__init__.py",
+    "tests/test_layout.py",
+    "rich/jupyter.py",
+    "tests/test_live_render.py",
+    "rich/live_render.py",
+    "tests/test_live.py",
+    "tests/test_progress.py",
+    "tests/test_inspect.py",
+    "rich/status.py"
+   ]
+  },
+  "h-rich-09": {
+   "repo": "rich",
+   "query": "How does Console.out differ from Console.print when handling arbitrary objects and markup?",
+   "files": [
+    "tests/test_win32_console.py",
+    "rich/style.py",
+    "tests/test_traceback.py",
+    "rich/markup.py",
+    "tests/test_box.py",
+    "rich/progress.py",
+    "tests/test_text.py",
+    "tests/test_logging.py",
+    "tests/test_console.py",
+    "rich/text.py",
+    "rich/segment.py",
+    "rich/__init__.py",
+    "rich/status.py"
+   ]
+  },
+  "h-rich-10": {
+   "repo": "rich",
+   "query": "How are table column widths measured and then constrained when the table cannot fit?",
+   "files": [
+    "tests/test_console.py",
+    "tests/test_progress.py",
+    "tests/test_rule_in_table.py",
+    "rich/_wrap.py",
+    "rich/segment.py",
+    "rich/cells.py",
+    "rich/progress.py",
+    "rich/text.py",
+    "rich/jupyter.py",
+    "rich/measure.py",
+    "rich/box.py",
+    "tests/test_text.py",
+    "rich/style.py",
+    "tests/test_table.py",
+    "rich/panel.py",
+    "rich/columns.py"
+   ]
+  },
+  "h-rich-11": {
+   "repo": "rich",
+   "query": "What does soft wrapping change in the Console.print option setup?",
+   "files": [
+    "tests/test_align.py",
+    "rich/measure.py",
+    "rich/style.py",
+    "tests/test_text.py",
+    "rich/pretty.py",
+    "rich/syntax.py",
+    "tests/test_console.py",
+    "rich/segment.py",
+    "tests/test_table.py",
+    "rich/__init__.py",
+    "tests/test_panel.py",
+    "rich/text.py",
+    "benchmarks/benchmarks.py",
+    "setup.py"
+   ]
+  },
+  "h-rich-12": {
+   "repo": "rich",
+   "query": "How does Rich resolve overlapping markup closing tags rather than requiring strictly nested tags?",
+   "files": [
+    "tests/test_markup.py",
+    "rich/markdown.py",
+    "rich/_ratio.py",
+    "rich/_inspect.py",
+    "rich/prompt.py",
+    "tests/test_logging.py",
+    "tests/test_ratio.py",
+    "rich/segment.py",
+    "tests/test_text.py",
+    "tests/test_traceback.py",
+    "rich/console.py",
+    "rich/text.py"
+   ]
+  },
+  "h-rich-13": {
+   "repo": "rich",
+   "query": "How does Align determine the width it renders at when no explicit width was provided?",
+   "files": [
+    "rich/live.py",
+    "rich/progress_bar.py",
+    "rich/measure.py",
+    "tests/test_text.py",
+    "rich/table.py",
+    "rich/layout.py",
+    "tests/test_rule.py",
+    "rich/segment.py",
+    "rich/syntax.py",
+    "tests/test_align.py",
+    "rich/progress.py",
+    "tests/test_columns_align.py",
+    "tests/test_live.py",
+    "rich/rule.py",
+    "rich/jupyter.py",
+    "rich/console.py"
+   ]
+  },
+  "h-rich-14": {
+   "repo": "rich",
+   "query": "How does Layout render child panels into the final rows of Segments?",
+   "files": [
+    "rich/table.py",
+    "tests/render.py",
+    "rich/pretty.py",
+    "tests/test_columns.py",
+    "rich/panel.py",
+    "examples/group2.py",
+    "rich/markdown.py",
+    "rich/segment.py",
+    "rich/syntax.py",
+    "tests/test_layout.py",
+    "tests/test_panel.py",
+    "tests/test_columns_align.py",
+    "tests/test_syntax.py",
+    "rich/control.py",
+    "rich/console.py"
+   ]
+  },
+  "h-rich-15": {
+   "repo": "rich",
+   "query": "How does the progress renderer translate visible tasks and configured columns into a Table?",
+   "files": [
+    "tests/test_live.py",
+    "tests/test_rule_in_table.py",
+    "tests/test_progress.py",
+    "rich/style.py",
+    "examples/live_progress.py",
+    "rich/table.py",
+    "tests/test_table.py",
+    "rich/text.py",
+    "tests/test_windows_renderer.py",
+    "rich/console.py",
+    "examples/fullscreen.py",
+    "rich/columns.py",
+    "rich/ansi.py",
+    "examples/dynamic_progress.py",
+    "tests/test_columns_align.py",
+    "rich/segment.py"
+   ]
+  },
+  "h-rich-16": {
+   "repo": "rich",
+   "query": "How does Text compute its measurement range from plain text?",
+   "files": [
+    "rich/rule.py",
+    "rich/panel.py",
+    "rich/segment.py",
+    "tests/test_ansi.py",
+    "tests/test_console.py",
+    "tests/test_progress.py",
+    "rich/console.py",
+    "tests/test_measure.py",
+    "rich/measure.py",
+    "rich/table.py",
+    "tests/test_table.py",
+    "tests/test_text.py",
+    "rich/style.py",
+    "rich/containers.py",
+    "rich/syntax.py"
+   ]
+  },
+  "h-rich-17": {
+   "repo": "rich",
+   "query": "Trace a string passed to Console.out through preparation to output: how are multiple arguments combined and which print flags prevent markup and overflow handling?",
+   "files": [
+    "rich/layout.py",
+    "tests/test_console.py",
+    "tests/test_prompt.py",
+    "tests/test_progress.py",
+    "rich/text.py",
+    "rich/markdown.py",
+    "rich/markup.py",
+    "tests/test_table.py",
+    "rich/__init__.py",
+    "rich/columns.py",
+    "tests/test_pretty.py",
+    "tests/test_traceback.py",
+    "examples/overflow.py",
+    "rich/pretty.py",
+    "rich/bar.py",
+    "rich/traceback.py"
+   ]
+  },
+  "h-rich-18": {
+   "repo": "rich",
+   "query": "When a Table is printed, where does it calculate widths and how do title, body, and caption get emitted?",
+   "files": [
+    "tests/test_panel.py",
+    "rich/panel.py",
+    "rich/style.py",
+    "rich/columns.py",
+    "tests/test_text.py",
+    "rich/palette.py",
+    "tests/test_box.py",
+    "rich/progress_bar.py",
+    "tests/test_console.py",
+    "rich/text.py",
+    "rich/color.py",
+    "rich/markdown.py",
+    "examples/table_movie.py",
+    "rich/segment.py",
+    "tests/test_table.py",
+    "rich/progress.py",
+    "rich/measure.py"
+   ]
+  },
+  "h-rich-19": {
+   "repo": "rich",
+   "query": "Trace a Rich Text object through console rendering: how do options choose wrap behavior and how are wrapped lines converted to segments?",
+   "files": [
+    "rich/console.py",
+    "rich/style.py",
+    "tests/test_panel.py",
+    "tests/test_containers.py",
+    "rich/live.py",
+    "rich/_inspect.py",
+    "tests/test_text.py",
+    "rich/progress.py",
+    "rich/containers.py",
+    "rich/traceback.py",
+    "tests/test_segment.py",
+    "rich/segment.py",
+    "rich/syntax.py",
+    "tests/test_console.py"
+   ]
+  },
+  "h-rich-20": {
+   "repo": "rich",
+   "query": "How does adding a progress task connect to later display rows? Include the task insertion and table conversion paths.",
+   "files": [
+    "rich/text.py",
+    "examples/dynamic_progress.py",
+    "tests/test_text.py",
+    "rich/console.py",
+    "examples/fullscreen.py",
+    "tests/test_table.py",
+    "tests/test_live.py",
+    "rich/style.py",
+    "tests/test_rule_in_table.py",
+    "examples/live_progress.py",
+    "rich/segment.py",
+    "rich/table.py",
+    "tests/test_syntax.py",
+    "tests/test_pretty.py",
+    "rich/jupyter.py",
+    "tests/test_progress.py",
+    "rich/layout.py"
+   ]
+  },
+  "h-rich-21": {
+   "repo": "rich",
+   "query": "Trace Live.update when passed a string with refresh=True. What conversion and synchronization occur?",
+   "files": [
+    "rich/traceback.py",
+    "rich/control.py",
+    "tests/test_live_render.py",
+    "tests/test_console.py",
+    "rich/status.py",
+    "tests/test_progress.py",
+    "rich/color.py",
+    "rich/jupyter.py",
+    "rich/repr.py",
+    "tests/test_color.py",
+    "examples/top_lite_simulator.py",
+    "tests/test_pretty.py",
+    "rich/console.py",
+    "rich/color_triplet.py",
+    "rich/progress.py",
+    "tests/test_live.py"
+   ]
+  },
+  "h-rich-22": {
+   "repo": "rich",
+   "query": "What is the sequence for parsing markup into styled text, including the fast path when no opening bracket exists?",
+   "files": [
+    "rich/styled.py",
+    "rich/progress.py",
+    "tests/test_console.py",
+    "tests/test_markup.py",
+    "rich/style.py",
+    "tests/test_traceback.py",
+    "rich/table.py",
+    "rich/text.py",
+    "tests/test_pretty.py",
+    "tests/test_text.py",
+    "rich/console.py",
+    "rich/logging.py",
+    "rich/segment.py",
+    "tests/test_ansi.py",
+    "rich/traceback.py",
+    "rich/syntax.py"
+   ]
+  },
+  "h-rich-23": {
+   "repo": "rich",
+   "query": "Trace a Layout render from terminal dimensions to leaf renderables and final output rows.",
+   "files": [
+    "tests/test_console.py",
+    "rich/table.py",
+    "rich/live.py",
+    "rich/traceback.py",
+    "tests/test_live_render.py",
+    "rich/console.py",
+    "tests/test_markdown.py",
+    "rich/style.py",
+    "tests/test_markdown_no_hyperlinks.py",
+    "tests/test_layout.py",
+    "tests/render.py",
+    "rich/terminal_theme.py",
+    "rich/segment.py",
+    "rich/containers.py"
+   ]
+  },
+  "h-rich-24": {
+   "repo": "rich",
+   "query": "How does Segment.split_and_crop_lines treat newline characters inside a normal text segment?",
+   "files": [
+    "tests/test_segment.py",
+    "rich/console.py",
+    "rich/containers.py",
+    "rich/live_render.py",
+    "rich/style.py",
+    "tests/test_panel.py",
+    "rich/layout.py",
+    "tests/test_text.py",
+    "tests/test_pretty.py",
+    "rich/syntax.py",
+    "tests/test_console.py",
+    "rich/text.py",
+    "tests/test_cells.py",
+    "tests/test_rule.py",
+    "rich/logging.py"
+   ]
+  },
+  "h-rich-25": {
+   "repo": "rich",
+   "query": "Which rendering protocol hooks let a custom object either return one renderable or yield several, and what parameters does the multi-render hook receive?",
+   "files": [
+    "tests/test_inspect.py",
+    "rich/traceback.py",
+    "tests/test_pretty.py",
+    "rich/prompt.py",
+    "rich/layout.py",
+    "rich/table.py",
+    "tests/render.py",
+    "rich/live.py",
+    "rich/protocol.py",
+    "rich/color.py",
+    "tests/test_text.py",
+    "tests/test_console.py",
+    "rich/markup.py",
+    "rich/pretty.py"
+   ]
+  },
+  "h-rich-26": {
+   "repo": "rich",
+   "query": "How does the Layout subsystem divide responsibility between region allocation and leaf rendering?",
+   "files": [
+    "rich/region.py",
+    "tests/test_table.py",
+    "tests/test_text.py",
+    "tests/test_segment.py",
+    "rich/logging.py",
+    "rich/text.py",
+    "rich/pretty.py",
+    "tests/test_layout.py",
+    "rich/segment.py",
+    "rich/measure.py",
+    "rich/table.py",
+    "rich/live.py",
+    "rich/console.py",
+    "tests/test_console.py",
+    "rich/_ratio.py"
+   ]
+  },
+  "h-rich-27": {
+   "repo": "rich",
+   "query": "What does the table rendering pipeline delegate to _measure_column and _render after its public Rich console hook?",
+   "files": [
+    "rich/prompt.py",
+    "rich/columns.py",
+    "tests/render.py",
+    "rich/text.py",
+    "rich/live.py",
+    "rich/syntax.py",
+    "rich/console.py",
+    "tests/test_table.py",
+    "tests/test_text.py",
+    "rich/_inspect.py",
+    "tests/test_spinner.py",
+    "rich/style.py",
+    "tests/test_pretty.py",
+    "tests/test_block_bar.py",
+    "rich/progress.py",
+    "tests/test_rule_in_table.py"
+   ]
+  },
+  "h-rich-28": {
+   "repo": "rich",
+   "query": "How does make_tasks_table convert string column specs and ProgressColumn specs into the columns passed to Table.grid?",
+   "files": [
+    "rich/columns.py",
+    "rich/segment.py",
+    "tests/test_progress.py",
+    "tests/test_rule_in_table.py",
+    "tests/test_table.py",
+    "tests/test_columns.py",
+    "rich/text.py",
+    "examples/live_progress.py",
+    "rich/measure.py",
+    "tools/make_width_tables.py",
+    "rich/__main__.py",
+    "tests/test_columns_align.py",
+    "rich/prompt.py",
+    "rich/table.py",
+    "rich/style.py",
+    "rich/console.py",
+    "examples/fullscreen.py"
+   ]
+  },
+  "h-rich-29": {
+   "repo": "rich",
+   "query": "If soft_wrap=True is used while no_wrap=False and overflow='fold' are explicitly supplied, which settings survive, and how does cropping change?",
+   "files": [
+    "tests/test_text.py",
+    "examples/overflow.py",
+    "tests/test_syntax.py",
+    "rich/traceback.py",
+    "tests/render.py",
+    "rich/pretty.py",
+    "tests/test_console.py",
+    "rich/text.py",
+    "tests/test_table.py",
+    "rich/progress.py",
+    "rich/segment.py",
+    "rich/prompt.py",
+    "benchmarks/benchmarks.py",
+    "rich/__init__.py"
+   ]
+  },
+  "h-rich-30": {
+   "repo": "rich",
+   "query": "If a table exceeds the available width, which columns are initially eligible for width collapse and what happens if it still does not fit?",
+   "files": [
+    "tests/test_table.py",
+    "rich/columns.py",
+    "rich/markdown.py",
+    "tests/test_rule.py",
+    "rich/progress.py",
+    "rich/text.py",
+    "tests/test_text.py",
+    "tests/test_console.py",
+    "rich/panel.py",
+    "tests/test_columns_align.py",
+    "tests/test_rule_in_table.py",
+    "rich/style.py",
+    "rich/segment.py",
+    "rich/measure.py",
+    "rich/console.py"
+   ]
+  },
+  "h-rich-31": {
+   "repo": "rich",
+   "query": "If Live.update receives a string and refresh is false, what changes immediately and what rendering work is deferred?",
+   "files": [
+    "rich/spinner.py",
+    "rich/status.py",
+    "tests/test_progress.py",
+    "tests/test_table.py",
+    "rich/control.py",
+    "tests/test_live.py",
+    "examples/fullscreen.py",
+    "rich/progress.py",
+    "rich/console.py",
+    "rich/table.py",
+    "rich/jupyter.py",
+    "tests/test_cells.py",
+    "examples/top_lite_simulator.py",
+    "tests/test_traceback.py",
+    "tests/test_console.py",
+    "tests/test_live_render.py"
+   ]
+  },
+  "h-rich-32": {
+   "repo": "rich",
+   "query": "If a Progress task is hidden, how does that affect the task table?",
+   "files": [
+    "rich/segment.py",
+    "rich/text.py",
+    "tests/test_traceback.py",
+    "rich/style.py",
+    "rich/measure.py",
+    "tests/test_rule_in_table.py",
+    "tests/test_table.py",
+    "rich/jupyter.py",
+    "examples/fullscreen.py",
+    "rich/table.py",
+    "examples/dynamic_progress.py",
+    "tests/test_progress.py",
+    "examples/live_progress.py",
+    "tests/test_markdown.py",
+    "examples/downloader.py",
+    "rich/live.py",
+    "rich/console.py"
+   ]
+  },
+  "h-rich-33": {
+   "repo": "rich",
+   "query": "If the same progress task update changes total and advances completed, what reset and sampling behavior follows?",
+   "files": [
+    "rich/text.py",
+    "tests/test_console.py",
+    "examples/fullscreen.py",
+    "examples/table_movie.py",
+    "rich/jupyter.py",
+    "tests/test_progress.py",
+    "examples/live_progress.py",
+    "tests/conftest.py",
+    "rich/live.py",
+    "tests/test_bar.py",
+    "examples/dynamic_progress.py",
+    "tests/test_box.py",
+    "rich/table.py",
+    "rich/progress_bar.py",
+    "rich/console.py"
+   ]
+  },
+  "h-rich-34": {
+   "repo": "rich",
+   "query": "The docs call fold the default overflow. What does Console.print pass to its render options when overflow is omitted, and what value does its soft_wrap path substitute?",
+   "files": [
+    "tests/test_inspect.py",
+    "rich/color.py",
+    "tests/render.py",
+    "tests/test_console.py",
+    "rich/logging.py",
+    "examples/overflow.py",
+    "rich/__init__.py",
+    "tests/test_text.py",
+    "tests/test_markdown.py",
+    "rich/text.py",
+    "rich/box.py",
+    "rich/layout.py"
+   ]
+  },
+  "h-rich-35": {
+   "repo": "rich",
+   "query": "The docs describe Console.out as not applying word wrap. Which explicit flags in implementation also disable markup, emoji replacement, and cropping?",
+   "files": [
+    "tests/test_inspect.py",
+    "tests/test_syntax.py",
+    "rich/file_proxy.py",
+    "rich/segment.py",
+    "tests/test_console.py",
+    "rich/traceback.py",
+    "rich/style.py",
+    "tests/test_text.py",
+    "tests/test_progress.py",
+    "rich/emoji.py",
+    "tests/test_win32_console.py",
+    "rich/__init__.py",
+    "rich/live.py",
+    "rich/text.py",
+    "rich/markup.py"
+   ]
+  },
+  "h-rich-36": {
+   "repo": "rich",
+   "query": "The docs say disabling Live auto-refresh requires manual refresh or update(refresh=True). Does Live.update refresh by default?",
+   "files": [
+    "tests/test_layout.py",
+    "tests/test_progress.py",
+    "tests/test_inspect.py",
+    "rich/progress.py",
+    "examples/top_lite_simulator.py",
+    "tests/test_live.py",
+    "rich/status.py",
+    "rich/repr.py",
+    "rich/color.py",
+    "rich/console.py",
+    "tests/test_console.py",
+    "rich/jupyter.py",
+    "tests/test_repr.py",
+    "rich/color_triplet.py",
+    "tests/test_color.py"
+   ]
+  },
+  "h-rich-37": {
+   "repo": "rich",
+   "query": "The Text docs list fold, crop, and ellipsis but not ignore. When Console.print's soft_wrap path supplies ignore, what value does Text use for wrapping?",
+   "files": [
+    "tests/test_traceback.py",
+    "benchmarks/benchmarks.py",
+    "rich/syntax.py",
+    "tests/test_inspect.py",
+    "tests/test_text.py",
+    "examples/listdir.py",
+    "tests/test_console.py",
+    "tests/test_table.py",
+    "rich/segment.py",
+    "rich/style.py",
+    "rich/__init__.py"
+   ]
+  },
+  "h-zerolog-arch-context-builders": {
+   "repo": "zerolog",
+   "query": "Which logger-associated state do Context.CreateDict and Context.CreateArray copy into temporary dictionary and array values?",
+   "files": [
+    "event.go",
+    "binary_test.go",
+    "log_example_test.go",
+    "pkgerrors/stacktrace.go",
+    "log_test.go",
+    "event_test.go",
+    "hook_test.go",
+    "slog.go",
+    "hlog/hlog.go",
+    "log.go",
+    "array.go",
+    "ctx.go",
+    "sampler.go",
+    "hook.go",
+    "writer.go"
+   ]
+  },
+  "h-zerolog-arch-diode-components": {
+   "repo": "zerolog",
+   "query": "What components make diode.Writer non-blocking for producers while a separate consumer writes to the destination, and what role does the poll interval play?",
+   "files": [
+    "error_marshal_test.go",
+    "log.go",
+    "event.go",
+    "writer_test.go",
+    "hlog/internal/mutil/writer_proxy_test.go",
+    "writer.go",
+    "syslog_test.go",
+    "fixtures_test.go",
+    "benchmark_test.go",
+    "diode/internal/diodes/waiter.go",
+    "diode/diode_example_test.go",
+    "diode/internal/diodes/many_to_one.go",
+    "diode/diode_test.go",
+    "internal/cbor/decode_stream.go",
+    "journald/journald.go",
+    "diode/internal/diodes/poller.go",
+    "event_test.go"
+   ]
+  },
+  "h-zerolog-arch-logger-event-encoder": {
+   "repo": "zerolog",
+   "query": "Describe the path from a Logger method such as Info to an Event and then to the writer, including where the level is filtered and where the message is encoded.",
+   "files": [
+    "console.go",
+    "writer_test.go",
+    "context.go",
+    "hlog/hlog.go",
+    "diode/diode.go",
+    "syslog.go",
+    "hlog/hlog_example_test.go",
+    "binary_test.go",
+    "writer.go",
+    "log_example_test.go",
+    "diode/diode_test.go",
+    "slog_test.go",
+    "log/log.go"
+   ]
+  },
+  "h-zerolog-arch-slog-adapter": {
+   "repo": "zerolog",
+   "query": "How is standard-library slog integrated with zerolog, from handler construction through level conversion and attribute conversion?",
+   "files": [
+    "globals.go",
+    "log/log.go",
+    "hlog/hlog_example_test.go",
+    "slog_test.go",
+    "event.go",
+    "log.go",
+    "log/log_example_test.go",
+    "hlog/hlog.go",
+    "syslog.go",
+    "journald/journald.go",
+    "writer.go",
+    "log_test.go",
+    "hlog/hlog_test.go",
+    "sampler.go",
+    "event_test.go"
+   ]
+  },
+  "h-zerolog-conceptual-burst-sampling": {
+   "repo": "zerolog",
+   "query": "How does BurstSampler behave after its initial per-period burst is exhausted, including when there is no follow-on sampler?",
+   "files": [
+    "sampler_test.go",
+    "diode/internal/diodes/poller.go",
+    "event.go",
+    "hook.go",
+    "console_test.go",
+    "diode/internal/diodes/many_to_one.go",
+    "diode/diode.go",
+    "slog.go",
+    "writer.go",
+    "fixtures_test.go",
+    "array.go",
+    "log.go",
+    "context.go",
+    "slog_test.go",
+    "hlog/hlog.go",
+    "journald/journald_test.go",
+    "log/log_example_test.go"
+   ]
+  },
+  "h-zerolog-conceptual-console-pipeline": {
+   "repo": "zerolog",
+   "query": "What does ConsoleWriter do to an incoming log record before producing human-readable output, and how can callers control part ordering?",
+   "files": [
+    "log.go",
+    "writer_test.go",
+    "writer.go",
+    "log/log.go",
+    "slog.go",
+    "hlog/hlog_example_test.go",
+    "log_test.go",
+    "slog_test.go",
+    "console_test.go",
+    "globals.go"
+   ]
+  },
+  "h-zerolog-conceptual-context-fallback": {
+   "repo": "zerolog",
+   "query": "What logger does zerolog.Ctx return when the context has no attached logger, and how can the package-level fallback be disabled?",
+   "files": [
+    "log/log_example_test.go",
+    "log.go",
+    "log_test.go",
+    "journald/journald_test.go",
+    "hook_test.go",
+    "ctx_test.go",
+    "context.go",
+    "slog_test.go",
+    "globals.go",
+    "slog.go",
+    "log/log.go"
+   ]
+  },
+  "h-zerolog-conceptual-field-input-shapes": {
+   "repo": "zerolog",
+   "query": "When using Context.Fields to add several fields at once, which input container shapes and element arrangement does the API accept?",
+   "files": [
+    "cmd/prettylog/prettylog.go",
+    "sampler.go",
+    "hlog/hlog.go",
+    "hook.go",
+    "log/log_example_test.go",
+    "log_example_test.go",
+    "binary_test.go",
+    "internal/cbor/decode_stream.go",
+    "encoder_cbor.go",
+    "hlog/internal/mutil/writer_proxy_test.go",
+    "fields.go",
+    "log_test.go",
+    "event.go",
+    "slog_test.go",
+    "writer.go",
+    "log.go"
+   ]
+  },
+  "h-zerolog-conceptual-interface-reflection": {
+   "repo": "zerolog",
+   "query": "How does an Event\u2019s Interface field method handle values that implement the package\u2019s object-marshaling interface versus other values?",
+   "files": [
+    "internal/json/types_test.go",
+    "hook.go",
+    "event_test.go",
+    "writer.go",
+    "slog.go",
+    "hlog/hlog.go",
+    "fields.go",
+    "ctx_test.go",
+    "context.go",
+    "cmd/lint/lint.go",
+    "log.go",
+    "internal/json/types.go",
+    "benchmark_test.go",
+    "internal/cbor/types_test.go"
+   ]
+  },
+  "h-zerolog-conceptual-msg-completion": {
+   "repo": "zerolog",
+   "query": "Why can a chained logging call compile yet emit nothing if the developer only adds fields and never finishes the event?",
+   "files": [
+    "binary_test.go",
+    "writer.go",
+    "diode/internal/diodes/waiter.go",
+    "console.go",
+    "fields.go",
+    "journald/journald_test.go",
+    "slog.go",
+    "fixtures_test.go",
+    "log_example_test.go",
+    "event_test.go",
+    "hook.go",
+    "context.go",
+    "log_test.go"
+   ]
+  },
+  "h-zerolog-conceptual-sampler-count": {
+   "repo": "zerolog",
+   "query": "How does BasicSampler decide which events to pass when N is greater than one, and what do N=0 and N=1 mean?",
+   "files": [
+    "event.go",
+    "diode/internal/diodes/one_to_one.go",
+    "log_example_test.go",
+    "binary_test.go",
+    "diode/diode.go",
+    "diode/internal/diodes/many_to_one.go",
+    "log_test.go",
+    "log/log_example_test.go",
+    "sampler_test.go",
+    "hlog/hlog_test.go",
+    "log.go",
+    "internal/cbor/decode_stream.go",
+    "globals_118.go",
+    "hlog/hlog.go"
+   ]
+  },
+  "h-zerolog-conceptual-slog-groups": {
+   "repo": "zerolog",
+   "query": "How do repeated SlogHandler.WithAttrs calls accumulate pre-attached attributes, and when are those attributes added to each record?",
+   "files": [
+    "slog_test.go",
+    "journald/journald_test.go",
+    "cmd/prettylog/prettylog.go",
+    "event.go",
+    "log/log_example_test.go",
+    "hlog/hlog.go",
+    "event_test.go",
+    "context.go",
+    "hlog/hlog_example_test.go",
+    "array.go"
+   ]
+  },
+  "h-zerolog-disc-msgf-disabled-allocation": {
+   "repo": "zerolog",
+   "query": "The README warns that Msgf allocates even when logging is disabled; what does the implementation do when a disabled logger yields a nil Event?",
+   "files": [
+    "ctx_test.go",
+    "event_test.go",
+    "slog_test.go",
+    "log/log.go",
+    "benchmark_test.go",
+    "log.go",
+    "slog.go",
+    "binary_test.go",
+    "context.go",
+    "hook.go",
+    "ctx.go",
+    "globals.go",
+    "sampler.go",
+    "log_test.go",
+    "writer.go"
+   ]
+  },
+  "h-zerolog-disc-print-level": {
+   "repo": "zerolog",
+   "query": "The README says the default level for package log.Print is trace; what level does the implementation actually use, and what discrepancy should be corrected?",
+   "files": [
+    "binary_test.go",
+    "sampler.go",
+    "hook.go",
+    "event.go",
+    "log_example_test.go",
+    "log_test.go",
+    "log.go",
+    "globals.go",
+    "writer.go",
+    "slog.go",
+    "log/log_example_test.go",
+    "writer_test.go",
+    "console.go",
+    "hook_test.go",
+    "syslog.go"
+   ]
+  },
+  "h-zerolog-disc-slog-group-shape": {
+   "repo": "zerolog",
+   "query": "The SlogHandler.WithGroup documentation describes attributes as nested under a group. Does the implementation emit nested objects or flattened dotted keys, and what test demonstrates the actual shape?",
+   "files": [
+    "writer.go",
+    "fields.go",
+    "array.go",
+    "fixtures_test.go",
+    "log_example_test.go",
+    "log.go",
+    "event_test.go",
+    "internal/cbor/decode_stream.go",
+    "internal/json/float_test.go",
+    "benchmark_test.go",
+    "context.go",
+    "hlog/hlog_example_test.go",
+    "event.go",
+    "hlog/hlog_test.go"
+   ]
+  },
+  "h-zerolog-disc-write-method": {
+   "repo": "zerolog",
+   "query": "The Logger type comment says an event calls the writer\u2019s Write method; how does New handle LevelWriter implementations, and which method receives the event instead?",
+   "files": [
+    "hlog/hlog_test.go",
+    "slog.go",
+    "writer_test.go",
+    "event_test.go",
+    "log_test.go",
+    "event.go",
+    "benchmark_test.go",
+    "diode/diode.go",
+    "diode/diode_test.go",
+    "log/log_example_test.go",
+    "context.go",
+    "hlog/hlog.go"
+   ]
+  },
+  "h-zerolog-exact-context-array": {
+   "repo": "zerolog",
+   "query": "Which Context method creates an Array that carries over the logger\u2019s stack setting, context, and hooks?",
+   "files": [
+    "binary_test.go",
+    "array.go",
+    "event_test.go",
+    "event.go",
+    "log_test.go",
+    "slog.go",
+    "log.go",
+    "hook.go",
+    "hlog/hlog.go",
+    "writer.go",
+    "hook_test.go",
+    "context_test.go",
+    "pkgerrors/stacktrace_test.go",
+    "log_example_test.go"
+   ]
+  },
+  "h-zerolog-exact-diode-selection": {
+   "repo": "zerolog",
+   "query": "How does diode.NewWriter choose between its waiter and poller implementations?",
+   "files": [
+    "diode/internal/diodes/waiter.go",
+    "writer_test.go",
+    "hlog/hlog_test.go",
+    "console_test.go",
+    "event.go",
+    "console.go",
+    "diode/internal/diodes/poller.go",
+    "diode/internal/diodes/many_to_one.go",
+    "diode/internal/diodes/one_to_one.go",
+    "internal/cbor/decode_stream.go",
+    "array.go",
+    "log.go",
+    "hlog/internal/mutil/writer_proxy.go",
+    "writer.go",
+    "diode/diode_example_test.go",
+    "diode/diode_test.go"
+   ]
+  },
+  "h-zerolog-exact-levelwriter": {
+   "repo": "zerolog",
+   "query": "What interface lets a writer receive both a zerolog level and the encoded payload?",
+   "files": [
+    "diode/diode_test.go",
+    "log/log.go",
+    "writer_test.go",
+    "event_test.go",
+    "syslog.go",
+    "log_test.go",
+    "diode/diode.go",
+    "console_test.go",
+    "syslog_test.go",
+    "log/log_example_test.go",
+    "cmd/lint/lint.go",
+    "benchmark_test.go",
+    "log.go",
+    "event.go",
+    "slog.go"
+   ]
+  },
+  "h-zerolog-exact-log-level-names": {
+   "repo": "zerolog",
+   "query": "What integer values are assigned to DebugLevel through PanicLevel, and what value is used for TraceLevel?",
+   "files": [
+    "log/log_example_test.go",
+    "writer.go",
+    "log_test.go",
+    "slog.go",
+    "internal/cbor/decode_stream.go",
+    "log/log.go",
+    "event_test.go",
+    "syslog_test.go",
+    "journald/journald.go",
+    "hook_test.go",
+    "globals.go",
+    "internal/cbor/decoder_test.go",
+    "event.go",
+    "ctx.go"
+   ]
+  },
+  "h-zerolog-exact-msgfunc": {
+   "repo": "zerolog",
+   "query": "Which Event method takes a callback to create the message lazily, and what happens when the Event receiver is nil?",
+   "files": [
+    "log/log_example_test.go",
+    "log_test.go",
+    "cmd/lint/lint.go",
+    "slog.go",
+    "hlog/hlog.go",
+    "log_example_test.go",
+    "log.go",
+    "array.go",
+    "binary_test.go",
+    "context.go",
+    "writer.go"
+   ]
+  },
+  "h-zerolog-exact-sanitize-prefix": {
+   "repo": "zerolog",
+   "query": "What prefix does journald key sanitization add when the normalized key is empty or begins with a digit or underscore?",
+   "files": [
+    "internal/cbor/cbor.go",
+    "internal/cbor/time.go",
+    "log.go",
+    "internal/cbor/base.go",
+    "internal/cbor/string.go",
+    "slog_test.go",
+    "internal/json/base.go",
+    "context.go",
+    "journald/journald_windows_test.go",
+    "slog.go",
+    "internal/json/base_test.go",
+    "log_test.go",
+    "event.go",
+    "internal/cbor/decode_stream.go",
+    "internal/cbor/types.go"
+   ]
+  },
+  "h-zerolog-exact-update-context": {
+   "repo": "zerolog",
+   "query": "What method mutates an existing Logger\u2019s contextual fields through a callback, and what concurrency caveat does its API document?",
+   "files": [
+    "context.go",
+    "slog.go",
+    "hlog/hlog_test.go",
+    "fields.go",
+    "event_test.go",
+    "internal/cbor/types.go",
+    "log_example_test.go",
+    "sampler.go",
+    "slog_test.go",
+    "hlog/hlog.go",
+    "hook.go",
+    "log_test.go",
+    "writer.go"
+   ]
+  },
+  "h-zerolog-exact-warning-level": {
+   "repo": "zerolog",
+   "query": "What signed numeric range does ParseLevel accept for custom levels, and what result does it return for out-of-range values?",
+   "files": [
+    "internal/cbor/decode_stream.go",
+    "sampler.go",
+    "internal/testcases.go",
+    "journald/journald.go",
+    "slog.go",
+    "console.go",
+    "journald/journald_test.go",
+    "globals.go",
+    "hlog/hlog_test.go",
+    "log/log.go",
+    "log/log_example_test.go",
+    "console_test.go",
+    "hlog/hlog.go"
+   ]
+  },
+  "h-zerolog-impact-diode-pool-cap": {
+   "repo": "zerolog",
+   "query": "What would change if the 64 KiB cap before returning diode buffers to the pool were raised or removed, and where is that cap enforced?",
+   "files": [
+    "diode/internal/diodes/many_to_one.go",
+    "writer.go",
+    "event.go",
+    "journald/journald_test.go",
+    "internal/cbor/types_64_test.go",
+    "log_test.go",
+    "globals.go",
+    "internal/json/types_test.go",
+    "event_test.go",
+    "internal/cbor/types_test.go",
+    "diode/internal/diodes/poller.go",
+    "log/log_example_test.go",
+    "slog_test.go",
+    "hlog/hlog_test.go",
+    "diode/diode_example_test.go",
+    "diode/diode_test.go",
+    "diode/internal/diodes/waiter.go",
+    "array.go",
+    "log.go"
+   ]
+  },
+  "h-zerolog-impact-field-name": {
+   "repo": "zerolog",
+   "query": "If the package changed its default timestamp field key, which shared configuration and event-encoding paths determine the resulting field name?",
+   "files": [
+    "console_test.go",
+    "context.go",
+    "hook.go",
+    "fields.go",
+    "writer.go",
+    "log/log_example_test.go",
+    "slog_test.go",
+    "journald/journald.go",
+    "slog.go",
+    "benchmark_test.go",
+    "log_test.go",
+    "log.go",
+    "console.go",
+    "event_test.go"
+   ]
+  },
+  "h-zerolog-impact-global-level": {
+   "repo": "zerolog",
+   "query": "If the global minimum level check were removed from Logger.should, which filtering behavior and user-visible guarantee would change?",
+   "files": [
+    "log/log_example_test.go",
+    "writer.go",
+    "binary_test.go",
+    "slog.go",
+    "globals.go",
+    "hook.go",
+    "writer_test.go",
+    "log/log.go",
+    "context.go",
+    "log_example_test.go",
+    "slog_test.go",
+    "event.go",
+    "log_test.go",
+    "hlog/hlog_example_test.go"
+   ]
+  },
+  "h-zerolog-impact-slog-disabled": {
+   "repo": "zerolog",
+   "query": "If disabled loggers began returning non-nil Events, which nil-guarded message callback behavior would be at risk, and what test currently protects the lazy callback contract?",
+   "files": [
+    "log/log.go",
+    "array.go",
+    "slog_test.go",
+    "console.go",
+    "globals.go",
+    "benchmark_test.go",
+    "ctx_test.go",
+    "binary_test.go",
+    "error_marshal_test.go",
+    "fixtures_test.go",
+    "context.go",
+    "log_test.go"
+   ]
+  },
+  "h-zerolog-impact-warning-alias": {
+   "repo": "zerolog",
+   "query": "If Event.Interface stopped dispatching LogObjectMarshaler values to Object, what encoding behavior would change and which interface-field test case exercises that path?",
+   "files": [
+    "fields.go",
+    "log_test.go",
+    "internal/testcases.go",
+    "ctx_test.go",
+    "context.go",
+    "log.go",
+    "slog_test.go",
+    "array.go",
+    "benchmark_test.go",
+    "context_test.go"
+   ]
+  },
+  "h-zerolog-trace-context-roundtrip": {
+   "repo": "zerolog",
+   "query": "Trace the logger/context round trip: where is a Logger stored by WithContext, and what object is returned by Ctx when that value exists?",
+   "files": [
+    "log/log_example_test.go",
+    "hlog/hlog.go",
+    "ctx_test.go",
+    "console.go",
+    "slog_test.go",
+    "event.go",
+    "context.go",
+    "log/log.go",
+    "log.go",
+    "log_test.go",
+    "event_test.go"
+   ]
+  },
+  "h-zerolog-trace-dict-array": {
+   "repo": "zerolog",
+   "query": "Trace a Context.Dict call to finalization: how is the nested Event terminated and appended, and how is that temporary Event disposed?",
+   "files": [
+    "array.go",
+    "syslog_test.go",
+    "binary_test.go",
+    "event.go",
+    "log_test.go",
+    "slog_test.go",
+    "event_test.go",
+    "log_example_test.go",
+    "log/log.go",
+    "log.go"
+   ]
+  },
+  "h-zerolog-trace-diode-lifecycle": {
+   "repo": "zerolog",
+   "query": "Trace a log line through diode.NewWriter to the wrapped writer, then explain how Close waits for the background consumer and closes the destination when supported.",
+   "files": [
+    "error_marshal_test.go",
+    "diode/internal/diodes/poller.go",
+    "writer_test.go",
+    "internal/cbor/types_test.go",
+    "hlog/hlog_example_test.go",
+    "log.go",
+    "log_test.go",
+    "diode/diode_example_test.go",
+    "hlog/internal/mutil/writer_proxy.go",
+    "diode/diode_test.go",
+    "diode/internal/diodes/waiter.go",
+    "hlog/hlog.go",
+    "writer.go",
+    "syslog_test.go",
+    "log/log.go"
+   ]
+  },
+  "h-zerolog-trace-event-send-hooks": {
+   "repo": "zerolog",
+   "query": "When an Event is finalized with Msg, where do hooks run relative to message insertion and the writer call?",
+   "files": [
+    "diode/diode.go",
+    "writer.go",
+    "context.go",
+    "hook.go",
+    "hook_test.go",
+    "log_example_test.go",
+    "log.go",
+    "binary_test.go",
+    "log/log.go",
+    "log_test.go",
+    "slog.go",
+    "event_test.go"
+   ]
+  },
+  "h-zerolog-trace-journald-write": {
+   "repo": "zerolog",
+   "query": "Trace a JSON record through the journald writer: how are priority and key/value arguments derived, and what extra argument contains the original record?",
+   "files": [
+    "context.go",
+    "syslog_test.go",
+    "slog.go",
+    "log/log.go",
+    "journald/journald_test.go",
+    "diode/diode.go",
+    "event_test.go",
+    "log.go",
+    "internal/json/types_test.go",
+    "log/log_example_test.go",
+    "slog_test.go",
+    "log_test.go"
+   ]
+  },
+  "h-zerolog-trace-print-event": {
+   "repo": "zerolog",
+   "query": "Follow Logger.Print from the convenience method to the emitted event: which level does it use, how is the caller adjusted, and what message string is sent?",
+   "files": [
+    "event.go",
+    "log/log.go",
+    "hlog/hlog.go",
+    "log_test.go",
+    "log/log_example_test.go",
+    "context.go",
+    "writer.go",
+    "hlog/hlog_test.go",
+    "internal/cbor/time_test.go",
+    "event_test.go",
+    "log_example_test.go",
+    "binary_test.go",
+    "globals.go",
+    "hook_test.go"
+   ]
+  },
+  "h-zerolog-trace-slog-handle": {
+   "repo": "zerolog",
+   "query": "Trace how SlogHandler.Handle maps a slog level, attaches the supplied context, adds record attributes, and emits the message.",
+   "files": [
+    "ctx.go",
+    "log/log.go",
+    "log.go",
+    "binary_test.go",
+    "syslog.go",
+    "writer.go",
+    "hlog/hlog.go",
+    "event.go",
+    "log_test.go",
+    "slog_test.go",
+    "syslog_test.go",
+    "hlog/hlog_example_test.go",
+    "context.go",
+    "event_test.go"
+   ]
+  },
+  "h-zerolog-trace-warning-parse-test": {
+   "repo": "zerolog",
+   "query": "Trace parsing \"WARNING\" from the public parser through the regression test: what level and error outcome should a caller get?",
+   "files": [
+    "hook_test.go",
+    "binary_test.go",
+    "globals.go",
+    "fixtures_test.go",
+    "event_test.go",
+    "journald/journald.go",
+    "syslog.go",
+    "syslog_test.go",
+    "writer.go",
+    "event.go",
+    "log/log.go",
+    "internal/cbor/decode_stream.go"
+   ]
+  }
+ }
+}

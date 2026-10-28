@@ -12,7 +12,7 @@ def main():
     assert len(result["rows"]) == 60
     lines = [
         "# Paired graf / Graphify comparison\n",
-        "All three query arms received identical filtered Cobra, Flask, and Fastify inputs, 30 frozen requests, and 2K/8K requested budgets. Each case runs three times per tool, rotating sequential order with a fixed Python hash seed. This is an exploratory code-file discovery comparison; the labels are author-selected and incomplete.\n",
+        f"All {len(result['arms'])} query arms received identical filtered Cobra, Flask, and Fastify inputs, 30 frozen requests, and 2K/8K requested budgets. Each case runs {result.get('repeats', 3)} times per tool, rotating sequential order with a fixed Python hash seed. This is an exploratory code-file discovery comparison on development queries; the labels are author-selected and incomplete. Arms marked experimental are preregistered candidates, not accepted changes.\n",
         "Graphify uses the pinned code-only, unclustered configuration. Its outputs are native navigation hints. graf search returns source excerpts; graf locate returns one compact hint per file with an expansion ID. The two graf modes share the same BM25 index and scores. The [fixed locate policy](../benchmark/locate-experiment.json) was recorded before this run; the query set is reused from earlier experiments. The shared quality metric is **code-file hint recall**, not source-anchor recall or answer correctness.\n",
         "| Budget | Tool | Code-file hint recall | Scored queries | Median process query (ms) | Median text tokens | Outputs over cl100k budget |",
         "| --- | --- | ---: | ---: | ---: | ---: | ---: |",

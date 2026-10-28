@@ -1,0 +1,30 @@
+{
+  "judge_id": "rich-2-independent-blind-review",
+  "model": "gpt-6-luna",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "d8a9e8e0f6e51f8692485da9fe7507542af7258443258bbe393acce767349abb",
+  "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+  "judgments_sha256": "18a675569740f127f2a8fbcac06f4960d86d9a05b47a70d967b00a41a73842bc",
+  "reviewed_query_ids": [
+    "h-rich-11",
+    "h-rich-12",
+    "h-rich-13",
+    "h-rich-14",
+    "h-rich-15",
+    "h-rich-16",
+    "h-rich-17",
+    "h-rich-18",
+    "h-rich-19",
+    "h-rich-20"
+  ],
+  "pair_count": 152,
+  "unresolved_issues": [],
+  "limitations": [
+    "No API cost or token accounting is exposed by the review session.",
+    "The h-rich-15 and h-rich-20 pools omit rich/progress.py, so the implementation\u2019s exact task-to-Table conversion is unavailable among the supplied pairs; the reviewed tests and examples still support the verdicts on those pairs.",
+    "The h-rich-17 pool omits rich/console.py, so Console.out\u2019s own argument preparation cannot be inspected among the supplied pairs; tests and other supplied rendering sources support the individual relevance judgments."
+  ]
+}

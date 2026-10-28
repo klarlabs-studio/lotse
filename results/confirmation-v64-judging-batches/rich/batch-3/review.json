@@ -1,0 +1,29 @@
+{
+  "judge_id": "blind-v64-retry-rich-3-independent-source-review",
+  "model": "gpt-6-luna",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "3f9dac45792d99f2301da32b4712d392b4b7846a48349b7acaf582c672c2c64d",
+  "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+  "judgments_sha256": "e27493d6daae9ca63cb98679ccbe93fce52c0d0599e0ce0e21f4d8b8419f4e75",
+  "reviewed_query_ids": [
+    "h-rich-21",
+    "h-rich-22",
+    "h-rich-23",
+    "h-rich-24",
+    "h-rich-25",
+    "h-rich-26",
+    "h-rich-27",
+    "h-rich-28",
+    "h-rich-29",
+    "h-rich-30"
+  ],
+  "pair_count": 152,
+  "unresolved_issues": [],
+  "limitations": [
+    "The supplied pairs omit rich/live.py for h-rich-21, rich/markup.py for h-rich-22, rich/layout.py for h-rich-23 and h-rich-26, rich/segment.py for h-rich-24, rich/table.py for h-rich-27 and h-rich-30, rich/progress.py for h-rich-28, and rich/console.py for h-rich-29. These absences limit how fully the candidate set can answer those queries; verdicts still judge only the supplied pairs.",
+    "Some tests establish public behavior without directly asserting the named internal helper. I used their concrete rendered output only as evidence for those public-path pairs."
+  ]
+}

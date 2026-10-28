@@ -1,0 +1,88 @@
+{
+  "id": "codex-classification-local-retry-v2-verification",
+  "frozen_measurement_integrity": {
+    "codex-otel-probe-v1": {
+      "plan_sha256": "89e15f6ca6fff29898dc28ff0b25429a57e4a76ad810860e8a037da4d770737c",
+      "implementation_hash_checks": {
+        "benchmark/codex_otel.py": true,
+        "benchmark/probe_codex_otel.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_mcp_solver.py": true
+      }
+    },
+    "codex-otel-probe-v2": {
+      "plan_sha256": "1fb2a134f8f4261de223cfaa08137ee316b487e4891f6ffca96d885ab171f16a",
+      "implementation_hash_checks": {
+        "benchmark/probe_codex_http.py": true,
+        "benchmark/test_probe_codex_http.py": true,
+        "benchmark/probe_codex_otel.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_mcp_solver.py": true,
+        "benchmark/codex_otel.py": true,
+        "benchmark/codex_otel_accounting.py": true
+      }
+    },
+    "codex-local-retry-v1": {
+      "plan_sha256": "235b8943407ba5a7bd4c3ccf1b383cab746cda1679baed8e39e6d734563ea57a",
+      "implementation_hash_checks": {
+        "benchmark/probe_codex_retry.py": true,
+        "benchmark/test_probe_codex_retry.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_otel.py": true
+      }
+    },
+    "codex-local-retry-v2": {
+      "plan_sha256": "db28f7c970416297c3d38dd3239aa2092174e3d6284041d31562273516b057f1",
+      "implementation_hash_checks": {
+        "benchmark/probe_codex_retry_v2.py": true,
+        "benchmark/test_probe_codex_retry_v2.py": true,
+        "benchmark/probe_codex_retry.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_otel.py": true
+      }
+    }
+  },
+  "v64_unchanged": {
+    "results/confirmation-v64-comparison.json": true,
+    "results/confirmation-v64-decision.json": true,
+    "results/confirmation-v64-report.json": true,
+    "benchmark/preregistration.json": true
+  },
+  "test_commands": [
+    {
+      "command": ".research/venv/bin/python -m unittest discover -s benchmark -p 'test*codex*otel*.py' -v",
+      "tests": 19,
+      "exit_code": 1,
+      "reason": "3 socket-bind tests blocked by sandbox; remaining16 passed"
+    },
+    {
+      "command": ".research/venv/bin/python -m unittest discover -s benchmark -p test_codex_otel.py -v",
+      "tests": 5,
+      "exit_code": 0,
+      "execution": "escalated loopback sockets allowed"
+    },
+    {
+      "command": ".research/venv/bin/python -m unittest discover -s benchmark -p 'test_probe_codex*.py' -v",
+      "tests": 19,
+      "exit_code": 0
+    }
+  ],
+  "unique_tests_passing": 37,
+  "new_tests": 10,
+  "live_provider_probe_invocations": 0,
+  "local_stub_only_invocations": 2,
+  "historical_skipped_probe_still_skipped": true,
+  "reports": {
+    "results/codex-preserved-classification-v1.json": {
+      "sha256": "e801cca817d5b4a0646b52158b807781c28c3f945884f3fae1f4bd9549bf21e2",
+      "exit_code": 1
+    },
+    "results/codex-local-retry-v2.json": {
+      "sha256": "90bbb3a4594ca033ac800898c9a830401f25c824574bace26fb45001c906fd02",
+      "exit_code": 1
+    }
+  },
+  "complete_agent_accounting_pass": false,
+  "agent_savings": "unmeasured",
+  "product_promotion_pass": false
+}

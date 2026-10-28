@@ -1,0 +1,52 @@
+{
+  "kind": "integrity_and_preparation_only",
+  "readiness_command": [
+    ".research/venv/bin/python",
+    "benchmark/agent_readiness.py",
+    "--plan",
+    "benchmark/agent-trial-preparation.json",
+    "--output",
+    "results/agent-trial-preparation-readiness.json"
+  ],
+  "readiness_exit_code": 1,
+  "readiness_pass": false,
+  "prerequisite_blockers": [
+    "complete accounting for provider totals, model requests, tool payloads, and failed attempts is required",
+    "token limit must be a hard live cap; observed_after_turn is not enforceable",
+    "task catalog must be safely located, hash-pinned, fresh, outcome-checked, and independently reviewed",
+    "paired sequential comparison, hashed shared source manifest, tokenizer, budgets <=8000, cache conditions, quality criteria, and primary metric are required"
+  ],
+  "tests": {
+    "command": "cd benchmark && ../.research/venv/bin/python -m unittest test_agent_backend test_agent_readiness test_codex_solver test_codex_mcp_solver test_codex_validation test_codex_discovery test_comparison_plan",
+    "tests_run": 52,
+    "exit_code": 0
+  },
+  "unchanged_historical_artifacts": {
+    "benchmark/preregistration.json": {
+      "expected_sha256": "36eb017f5348c8533123373c571ff5157fa146a141459ba0a863025eb766cb58",
+      "observed_sha256": "36eb017f5348c8533123373c571ff5157fa146a141459ba0a863025eb766cb58",
+      "unchanged": true
+    },
+    "results/confirmation-v64-comparison.json": {
+      "expected_sha256": "1cd731799f390e6e7053c63ff3a606b59175118fe6c9d380833bd5c27b3c2f90",
+      "observed_sha256": "1cd731799f390e6e7053c63ff3a606b59175118fe6c9d380833bd5c27b3c2f90",
+      "unchanged": true
+    },
+    "results/confirmation-v64-decision.json": {
+      "expected_sha256": "1ada0c1f96fc1eb6e1becd09ec68c55e70806ab477d9960e22dabb9775c1fcdc",
+      "observed_sha256": "1ada0c1f96fc1eb6e1becd09ec68c55e70806ab477d9960e22dabb9775c1fcdc",
+      "unchanged": true
+    },
+    "results/confirmation-v64-report.json": {
+      "expected_sha256": "a177e3403053c0ba0badd68adf4abc8e2321d5142a6165a5b8703b32f14b44fe",
+      "observed_sha256": "a177e3403053c0ba0badd68adf4abc8e2321d5142a6165a5b8703b32f14b44fe",
+      "unchanged": true
+    }
+  },
+  "implementation_hashes_match": true,
+  "plan_sha256": "033d62961fe214bdab8001abf1a456544cce98ce202b83f12ee12c5059f163b5",
+  "readiness_sha256": "e612c62693510640a7d07baf969f56d798d9d55e96691d609298c3a08c0edb76",
+  "new_solver_trials": 0,
+  "agent_savings": "unmeasured",
+  "product_promotion_pass": false
+}

@@ -226,57 +226,52 @@ fn cli_emits_machine_readable_results_and_actionable_errors() {
     assert!(child.wait().unwrap().success());
 }
 
+fn rewrite_index(root: &std::path::Path, edit: impl FnOnce(&mut Index)) {
+    let path = graf::index_path(root);
+    let mut index: Index = bincode::deserialize(&fs::read(&path).unwrap()).unwrap();
+    edit(&mut index);
+    fs::write(&path, bincode::serialize(&index).unwrap()).unwrap();
+}
+
 #[test]
 fn incompatible_and_moved_indexes_require_explicit_rebuild() {
     let dir = fixture();
     let root = canonical_root(dir.path()).unwrap();
     Index::build(&root, false).unwrap();
-    let path = graf::index_path(&root);
-    let original = fs::read(&path).unwrap();
-    let mut value: serde_json::Value = serde_json::from_slice(&original).unwrap();
-    value["schema"] = 99.into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
+    let original = fs::read(graf::index_path(&root)).unwrap();
+    rewrite_index(&root, |index| index.schema = 99);
     assert!(Index::load(&root).is_err());
     assert!(Index::build(&root, false).is_err());
     Index::build(&root, true).unwrap();
     let current = Index::load(&root).unwrap();
     assert_eq!(current.files.len(), 3);
-    let mut value: serde_json::Value = serde_json::from_slice(&original).unwrap();
-    value["root"] = "/another-checkout".into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
+    fs::write(graf::index_path(&root), &original).unwrap();
+    rewrite_index(&root, |index| index.root = "/another-checkout".into());
     assert!(Index::load(&root).is_err());
     Index::build(&root, true).unwrap();
     assert!(Index::load(&root).is_ok());
 }
 
 #[test]
-fn corrupt_postings_and_excerpt_text_are_rejected() {
+fn corrupt_postings_and_excerpt_ranges_are_rejected() {
     let dir = fixture();
     let root = canonical_root(dir.path()).unwrap();
     Index::build(&root, false).unwrap();
-    let path = graf::index_path(&root);
-    let bytes = fs::read(&path).unwrap();
-    let mut value: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
-    let term = value["postings"]
-        .as_object()
-        .unwrap()
-        .keys()
-        .next()
-        .unwrap()
-        .clone();
-    value["postings"][&term][0]["chunk"] = 999_999.into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
+    let original = fs::read(graf::index_path(&root)).unwrap();
+    rewrite_index(&root, |index| {
+        index.postings.values_mut().next().unwrap()[0].chunk = 999_999;
+    });
     assert!(Index::load(&root).is_err());
-    let mut value: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
-    value["files"]["cache.rs"]["chunks"][0]["text"] = "invented source".into();
-    fs::write(&path, serde_json::to_vec(&value).unwrap()).unwrap();
-    let index = Index::load(&root).unwrap();
+    fs::write(graf::index_path(&root), &original).unwrap();
+    rewrite_index(&root, |index| {
+        let chunk = &mut index.files.get_mut("cache.rs").unwrap().chunks[0];
+        chunk.end = 10_000;
+    });
     assert!(
-        index
-            .search("cache", 2000, 10, None, None)
+        Index::load(&root)
             .unwrap_err()
             .to_string()
-            .contains("Corrupt source")
+            .contains("Invalid source ranges")
     );
 }
 
@@ -474,4 +469,599 @@ fn locate_rejects_stale_sources_and_cli_handles_round_trip() {
             .to_string()
             .contains("Stale source")
     );
+}
+
+#[test]
+fn experimental_policies_are_opt_in_and_only_narrow_delivery() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::write(
+        dir.path().join("rotation.rs"),
+        "fn rotate_session_key() { rotate(session, key); rotate(session, key); }\n",
+    )
+    .unwrap();
+    for i in 0..8 {
+        fs::write(
+            dir.path().join(format!("other{i}.rs")),
+            "fn unrelated() { session(); }\n",
+        )
+        .unwrap();
+    }
+    let run = |args: &[&str]| {
+        Command::new(env!("CARGO_BIN_EXE_graf"))
+            .arg("--root")
+            .arg(dir.path())
+            .args(args)
+            .output()
+            .unwrap()
+    };
+    assert!(run(&["index"]).status.success());
+    let hints = |args: &[&str]| -> Vec<String> {
+        let output = run(args);
+        assert!(output.status.success(), "{args:?}");
+        let value: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
+        value["hints"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|h| h["path"].as_str().unwrap().into())
+            .collect()
+    };
+    let query = "rotate session key";
+    let accepted = hints(&["locate", query]);
+    assert_eq!(accepted.len(), 9);
+    assert_eq!(
+        hints(&["locate", query, "--stop", "full", "--file-score", "max"]),
+        accepted
+    );
+    let floor = hints(&["locate", query, "--stop", "floor"]);
+    assert_eq!(floor, ["rotation.rs"]);
+    let gap = hints(&["locate", query, "--stop", "gap"]);
+    // Largest gap follows the first file: raised to the minimum of 3, plus a buffer of 2.
+    assert_eq!(gap, accepted[..5]);
+    assert_eq!(
+        hints(&["locate", query, "--file-score", "damped"])[0],
+        "rotation.rs"
+    );
+    let rejected = run(&["search", query, "--file-score", "damped"]);
+    assert!(!rejected.status.success());
+    assert!(
+        String::from_utf8(rejected.stderr)
+            .unwrap()
+            .contains("locate only")
+    );
+}
+
+#[test]
+fn experimental_analyzers_persist_with_the_index_and_drive_queries() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::write(
+        dir.path().join("helpers.rs"),
+        "fn test_helpers() { refreshCache(); }\n",
+    )
+    .unwrap();
+    let run = |args: &[&str]| {
+        Command::new(env!("CARGO_BIN_EXE_graf"))
+            .arg("--root")
+            .arg(dir.path())
+            .args(args)
+            .output()
+            .unwrap()
+    };
+    let index_json = || -> serde_json::Value {
+        Index::load(&canonical_root(dir.path()).unwrap())
+            .unwrap()
+            .export_legacy()
+            .unwrap()
+    };
+    let matched = |query: &str| -> u64 {
+        let value: serde_json::Value =
+            serde_json::from_slice(&run(&["search", query]).stdout).unwrap();
+        value["matched_chunks"].as_u64().unwrap()
+    };
+    assert!(run(&["index"]).status.success());
+    assert!(
+        index_json().get("analyzer").is_none(),
+        "accepted indexes are unchanged"
+    );
+    assert_eq!(matched("test"), 0, "request phrasing is a stopword");
+    assert_eq!(matched("refreshcache"), 0);
+
+    let built = run(&[
+        "index",
+        "--stopwords",
+        "english",
+        "--full-identifiers",
+        "--path-weight",
+        "3",
+    ]);
+    assert!(built.status.success());
+    let analyzer = &index_json()["analyzer"];
+    assert_eq!(analyzer["stopwords"], "english");
+    assert_eq!(analyzer["path_weight"], 3);
+    assert_eq!(matched("test"), 1, "queries use the index's analyzer");
+    assert_eq!(matched("refreshcache"), 1);
+
+    assert!(run(&["index"]).status.success());
+    assert!(
+        index_json().get("analyzer").is_none(),
+        "flags apply per build"
+    );
+    assert!(!run(&["index", "--path-weight", "0"]).status.success());
+}
+
+fn agent_fixture() -> TempDir {
+    let dir = tempfile::tempdir().unwrap();
+    fs::create_dir(dir.path().join("lib")).unwrap();
+    fs::write(
+        dir.path().join("lib/reply.js"),
+        "'use strict'\nfunction onSend (reply) {\n  return serialize(reply)\n}\n\nfunction serialize (payload) {\n  return JSON.stringify(payload)\n}\nmodule.exports = { onSend }\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("lib/route.js"),
+        "function route (opts) {\n  return opts.url\n}\nmodule.exports = { route }\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("README.md"),
+        "# Demo\nRoutes and replies.\n",
+    )
+    .unwrap();
+    dir
+}
+
+#[test]
+fn triage_lists_files_then_whole_functions_within_budget() {
+    let dir = agent_fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    let index = Index::load(&root).unwrap();
+    let bpe = cl100k_base().unwrap();
+    let issue = "onSend drops the payload\n\nCalling `serialize(payload)` from onSend in lib/reply.js returns nothing.";
+    let result = graf::triage::triage(&bpe, &index, issue, 2000).unwrap();
+    assert_eq!(
+        result.files.first().map(String::as_str),
+        Some("lib/reply.js")
+    );
+    assert!(
+        result
+            .context
+            .starts_with("Likely files:\n- lib/reply.js\n")
+    );
+    assert!(result.context.contains("Likely code:\nlib/reply.js:"));
+    assert!(
+        result
+            .context
+            .contains("function serialize (payload) {\n  return JSON.stringify(payload)\n}")
+    );
+    assert!(result.context_tokens <= 2000);
+    let tiny = graf::triage::triage(&bpe, &index, issue, 5).unwrap();
+    assert!(tiny.context_tokens <= 5);
+}
+
+#[test]
+fn outline_lists_functions_with_line_ranges() {
+    let dir = agent_fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    let index = Index::load(&root).unwrap();
+    let outline = graf::triage::outline(&index, "lib/reply.js").unwrap();
+    assert_eq!(
+        outline.context,
+        "lib/reply.js (9 lines, 2 functions)\nL2-4: function onSend (reply) {\nL6-8: function serialize (payload) {\n"
+    );
+    assert!(graf::triage::outline(&index, "README.md").is_err());
+    assert!(graf::triage::outline(&index, "missing.js").is_err());
+}
+
+#[test]
+fn unit_cache_is_reused_refreshed_and_never_serves_stale_code() {
+    let dir = agent_fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    let bpe = cl100k_base().unwrap();
+    let index = Index::load(&root).unwrap();
+    let cold = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    let cache = root.join(".graf/units.bin");
+    let query_index = root.join(".graf/unit-index.bin");
+    let written = fs::metadata(&cache).unwrap().modified().unwrap();
+    let derived = fs::read(&query_index).unwrap();
+    let warm = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    assert_eq!(cold.1, warm.1);
+    assert_eq!(fs::metadata(&cache).unwrap().modified().unwrap(), written);
+    assert_eq!(fs::read(&query_index).unwrap(), derived);
+    fs::remove_file(&query_index).unwrap();
+    let rebuilt = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    assert_eq!(cold.1, rebuilt.1);
+    assert_eq!(fs::read(&query_index).unwrap(), derived);
+
+    let changed = "function serialize (payload) {\n  return String(payload)\n}\nmodule.exports = { serialize }\n";
+    fs::write(root.join("lib/reply.js"), changed).unwrap();
+    assert!(graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).is_err());
+    Index::build(&root, false).unwrap();
+    let index = Index::load(&root).unwrap();
+    let fresh = graf::triage::ranked_units(&bpe, &index, "serialize payload", 2000).unwrap();
+    assert!(fresh.1.contains("return String(payload)"));
+    assert!(!fresh.1.contains("JSON.stringify"));
+    assert_ne!(fs::read(&query_index).unwrap(), derived);
+}
+
+#[test]
+fn dash_leading_queries_are_text_not_options() {
+    let dir = agent_fixture();
+    let root = dir.path().to_str().unwrap();
+    let graf = env!("CARGO_BIN_EXE_graf");
+    assert!(
+        Command::new(graf)
+            .args(["--root", root, "index"])
+            .status()
+            .unwrap()
+            .success()
+    );
+    for args in [
+        vec!["locate", "--budget", "200", "--text", "--verbose onSend"],
+        vec!["units", "--budget", "200", "--text", "-v onSend"],
+        vec![
+            "triage",
+            "--budget",
+            "200",
+            "--text",
+            "--verbose onSend\nbody",
+        ],
+        vec!["rewrite", "--verbose onSend"],
+    ] {
+        let output = Command::new(graf)
+            .arg("--root")
+            .arg(root)
+            .args(&args)
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{args:?}: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+    let output = Command::new(graf)
+        .args([
+            "--root", root, "locate", "--text", "--budget", "100", "onSend",
+        ])
+        .output()
+        .unwrap();
+    assert!(output.status.success());
+    assert!(String::from_utf8_lossy(&output.stdout).contains("lib/reply.js"));
+}
+
+#[test]
+fn compact_index_stores_no_excerpt_text_and_exports_legacy_json() {
+    let dir = fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    assert!(root.join(".graf/index.bin").is_file());
+    assert!(!root.join(".graf/index.json").exists());
+    let stored = fs::read(root.join(".graf/index.bin")).unwrap();
+    assert!(!String::from_utf8_lossy(&stored).contains("refreshCache() {"));
+    let index = Index::load(&root).unwrap();
+    assert!(index.files["cache.rs"].chunks[0].text.is_empty());
+    let found = index.search("refresh cache", 2000, 10, None, None).unwrap();
+    assert!(found.context.contains("pub fn refreshCache() {"));
+    let exported = index.export_legacy().unwrap();
+    assert_eq!(exported["schema"], 1);
+    assert_eq!(
+        exported["files"]["cache.rs"]["chunks"][0]["text"],
+        "pub fn refreshCache() {\n    let session = \"café 東京\";\n}"
+    );
+    assert!(exported["postings"]["refresh"].as_array().unwrap().len() >= 2);
+    let cli = Command::new(env!("CARGO_BIN_EXE_graf"))
+        .arg("--root")
+        .arg(&root)
+        .arg("export-index")
+        .output()
+        .unwrap();
+    assert!(cli.status.success());
+    let printed: serde_json::Value = serde_json::from_slice(&cli.stdout).unwrap();
+    assert_eq!(printed, exported);
+}
+
+#[test]
+fn a_legacy_json_index_asks_for_a_rebuild() {
+    let dir = fixture();
+    let root = canonical_root(dir.path()).unwrap();
+    fs::create_dir(root.join(".graf")).unwrap();
+    fs::write(root.join(".graf/index.json"), "{\"schema\":1}").unwrap();
+    let error = Index::load(&root).unwrap_err().to_string();
+    assert!(error.contains("graf index"), "{error}");
+    Index::build(&root, false).unwrap();
+    assert!(!root.join(".graf/index.json").exists());
+    assert!(Index::load(&root).is_ok());
+}
+
+#[test]
+fn cli_index_also_builds_the_function_index() {
+    let dir = agent_fixture();
+    let status = Command::new(env!("CARGO_BIN_EXE_graf"))
+        .arg("--root")
+        .arg(dir.path())
+        .arg("index")
+        .output()
+        .unwrap();
+    assert!(status.status.success());
+    assert!(dir.path().join(".graf/unit-index.bin").is_file());
+    assert!(dir.path().join(".graf/units.bin").is_file());
+    assert_eq!(
+        fs::read_to_string(dir.path().join(".graf/.gitignore")).unwrap(),
+        "# Generated by graf\n*\n"
+    );
+}
+
+fn mcp_call(
+    server: &mut graf::mcp::Server,
+    id: u64,
+    name: &str,
+    args: serde_json::Value,
+) -> serde_json::Value {
+    let request = serde_json::json!({"jsonrpc": "2.0", "id": id, "method": "tools/call",
+                                     "params": {"name": name, "arguments": args}});
+    server.handle(&request).unwrap()["result"].clone()
+}
+
+#[test]
+fn mcp_server_indexes_on_demand_and_follows_edits() {
+    let dir = agent_fixture();
+    let mut server = graf::mcp::Server::new(dir.path()).unwrap();
+    let init = server
+        .handle(
+            &serde_json::json!({"jsonrpc": "2.0", "id": 1, "method": "initialize",
+                                    "params": {"protocolVersion": "2025-06-18"}}),
+        )
+        .unwrap();
+    assert_eq!(init["result"]["protocolVersion"], "2025-06-18");
+    assert!(
+        init["result"]["instructions"]
+            .as_str()
+            .unwrap()
+            .contains("triage")
+    );
+    assert!(
+        server
+            .handle(&serde_json::json!({"jsonrpc": "2.0", "method": "notifications/initialized"}))
+            .is_none()
+    );
+    let listed = server
+        .handle(&serde_json::json!({"jsonrpc": "2.0", "id": 2, "method": "tools/list"}))
+        .unwrap();
+    let names: Vec<_> = listed["result"]["tools"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|t| t["name"].as_str().unwrap().to_string())
+        .collect();
+    assert_eq!(
+        names,
+        [
+            "triage", "outline", "units", "locate", "search", "expand", "index"
+        ]
+    );
+
+    // No index yet: the first call builds it.
+    let first = mcp_call(
+        &mut server,
+        3,
+        "triage",
+        serde_json::json!({"issue": "serialize payload of reply"}),
+    );
+    assert_eq!(first["isError"], false);
+    let text = first["content"][0]["text"].as_str().unwrap();
+    assert!(
+        text.contains("lib/reply.js") && text.contains("JSON.stringify(payload)"),
+        "{text}"
+    );
+    assert!(dir.path().join(".graf/index.bin").is_file());
+
+    // An edit after indexing is picked up without a manual reindex.
+    fs::write(
+        dir.path().join("lib/reply.js"),
+        "function serialize (payload) {\n  return String(payload)\n}\nmodule.exports = { serialize }\n",
+    )
+    .unwrap();
+    let edited = mcp_call(
+        &mut server,
+        4,
+        "units",
+        serde_json::json!({"query": "serialize payload"}),
+    );
+    let text = edited["content"][0]["text"].as_str().unwrap();
+    assert!(
+        text.contains("return String(payload)") && !text.contains("JSON.stringify"),
+        "{text}"
+    );
+
+    let outline = mcp_call(
+        &mut server,
+        5,
+        "outline",
+        serde_json::json!({"path": "lib/reply.js"}),
+    );
+    assert!(
+        outline["content"][0]["text"]
+            .as_str()
+            .unwrap()
+            .contains("L1-3: function serialize")
+    );
+    let bad = mcp_call(&mut server, 6, "outline", serde_json::json!({}));
+    assert_eq!(bad["isError"], true);
+    let unknown = server
+        .handle(&serde_json::json!({"jsonrpc": "2.0", "id": 7, "method": "nope"}))
+        .unwrap();
+    assert_eq!(unknown["error"]["code"], -32601);
+}
+
+#[test]
+fn mcp_refreshes_membership_and_new_terms_before_ranking() {
+    let dir = agent_fixture();
+    let mut server = graf::mcp::Server::new(dir.path()).unwrap();
+    server
+        .call("triage", &serde_json::json!({"issue": "serialize payload"}))
+        .unwrap();
+
+    fs::write(
+        dir.path().join("lib/new.js"),
+        "function zebrabridge() { return 42 }\n",
+    )
+    .unwrap();
+    for tool in ["locate", "search", "units", "triage"] {
+        let args = if tool == "triage" {
+            serde_json::json!({"issue": "zebrabridge"})
+        } else {
+            serde_json::json!({"query": "zebrabridge"})
+        };
+        let text = server.call(tool, &args).unwrap();
+        assert!(text.contains("lib/new.js"), "{tool}: {text}");
+    }
+
+    // This term was absent from the postings; no old matching excerpt could trigger an error.
+    fs::write(
+        dir.path().join("lib/new.js"),
+        "function otterbridge() { return 42 }\n",
+    )
+    .unwrap();
+    assert!(
+        server
+            .call("units", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .contains("otterbridge")
+    );
+    assert!(
+        server
+            .call("locate", &serde_json::json!({"query": "zebrabridge"}))
+            .unwrap()
+            .is_empty()
+    );
+
+    fs::rename(
+        dir.path().join("lib/new.js"),
+        dir.path().join("lib/renamed.js"),
+    )
+    .unwrap();
+    let renamed = server
+        .call("locate", &serde_json::json!({"query": "otterbridge"}))
+        .unwrap();
+    assert!(renamed.contains("lib/renamed.js") && !renamed.contains("lib/new.js"));
+    fs::write(dir.path().join(".gitignore"), "lib/renamed.js\n").unwrap();
+    assert!(
+        server
+            .call("locate", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .is_empty()
+    );
+    fs::write(dir.path().join(".gitignore"), "").unwrap();
+    assert!(
+        !server
+            .call("locate", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .is_empty()
+    );
+    fs::remove_file(dir.path().join("lib/renamed.js")).unwrap();
+    assert!(
+        server
+            .call("units", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .is_empty()
+    );
+}
+
+#[test]
+fn mcp_search_handles_expand_and_fit_the_budget() {
+    let dir = agent_fixture();
+    let mut server = graf::mcp::Server::new(dir.path()).unwrap();
+    let bpe = tiktoken_rs::cl100k_base().unwrap();
+    for budget in [20, 40, 100, 2000] {
+        let text = server
+            .call(
+                "search",
+                &serde_json::json!({"query": "serialize payload", "budget": budget}),
+            )
+            .unwrap();
+        assert!(bpe.encode_ordinary(&text).len() <= budget);
+        if text.is_empty() {
+            continue;
+        }
+        let handle = text
+            .lines()
+            .find_map(|line| line.strip_prefix("id="))
+            .unwrap();
+        let expanded = server
+            .call("expand", &serde_json::json!({"id": handle}))
+            .unwrap();
+        assert!(expanded.contains("serialize"), "{expanded}");
+    }
+    let text = server
+        .call("search", &serde_json::json!({"query": "serialize payload"}))
+        .unwrap();
+    assert!(text.contains("id="));
+}
+
+#[test]
+fn mcp_cli_speaks_newline_delimited_json_rpc() {
+    use std::io::Write as _;
+    let dir = agent_fixture();
+    let mut child = Command::new(env!("CARGO_BIN_EXE_graf"))
+        .arg("--root")
+        .arg(dir.path())
+        .arg("mcp")
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    let mut stdin = child.stdin.take().unwrap();
+    writeln!(
+        stdin,
+        r#"{{"jsonrpc":"2.0","id":1,"method":"initialize","params":{{}}}}"#
+    )
+    .unwrap();
+    writeln!(stdin, "not json").unwrap();
+    writeln!(
+        stdin,
+        r#"{{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{{"name":"locate","arguments":{{"query":"route url"}}}}}}"#
+    )
+    .unwrap();
+    drop(stdin);
+    let output = child.wait_with_output().unwrap();
+    assert!(output.status.success());
+    let lines: Vec<serde_json::Value> = String::from_utf8(output.stdout)
+        .unwrap()
+        .lines()
+        .map(|l| serde_json::from_str(l).unwrap())
+        .collect();
+    assert_eq!(lines.len(), 3);
+    assert_eq!(lines[1]["error"]["code"], -32700);
+    assert!(
+        lines[2]["result"]["content"][0]["text"]
+            .as_str()
+            .unwrap()
+            .contains("lib/route.js")
+    );
+}
+
+#[test]
+fn cli_queries_build_a_missing_index() {
+    let dir = agent_fixture();
+    let output = Command::new(env!("CARGO_BIN_EXE_graf"))
+        .arg("--root")
+        .arg(dir.path())
+        .args(["triage", "--text", "--", "route url"])
+        .output()
+        .unwrap();
+    assert!(output.status.success());
+    assert!(
+        String::from_utf8(output.stdout)
+            .unwrap()
+            .contains("lib/route.js")
+    );
+    assert!(
+        String::from_utf8(output.stderr)
+            .unwrap()
+            .contains("no index yet")
+    );
+    assert!(dir.path().join(".graf/unit-index.bin").is_file());
 }

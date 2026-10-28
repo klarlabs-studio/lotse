@@ -1,0 +1,420 @@
+{
+  "h-rich-31": {
+    "rich/spinner.py": {
+      "relevant": false,
+      "reason": "`Spinner.__rich_console__` builds spinner glyphs and text for its own renderable; it does not define Live.update state or refresh behavior (rich/spinner.py:50)."
+    },
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "`Status.update` changes status/spinner configuration and then delegates to its owned Live object; it does not establish what Live.update itself does for string inputs (rich/status.py:53)."
+    },
+    "tests/test_progress.py": {
+      "relevant": false,
+      "reason": "The tests exercise progress columns, tasks, and Progress rendering; their fixture builds Progress tasks rather than testing Live.update string conversion (tests/test_progress.py:178)."
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "These cases render Table rows and column sizing; they do not test Live.update or refresh deferral (tests/test_table.py:89)."
+    },
+    "rich/control.py": {
+      "relevant": false,
+      "reason": "`Control` represents terminal cursor/control codes, which Live may use during refresh, but this file says nothing about storing an updated renderable or when it is rendered (rich/control.py:48)."
+    },
+    "tests/test_live.py": {
+      "relevant": true,
+      "reason": "`test_growing_display` passes strings to `live.update(..., refresh=True)` and checks the emitted frames; the auto-refresh case calls update without the flag, directly covering the refresh distinction (tests/test_live.py:38)."
+    },
+    "examples/fullscreen.py": {
+      "relevant": false,
+      "reason": "This example assembles a Layout and its panels/renderables; it does not call Live.update with a string or examine refresh behavior (examples/fullscreen.py:20)."
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "`Progress.update` mutates task progress fields and controls its own refresh flag; it is a separate API from Live.update accepting renderables (rich/progress.py:1417)."
+    },
+    "rich/console.py": {
+      "relevant": true,
+      "reason": "`Live.update` converts a string through `Console.render_str`, while Console rendering methods define the conversion/render path; this is the immediate work that occurs before any optional refresh (rich/console.py:1409)."
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "Table code stores rows and computes table layout; it does not participate in Live.update’s string conversion or refresh decision (rich/table.py:422)."
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "This file implements Jupyter MIME bundle representation, not the Live.update state transition or its default refresh behavior (rich/jupyter.py:18)."
+    },
+    "tests/test_cells.py": {
+      "relevant": false,
+      "reason": "These tests measure Unicode display cell widths, independent of Live’s update and render timing (tests/test_cells.py:29)."
+    },
+    "examples/top_lite_simulator.py": {
+      "relevant": false,
+      "reason": "The simulator creates a process table for display; it does not call Live.update or exercise its refresh option (examples/top_lite_simulator.py:50)."
+    },
+    "tests/test_traceback.py": {
+      "relevant": false,
+      "reason": "These tests capture and format exceptions, with no Live.update string or refresh behavior under test (tests/test_traceback.py:13)."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "Console tests cover print formatting and terminal output, but the selected cases do not exercise Live.update or its deferred display (tests/test_console.py:37)."
+    },
+    "tests/test_live_render.py": {
+      "relevant": true,
+      "reason": "`test_renderable` verifies that LiveRender stores a replacement renderable through `set_renderable`; that is the state update which refresh later supplies before rendering (tests/test_live_render.py:13)."
+    }
+  },
+  "h-rich-32": {
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "Segment represents styled text/control output after rendering, not Progress task visibility or selection for the task table (rich/segment.py:61)."
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text handles text formatting and wrapping, not whether a Progress task is included as a row (rich/text.py:1201)."
+    },
+    "tests/test_traceback.py": {
+      "relevant": false,
+      "reason": "These tests concern traceback capture/rendering and contain no hidden Progress task or task-table assertion (tests/test_traceback.py:63)."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style defines terminal style parsing and combination; it does not determine which Progress tasks become table rows (rich/style.py:40)."
+    },
+    "rich/measure.py": {
+      "relevant": false,
+      "reason": "Measurement provides width bounds for renderables, unrelated to filtering hidden tasks from a Progress table (rich/measure.py:11)."
+    },
+    "tests/test_rule_in_table.py": {
+      "relevant": false,
+      "reason": "These tests check Rule renderables embedded in ordinary Tables; they do not create Progress tasks or check visibility (tests/test_rule_in_table.py:13)."
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "These tests exercise ordinary Table layout and row rendering, without Progress task visibility semantics (tests/test_table.py:89)."
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "Jupyter MIME-bundle conversion is a display backend and does not select Progress task rows (rich/jupyter.py:18)."
+    },
+    "examples/fullscreen.py": {
+      "relevant": false,
+      "reason": "The fullscreen example places panels and a table in a Layout; no Progress task is hidden or filtered here (examples/fullscreen.py:20)."
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "Table.add_row appends supplied cells without knowing Progress task visibility; the task-level filter that decides whether to call it is elsewhere (rich/table.py:422)."
+    },
+    "examples/dynamic_progress.py": {
+      "relevant": true,
+      "reason": "The example stops a step task and then calls `step_progress.update(..., visible=False)` to hide its progress bar, directly demonstrating the effect on the displayed progress view (examples/dynamic_progress.py:36)."
+    },
+    "tests/test_progress.py": {
+      "relevant": true,
+      "reason": "The shared test fixture creates `baz` with `visible=False`; the rendered expected output in `test_render` includes other tasks but omits baz, directly establishing hidden-task exclusion (tests/test_progress.py:178)."
+    },
+    "examples/live_progress.py": {
+      "relevant": false,
+      "reason": "This example uses a basic Progress context to update a task, with no hidden-task setting (examples/live_progress.py:1)."
+    },
+    "tests/test_markdown.py": {
+      "relevant": false,
+      "reason": "These tests render Markdown blocks and tables; they do not exercise Progress visibility or its task table (tests/test_markdown.py:99)."
+    },
+    "examples/downloader.py": {
+      "relevant": false,
+      "reason": "The downloader creates and advances download tasks but does not hide tasks or inspect the table’s rows (examples/downloader.py:47)."
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "Live manages the outer renderable refresh and output lifecycle; it has no task-table row-selection logic (rich/live.py:230)."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "Console implements generic rendering and printing; it does not inspect a Progress task’s visible flag (rich/console.py:1652)."
+    }
+  },
+  "h-rich-33": {
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text.wrap splits and truncates text lines; task totals, completion, reset state, and speed samples are maintained in Progress, not Text (rich/text.py:1201)."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "These cases test Console soft wrapping and printed output; they do not update a Progress task or inspect sampling (tests/test_console.py:598)."
+    },
+    "examples/fullscreen.py": {
+      "relevant": false,
+      "reason": "The fullscreen example builds a Layout of display renderables; it has no task update changing total or completed work (examples/fullscreen.py:20)."
+    },
+    "examples/table_movie.py": {
+      "relevant": false,
+      "reason": "This animation changes Table content for a movie-style display and does not exercise Progress task reset or speed sampling (examples/table_movie.py:63)."
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "Jupyter output formatting is separate from Progress.update’s task fields and sample history (rich/jupyter.py:18)."
+    },
+    "tests/test_progress.py": {
+      "relevant": true,
+      "reason": "`make_progress` calls update with a changed total plus `advance` and `completed`; other tests exercise task reset and speed columns, directly covering Progress update/reset state and its observable sampling-derived speed (tests/test_progress.py:203)."
+    },
+    "examples/live_progress.py": {
+      "relevant": false,
+      "reason": "The live-progress demo increments a task in a loop but does not change its total or inspect reset/sampling behavior (examples/live_progress.py:1)."
+    },
+    "tests/conftest.py": {
+      "relevant": false,
+      "reason": "The only fixture here resets color-related environment variables; it does not affect Progress task updates or sampling (tests/conftest.py:5)."
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "Live.refresh redraws the current renderable; the query concerns Progress.update’s task reset and speed sample history, which this file does not mutate (rich/live.py:244)."
+    },
+    "tests/test_bar.py": {
+      "relevant": false,
+      "reason": "These tests target the standalone Bar renderable’s initialization, update, and rendering, not Progress task totals or speed samples (tests/test_bar.py:9)."
+    },
+    "examples/dynamic_progress.py": {
+      "relevant": false,
+      "reason": "This example advances step tasks and toggles their visibility; it never changes a task total while advancing or inspects sample history (examples/dynamic_progress.py:26)."
+    },
+    "tests/test_box.py": {
+      "relevant": false,
+      "reason": "These tests verify Box border geometry and character accessors, unrelated to Progress task reset and speed sampling (tests/test_box.py:19)."
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "Table lays out cells and rows after the Progress layer supplies them; it does not reset task completion or sample history (rich/table.py:422)."
+    },
+    "rich/progress_bar.py": {
+      "relevant": false,
+      "reason": "ProgressBar renders a supplied completed/total ratio, but does not own Progress.update’s reset or sampled speed behavior (rich/progress_bar.py:156)."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "Console print/render options format output; they do not alter the Progress task’s total, completed value, or speed samples (rich/console.py:1652)."
+    }
+  },
+  "h-rich-34": {
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "Inspect tests format object representations and attributes; they do not exercise Console.print overflow defaults or its soft_wrap option (tests/test_inspect.py:58)."
+    },
+    "rich/color.py": {
+      "relevant": false,
+      "reason": "Color conversion and color-system selection do not control ConsoleOptions.overflow or the soft_wrap substitutions (rich/color.py:21)."
+    },
+    "tests/render.py": {
+      "relevant": false,
+      "reason": "The render helper optionally sets no_wrap for snapshots, but it does not assert Console.print’s overflow default or soft_wrap option values (tests/render.py:18)."
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "test_soft_wrap directly shows that Console.print with soft_wrap=True emits the full unwrapped string; it supports the behavior produced by the soft-wrap options path (tests/test_console.py:604)."
+    },
+    "rich/logging.py": {
+      "relevant": false,
+      "reason": "RichHandler formats and emits logging records, not the values Console.print supplies to render options when overflow or soft_wrap is omitted (rich/logging.py:138)."
+    },
+    "examples/overflow.py": {
+      "relevant": false,
+      "reason": "This example explicitly passes each of fold, crop, and ellipsis to Console.print; it does not establish the omitted-overflow default or soft_wrap substitution (examples/overflow.py:7)."
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "The module-level rich.print wrapper forwards its arguments to Console.print, but exposes neither ConsoleOptions defaults nor a soft_wrap parameter/path (rich/__init__.py:53)."
+    },
+    "tests/test_text.py": {
+      "relevant": true,
+      "reason": "Text tests exercise wrapping and overflow handling directly; the Text.wrap expectations help distinguish its own default overflow behavior from the Console soft_wrap override (tests/test_text.py:652)."
+    },
+    "tests/test_markdown.py": {
+      "relevant": false,
+      "reason": "Markdown tests render parsed Markdown elements and tables, not Console.print’s omitted overflow or soft_wrap option handling (tests/test_markdown.py:99)."
+    },
+    "rich/text.py": {
+      "relevant": true,
+      "reason": "Text.wrap derives wrap_overflow from the supplied overflow or Text’s configured/default overflow, then treats \"ignore\" as no-wrap and keeps the full line; this establishes how Text consumes the soft_wrap-supplied value (rich/text.py:1224)."
+    },
+    "rich/box.py": {
+      "relevant": false,
+      "reason": "Box defines border glyph sets and substitutes box variants based on console options; it does not set ConsoleOptions overflow values (rich/box.py:10)."
+    },
+    "rich/layout.py": {
+      "relevant": false,
+      "reason": "Layout divides terminal dimensions among child renderables; it does not define Console.print’s overflow argument defaults or soft_wrap path (rich/layout.py:32)."
+    }
+  },
+  "h-rich-35": {
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "Inspect tests validate object introspection formatting, not Console.out’s delegated flags (tests/test_inspect.py:58)."
+    },
+    "tests/test_syntax.py": {
+      "relevant": false,
+      "reason": "Syntax tests assert syntax-highlighted code output; they do not cover Console.out or the markup/emoji/crop arguments it passes (tests/test_syntax.py:56)."
+    },
+    "rich/file_proxy.py": {
+      "relevant": false,
+      "reason": "FileProxy forwards writes to the console but does not implement Console.out’s call to print with explicit flags (rich/file_proxy.py:28)."
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "Segment represents rendered text and control codes, downstream of Console.out; it does not show which flags out supplies to print (rich/segment.py:61)."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "The test_out case checks concatenated output beyond console width, but does not inspect or establish the explicit markup, emoji, and crop arguments asked for (tests/test_console.py:650)."
+    },
+    "rich/traceback.py": {
+      "relevant": false,
+      "reason": "Traceback formats exception frames and source lines; this is separate from Console.out’s argument forwarding (rich/traceback.py:56)."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style parses and combines text styles but does not specify Console.out’s markup, emoji, or crop flags (rich/style.py:40)."
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "These tests check Text formatting and wrapping behavior, not the flags Console.out explicitly passes to Console.print (tests/test_text.py:652)."
+    },
+    "tests/test_progress.py": {
+      "relevant": false,
+      "reason": "The tests build and render Progress tasks and never invoke Console.out or assert its flag values (tests/test_progress.py:178)."
+    },
+    "rich/emoji.py": {
+      "relevant": false,
+      "reason": "Emoji.replace defines how emoji codes are expanded, but it has no call site from Console.out and cannot establish the flag that disables replacement there (rich/emoji.py:53)."
+    },
+    "tests/test_win32_console.py": {
+      "relevant": false,
+      "reason": "These tests cover Windows console handles, cursor info, and coordinates, not Console.out’s print flags (tests/test_win32_console.py:30)."
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "The top-level print wrapper forwards generic arguments to Console.print; it does not implement Console.out or its explicit flags (rich/__init__.py:53)."
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "Live.update/refresh controls a live renderable display, unrelated to the low-level Console.out flags (rich/live.py:230)."
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text implements text wrapping and truncation after Console options are supplied; it does not reveal the explicit arguments Console.out passes (rich/text.py:1201)."
+    },
+    "rich/markup.py": {
+      "relevant": false,
+      "reason": "Markup parsing is implemented here, but the file contains no Console.out call or flag disabling markup for that method (rich/markup.py:48)."
+    }
+  },
+  "h-rich-36": {
+    "tests/test_layout.py": {
+      "relevant": false,
+      "reason": "Layout tests verify split and render behavior, without invoking Live.update or distinguishing its refresh default (tests/test_layout.py:10)."
+    },
+    "tests/test_progress.py": {
+      "relevant": false,
+      "reason": "These tests use Progress.update and progress refresh settings, a separate API from Live.update’s renderable refresh default (tests/test_progress.py:178)."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "Inspect tests format object information and do not exercise Live.update’s default refresh argument (tests/test_inspect.py:58)."
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "Progress.update has its own refresh=False default, but this is the Progress API and cannot establish Live.update’s default (rich/progress.py:1417)."
+    },
+    "examples/top_lite_simulator.py": {
+      "relevant": false,
+      "reason": "The simulator constructs and renders a process table, without calling Live.update (examples/top_lite_simulator.py:50)."
+    },
+    "tests/test_live.py": {
+      "relevant": false,
+      "reason": "The test invokes live.update(display) without an explicit refresh flag under auto_refresh=True, but only asserts that the multithreaded case does not crash, so it does not establish whether update refreshes by default (tests/test_live.py:116)."
+    },
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "Status.update changes status text and spinner properties through its own wrapper; it does not establish Live.update’s refresh default (rich/status.py:53)."
+    },
+    "rich/repr.py": {
+      "relevant": false,
+      "reason": "This module implements automatic object repr support, unrelated to Live refresh behavior (rich/repr.py:22)."
+    },
+    "rich/color.py": {
+      "relevant": false,
+      "reason": "Color-system selection has no bearing on whether Live.update calls refresh by default (rich/color.py:21)."
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "Console rendering and print options do not define the refresh default on Live.update (rich/console.py:1652)."
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "Console tests cover output formatting and soft wrapping, not calls to Live.update or its default refresh behavior (tests/test_console.py:604)."
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "Jupyter MIME representation is unrelated to the Live.update method’s default refresh flag (rich/jupyter.py:18)."
+    },
+    "tests/test_repr.py": {
+      "relevant": false,
+      "reason": "These tests validate __rich_repr__ output for custom objects, not Live refresh semantics (tests/test_repr.py:12)."
+    },
+    "rich/color_triplet.py": {
+      "relevant": false,
+      "reason": "ColorTriplet converts RGB values to hex, RGB, and normalized values, with no Live update behavior (rich/color_triplet.py:4)."
+    },
+    "tests/test_color.py": {
+      "relevant": false,
+      "reason": "The color tests cover color string/system conversions and do not exercise Live.update (tests/test_color.py:16)."
+    }
+  },
+  "h-rich-37": {
+    "tests/test_traceback.py": {
+      "relevant": false,
+      "reason": "Traceback tests capture and format exception output; they do not exercise Text wrapping with Console.print soft_wrap (tests/test_traceback.py:13)."
+    },
+    "benchmarks/benchmarks.py": {
+      "relevant": false,
+      "reason": "The text benchmark calls Text.wrap with overflow explicitly set to fold; it measures performance and does not establish the ignore behavior supplied through soft_wrap (benchmarks/benchmarks.py:22)."
+    },
+    "rich/syntax.py": {
+      "relevant": false,
+      "reason": "Syntax creates Text with a no_wrap setting based on Syntax.word_wrap, a distinct option path that does not examine Console.print’s soft_wrap-supplied ignore value (rich/syntax.py:490)."
+    },
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "Inspect tests cover introspection output and do not exercise Text.wrap or Console.print soft_wrap (tests/test_inspect.py:58)."
+    },
+    "tests/test_text.py": {
+      "relevant": true,
+      "reason": "The no-wrap/no-crop test passes overflow=\"ignore\" to Console.print and verifies a long Text is retained as one untruncated line, directly testing the Text-facing effect of ignore (tests/test_text.py:652)."
+    },
+    "examples/listdir.py": {
+      "relevant": false,
+      "reason": "The example uses the module-level print wrapper to display a Columns renderable, with no soft_wrap option or ignore overflow behavior (examples/listdir.py:22)."
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "test_soft_wrap prints a string wider than the Console and asserts the full string remains on one line, directly establishing the output behavior of soft_wrap (tests/test_console.py:604)."
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "Table tests exercise table layout and rendering; they do not test Text wrapping through Console.print soft_wrap (tests/test_table.py:89)."
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "Segment utilities operate on already-rendered lines and cell widths, not the Text.wrap decision that receives overflow=\"ignore\" (rich/segment.py:61)."
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style parsing and application do not control wrapping or overflow values passed to Text (rich/style.py:40)."
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "The module-level print wrapper forwards ordinary print arguments to Console.print and offers no soft_wrap parameter or Text wrapping implementation (rich/__init__.py:53)."
+    }
+  }
+}

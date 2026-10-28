@@ -1,0 +1,176 @@
+{
+  "id": "claude-subscription-v2",
+  "plan_sha256": "e2d0c91e151c6517c268c1d9a14865224ef96a2c0c80e6d8fee30980b5d6dbf0",
+  "scope": "subscription_accounting_diagnostic",
+  "cases": [
+    {
+      "case": "plain",
+      "exit_code": 0,
+      "wall_seconds": 2.744323999999324,
+      "diagnostic_pass": true,
+      "tool_calls": 0,
+      "usage": {
+        "event_counts": {
+          "assistant": 1,
+          "rate_limit_event": 1,
+          "result": 1,
+          "stream_event": 6,
+          "system": 2
+        },
+        "event_count": 11,
+        "result_count": 1,
+        "assistant_count": 1,
+        "assistant_message_ids": [
+          "msg_011CgLcPGHcqeNprpaFvBrcq"
+        ],
+        "usage_bearing_event_count": 5,
+        "model_usage_event_count": 1,
+        "result_usage_event_count": 1,
+        "usage_observation_event_count": 4,
+        "init_models": [
+          "claude-haiku-5-5"
+        ],
+        "assistant_models": [
+          "claude-haiku-5-5"
+        ],
+        "model_usage_keys": [
+          "claude-haiku-5-5"
+        ],
+        "model_usage": {
+          "claude-haiku-5-5": {
+            "inputTokens": 2,
+            "cacheCreationInputTokens": 848,
+            "cacheReadInputTokens": 0,
+            "outputTokens": 4,
+            "costUSD": 0.0001718
+          }
+        },
+        "model_usage_totals": {
+          "inputTokens": 2,
+          "cacheCreationInputTokens": 848,
+          "cacheReadInputTokens": 0,
+          "outputTokens": 4,
+          "costUSD": 0.0001718,
+          "inputTokensTotal": 850
+        },
+        "result_usage": {
+          "inputTokens": 850,
+          "cacheCreationInputTokens": 848,
+          "cacheReadInputTokens": 0,
+          "outputTokens": 4
+        },
+        "result_usage_valid": true,
+        "permission_denial_count": 0,
+        "totals_match": true,
+        "diagnostic_success": true,
+        "diagnostic_pass": true,
+        "estimated_cost_label": "Claude Code stream modelUsage costUSD observation; not verified billing",
+        "complete_accounting": false,
+        "product_promotion_pass": false,
+        "agent_savings": "unmeasured",
+        "live_cap": "unverified"
+      },
+      "within_estimated_budget": true,
+      "expected_reply": true,
+      "expected_tool_inventory": true
+    },
+    {
+      "case": "ping",
+      "exit_code": 0,
+      "wall_seconds": 5.003084791009314,
+      "diagnostic_pass": true,
+      "tool_calls": 1,
+      "usage": {
+        "event_counts": {
+          "assistant": 2,
+          "rate_limit_event": 1,
+          "result": 1,
+          "stream_event": 12,
+          "system": 3,
+          "user": 1
+        },
+        "event_count": 20,
+        "result_count": 1,
+        "assistant_count": 2,
+        "assistant_message_ids": [
+          "msg_011CgLcPU9VoevLYAdkFujpn",
+          "msg_011CgLcPbSHwAKrazFKiiGh2"
+        ],
+        "usage_bearing_event_count": 8,
+        "model_usage_event_count": 1,
+        "result_usage_event_count": 1,
+        "usage_observation_event_count": 7,
+        "init_models": [
+          "claude-haiku-5-5"
+        ],
+        "assistant_models": [
+          "claude-haiku-5-5",
+          "claude-haiku-5-5"
+        ],
+        "model_usage_keys": [
+          "claude-haiku-5-5"
+        ],
+        "model_usage": {
+          "claude-haiku-5-5": {
+            "inputTokens": 4,
+            "cacheCreationInputTokens": 1413,
+            "cacheReadInputTokens": 1319,
+            "outputTokens": 36,
+            "costUSD": 0.00031419
+          }
+        },
+        "model_usage_totals": {
+          "inputTokens": 4,
+          "cacheCreationInputTokens": 1413,
+          "cacheReadInputTokens": 1319,
+          "outputTokens": 36,
+          "costUSD": 0.00031419,
+          "inputTokensTotal": 2736
+        },
+        "result_usage": {
+          "inputTokens": 2736,
+          "cacheCreationInputTokens": 1413,
+          "cacheReadInputTokens": 1319,
+          "outputTokens": 36
+        },
+        "result_usage_valid": true,
+        "permission_denial_count": 0,
+        "totals_match": true,
+        "diagnostic_success": true,
+        "diagnostic_pass": true,
+        "estimated_cost_label": "Claude Code stream modelUsage costUSD observation; not verified billing",
+        "complete_accounting": false,
+        "product_promotion_pass": false,
+        "agent_savings": "unmeasured",
+        "live_cap": "unverified"
+      },
+      "within_estimated_budget": true,
+      "expected_reply": true,
+      "expected_tool_inventory": true
+    }
+  ],
+  "cli_invocations": 2,
+  "product_promotion_pass": false,
+  "complete_accounting": false,
+  "agent_savings": "unmeasured",
+  "internal_provider_attempts": "unmeasured",
+  "hard_token_cap": "unverified",
+  "cost_basis": "client-side list-price estimate; subscription charge unverified",
+  "graphify_comparison": "unchanged",
+  "status": "completed",
+  "exit_code": 0,
+  "raw_artifacts": {
+    "run/auth-status.json": "19b9097e39b8e9e3285b53c8fe79610fd26409284fa77d0c14db6f8b7d8e34ef",
+    "run/ping/analysis.json": "08268eba219ee954c27758a8275dc4756990e06f89ea323bcd0ded73c8d391aa",
+    "run/ping/command.json": "062112f70712d3149496ce4338e38506e3f1ecdff31540200927c4d209eeebcf",
+    "run/ping/mcp.json": "4b30e0219292ba42a39a952581f01088add8fe1e4fdc42b2669522b174196eb0",
+    "run/ping/ping.jsonl": "5cf72c227826598de7c66cd17a09436140d9202de9c0d2c02f432faeed118c58",
+    "run/ping/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run/ping/stream.jsonl": "36f5e9d5376f68ff3deec6e179d82be817e8dc672cb6f4f51f498b62c8cf7b01",
+    "run/plain/analysis.json": "259766778444b4edad37c033915bc24d1bdbc8963fc87295ce6a1441dbfb93f6",
+    "run/plain/command.json": "f9f8dee39df416693d3a4cbf715c49babe37cb99b8622a41febcd064a680fed9",
+    "run/plain/mcp.json": "d8e397af03b5b032f21d0aa967086f0c78b33c87b76f2e9898ae0a144df7de02",
+    "run/plain/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run/plain/stream.jsonl": "e760369be82146656b1361956d6a910bdabadb8cdb61e4f167d46976466d9b90"
+  }
+}

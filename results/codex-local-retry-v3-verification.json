@@ -1,0 +1,89 @@
+{
+  "id": "codex-local-retry-v3-verification",
+  "frozen_integrity": {
+    "codex-otel-probe-v1": {
+      "plan_sha256": "89e15f6ca6fff29898dc28ff0b25429a57e4a76ad810860e8a037da4d770737c",
+      "implementation_hash_checks": {
+        "benchmark/codex_otel.py": true,
+        "benchmark/probe_codex_otel.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_mcp_solver.py": true
+      }
+    },
+    "codex-otel-probe-v2": {
+      "plan_sha256": "1fb2a134f8f4261de223cfaa08137ee316b487e4891f6ffca96d885ab171f16a",
+      "implementation_hash_checks": {
+        "benchmark/probe_codex_http.py": true,
+        "benchmark/test_probe_codex_http.py": true,
+        "benchmark/probe_codex_otel.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_mcp_solver.py": true,
+        "benchmark/codex_otel.py": true,
+        "benchmark/codex_otel_accounting.py": true
+      }
+    },
+    "codex-local-retry-v1": {
+      "plan_sha256": "235b8943407ba5a7bd4c3ccf1b383cab746cda1679baed8e39e6d734563ea57a",
+      "implementation_hash_checks": {
+        "benchmark/probe_codex_retry.py": true,
+        "benchmark/test_probe_codex_retry.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_otel.py": true
+      }
+    },
+    "codex-local-retry-v2": {
+      "plan_sha256": "db28f7c970416297c3d38dd3239aa2092174e3d6284041d31562273516b057f1",
+      "implementation_hash_checks": {
+        "benchmark/probe_codex_retry_v2.py": true,
+        "benchmark/test_probe_codex_retry_v2.py": true,
+        "benchmark/probe_codex_retry.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_otel.py": true
+      }
+    },
+    "codex-local-retry-v3": {
+      "plan_sha256": "11ae866d646a06d99293c3c64fdf6fce13cb0d5a65e82d10981c50ccfdb95abb",
+      "implementation_hash_checks": {
+        "benchmark/codex_otel.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/probe_codex_retry.py": true,
+        "benchmark/probe_codex_retry_v2.py": true,
+        "benchmark/probe_codex_retry_v3.py": true,
+        "benchmark/test_probe_codex_retry_v3.py": true
+      }
+    }
+  },
+  "prior_reports_unchanged": {
+    "results/codex-preserved-classification-v1.json": true,
+    "results/codex-local-retry-v2.json": true
+  },
+  "v64_unchanged": {
+    "results/confirmation-v64-comparison.json": true,
+    "results/confirmation-v64-decision.json": true,
+    "results/confirmation-v64-report.json": true,
+    "benchmark/preregistration.json": true
+  },
+  "test_command": ".research/venv/bin/python -m unittest discover -s benchmark -p test_probe_codex_retry_v3.py -v",
+  "focused_tests": 5,
+  "test_exit_code": 0,
+  "initial_test_failure": "Mocked base __enter__ did not assign self.server; corrected fixture before freeze, allfive pass.",
+  "reports": {
+    "results/codex-installed-telemetry-audit-v1.json": {
+      "sha256": "3f9e7e3ec6621df8f6e24fc852c4ac5d045544ab9d5835d208ed88bb880b39b3",
+      "exit_code": 0
+    },
+    "results/codex-local-retry-v3.json": {
+      "sha256": "bf43360bb1c8b442cd298c14e86325e3d48f722f1b3cbcb8f19a7af600a962ed",
+      "exit_code": 1
+    }
+  },
+  "live_provider_probe_invocations": 0,
+  "local_stub_only_invocations": 2,
+  "runner_exit_codes": {
+    "immediate_failure": 1,
+    "delayed_failure": 1
+  },
+  "complete_agent_accounting_pass": false,
+  "agent_savings": "unmeasured",
+  "product_promotion_pass": false
+}

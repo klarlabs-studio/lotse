@@ -1,0 +1,62 @@
+{
+  "author_id": "codex-source-author-zerolog-01; independent-rich-source-author; independent-pino-source-author",
+  "source_only": true,
+  "independent_of_tuning": true,
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+  "queries_sha256": "cbbdef34c9d16d5e9ffbfda1969914ff0fbaa8f5953a2408ca3b096b0d8d9f29",
+  "no_evidence_rationales": {
+    "h-zerolog-no-midnight-rotation": "The allowed packet contains no rotation or retention implementation: the source inventory has no rolling-file package, and the inspected root writer API (writer.go) and output setup (log.go) expose writer adaptation rather than file lifecycle management. The query requires a time-based rotation and retention policy absent from these repository sources.",
+    "h-zerolog-no-at-rest-encryption": "No encryption API or encryption stage is present in the allowed repository source inventory. The inspected event writer path in event.go and writer abstractions in writer.go encode and pass payloads to io.Writer; neither supplies a key, cipher, or persistence layer. The packet provides no evidence for record-at-rest encryption.",
+    "h-zerolog-no-http-ingest": "journald/journald.go sends records through journal.Send (or its test replacement SendFunc) to the local journald integration; it does not specify a remote HTTP destination. The source inventory includes HTTP middleware helpers under hlog, but no remote log-ingestion endpoint or upload client, so the requested endpoint cannot be established.",
+    "h-zerolog-no-config-watcher": "The packet contains level parsing and global-level APIs in log.go but no YAML configuration loader or filesystem watcher. The repository source inventory has no configuration-reload component; therefore automatic reload behavior is unsupported by the inspected sources.",
+    "h-rich-38": "Searched the supplied Rich source inventory and source tree for pandas, DataFrame, SQL, and export APIs. The only pandas hit is a changelog note about pretty-printing Pandas objects; no Rich DataFrame/table API with automatic type inference and SQL export is present.",
+    "h-rich-39": "Searched the supplied source tree for socket, socketserver, network output, CLI/argument parsing, and output transport terms, and inspected the Console output setup. No Rich command-line flag or built-in socket transport is present; callers can supply their own file-like output, which is not a Rich socket flag.",
+    "h-rich-40": "Searched the Progress implementation, docs, examples, and source inventory for browser dashboards and web-server APIs. Progress builds terminal renderables and a Table. The benchmark README mentions an ASV-generated benchmark dashboard, which is unrelated to an interactive browser dashboard driven by Progress tasks; no such Rich API is present.",
+    "h-rich-41": "Inspected Live implementation and docs and searched the source tree for persistence, database, and history storage. Live updates a terminal renderable and docs say the display persists for the context duration; no backend stores Live display history across process restarts. Other history hits concern readline input.",
+    "h-pino-38": "Searched all supplied Pino source files, documentation, and tests for token-bucket, rate-limit, and rate-limiting concepts; no built-in emission rate limiter or token-bucket API is evidenced.",
+    "h-pino-39": "Searched all supplied Pino source files, documentation, and tests for encrypt, encryption, cipher, and crypto logging stages; no option encrypting records before destination writes is evidenced.",
+    "h-pino-40": "Searched supplied Pino construction, docs, and tests for persistent configuration, local databases, and process-restart restoration; construction uses in-memory options and no persistence facility is evidenced.",
+    "h-pino-41": "Searched supplied transport implementation, docs, and transport tests for retry and backoff behavior; transports are created and closed without a retry policy or exponential-backoff API."
+  },
+  "authors": [
+    {
+      "author_id": "codex-source-author-zerolog-01",
+      "independent_of_tuning": true,
+      "source_only": true,
+      "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+      "queries_sha256": "4d716de41e1aeb17fa79ceba0d507bae71b6f981f878ea37d4ea74fb912fb2ae",
+      "no_evidence_rationales": {
+        "h-zerolog-no-midnight-rotation": "The allowed packet contains no rotation or retention implementation: the source inventory has no rolling-file package, and the inspected root writer API (writer.go) and output setup (log.go) expose writer adaptation rather than file lifecycle management. The query requires a time-based rotation and retention policy absent from these repository sources.",
+        "h-zerolog-no-at-rest-encryption": "No encryption API or encryption stage is present in the allowed repository source inventory. The inspected event writer path in event.go and writer abstractions in writer.go encode and pass payloads to io.Writer; neither supplies a key, cipher, or persistence layer. The packet provides no evidence for record-at-rest encryption.",
+        "h-zerolog-no-http-ingest": "journald/journald.go sends records through journal.Send (or its test replacement SendFunc) to the local journald integration; it does not specify a remote HTTP destination. The source inventory includes HTTP middleware helpers under hlog, but no remote log-ingestion endpoint or upload client, so the requested endpoint cannot be established.",
+        "h-zerolog-no-config-watcher": "The packet contains level parsing and global-level APIs in log.go but no YAML configuration loader or filesystem watcher. The repository source inventory has no configuration-reload component; therefore automatic reload behavior is unsupported by the inspected sources."
+      }
+    },
+    {
+      "author_id": "independent-rich-source-author",
+      "source_only": true,
+      "independent_of_tuning": true,
+      "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+      "queries_sha256": "89f03b3bc7c133e5fd94fcd73e65c955e739648b6ad7fc1435593110c668fa43",
+      "no_evidence_rationales": {
+        "h-rich-38": "Searched the supplied Rich source inventory and source tree for pandas, DataFrame, SQL, and export APIs. The only pandas hit is a changelog note about pretty-printing Pandas objects; no Rich DataFrame/table API with automatic type inference and SQL export is present.",
+        "h-rich-39": "Searched the supplied source tree for socket, socketserver, network output, CLI/argument parsing, and output transport terms, and inspected the Console output setup. No Rich command-line flag or built-in socket transport is present; callers can supply their own file-like output, which is not a Rich socket flag.",
+        "h-rich-40": "Searched the Progress implementation, docs, examples, and source inventory for browser dashboards and web-server APIs. Progress builds terminal renderables and a Table. The benchmark README mentions an ASV-generated benchmark dashboard, which is unrelated to an interactive browser dashboard driven by Progress tasks; no such Rich API is present.",
+        "h-rich-41": "Inspected Live implementation and docs and searched the source tree for persistence, database, and history storage. Live updates a terminal renderable and docs say the display persists for the context duration; no backend stores Live display history across process restarts. Other history hits concern readline input."
+      }
+    },
+    {
+      "author_id": "independent-pino-source-author",
+      "independent_of_tuning": true,
+      "source_only": true,
+      "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+      "queries_sha256": "d6f14d4187066a03321c6c7420f99d41677f5ddd866d95e31d9eade70fea83be",
+      "no_evidence_rationales": {
+        "h-pino-38": "Searched all supplied Pino source files, documentation, and tests for token-bucket, rate-limit, and rate-limiting concepts; no built-in emission rate limiter or token-bucket API is evidenced.",
+        "h-pino-39": "Searched all supplied Pino source files, documentation, and tests for encrypt, encryption, cipher, and crypto logging stages; no option encrypting records before destination writes is evidenced.",
+        "h-pino-40": "Searched supplied Pino construction, docs, and tests for persistent configuration, local databases, and process-restart restoration; construction uses in-memory options and no persistence facility is evidenced.",
+        "h-pino-41": "Searched supplied transport implementation, docs, and transport tests for retry and backoff behavior; transports are created and closed without a retry policy or exponential-backoff API."
+      }
+    }
+  ]
+}

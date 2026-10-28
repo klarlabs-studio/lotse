@@ -1,0 +1,1024 @@
+[
+  {
+    "id": "h-zerolog-exact-warning-level",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "Which noncanonical spelling does ParseLevel accept for the warning level, and what level does it return?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 187,
+        "end": 189,
+        "anchor": "\t\tstrings.EqualFold(levelStr, \"warning\"):",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log_test.go",
+        "start": 1459,
+        "end": 1461,
+        "anchor": "func TestParseLevelWarningAlias(t *testing.T) {",
+        "file_sha256": "dd139c3795a378cff0b25ea7dd71541daf52029d0f2f5b08f760087e79aa1ee2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-update-context",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What method mutates an existing Logger’s contextual fields through a callback, and what concurrency caveat does its API document?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 298,
+        "end": 300,
+        "anchor": "func (l *Logger) UpdateContext(update func(c Context) Context) {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 296,
+        "end": 298,
+        "anchor": "// Caution: This method is not concurrency safe.",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-msgfunc",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "Which Event method takes a callback to create the message lazily, and what happens when the Event receiver is nil?",
+    "evidence": [
+      {
+        "path": "event.go",
+        "start": 143,
+        "end": 145,
+        "anchor": "func (e *Event) MsgFunc(createMsg func() string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event_test.go",
+        "start": 375,
+        "end": 377,
+        "anchor": "\t\tt.Errorf(\"Event.MsgFunc() should not be called on nil Event\")",
+        "file_sha256": "69c96d1d2115f7bb25de111814a1a9d728de7c9a953443bbde2ecbdedafc9f0e"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-levelwriter",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What interface lets a writer receive both a zerolog level and the encoded payload?",
+    "evidence": [
+      {
+        "path": "writer.go",
+        "start": 15,
+        "end": 17,
+        "anchor": "type LevelWriter interface {",
+        "file_sha256": "437630a3c7adb307d58bb5991b2965512cbb2cc5d4da88b760f1ad5444ffeff2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-diode-selection",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "How does diode.NewWriter choose between its waiter and poller implementations?",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 62,
+        "end": 64,
+        "anchor": "\tif pollInterval > 0 {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 67,
+        "end": 69,
+        "anchor": "\t\tdw.d = diodes.NewWaiter(d,",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-sanitize-prefix",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What prefix does journald key sanitization add when the normalized key is empty or begins with a digit or underscore?",
+    "evidence": [
+      {
+        "path": "journald/journald.go",
+        "start": 88,
+        "end": 90,
+        "anchor": "\tif len(sanitized) == 0 || sanitized[0] >= '0' && sanitized[0] <= '9' || sanitized[0] == '_' {",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      },
+      {
+        "path": "journald/journald_test.go",
+        "start": 69,
+        "end": 71,
+        "anchor": "\t\t{\"123\", \"X123\"},",
+        "file_sha256": "cef464a1ef4066d80f4e3bd86c91c28ecde1db9eb51d5b2ac86786f8624f11f6"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-context-array",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "Which Context method creates an Array that carries over the logger’s stack setting, context, and hooks?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 49,
+        "end": 51,
+        "anchor": "func (c Context) CreateArray() *Array {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 53,
+        "end": 55,
+        "anchor": "\ta.ch = c.l.hooks",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-log-level-names",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What integer values are assigned to DebugLevel through PanicLevel, and what value is used for TraceLevel?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 131,
+        "end": 133,
+        "anchor": "\tDebugLevel Level = iota",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 148,
+        "end": 150,
+        "anchor": "\tTraceLevel Level = -1",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-msg-completion",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "Why can a chained logging call compile yet emit nothing if the developer only adds fields and never finishes the event?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 342,
+        "end": 344,
+        "anchor": "// You must call Msg on the returned event in order to send the event.",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "event.go",
+        "start": 115,
+        "end": 117,
+        "anchor": "func (e *Event) Msg(msg string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-field-input-shapes",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "When using Context.Fields to add several fields at once, which input container shapes and element arrangement does the API accept?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 22,
+        "end": 24,
+        "anchor": "// Only map[string]interface{} and []interface{} are accepted. []interface{} must",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 25,
+        "end": 27,
+        "anchor": "\tc.l.context = appendFields(c.l.context, fields, c.l.stack, c.l.ctx, c.l.hooks)",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-sampler-count",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "How does BasicSampler decide which events to pass when N is greater than one, and what do N=0 and N=1 mean?",
+    "evidence": [
+      {
+        "path": "sampler.go",
+        "start": 39,
+        "end": 41,
+        "anchor": "type BasicSampler struct {",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      },
+      {
+        "path": "sampler.go",
+        "start": 47,
+        "end": 49,
+        "anchor": "\tif n == 0 {",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      },
+      {
+        "path": "sampler.go",
+        "start": 50,
+        "end": 52,
+        "anchor": "\tif n == 1 {",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-burst-sampling",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "How does BurstSampler behave after its initial per-period burst is exhausted, including when there is no follow-on sampler?",
+    "evidence": [
+      {
+        "path": "sampler.go",
+        "start": 57,
+        "end": 59,
+        "anchor": "// BurstSampler lets Burst events pass per Period then pass the decision to",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      },
+      {
+        "path": "sampler.go",
+        "start": 80,
+        "end": 82,
+        "anchor": "\tif s.NextSampler == nil {",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-slog-groups",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "When slog attributes arrive inside a group, how does the zerolog handler represent the group path in emitted keys?",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 99,
+        "end": 101,
+        "anchor": "func (h *SlogHandler) WithGroup(name string) slog.Handler {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 174,
+        "end": 176,
+        "anchor": "\treturn prefix + \".\" + key",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog_test.go",
+        "start": 229,
+        "end": 231,
+        "anchor": "\tif m[\"request.method\"] != \"GET\" {",
+        "file_sha256": "40e65850be0cac0208a141eb9d1b6777a9b8aa94dbf10315093ee3c5952afbd2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-console-pipeline",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "What does ConsoleWriter do to an incoming log record before producing human-readable output, and how can callers control part ordering?",
+    "evidence": [
+      {
+        "path": "console.go",
+        "start": 122,
+        "end": 124,
+        "anchor": "func (w ConsoleWriter) Write(p []byte) (n int, err error) {",
+        "file_sha256": "66b97a2b98a57462931cc62d213be96ab1f8e0290b67dafde7000e4a814982f7"
+      },
+      {
+        "path": "console.go",
+        "start": 128,
+        "end": 130,
+        "anchor": "\tif w.PartsOrder == nil {",
+        "file_sha256": "66b97a2b98a57462931cc62d213be96ab1f8e0290b67dafde7000e4a814982f7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-context-fallback",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "What logger does zerolog.Ctx return when the context has no attached logger, and how can the package-level fallback be disabled?",
+    "evidence": [
+      {
+        "path": "ctx.go",
+        "start": 44,
+        "end": 46,
+        "anchor": "func Ctx(ctx context.Context) *Logger {",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      },
+      {
+        "path": "ctx.go",
+        "start": 47,
+        "end": 49,
+        "anchor": "\t} else if l = DefaultContextLogger; l != nil {",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      },
+      {
+        "path": "ctx.go",
+        "start": 50,
+        "end": 51,
+        "anchor": "\treturn disabledLogger",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-interface-reflection",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "How does an Event’s Interface field method handle values that implement the package’s object-marshaling interface versus other values?",
+    "evidence": [
+      {
+        "path": "event.go",
+        "start": 825,
+        "end": 827,
+        "anchor": "func (e *Event) Interface(key string, i interface{}) *Event {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event.go",
+        "start": 829,
+        "end": 831,
+        "anchor": "\tif obj, ok := i.(LogObjectMarshaler); ok {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-warning-parse-test",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace parsing \"WARNING\" from the public parser through the regression test: what level and error outcome should a caller get?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 187,
+        "end": 189,
+        "anchor": "\t\tstrings.EqualFold(levelStr, \"warning\"):",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log_test.go",
+        "start": 1464,
+        "end": 1466,
+        "anchor": "\tl, err = ParseLevel(\"WARNING\")",
+        "file_sha256": "dd139c3795a378cff0b25ea7dd71541daf52029d0f2f5b08f760087e79aa1ee2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-print-event",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Follow Logger.Print from the convenience method to the emitted event: which level does it use, how is the caller adjusted, and what message string is sent?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 456,
+        "end": 458,
+        "anchor": "func (l *Logger) Print(v ...interface{}) {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 458,
+        "end": 460,
+        "anchor": "\t\te.CallerSkipFrame(1).Msg(fmt.Sprint(v...))",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-event-send-hooks",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "When an Event is finalized with Msg, where do hooks run relative to message insertion and the writer call?",
+    "evidence": [
+      {
+        "path": "event.go",
+        "start": 150,
+        "end": 152,
+        "anchor": "func (e *Event) msg(msg string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event.go",
+        "start": 151,
+        "end": 153,
+        "anchor": "\tfor _, hook := range e.ch {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event.go",
+        "start": 160,
+        "end": 162,
+        "anchor": "\tif err := e.write(); err != nil {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-context-roundtrip",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace the logger/context round trip: where is a Logger stored by WithContext, and what object is returned by Ctx when that value exists?",
+    "evidence": [
+      {
+        "path": "ctx.go",
+        "start": 38,
+        "end": 40,
+        "anchor": "\treturn context.WithValue(ctx, ctxKey{}, &l)",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      },
+      {
+        "path": "ctx.go",
+        "start": 45,
+        "end": 47,
+        "anchor": "\tif l, ok := ctx.Value(ctxKey{}).(*Logger); ok {",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-diode-lifecycle",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace a log line through diode.NewWriter to the wrapped writer, then explain how Close waits for the background consumer and closes the destination when supported.",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 78,
+        "end": 80,
+        "anchor": "\tdw.d.Set(diodes.GenericDataType(&p))",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 86,
+        "end": 88,
+        "anchor": "\t<-dw.done",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 88,
+        "end": 90,
+        "anchor": "\t\treturn w.Close()",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-slog-handle",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace how SlogHandler.Handle maps a slog level, attaches the supplied context, adds record attributes, and emits the message.",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 41,
+        "end": 43,
+        "anchor": "\tzlevel := slogToZerologLevel(record.Level)",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 50,
+        "end": 52,
+        "anchor": "\t\tevent = event.Ctx(ctx)",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 71,
+        "end": 73,
+        "anchor": "\tevent.Msg(record.Message)",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-journald-write",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace a JSON record through the journald writer: how are priority and key/value arguments derived, and what extra argument contains the original record?",
+    "evidence": [
+      {
+        "path": "journald/journald.go",
+        "start": 107,
+        "end": 109,
+        "anchor": "\t\tjPrio = levelToJPrio(l)",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      },
+      {
+        "path": "journald/journald.go",
+        "start": 112,
+        "end": 114,
+        "anchor": "\t\tjKey := sanitizeKey(key)",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      },
+      {
+        "path": "journald/journald.go",
+        "start": 135,
+        "end": 137,
+        "anchor": "\targs[\"JSON\"] = string(p)",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-dict-array",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace a Context.Dict call to finalization: how is the nested Event terminated and appended, and how is that temporary Event disposed?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 30,
+        "end": 32,
+        "anchor": "func (c Context) Dict(key string, dict *Event) Context {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 31,
+        "end": 33,
+        "anchor": "\tdict.buf = enc.AppendEndMarker(dict.buf)",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 33,
+        "end": 35,
+        "anchor": "\tputEvent(dict)",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-logger-event-encoder",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "Describe the path from a Logger method such as Info to an Event and then to the writer, including where the level is filtered and where the message is encoded.",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 357,
+        "end": 359,
+        "anchor": "func (l *Logger) Info() *Event {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 490,
+        "end": 492,
+        "anchor": "func (l *Logger) newEvent(level Level, done func(string)) *Event {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "event.go",
+        "start": 150,
+        "end": 152,
+        "anchor": "func (e *Event) msg(msg string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-context-builders",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "How do Context.CreateDict and Context.CreateArray preserve logger-level behavior for the temporary values they build?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 41,
+        "end": 43,
+        "anchor": "func (c Context) CreateDict() *Event {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 49,
+        "end": 51,
+        "anchor": "func (c Context) CreateArray() *Array {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-diode-components",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "What components make diode.Writer non-blocking for producers while a separate consumer writes to the destination, and what role does the poll interval play?",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 29,
+        "end": 31,
+        "anchor": "type Writer struct {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 61,
+        "end": 63,
+        "anchor": "\td := diodes.NewManyToOne(size, diodes.AlertFunc(f))",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 70,
+        "end": 72,
+        "anchor": "\tgo dw.poll()",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-slog-adapter",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "How is standard-library slog integrated with zerolog, from handler construction through level conversion and attribute conversion?",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 21,
+        "end": 23,
+        "anchor": "func NewSlogHandler(logger Logger) *SlogHandler {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 128,
+        "end": 130,
+        "anchor": "func slogToZerologLevel(level slog.Level) Level {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 179,
+        "end": 181,
+        "anchor": "func appendSlogAttr(event *Event, attr slog.Attr, prefix string) *Event {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-warning-alias",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If ParseLevel stopped accepting the spelling \"warning\", which parser branch and regression test would need coordinated changes?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 187,
+        "end": 189,
+        "anchor": "\t\tstrings.EqualFold(levelStr, \"warning\"):",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log_test.go",
+        "start": 1459,
+        "end": 1461,
+        "anchor": "func TestParseLevelWarningAlias(t *testing.T) {",
+        "file_sha256": "dd139c3795a378cff0b25ea7dd71541daf52029d0f2f5b08f760087e79aa1ee2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-field-name",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If the package changed its default timestamp field key, which shared configuration and event-encoding paths determine the resulting field name?",
+    "evidence": [
+      {
+        "path": "globals.go",
+        "start": 41,
+        "end": 43,
+        "anchor": "\tTimestampFieldName = \"time\"",
+        "file_sha256": "64b06cb2d8d1cb3a761ef98a975d656aa586ec98360bd54825885f0b8bb98067"
+      },
+      {
+        "path": "event.go",
+        "start": 760,
+        "end": 762,
+        "anchor": "\te.buf = enc.AppendTime(enc.AppendKey(e.buf, TimestampFieldName), TimestampFunc(), TimeFieldFormat)",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-slog-disabled",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If disabled loggers began returning non-nil Events, which nil-guarded message callback behavior would be at risk, and what test currently protects the lazy callback contract?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 492,
+        "end": 494,
+        "anchor": "\tif !enabled {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "event.go",
+        "start": 143,
+        "end": 145,
+        "anchor": "func (e *Event) MsgFunc(createMsg func() string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event_test.go",
+        "start": 375,
+        "end": 377,
+        "anchor": "\t\tt.Errorf(\"Event.MsgFunc() should not be called on nil Event\")",
+        "file_sha256": "69c96d1d2115f7bb25de111814a1a9d728de7c9a953443bbde2ecbdedafc9f0e"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-diode-pool-cap",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "What would change if the 64 KiB cap before returning diode buffers to the pool were raised or removed, and where is that cap enforced?",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 109,
+        "end": 111,
+        "anchor": "\t\tconst maxSize = 1 << 16 // 64KiB",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 111,
+        "end": 113,
+        "anchor": "\t\t\tbufPool.Put(p[:0])",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-global-level",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If the global minimum level check were removed from Logger.should, which filtering behavior and user-visible guarantee would change?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 523,
+        "end": 525,
+        "anchor": "\tif lvl < l.level || lvl < GlobalLevel() {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 519,
+        "end": 521,
+        "anchor": "func (l *Logger) should(lvl Level) bool {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-print-level",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The README says the default level for package log.Print is trace; what level does the implementation actually use, and what discrepancy should be corrected?",
+    "evidence": [
+      {
+        "path": "README.md",
+        "start": 65,
+        "end": 67,
+        "anchor": "> Note: The default log level for `log.Print` is _trace_",
+        "file_sha256": "1bd6e0eef76d6161e62b991ec88f0693c44562da508d14adbb66d635b82bfdf6"
+      },
+      {
+        "path": "log/log.go",
+        "start": 118,
+        "end": 120,
+        "anchor": "\tLogger.Debug().CallerSkipFrame(1).Msg(fmt.Sprint(v...))",
+        "file_sha256": "006ce1ea3ac6cc156b42536d4b987d7cc67599ac2847823aac04884928be9d09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-msgf-disabled-allocation",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The README warns that Msgf allocates even when logging is disabled; what does the implementation do when a disabled logger yields a nil Event?",
+    "evidence": [
+      {
+        "path": "README.md",
+        "start": 313,
+        "end": 315,
+        "anchor": "> NOTE: Using `Msgf` generates one allocation even when the logger is disabled.",
+        "file_sha256": "1bd6e0eef76d6161e62b991ec88f0693c44562da508d14adbb66d635b82bfdf6"
+      },
+      {
+        "path": "event.go",
+        "start": 136,
+        "end": 138,
+        "anchor": "func (e *Event) Msgf(format string, v ...interface{}) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event.go",
+        "start": 82,
+        "end": 84,
+        "anchor": "\tif e == nil {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-slog-group-shape",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The SlogHandler.WithGroup documentation describes attributes as nested under a group. Does the implementation emit nested objects or flattened dotted keys, and what test demonstrates the actual shape?",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 98,
+        "end": 100,
+        "anchor": "// attributes will be nested under this group name in the output.",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 174,
+        "end": 176,
+        "anchor": "\treturn prefix + \".\" + key",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog_test.go",
+        "start": 229,
+        "end": 231,
+        "anchor": "\tif m[\"request.method\"] != \"GET\" {",
+        "file_sha256": "40e65850be0cac0208a141eb9d1b6777a9b8aa94dbf10315093ee3c5952afbd2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-write-method",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The Logger type comment says an event calls the writer’s Write method; how does New handle LevelWriter implementations, and which method receives the event instead?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 244,
+        "end": 246,
+        "anchor": "// Each logging operation makes a single call to the Writer's Write method. There is no",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 241,
+        "end": 243,
+        "anchor": "// the LevelWriter interface, the WriteLevel method will be called instead of the Write",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "writer.go",
+        "start": 17,
+        "end": 19,
+        "anchor": "\tWriteLevel(level Level, p []byte) (n int, err error)",
+        "file_sha256": "437630a3c7adb307d58bb5991b2965512cbb2cc5d4da88b760f1ad5444ffeff2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-midnight-rotation",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "How does zerolog rotate a file at midnight and retain the previous 30 days of log files?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-at-rest-encryption",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "Which built-in API encrypts each log record before it is written to a file?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-http-ingest",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "What HTTP endpoint does NewJournalDWriter call to upload a log record to a remote server?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-config-watcher",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "Which built-in watcher reloads a YAML logging configuration and changes the global level when the file is edited?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  }
+]

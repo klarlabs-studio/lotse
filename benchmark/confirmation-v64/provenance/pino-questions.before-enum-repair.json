@@ -1,0 +1,1073 @@
+[
+  {
+    "id": "h-pino-01",
+    "repo": "pino",
+    "category": "exact",
+    "query": "Which option controls Pino\u2019s maximum depth and breadth when its fallback serializer handles a value?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "depthLimit: 5",
+        "start": 82,
+        "end": 82,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "maximumDepth: depthLimit",
+        "start": 121,
+        "end": 121,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "Defaults are depthLimit 5 and edgeLimit 100; pino.js passes these into safe-stable-stringify configuration.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-02",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What exact warning code is emitted when a custom level formatter may break multi-target routing?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "code: 'PINO_TRANSPORT_MULTI_TARGETS_LEVEL_FORMATTER'",
+        "start": 188,
+        "end": 188,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "PINO_TRANSPORT_MULTI_TARGETS_LEVEL_FORMATTER is emitted when the formatted sample lacks the expected numeric level field.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-03",
+    "repo": "pino",
+    "category": "exact",
+    "query": "How does a child logger expose the logger version and read-only numeric level value?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "get levelVal () { return this[levelValSym] }",
+        "start": 66,
+        "end": 66,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "set levelVal (n) { throw Error('levelVal is read-only')",
+        "start": 67,
+        "end": 67,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 63,
+        "end": 63,
+        "anchor": "version,",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "The prototype exposes version and a levelVal getter whose setter throws levelVal is read-only.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-04",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What is the built-in censor text used when redaction does not specify a censor?",
+    "evidence": [
+      {
+        "path": "lib/redaction.js",
+        "anchor": "const CENSOR = '[Redacted]'",
+        "start": 9,
+        "end": 9,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      }
+    ],
+    "expected": "The default censor is [Redacted].",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-05",
+    "repo": "pino",
+    "category": "exact",
+    "query": "How does the library handle an explicit useOnlyCustomLevels setting when customLevels is absent?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "if (useOnlyCustomLevels && !customLevels) throw Error",
+        "start": 164,
+        "end": 164,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "Logger construction throws that customLevels is required if useOnlyCustomLevels is true.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-06",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What default values does Pino use for messageKey and errorKey?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "messageKey: 'msg'",
+        "start": 57,
+        "end": 57,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "errorKey: 'err'",
+        "start": 58,
+        "end": 58,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "messageKey defaults to msg and errorKey defaults to err.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-07",
+    "repo": "pino",
+    "category": "exact",
+    "query": "When a child receives msgPrefix, how is its prefix derived from the parent?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "instance[msgPrefixSym] = (this[msgPrefixSym] || '') + options.msgPrefix",
+        "start": 168,
+        "end": 168,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "The child prefix concatenates the existing parent prefix (or empty string) and the new prefix.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-08",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What metadata fields does a logger write onto a metadata-aware destination before writing the serialized line?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (stream[needsMetadataGsym] === true)",
+        "start": 236,
+        "end": 236,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "stream.lastLogger = this // for child loggers",
+        "start": 241,
+        "end": 241,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 237,
+        "end": 237,
+        "anchor": "stream.lastLevel = num",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "It sets lastLevel, lastObj, lastMsg, lastTime, and lastLogger on streams declaring needsMetadata.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-09",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "Why can a logger created with base:null omit pid and hostname, and what path adds its initial bindings otherwise?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "if (base !== null)",
+        "start": 151,
+        "end": 151,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "chindings = coreChindings(Object.assign({}, base, { name }))",
+        "start": 155,
+        "end": 155,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "pino initializes chindings only when base is not null; absent name it serializes base, while name merges into base before serialization.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-10",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How does the default mixin merge resolve a key supplied by both the log call and mixin?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "function defaultMixinMergeStrategy",
+        "start": 202,
+        "end": 202,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "return Object.assign(mixinObject, mergeObject)",
+        "start": 203,
+        "end": 203,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "The default strategy mutates/uses mixinObject as target then assigns mergeObject, so the user log object wins conflicts.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-11",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "What distinction does Pino make between an Error passed as the log object and an ordinary object with an error field?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "} else if (_obj instanceof Error)",
+        "start": 217,
+        "end": 217,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (msg === undefined && _obj[messageKey] === undefined && _obj[errorKey])",
+        "start": 224,
+        "end": 224,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "An Error instance is wrapped under configured errorKey and supplies its message if no message was given; ordinary objects only infer message from their errorKey value when no message field exists.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-12",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How do child bindings become part of output, and why can repeated binding names appear in the serialized line?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "instance[chindingsSym] = asChindings(instance, bindings)",
+        "start": 106,
+        "end": 106,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "docs/child-loggers.md",
+        "anchor": "This is why duplicate keys between",
+        "start": 115,
+        "end": 115,
+        "file_sha256": "0eda746b1e651987fabb7af61a2c18883b35edb91a4fcf5531e2f4a7eaa6e385"
+      }
+    ],
+    "expected": "Bindings are encoded as chindings strings and appended; parent and child duplicate keys therefore remain duplicate JSON properties, with later child keys winning when parsed.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-13",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "What is the distinction between logger-level gating and per-destination level filtering for a multistream?",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "function setLevel (level)",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (dest.level <= level)",
+        "start": 67,
+        "end": 67,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/levels.js",
+        "start": 91,
+        "end": 91,
+        "anchor": "if (levelComparison(values[key], levelVal) === false) {",
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "Logger level disables methods first; multistream destinations then apply their own level thresholds during write.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-14",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How does Pino preserve redaction when an object is interpolated into the message string?",
+    "evidence": [
+      {
+        "path": "lib/redaction.js",
+        "anchor": "provides top level redaction for instances where",
+        "start": 73,
+        "end": 73,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "{ stringify: stringifiers[redactFmtSym] }",
+        "start": 138,
+        "end": 138,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "The redaction module creates a formatter redactor for top-level message interpolation and Pino installs it as formatOpts stringify.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-15",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "Why does a no-options child creation take a separate fast path, and what does it still reset or invoke?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "If an `options` object was not supplied",
+        "start": 93,
+        "end": 93,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (this.onChild !== noop)",
+        "start": 108,
+        "end": 108,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 98,
+        "end": 98,
+        "anchor": "if (instance[formattersSym].bindings !== resetChildingsFormatter) {",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "It skips option checks, resets the child bindings formatter as needed, serializes new bindings, invokes onChild when configured, then returns.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-16",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How are standard level methods disabled or generated when the level threshold changes?",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "if (levelComparison(values[key], levelVal) === false)",
+        "start": 91,
+        "end": 91,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "this[key] = isStandardLevel(key, useOnlyCustomLevelsVal)",
+        "start": 95,
+        "end": 95,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "setLevel compares each numeric level with the configured comparison; disabled keys become noop, while enabled standard methods use specialized methods and custom ones use genLog.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-17",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace the path from calling logger.info(object, message) to bytes written, including the mixin and streamWrite hook.",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "info: (hook) => genLog(DEFAULT_LEVELS.info, hook)",
+        "start": 32,
+        "end": 32,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "function write (_obj, msg, num)",
+        "start": 206,
+        "end": 206,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "stream.write(streamWriteHook ? streamWriteHook(s) : s)",
+        "start": 243,
+        "end": 243,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/tools.js",
+        "start": 59,
+        "end": 59,
+        "anchor": "formatParams = [null]",
+        "file_sha256": "f40299d3a55ef799489dc8cc91bd8c1b3546e7cbf8d2be4c7dba80416bb4dd4b"
+      }
+    ],
+    "expected": "The generated method reaches proto.write, which normalizes input, applies mixin strategy, serializes via asJson, then passes the line through streamWrite hook and stream.write.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-18",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a custom level added at logger construction becomes a callable method and how changing logger.level updates that method set.",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "function mappings (customLevels = null, useOnlyCustomLevels = false)",
+        "start": 152,
+        "end": 152,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "function setLevel (level)",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "start": 95,
+        "end": 95,
+        "anchor": "this[key] = isStandardLevel(key, useOnlyCustomLevelsVal) ? levelMethods[key](hook) : genLog(values[key], hook)",
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "mappings creates label/value maps; setLevel validates threshold and loops over values, assigning noop or genLog to each method.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-19",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Follow a redact path from logger initialization into serialization and identify where redaction is applied.",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "const stringifiers = redact",
+        "start": 134,
+        "end": 134,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "const formatOpts = redact",
+        "start": 137,
+        "end": 137,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "const s = this[asJsonSym](obj, msg, num, t)",
+        "start": 233,
+        "end": 233,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "pino.js",
+        "start": 144,
+        "end": 144,
+        "anchor": "[stringifiersSym]: stringifiers,",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "pino constructs stringifiers from redaction paths, installs redact formatter in formatOpts, and serializer receives these via symbols.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-20",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a child logger with new bindings and a custom serializer option is assembled.",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "const instance = Object.create(this)",
+        "start": 91,
+        "end": 91,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (options.hasOwnProperty('serializers') === true)",
+        "start": 115,
+        "end": 115,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "instance[chindingsSym] = asChindings(instance, bindings)",
+        "start": 106,
+        "end": 106,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 126,
+        "end": 126,
+        "anchor": "}",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "child clones via Object.create, copies and overlays serializers, builds formatters, serializes bindings into chindings, and calls onChild.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-21",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how fatal logging differs from info after the line is emitted.",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "fatal: (hook) =>",
+        "start": 16,
+        "end": 16,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "if (typeof stream.flushSync === 'function')",
+        "start": 21,
+        "end": 21,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "info: (hook) => genLog(DEFAULT_LEVELS.info, hook)",
+        "start": 32,
+        "end": 32,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "fatal uses a specialized generated method that calls logger write then attempts destination.flushSync; info is a normal genLog method.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-22",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a multistream determines which destinations receive one record when dedupe is enabled.",
+    "evidence": [
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (opts.dedupe)",
+        "start": 81,
+        "end": 81,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (recordedLevel !== 0 && recordedLevel !== dest.level)",
+        "start": 68,
+        "end": 68,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "stream.write(data)",
+        "start": 80,
+        "end": 80,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/multistream.js",
+        "start": 140,
+        "end": 140,
+        "anchor": "streams.sort(compareByLevel)",
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      }
+    ],
+    "expected": "Destinations are sorted; dedupe iterates from highest threshold downward, writes eligible records and stops after a different eligible level is encountered.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-23",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a transport configured with multiple targets builds its worker-side routing stream.",
+    "evidence": [
+      {
+        "path": "lib/worker.js",
+        "anchor": "const multi = pino.multistream(targetStreams, { levels, dedupe })",
+        "start": 154,
+        "end": 154,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "multi.write(chunk + '\\n')",
+        "start": 164,
+        "end": 164,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "start": 157,
+        "end": 157,
+        "anchor": "const { lastTime, lastMsg, lastObj, lastLevel } = this",
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "transport processing constructs pino.multistream(targetStreams,{levels,dedupe}), relays metadata from incoming stream, then writes each chunk into multi.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-24",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how the logger\u2019s flush method behaves when its destination has no flush method.",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "function flush (cb)",
+        "start": 246,
+        "end": 246,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "} else if (cb) cb()",
+        "start": 255,
+        "end": 255,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "It validates callback type; calls stream.flush(cb or noop) if present, otherwise immediately calls a provided callback.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-25",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "Which modules divide responsibility for logger construction, logger behavior, level mapping, and redaction?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "function pino (...args)",
+        "start": 90,
+        "end": 90,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "const prototype =",
+        "start": 56,
+        "end": 56,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "function mappings",
+        "start": 152,
+        "end": 152,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/redaction.js",
+        "anchor": "function redaction",
+        "start": 12,
+        "end": 12,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      }
+    ],
+    "expected": "pino.js builds instances; lib/proto.js implements logger behavior; lib/levels.js maps/gates levels; lib/redaction.js creates redactors.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-26",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "How are logger instances tied to EventEmitter behavior while sharing a prototype created by a factory?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "Object.setPrototypeOf(prototype, EventEmitter.prototype)",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "return Object.create(prototype)",
+        "start": 81,
+        "end": 81,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "Object.setPrototypeOf(instance, proto())",
+        "start": 228,
+        "end": 228,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "proto sets the shared prototype\u2019s parent to EventEmitter.prototype and exports a factory returning Object.create(prototype); pino sets each instance to that result.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-27",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "What is the transport architecture boundary between application-thread logging and target processing?",
+    "evidence": [
+      {
+        "path": "docs/transports.md",
+        "anchor": "The transport code will be executed in a separate worker thread.",
+        "start": 49,
+        "end": 49,
+        "file_sha256": "acad328084ca317441bb4d0e684ce30ad495f3ec057458792e7e0ea104be8520"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "function process (stream)",
+        "start": 153,
+        "end": 153,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "The application logger writes into ThreadStream; transport code runs in a worker, parses records and routes to returned writable target streams.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-28",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "How does multi-target transport setup represent target routing state and shutdown behavior?",
+    "evidence": [
+      {
+        "path": "lib/worker.js",
+        "anchor": "const targetStreams = []",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "transport.stream.end()",
+        "start": 140,
+        "end": 140,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "start": 86,
+        "end": 86,
+        "anchor": "stream",
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "It stores target streams with levels and closes by ending each target, waiting for every close event before callback.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-29",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If a change renames the numeric level property in formatter output, what multi-target behavior and warning path should be reviewed?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "formatted.level === sampleNumber",
+        "start": 180,
+        "end": 180,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "const level = typeof this.lastLevel === 'string'",
+        "start": 55,
+        "end": 55,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "docs/transports.md",
+        "anchor": "custom `formatters.level` must not remove",
+        "start": 164,
+        "end": 164,
+        "file_sha256": "acad328084ca317441bb4d0e684ce30ad495f3ec057458792e7e0ea104be8520"
+      }
+    ],
+    "expected": "Multi-target routing consumes numeric level from serialized records and constructor probes custom formatter output; if missing or renamed, levels can drop records and warning code is emitted.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-30",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If child loggers are changed to merge bindings into objects instead of appending chindings, which documented duplicate-key behavior and tests are affected?",
+    "evidence": [
+      {
+        "path": "docs/child-loggers.md",
+        "anchor": "Notice how there are two keys named `a`",
+        "start": 94,
+        "end": 94,
+        "file_sha256": "0eda746b1e651987fabb7af61a2c18883b35edb91a4fcf5531e2f4a7eaa6e385"
+      },
+      {
+        "path": "test/basic.test.js",
+        "anchor": "children with same names render in correct order",
+        "start": 645,
+        "end": 645,
+        "file_sha256": "093ce3ce3edd7c6e712fa3667394ce9f6267a34c44057b16880fad14d19e5fab"
+      }
+    ],
+    "expected": "The documented duplicate-key ordering and the test verifying same-named nested children resolve to the last logged object are affected.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-31",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If streamWrite hook behavior changes, what assertions should be checked about hook execution and the write path?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "stream.write(streamWriteHook ? streamWriteHook(s) : s)",
+        "start": 243,
+        "end": 243,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "test/hooks.test.js",
+        "anchor": "streamWrite",
+        "start": 99,
+        "end": 99,
+        "file_sha256": "d194f4a0876d61a1cb20e6d42e3bed904fa138e035d1ce21dd42021fde64d58d"
+      },
+      {
+        "path": "test/hooks.test.js",
+        "start": 100,
+        "end": 100,
+        "anchor": "test('gets invoked', async () => {",
+        "file_sha256": "d194f4a0876d61a1cb20e6d42e3bed904fa138e035d1ce21dd42021fde64d58d"
+      }
+    ],
+    "expected": "The hook receives serialized output immediately before stream.write; tests assert it is invoked and affects the emitted line.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-32",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If a child-level redact override changes, which ordering constraint protects bindings and what serializer state must be rebuilt?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "// redact must place before asChindings",
+        "start": 157,
+        "end": 157,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "const stringifiers = redaction(instance.redact, stringify)",
+        "start": 160,
+        "end": 160,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 171,
+        "end": 171,
+        "anchor": "instance[chindingsSym] = asChindings(instance, bindings)",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "Redact must be set before asChindings; child redaction rebuilds stringifiers and formatOpts on the instance.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-33",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If multistream dedupe sorting changes, which routing invariant and tests should guard delivery to streams at equal versus different levels?",
+    "evidence": [
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (recordedLevel !== 0 && recordedLevel !== dest.level)",
+        "start": 68,
+        "end": 68,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "test/multistream.test.js",
+        "anchor": "dedupe",
+        "start": 466,
+        "end": 466,
+        "file_sha256": "98bf1aa451cfbd4fe0d371766ad948a6672acf2952280cb08315705241c8ed5c"
+      }
+    ],
+    "expected": "Eligible streams receive the record; dedupe sends to the highest eligible level and permits same-level streams, so multistream routing tests cover both cases.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-34",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The redaction guide says the implementation is built on fast-redact. What dependency does this source revision actually import?",
+    "evidence": [
+      {
+        "path": "docs/redaction.md",
+        "anchor": "built on top of [`fast-redact`]",
+        "start": 114,
+        "end": 114,
+        "file_sha256": "9d96ac0fe5cf5d323e30016a6c403a8120dfc8c3346dfdfeac1c3aee04e9da87"
+      },
+      {
+        "path": "lib/redaction.js",
+        "anchor": "require('@pinojs/redact')",
+        "start": 3,
+        "end": 3,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      }
+    ],
+    "expected": "The guide names fast-redact, while this source imports @pinojs/redact. The snapshot establishes the package-name mismatch, but does not include dependency internals.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-35",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The API lists `redact` default as `undefined`. When callers omit it, what value is merged into options internally, and does that value enter the redactor setup branch?",
+    "evidence": [
+      {
+        "path": "docs/api.md",
+        "start": 336,
+        "end": 336,
+        "anchor": "Default: `undefined`",
+        "file_sha256": "c28381258d16f470f32c7a60da3102d54be87432db9403265ce307a5c03b3978"
+      },
+      {
+        "path": "pino.js",
+        "start": 79,
+        "end": 79,
+        "anchor": "redact: null,",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/tools.js",
+        "start": 351,
+        "end": 351,
+        "anchor": "opts = Object.assign({}, defaultOptions, opts)",
+        "file_sha256": "f40299d3a55ef799489dc8cc91bd8c1b3546e7cbf8d2be4c7dba80416bb4dd4b"
+      },
+      {
+        "path": "pino.js",
+        "start": 134,
+        "end": 134,
+        "anchor": "const stringifiers = redact",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "The API says undefined; for an omitted option, normalize merges defaultOptions.redact as null. The `redact` conditional is falsy, so no redactor is set up. The source shows a literal default-value difference, not a behavioral difference for the omitted option.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-36",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The transport guide says transport.level is ignored with a single target. What does the worker do when that target has a level?",
+    "evidence": [
+      {
+        "path": "docs/transports.md",
+        "anchor": "transport.level` is not used in this path",
+        "start": 117,
+        "end": 117,
+        "file_sha256": "acad328084ca317441bb4d0e684ce30ad495f3ec057458792e7e0ea104be8520"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "When a `level` is set on the single target/pipeline",
+        "start": 127,
+        "end": 127,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "The guide says a single target ignores transport.level, but worker code deliberately falls through to multistream when a single target or pipeline has a level, so its threshold is honored.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-37",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The API reference lists the default for `customLevels` as `undefined`. For an omitted option, what default enters normalized logger options?",
+    "evidence": [
+      {
+        "path": "docs/api.md",
+        "start": 101,
+        "end": 101,
+        "anchor": "Default: `undefined`",
+        "file_sha256": "c28381258d16f470f32c7a60da3102d54be87432db9403265ce307a5c03b3978"
+      },
+      {
+        "path": "pino.js",
+        "start": 80,
+        "end": 80,
+        "anchor": "customLevels: null",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/tools.js",
+        "start": 351,
+        "end": 351,
+        "anchor": "opts = Object.assign({}, defaultOptions, opts)",
+        "file_sha256": "f40299d3a55ef799489dc8cc91bd8c1b3546e7cbf8d2be4c7dba80416bb4dd4b"
+      }
+    ],
+    "expected": "The API documents undefined; defaultOptions supplies null, and the argument normalizer merges defaultOptions into an options object when customLevels is omitted.",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-38",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "Where does Pino implement built-in token-bucket rate limiting for log emission?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-39",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "Which Pino option encrypts log records before they are written to a destination?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-40",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "How does Pino persist logger configuration across process restarts by writing it to a local configuration database?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-41",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "Which Pino API automatically retries a failed transport with exponential backoff?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  }
+]

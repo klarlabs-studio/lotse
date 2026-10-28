@@ -1,5 +1,6 @@
 """Fail-closed retrieval acceptance diagnostic; never establishes agent efficiency."""
 import hashlib
+import argparse
 import json
 import math
 from pathlib import Path
@@ -79,24 +80,28 @@ def evaluate(rows, expected, candidate):
 
 
 def main():
-    source = BASE / "results/graphify-comparison.json"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--comparison", type=Path, default=BASE / "results/graphify-comparison.json")
+    source = parser.parse_args().comparison.resolve()
     dest = BASE / "results/acceptance.json"
     # Authenticate saved outputs against their source receipts before evaluating.
-    audit = subprocess.run([sys.executable, str(BASE / "benchmark/check_comparison.py")],
+    audit = subprocess.run([sys.executable, str(BASE / "benchmark/check_comparison.py"),
+                            "--comparison", str(source)],
                            capture_output=True, text=True)
     if audit.returncode:
         result = {"status": "invalid_evidence", "product_promotion_allowed": False,
                   "audit_stdout": audit.stdout, "audit_stderr": audit.stderr}
     else:
         from compare_graphify import code_hint_recall
-        queries = json.loads((BASE / "benchmark/queries.json").read_text())
+        data = json.loads(source.read_text())
+        queries = json.loads((BASE / data.get("queries", "benchmark/queries.json")).read_text())
         expected = {(q["id"], budget): code_hint_recall(q, []) is not None
                     for q in queries for budget in (2000, 8000)}
-        data = json.loads(source.read_text())
         pinned = json.loads((BASE / "benchmark/corpora.json").read_text())
-        pin = next(p for p in pinned["repositories"] if p["id"] == "graphify")
-        arms = [evaluate(data["rows"], expected, arm) for arm in ("graf", "graf_locate")]
-        pin_matches = data["baseline"]["pin"] == pin
+        from retrieval import graphify_baselines
+        from compare_graphify import GRAF_ARMS
+        arms = [evaluate(data["rows"], expected, arm) for arm in data["arms"] if arm in GRAF_ARMS]
+        pin_matches = data["baseline"]["pin"] in graphify_baselines(pinned)
         result = {"status": "not_passed", "product_promotion_allowed": False,
                   "baseline_pin_matches": pin_matches,
                   "comparison_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),

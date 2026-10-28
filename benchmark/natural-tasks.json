@@ -1,0 +1,627 @@
+[
+ {
+  "id": "cobra-2257",
+  "repo": "cobra",
+  "issue": "Completions modify os.Args\n\nI'm trying to workaround https://github.com/spf13/cobra/issues/1877 by inspecting `os.Args` by hand. In some cases cobra accidentally inserts `--` into `os.Args`.\n\nMinimal example:\n```go\npackage main\n\nimport (\n\t\"os\"\n\t\"strings\"\n\n\t\"github.com/spf13/cobra\"\n)\n\nfunc main() {\n\tcmd := &cobra.Command{\n\t\tTraverseChildren: true,\n\t\tValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]cobra.Completion, cobra.ShellCompDirective) {\n\t\t\tcobra.CompErrorln(strings.Join(os.Args[1:], \", \"))\n\t\t\treturn nil, cobra.ShellCompDirectiveDefault\n\t\t},\n\t}\n\tif err := cmd.Execute(); err != nil {\n\t\tpanic(err)\n\t}\n}\n\n```\n\nExpected behaviour:\n```console\n$ go run . __complete x\n[Debug] [Error] __complete, x\n:0\nCompletion ended with directive: ShellCompDirectiveDefault\n```\n\nActual behaviour:\n```console\n$ go run . __complete x\n[Debug] [Error] __complete, --\n:0\nCompletion ended with directive: ShellCompDirectiveDefault\n```",
+  "faults": [
+   {
+    "path": "completions.go",
+    "before": "\nfunc (c *Command) getCompletions(args []string) (*Command, []Completion, ShellCompDirective, error) {\n\t// The last argument, which is not completely typed by the user,\n\t// should not be part of the list of arguments\n\ttoComplete := args[len(args)-1]\n\t// Copy trimmedArgs to a new slice to avoid mutating the caller's\n\t// backing array (which may be os.Args) when later appending \"--\".\n\ttrimmedArgs := make([]string, len(args)-1)\n\tcopy(trimmedArgs, args[:len(args)-1])\n\n\tvar finalCmd *Command\n\tvar finalArgs []string\n\tvar err error\n\t// Find the real command for which completion must be performed\n",
+    "after": "\nfunc (c *Command) getCompletions(args []string) (*Command, []Completion, ShellCompDirective, error) {\n\t// The last argument, which is not completely typed by the user,\n\t// should not be part of the list of arguments\n\ttoComplete := args[len(args)-1]\n\ttrimmedArgs := args[:len(args)-1]\n\n\tvar finalCmd *Command\n\tvar finalArgs []string\n\tvar err error\n\t// Find the real command for which completion must be performed\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "completions_test.go",
+    "before": "\t\t\t\tt.Errorf(\"expected: %q, got: %q\", tc.expectedDirective, directive)\n\t\t\t}\n\t\t})\n\t}\n}\n\nfunc TestCompletionDoesNotMutateOsArgs(t *testing.T) {\n\t// Test for https://github.com/spf13/cobra/issues/2257\n\t// Verify that os.Args is not corrupted when shell completion runs\n\t// with TraverseChildren enabled.\n\t//\n\t// The bug: getCompletions() calls append(finalArgs, \"--\") where\n\t// finalArgs is a sub-slice of the original args (from os.Args[1:]).\n\t// If there's spare capacity, append writes \"--\" into the shared\n\t// backing array, mutating os.Args in place.\n\n\t// Save and restore os.Args since we need to override it.\n\torigArgs := os.Args\n\tdefer func() { os.Args = origArgs }()\n\n\t// Set os.Args to simulate: root __completeNoDesc x\n\t// We do NOT use SetArgs so the code falls through to os.Args[1:].\n\t// The program name must not be \"cobra.test\" to bypass the test guard\n\t// in ExecuteC().\n\tos.Args = []string{\"root\", ShellCompNoDescRequestCmd, \"x\"}\n\n\trootCmd := &Command{\n\t\tUse:              \"root\",\n\t\tTraverseChildren: true,\n\t\tValidArgsFunction: func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {\n\t\t\treturn []string{\"mycompletion\"}, ShellCompDirectiveDefault\n\t\t},\n\t\tRun: emptyRun,\n\t}\n\n\tbuf := new(bytes.Buffer)\n\trootCmd.SetOut(buf)\n\trootCmd.SetErr(buf)\n\n\t_, err := rootCmd.ExecuteC()\n\tif err != nil {\n\t\tt.Fatalf(\"Unexpected error: %v\", err)\n\t}\n\n\t// Without the fix, os.Args[2] would be changed from \"x\" to \"--\"\n\t// because append(finalArgs, \"--\") in getCompletions wrote into\n\t// the shared backing array of os.Args.\n\tif len(os.Args) != 3 {\n\t\tt.Fatalf(\"os.Args length changed: expected 3, got %d\", len(os.Args))\n\t}\n\tif os.Args[0] != \"root\" {\n\t\tt.Errorf(\"os.Args[0] was mutated: expected %q, got %q\", \"root\", os.Args[0])\n\t}\n\tif os.Args[1] != ShellCompNoDescRequestCmd {\n\t\tt.Errorf(\"os.Args[1] was mutated: expected %q, got %q\", ShellCompNoDescRequestCmd, os.Args[1])\n\t}\n\tif os.Args[2] != \"x\" {\n\t\tt.Errorf(\"os.Args[2] was mutated: expected %q, got %q\", \"x\", os.Args[2])\n\t}\n}\n",
+    "after": "\t\t\t\tt.Errorf(\"expected: %q, got: %q\", tc.expectedDirective, directive)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+   }
+  ],
+  "verify": [
+   "go",
+   "test",
+   "./.",
+   "-count=1"
+  ]
+ },
+ {
+  "id": "cobra-2060",
+  "repo": "cobra",
+  "issue": "Completion should not complete the --help/-h and --version/-v flags if DisableFlagParsing==true \n\nWhen a command sets `DisableFlagParsing = true` it requests the responsibility of doing all the flag parsing.\nIf there are flags for that command, Cobra may not even know about them.\nI've seen this used to provide plugins to a Cobra-based CLI.  The plugins must handle their own flags as the original CLI knows nothing about such flags.\n\nThe problem is that with #1813 the shell completion logic completes the `--help/-h` and `--version/-v` for all commands, even those that do their own flag handling (i.e., `DisableFlagParsing == true`).  I've seen this cause the `--help/-h` be completed twice for plugins: one time from cobra and one time from the plugin.\n\nI therefore feel that Cobra should not complete the `--help/-h` and `--version/-v` if `DisableFlagParsing==true`.\n\nSomewhat related to #1328 but for completion.",
+  "faults": [
+   {
+    "path": "completions.go",
+    "before": "\t}\n\tfinalCmd.ctx = c.ctx\n\n\t// These flags are normally added when `execute()` is called on `finalCmd`,\n\t// however, when doing completion, we don't call `finalCmd.execute()`.\n\t// Let's add the --help and --version flag ourselves but only if the finalCmd\n\t// has not disabled flag parsing; if flag parsing is disabled, it is up to the\n\t// finalCmd itself to handle the completion of *all* flags.\n\tif !finalCmd.DisableFlagParsing {\n\t\tfinalCmd.InitDefaultHelpFlag()\n\t\tfinalCmd.InitDefaultVersionFlag()\n\t}\n\n\t// Check if we are doing flag value completion before parsing the flags.\n\t// This is important because if we are completing a flag value, we need to also\n\t// remove the flag name argument from the list of finalArgs or else the parsing\n\t// could fail due to an invalid value (incomplete) for the flag.\n",
+    "after": "\t}\n\tfinalCmd.ctx = c.ctx\n\n\t// These flags are normally added when `execute()` is called on `finalCmd`,\n\t// however, when doing completion, we don't call `finalCmd.execute()`.\n\t// Let's add the --help and --version flag ourselves.\n\tfinalCmd.InitDefaultHelpFlag()\n\tfinalCmd.InitDefaultVersionFlag()\n\n\t// Check if we are doing flag value completion before parsing the flags.\n\t// This is important because if we are completing a flag value, we need to also\n\t// remove the flag name argument from the list of finalArgs or else the parsing\n\t// could fail due to an invalid value (incomplete) for the flag.\n"
+   },
+   {
+    "path": "completions.go",
+    "before": "\t\t\t// that have set DisableFlagParsing; it is ParseFlags() that merges the inherited and\n\t\t\t// non-inherited flags.\n\t\t\tfinalCmd.InheritedFlags().VisitAll(func(flag *pflag.Flag) {\n\t\t\t\tdoCompleteFlags(flag)\n\t\t\t})\n\t\t\t// Try to complete non-inherited flags even if DisableFlagParsing==true.\n\t\t\t// This allows programs to tell Cobra about flags for completion even\n\t\t\t// if the actual parsing of flags is not done by Cobra.\n\t\t\t// For instance, Helm uses this to provide flag name completion for\n\t\t\t// some of its plugins.\n\t\t\tfinalCmd.NonInheritedFlags().VisitAll(func(flag *pflag.Flag) {\n\t\t\t\tdoCompleteFlags(flag)\n\t\t\t})\n\t\t}\n\n",
+    "after": "\t\t\t// that have set DisableFlagParsing; it is ParseFlags() that merges the inherited and\n\t\t\t// non-inherited flags.\n\t\t\tfinalCmd.InheritedFlags().VisitAll(func(flag *pflag.Flag) {\n\t\t\t\tdoCompleteFlags(flag)\n\t\t\t})\n\t\t\tfinalCmd.NonInheritedFlags().VisitAll(func(flag *pflag.Flag) {\n\t\t\t\tdoCompleteFlags(flag)\n\t\t\t})\n\t\t}\n\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "completions_test.go",
+    "before": "\t}\n\n\texpected := strings.Join([]string{\n\t\t\"--persistent\",\n\t\t\"-p\",\n\t\t\"--nonPersistent\",\n\t\t\"-n\",\n\t\t\"--flag\",\n\t\t\"-f\",\n\t\t\":4\",\n",
+    "after": "\t}\n\n\texpected := strings.Join([]string{\n\t\t\"--persistent\",\n\t\t\"-p\",\n\t\t\"--help\",\n\t\t\"-h\",\n\t\t\"--nonPersistent\",\n\t\t\"-n\",\n\t\t\"--flag\",\n\t\t\"-f\",\n\t\t\":4\",\n"
+   },
+   {
+    "path": "completions_test.go",
+    "before": "\t\t\tRun:     emptyRun,\n\t\t\tValidArgsFunction: func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {\n\t\t\t\treturn []string{\"extra3\"}, ShellCompDirectiveNoFileComp\n\t\t\t},\n\t\t}\n\t\tchildCmd4 := &Command{\n\t\t\tUse:     \"child4\",\n\t\t\tVersion: \"1.1.1\",\n\t\t\tRun:     emptyRun,\n\t\t\tValidArgsFunction: func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {\n\t\t\t\treturn []string{\"extra4\"}, ShellCompDirectiveNoFileComp\n\t\t\t},\n\t\t\tDisableFlagParsing: true,\n\t\t}\n\t\tchildCmd5 := &Command{\n\t\t\tUse:     \"child5\",\n\t\t\tVersion: \"1.1.1\",\n\t\t\tRun:     emptyRun,\n\t\t\tValidArgsFunction: func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {\n\t\t\t\treturn []string{\"extra5\"}, ShellCompDirectiveNoFileComp\n\t\t\t},\n\t\t\tDisableFlagParsing: true,\n\t\t}\n\n",
+    "after": "\t\t\tRun:     emptyRun,\n\t\t\tValidArgsFunction: func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {\n\t\t\t\treturn []string{\"extra3\"}, ShellCompDirectiveNoFileComp\n\t\t\t},\n\t\t}\n\n"
+   },
+   {
+    "path": "completions_test.go",
+    "before": "\n\t\trootCmd.AddCommand(childCmd, childCmd2, childCmd3, childCmd4, childCmd5)\n\n\t\t_ = childCmd.Flags().Bool(\"bool\", false, \"A bool flag\")\n\t\t_ = childCmd.MarkFlagRequired(\"bool\")\n\n\t\t// Have a command that adds its own help and version flag\n",
+    "after": "\n\t\trootCmd.AddCommand(childCmd, childCmd2, childCmd3)\n\n\t\t_ = childCmd.Flags().Bool(\"bool\", false, \"A bool flag\")\n\t\t_ = childCmd.MarkFlagRequired(\"bool\")\n\n\t\t// Have a command that adds its own help and version flag\n"
+   },
+   {
+    "path": "completions_test.go",
+    "before": "\t\t_ = childCmd2.Flags().BoolP(\"help\", \"h\", false, \"My own help\")\n\t\t_ = childCmd2.Flags().BoolP(\"version\", \"v\", false, \"My own version\")\n\n\t\t// Have a command that only adds its own -v flag\n\t\t_ = childCmd3.Flags().BoolP(\"verbose\", \"v\", false, \"Not a version flag\")\n\n\t\t// Have a command that DisablesFlagParsing but that also adds its own help and version flags\n\t\t_ = childCmd5.Flags().BoolP(\"help\", \"h\", false, \"My own help\")\n\t\t_ = childCmd5.Flags().BoolP(\"version\", \"v\", false, \"My own version\")\n\n\t\treturn rootCmd\n\t}\n\n\t// Each test case uses a unique command from the function above.\n",
+    "after": "\t\t_ = childCmd2.Flags().BoolP(\"help\", \"h\", false, \"My own help\")\n\t\t_ = childCmd2.Flags().BoolP(\"version\", \"v\", false, \"My own version\")\n\n\t\t// Have a command that only adds its own -v flag\n\t\t_ = childCmd3.Flags().BoolP(\"verbose\", \"v\", false, \"Not a version flag\")\n\n\t\treturn rootCmd\n\t}\n\n\t// Each test case uses a unique command from the function above.\n"
+   },
+   {
+    "path": "completions_test.go",
+    "before": "\t\t\texpectedOutput: strings.Join([]string{\n\t\t\t\t\"extra3\",\n\t\t\t\t\":4\",\n\t\t\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\"),\n\t\t},\n\t\t{\n\t\t\tdesc: \"no completion for --help/-h and --version/-v flags when DisableFlagParsing=true\",\n\t\t\targs: []string{\"child4\", \"-\"},\n\t\t\texpectedOutput: strings.Join([]string{\n\t\t\t\t\"extra4\",\n\t\t\t\t\":4\",\n\t\t\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\"),\n\t\t},\n\t\t{\n\t\t\tdesc: \"completions for program-defined --help/-h and --version/-v flags even when DisableFlagParsing=true\",\n\t\t\targs: []string{\"child5\", \"-\"},\n\t\t\texpectedOutput: strings.Join([]string{\n\t\t\t\t\"--help\",\n\t\t\t\t\"-h\",\n\t\t\t\t\"--version\",\n\t\t\t\t\"-v\",\n\t\t\t\t\"extra5\",\n\t\t\t\t\":4\",\n\t\t\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\"),\n\t\t},\n\t}\n\n\tfor _, tc := range testcases {\n\t\tt.Run(tc.desc, func(t *testing.T) {\n\t\t\tc := getCmd()\n",
+    "after": "\t\t\texpectedOutput: strings.Join([]string{\n\t\t\t\t\"extra3\",\n\t\t\t\t\":4\",\n\t\t\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\"),\n\t\t},\n\t}\n\n\tfor _, tc := range testcases {\n\t\tt.Run(tc.desc, func(t *testing.T) {\n\t\t\tc := getCmd()\n"
+   }
+  ],
+  "verify": [
+   "go",
+   "test",
+   "./.",
+   "-count=1"
+  ]
+ },
+ {
+  "id": "cobra-1816",
+  "repo": "cobra",
+  "issue": "Completion detects non-flag argument as flag\n\nWe have encountered some odd behavior in the auto completion.\nIt appears that arguments with a dash as the second character are detected as flags by mistake.\n\nThe full reproducer with various test cases can be found here:\nhttps://go.dev/play/p/UxqRkMcEX2a\n\nThe minimal reproducer is the following:\n\n```go\npackage main\n\nimport \"github.com/spf13/cobra\"\n\nfunc main() {\n\troot := &cobra.Command{\n\t\tUse: \"root\",\n\t}\n\troot.SetArgs([]string{\"__complete\", \"1-ff00:0:1\", \"\"})\n\troot.Execute()\n}\n```\n\nwhich results in the following output:\n\n```\n[Debug] [Error] Subcommand 'root' does not support flag '1'\n:0\nCompletion ended with directive: ShellCompDirectiveDefault\n```\n\nI tracked down the issue and appears that we enter this branch by mistake:\nhttps://github.com/spf13/cobra/blob/fce8d8aeb08dc6afe413cc0af67a7fbb3cffec4c/completions.go#L577-L595\n\nIn particular, it appears that the is `isFlagArg` classifies the argument as a flag byistake:\n\nhttps://github.com/spf13/cobra/blob/fce8d8aeb08dc6afe413cc0af67a7fbb3cffec4c/command.go#L629-L632",
+  "faults": [
+   {
+    "path": "command.go",
+    "before": "\t}\n\treturn args\n}\n\nfunc isFlagArg(arg string) bool {\n\treturn ((len(arg) >= 3 && arg[0:2] == \"--\") ||\n\t\t(len(arg) >= 2 && arg[0] == '-' && arg[1] != '-'))\n}\n\n// Find the target command given the args and command tree\n// Meant to be run on the highest node. Only searches down.\n",
+    "after": "\t}\n\treturn args\n}\n\nfunc isFlagArg(arg string) bool {\n\treturn ((len(arg) >= 3 && arg[1] == '-') ||\n\t\t(len(arg) >= 2 && arg[0] == '-' && arg[1] != '-'))\n}\n\n// Find the target command given the args and command tree\n// Meant to be run on the highest node. Only searches down.\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "completions_test.go",
+    "before": "\t\t\t\tt.Errorf(\"Unexpected error %q\", err)\n\t\t\t}\n\t\t})\n\t}\n}\n\nfunc TestArgsNotDetectedAsFlagsCompletionInGo(t *testing.T) {\n\t// Regression test that ensures the bug described in\n\t// https://github.com/spf13/cobra/issues/1816 does not occur anymore.\n\n\troot := Command{\n\t\tUse: \"root\",\n\t\tValidArgsFunction: func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {\n\t\t\treturn []string{\"service\", \"1-123\", \"11-123\"}, ShellCompDirectiveNoFileComp\n\t\t},\n\t}\n\n\tcompletion := `service\n1-123\n11-123\n:4\nCompletion ended with directive: ShellCompDirectiveNoFileComp\n`\n\n\ttestcases := []struct {\n\t\tdesc           string\n\t\targs           []string\n\t\texpectedOutput string\n\t}{\n\t\t{\n\t\t\tdesc:           \"empty\",\n\t\t\targs:           []string{\"\"},\n\t\t\texpectedOutput: completion,\n\t\t},\n\t\t{\n\t\t\tdesc:           \"service only\",\n\t\t\targs:           []string{\"service\", \"\"},\n\t\t\texpectedOutput: completion,\n\t\t},\n\t\t{\n\t\t\tdesc:           \"service last\",\n\t\t\targs:           []string{\"1-123\", \"service\", \"\"},\n\t\t\texpectedOutput: completion,\n\t\t},\n\t\t{\n\t\t\tdesc:           \"two digit prefixed dash last\",\n\t\t\targs:           []string{\"service\", \"11-123\", \"\"},\n\t\t\texpectedOutput: completion,\n\t\t},\n\t\t{\n\t\t\tdesc:           \"one digit prefixed dash last\",\n\t\t\targs:           []string{\"service\", \"1-123\", \"\"},\n\t\t\texpectedOutput: completion,\n\t\t},\n\t}\n\tfor _, tc := range testcases {\n\t\tt.Run(tc.desc, func(t *testing.T) {\n\t\t\targs := []string{ShellCompNoDescRequestCmd}\n\t\t\targs = append(args, tc.args...)\n\t\t\toutput, err := executeCommand(&root, args...)\n\t\t\tswitch {\n\t\t\tcase err == nil && output != tc.expectedOutput:\n\t\t\t\tt.Errorf(\"expected: %q, got: %q\", tc.expectedOutput, output)\n\t\t\tcase err != nil:\n\t\t\t\tt.Errorf(\"Unexpected error %q\", err)\n\t\t\t}\n\t\t})\n\t}\n}\n",
+    "after": "\t\t\t\tt.Errorf(\"Unexpected error %q\", err)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+   }
+  ],
+  "verify": [
+   "go",
+   "test",
+   "./.",
+   "-count=1"
+  ]
+ },
+ {
+  "id": "cobra-1651",
+  "repo": "cobra",
+  "issue": "When persistent flag is shadowed, help text does not show shadowing flag\n\nIf I declare a flag `--flag` on the root command then declare the same local flag on a sub command, the local flag shadows the persistent one.  This seems reasonable.  However the help command does not respect this and gives priority to persistent flags.\n\nHere is a program to illustrate:\n```\npackage main\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/spf13/cobra\"\n)\n\ntype testOpts struct {\n\troot string\n\tsub   string\n}\n\nvar opt testOpts\n\nvar root = &cobra.Command{\n\tUse: \"prog\",\n\tRun: func(cmd *cobra.Command, args []string) {\n\t\tfmt.Printf(\"root called with root flag %s\\n\", opt.root)\n\t\tfmt.Printf(\"root called with sub flag %s\\n\", opt.sub)\n\t},\n}\n\nvar sub = &cobra.Command{\n\tUse: \"sub\",\n\tRun: func(cmd *cobra.Command, args []string) {\n\t\tfmt.Printf(\"sub called with root flag %s\\n\", opt.root)\n\t\tfmt.Printf(\"sub called with sub flag %s\\n\", opt.sub)\n\t},\n}\n\nfunc main() {\n\troot.AddCommand(sub)\n        // Persistent flag named --flag\n\troot.PersistentFlags().StringVar(&opt.root, \"flag\", \"defaultroot\", \"usage for root\")\n        // Local flag also named --flag: it will shadow the above flag\n\tsub.Flags().StringVar(&opt.sub, \"flag\", \"defaultsub\", \"usage for sub\")\n\n\troot.Execute()\n}\n```\nFirst we check what happens to the flag behaviour:\n```\n$ go build -o prog overrideArg.go\n$ ./prog --flag MARC\nroot cmd with root flag MARC and sub flag DEFAULTSUB\n# here it is the persistent flag that gets set, as expected\n\n$ ./prog sub --flag MARC\nsub cmd with root flag DEFAULTROOT and sub flag MARC\n# here it is the local shadowing flag that gets set\n\n$ ./prog --flag MARC sub\nsub cmd with root flag DEFAULTROOT and sub flag MARC\n# here too it is the local shadowing flag that gets set\n```\nThis seems right: the more specialized flag takes precedence.\n\nI don't know if this is just by chance in how pflag behaves.  I wasn't aware this was possible.\n\nThe problem now, is that the help does not respect this behaviour:\n```\n./prog help\nUsage:\n  prog [flags]\n  prog [command]\n\nAvailable Commands:\n  completion  Generate the autocompletion script for the specified shell\n  help        Help about any command\n  sub\n\nFlags:\n      --flag string   usage for root (default \"DEFAULTROOT\")\n  -h, --help          help for prog\n\nUse \"prog [command] --help\" for more information about a command.\n\n# As expected, the persistent flag is documented above but...\n\n$ ./prog help sub\nUsage:\n  prog sub [flags]\n\nFlags:\n  -h, --help   help for sub\n\nGlobal Flags:\n      --flag string   usage for root (default \"DEFAULTROOT\")\n\n# Here the shadowing flag is not shown.  The user therefore does not realize the behaviour may be different than for the global flag\n```",
+  "faults": [
+   {
+    "path": "command.go",
+    "before": "\tif c.globNormFunc != nil {\n\t\tc.lflags.SetNormalizeFunc(c.globNormFunc)\n\t}\n\n\taddToLocal := func(f *flag.Flag) {\n\t\t// Add the flag if it is not a parent PFlag, or it shadows a parent PFlag\n\t\tif c.lflags.Lookup(f.Name) == nil && f != c.parentsPflags.Lookup(f.Name) {\n\t\t\tc.lflags.AddFlag(f)\n\t\t}\n\t}\n\tc.Flags().VisitAll(addToLocal)\n\tc.PersistentFlags().VisitAll(addToLocal)\n",
+    "after": "\tif c.globNormFunc != nil {\n\t\tc.lflags.SetNormalizeFunc(c.globNormFunc)\n\t}\n\n\taddToLocal := func(f *flag.Flag) {\n\t\tif c.lflags.Lookup(f.Name) == nil && c.parentsPflags.Lookup(f.Name) == nil {\n\t\t\tc.lflags.AddFlag(f)\n\t\t}\n\t}\n\tc.Flags().VisitAll(addToLocal)\n\tc.PersistentFlags().VisitAll(addToLocal)\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "command_test.go",
+    "before": "\tif flagValue != 7 {\n\t\tt.Errorf(\"flagValue expected: %v, got %v\", 7, flagValue)\n\t}\n}\n\nfunc TestChildFlagShadowsParentPersistentFlag(t *testing.T) {\n\tparent := &Command{Use: \"parent\", Run: emptyRun}\n\tchild := &Command{Use: \"child\", Run: emptyRun}\n\n\tparent.PersistentFlags().Bool(\"boolf\", false, \"\")\n\tparent.PersistentFlags().Int(\"intf\", -1, \"\")\n",
+    "after": "\tif flagValue != 7 {\n\t\tt.Errorf(\"flagValue expected: %v, got %v\", 7, flagValue)\n\t}\n}\n\nfunc TestOverwrittenFlag(t *testing.T) {\n\t// TODO: This test fails, but should work.\n\tt.Skip()\n\n\tparent := &Command{Use: \"parent\", Run: emptyRun}\n\tchild := &Command{Use: \"child\", Run: emptyRun}\n\n\tparent.PersistentFlags().Bool(\"boolf\", false, \"\")\n\tparent.PersistentFlags().Int(\"intf\", -1, \"\")\n"
+   },
+   {
+    "path": "command_test.go",
+    "before": "\tif childInherited.Lookup(\"boolf\") == nil {\n\t\tt.Error(`InheritedFlags expected to contain \"boolf\", got \"nil\"`)\n\t}\n\n\tif childInherited.Lookup(\"intf\") != nil {\n\t\tt.Errorf(`InheritedFlags should not contain shadowed flag \"intf\"`)\n\t}\n\tif childLocal.Lookup(\"intf\") == nil {\n\t\tt.Error(`LocalFlags expected to contain \"intf\", got \"nil\"`)\n\t}\n}\n",
+    "after": "\tif childInherited.Lookup(\"boolf\") == nil {\n\t\tt.Error(`InheritedFlags expected to contain \"boolf\", got \"nil\"`)\n\t}\n\n\tif childInherited.Lookup(\"intf\") != nil {\n\t\tt.Errorf(`InheritedFlags should not contain overwritten flag \"intf\"`)\n\t}\n\tif childLocal.Lookup(\"intf\") == nil {\n\t\tt.Error(`LocalFlags expected to contain \"intf\", got \"nil\"`)\n\t}\n}\n"
+   },
+   {
+    "path": "command_test.go",
+    "before": "\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\tcheckStringContains(t, output, childCmd.Long)\n}\n\nfunc TestHelpCommandExecutedOnChildWithFlagThatShadowsParentFlag(t *testing.T) {\n\tparent := &Command{Use: \"parent\", Run: emptyRun}\n\tchild := &Command{Use: \"child\", Run: emptyRun}\n\tparent.AddCommand(child)\n\n\tparent.PersistentFlags().Bool(\"foo\", false, \"parent foo usage\")\n\tparent.PersistentFlags().Bool(\"bar\", false, \"parent bar usage\")\n\tchild.Flags().Bool(\"foo\", false, \"child foo usage\") // This shadows parent's foo flag\n\tchild.Flags().Bool(\"baz\", false, \"child baz usage\")\n\n\tgot, err := executeCommand(parent, \"help\", \"child\")\n\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\texpected := `Usage:\n  parent child [flags]\n\nFlags:\n      --baz    child baz usage\n      --foo    child foo usage\n  -h, --help   help for child\n\nGlobal Flags:\n      --bar   parent bar usage\n`\n\n\tif got != expected {\n\t\tt.Errorf(\"Help text mismatch.\\nExpected:\\n%s\\n\\nGot:\\n%s\\n\", expected, got)\n\t}\n}\n\nfunc TestSetHelpCommand(t *testing.T) {\n\tc := &Command{Use: \"c\", Run: emptyRun}\n\tc.AddCommand(&Command{Use: \"empty\", Run: emptyRun})\n",
+    "after": "\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\tcheckStringContains(t, output, childCmd.Long)\n}\n\nfunc TestSetHelpCommand(t *testing.T) {\n\tc := &Command{Use: \"c\", Run: emptyRun}\n\tc.AddCommand(&Command{Use: \"empty\", Run: emptyRun})\n"
+   }
+  ],
+  "verify": [
+   "go",
+   "test",
+   "./.",
+   "-count=1"
+  ]
+ },
+ {
+  "id": "cobra-1257",
+  "repo": "cobra",
+  "issue": "Custom completion logic doesn't support multiple shorthand flags together\n\n> Unlike the flag package, a single dash before an option means something different than a double dash. Single dashes signify a series of shorthand letters for flags. All but the last shorthand letter must be boolean flags or a flag with a default value\n\nfrom: https://github.com/spf13/pflag#command-line-flag-syntax\n\nThe custom completion logic does not respect this and will error in that case. (no completion)\n\nConsider the following simple example:\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n\t\"path/filepath\"\n\n\t\"github.com/spf13/cobra\"\n)\n\nvar rootCmd = &cobra.Command{\n\tUse:              filepath.Base(os.Args[0]),\n\tTraverseChildren: false,\n\tValidArgs:        []string{\"foo\", \"bar\"},\n\tRun: func(cmd *cobra.Command, args []string) {\n\t\tfmt.Println(\"rootCmd called\")\n\t},\n}\n\nfunc main() {\n\tf := rootCmd.Flags()\n\tf.BoolP(\"short\", \"s\", false, \"short flag 1\")\n\tf.BoolP(\"short2\", \"d\", false, \"short flag 2\")\n\trootCmd.Execute()\n}\n```\n```bash\n$ ./testprog -sd\nrootCmd called\n$ ./testprog __complete -sd \"\"\n[Debug] [Error] Subcommand 'testprog' does not support flag 'sd'\n:0\nCompletion ended with directive: ShellCompDirectiveDefault\n$ ./testprog __complete -s \"\"\nfoo\nbar\n:4\nCompletion ended with directive: ShellCompDirectiveNoFileComp\n```",
+  "faults": [
+   {
+    "path": "completions.go",
+    "before": "\t// a '-' we know it is a flag.  We cannot use isFlagArg() here as that function\n\t// requires the flag name to be complete\n\tif len(lastArg) > 0 && lastArg[0] == '-' {\n\t\tif index := strings.Index(lastArg, \"=\"); index >= 0 {\n\t\t\t// Flag with an =\n\t\t\tif strings.HasPrefix(lastArg[:index], \"--\") {\n\t\t\t\t// Flag has full name\n\t\t\t\tflagName = lastArg[2:index]\n\t\t\t} else {\n\t\t\t\t// Flag is shorthand\n\t\t\t\t// We have to get the last shorthand flag name\n\t\t\t\t// e.g. `-asd` => d to provide the correct completion\n\t\t\t\t// https://github.com/spf13/cobra/issues/1257\n\t\t\t\tflagName = lastArg[index-1 : index]\n\t\t\t}\n\t\t\tlastArg = lastArg[index+1:]\n\t\t\tflagWithEqual = true\n\t\t} else {\n\t\t\t// Normal flag completion\n\t\t\treturn nil, args, lastArg, nil\n",
+    "after": "\t// a '-' we know it is a flag.  We cannot use isFlagArg() here as that function\n\t// requires the flag name to be complete\n\tif len(lastArg) > 0 && lastArg[0] == '-' {\n\t\tif index := strings.Index(lastArg, \"=\"); index >= 0 {\n\t\t\t// Flag with an =\n\t\t\tflagName = strings.TrimLeft(lastArg[:index], \"-\")\n\t\t\tlastArg = lastArg[index+1:]\n\t\t\tflagWithEqual = true\n\t\t} else {\n\t\t\t// Normal flag completion\n\t\t\treturn nil, args, lastArg, nil\n"
+   },
+   {
+    "path": "completions.go",
+    "before": "\t\t\tif isFlagArg(prevArg) {\n\t\t\t\t// Only consider the case where the flag does not contain an =.\n\t\t\t\t// If the flag contains an = it means it has already been fully processed,\n\t\t\t\t// so we don't need to deal with it here.\n\t\t\t\tif index := strings.Index(prevArg, \"=\"); index < 0 {\n\t\t\t\t\tif strings.HasPrefix(prevArg, \"--\") {\n\t\t\t\t\t\t// Flag has full name\n\t\t\t\t\t\tflagName = prevArg[2:]\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Flag is shorthand\n\t\t\t\t\t\t// We have to get the last shorthand flag name\n\t\t\t\t\t\t// e.g. `-asd` => d to provide the correct completion\n\t\t\t\t\t\t// https://github.com/spf13/cobra/issues/1257\n\t\t\t\t\t\tflagName = prevArg[len(prevArg)-1:]\n\t\t\t\t\t}\n\t\t\t\t\t// Remove the uncompleted flag or else there could be an error created\n\t\t\t\t\t// for an invalid value for that flag\n\t\t\t\t\ttrimmedArgs = args[:len(args)-1]\n\t\t\t\t}\n\t\t\t}\n",
+    "after": "\t\t\tif isFlagArg(prevArg) {\n\t\t\t\t// Only consider the case where the flag does not contain an =.\n\t\t\t\t// If the flag contains an = it means it has already been fully processed,\n\t\t\t\t// so we don't need to deal with it here.\n\t\t\t\tif index := strings.Index(prevArg, \"=\"); index < 0 {\n\t\t\t\t\tflagName = strings.TrimLeft(prevArg, \"-\")\n\n\t\t\t\t\t// Remove the uncompleted flag or else there could be an error created\n\t\t\t\t\t// for an invalid value for that flag\n\t\t\t\t\ttrimmedArgs = args[:len(args)-1]\n\t\t\t\t}\n\t\t\t}\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "completions_test.go",
+    "before": "\t\tif output != expected {\n\t\t\tt.Errorf(\"expected: %q, got: %q\", expected, output)\n\t\t}\n\t}\n}\n\nfunc TestMultipleShorthandFlagCompletion(t *testing.T) {\n\trootCmd := &Command{\n\t\tUse:       \"root\",\n\t\tValidArgs: []string{\"foo\", \"bar\"},\n\t\tRun:       emptyRun,\n\t}\n\tf := rootCmd.Flags()\n\tf.BoolP(\"short\", \"s\", false, \"short flag 1\")\n\tf.BoolP(\"short2\", \"d\", false, \"short flag 2\")\n\tf.StringP(\"short3\", \"f\", \"\", \"short flag 3\")\n\t_ = rootCmd.RegisterFlagCompletionFunc(\"short3\", func(*Command, []string, string) ([]string, ShellCompDirective) {\n\t\treturn []string{\"works\"}, ShellCompDirectiveNoFileComp\n\t})\n\n\t// Test that a single shorthand flag works\n\toutput, err := executeCommand(rootCmd, ShellCompNoDescRequestCmd, \"-s\", \"\")\n\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\texpected := strings.Join([]string{\n\t\t\"foo\",\n\t\t\"bar\",\n\t\t\":4\",\n\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\")\n\n\tif output != expected {\n\t\tt.Errorf(\"expected: %q, got: %q\", expected, output)\n\t}\n\n\t// Test that multiple boolean shorthand flags work\n\toutput, err = executeCommand(rootCmd, ShellCompNoDescRequestCmd, \"-sd\", \"\")\n\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\texpected = strings.Join([]string{\n\t\t\"foo\",\n\t\t\"bar\",\n\t\t\":4\",\n\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\")\n\n\tif output != expected {\n\t\tt.Errorf(\"expected: %q, got: %q\", expected, output)\n\t}\n\n\t// Test that multiple boolean + string shorthand flags work\n\toutput, err = executeCommand(rootCmd, ShellCompNoDescRequestCmd, \"-sdf\", \"\")\n\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\texpected = strings.Join([]string{\n\t\t\"works\",\n\t\t\":4\",\n\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\")\n\n\tif output != expected {\n\t\tt.Errorf(\"expected: %q, got: %q\", expected, output)\n\t}\n\n\t// Test that multiple boolean + string with equal sign shorthand flags work\n\toutput, err = executeCommand(rootCmd, ShellCompNoDescRequestCmd, \"-sdf=\")\n\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\texpected = strings.Join([]string{\n\t\t\"works\",\n\t\t\":4\",\n\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\")\n\n\tif output != expected {\n\t\tt.Errorf(\"expected: %q, got: %q\", expected, output)\n\t}\n\n\t// Test that multiple boolean + string with equal sign with value shorthand flags work\n\toutput, err = executeCommand(rootCmd, ShellCompNoDescRequestCmd, \"-sdf=abc\", \"\")\n\tif err != nil {\n\t\tt.Errorf(\"Unexpected error: %v\", err)\n\t}\n\n\texpected = strings.Join([]string{\n\t\t\"foo\",\n\t\t\"bar\",\n\t\t\":4\",\n\t\t\"Completion ended with directive: ShellCompDirectiveNoFileComp\", \"\"}, \"\\n\")\n\n\tif output != expected {\n\t\tt.Errorf(\"expected: %q, got: %q\", expected, output)\n\t}\n}\n",
+    "after": "\t\tif output != expected {\n\t\t\tt.Errorf(\"expected: %q, got: %q\", expected, output)\n\t\t}\n\t}\n}\n"
+   }
+  ],
+  "verify": [
+   "go",
+   "test",
+   "./.",
+   "-count=1"
+  ]
+ },
+ {
+  "id": "flask-6093",
+  "repo": "flask",
+  "issue": "IPv6 addresses parsed incorrectly because of `.partition(\":\")`?\n\nHi, I checked the code and saw that two places use `.partition(\":\")` on addresses, and IPv6 addresses contain \":\".\n\nThis breaks 1. `session_transaction` value setting, and 2. `Flask.run()` if `SERVER_NAME` is set. I've already prepared two tests that fail, you can use them to reproduce:\n\n1. In `test_testing.py`\n```\ndef test_session_transaction_ipv6(app):\n    base_url = \"http://[::1]:8000/\"\n    client = app.test_client()\n\n    @app.get(\"/\")\n    def index():\n        return str(flask.session.get(\"value\"))\n\n    with client.session_transaction(base_url=base_url) as sess:\n        sess[\"value\"] = 42\n\n    assert client.get(\"/\", base_url=base_url).text == \"42\"\n```\n\n2. Add one case to `test_run_from_config`\n```\n(None, None, \"[::1]:8080\", \"::1\", 8080),\n```\n\nIs this known and intended? I could send the patches for these two places.",
+  "faults": [
+   {
+    "path": "src/flask/app.py",
+    "before": "from itertools import chain\nfrom types import TracebackType\nfrom urllib.parse import quote as _url_quote\nfrom urllib.parse import urlsplit\n\nimport click\nfrom werkzeug.datastructures import Headers\n",
+    "after": "from itertools import chain\nfrom types import TracebackType\nfrom urllib.parse import quote as _url_quote\n\nimport click\nfrom werkzeug.datastructures import Headers\n"
+   },
+   {
+    "path": "src/flask/app.py",
+    "before": "\n        server_name = self.config.get(\"SERVER_NAME\")\n        sn_host = sn_port = None\n\n        if server_name:\n            server_url = urlsplit(f\"//{server_name}\")\n            sn_host = server_url.hostname\n            sn_port = server_url.port\n\n        if not host:\n            if sn_host:\n                host = sn_host\n            else:\n",
+    "after": "\n        server_name = self.config.get(\"SERVER_NAME\")\n        sn_host = sn_port = None\n\n        if server_name:\n            sn_host, _, sn_port = server_name.partition(\":\")\n\n        if not host:\n            if sn_host:\n                host = sn_host\n            else:\n"
+   },
+   {
+    "path": "src/flask/app.py",
+    "before": "            else:\n                host = \"127.0.0.1\"\n\n        if port or port == 0:\n            port = int(port)\n        elif sn_port is not None:\n            port = sn_port\n        else:\n            port = 5000\n\n        options.setdefault(\"use_reloader\", self.debug)\n        options.setdefault(\"use_debugger\", self.debug)\n",
+    "after": "            else:\n                host = \"127.0.0.1\"\n\n        if port or port == 0:\n            port = int(port)\n        elif sn_port:\n            port = int(sn_port)\n        else:\n            port = 5000\n\n        options.setdefault(\"use_reloader\", self.debug)\n        options.setdefault(\"use_debugger\", self.debug)\n"
+   },
+   {
+    "path": "src/flask/app.py",
+    "before": "        cli.show_server_banner(self.debug, self.name)\n\n        from werkzeug.serving import run_simple\n\n        try:\n            run_simple(host, port, self, **options)\n        finally:\n            # reset the first request information if the development server\n            # reset normally.  This makes it possible to restart the server\n            # without reloader and that stuff from an interactive shell.\n            self._got_first_request = False\n",
+    "after": "        cli.show_server_banner(self.debug, self.name)\n\n        from werkzeug.serving import run_simple\n\n        try:\n            run_simple(t.cast(str, host), port, self, **options)\n        finally:\n            # reset the first request information if the development server\n            # reset normally.  This makes it possible to restart the server\n            # without reloader and that stuff from an interactive shell.\n            self._got_first_request = False\n"
+   },
+   {
+    "path": "src/flask/testing.py",
+    "before": "\n        with ctx:\n            app.session_interface.save_session(app, sess, resp)\n\n        self._update_cookies_from_response(\n            urlsplit(ctx.request.host_url).hostname or \"localhost\",\n            ctx.request.path,\n            resp.headers.getlist(\"Set-Cookie\"),\n        )\n\n    def _copy_environ(self, other: WSGIEnvironment) -> WSGIEnvironment:\n",
+    "after": "\n        with ctx:\n            app.session_interface.save_session(app, sess, resp)\n\n        self._update_cookies_from_response(\n            ctx.request.host.partition(\":\")[0],\n            ctx.request.path,\n            resp.headers.getlist(\"Set-Cookie\"),\n        )\n\n    def _copy_environ(self, other: WSGIEnvironment) -> WSGIEnvironment:\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "tests/test_basic.py",
+    "before": "        (None, 80, \"pocoo.org:8080\", \"pocoo.org\", 80),\n        (\"localhost\", 80, \"pocoo.org:8080\", \"localhost\", 80),\n        (\"localhost\", 0, \"localhost:8080\", \"localhost\", 0),\n        (None, None, \"localhost:8080\", \"localhost\", 8080),\n        (None, None, \"localhost:0\", \"localhost\", 0),\n        (None, None, \"[::1]:8080\", \"::1\", 8080),\n    ),\n)\ndef test_run_from_config(\n    monkeypatch, host, port, server_name, expect_host, expect_port, app\n):\n",
+    "after": "        (None, 80, \"pocoo.org:8080\", \"pocoo.org\", 80),\n        (\"localhost\", 80, \"pocoo.org:8080\", \"localhost\", 80),\n        (\"localhost\", 0, \"localhost:8080\", \"localhost\", 0),\n        (None, None, \"localhost:8080\", \"localhost\", 8080),\n        (None, None, \"localhost:0\", \"localhost\", 0),\n    ),\n)\ndef test_run_from_config(\n    monkeypatch, host, port, server_name, expect_host, expect_port, app\n):\n"
+   },
+   {
+    "path": "tests/test_testing.py",
+    "before": "        rv = client.get(\"/\")\n        assert rv.data == b\"[42]\"\n        with client.session_transaction() as sess:\n            assert len(sess) == 1\n            assert sess[\"foo\"] == [42]\n\n\ndef test_session_transaction_ipv6(app):\n    base_url = \"http://[::1]:8000/\"\n    client = app.test_client()\n\n    @app.get(\"/\")\n    def index():\n        return str(flask.session.get(\"value\"))\n\n    with client.session_transaction(base_url=base_url) as sess:\n        sess[\"value\"] = 42\n\n    assert client.get(\"/\", base_url=base_url).text == \"42\"\n\n\ndef test_session_transactions_no_null_sessions():\n    app = flask.Flask(__name__)\n\n",
+    "after": "        rv = client.get(\"/\")\n        assert rv.data == b\"[42]\"\n        with client.session_transaction() as sess:\n            assert len(sess) == 1\n            assert sess[\"foo\"] == [42]\n\n\ndef test_session_transactions_no_null_sessions():\n    app = flask.Flask(__name__)\n\n"
+   }
+  ],
+  "verify": [
+   "{python}",
+   "-m",
+   "pytest",
+   "-q",
+   "-p",
+   "no:cacheprovider",
+   "tests/test_basic.py",
+   "tests/test_testing.py"
+  ]
+ },
+ {
+  "id": "flask-5258",
+  "repo": "flask",
+  "issue": "TypeError: Flask.url_for() got multiple values for argument 'self'\n\n[Official documentation](https://flask.palletsprojects.com/en/2.3.x/api/#flask.url_for) doesn't mention any preconditions for values argument, but `self=1` raises an exception.\n\nCan be replicated with the following test case:\n\n```python\nfrom unittest import TestCase\n\nfrom flask import Flask, url_for\n\n\nclass UrlForTests(TestCase):\n    def setUp(self) -> None:\n        self.app = Flask(__name__)\n\n    def test_with_self_argument(self) -> None:\n        with (\n            self.app.app_context(),\n            self.assertRaisesRegex(\n                TypeError, \"got multiple values for argument 'self'\"\n            ),\n        ):\n            url_for(\"doesnotmatter\", self=1)\n```\n\nTraceback example:\n\n```\nTraceback (most recent call last):\n  File \"/home/dmitry/git/github.com/minetest/contentdb/tests.py\", line 6, in <module>\n    url_for(\"doesnotmatter\", self=1)\n  File \"/home/dmitry/.cache/pypoetry/virtualenvs/contentdb-MK2UWkId-py3.10/lib/python3.10/site-packages/flask/helpers.py\", line 256, in url_for\n    return current_app.url_for(\nTypeError: Flask.url_for() got multiple values for argument 'self'\n```\n\nThe expected behavior is the returned URL has query string like '?self=1'.\n\nEnvironment:\n\n- Python version: 3.10.6\n- Flask version: 2.3.3",
+  "faults": [
+   {
+    "path": "CHANGES.rst",
+    "before": "-   Allow self as an argument to url_for. :pr:`5264`\n",
+    "after": ""
+   },
+   {
+    "path": "src/flask/app.py",
+    "before": "\n        return asgiref_async_to_sync(func)\n\n    def url_for(\n        self,\n        /,\n        endpoint: str,\n        *,\n        _anchor: str | None = None,\n        _method: str | None = None,\n        _scheme: str | None = None,\n",
+    "after": "\n        return asgiref_async_to_sync(func)\n\n    def url_for(\n        self,\n        endpoint: str,\n        *,\n        _anchor: str | None = None,\n        _method: str | None = None,\n        _scheme: str | None = None,\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "tests/test_helpers.py",
+    "before": "        app.add_url_rule(\"/myview/create\", methods=[\"POST\"], view_func=myview)\n\n        assert flask.url_for(\"myview\", _method=\"GET\") == \"/myview/\"\n        assert flask.url_for(\"myview\", id=42, _method=\"GET\") == \"/myview/42\"\n        assert flask.url_for(\"myview\", _method=\"POST\") == \"/myview/create\"\n\n    def test_url_for_with_self(self, app, req_ctx):\n        @app.route(\"/<self>\")\n        def index(self):\n            return \"42\"\n\n        assert flask.url_for(\"index\", self=\"2\") == \"/2\"\n\n\ndef test_redirect_no_app():\n    response = flask.redirect(\"https://localhost\", 307)\n    assert response.location == \"https://localhost\"\n",
+    "after": "        app.add_url_rule(\"/myview/create\", methods=[\"POST\"], view_func=myview)\n\n        assert flask.url_for(\"myview\", _method=\"GET\") == \"/myview/\"\n        assert flask.url_for(\"myview\", id=42, _method=\"GET\") == \"/myview/42\"\n        assert flask.url_for(\"myview\", _method=\"POST\") == \"/myview/create\"\n\n\ndef test_redirect_no_app():\n    response = flask.redirect(\"https://localhost\", 307)\n    assert response.location == \"https://localhost\"\n"
+   }
+  ],
+  "verify": [
+   "{python}",
+   "-m",
+   "pytest",
+   "-q",
+   "-p",
+   "no:cacheprovider",
+   "tests/test_helpers.py"
+  ]
+ },
+ {
+  "id": "flask-3628",
+  "repo": "flask",
+  "issue": "Returning Response and headers causes duplicate headers\n\n### Expected Behavior\n\n```\nfrom flask import Flask\napp = Flask(__name__)\n@app.route('/')\ndef issue():\n    return {'test': 'test'}, {'Content-Type': 'test'}\n```\nUsing `curl -v http://127.0.0.1:5000/` to query the view I expect only one `Content-Type` header > `Content-Type: test`\n\n### Actual Behavior\n\nDuplicate headers are returned\n\n```\n< Content-Type: application/json\n< Content-Type: test\n```\n\n### Environment\n\n* Python version: 3.8.2\n* Flask version: 1.1.2\n* Werkzeug version: 1.0.1\n\n### Context\n\nThis issue also effects responses created with make_response when using a dict or jsonify body + the headers argument with a 'Content-Type':\n\n```\nfrom flask import Flask, make_response\napp = Flask(__name__)\n@app.route('/')\ndef issue():\n    return make_response({'test': 'test'}, {'Content-Type': 'test'})\n```\n\nThis issue is caused by jsonify adding a 'Content-Type' header then make_response uses `extent` to add the additional headers, thus leading to the duplicate.\n\nReturning a str/bytes body does not have this problem as no 'Content-Type' is added by flask, if one is missing it is added by werkzeug.\n\nThe reason I came across this issue is we have older code which does `return json.dumps(data), 200, {'Content-Type': 'application/json+somecustomtype'}` and I assumed based on the flask docs that just returning the data and letting flask do the jsonify would be better.",
+  "faults": [
+   {
+    "path": "CHANGES.rst",
+    "before": "-   When loading a ``.env`` or ``.flaskenv`` file, the current working\n    directory is no longer changed to the location of the file.\n    :pr:`3560`\n-   When returning a ``(response, headers)`` tuple from a view, the\n    headers replace rather than extend existing headers on the response.\n    For example, this allows setting the ``Content-Type`` for\n    ``jsonify()``. Use ``response.headers.extend()`` if extending is\n    desired. :issue:`3628`\n",
+    "after": "-   When loading a ``.env`` or ``.flaskenv`` file on top level directory,\n    Flask will not change current work directory to the location of dotenv\n    files, in order to prevent potential confusion. :pr:`3560`\n"
+   },
+   {
+    "path": "src/flask/app.py",
+    "before": "\n        # extend existing headers with provided headers\n        if headers:\n            rv.headers.update(headers)\n\n        return rv\n\n",
+    "after": "\n        # extend existing headers with provided headers\n        if headers:\n            rv.headers.extend(headers)\n\n        return rv\n\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "tests/test_basic.py",
+    "before": "        return \"Hi, status!\", 400\n\n    @app.route(\"/response_headers\")\n    def from_response_headers():\n        return (\n            flask.Response(\n                \"Hello world\", 404, {\"Content-Type\": \"text/html\", \"X-Foo\": \"Baz\"}\n            ),\n            {\"Content-Type\": \"text/plain\", \"X-Foo\": \"Bar\", \"X-Bar\": \"Foo\"},\n        )\n\n    @app.route(\"/response_status\")\n    def from_response_status():\n        return app.response_class(\"Hello world\", 400), 500\n",
+    "after": "        return \"Hi, status!\", 400\n\n    @app.route(\"/response_headers\")\n    def from_response_headers():\n        return (\n            flask.Response(\"Hello world\", 404, {\"X-Foo\": \"Baz\"}),\n            {\"X-Foo\": \"Bar\", \"X-Bar\": \"Foo\"},\n        )\n\n    @app.route(\"/response_status\")\n    def from_response_status():\n        return app.response_class(\"Hello world\", 400), 500\n"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "before": "    assert rv.status_code == 400\n    assert rv.mimetype == \"text/html\"\n\n    rv = client.get(\"/response_headers\")\n    assert rv.data == b\"Hello world\"\n    assert rv.content_type == \"text/plain\"\n    assert rv.headers.getlist(\"X-Foo\") == [\"Bar\"]\n    assert rv.headers[\"X-Bar\"] == \"Foo\"\n    assert rv.status_code == 404\n\n    rv = client.get(\"/response_status\")\n    assert rv.data == b\"Hello world\"\n",
+    "after": "    assert rv.status_code == 400\n    assert rv.mimetype == \"text/html\"\n\n    rv = client.get(\"/response_headers\")\n    assert rv.data == b\"Hello world\"\n    assert rv.headers.getlist(\"X-Foo\") == [\"Baz\", \"Bar\"]\n    assert rv.headers[\"X-Bar\"] == \"Foo\"\n    assert rv.status_code == 404\n\n    rv = client.get(\"/response_status\")\n    assert rv.data == b\"Hello world\"\n"
+   }
+  ],
+  "verify": [
+   "{python}",
+   "-m",
+   "pytest",
+   "-q",
+   "-p",
+   "no:cacheprovider",
+   "tests/test_basic.py"
+  ]
+ },
+ {
+  "id": "fastify-7117",
+  "repo": "fastify",
+  "issue": "Synchronous throw in a custom content-type parser crashes the process instead of becoming a 500\n\n### Prerequisites\n\n- [x] I have written a descriptive issue title\n- [x] I have searched the issue tracker to ensure this has not already been reported\n\n### Fastify version\n\n6.0.0-alpha.5 (also reproduces on 5.12.7)\n\n### Node.js version\n\n22.x\n\n### Operating system / version\n\nmacOS (platform-independent)\n\n### Description\n\nA custom content-type parser registered with `addContentTypeParser` that throws **synchronously** terminates the process with an uncaught exception, instead of being turned into a `500` the way a throw from a route handler or a lifecycle hook is.\n\nThis affects both stream-mode parsers and `parseAs: 'string' | 'buffer'` parsers. `setErrorHandler` does not intercept it \u2014 only a global `process.on('uncaughtException')` sees it.\n\n`parser.fn(request, payload, done)` is called in `lib/content-type-parser.js` without a `try/catch`; only a returned promise's *rejection* is routed to `done`. A synchronous `throw` escapes. The default JSON/text parsers wrap their body in `try/catch`, so only custom parsers are affected \u2014 but `done(null, JSON.parse(body))` / XML parse / `qs` decode are idiomatic, and malformed request bodies make them throw.\n\nThere is also an internal inconsistency: a stream-mode parser throw is contained **iff** a `preParsing` hook is registered (the hook runner's `try/catch` happens to be on the call stack), while a `parseAs` parser throw always escapes.\n\n### Steps to Reproduce\n\n```js\nconst Fastify = require('fastify')\nconst app = Fastify()\n\napp.addContentTypeParser('application/json', { parseAs: 'string' }, (req, body, done) => {\n  throw new Error('boom') // e.g. a parser that does JSON.parse / XML parse on malformed input\n})\napp.post('/', (req, reply) => reply.send('ok'))\n\napp.listen({ port: 0 }, (err, address) => {\n  if (err) throw err\n  // POST application/json with any body -> the process exits with an\n  // uncaughtException (\"boom\"), instead of responding 500\n})\n```\n\n### Expected Behavior\n\nA synchronous throw from a custom parser is caught and handled by the normal error path (a `500`, or the error's `statusCode` if set), consistent with throws from route handlers and hooks.\n\n### Actual Behavior\n\nThe process crashes with an uncaught exception.\n\n---\n\nI have a fix ready (wrap both `parser.fn()` call sites in `try/catch` and route the error to `done(error)`, mirroring the hook runner and `preHandlerCallbackInner`) with regression tests, and will open a PR referencing this issue if it sounds good.",
+  "faults": [
+   {
+    "path": "lib/content-type-parser.js",
+    "before": "      done\n    )\n    return\n  }\n\n  let result\n  try {\n    result = parser.fn(request, request[kRequestPayloadStream], done)\n  } catch (error) {\n    done(error, undefined)\n    return\n  }\n  if (result && typeof result.then === 'function') {\n    result.then(body => { done(null, body) }, done)\n  }\n\n  function onDone (error, body) {\n",
+    "after": "      done\n    )\n    return\n  }\n\n  const result = parser.fn(request, request[kRequestPayloadStream], done)\n  if (result && typeof result.then === 'function') {\n    result.then(body => { done(null, body) }, done)\n  }\n\n  function onDone (error, body) {\n"
+   },
+   {
+    "path": "lib/content-type-parser.js",
+    "before": "      // Always copy so the parser never receives a view over the shared\n      // socket read buffer\n      body = Buffer.concat(chunks, receivedLength)\n    }\n\n    let result\n    try {\n      result = parser.fn(request, body, done)\n    } catch (error) {\n      done(error, undefined)\n      return\n    }\n    if (result && typeof result.then === 'function') {\n      result.then(body => { done(null, body) }, done)\n    }\n  }\n}\n",
+    "after": "      // Always copy so the parser never receives a view over the shared\n      // socket read buffer\n      body = Buffer.concat(chunks, receivedLength)\n    }\n\n    const result = parser.fn(request, body, done)\n    if (result && typeof result.then === 'function') {\n      result.then(body => { done(null, body) }, done)\n    }\n  }\n}\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/content-parser.test.js",
+    "before": "    payload: Buffer.from([0x61, 0xff, 0x62])\n  })\n  t.assert.strictEqual(res.statusCode, 200)\n  t.assert.strictEqual(res.body, 'a\ufffdb')\n})\n\ntest('a synchronous throw in a custom parser is handled like a route error, not an uncaught exception', async t => {\n  await t.test('stream-mode parser', async t => {\n    t.plan(2)\n    const fastify = Fastify()\n    fastify.addContentTypeParser('application/json', function (req, payload, done) {\n      throw new Error('parser boom')\n    })\n    fastify.post('/', (req, reply) => reply.send('ok'))\n    const res = await fastify.inject({ method: 'POST', url: '/', headers: { 'content-type': 'application/json' }, payload: '{}' })\n    t.assert.strictEqual(res.statusCode, 500)\n    t.assert.strictEqual(res.json().message, 'parser boom')\n  })\n\n  await t.test('parseAs string parser', async t => {\n    t.plan(2)\n    const fastify = Fastify()\n    fastify.addContentTypeParser('application/json', { parseAs: 'string' }, function (req, body, done) {\n      throw new Error('parser boom')\n    })\n    fastify.post('/', (req, reply) => reply.send('ok'))\n    const res = await fastify.inject({ method: 'POST', url: '/', headers: { 'content-type': 'application/json' }, payload: '{}' })\n    t.assert.strictEqual(res.statusCode, 500)\n    t.assert.strictEqual(res.json().message, 'parser boom')\n  })\n\n  await t.test('a thrown error with a statusCode is preserved', async t => {\n    t.plan(1)\n    const fastify = Fastify()\n    fastify.addContentTypeParser('application/json', { parseAs: 'string' }, function (req, body, done) {\n      const err = new Error('too big')\n      err.statusCode = 413\n      throw err\n    })\n    fastify.post('/', (req, reply) => reply.send('ok'))\n    const res = await fastify.inject({ method: 'POST', url: '/', headers: { 'content-type': 'application/json' }, payload: '{}' })\n    t.assert.strictEqual(res.statusCode, 413)\n  })\n})\n",
+    "after": "    payload: Buffer.from([0x61, 0xff, 0x62])\n  })\n  t.assert.strictEqual(res.statusCode, 200)\n  t.assert.strictEqual(res.body, 'a\ufffdb')\n})\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/content-parser.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-7073",
+  "repo": "fastify",
+  "issue": "An error with `statusCode` \u2265 600 becomes an unhandled rejection when a `tracing:fastify.request.handler` subscriber exists (5.12.5)\n\n**Versions:** fastify 5.12.5, Node 24.\n\n**What happens.** `lib/error-status.js` passes `err.statusCode || err.status` to `reply.code()` whenever it is `>= 400`, and `reply.code()` throws `FST_ERR_BAD_STATUS_CODE` outside 100\u2013599. With a subscriber on the handler-error channel, `setErrorStatusCode` runs in the rejection callback in `lib/wrap-thenable.js` (line 57) and in `preHandlerCallbackInner` in `lib/handle-request.js` (line 193), where nothing catches the throw before the promise boundary. An async handler or an async `preHandler` hook that throws `Object.assign(new Error('x'), { statusCode: 600 })` therefore ends the process with an unhandled rejection; the request is never answered. Without a subscriber the same request is answered.\n\nSeparately, `setErrorHeaders` in `lib/error-handler.js` writes `error.status` / `error.statusCode` to the raw response with only a lower bound: with the default error handler, 600 is sent on the wire, and 1000 or more throws `ERR_HTTP_INVALID_STATUS_CODE` from `writeHead` and ends the process with no subscriber at all.\n\n**Reproduction.**\n```js\nconst { subscribe } = require('node:diagnostics_channel')\nconst fastify = require('fastify')()\nsubscribe('tracing:fastify.request.handler:error', () => {})\nfastify.get('/', async () => { throw Object.assign(new Error('x'), { statusCode: 600 }) })\nfastify.listen({ port: 0 }).then((address) => fetch(address))\n```\n\n**Expected.** A 500 reply and a running process.\n\n**Prior work.** #7024 fixed both functions by falling back to 500 outside 400\u2013599 and was closed by its author before merge; the review there agreed a 500 fallback is correct for the response. Opening this so the fault has an issue to track.",
+  "faults": [
+   {
+    "path": "lib/error-handler.js",
+    "before": "}\n\nfunction setErrorHeaders (error, reply) {\n  const res = reply.raw\n  let statusCode = res.statusCode\n  statusCode = (statusCode >= 400 && statusCode <= 599) ? statusCode : 500\n  // treat undefined and null as same\n  if (error != null) {\n    if (error.headers !== undefined) {\n      reply.headers(error.headers)\n    }\n",
+    "after": "}\n\nfunction setErrorHeaders (error, reply) {\n  const res = reply.raw\n  let statusCode = res.statusCode\n  statusCode = (statusCode >= 400) ? statusCode : 500\n  // treat undefined and null as same\n  if (error != null) {\n    if (error.headers !== undefined) {\n      reply.headers(error.headers)\n    }\n"
+   },
+   {
+    "path": "lib/error-handler.js",
+    "before": "  // treat undefined and null as same\n  if (error != null) {\n    if (error.headers !== undefined) {\n      reply.headers(error.headers)\n    }\n    if (error.statusCode >= 400 && error.statusCode <= 599) {\n      statusCode = error.statusCode\n    } else if (error.status >= 400 && error.status <= 599) {\n      statusCode = error.status\n",
+    "after": "  // treat undefined and null as same\n  if (error != null) {\n    if (error.headers !== undefined) {\n      reply.headers(error.headers)\n    }\n    if (error.status >= 400) {\n      statusCode = error.status\n"
+   },
+   {
+    "path": "lib/error-handler.js",
+    "before": "      statusCode = error.status\n    }\n  }\n  res.statusCode = statusCode\n}\n\n",
+    "after": "      statusCode = error.status\n    } else if (error.statusCode >= 400) {\n      statusCode = error.statusCode\n    }\n  }\n  res.statusCode = statusCode\n}\n\n"
+   },
+   {
+    "path": "lib/error-status.js",
+    "before": "  kReplyHasStatusCode\n} = require('./symbols')\n\nfunction setErrorStatusCode (reply, err) {\n  if (!reply[kReplyHasStatusCode] || reply.statusCode === 200) {\n    let statusCode = 500\n    if (err?.statusCode >= 400 && err.statusCode <= 599) statusCode = err.statusCode\n    else if (err?.status >= 400 && err.status <= 599) statusCode = err.status\n    reply.code(statusCode)\n  }\n}\n\nmodule.exports = { setErrorStatusCode }\n",
+    "after": "  kReplyHasStatusCode\n} = require('./symbols')\n\nfunction setErrorStatusCode (reply, err) {\n  if (!reply[kReplyHasStatusCode] || reply.statusCode === 200) {\n    const statusCode = err && (err.statusCode || err.status)\n    reply.code(statusCode >= 400 ? statusCode : 500)\n  }\n}\n\nmodule.exports = { setErrorStatusCode }\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/diagnostics-channel/error-status.test.js",
+    "before": "  const fastify = Fastify()\n  t.after(() => fastify.close())\n  const err = new Error('winter is coming')\n  err.status = 418\n\n  const channel = diagnostics.channel('tracing:fastify.request.handler:error')\n  const handler = (msg) => {\n    t.assert.strictEqual(msg.error.message, 'winter is coming')\n",
+    "after": "  const fastify = Fastify()\n  t.after(() => fastify.close())\n  const err = new Error('winter is coming')\n  err.status = 418\n\n  diagnostics.subscribe('tracing:fastify.request.handler:error', (msg) => {\n    t.assert.strictEqual(msg.error.message, 'winter is coming')\n"
+   },
+   {
+    "path": "test/diagnostics-channel/error-status.test.js",
+    "before": "    t.assert.strictEqual(msg.error.message, 'winter is coming')\n  }\n  channel.subscribe(handler)\n  t.after(() => channel.unsubscribe(handler))\n\n  fastify.get('/', () => {\n    return Promise.reject(err)\n  })\n\n",
+    "after": "    t.assert.strictEqual(msg.error.message, 'winter is coming')\n  })\n\n  fastify.get('/', () => {\n    return Promise.reject(err)\n  })\n\n"
+   },
+   {
+    "path": "test/diagnostics-channel/error-status.test.js",
+    "before": "      JSON.parse(res.payload)\n    )\n    done()\n  })\n})\n\ntest('diagnostics channel error event should report 500 for error with statusCode >= 600', async (t) => {\n  t.plan(4)\n  const fastify = Fastify()\n  t.after(() => fastify.close())\n\n  let diagnosticsStatusCode\n  let diagnosticsError\n\n  const channel = diagnostics.channel('tracing:fastify.request.handler:error')\n  const handler = (msg) => {\n    diagnosticsStatusCode = msg.reply.statusCode\n    diagnosticsError = msg.error\n  }\n  channel.subscribe(handler)\n  t.after(() => channel.unsubscribe(handler))\n\n  fastify.get('/', async () => {\n    const err = new Error('custom invalid status')\n    err.statusCode = 600\n    throw err\n  })\n\n  const res = await fastify.inject('/')\n\n  t.assert.strictEqual(res.statusCode, 500)\n  t.assert.strictEqual(diagnosticsStatusCode, 500, 'diagnostics channel should report 500 when statusCode >= 600')\n  t.assert.strictEqual(diagnosticsStatusCode, res.statusCode, 'diagnostics status should match response status')\n  t.assert.strictEqual(diagnosticsError.message, 'custom invalid status')\n})\n",
+    "after": "      JSON.parse(res.payload)\n    )\n    done()\n  })\n})\n"
+   },
+   {
+    "path": "test/reply-error.test.js",
+    "before": "  t.plan(3)\n  const fastify = Fastify()\n  t.after(() => fastify.close())\n  const err = new Error('winter is coming')\n  err.statusCode = 399\n\n  fastify.get('/', () => {\n    return Promise.reject(err)\n  })\n\n  fastify.inject({\n    method: 'GET',\n    url: '/'\n  }, (error, res) => {\n    t.assert.ifError(error)\n    t.assert.strictEqual(res.statusCode, 500)\n    t.assert.deepStrictEqual(\n      {\n        error: statusCodes['500'],\n        message: err.message,\n        statusCode: 500\n      },\n      JSON.parse(res.payload)\n    )\n    testDone()\n  })\n})\n\ntest('Error status code above 599 defaults to 500', (t, testDone) => {\n  t.plan(3)\n  const fastify = Fastify()\n  t.after(() => fastify.close())\n  const err = new Error('winter is coming')\n  err.statusCode = 600\n\n  fastify.get('/', () => {\n    return Promise.reject(err)\n  })\n\n",
+    "after": "  t.plan(3)\n  const fastify = Fastify()\n  t.after(() => fastify.close())\n  const err = new Error('winter is coming')\n  err.statusCode = 399\n\n  fastify.get('/', () => {\n    return Promise.reject(err)\n  })\n\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/diagnostics-channel/error-status.test.js",
+   "test/reply-error.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-6988",
+  "repo": "fastify",
+  "issue": "compileSerializationSchema passes null for omitted optional metadata\n\n### Description\n\nCalling `reply.compileSerializationSchema(schema)` without optional metadata passes `null` for both `httpStatus` and `contentType` to a custom serializer compiler. The public types model those fields as optional strings, and the documentation describes the default as `undefined`.\n\nThis is present on `main` at `1beaf7e72d24b2fc63a02a7f5806772a00e45454`:\n\n- [The implementation defaults both parameters to `null`](https://github.com/fastify/fastify/blob/1beaf7e72d24b2fc63a02a7f5806772a00e45454/lib/reply.js#L373-L397)\n- [`FastifyRouteSchemaDef` declares optional string fields](https://github.com/fastify/fastify/blob/1beaf7e72d24b2fc63a02a7f5806772a00e45454/types/schema.d.ts#L18-L25)\n- [The reference says the optional status defaults to `undefined`](https://github.com/fastify/fastify/blob/1beaf7e72d24b2fc63a02a7f5806772a00e45454/docs/Reference/Reply.md#L78-L86)\n\n### Reproduction\n\n```js\nconst Fastify = require('fastify')\n\nconst app = Fastify()\n\napp.setSerializerCompiler((definition) => {\n  console.log(definition.httpStatus, definition.contentType)\n  return JSON.stringify\n})\n\napp.get('/', (_request, reply) => {\n  const serialize = reply.compileSerializationSchema({ type: 'object' })\n  return serialize({ ok: true })\n})\n\napp.inject({ method: 'GET', url: '/' })\n```\n\n### Actual behavior\n\nThe custom compiler receives `null, null`.\n\n### Expected behavior\n\nIt should receive `undefined, undefined`, consistent with the optional TypeScript fields and documented default, or the public type/documentation should explicitly include `null`.\n\n### Possible direction\n\nDefault the implementation parameters to `undefined` (or omit the properties when they were not supplied). This would preserve the existing optional contract for custom compilers.\n\nI found this while benchmarking an automated code-review workflow and manually verified the source path and reproduction before reporting it.",
+  "faults": [
+   {
+    "path": "lib/reply.js",
+    "before": "  }\n\n  return serialize\n}\n\nReply.prototype.compileSerializationSchema = function (schema, httpStatus, contentType) {\n  const { request } = this\n  const { method, url } = request\n\n  // Check if serialize function already compiled\n  if (this[kRouteContext][kReplyCacheSerializeFns]?.has(schema)) {\n",
+    "after": "  }\n\n  return serialize\n}\n\nReply.prototype.compileSerializationSchema = function (schema, httpStatus = null, contentType = null) {\n  const { request } = this\n  const { method, url } = request\n\n  // Check if serialize function already compiled\n  if (this[kRouteContext][kReplyCacheSerializeFns]?.has(schema)) {\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/internals/reply-serialize.test.js",
+    "before": "      path: '/',\n      method: 'GET'\n    })\n  })\n})\n\ntest('Reply#compileSerializationSchema omits absent metadata instead of passing null', async t => {\n  t.plan(2)\n\n  const fastify = Fastify()\n\n  fastify.setSerializerCompiler(({ httpStatus, contentType }) => {\n    t.assert.strictEqual(httpStatus, undefined)\n    t.assert.strictEqual(contentType, undefined)\n\n    return input => JSON.stringify(input)\n  })\n\n  fastify.get('/', (req, reply) => {\n    reply.compileSerializationSchema(getDefaultSchema())\n    reply.send({ hello: 'world' })\n  })\n\n  await fastify.inject({ path: '/', method: 'GET' })\n})\n",
+    "after": "      path: '/',\n      method: 'GET'\n    })\n  })\n})\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/internals/reply-serialize.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-4424",
+  "repo": "fastify",
+  "issue": "routerPath returns url with a trailing slash\n\n### Prerequisites\n\n- [X] I have written a descriptive issue title\n- [X] I have searched existing issues to ensure the issue has not already been raised\n\n\n### Issue\n\nOriginally this error comes from [fastify-metrics](https://github.com/SkeLLLa/fastify-metrics) plugin. It relies on two things: \n - `onRoute` hook to set up a metric for the route;\n - request `routerPath` property to find the route metric from the request context.\n \n The problem happens when you use a plugin prefix with the `prefixTrailingSlash` option set to `both` (default) value. In this case, the `onRoute` hook will be called only once, so `fastify-metrics` will set up only one route, but internally there are two different routes with two different `routerPath` properties. So `fastify-metrics` will not record metrics for requests with trailing slash.\n \n Example:\n ```js\n 'use strict'\n\nconst fastify = require('fastify')()\n\nfastify.addHook('onRoute', ({ method, url }) => {\n  console.log('New route added:', method, url)\n})\n\nfastify.register(async (fastify) => {\n  fastify.get('/', async (request) => {\n    console.log(request.routerPath)\n  })\n}, { prefix: '/foo' })\n\nfastify.ready(() => {\n  fastify.inject({ method: 'GET', url: '/foo' })\n  fastify.inject({ method: 'GET', url: '/foo/' })\n})\n ```\n \n Output:\n ```js\n New route added: GET /foo\nNew route added: HEAD /foo\nNew route added: HEAD /foo/\n/foo\n/foo/\n ```\n \n If we don't call `onRoute` twice, that means that we want to hide the second route from a user. So from the user's perspective, there should be only one route. If it's true, then we should return `routerPath` with a trimmed trailing slash.",
+  "faults": [
+   {
+    "path": "lib/route.js",
+    "before": "\n      if (opts.attachValidation == null) {\n        opts.attachValidation = false\n      }\n\n      const routeConfigUrl = prefixing ? prefix : url\n      if (prefixing === false) {\n        // run 'onRoute' hooks\n        for (const hook of this[kHooks].onRoute) {\n          hook.call(this, opts)\n        }\n",
+    "after": "\n      if (opts.attachValidation == null) {\n        opts.attachValidation = false\n      }\n\n      if (prefixing === false) {\n        // run 'onRoute' hooks\n        for (const hook of this[kHooks].onRoute) {\n          hook.call(this, opts)\n        }\n"
+   },
+   {
+    "path": "lib/route.js",
+    "before": "      }\n\n      const constraints = opts.constraints || {}\n      const config = {\n        ...opts.config,\n        url: routeConfigUrl,\n        method: opts.method\n      }\n\n      const context = new Context({\n        schema: opts.schema,\n",
+    "after": "      }\n\n      const constraints = opts.constraints || {}\n      const config = {\n        ...opts.config,\n        url,\n        method: opts.method\n      }\n\n      const context = new Context({\n        schema: opts.schema,\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/route-prefix.test.js",
+    "before": "    completion.stepIn()\n  })\n  completion.patience.then(testDone)\n})\n\ntest('reports the canonical route url for hidden prefix trailing slash route', async t => {\n  t.plan(4)\n\n  const fastify = Fastify({\n    ignoreTrailingSlash: false,\n    exposeHeadRoutes: false\n  })\n\n  const onRouteUrls = []\n\n  fastify.addHook('onRoute', routeOptions => {\n    onRouteUrls.push(routeOptions.url)\n  })\n\n  fastify.register(async instance => {\n    instance.get('/', async request => {\n      return request.routeOptions.url\n    })\n\n    instance.get('/bar/', async request => {\n      return request.routeOptions.url\n    })\n  }, { prefix: '/prefix' })\n\n  t.assert.strictEqual((await fastify.inject('/prefix')).payload, '/prefix')\n  t.assert.strictEqual((await fastify.inject('/prefix/')).payload, '/prefix')\n  t.assert.strictEqual((await fastify.inject('/prefix/bar/')).payload, '/prefix/bar/')\n  t.assert.deepStrictEqual(onRouteUrls, ['/prefix', '/prefix/bar/'])\n\n  await fastify.close()\n})\n\ntest('matches both /prefix and /prefix/  with a / route - prefixTrailingSlash: \"both\", ignoreDuplicateSlashes: false', (t, testDone) => {\n  t.plan(4)\n  const fastify = Fastify({\n    routerOptions: {\n      ignoreDuplicateSlashes: false\n",
+    "after": "    completion.stepIn()\n  })\n  completion.patience.then(testDone)\n})\n\ntest('matches both /prefix and /prefix/  with a / route - prefixTrailingSlash: \"both\", ignoreDuplicateSlashes: false', (t, testDone) => {\n  t.plan(4)\n  const fastify = Fastify({\n    routerOptions: {\n      ignoreDuplicateSlashes: false\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/route-prefix.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-6411",
+  "repo": "fastify",
+  "issue": "Validation of optional, nullable number where property value is `0` will default to `null`\n\n### Prerequisites\n\n- [x] I have written a descriptive issue title\n- [x] I have searched existing issues to ensure the bug has not already been reported\n\n\n### Fastify version\n\n5.6.2\n\n### Plugin version\n\n_No response_\n\n### Node.js version\n\n24.11.0\n\n### Operating system\n\nWindows\n\n### Operating system version (i.e. 20.04, 11.3, 10)\n\n10\n\n### Description\n\nWhen using a schema that defines an optional, nullable number as a property if I send the value `0` then the property is evaluated to be `null` I have added `preValidation` and `preHandler` hooks to look at the incoming body shape and can confirm before the validation step the raw value is `0` and after validation is `null` my schema for validating the model is:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"length\": {\n      \"anyOf\": [\n        {\n          \"type\": \"null\"\n        },\n        {\n          \"type\": \"number\"\n        }\n      ]\n    }\n  },\n  \"$id\": \"MyModel\"\n}\n```\n\nmy request body sent from client (and during `preValidation`) is:\n\n```json\n{\n  \"length\": 0\n}\n```\n\nmy resulting model in my handler (and during `preHandler`) is:\n\n```json\n{\n  \"length\": null\n}\n```\n\nI can't see any immediate ajv options (or issues in their repo) about this.\n\nIf I make the property \"required\" then I see no change.\n\nIf I make the property \"required and not nullable\" then it works but is now breaking my contract.\n\n### Link to code that reproduces the bug\n\nhttps://gist.github.com/cmcnicholas/cc83f261bb9cbd6847c901e7c1482b92\n\n### Expected Behavior\n\nI would expect that sending explicit `0` value to a validated model property should retain that value and not default to `null`",
+  "faults": [
+   {
+    "path": "lib/validation.js",
+    "before": "  return answer(ret)\n\n  function answer (ret) {\n    if (ret === false) return validatorFunction.errors\n    if (ret && ret.error) return ret.error\n    if (ret && typeof ret === 'object' && 'value' in ret) request[paramName] = ret.value\n    return false\n  }\n}\n\nfunction validate (context, request, execution) {\n",
+    "after": "  return answer(ret)\n\n  function answer (ret) {\n    if (ret === false) return validatorFunction.errors\n    if (ret && ret.error) return ret.error\n    if (ret && ret.value) request[paramName] = ret.value\n    return false\n  }\n}\n\nfunction validate (context, request, execution) {\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/fix-6411.test.js",
+    "added": true
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/fix-6411.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-6652",
+  "repo": "fastify",
+  "issue": "[Bug] Schema controller checks buildValidator instead of buildSerializer for isCustomSerializerCompiler\n\n## Summary\nIn `lib/schema-controller.js:34`, the `isCustomSerializerCompiler` flag checks `buildValidator` instead of `buildSerializer`:\n\n```javascript\nisCustomSerializerCompiler: typeof opts?.compilersFactory?.buildValidator === 'function'\n//                                                         ^^^^^^^^^^^^^^ should be buildSerializer\n```\n\n## Impact\n`isCustomSerializerCompiler` is incorrect whenever a user provides only a custom serializer compiler (without a custom validator). This affects downstream code that relies on this flag.\n\n## Fix\n```diff\n- isCustomSerializerCompiler: typeof opts?.compilersFactory?.buildValidator === 'function'\n+ isCustomSerializerCompiler: typeof opts?.compilersFactory?.buildSerializer === 'function'\n```",
+  "faults": [
+   {
+    "path": "lib/schema-controller.js",
+    "before": "\n  const option = {\n    bucket: (opts && opts.bucket) || buildSchemas,\n    compilersFactory,\n    isCustomValidatorCompiler: typeof opts?.compilersFactory?.buildValidator === 'function',\n    isCustomSerializerCompiler: typeof opts?.compilersFactory?.buildSerializer === 'function'\n  }\n\n  return new SchemaController(undefined, option)\n}\n\n",
+    "after": "\n  const option = {\n    bucket: (opts && opts.bucket) || buildSchemas,\n    compilersFactory,\n    isCustomValidatorCompiler: typeof opts?.compilersFactory?.buildValidator === 'function',\n    isCustomSerializerCompiler: typeof opts?.compilersFactory?.buildValidator === 'function'\n  }\n\n  return new SchemaController(undefined, option)\n}\n\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/internals/schema-controller-perf.test.js",
+    "before": "const { sep } = require('node:path')\nconst { test } = require('node:test')\nconst Fastify = require('../../fastify')\nconst { kSchemaController } = require('../../lib/symbols')\n\ntest('SchemaController are NOT loaded when the controllers are custom', async t => {\n  const app = Fastify({\n    schemaController: {\n      compilersFactory: {\n",
+    "after": "const { sep } = require('node:path')\nconst { test } = require('node:test')\nconst Fastify = require('../../fastify')\n\ntest('SchemaController are NOT loaded when the controllers are custom', async t => {\n  const app = Fastify({\n    schemaController: {\n      compilersFactory: {\n"
+   },
+   {
+    "path": "test/internals/schema-controller-perf.test.js",
+    "before": "\n  t.assert.equal(ajvModule, undefined, 'Ajv compiler is loaded')\n  t.assert.equal(stringifyModule, undefined, 'Stringify compiler is loaded')\n})\n\ntest('isCustomSerializerCompiler flag is set correctly when only buildSerializer is provided', async t => {\n  const app = Fastify({\n    schemaController: {\n      compilersFactory: {\n        buildSerializer: () => () => { }\n      }\n    }\n  })\n\n  await app.ready()\n\n  const schemaController = app[kSchemaController]\n  t.assert.equal(schemaController.isCustomValidatorCompiler, false, 'isCustomValidatorCompiler should be false')\n  t.assert.equal(schemaController.isCustomSerializerCompiler, true, 'isCustomSerializerCompiler should be true')\n})\n\ntest('isCustomValidatorCompiler flag is set correctly when only buildValidator is provided', async t => {\n  const app = Fastify({\n    schemaController: {\n      compilersFactory: {\n        buildValidator: () => () => { }\n      }\n    }\n  })\n\n  await app.ready()\n\n  const schemaController = app[kSchemaController]\n  t.assert.equal(schemaController.isCustomValidatorCompiler, true, 'isCustomValidatorCompiler should be true')\n  t.assert.equal(schemaController.isCustomSerializerCompiler, false, 'isCustomSerializerCompiler should be false')\n})\n\ntest('SchemaController are loaded when the controllers are not custom', async t => {\n  const app = Fastify()\n  await app.ready()\n\n  const loaded = Object.keys(require.cache)\n",
+    "after": "\n  t.assert.equal(ajvModule, undefined, 'Ajv compiler is loaded')\n  t.assert.equal(stringifyModule, undefined, 'Stringify compiler is loaded')\n})\n\ntest('SchemaController are loaded when the controllers are not custom', async t => {\n  const app = Fastify()\n  await app.ready()\n\n  const loaded = Object.keys(require.cache)\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/internals/schema-controller-perf.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-6674",
+  "repo": "fastify",
+  "issue": "error.code not present on some fastify routing errors\n\nMinor, but already triaged & patch exists, so why not fix it.\n\n`error.code` present on errors thrown by `method: 'GET'` but not present on `method: ['GET', 'POST']`\n\n```js\ntest('Fastify should throw on multiple assignment to the same route with array method', (t) => {\n  t.plan(1)\n  const fastify = Fastify()\n\n  fastify.route({ method: ['GET', 'POST'], url: '/', handler: () => {} })\n\n  try {\n    fastify.route({ method: ['GET', 'POST'], url: '/', handler: () => {} })\n    t.assert.fail('Should throw fastify duplicated route declaration')\n  } catch (error) {\n    t.assert.strictEqual(error.code, 'FST_ERR_DUPLICATED_ROUTE')\n  }\n})\n```\n\nSee https://github.com/deepview-autofix/fastify/commit/861abedf68a68841e23e394a016d73fb1b3c2b3e",
+  "faults": [
+   {
+    "path": "lib/route.js",
+    "before": "        router.on(opts.method, opts.url, { constraints }, routeHandler, context)\n      } catch (error) {\n        // any route insertion error created by fastify can be safely ignore\n        // because it only duplicate route for head\n        if (!context[kRouteByFastify]) {\n          const methods = Array.isArray(opts.method) ? opts.method : [opts.method]\n          const isDuplicatedRoute = methods.some(method => error.message.includes(`Method '${method}' already declared for route`))\n          if (isDuplicatedRoute) {\n            throw new FST_ERR_DUPLICATED_ROUTE(opts.method, opts.url)\n          }\n\n          throw error\n",
+    "after": "        router.on(opts.method, opts.url, { constraints }, routeHandler, context)\n      } catch (error) {\n        // any route insertion error created by fastify can be safely ignore\n        // because it only duplicate route for head\n        if (!context[kRouteByFastify]) {\n          const isDuplicatedRoute = error.message.includes(`Method '${opts.method}' already declared for route`)\n          if (isDuplicatedRoute) {\n            throw new FST_ERR_DUPLICATED_ROUTE(opts.method, opts.url)\n          }\n\n          throw error\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/throw.test.js",
+    "before": "\n  fastify.get('/', () => {})\n\n  try {\n    fastify.get('/', () => {})\n    t.assert.fail('Should throw fastify duplicated route declaration')\n  } catch (error) {\n    t.assert.strictEqual(error.code, 'FST_ERR_DUPLICATED_ROUTE')\n  }\n})\n\ntest('Fastify should throw on multiple assignment to the same route with array method', (t) => {\n  t.plan(1)\n  const fastify = Fastify()\n\n  fastify.route({ method: ['GET', 'POST'], url: '/', handler: () => {} })\n\n  try {\n    fastify.route({ method: ['GET', 'POST'], url: '/', handler: () => {} })\n    t.assert.fail('Should throw fastify duplicated route declaration')\n  } catch (error) {\n    t.assert.strictEqual(error.code, 'FST_ERR_DUPLICATED_ROUTE')\n  }\n})\n",
+    "after": "\n  fastify.get('/', () => {})\n\n  try {\n    fastify.get('/', () => {})\n    t.assert.fail('Should throw fastify duplicated route declaration')\n  } catch (error) {\n    t.assert.strictEqual(error.code, 'FST_ERR_DUPLICATED_ROUTE')\n  }\n})\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/throw.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-6512",
+  "repo": "fastify",
+  "issue": "routerOptions cannot be reused across multiple fastify instances\n\n### Prerequisites\n\n- [x] I have written a descriptive issue title\n- [x] I have searched existing issues to ensure the bug has not already been reported\n\n\n### Fastify version\n\n5.7.4\n\n### Plugin version\n\n_No response_\n\n### Node.js version\n\n25.6.1\n\n### Operating system\n\nLinux\n\n### Operating system version (i.e. 20.04, 11.3, 10)\n\nArchlinux\n\n### Description\n\nAfter the upgrade to 5.7.4, we started getting the deprecation warning about how we need to use `routerOptions` instead of setting them directly. But when I changed this, I started running into #4068 but only in our tests. While trying to create a minimal reproducible example for it, I got yet another error:\n`TypeError: Cannot read properties of null (reading 'server')`\n\nContext: in one of our tests we have multiple fastify instances. Some of those instances are fastify+options+someplugins, other instances are fastify+options+allroutes, yet others are fastify+options+oneroute. One of the options is `maxParamLength: 2048`. We have this defined in a separate file, and **all the fastify instances use the same options object**. The bolded part is important because if you do:\n* `const options = { maxParamLength: 2048 }` = you'll get the deprecation warning a lot of times, but things will actually work\n* `const options = { routerOptions: { maxParamLength: 2048 } }` = tests start erroring and/or timing out\n\nIn the MRE I've reduced this down even further. and also included 3 ways of making it \"work\" again, but none of them make any sense to me. Essentially, the moment I include `routerOptions` in my options and it's set to something other than `undefined`, I suddenly can't reuse it anymore? The \"fix\" with calling `.ready()` is also strange, because historically we never called that, and in the MRE it's specifically `app1` that it needs to be called on, which isn't where the error occurs.\n\nWe upgraded from a fastify 5.2.1 straight to 5.7.4, but as long as we don't _address_ the deprecation warning, everything works fine. It's specifically addressing the deprecation warning that causes the issue.\n\n### Link to code that reproduces the bug\n\nhttps://github.com/barbeque-squared/fastify-routeroptions\n\n### Expected Behavior\n\nI think being able to reuse the options object? I don't know if not being able to is a deliberate choice or not.\n\nOf course I can rewrite my code so that instead of an `export const` I make a function that returns the options object, but then I'd also need to annotate it that people shouldn't reuse the function result. I'm also okay with having to call `.ready()` the whole time, but then the error when you forget it (see the MRE) should be improved.",
+  "faults": [
+   {
+    "path": "lib/route.js",
+    "before": "function buildRouterOptions (options, defaultOptions) {\n  const routerOptions = options.routerOptions == null\n    ? Object.create(null)\n    : Object.assign(Object.create(null), options.routerOptions)\n\n",
+    "after": "function buildRouterOptions (options, defaultOptions) {\n  const routerOptions = options.routerOptions || Object.create(null)\n\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/router-options.test.js",
+    "before": "\n  t.after(() => fastify.close())\n\n  await fastify.ready()\n",
+    "after": "\n  await fastify.ready()\n"
+   },
+   {
+    "path": "test/router-options.test.js",
+    "before": "})\n\ntest('Should allow reusing a routerOptions object across instances', async t => {\n  t.plan(1)\n\n  const options = {\n    routerOptions: {\n      maxParamLength: 2048\n    }\n  }\n\n  const app1 = Fastify(options)\n  const app2 = Fastify(options)\n\n  t.after(() => Promise.all([\n    app1.close(),\n    app2.close()\n  ]))\n\n  const response = await app2.inject('/not-found')\n  t.assert.strictEqual(response.statusCode, 404)\n})\n\ntest('Should not mutate user-provided routerOptions object', async t => {\n  t.plan(4)\n\n  const routerOptions = {\n    maxParamLength: 2048\n  }\n  const options = { routerOptions }\n\n  const app = Fastify(options)\n  t.after(() => app.close())\n\n  await app.ready()\n\n  t.assert.deepStrictEqual(Object.keys(routerOptions), ['maxParamLength'])\n  t.assert.strictEqual(routerOptions.maxParamLength, 2048)\n  t.assert.strictEqual(routerOptions.defaultRoute, undefined)\n  t.assert.strictEqual(routerOptions.onBadUrl, undefined)\n})\n",
+    "after": "})\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/router-options.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-6371",
+  "repo": "fastify",
+  "issue": "HEAD route throws `ERR_INVALID_ARG_TYPE` error when GET route sends a Web Stream\n\n### Prerequisites\n\n- [x] I have written a descriptive issue title\n- [x] I have searched existing issues to ensure the bug has not already been reported\n\n\n### Fastify version\n\n5.6.1\n\n### Plugin version\n\n_No response_\n\n### Node.js version\n\n22.18.0\n\n### Operating system\n\nmacOS\n\n### Operating system version (i.e. 20.04, 11.3, 10)\n\n15.6\n\n### Description\n\n### Summary\nFastify automatically creates a corresponding `HEAD` route for every `GET` route. However, if the `GET` route handler sends a Web Stream (e.g., a `ReadableStream`), making a request to the `HEAD` route throws a `TypeError`.\n\n### Steps to Reproduce\n1. Register a `GET` route that replies with a Web Stream payload (e.g., `new ReadableStream(...)`).\n2. Start the Fastify server.\n3. Send a `HEAD` request to the same route.\n4. The server crashes with the error below.\n\n### Error Details\nThe following `TypeError` is thrown:\n\n```\nTypeError [ERR_INVALID_ARG_TYPE]: The \"string\" argument must be of type string or an instance of Buffer or ArrayBuffer. Received an instance of ReadableStream\n    at Function.byteLength (node:buffer:777:11)\n    ...\n```\n\n### Analysis\nThis error originates from the `headRouteOnSendHandler` function, specifically at this line:\n\nhttps://github.com/fastify/fastify/blob/1564559c355b4aa1f00f7371f71f896ebe94f862/lib/head-route.js#L19\n\nThis line incorrectly assumes the payload is a Buffer-like type (`string`, `Buffer`, or `ArrayBuffer`, ...) to calculate the `Content-Length`.\nThus `Buffer.byteLength` fails causing the error when the payload is a `ReadableStream`.\n\n### Link to code that reproduces the bug\n\nhttps://github.com/orionmiz/fastify-repro-web-stream-in-head\n\n### Expected Behavior\n\n**HEAD request to a route whose corresponding GET handler sends a Web Stream should not throw an error.**\n\n- The `headRouteOnSendHandler` should not attempt to calculate the `Content-Length` of a stream payload (e.g., by calling `Buffer.byteLength`).\n- Instead, in accordance with the HTTP specification, the `HEAD` response must include the exact same headers (such as `Transfer-Encoding` or `Content-Length`) that would have been sent by the corresponding `GET` request.",
+  "faults": [
+   {
+    "path": "lib/head-route.js",
+    "before": "    reply.header('content-length', '0')\n    done(null, null)\n    return\n  }\n\n  // node:stream\n  if (typeof payload.resume === 'function') {\n    payload.on('error', (err) => {\n      reply.log.error({ err }, 'Error on Stream found for HEAD route')\n    })\n    payload.resume()\n",
+    "after": "    reply.header('content-length', '0')\n    done(null, null)\n    return\n  }\n\n  if (typeof payload.resume === 'function') {\n    payload.on('error', (err) => {\n      reply.log.error({ err }, 'Error on Stream found for HEAD route')\n    })\n    payload.resume()\n"
+   },
+   {
+    "path": "lib/head-route.js",
+    "before": "  if (typeof payload.resume === 'function') {\n    payload.on('error', (err) => {\n      reply.log.error({ err }, 'Error on Stream found for HEAD route')\n    })\n    payload.resume()\n    done(null, null)\n    return\n  }\n\n  // node:stream/web\n  if (typeof payload.getReader === 'function') {\n    payload.cancel('Stream cancelled by HEAD route').catch((err) => {\n      reply.log.error({ err }, 'Error on Stream found for HEAD route')\n    })\n    done(null, null)\n    return\n  }\n\n  const size = '' + Buffer.byteLength(payload)\n",
+    "after": "  if (typeof payload.resume === 'function') {\n    payload.on('error', (err) => {\n      reply.log.error({ err }, 'Error on Stream found for HEAD route')\n    })\n    payload.resume()\n    done(null, null)\n    return\n  }\n\n  const size = '' + Buffer.byteLength(payload)\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/route.6.test.js",
+    "before": "\nconst stream = require('node:stream')\nconst { ReadableStream } = require('node:stream/web')\nconst { test } = require('node:test')\nconst Fastify = require('..')\n",
+    "after": "\nconst stream = require('node:stream')\nconst { test } = require('node:test')\nconst Fastify = require('..')\n"
+   },
+   {
+    "path": "test/route.6.test.js",
+    "before": "\n  t.assert.strictEqual(res.statusCode, 404)\n})\n\ntest('HEAD route should handle properly each response type', async t => {\n  t.plan(24)\n\n  const fastify = Fastify({ exposeHeadRoutes: true })\n  const resString = 'Found me!'\n  const resJSON = { here: 'is Johnny' }\n  const resBuffer = Buffer.from('I am a buffer!')\n",
+    "after": "\n  t.assert.strictEqual(res.statusCode, 404)\n})\n\ntest('HEAD route should handle properly each response type', async t => {\n  t.plan(20)\n\n  const fastify = Fastify({ exposeHeadRoutes: true })\n  const resString = 'Found me!'\n  const resJSON = { here: 'is Johnny' }\n  const resBuffer = Buffer.from('I am a buffer!')\n"
+   },
+   {
+    "path": "test/route.6.test.js",
+    "before": "  const fastify = Fastify({ exposeHeadRoutes: true })\n  const resString = 'Found me!'\n  const resJSON = { here: 'is Johnny' }\n  const resBuffer = Buffer.from('I am a buffer!')\n  const resStream = stream.Readable.from('I am a stream!')\n  const resWebStream = ReadableStream.from('I am a web stream!')\n\n  fastify.route({\n    method: 'GET',\n    path: '/json',\n    handler: (req, reply) => {\n",
+    "after": "  const fastify = Fastify({ exposeHeadRoutes: true })\n  const resString = 'Found me!'\n  const resJSON = { here: 'is Johnny' }\n  const resBuffer = Buffer.from('I am a buffer!')\n  const resStream = stream.Readable.from('I am a stream!')\n\n  fastify.route({\n    method: 'GET',\n    path: '/json',\n    handler: (req, reply) => {\n"
+   },
+   {
+    "path": "test/route.6.test.js",
+    "before": "    handler: (req, reply) => {\n      return resStream\n    }\n  })\n\n  fastify.route({\n    method: 'GET',\n    path: '/web-stream',\n    handler: (req, reply) => {\n      return resWebStream\n    }\n  })\n\n  let res = await fastify.inject({\n    method: 'HEAD',\n    url: '/json'\n  })\n  t.assert.strictEqual(res.statusCode, 200)\n",
+    "after": "    handler: (req, reply) => {\n      return resStream\n    }\n  })\n\n  let res = await fastify.inject({\n    method: 'HEAD',\n    url: '/json'\n  })\n  t.assert.strictEqual(res.statusCode, 200)\n"
+   },
+   {
+    "path": "test/route.6.test.js",
+    "before": "  t.assert.strictEqual(res.body, '')\n\n  res = await fastify.inject({\n    method: 'HEAD',\n    url: '/stream'\n  })\n  t.assert.strictEqual(res.statusCode, 200)\n  t.assert.strictEqual(res.headers['content-type'], undefined)\n  t.assert.strictEqual(res.headers['content-length'], undefined)\n  t.assert.strictEqual(res.body, '')\n\n  res = await fastify.inject({\n    method: 'HEAD',\n    url: '/web-stream'\n  })\n  t.assert.strictEqual(res.statusCode, 200)\n  t.assert.strictEqual(res.headers['content-type'], undefined)\n  t.assert.strictEqual(res.headers['content-length'], undefined)\n  t.assert.strictEqual(res.body, '')\n",
+    "after": "  t.assert.strictEqual(res.body, '')\n\n  res = await fastify.inject({\n    method: 'HEAD',\n    url: '/stream'\n  })\n  t.assert.strictEqual(res.statusCode, 200)\n  t.assert.strictEqual(res.headers['content-type'], undefined)\n  t.assert.strictEqual(res.headers['content-length'], undefined)\n  t.assert.strictEqual(res.body, '')\n"
+   },
+   {
+    "path": "test/route.7.test.js",
+    "before": "'use strict'\n\nconst stream = require('node:stream')\nconst { ReadableStream } = require('node:stream/web')\nconst split = require('split2')\nconst { test } = require('node:test')\nconst Fastify = require('..')\nconst createError = require('@fastify/error')\n\n",
+    "after": "'use strict'\n\nconst stream = require('node:stream')\nconst split = require('split2')\nconst { test } = require('node:test')\nconst Fastify = require('..')\nconst createError = require('@fastify/error')\n\n"
+   },
+   {
+    "path": "test/route.7.test.js",
+    "before": "  })\n\n  fastify.inject({\n    method: 'HEAD',\n    url: '/more-coffee'\n  }, (error, res) => {\n    t.assert.ifError(error)\n    t.assert.strictEqual(res.statusCode, 200)\n    t.assert.strictEqual(res.headers['content-type'], undefined)\n    done()\n  })\n})\n\ntest('HEAD route should handle ReadableStream.cancel() error', (t, done) => {\n  t.plan(7)\n\n  const logStream = split(JSON.parse)\n  const expectedError = new Error('Cancel error!')\n  const fastify = Fastify({\n    logger: {\n      stream: logStream,\n      level: 'error'\n    }\n  })\n\n  fastify.route({\n    method: 'GET',\n    path: '/web-stream',\n    exposeHeadRoute: true,\n    handler: (req, reply) => {\n      const webStream = new ReadableStream({\n        start (controller) {\n          controller.enqueue('Hello from web stream!')\n        },\n        cancel (reason) {\n          t.assert.strictEqual(reason, 'Stream cancelled by HEAD route')\n          throw expectedError\n        }\n      })\n      return webStream\n    }\n  })\n\n  logStream.once('data', line => {\n    const { message, stack } = expectedError\n    t.assert.deepStrictEqual(line.err, { type: 'Error', message, stack })\n    t.assert.strictEqual(line.msg, 'Error on Stream found for HEAD route')\n    t.assert.strictEqual(line.level, 50)\n  })\n\n  fastify.inject({\n    method: 'HEAD',\n    url: '/web-stream'\n  }, (error, res) => {\n    t.assert.ifError(error)\n    t.assert.strictEqual(res.statusCode, 200)\n    t.assert.strictEqual(res.headers['content-type'], undefined)\n    done()\n",
+    "after": "  })\n\n  fastify.inject({\n    method: 'HEAD',\n    url: '/more-coffee'\n  }, (error, res) => {\n    t.assert.ifError(error)\n    t.assert.strictEqual(res.statusCode, 200)\n    t.assert.strictEqual(res.headers['content-type'], undefined)\n    done()\n"
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/route.6.test.js",
+   "test/route.7.test.js"
+  ],
+  "runtime": "fastify-full"
+ },
+ {
+  "id": "fastify-4327",
+  "repo": "fastify",
+  "issue": "Uncaught exception in error handler\n\n### Prerequisites\n\n- [X] I have written a descriptive issue title\n- [X] I have searched existing issues to ensure the bug has not already been reported\n\n\n### Fastify version\n\n4.6.0\n\n### Plugin version\n\n_No response_\n\n### Node.js version\n\n16.6.x\n\n### Operating system\n\nmacOS\n\n### Operating system version (i.e. 20.04, 11.3, 10)\n\n20\n\n### Description\n\nI was working on a plugin, one that creates a db transaction once a request starts/ends\nand come across an issue where fastify process is killed.\n\nIn the example I added, sending a request to \"/bug\" cause the process to exit.\n\nWhen there is a custom error handler, and an exception occurs within a hook\nfastify will call the custom error handler, creating a new \"payload\", which will kill the process and print:\n\n```\n Attempted to send payload of invalid type 'object'. Expected a string or Buffer.\n```\n\n### Steps to Reproduce\n\n```js\nconst Fastify = require(\"fastify\");\n\nconst fastify = Fastify({\n  logger: true,\n  disableRequestLogging: true,\n});\n\nfastify.setErrorHandler(async (error, request, reply) => {\n  // Look mom, i'm a teapot.\n  return reply.status(418).send({\n    iam: \"a teapot\",\n  });\n});\n\nfastify.register(async () => {\n  fastify.decorateRequest(\"commitTransaction\", true);\n\n  fastify.addHook(\"onError\", async (request) => {\n    request.commitTransaction = false;\n  });\n\n  fastify.addHook(\"onSend\", async (request, reply, payload) => {\n    if (request.commitTransaction) {\n      throw new Error(\"some exception\");\n    }\n\n    return payload;\n  });\n});\n\nfastify.post(\"/bug\", async (request, reply) => {\n  return reply.send(\"test\");\n});\n\nfastify.post(\"/working\", async (request, reply) => {\n  return reply.send({ test: 1 });\n});\n\nreturn fastify.listen({ host: \"127.0.0.1\", port: 3333 });\n```\n\n### Expected Behavior\n\n1. The process should not die.\n2. Calling an error handler, and then calling all the lifecycle hooks all over again is weird.\n     I am used to error handler being the last stop before a reply is sent.\n     The only way I could make the error handler be the last stop is by using (the under documented) \"hijack\"\n     \nI think fastify is great, but it seems to have fallen into a common trap regrading errors and errors handling.\n\nThere are two versions of an \"Error\", an \"exception\" and an applicative error.\n\nThe \"exception\" type is the equivalent of a RuntimeExceprion in Java, where shit may hit the fence by null pointer exceptions, or any other stuff the code did not except **and shouldn't have** (if every line of code we wrote checked if something is null or undefined, we would go crazy).\n\nThe applicative error type is the equivalent of a checked exception in Java, its used for example when\nschema validation fails. Point is, this is an error which is used as control flow.\n\nI would argue that exceptions should result in a call to the error handler, which should be the last\none to handle the request chain.",
+  "faults": [
+   {
+    "path": "lib/error-handler.js",
+    "before": "  const errorHandler = reply[kReplyNextErrorHandler] || context.errorHandler\n\n  // In case the error handler throws, we set the next errorHandler so we can error again\n  reply[kReplyNextErrorHandler] = Object.getPrototypeOf(errorHandler)\n\n  // we need to remove content-type to allow content-type guessing for serialization\n  delete reply[kReplyHeaders]['content-type']\n  delete reply[kReplyHeaders]['content-length']\n\n  const func = errorHandler.func\n\n  if (!func) {\n",
+    "after": "  const errorHandler = reply[kReplyNextErrorHandler] || context.errorHandler\n\n  // In case the error handler throws, we set the next errorHandler so we can error again\n  reply[kReplyNextErrorHandler] = Object.getPrototypeOf(errorHandler)\n\n  delete reply[kReplyHeaders]['content-length']\n\n  const func = errorHandler.func\n\n  if (!func) {\n"
+   }
+  ],
+  "hidden_tests": [
+   {
+    "path": "test/content-type.test.js",
+    "added": true
+   }
+  ],
+  "verify": [
+   "node",
+   "--test",
+   "test/content-type.test.js"
+  ],
+  "runtime": "fastify-full"
+ }
+]

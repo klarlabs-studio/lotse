@@ -1,0 +1,219 @@
+{
+  "id": "codex-local-retry-v3",
+  "scope": "synthetic_instrumentation_diagnostic_only",
+  "plan_sha256": "11ae866d646a06d99293c3c64fdf6fce13cb0d5a65e82d10981c50ccfdb95abb",
+  "implementation_hash_checks": {
+    "benchmark/codex_otel.py": true,
+    "benchmark/codex_solver.py": true,
+    "benchmark/probe_codex_retry.py": true,
+    "benchmark/probe_codex_retry_v2.py": true,
+    "benchmark/probe_codex_retry_v3.py": true,
+    "benchmark/test_probe_codex_retry_v3.py": true
+  },
+  "cases": {
+    "immediate_failure": {
+      "elapsed_seconds": 0.587746,
+      "exit_code": 1,
+      "timeout": false,
+      "launch_error": null,
+      "response_delay_seconds": 0,
+      "response_attempt_count": 2,
+      "request_count": 5,
+      "auth_absent": true,
+      "completed_usage_count": 0,
+      "decode_errors": [],
+      "collector_errors": [],
+      "diagnostic_observation_pass": false,
+      "capture_count": 0,
+      "event_counts": {},
+      "response_telemetry": [],
+      "errors": [
+        "missing_telemetry_captures",
+        "telemetry_attempt_count_differs_from_independent_receipts"
+      ],
+      "request_receipts": [
+        {
+          "method": "POST",
+          "path": "/v1/analytics/codex/turn-costs",
+          "status": 404,
+          "body_sha256": "64056dde3d967d2bf0db4ebb325b62d4e0482bb859e6142051280b9ef872f63c",
+          "body_size": 53,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:44.115414+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:44.116073+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:44.119922+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "2da2e081f9750099a6fc7a6e221ce4f7b4ad4124d068687e6c968a3b0c6a0c18",
+          "body_size": 15862,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:44.420862+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "2da2e081f9750099a6fc7a6e221ce4f7b4ad4124d068687e6c968a3b0c6a0c18",
+          "body_size": 15862,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:44.629289+00:00"
+        }
+      ],
+      "receipt_plan_hash_matches": true,
+      "runner_exit_code": 1,
+      "command": [
+        ".research/venv/bin/python",
+        "benchmark/probe_codex_retry_v3.py",
+        "--plan",
+        ".research/evidence/codex-local-retry-v3/plan.json",
+        "--case",
+        "immediate_failure"
+      ],
+      "evidence_sha256": {
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/command.json": "f7c9705153216494c0398d63028bc25087ef4ffce70db7581889c742956a8606",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/decoded-events.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/delay-policy.json": "1a2867029066dfe0be05c6ffb057c1328b67fac7db10afb3bbe893b905e1385d",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/instructions.txt": "cb67ae0e8c6eeb3cbefd2ee8332c637206d50b34e1849a73ed94a97164e8b476",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/prompt.txt": "05669c1d0abb50c4fa83d2b9df405ec7e23214a46a1c2523d692c09308edb119",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/receipt.json": "949479edd334a22c1187b47e1abc3160d1505745040fb3dc3a10e6e4934451ce",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/requests.jsonl": "e19be09bf8e766a4b30ce765c12b4c1836fdd5b4b989bcef230a52d9dc316928",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/stderr.txt": "9175649e8f3fbf51c1b58c3461b2a7d8c62a67435ca3ba42cd030ec911884063",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/immediate_failure/stream.jsonl": "c1218c51938b76cbceb890ac6a8e73579f4b028b772e3363cad57eaffc6601f5"
+      }
+    },
+    "delayed_failure": {
+      "elapsed_seconds": 12.617933,
+      "exit_code": 1,
+      "timeout": false,
+      "launch_error": null,
+      "response_delay_seconds": 6,
+      "response_attempt_count": 2,
+      "request_count": 5,
+      "auth_absent": true,
+      "completed_usage_count": 0,
+      "decode_errors": [],
+      "collector_errors": [],
+      "diagnostic_observation_pass": false,
+      "capture_count": 2,
+      "event_counts": {
+        "codex.api_request": 3,
+        "codex.conversation_starts": 1,
+        "codex.startup_phase": 2,
+        "codex.user_prompt": 1
+      },
+      "response_telemetry": [
+        {
+          "attempt": 0,
+          "http.response.status_code": 503,
+          "success": null,
+          "duration_ms": "6010"
+        }
+      ],
+      "errors": [
+        "telemetry_attempt_count_differs_from_independent_receipts",
+        "missing_explicit_request_success"
+      ],
+      "request_receipts": [
+        {
+          "method": "POST",
+          "path": "/v1/analytics/codex/turn-costs",
+          "status": 404,
+          "body_sha256": "0d2baaf1bb493a2261bb9fef5538dc23733e59ae4a1fecb58029632cb35a871b",
+          "body_size": 53,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:49.613891+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:49.614364+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:49.617867+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "b13b00e0a36ce016f7fcfd6dc01872c3baa5b4c4da5451955ea3fa586f137422",
+          "body_size": 15858,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:49.953881+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "b13b00e0a36ce016f7fcfd6dc01872c3baa5b4c4da5451955ea3fa586f137422",
+          "body_size": 15858,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:09:56.178304+00:00"
+        }
+      ],
+      "receipt_plan_hash_matches": true,
+      "runner_exit_code": 1,
+      "command": [
+        ".research/venv/bin/python",
+        "benchmark/probe_codex_retry_v3.py",
+        "--plan",
+        ".research/evidence/codex-local-retry-v3/plan.json",
+        "--case",
+        "delayed_failure"
+      ],
+      "evidence_sha256": {
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/command.json": "3a5b00134f5d32c8bcd256c34e873fbb33134f068add55639e85380c54542191",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/decoded-events.json": "bd48bc818564e602812f45613a90ca87280310c2749992009af46f747665db36",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/delay-policy.json": "58216a1811044189c026b726e2712bc03312f79367c8ff49904066af61d10792",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/instructions.txt": "cb67ae0e8c6eeb3cbefd2ee8332c637206d50b34e1849a73ed94a97164e8b476",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/prompt.txt": "05669c1d0abb50c4fa83d2b9df405ec7e23214a46a1c2523d692c09308edb119",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/receipt.json": "2109b6b6e6205f8a0f5964f7fbe4586af5f143552a5c08dc395be79b89b235bd",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/requests.jsonl": "9de82ad1bf13e21cd7570c566b56cf1c649e63bd31116b890f1a071b90a09b49",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/stderr.txt": "4ead6765b603addc4ee7757d054a5c9d7a578fd8560cf42b637ff28637ccdeb0",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/stream.jsonl": "b4370c2f85b6d1360e75520889097f25afebcd131bddbb6f2165b95b59ce7d0d",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/telemetry/capture-0001.json": "62ae828be1ce09d023a8f38e2d35baaf1abef33286f4b6a932d17198ac2944ba",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/telemetry/capture-0002.json": "4763dfd6fecaecfd8dd7f50a1912f8658fedbcca307775d5d85f52962ad2c8f1",
+        ".research/evidence/codex-local-retry-v3/local_retry_v3/delayed_failure/telemetry/receipts.jsonl": "50632b7d5dae61ab5682dd27b6e03a9ab70eda9055065be48b43078153896e02"
+      }
+    }
+  },
+  "binary_hash_matches_plan": true,
+  "interpretation": "Delayed condition exported logs including attempt0, but not attempt1. Immediate condition exported none. Consistent with timing/shutdown loss; exact internal cause unproven.",
+  "decision": "OTel alone is insufficient for complete failure-path accounting in this harness.",
+  "diagnostic_observation_pass": false,
+  "complete_agent_accounting_pass": false,
+  "live_token_cap": "unverified",
+  "product_promotion_pass": false,
+  "agent_savings": "unmeasured",
+  "live_provider_probe_invocations": 0,
+  "local_stub_only_invocations": 2,
+  "analysis_sha256": "d61bde7bfd57d3e9f927cb2ad15503e6176713b57163375e0c9add5e4d0ed8af"
+}

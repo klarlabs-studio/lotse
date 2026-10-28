@@ -1,0 +1,3272 @@
+{
+  "agent_and_interface_trials": {
+    "batches": {
+      "t": {
+        "arms": {
+          "graf": {
+            "attempts": 100,
+            "pass_hat_k": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "passes": 100,
+            "success_rate": 1.0,
+            "success_wilson95": [
+              0.9630065017930143,
+              1.0
+            ],
+            "total_cost_usd": 0.29217576,
+            "total_tokens": 5371804.0
+          },
+          "graphify": {
+            "attempts": 100,
+            "pass_hat_k": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "passes": 100,
+            "success_rate": 1.0,
+            "success_wilson95": [
+              0.9630065017930143,
+              1.0
+            ],
+            "total_cost_usd": 0.26679695000000003,
+            "total_tokens": 4651247.0
+          }
+        },
+        "attempts": 200,
+        "passed": false,
+        "report": "results/agent-decision-t.json",
+        "report_sha256": "86548162797e67e012e21a5d0599e848b0ffb4f4ee2326bc8c45d021c7b03d4b"
+      },
+      "t2": {
+        "arms": {
+          "graf_floor": {
+            "attempts": 100,
+            "pass_hat_k": [
+              0.99,
+              0.9800000000000001,
+              0.97,
+              0.96,
+              0.95
+            ],
+            "passes": 99,
+            "success_rate": 0.99,
+            "success_wilson95": [
+              0.9455138038212947,
+              0.9982325679358592
+            ],
+            "total_cost_usd": 0.24082887,
+            "total_tokens": 4171309.0
+          },
+          "graphify": {
+            "attempts": 100,
+            "pass_hat_k": [
+              0.96,
+              0.9349999999999999,
+              0.9199999999999999,
+              0.9099999999999999,
+              0.9
+            ],
+            "passes": 96,
+            "success_rate": 0.96,
+            "success_wilson95": [
+              0.9016292856411208,
+              0.9843366960084523
+            ],
+            "total_cost_usd": 0.30781556000000004,
+            "total_tokens": 5846399.0
+          },
+          "search_only": {
+            "attempts": 100,
+            "pass_hat_k": [
+              0.99,
+              0.9800000000000001,
+              0.97,
+              0.96,
+              0.95
+            ],
+            "passes": 99,
+            "success_rate": 0.99,
+            "success_wilson95": [
+              0.9455138038212947,
+              0.9982325679358592
+            ],
+            "total_cost_usd": 0.23579545000000002,
+            "total_tokens": 3827982.0
+          }
+        },
+        "attempts": 300,
+        "passed": true,
+        "report": "results/agent-decision-t2.json",
+        "report_sha256": "675311aba4218cb4ad5696ca91cd6b8f03725861bca39a21b7973a72ea00419a"
+      },
+      "t3": {
+        "arms": {
+          "graf_floor": {
+            "attempts": 90,
+            "pass_hat_k": [
+              0.9222222222222223,
+              0.8666666666666667,
+              0.8277777777777778,
+              0.8,
+              0.7777777777777778
+            ],
+            "passes": 83,
+            "success_rate": 0.9222222222222223,
+            "success_wilson95": [
+              0.8480613981740799,
+              0.961815184682711
+            ],
+            "total_cost_usd": 0.40250039000000004,
+            "total_tokens": 8439315.0
+          },
+          "graphify": {
+            "attempts": 90,
+            "pass_hat_k": [
+              0.9444444444444444,
+              0.8944444444444445,
+              0.8500000000000001,
+              0.8111111111111111,
+              0.7777777777777778
+            ],
+            "passes": 85,
+            "success_rate": 0.9444444444444444,
+            "success_wilson95": [
+              0.8764626377820048,
+              0.976039028383038
+            ],
+            "total_cost_usd": 0.40061576000000004,
+            "total_tokens": 7918457.0
+          },
+          "search_only": {
+            "attempts": 90,
+            "pass_hat_k": [
+              0.9222222222222223,
+              0.8722222222222222,
+              0.8444444444444444,
+              0.8333333333333334,
+              0.8333333333333334
+            ],
+            "passes": 83,
+            "success_rate": 0.9222222222222223,
+            "success_wilson95": [
+              0.8480613981740799,
+              0.961815184682711
+            ],
+            "total_cost_usd": 0.40645269000000006,
+            "total_tokens": 7661973.0
+          }
+        },
+        "attempts": 270,
+        "passed": false,
+        "report": "results/agent-decision-t3.json",
+        "report_sha256": "64566ccb1fe6b424576e0bcd89d7b12fcc50a1f7a029a09bce5d381b244d267f"
+      }
+    },
+    "conclusion": "Synthetic t2 cost win did not replicate on natural t3 tasks; no general agent-efficiency win",
+    "cost_kind": "list-price usage estimate under subscription, not a charge",
+    "current_product_mcp_evaluated": false,
+    "current_triage_batch": {
+      "approval_review_reason": "This launches an external Claude trial that may transmit repository source and issue data; the benchmark request authorizes using the solver, but does not explicitly authorize exporting that sensitive payload to this destination.",
+      "batch": "t6",
+      "blocked_action": ".research/venv/bin/python benchmark/run_agent_batch.py --batch t6 --limit 1",
+      "blockers": [
+        "Claude weekly limit reached, as reported by the user",
+        "Explicit external solver data-transfer approval remains pending"
+      ],
+      "comparative_agent_efficiency": "unmeasured",
+      "completed_trials": 0,
+      "decision_command": ".research/venv/bin/python benchmark/agent_decision.py --batch t6",
+      "local_preflight": "results/agent-t6-preflight.json",
+      "model_calls": 0,
+      "planned_trials": 720,
+      "preregistration_version": 28,
+      "product_promotion_allowed": false,
+      "report": "results/agent-t6-status.json",
+      "resume_command": ".research/venv/bin/python benchmark/run_agent_batch.py --batch t6",
+      "scope": "Regression diagnostic on a reused task catalog used by localization experiments. Cannot authorize product superiority or promotion; fresh held-out natural tasks and remaining retrieval gates are required.",
+      "solver_availability": {
+        "independently_verified": false,
+        "reset_time": "unknown",
+        "source": "user report",
+        "status": "weekly_limit_reached"
+      },
+      "status": "blocked_solver_weekly_limit_and_external_transfer_approval",
+      "validation": "140 Python tests passed"
+    },
+    "model_calls_during_this_audit_repair": 0,
+    "per_run_cap_estimated_usd": 0.5,
+    "report": "research/agent-results.md",
+    "solver": "Claude Code 2.1.302; claude-haiku-5-5; benchmark broker-only MCP adapter",
+    "status": "three historical model-backed batches completed",
+    "valid_attempts": 770
+  },
+  "codex_comparison_history": [
+    {
+      "agent_efficiency_acceptance_pass": false,
+      "baseline": "frozen code-only Graphify plus source reads; same solver and limits within each batch",
+      "comparator_invocation_caveat": {
+        "audit": "results/graphify-source-audit-2026-10-23.json",
+        "finding": "Adapter can reverse stored call direction and uses depth 3 versus native CLI depth 2. Historical outcomes remain observed under the recorded adapter; causal impact unknown.",
+        "native_cli_parity_pass": false,
+        "required_before_new_model_calls": "Resolve adapter contract and direction parity in a separately recorded freeze; retain old results and pinned Graphify commit."
+      },
+      "conclusion": "Graf has fewer correct repairs in both diagnostics. Lower tokens in the incomplete latest batch do not establish useful savings.",
+      "last_complete_batch": {
+        "attempts_per_arm": 6,
+        "batch": "codex-v1",
+        "graf_passes": 3,
+        "graf_reported_tokens": 1070662,
+        "graphify_passes": 4,
+        "graphify_reported_tokens": 907362
+      },
+      "latest_stopped_batch": {
+        "batch": "codex-v2",
+        "complete_shared_groups": 4,
+        "graf_passes": 1,
+        "graf_reported_tokens": 892301,
+        "graphify_passes": 2,
+        "graphify_reported_tokens": 1034234,
+        "missing_trials": 5
+      },
+      "limitations": "Exposed development tasks, protocol errors retained, provider internal requests and charges unknown. Batches differ in feedback configuration; do not pool them. Historical provider discovery was not captured.",
+      "mode": "saved evidence; no new model or retrieval calls",
+      "model_calls_for_this_report": 0,
+      "product_promotion_allowed": false,
+      "report": "results/codex-graphify-progress.json",
+      "solver_readiness_pass": false
+    }
+  ],
+  "confirmation_preparation_v62": {
+    "active_heldout_replaced": false,
+    "comparative_data_collected": false,
+    "id": "confirmation-v62",
+    "note": "Prospective preparation only. Do not run or decide the old held-out workload as if it were this packet. The new question hash and a generalized driver must be frozen in a later preregistration before collecting comparisons.",
+    "packet_receipt": "results/confirmation-v62-packet.json",
+    "packet_receipt_sha256": "ed0bb5b040cb021dbbe1ec24b77fa6ad4cb98e67bb067160174a25ff073573bc",
+    "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+    "phase": "source_packet_prepared",
+    "preregistration": "results/preregistrations/v62-855a0150cf711bac94faac17433c3910cbcac28ad1d720037f6f9694ae114534.json",
+    "prior_preregistration_sha256": "5eef731775d68b3086f42abf509904a9dbafcf8db9e73f0301c4a44db050909c",
+    "product_promotion_allowed": false,
+    "query_workload_frozen": false,
+    "remaining_before_freeze": [
+      "independent source-only questions and source review",
+      "freeze exact query hash in a new active preregistration version",
+      "record generalized driver, corpora manifest and snapshot receipt hashes; existing driver is restricted to original three repositories",
+      "validate frozen source sets and complete run plan"
+    ],
+    "spec": "benchmark/confirmation-v62.json",
+    "spec_sha256": "492926ecae5bf8c582c92094a3a1b4d9fdeec6510633c1006610fd2bedf55603",
+    "status": "awaiting_independent_authoring_and_source_review",
+    "tools": {
+      "benchmark/confirmation.py": "72f054b7f3cdb3a78c06e88d8901d1578d5e7c3d8ce8c5ae6aca45dcb33fd021",
+      "benchmark/test_confirmation.py": "5113963518f2a61743b3eae7d52f3e3a48f5ae0e4a27a5fcad51e4234cffd3df"
+    }
+  },
+  "graphify_adapter_readiness": {
+    "agent_broker_uses_new_adapter": true,
+    "agent_plan": "codex-v3",
+    "agent_preflight": "results/codex-v3-preflight.json",
+    "agent_run_status": "results/codex-v3-status.json",
+    "completed_solver_trials": 13,
+    "historical_adapter": "library-v1",
+    "internal_provider_request_count": null,
+    "model_calls": null,
+    "native_cli_contract_pass": true,
+    "new_preregistration_required": false,
+    "note": "Native CLI routes and discovery validated in v38. Batch stopped at frozen token threshold after 13/18 trials; readiness and promotion failed.",
+    "preregistration_version": 38,
+    "product_promotion_pass": false,
+    "recorded_cli_invocations": 13,
+    "report": "results/graphify-adapter-v2-validation.json",
+    "revision": "native-cli-v2"
+  },
+  "graphify_comparison": {
+    "agent_savings_for_current_build": "unmeasured",
+    "audit": "results/audit-2026-10-22-comparison-audit.json",
+    "baseline_mode": "code_only_no_clustering",
+    "budgets": [
+      2000,
+      8000
+    ],
+    "cache_conditions": "fresh subprocess per query: startup, imports, index load, query, rendering, stdout; OS caches uncontrolled",
+    "cases": 60,
+    "graf_output_equivalence_to_previous_development_run": {
+      "compared_outputs": 780,
+      "identical_outputs": 780,
+      "role": "deterministic output regression diagnostic; not efficiency evidence"
+    },
+    "latency_inference_allowed": false,
+    "positive_queries": 27,
+    "queries": 30,
+    "repeats": 1,
+    "report": "research/audit-repairs-2026-10-22.md",
+    "required_baseline": "unchanged pinned Graphify in benchmark/corpora.json",
+    "results": "results/audit-2026-10-22-comparison.json",
+    "status": "complete",
+    "timing_samples": 840,
+    "workload": "development; regression diagnostic only"
+  },
+  "latest_codex_comparison": {
+    "accounting": "results/codex-v3-accounting.json",
+    "agent_efficiency_acceptance_pass": false,
+    "all_captured_discovery_valid": true,
+    "all_usage_records_present": true,
+    "batch": "codex-v3",
+    "cached_input_tokens_all_completed_trials": 2337024,
+    "complete_shared_groups": 4,
+    "completed_trials": 13,
+    "conclusion": "Graf passed 2/4 matched repairs versus 3/4 for native code-only Graphify plus reads; search-only passed 2/4. Fewer reported tokens with fewer successes do not establish useful savings.",
+    "frozen_sources_and_implementations_match": true,
+    "graphify_adapter": "native-cli-v2",
+    "historical_comparison": "results/codex-graphify-progress-v3.json",
+    "limitations": "Four matched groups from two exposed development tasks, with two repetitions nested within task; no independent task samples or significance. Five planned Go trials missing; an extra Go search-only success is unmatched. Eleven observed per-attempt token-threshold overshoots retained. Provider internal requests, charges and prompt replay unknown. Native CLI invocation and discovery requirements differ from earlier batches: no pooling or causal comparison.",
+    "missing_trials": 5,
+    "model": "gpt-6-luna",
+    "planned_trials": 18,
+    "preregistration_version": 38,
+    "product_promotion_allowed": false,
+    "recorded_cli_invocations": 13,
+    "recorded_native_tool_calls": 164,
+    "report": "results/codex-v3-graphify-comparison.json",
+    "reported_tokens_all_completed_trials": 2780846,
+    "shared_totals": {
+      "graf_current_orient": {
+        "attempts": 4,
+        "attempts_with_errors": 3,
+        "attempts_without_agent_finish": 0,
+        "descriptive_wall_s": 107.31112316597137,
+        "recorded_cli_invocations": 4,
+        "recorded_native_tool_calls": 43,
+        "reported_tokens": 730347,
+        "verifier_passes": 2
+      },
+      "graphify_orient": {
+        "attempts": 4,
+        "attempts_with_errors": 4,
+        "attempts_without_agent_finish": 0,
+        "descriptive_wall_s": 167.31438141703256,
+        "recorded_cli_invocations": 4,
+        "recorded_native_tool_calls": 57,
+        "reported_tokens": 1083118,
+        "verifier_passes": 3
+      },
+      "search_only": {
+        "attempts": 4,
+        "attempts_with_errors": 4,
+        "attempts_without_agent_finish": 0,
+        "descriptive_wall_s": 135.64547208393924,
+        "recorded_cli_invocations": 4,
+        "recorded_native_tool_calls": 55,
+        "reported_tokens": 876732,
+        "verifier_passes": 2
+      }
+    },
+    "solver_readiness_pass": false,
+    "status": "results/codex-v3-status.json",
+    "stop_reason": "Frozen observed batch-token threshold reached; no resumption or budget increase."
+  },
+  "latest_retrieval_experiment": {
+    "acceptance": "results/selective-evidence-v61-acceptance.json",
+    "agent_efficiency_acceptance_pass": false,
+    "agent_savings": "unmeasured; zero model calls",
+    "decision": "results/selective-evidence-v61-decision.json",
+    "gate_components": {
+      "primary": true,
+      "quality_guardrails": true,
+      "tail": true
+    },
+    "id": "selective-evidence-v61",
+    "preregistration_version": 61,
+    "product_promotion_allowed": false,
+    "recommendation": "Retain v61 as an opt-in candidate for fresh held-out evaluation: measured source-anchor scores match v60 with lower tokens in52/60 cases and no higher-token cases. Development-only; promotion and agent savings unpassed, defaults unchanged.",
+    "report": "results/selective-evidence-v61-report.json",
+    "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 35 arms, 1 sequential repetition, 2100 timing samples; code-only Graphify; no held-out or agent inference.",
+    "status": "experimental_unproven",
+    "summary": {
+      "2000": {
+        "graf_evidence_callees": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 1798.9666666666667
+        },
+        "graf_evidence_families": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9444444444444444,
+          "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+          "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+          "mean_retrieval_text_tokens": 1514.2333333333333
+        },
+        "graf_evidence_fused": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9444444444444444,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 1466.6
+        },
+        "graf_evidence_referenced": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+          "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+          "mean_retrieval_text_tokens": 1465.4666666666667
+        },
+        "graf_evidence_rescue": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 1557.3333333333333
+        },
+        "graf_evidence_selective": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 1631.4333333333334
+        },
+        "graf_evidence_units": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+          "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+          "mean_retrieval_text_tokens": 1496.2333333333333
+        },
+        "graphify": {
+          "cl100k_budget_overshoots": 6,
+          "mean_code_file_hint_recall": 0.8703703703703703,
+          "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+          "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+          "mean_retrieval_text_tokens": 2412.366666666667
+        }
+      },
+      "8000": {
+        "graf_evidence_callees": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 4913.6
+        },
+        "graf_evidence_families": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9444444444444444,
+          "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+          "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+          "mean_retrieval_text_tokens": 3847.3
+        },
+        "graf_evidence_fused": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9444444444444444,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 3677.9666666666667
+        },
+        "graf_evidence_referenced": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+          "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+          "mean_retrieval_text_tokens": 3643.7
+        },
+        "graf_evidence_rescue": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 3896.3
+        },
+        "graf_evidence_selective": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9814814814814815,
+          "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+          "mean_retrieval_text_tokens": 3985.4
+        },
+        "graf_evidence_units": {
+          "cl100k_budget_overshoots": 0,
+          "mean_code_file_hint_recall": 0.9259259259259259,
+          "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+          "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+          "mean_retrieval_text_tokens": 3753.733333333333
+        },
+        "graphify": {
+          "cl100k_budget_overshoots": 16,
+          "mean_code_file_hint_recall": 0.8703703703703703,
+          "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+          "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+          "mean_retrieval_text_tokens": 13002.933333333332
+        }
+      }
+    }
+  },
+  "retrieval_experiment_history": [
+    {
+      "acceptance": "results/focused-units-v39-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; no new model-backed attempts",
+      "decision": "results/focused-units-v39-decision.json",
+      "id": "focused-units-v39",
+      "interpretation": "No oversized-first-unit fallback activation in this workload. Only citation quoting overhead and a later packing boundary changed output. No empirical evidence of improved deep-match visibility from these queries. Synthetic source-range/budget tests exercise the fallback but are diagnostics, not Graphify efficiency evidence.",
+      "preregistration_version": 39,
+      "promotion_allowed": false,
+      "report": "results/focused-units-v39-report.json",
+      "scope": "30 exposed development queries; 27 have code evidence; 2 budgets; 16 arms; 1 sequential repetition; 960 query timings. Not held-out.",
+      "severe_loss_queries": [
+        "cobra-03",
+        "fastify-01",
+        "fastify-03",
+        "fastify-04"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 2411.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 13001.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/symbol-units-v40-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changed_context_cases": 60,
+      "decision": "results/symbol-units-v40-decision.json",
+      "id": "symbol-units-v40",
+      "improved_code_recall_cases_vs_focused": 6,
+      "preregistration_version": 40,
+      "product_promotion_allowed": false,
+      "report": "results/symbol-units-v40-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 17 arms; 1 sequential repetition; 1020 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2411.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13001.933333333332
+          }
+        }
+      },
+      "worsened_code_recall_cases_vs_focused": 2
+    },
+    {
+      "acceptance": "results/retain-body-v41-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 8,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 36,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 0
+        }
+      },
+      "decision": "results/retain-body-v41-decision.json",
+      "id": "retain-body-v41",
+      "preregistration_version": 41,
+      "product_promotion_allowed": false,
+      "report": "results/retain-body-v41-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 18 arms; 1 sequential repetition; 1080 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2411.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13001.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/packing-v42-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 9,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_retain_body": {
+          "changed_context_cases": 55,
+          "improved_code_recall_cases": 1,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 57,
+          "improved_code_recall_cases": 5,
+          "worsened_code_recall_cases": 0
+        }
+      },
+      "decision": "results/packing-v42-decision.json",
+      "id": "packing-v42",
+      "preregistration_version": 42,
+      "product_promotion_allowed": false,
+      "report": "results/packing-v42-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 19 arms; 1 sequential repetition; 1140 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1622
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2410.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5121.1
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13000.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/callees-v43-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_units_diverse": {
+          "changed_context_cases": 59,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 9,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_retain_body": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 1,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 5,
+          "worsened_code_recall_cases": 0
+        }
+      },
+      "decision": "results/callees-v43-decision.json",
+      "id": "callees-v43",
+      "preregistration_version": 43,
+      "product_promotion_allowed": false,
+      "report": "results/callees-v43-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 20 arms; 1 sequential repetition; 1200 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1622
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1699.5333333333333
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2411.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5121.1
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5047
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13001.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/tail-v44-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_units_diverse": {
+          "changed_context_cases": 41,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 9,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_linked": {
+          "changed_context_cases": 57,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_retain_body": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 1,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 5,
+          "worsened_code_recall_cases": 0
+        }
+      },
+      "decision": "results/tail-v44-decision.json",
+      "id": "tail-v44",
+      "preregistration_version": 44,
+      "product_promotion_allowed": false,
+      "report": "results/tail-v44-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 21 arms; 1 sequential repetition; 1260 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1622
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1699.5333333333333
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1729.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2410.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5121.1
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5047
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5257.3
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13000.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/evidence-v45-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_locate": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_diverse": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 6,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 15,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_linked": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 6,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_retain_body": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 7,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 11,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_tail": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 6,
+          "worsened_code_recall_cases": 1
+        }
+      },
+      "configuration_deviation": {
+        "actual_benchmark_hint_limit": 1000,
+        "cause": "Shared driver override for all non-units commands passed --limit 1000, overriding the described default 20. Driver bytes and raw commands were frozen/retained, but the prose specification and invocation disagree.",
+        "interpretation": "Excluded from confirmatory evidence and promotion; retain every output and loss. New version required for explicit 20-file replay.",
+        "preregistered_hint_limit": 20,
+        "status": "configuration_deviation"
+      },
+      "decision": "results/evidence-v45-decision.json",
+      "id": "evidence-v45",
+      "preregistration_version": 45,
+      "product_promotion_allowed": false,
+      "report": "results/evidence-v45-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 22 arms; 1 sequential repetition; 1320 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_configuration_deviation",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 1639.4666666666667
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1622
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1699.5333333333333
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1729.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2410.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 6824.5
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5121.1
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5047
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5257.3
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13000.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/evidence-v46-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_locate": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 3
+        },
+        "graf_units_diverse": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 12,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_linked": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_retain_body": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 8,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_tail": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        }
+      },
+      "decision": "results/evidence-v46-decision.json",
+      "id": "evidence-v46",
+      "preregistration_version": 46,
+      "product_promotion_allowed": false,
+      "report": "results/evidence-v46-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 22 arms; 1 sequential repetition; 1320 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1845.3333333333333
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1622
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1699.5333333333333
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1729.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2410.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 4178.466666666666
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5121.1
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5047
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5257.3
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13000.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/structural-v47-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_evidence": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_locate": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 3
+        },
+        "graf_units_diverse": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 12,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_linked": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_retain_body": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 8,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_tail": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        }
+      },
+      "decision": "results/structural-v47-decision.json",
+      "id": "structural-v47",
+      "preregistration_version": 47,
+      "product_promotion_allowed": false,
+      "report": "results/structural-v47-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 23 arms; 1 sequential repetition; 1380 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1845.3333333333333
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1622
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1699.5333333333333
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1729.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2410.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 4178.466666666666
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5121.1
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5047
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5257.3
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13000.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/range-handles-v48-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero new model attempts",
+      "changes_vs_ablations": {
+        "graf_evidence": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_locate": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 0,
+          "worsened_code_recall_cases": 3
+        },
+        "graf_units_diverse": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_focus": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 12,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_linked": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        },
+        "graf_units_retain_body": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_symbols": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 8,
+          "worsened_code_recall_cases": 0
+        },
+        "graf_units_tail": {
+          "changed_context_cases": 60,
+          "improved_code_recall_cases": 4,
+          "worsened_code_recall_cases": 1
+        }
+      },
+      "decision": "results/range-handles-v48-decision.json",
+      "id": "range-handles-v48",
+      "preregistration_version": 48,
+      "product_promotion_allowed": false,
+      "report": "results/range-handles-v48-report.json",
+      "scope": "30 exposed development queries, 27 code-annotated; 2K/8K budgets; 23 arms; 1 sequential repetition; 1380 timing samples. Code-only Graphify, not documentation or repair quality.",
+      "severe_loss_queries_vs_graphify": [
+        "fastify-03"
+      ],
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_10": 0.7222222222222222,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1979.1
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1845.3333333333333
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1784.1333333333334
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1530.4666666666667
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1622
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_10": 0.6666666666666666,
+            "mean_code_file_hint_recall_at_5": 0.6666666666666666,
+            "mean_retrieval_text_tokens": 1528.6666666666667
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1699.5333333333333
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1665.5333333333333
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.7962962962962963,
+            "mean_retrieval_text_tokens": 1306.9666666666667
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.8333333333333334,
+            "mean_retrieval_text_tokens": 1729.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2411.366666666667
+          }
+        },
+        "8000": {
+          "graf": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 7965.733333333334
+          },
+          "graf_evidence": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 4178.466666666666
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graf_locate": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3036.233333333333
+          },
+          "graf_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5070.833333333333
+          },
+          "graf_units_diverse": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5121.1
+          },
+          "graf_units_focus": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.6851851851851852,
+            "mean_retrieval_text_tokens": 5092.533333333334
+          },
+          "graf_units_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5047
+          },
+          "graf_units_retain_body": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8888888888888888,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5414.066666666667
+          },
+          "graf_units_symbols": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_10": 0.8148148148148148,
+            "mean_code_file_hint_recall_at_5": 0.8148148148148148,
+            "mean_retrieval_text_tokens": 3110.6
+          },
+          "graf_units_tail": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.8518518518518519,
+            "mean_retrieval_text_tokens": 5257.3
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13001.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/linked-evidence-v50-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/linked-evidence-v50-decision.json",
+      "id": "linked-evidence-v50",
+      "preregistration_version": 50,
+      "product_promotion_allowed": false,
+      "report": "results/linked-evidence-v50-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 24 arms, 1 sequential repetition, 1440 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9629629629629629,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1864.1666666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2411.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 4480.866666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13001.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/bundled-evidence-v51-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/bundled-evidence-v51-decision.json",
+      "id": "bundled-evidence-v51",
+      "interpretation": "Rejected as an improvement on the exposed development pilot: more mean output tokens at both budgets versus v50, one code-file recall loss at2K (fastify-03), no code-file gains and no exploratory source-anchor gains at either budget. No source evidence gained versus the simpler structural prefix. The synthetic functionality works, but this data does not support the retrieval hypothesis. Retain opt-in for reproducibility; do not promote. No post-result algorithm tuning.",
+      "preregistration_version": 51,
+      "product_promotion_allowed": false,
+      "report": "results/bundled-evidence-v51-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 25 arms, 1 sequential repetition, 1500 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_regression",
+      "summary": {
+        "2000": {
+          "graf_evidence_bundles": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1883.8333333333333
+          },
+          "graf_evidence_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9629629629629629,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1864.1666666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2413.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_bundles": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 4755.866666666667
+          },
+          "graf_evidence_linked": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 4480.866666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13003.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/coverage-evidence-v52-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/coverage-evidence-v52-decision.json",
+      "id": "coverage-evidence-v52",
+      "preregistration_version": 52,
+      "product_promotion_allowed": false,
+      "report": "results/coverage-evidence-v52-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 26 arms, 1 sequential repetition, 1560 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_bundles": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1883.8333333333333
+          },
+          "graf_evidence_coverage": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7777777777777778,
+            "mean_code_file_hint_recall_at_5": 0.6296296296296297,
+            "mean_retrieval_text_tokens": 1512.7666666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2412.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_bundles": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 4755.866666666667
+          },
+          "graf_evidence_coverage": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7777777777777778,
+            "mean_code_file_hint_recall_at_5": 0.6296296296296297,
+            "mean_retrieval_text_tokens": 3897.6666666666665
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13002.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/family-evidence-v53-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/family-evidence-v53-decision.json",
+      "id": "family-evidence-v53",
+      "preregistration_version": 53,
+      "product_promotion_allowed": false,
+      "report": "results/family-evidence-v53-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 27 arms, 1 sequential repetition, 1620 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_coverage": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7777777777777778,
+            "mean_code_file_hint_recall_at_5": 0.6296296296296297,
+            "mean_retrieval_text_tokens": 1512.7666666666667
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2411.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_coverage": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7777777777777778,
+            "mean_code_file_hint_recall_at_5": 0.6296296296296297,
+            "mean_retrieval_text_tokens": 3897.6666666666665
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13001.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/passage-evidence-v54-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/passage-evidence-v54-decision.json",
+      "id": "passage-evidence-v54",
+      "preregistration_version": 54,
+      "product_promotion_allowed": false,
+      "report": "results/passage-evidence-v54-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 28 arms, 1 sequential repetition, 1680 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_passages": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1830.2
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2412.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_passages": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 4635.533333333334
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13002.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/complement-evidence-v55-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/complement-evidence-v55-decision.json",
+      "id": "complement-evidence-v55",
+      "preregistration_version": 55,
+      "product_promotion_allowed": false,
+      "report": "results/complement-evidence-v55-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 29 arms, 1 sequential repetition, 1740 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_complement": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1671.7
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_passages": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1830.2
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2412.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_complement": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 5951.233333333334
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_passages": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 4635.533333333334
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13002.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/stratified-evidence-v56-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/stratified-evidence-v56-decision.json",
+      "id": "stratified-evidence-v56",
+      "preregistration_version": 56,
+      "product_promotion_allowed": false,
+      "report": "results/stratified-evidence-v56-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 30 arms, 1 sequential repetition, 1800 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_complement": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1671.7
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_stratified": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.7407407407407407,
+            "mean_retrieval_text_tokens": 1483.7333333333333
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2413.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_complement": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 5951.233333333334
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_stratified": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.7407407407407407,
+            "mean_retrieval_text_tokens": 3805.866666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13003.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/fused-evidence-v57-acceptance.json",
+      "acceptance_status": "not_passed",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/fused-evidence-v57-decision.json",
+      "decision_status": "not_passed",
+      "id": "fused-evidence-v57",
+      "preregistration_version": 57,
+      "primary_development_diagnostic_pass": true,
+      "product_promotion_allowed": false,
+      "quality_guardrails_development_diagnostic_pass": true,
+      "report": "results/fused-evidence-v57-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 31 arms, 1 sequential repetition, 1860 timing samples; code-only Graphify; no held-out or agent inference.",
+      "severe_tail_development_diagnostic_pass": false,
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 1466.6
+          },
+          "graf_evidence_stratified": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.7407407407407407,
+            "mean_retrieval_text_tokens": 1483.7333333333333
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2412.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 3677.9666666666667
+          },
+          "graf_evidence_stratified": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.7407407407407407,
+            "mean_retrieval_text_tokens": 3805.866666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13002.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/referenced-evidence-v58-acceptance.json",
+      "acceptance_status": "not_passed",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "candidate_recommendation": "Do not replace v57 with v58; total-file coverage gain comes with large early-ranking losses. Both versions remain unaccepted experiments.",
+      "decision": "results/referenced-evidence-v58-decision.json",
+      "decision_status": "not_passed",
+      "id": "referenced-evidence-v58",
+      "preregistration_version": 58,
+      "primary_development_diagnostic_pass": true,
+      "product_promotion_allowed": false,
+      "quality_guardrails_development_diagnostic_pass": false,
+      "report": "results/referenced-evidence-v58-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 32 arms, 1 sequential repetition, 1920 timing samples; code-only Graphify; no held-out or agent inference.",
+      "severe_tail_development_diagnostic_pass": true,
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 1466.6
+          },
+          "graf_evidence_referenced": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1465.4666666666667
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2413.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 3677.9666666666667
+          },
+          "graf_evidence_referenced": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3643.7
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13003.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/rescue-evidence-v59-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/rescue-evidence-v59-decision.json",
+      "gate_components": {
+        "primary": true,
+        "quality_guardrails": true,
+        "tail": true
+      },
+      "id": "rescue-evidence-v59",
+      "preregistration_version": 59,
+      "product_promotion_allowed": false,
+      "recommendation": "Keep opt-in experimental; defaults unchanged. No product superiority or agent-efficiency acceptance from this development run.",
+      "report": "results/rescue-evidence-v59-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 33 arms, 1 sequential repetition, 1980 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 1466.6
+          },
+          "graf_evidence_referenced": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1465.4666666666667
+          },
+          "graf_evidence_rescue": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 1557.3333333333333
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2412.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 3677.9666666666667
+          },
+          "graf_evidence_referenced": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3643.7
+          },
+          "graf_evidence_rescue": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 3896.3
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13002.933333333332
+          }
+        }
+      }
+    },
+    {
+      "acceptance": "results/callees-evidence-v60-acceptance.json",
+      "agent_efficiency_acceptance_pass": false,
+      "agent_savings": "unmeasured; zero model calls",
+      "decision": "results/callees-evidence-v60-decision.json",
+      "gate_components": {
+        "primary": false,
+        "quality_guardrails": true,
+        "tail": true
+      },
+      "id": "callees-evidence-v60",
+      "preregistration_version": 60,
+      "product_promotion_allowed": false,
+      "recommendation": "Do not replace v59 with v60: three query-budget source-anchor gains cost additional tokens in57/60 contexts and the primary efficiency test fails. Keep opt-in; defaults unchanged.",
+      "report": "results/callees-evidence-v60-report.json",
+      "scope": "30 exposed development queries (27 code-annotated), 2K/8K, 34 arms, 1 sequential repetition, 2040 timing samples; code-only Graphify; no held-out or agent inference.",
+      "status": "experimental_unproven",
+      "summary": {
+        "2000": {
+          "graf_evidence_callees": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 1798.9666666666667
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1514.2333333333333
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 1466.6
+          },
+          "graf_evidence_referenced": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 1465.4666666666667
+          },
+          "graf_evidence_rescue": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 1557.3333333333333
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 1496.2333333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 6,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 2413.366666666667
+          }
+        },
+        "8000": {
+          "graf_evidence_callees": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 4913.6
+          },
+          "graf_evidence_families": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.7962962962962963,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3847.3
+          },
+          "graf_evidence_fused": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9444444444444444,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 3677.9666666666667
+          },
+          "graf_evidence_referenced": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_5": 0.6481481481481481,
+            "mean_retrieval_text_tokens": 3643.7
+          },
+          "graf_evidence_rescue": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9814814814814815,
+            "mean_code_file_hint_recall_at_10": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_5": 0.8703703703703703,
+            "mean_retrieval_text_tokens": 3896.3
+          },
+          "graf_evidence_units": {
+            "cl100k_budget_overshoots": 0,
+            "mean_code_file_hint_recall": 0.9259259259259259,
+            "mean_code_file_hint_recall_at_10": 0.8518518518518519,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 3753.733333333333
+          },
+          "graphify": {
+            "cl100k_budget_overshoots": 16,
+            "mean_code_file_hint_recall": 0.8703703703703703,
+            "mean_code_file_hint_recall_at_10": 0.8333333333333334,
+            "mean_code_file_hint_recall_at_5": 0.7037037037037037,
+            "mean_retrieval_text_tokens": 13003.933333333332
+          }
+        }
+      }
+    }
+  ],
+  "rust_cli": {
+    "commands": [
+      "index",
+      "locate",
+      "search",
+      "expand",
+      "map",
+      "stats",
+      "triage",
+      "units",
+      "outline",
+      "mcp"
+    ],
+    "experimental_commands": [
+      "triage",
+      "units",
+      "outline"
+    ],
+    "mcp_agent_efficiency": "unmeasured",
+    "source_freshness": "MCP scans and hashes eligible sources before every tool call; CLI users reindex after edits",
+    "status": "implemented",
+    "version": "0.1.0"
+  },
+  "scientific_review": {
+    "papers": 13,
+    "status": "historical review complete",
+    "training_results_reproduced": false
+  },
+  "scope": "Current audit repairs and saved historical experiment outcomes; historical agent traces were not re-audited in this repair run",
+  "superiority_acceptance": {
+    "blockers": [
+      "Development workload cannot establish acceptance",
+      "No new independent held-out quality/efficiency pass",
+      "Natural-task agent cost advantage was not established",
+      "Current MCP agent outcomes and complete usage are unmeasured"
+    ],
+    "decision": "results/decision.json",
+    "historical_heldout_decision": "results/decision-heldout.json",
+    "last_accepted_graf_version": null,
+    "product_promotion_allowed": false,
+    "retrieval_diagnostic": "results/acceptance.json",
+    "status": "not_passed"
+  },
+  "task_broker_preparation": {
+    "original_six_fixture_report": "results/task-broker-sanity.json",
+    "report": "research/task-comparison.md",
+    "solver_invoked_in_historical_trials": true,
+    "status": "fixture validation plus subsequent model-backed trials"
+  },
+  "updated_on": "2026-10-23",
+  "validation": {
+    "clippy": "passed",
+    "comparison_source_and_output_audit": "passed",
+    "format": "passed",
+    "python_integrity_tests": 185,
+    "release_build": "passed",
+    "rust_integration_tests": 119,
+    "rust_unit_tests": 40
+  },
+  "harness_v63": {
+    "report": "results/harness-v63-report.json",
+    "audit": "results/harness-v63-comparison-audit.json",
+    "python_tests": 211,
+    "paired_timing_samples": 180,
+    "graf_outputs_identical_to_v61": true,
+    "acceptance_status": "not_passed",
+    "decision_status": "not_passed",
+    "acceptance_exit": 1,
+    "decision_exit": 1,
+    "product_promotion_allowed": false,
+    "agent_savings": "unmeasured",
+    "scope": "30 exposed development questions, 27 code-scored; pinned native code-only Graphify; unchanged frozen v61/v59 binaries; one sequential repetition at 2K/8K, OS caches uncontrolled; no latency inference"
+  },
+  "confirmation_v64": {
+    "readiness": "results/confirmation-v64-readiness.json",
+    "queries_frozen": true,
+    "source_review_complete": true,
+    "queries": 123,
+    "scored_queries": 111,
+    "comparative_data_collected": true,
+    "agent_savings": "unmeasured",
+    "product_promotion_allowed": false,
+    "preregistration_sha256": "36eb017f5348c8533123373c571ff5157fa146a141459ba0a863025eb766cb58",
+    "comparison": "results/confirmation-v64-comparison.json",
+    "audit": "results/confirmation-v64-comparison-audit.json",
+    "cases": 246,
+    "timing_samples": 738,
+    "judgment_pairs": 1575,
+    "judging_status": "in_progress",
+    "acceptance_status": "not_passed",
+    "decision_status": "pending_blind_judgments",
+    "blind_judgment_review": "Generic-exclusion drafts rejected; semantic source-only repairs in progress. No final pooled quality result."
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "batch": "codex-m3",
+  "planned_trials": 3,
+  "completed_trials": 3,
+  "arms": {
+    "graf_current_orient": {
+      "completed_trials": 1,
+      "verifier_passes": 0,
+      "recorded_tokens": 82882,
+      "all_invocations_have_usage": true
+    },
+    "graphify_orient": {
+      "completed_trials": 1,
+      "verifier_passes": 0,
+      "recorded_tokens": 125007,
+      "all_invocations_have_usage": true
+    },
+    "search_only": {
+      "completed_trials": 1,
+      "verifier_passes": 1,
+      "recorded_tokens": 124405,
+      "all_invocations_have_usage": true
+    }
+  },
+  "cases": [
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-m3-click-1884-graf_current_orient-1",
+      "arm": "graf_current_orient",
+      "model": "gpt-6-luna",
+      "error": null,
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 17.533055874999263,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 5,
+      "broker_requests": 5,
+      "blocked_broker_requests": 0,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 82882,
+        "cached_input_tokens": 56576,
+        "reasoning_tokens": 249,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 6,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-m3-click-1884-search_only-1",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": null,
+      "passed": true,
+      "agent_called_finish": true,
+      "wall_s": 23.07818391699402,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 11,
+      "broker_requests": 11,
+      "blocked_broker_requests": 0,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 124405,
+        "cached_input_tokens": 92544,
+        "reasoning_tokens": 146,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 11,
+        "verification_passed": true
+      },
+      "promotion_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-m3-click-1884-graphify_orient-1",
+      "arm": "graphify_orient",
+      "model": "gpt-6-luna",
+      "error": null,
+      "passed": false,
+      "agent_called_finish": true,
+      "wall_s": 26.762837500005844,
+      "invocations": 1,
+      "completed_usage_records": 1,
+      "reported_usage_complete": true,
+      "native_mcp_calls": 6,
+      "broker_requests": 6,
+      "blocked_broker_requests": 0,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": {
+        "total_tokens": 125007,
+        "cached_input_tokens": 106880,
+        "reasoning_tokens": 0,
+        "cost_usd": null,
+        "unmeasured_fields": [
+          "cost_usd"
+        ],
+        "tool_calls": 7,
+        "verification_passed": false
+      },
+      "promotion_eligible": false
+    }
+  ],
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "blockers": [
+    "1 reused task(s), insufficient for promotion or statistical inference",
+    "Internal provider request counts and subscription charges unmeasured"
+  ]
+}

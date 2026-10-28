@@ -1,0 +1,143 @@
+{
+  "h-pino-31": {
+    "repo": "pino",
+    "query": "If streamWrite hook behavior changes, what assertions should be checked about hook execution and the write path?",
+    "files": [
+      "test/transport/module-link.test.js",
+      "lib/tools.js",
+      "lib/levels.js",
+      "test/transport/core.test.js",
+      "test/internals/version.test.js",
+      "lib/multistream.js",
+      "test/browser-child.test.js",
+      "pino.d.ts",
+      "test/helper.js",
+      "test/multistream.test.js",
+      "lib/worker.js",
+      "test/basic.test.js",
+      "test/types/pino.tst.ts",
+      "test/syncfalse.test.js"
+    ]
+  },
+  "h-pino-32": {
+    "repo": "pino",
+    "query": "If a child-level redact override changes, which ordering constraint protects bindings and what serializer state must be rebuilt?",
+    "files": [
+      "lib/tools.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "pino.js",
+      "browser.js",
+      "test/transport/core.test.js",
+      "pino.d.ts",
+      "lib/redaction.js",
+      "test/basic.test.js",
+      "test/helper.js",
+      "test/serializers.test.js",
+      "test/browser-bindings.test.js",
+      "test/custom-levels.test.js",
+      "test/browser-redaction.test.js",
+      "test/types/pino.tst.ts"
+    ]
+  },
+  "h-pino-33": {
+    "repo": "pino",
+    "query": "If multistream dedupe sorting changes, which routing invariant and tests should guard delivery to streams at equal versus different levels?",
+    "files": [
+      "pino.d.ts",
+      "test/custom-levels.test.js",
+      "test/types/pino-multistream.tst.ts",
+      "lib/transport.js",
+      "lib/worker.js",
+      "test/transport/core.transpiled.test.ts",
+      "lib/constants.js",
+      "benchmarks/multistream.js",
+      "lib/levels.js",
+      "test/transport/core.test.js",
+      "test/types/pino.ts",
+      "pino.js",
+      "lib/proto.js",
+      "test/helper.js"
+    ]
+  },
+  "h-pino-34": {
+    "repo": "pino",
+    "query": "The redaction guide says the implementation is built on fast-redact. What dependency does this source revision actually import?",
+    "files": [
+      "benchmarks/deep-object.bench.js",
+      "lib/worker.js",
+      "benchmarks/multi-arg.bench.js",
+      "test/browser-redaction.test.js",
+      "lib/proto.js",
+      "benchmarks/child.bench.js",
+      "benchmarks/object.bench.js",
+      "benchmarks/child-creation.bench.js",
+      "test/redact.test.js",
+      "benchmarks/child-child.bench.js",
+      "browser.js",
+      "test/fixtures/transport-uses-pino-config.js",
+      "test/fixtures/ts/transpile.cjs",
+      "benchmarks/long-string.bench.js",
+      "benchmarks/basic.bench.js",
+      "lib/transport-stream.js",
+      "test/fixtures/transport-transform.js"
+    ]
+  },
+  "h-pino-35": {
+    "repo": "pino",
+    "query": "The API lists `redact` default as `undefined`. When callers omit it, what value is merged into options internally, and does that value enter the redactor setup branch?",
+    "files": [
+      "test/escaping.test.js",
+      "test/browser-redaction.test.js",
+      "test/caller.test.js",
+      "lib/transport.js",
+      "test/fixtures/default-exit.js",
+      "test/transport/node-options.test.js",
+      "test/levels.test.js",
+      "test/helper.js",
+      "pino.d.ts",
+      "test/redact.test.js",
+      "browser.js",
+      "lib/redaction.js"
+    ]
+  },
+  "h-pino-36": {
+    "repo": "pino",
+    "query": "The transport guide says transport.level is ignored with a single target. What does the worker do when that target has a level?",
+    "files": [
+      "test/types/pino-transport.tst.ts",
+      "test/transport/crash.test.js",
+      "test/transport/targets.test.js",
+      "lib/transport-stream.js",
+      "test/transport/core.test.js",
+      "pino.d.ts",
+      "test/transport/bundlers-support.test.js",
+      "test/helper.js",
+      "lib/transport.js",
+      "test/transport/node-options.test.js",
+      "lib/tools.js",
+      "test/types/pino.tst.ts",
+      "examples/transport.js",
+      "pino.js"
+    ]
+  },
+  "h-pino-37": {
+    "repo": "pino",
+    "query": "The API reference lists the default for `customLevels` as `undefined`. For an omitted option, what default enters normalized logger options?",
+    "files": [
+      "lib/levels.js",
+      "test/fixtures/default-exit.js",
+      "lib/worker.js",
+      "test/transport/node-options.test.js",
+      "pino.d.ts",
+      "test/serializers.test.js",
+      "test/types/pino.ts",
+      "examples/transport.js",
+      "test/browser-is-level-enabled.test.js",
+      "test/helper.js",
+      "test/levels.test.js",
+      "test/escaping.test.js",
+      "lib/proto.js",
+      "test/custom-levels.test.js"
+    ]
+  }
+}

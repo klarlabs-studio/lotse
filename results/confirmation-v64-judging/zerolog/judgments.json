@@ -1,0 +1,2080 @@
+{
+  "h-zerolog-conceptual-context-fallback": {
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "At sources/log.go:178-207,230-257,324-329,421-445,490-526, implements core levels, Logger setup and filtering, sampling, level-specific event creation, and nil Event creation; it supports those core questions, not unrelated adapters. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_test.go:220-303,703-709,837-849,940-975,1086-1116,1250-1313,1367-1472, tests field conversion, interface marshaling, filtering, timestamp output, UpdateContext, and parser behavior; only the assertions matching the query are evidence. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "journald/journald_test.go": {
+      "relevant": false,
+      "reason": "At sources/journald/journald_test.go:55-80,124-190, tests key sanitization and the priority/argument map sent for JSON records; it supports those behaviors only when asked. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "At sources/hook_test.go:47-82, tests hook-added fields in emitted records; it supports hook behavior only when that behavior is the query target. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "ctx_test.go": {
+      "relevant": true,
+      "reason": "At sources/ctx_test.go:14-72, TestCtx checks Ctx on an empty context both before and after setting DefaultContextLogger, and checks that a stored logger is returned. This directly verifies the fallback and disabled-default outcomes."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "At sources/context.go:17-54, implements Context builders and the CreateDict/CreateArray constructors; when the query concerns a different adapter or writer path, these builders do not establish that behavior. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "At sources/slog_test.go:41-115,181-205,265-302,424-451, tests SlogHandler levels, attributes, grouping, and configuration; it is direct evidence only for those slog behaviors. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "globals.go": {
+      "relevant": true,
+      "reason": "At sources/globals.go:141-143, DefaultContextLogger is documented as the logger returned when Ctx sees no logger in the context; assigning it nil disables that package-level fallback."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "At sources/slog.go:21-109,165-205, constructs SlogHandler, maps levels, attaches context, handles attributes/groups, and emits records; it directly supports slog-handler questions. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "At sources/log/log.go:14-37,45-119, defines package-global logging helpers; its Print is package-level and distinct from the Logger.Print method. The missing evidence is Ctx\u2019s branch for an absent context value and its selection between DefaultContextLogger and the disabled logger."
+    }
+  },
+  "h-zerolog-conceptual-field-input-shapes": {
+    "cmd/prettylog/prettylog.go": {
+      "relevant": false,
+      "reason": "At sources/cmd/prettylog/prettylog.go:20-45, reads input and formats it with a console writer; it is a CLI consumer, not the library behavior asked about. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "sampler.go": {
+      "relevant": false,
+      "reason": "At sources/sampler.go:39-86, implements BasicSampler and BurstSampler admission/count logic; it directly supports sampling questions, not unrelated logging paths. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "At sources/hlog/hlog.go:19-94, implements HTTP request logging middleware and request-derived fields; this concerns HTTP integration rather than the queried core logger path. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "At sources/hook.go:4-24, defines the Hook interface and a level hook that writes a field; it establishes hook types, not their invocation order in an event. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_example_test.go:16-22,82-88, shows root Logger construction/output and the Logger.Print receiver example at debug level; it is example evidence, not the internal implementation. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "At sources/binary_test.go:16-93, examples exercise Logger.With, Level, Sample, hooks, and Printf in CBOR mode; they do not establish this JSON-side mechanism. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "At sources/internal/cbor/decode_stream.go:27-88, decodes primitive CBOR stream values; it is a decoder, not the requested record-producing path. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "encoder_cbor.go": {
+      "relevant": false,
+      "reason": "At sources/encoder_cbor.go:17-43, selects CBOR encoder helpers and decodes binary forms for display; it does not establish the specific JSON-level behavior asked. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "hlog/internal/mutil/writer_proxy_test.go": {
+      "relevant": false,
+      "reason": "At sources/hlog/internal/mutil/writer_proxy_test.go:37-59, checks that the HTTP writer proxy counts bytes once when using ReaderFrom; it does not cover the queried logger behavior. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "fields.go": {
+      "relevant": true,
+      "reason": "At sources/fields.go:22-42, appendFields switches between map[string]interface{} and []interface{}; slices are consumed as alternating key/value pairs and an odd trailing element is dropped, while map keys are sorted before encoding."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "At sources/log_test.go:220-303, Context.Fields tests maps and alternating key/value slices, including an odd-length slice whose last unpaired item is omitted from output."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "At sources/event.go:169-178, Event.Fields delegates to appendFields with the Event\u2019s stack, context, and hooks, tying the same accepted shapes to the Event field API used by Context builders."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "At sources/slog_test.go:41-115,181-205,265-302,424-451, tests SlogHandler levels, attributes, grouping, and configuration; it is direct evidence only for those slog behaviors. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "At sources/writer.go:15-35,48-69,78-109, defines LevelWriter and adapters, synchronization, and multi-writer forwarding; it directly supports writer interface questions. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "At sources/log.go:178-207,230-257,324-329,421-445,490-526, implements core levels, Logger setup and filtering, sampling, level-specific event creation, and nil Event creation; it supports those core questions, not unrelated adapters. The missing evidence is appendFields\u2019 type switch for map[string]interface{} versus []interface{} and the truncation of an odd trailing element."
+    }
+  },
+  "h-zerolog-conceptual-sampler-count": {
+    "event.go": {
+      "relevant": false,
+      "reason": "At sources/event.go:68-94, creates Events, writes encoded bytes to the level-aware writer, and returns pooled events; it directly supports event-finalization/writer questions, but not unrelated API behavior. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "diode/internal/diodes/one_to_one.go": {
+      "relevant": false,
+      "reason": "At sources/diode/internal/diodes/one_to_one.go:33-80, implements a single-producer/single-consumer ring; this queue variant is not the queried public writer or logger mechanism. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_example_test.go:16-22,82-88, shows root Logger construction/output and the Logger.Print receiver example at debug level; it is example evidence, not the internal implementation. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "At sources/binary_test.go:16-93, examples exercise Logger.With, Level, Sample, hooks, and Printf in CBOR mode; they do not establish this JSON-side mechanism. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "At sources/diode/diode.go:51-113, constructs the producer wrapper, enqueues writes, cancels/joins the consumer, and writes dequeued data to the destination; it directly supports diode lifecycle questions. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "diode/internal/diodes/many_to_one.go": {
+      "relevant": false,
+      "reason": "At sources/diode/internal/diodes/many_to_one.go:9-23,41-78, defines the multi-producer/single-consumer ring and its Set/TryNext operations; it establishes queue mechanics, not the unrelated API asked here. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "At sources/log_test.go:787-796, TestSampling uses BasicSampler{N:2} and expects events 1 and 3 from four calls, directly demonstrating the every-second-event rule for N>1."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "sampler_test.go": {
+      "relevant": true,
+      "reason": "At sources/sampler_test.go:16-37, the BasicSampler table expects all 100 events for N=1, 20 for N=5, and none for N=0; the companion sampling test covers those parameter semantics directly."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "At sources/hlog/hlog_test.go:30-93, tests HTTP handlers that add URL, method, request, and remote-address fields; these are HTTP-specific assertions. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "At sources/log.go:178-207,230-257,324-329,421-445,490-526, implements core levels, Logger setup and filtering, sampling, level-specific event creation, and nil Event creation; it supports those core questions, not unrelated adapters. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "At sources/internal/cbor/decode_stream.go:27-88, decodes primitive CBOR stream values; it is a decoder, not the requested record-producing path. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "globals_118.go": {
+      "relevant": false,
+      "reason": "At sources/globals_118.go:10-21, provides generic slice conversion helpers for Go 1.18; it does not implement the queried logger feature. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "At sources/hlog/hlog.go:19-94, implements HTTP request logging middleware and request-derived fields; this concerns HTTP integration rather than the queried core logger path. The missing evidence is BasicSampler\u2019s atomic counter rule, especially why N=0 rejects all and N=1 accepts all."
+    }
+  },
+  "h-zerolog-disc-print-level": {
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "At sources/binary_test.go:16-93, examples exercise Logger.With, Level, Sample, hooks, and Printf in CBOR mode; they do not establish this JSON-side mechanism. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "sampler.go": {
+      "relevant": false,
+      "reason": "At sources/sampler.go:39-86, implements BasicSampler and BurstSampler admission/count logic; it directly supports sampling questions, not unrelated logging paths. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "At sources/hook.go:4-24, defines the Hook interface and a level hook that writes a field; it establishes hook types, not their invocation order in an event. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "At sources/event.go:68-94, creates Events, writes encoded bytes to the level-aware writer, and returns pooled events; it directly supports event-finalization/writer questions, but not unrelated API behavior. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_example_test.go:16-22,82-88, shows root Logger construction/output and the Logger.Print receiver example at debug level; it is example evidence, not the internal implementation. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_test.go:220-303,703-709,837-849,940-975,1086-1116,1250-1313,1367-1472, tests field conversion, interface marshaling, filtering, timestamp output, UpdateContext, and parser behavior; only the assertions matching the query are evidence. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "At sources/log.go:178-207,230-257,324-329,421-445,490-526, implements core levels, Logger setup and filtering, sampling, level-specific event creation, and nil Event creation; it supports those core questions, not unrelated adapters. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "At sources/globals.go:39-77,141-194, declares shared field/caller settings, the default context logger, and global level controls; it supports those configuration questions, not unrelated runtime paths. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "At sources/writer.go:15-35,48-69,78-109, defines LevelWriter and adapters, synchronization, and multi-writer forwarding; it directly supports writer interface questions. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "At sources/slog.go:21-109,165-205, constructs SlogHandler, maps levels, attaches context, handles attributes/groups, and emits records; it directly supports slog-handler questions. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "log/log_example_test.go": {
+      "relevant": true,
+      "reason": "At sources/log/log_example_test.go:37-44, ExamplePrint explicitly says package log.Print defaults to debug and its expected JSON output has \"level\":\"debug\", exposing the discrepancy with the trace claim."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "At sources/writer_test.go:419-432, tests level and payload forwarding through MultiLevelWriter; it supports writer delivery questions, not unrelated API behavior. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "At sources/console.go:122-174, ConsoleWriter decodes a record and emits configured parts; it does not implement the distinct requested logger/sampler/context API. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "At sources/hook_test.go:47-82, tests hook-added fields in emitted records; it supports hook behavior only when that behavior is the query target. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    },
+    "syslog.go": {
+      "relevant": false,
+      "reason": "At sources/syslog.go:15-84, implements level-aware syslog adapters and maps zerolog levels to syslog methods; it supports writer-interface questions only as an implementation example. The missing evidence is package log.Print\u2019s exact logger method call; the root Logger.Print method is a different API."
+    }
+  },
+  "h-zerolog-exact-levelwriter": {
+    "diode/diode_test.go": {
+      "relevant": false,
+      "reason": "At sources/diode/diode_test.go:19-41, tests NewWriter output and Close with a buffer; these assertions cover wrapper output/closure, not internal poller-selection logic. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "At sources/log/log.go:14-37,45-119, defines package-global logging helpers; its Print is package-level and distinct from the Logger.Print method. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "At sources/writer_test.go:419-432, tests level and payload forwarding through MultiLevelWriter; it supports writer delivery questions, not unrelated API behavior. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "At sources/event_test.go:22-58, tests Event error and nil-write behavior; the tested path is not the API or state transition asked about. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "syslog.go": {
+      "relevant": true,
+      "reason": "At sources/syslog.go:57-75, the syslog adapter implements WriteLevel(level Level, p []byte), showing a concrete writer receiving both the zerolog level and encoded payload."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "At sources/log_test.go:852-874, the test levelWriter implements WriteLevel and records both its Level argument and the payload, directly demonstrating the two-part writer contract."
+    },
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "At sources/diode/diode.go:51-113, constructs the producer wrapper, enqueues writes, cancels/joins the consumer, and writes dequeued data to the destination; it directly supports diode lifecycle questions. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "console_test.go": {
+      "relevant": false,
+      "reason": "At sources/console_test.go:89-150, tests ConsoleWriter rendering and record parts; it does not exercise the queried API or state transition. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "At sources/syslog_test.go:54-132, tests syslog level dispatch and CEE payload output; it does not cover the queried core writer/logger behavior. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "cmd/lint/lint.go": {
+      "relevant": false,
+      "reason": "At sources/cmd/lint/lint.go:42-95, implements the static-analysis command and searches typed Go selections; it is tooling, not the runtime logging path. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "At sources/benchmark_test.go:15-45, benchmarks empty, disabled, and Info logging throughput; it records performance rather than the requested functional behavior. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "At sources/log.go:247-257, New type-asserts an output writer to LevelWriter and retains that interface when available, establishing where the level-aware writer is selected."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "At sources/event.go:81-94, Event.write calls e.w.WriteLevel(e.level,e.buf), sending the encoded buffer together with the event level."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "At sources/slog.go:21-109,165-205, constructs SlogHandler, maps levels, attaches context, handles attributes/groups, and emits records; it directly supports slog-handler questions. The missing evidence is the exact LevelWriter interface declaration and its WriteLevel(level,payload) signature."
+    }
+  },
+  "h-zerolog-exact-log-level-names": {
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "At sources/writer.go:15-35,48-69,78-109, defines LevelWriter and adapters, synchronization, and multi-writer forwarding; it directly supports writer interface questions. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "At sources/log_test.go:1367-1395, TestParseLevel checks the named constants through ParseLevel and verifies that textual -1 maps to TraceLevel; this pins TraceLevel\u2019s -1 parser behavior but does not reveal the numeric assignments for Debug through Panic."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "At sources/slog.go:21-109,165-205, constructs SlogHandler, maps levels, attaches context, handles attributes/groups, and emits records; it directly supports slog-handler questions. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "At sources/internal/cbor/decode_stream.go:27-88, decodes primitive CBOR stream values; it is a decoder, not the requested record-producing path. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "At sources/log/log.go:14-37,45-119, defines package-global logging helpers; its Print is package-level and distinct from the Logger.Print method. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "At sources/event_test.go:22-58, tests Event error and nil-write behavior; the tested path is not the API or state transition asked about. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "At sources/syslog_test.go:54-132, tests syslog level dispatch and CEE payload output; it does not cover the queried core writer/logger behavior. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "journald/journald.go": {
+      "relevant": false,
+      "reason": "At sources/journald/journald.go:52-147, maps zerolog levels to journal priorities, sanitizes keys, converts JSON fields to journal arguments, and sends the original message; directly supports journald questions. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "At sources/hook_test.go:47-82, tests hook-added fields in emitted records; it supports hook behavior only when that behavior is the query target. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "At sources/globals.go:39-77,141-194, declares shared field/caller settings, the default context logger, and global level controls; it supports those configuration questions, not unrelated runtime paths. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "internal/cbor/decoder_test.go": {
+      "relevant": false,
+      "reason": "At sources/internal/cbor/decoder_test.go:13-87, tests CBOR integer/string/array/map decoding; those inputs and assertions are unrelated to the queried behavior. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "At sources/event.go:68-94, creates Events, writes encoded bytes to the level-aware writer, and returns pooled events; it directly supports event-finalization/writer questions, but not unrelated API behavior. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    },
+    "ctx.go": {
+      "relevant": false,
+      "reason": "At sources/ctx.go:33-50, stores a Logger in context and resolves it with Ctx; it does not implement unrelated Event, writer, or parser behavior. The missing evidence is the source declaration assigning numeric values to each Level constant; string names and parser tests do not state those integers."
+    }
+  },
+  "h-zerolog-impact-field-name": {
+    "console_test.go": {
+      "relevant": false,
+      "reason": "At sources/console_test.go:89-150, tests ConsoleWriter rendering and record parts; it does not exercise the queried API or state transition. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "context.go": {
+      "relevant": true,
+      "reason": "At sources/context.go:393-408, the timestamp hook calls Event.Timestamp, and the API comment says TimestampFieldName controls the key used for timestamp output."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "At sources/hook.go:4-24, defines the Hook interface and a level hook that writes a field; it establishes hook types, not their invocation order in an event. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "fields.go": {
+      "relevant": false,
+      "reason": "At sources/fields.go:22-53, converts supported map and alternating key/value inputs into encoded fields; it supports field-shape questions, not unrelated mechanisms. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "At sources/writer.go:15-35,48-69,78-109, defines LevelWriter and adapters, synchronization, and multi-writer forwarding; it directly supports writer interface questions. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "At sources/slog_test.go:41-115,181-205,265-302,424-451, tests SlogHandler levels, attributes, grouping, and configuration; it is direct evidence only for those slog behaviors. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "journald/journald.go": {
+      "relevant": false,
+      "reason": "At sources/journald/journald.go:52-147, maps zerolog levels to journal priorities, sanitizes keys, converts JSON fields to journal arguments, and sends the original message; directly supports journald questions. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "slog.go": {
+      "relevant": true,
+      "reason": "At sources/slog.go:64-69, Handle writes record.Time using TimestampFieldName when no timestamp hook is installed, so changing the shared key changes slog timestamp output too."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "At sources/benchmark_test.go:15-45, benchmarks empty, disabled, and Info logging throughput; it records performance rather than the requested functional behavior. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "At sources/log_test.go:1086-1116, timestamp output tests assert the serialized key in Context and Event output, covering the field-name behavior affected by a shared setting change."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "At sources/log.go:178-207,230-257,324-329,421-445,490-526, implements core levels, Logger setup and filtering, sampling, level-specific event creation, and nil Event creation; it supports those core questions, not unrelated adapters. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "At sources/console.go:122-174, ConsoleWriter decodes a record and emits configured parts; it does not implement the distinct requested logger/sampler/context API. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "At sources/event_test.go:22-58, tests Event error and nil-write behavior; the tested path is not the API or state transition asked about. The missing evidence is whether this code reads TimestampFieldName and writes the serialized time key through an event or slog record."
+    }
+  },
+  "h-zerolog-impact-global-level": {
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "At sources/writer.go:15-35,48-69,78-109, defines LevelWriter and adapters, synchronization, and multi-writer forwarding; it directly supports writer interface questions. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "At sources/binary_test.go:16-93, examples exercise Logger.With, Level, Sample, hooks, and Printf in CBOR mode; they do not establish this JSON-side mechanism. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "At sources/slog.go:21-109,165-205, constructs SlogHandler, maps levels, attaches context, handles attributes/groups, and emits records; it directly supports slog-handler questions. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "globals.go": {
+      "relevant": true,
+      "reason": "At sources/globals.go:184-194, SetGlobalLevel and GlobalLevel update/read the process-wide minimum level used by logger filtering."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "At sources/hook.go:4-24, defines the Hook interface and a level hook that writes a field; it establishes hook types, not their invocation order in an event. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "At sources/writer_test.go:419-432, tests level and payload forwarding through MultiLevelWriter; it supports writer delivery questions, not unrelated API behavior. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "At sources/log/log.go:14-37,45-119, defines package-global logging helpers; its Print is package-level and distinct from the Logger.Print method. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "At sources/context.go:17-54, implements Context builders and the CreateDict/CreateArray constructors; when the query concerns a different adapter or writer path, these builders do not establish that behavior. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_example_test.go:16-22,82-88, shows root Logger construction/output and the Logger.Print receiver example at debug level; it is example evidence, not the internal implementation. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "At sources/slog_test.go:41-115,181-205,265-302,424-451, tests SlogHandler levels, attributes, grouping, and configuration; it is direct evidence only for those slog behaviors. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "At sources/event.go:68-94, creates Events, writes encoded bytes to the level-aware writer, and returns pooled events; it directly supports event-finalization/writer questions, but not unrelated API behavior. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "At sources/log_test.go:940-975, TestGlobalLevel sets a global minimum and checks that a below-threshold event produces no output, directly establishing the user-visible filtering guarantee."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/hlog/hlog_example_test.go:39-66, demonstrates HTTP middleware logging request data; it does not test the core behavior asked about. The missing evidence is Logger.should\u2019s check against GlobalLevel and the below-threshold omission it enforces."
+    }
+  },
+  "h-zerolog-trace-context-roundtrip": {
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log/log_example_test.go:37-44, shows package-level log.Print output as debug; it does not demonstrate the receiver method Logger.Print. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "At sources/hlog/hlog.go:19-94, implements HTTP request logging middleware and request-derived fields; this concerns HTTP integration rather than the queried core logger path. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "ctx_test.go": {
+      "relevant": true,
+      "reason": "At sources/ctx_test.go:14-72, tests store a logger with WithContext and compare Ctx\u2019s result to that logger, then repeat with an updated/copy logger; it directly verifies the round trip."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "At sources/console.go:122-174, ConsoleWriter decodes a record and emits configured parts; it does not implement the distinct requested logger/sampler/context API. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "At sources/slog_test.go:41-115,181-205,265-302,424-451, tests SlogHandler levels, attributes, grouping, and configuration; it is direct evidence only for those slog behaviors. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "At sources/event.go:68-94, creates Events, writes encoded bytes to the level-aware writer, and returns pooled events; it directly supports event-finalization/writer questions, but not unrelated API behavior. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "At sources/context.go:17-54, implements Context builders and the CreateDict/CreateArray constructors; when the query concerns a different adapter or writer path, these builders do not establish that behavior. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "At sources/log/log.go:14-37,45-119, defines package-global logging helpers; its Print is package-level and distinct from the Logger.Print method. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "At sources/log.go:178-207,230-257,324-329,421-445,490-526, implements core levels, Logger setup and filtering, sampling, level-specific event creation, and nil Event creation; it supports those core questions, not unrelated adapters. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_test.go:220-303,703-709,837-849,940-975,1086-1116,1250-1313,1367-1472, tests field conversion, interface marshaling, filtering, timestamp output, UpdateContext, and parser behavior; only the assertions matching the query are evidence. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "At sources/event_test.go:22-58, tests Event error and nil-write behavior; the tested path is not the API or state transition asked about. The missing evidence is WithContext\u2019s storage operation or Ctx\u2019s lookup of the stored Logger."
+    }
+  },
+  "h-zerolog-trace-event-send-hooks": {
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "At sources/diode/diode.go:51-113, constructs the producer wrapper, enqueues writes, cancels/joins the consumer, and writes dequeued data to the destination; it directly supports diode lifecycle questions. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "At sources/writer.go:15-35,48-69,78-109, defines LevelWriter and adapters, synchronization, and multi-writer forwarding; it directly supports writer interface questions. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "At sources/context.go:17-54, implements Context builders and the CreateDict/CreateArray constructors; when the query concerns a different adapter or writer path, these builders do not establish that behavior. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "At sources/hook.go:4-24, defines the Hook interface and a level hook that writes a field; it establishes hook types, not their invocation order in an event. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "hook_test.go": {
+      "relevant": true,
+      "reason": "At sources/hook_test.go:47-85, the Msg cases assert hook-added level/message fields in the emitted records, showing that hooks run as part of the finalized logging call."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_example_test.go:16-22,82-88, shows root Logger construction/output and the Logger.Print receiver example at debug level; it is example evidence, not the internal implementation. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "At sources/log.go:178-207,230-257,324-329,421-445,490-526, implements core levels, Logger setup and filtering, sampling, level-specific event creation, and nil Event creation; it supports those core questions, not unrelated adapters. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "At sources/binary_test.go:16-93, examples exercise Logger.With, Level, Sample, hooks, and Printf in CBOR mode; they do not establish this JSON-side mechanism. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "At sources/log/log.go:14-37,45-119, defines package-global logging helpers; its Print is package-level and distinct from the Logger.Print method. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "At sources/log_test.go:220-303,703-709,837-849,940-975,1086-1116,1250-1313,1367-1472, tests field conversion, interface marshaling, filtering, timestamp output, UpdateContext, and parser behavior; only the assertions matching the query are evidence. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "At sources/slog.go:21-109,165-205, constructs SlogHandler, maps levels, attaches context, handles attributes/groups, and emits records; it directly supports slog-handler questions. The missing evidence is Msg finalization\u2019s exact ordering of hook execution, message append, and writer invocation."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "At sources/event_test.go:118-156, Event.Msg is called with a hook that reads the Event context and adds fields; the expected serialized line contains those hook fields before the final message field, directly testing hook participation during finalization."
+    }
+  },
+  "h-zerolog-arch-context-builders": {
+    "event.go": {
+      "relevant": true,
+      "reason": "event.go: The Event builder counterparts explicitly pass stack, Go context, and hooks into the temporary Event event.go:191-223, giving direct evidence for the state represented by these builders."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "binary_test.go: The examples exercise ordinary binary logging output (for binary_test.go:23-26); they do not inspect Context.CreateDict/CreateArray metadata copying."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "log_example_test.go: The Context dictionary and array examples log_example_test.go:412-437 show nested field usage and output, but do not show which logger metadata the temporary values inherit."
+    },
+    "pkgerrors/stacktrace.go": {
+      "relevant": false,
+      "reason": "pkgerrors/stacktrace.go: This file formats stack traces through fmt.Formatter methods pkgerrors/stacktrace.go:17-28; it does not describe Context temporary builder state."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: The tests focus on Logger behavior and output, such as basic log calls log_test.go:23-44, rather than state copied by Context.CreateDict/CreateArray."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "event_test.go: These tests exercise Event serialization and event fields, but the visible setup event_test.go:35-70 constructs standalone Events and does not test Context builder metadata."
+    },
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "hook_test.go: This file tests hook behavior on log events (hook_test.go:15-30); it does not establish the fields copied by Context builder methods."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: This file adapts standard-library slog records (slog.go:9-12); its handler state is separate from Context.CreateDict/CreateArray."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package binds HTTP request information to loggers; it does not implement the Context temporary dictionary or array builders. Source anchor: hlog/hlog.go:23-37."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "log.go: Logger stores stack, hooks, and Go context as fields log.go:230-238, identifying the logger-associated metadata that the temporary builder copies; its With method also returns Context log.go:280-290."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "array.go: Array defines element marshaling and serialization (for example its write method array.go:65 onward), but does not show Context assigning logger state to a temporary Array."
+    },
+    "ctx.go": {
+      "relevant": false,
+      "reason": "ctx.go: This file attaches and retrieves Logger values from context.Context (ctx.go:17-50); that is distinct from the stack/hooks/context copied into Context-created values."
+    },
+    "sampler.go": {
+      "relevant": false,
+      "reason": "sampler.go: This file implements event sampling decisions (sampler.go:18-45); sampling is not among the temporary dictionary/array state asked about."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "hook.go: This file defines the Hook interface hook.go:3-6, but does not show Context builders copying the logger\u2019s hook slice or other state."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: This file defines writer adapters and output wrappers (writer.go:13 onward), unrelated to Context.CreateDict/CreateArray state inheritance."
+    }
+  },
+  "h-zerolog-arch-diode-components": {
+    "error_marshal_test.go": {
+      "relevant": false,
+      "reason": "error_marshal_test.go: These tests cover error serialization choices (error_marshal_test.go:57-70); they do not describe diode producer buffering or its consumer."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "log.go: Logger configuration and level handling in this file do not implement the diode ring buffer or poll interval. Source anchor: log.go:230-246."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "event.go: Event encodes individual records and emits them through its writer; it does not explain the diode queue or polling behavior. Source anchor: event.go:81-96."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "writer_test.go: These tests exercise multi-writer and syslog writer behavior (writer_test.go:41-46), not diode.Writer\u2019s producer/consumer design."
+    },
+    "hlog/internal/mutil/writer_proxy_test.go": {
+      "relevant": false,
+      "reason": "hlog/internal/mutil/writer_proxy_test.go: This test file covers the hlog writer proxy, which is separate from the diode queue and poller. Source anchor: hlog/internal/mutil/writer_proxy_test.go:37-59."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: This file defines generic zerolog LevelWriter and writer adapters (writer.go:13-27); it does not implement diode buffering or its consumer loop."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "syslog_test.go: These tests set up syslog-specific writer fixtures (syslog_test.go:14-18), not the diode queue or timing policy."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "fixtures_test.go: This file contains general serialization fixtures (fixtures_test.go:32-38), with no diode producer/consumer mechanism."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "benchmark_test.go: These benchmarks exercise ordinary logger event generation (benchmark_test.go:12-26); they do not measure or specify diode behavior."
+    },
+    "diode/internal/diodes/waiter.go": {
+      "relevant": true,
+      "reason": "diode/internal/diodes/waiter.go: The alternate Waiter uses a conditional mutex to wake its reader when data arrives (diode/internal/diodes/waiter.go:8-10, 55\u201378), explaining the non-polling option selected when interval is zero."
+    },
+    "diode/diode_example_test.go": {
+      "relevant": true,
+      "reason": "diode/diode_example_test.go: The example constructs diode.NewWriter around a destination and feeds it to zerolog.New (diode/diode_example_test.go:12-19), demonstrating its role as the asynchronous writer wrapper."
+    },
+    "diode/internal/diodes/many_to_one.go": {
+      "relevant": true,
+      "reason": "diode/internal/diodes/many_to_one.go: ManyToOne is documented as many writers with one reader (diode/internal/diodes/many_to_one.go:9-23), and Set/TryNext operate on a ring buffer that drops overwritten events and alerts (diode/internal/diodes/many_to_one.go:40-65, 68\u2013129)."
+    },
+    "diode/diode_test.go": {
+      "relevant": true,
+      "reason": "diode/diode_test.go: The tests construct diode.NewWriter with a destination and verify delivered records and missed-event alerts (diode/diode_test.go:20-52), directly exercising its producer/consumer contract."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "internal/cbor/decode_stream.go: This file decodes CBOR records; its console/syslog mention internal/cbor/decode_stream.go:624 is about output formatting, not diode scheduling."
+    },
+    "journald/journald.go": {
+      "relevant": false,
+      "reason": "journald/journald.go: This is a journald destination writer translating log fields (journald/journald.go:9-40); it does not explain diode producers or polling."
+    },
+    "diode/internal/diodes/poller.go": {
+      "relevant": true,
+      "reason": "diode/internal/diodes/poller.go: Poller.Next repeatedly calls TryNext and sleeps for the configured interval when empty (diode/internal/diodes/poller.go:56-70); this directly explains the interval\u2019s role and cancellation."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "event_test.go: These tests check Event serialization and fields; they do not exercise diode.Writer or the poll interval. Source anchor: event_test.go:22-47."
+    }
+  },
+  "h-zerolog-arch-logger-event-encoder": {
+    "console.go": {
+      "relevant": false,
+      "reason": "console.go: ConsoleWriter reformats already encoded records for human display; it is downstream formatting and does not establish Logger.Info event creation or message encoding. Source anchor: console.go:102-143."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "writer_test.go: This file tests multi-syslog writer behavior, not the Logger.Info-to-Event encoding path. Source anchor: writer_test.go:45-64."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: This file adds contextual fields to a child logger; it does not implement level methods, Event construction, or event message encoding. Source anchor: context.go:11-19."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package adds HTTP request fields and middleware around a logger; it does not implement the core Logger.Info-to-writer path. Source anchor: hlog/hlog.go:23-37."
+    },
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "diode/diode.go: This is an optional asynchronous writer wrapper; its queue is not the core path that creates and encodes a Logger.Info Event. Source anchor: diode/diode.go:51-73."
+    },
+    "syslog.go": {
+      "relevant": false,
+      "reason": "syslog.go: This file adapts syslog output, while the question asks for zerolog\u2019s core level filtering and message encoding path. Source anchor: syslog.go:32-58."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_example_test.go: The example demonstrates HTTP request fields on a log call hlog/hlog_example_test.go:63-72, but does not establish core Event creation, filtering, or encoding."
+    },
+    "binary_test.go": {
+      "relevant": true,
+      "reason": "binary_test.go: The Logger_Info example binary_test.go:20-26 shows Info followed by Msg and the encoded event output, giving direct usage evidence for the beginning and completion of the path."
+    },
+    "writer.go": {
+      "relevant": true,
+      "reason": "writer.go: LevelWriter and LevelWriterAdapter define the final sink call contract (writer.go:13-27), including forwarding payload bytes with or without the level."
+    },
+    "log_example_test.go": {
+      "relevant": true,
+      "reason": "log_example_test.go: The Info example log_example_test.go:128-136 shows the public call sequence and resulting serialized message, directly illustrating the Logger.Info-to-output behavior."
+    },
+    "diode/diode_test.go": {
+      "relevant": false,
+      "reason": "diode/diode_test.go: These tests cover the optional diode wrapper\u2019s delivery and alerts, not the core Logger.Info event creation and encoding path. Source anchor: diode/diode_test.go:19-34."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "slog_test.go: These tests exercise the slog adapter\u2019s mapping into zerolog, not the core Logger.Info entry point or its encoder. Source anchor: slog_test.go:41-55."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "log/log.go: This package adapts the standard log API to zerolog; its level helper is not the core Logger.Info-to-Event encoder path. Source anchor: log/log.go:27-83."
+    }
+  },
+  "h-zerolog-arch-slog-adapter": {
+    "globals.go": {
+      "relevant": true,
+      "reason": "globals.go: The globals define serialized zerolog level labels globals.go:43-59, which are the output values a slog-to-zerolog level mapping must target."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "log/log.go: This package adapts the legacy log package and exposes a level helper (log/log.go:26-28), not the standard-library slog.Handler or its attribute conversion."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_example_test.go: This example shows HTTP request metadata attached to an ordinary zerolog call (hlog/hlog_example_test.go:63-72), not slog handler construction or slog attribute conversion."
+    },
+    "slog_test.go": {
+      "relevant": true,
+      "reason": "slog_test.go: The tests construct NewSlogHandler and slog.Logger and directly verify typed attributes plus level mapping (for slog_test.go:181-203 and 410\u2013433)."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "event.go: Event methods provide the record object used by the handler: newEvent creates an Event (event.go:68), and Msg completes it (event.go:115-160), supporting the handler\u2019s event-construction path."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "log.go: Logger.WithLevel is the level-specific event constructor used by the adapter; the Logger stores its writer and threshold log.go:230-238, supporting the adapter\u2019s routing and filtering step."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "log/log_example_test.go: These examples cover the legacy log package\u2019s Print/Printf adapter, not slog.Handler construction or slog attribute conversion. Source anchor: log/log_example_test.go:37-53."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package provides HTTP middleware and request context helpers; it does not implement standard-library slog integration. Source anchor: hlog/hlog.go:23-37."
+    },
+    "syslog.go": {
+      "relevant": false,
+      "reason": "syslog.go: This file adapts a syslog destination; it does not convert slog levels or attributes into zerolog events. Source anchor: syslog.go:32-58."
+    },
+    "journald/journald.go": {
+      "relevant": false,
+      "reason": "journald/journald.go: This file translates serialized zerolog fields for journald output; it is a destination adapter rather than the slog source adapter. Source anchor: journald/journald.go:78-98."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: These types adapt output writers and preserve levels (writer.go:13-27); they do not construct slog handlers or convert slog attributes."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests cover core Logger behavior rather than slog handler construction, level mapping, or slog attribute conversion. Source anchor: log_test.go:19-44."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_test.go: These tests cover HTTP request fields and middleware behavior, not standard-library slog records. Source anchor: hlog/hlog_test.go:30-43."
+    },
+    "sampler.go": {
+      "relevant": false,
+      "reason": "sampler.go: This file implements log sampling decisions; it does not map slog levels or convert slog attributes. Source anchor: sampler.go:59-94."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "event_test.go: These tests cover Event encoding and event fields generally; they do not exercise the slog handler\u2019s level or attribute conversion. Source anchor: event_test.go:22-47."
+    }
+  },
+  "h-zerolog-conceptual-burst-sampling": {
+    "sampler_test.go": {
+      "relevant": true,
+      "reason": "sampler_test.go: The BurstSampler table tests both no follow-on sampler and a BasicSampler follow-on (sampler_test.go:54-73), and TestBurst checks reset boundaries (sampler_test.go:108-127)."
+    },
+    "diode/internal/diodes/poller.go": {
+      "relevant": false,
+      "reason": "diode/internal/diodes/poller.go: This file polls a diode queue and sleeps between checks (diode/internal/diodes/poller.go:56-70); that is unrelated to BurstSampler decisions."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "event.go: Event encodes and writes log records; it does not implement the sampler\u2019s burst counter or fallback decision. Source anchor: event.go:81-96."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "hook.go: This file defines event hooks, which mutate or observe events; it does not sample a burst or fallback events. Source anchor: hook.go:3-15."
+    },
+    "console_test.go": {
+      "relevant": false,
+      "reason": "console_test.go: These tests cover human-readable ConsoleWriter formatting and order (console_test.go:17-60), not sampling policy."
+    },
+    "diode/internal/diodes/many_to_one.go": {
+      "relevant": false,
+      "reason": "diode/internal/diodes/many_to_one.go: This ring buffer manages producer/reader concurrency and dropped queue entries (diode/internal/diodes/many_to_one.go:9-23), not per-period log sampling."
+    },
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "diode/diode.go: This asynchronous writer queues output and drops overloaded records; its drop policy is separate from BurstSampler\u2019s per-period admission. Source anchor: diode/diode.go:51-73."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: This file maps slog records to zerolog and converts attributes; it does not implement the BurstSampler algorithm. Source anchor: slog.go:9-21."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: The writer wrappers forward or buffer encoded output; they do not determine whether a BurstSampler admits a record. Source anchor: writer.go:13-23."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "fixtures_test.go: This file supplies general serialization fixtures; it does not assert burst thresholds or NextSampler fallback. Source anchor: fixtures_test.go:12-22."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "array.go: Array marshaling encodes structured fields and has no role in burst counter or follow-on sampler behavior. Source anchor: array.go:18-28."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "log.go: Logger.should applies the configured sampler before creating an active Event (log.go:523-530), showing where BurstSampler\u2019s decision is used for log calls."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context methods add fields and logger options; they do not define or invoke BurstSampler\u2019s post-burst behavior. Source anchor: context.go:11-19."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "slog_test.go: These tests exercise slog levels and attributes, not BurstSampler thresholds or NextSampler behavior. Source anchor: slog_test.go:41-55."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package adds HTTP fields and request middleware to loggers; it does not change sampling decisions. Source anchor: hlog/hlog.go:23-37."
+    },
+    "journald/journald_test.go": {
+      "relevant": false,
+      "reason": "journald/journald_test.go: These tests verify journald serialization of output records, not whether a burst sampler admits them. Source anchor: journald/journald_test.go:55-75."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "log/log_example_test.go: The examples show the legacy log adapter\u2019s output and default level, not burst sampling behavior. Source anchor: log/log_example_test.go:37-53."
+    }
+  },
+  "h-zerolog-conceptual-console-pipeline": {
+    "log.go": {
+      "relevant": false,
+      "reason": "log.go: This file creates and configures loggers; it does not parse encoded records into human-readable console output. Source anchor: log.go:230-246."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "writer_test.go: These tests cover syslog/multi-writer behavior, not ConsoleWriter parsing or part ordering. Source anchor: writer_test.go:45-64."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: The generic writer wrappers forward bytes, synchronize writes, or buffer by level (writer.go:13-27, 39\u201375, 260\u2013288); they do not format console records or control their part order."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "log/log.go: This package adapts the legacy log API and logger levels, not ConsoleWriter\u2019s record-to-text transformation. Source anchor: log/log.go:27-83."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: This file adapts slog records into zerolog events; it does not format serialized records for console display. Source anchor: slog.go:9-21."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_example_test.go: The HTTP logging example demonstrates request fields (hlog/hlog_example_test.go:63-72) and does not exercise ConsoleWriter formatting."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests cover core logger behavior and JSON output, not ConsoleWriter human-readable transformations or ordering. Source anchor: log_test.go:19-44."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "slog_test.go: These tests cover slog handler output and attributes, not ConsoleWriter parsing or display order. Source anchor: slog_test.go:41-55."
+    },
+    "console_test.go": {
+      "relevant": true,
+      "reason": "console_test.go: The tests pass JSON records to ConsoleWriter and assert human-readable results (console_test.go:104-120); the Sets PartsOrder case sets the desired order and checks the result (console_test.go:503-518)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "globals.go: This file declares default field names and level values, but does not implement ConsoleWriter\u2019s parsing, formatting, or caller-controlled order. Source anchor: globals.go:11-33."
+    }
+  },
+  "h-zerolog-conceptual-interface-reflection": {
+    "internal/json/types_test.go": {
+      "relevant": true,
+      "reason": "internal/json/types_test.go: The tests exercise Encoder.AppendInterface with representative values and nil (internal/json/types_test.go:105-133), covering the ordinary-value encoding branch reached when the Event value is not a LogObjectMarshaler."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "hook.go: Hook methods observe or add event fields (hook.go:3-24); they do not implement Event.Interface\u2019s type assertion or fallback encoding."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "event_test.go: The nil-receiver method table includes Interface with ordinary values and LogObjectMarshaler values (event_test.go:297-307), directly exercising the method\u2019s dispatch inputs alongside its event behavior."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: This file defines output writer adapters and buffering wrappers; it does not inspect values passed to Event.Interface. Source anchor: writer.go:13-23."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: This file converts slog attributes and can call Event.Interface for a fallback value (slog.go:179-240), but it does not establish the Event.Interface method\u2019s own marshaler-versus-reflection behavior."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package attaches HTTP request data to events; it does not implement Event.Interface\u2019s object-marshaler dispatch. Source anchor: hlog/hlog.go:23-37."
+    },
+    "fields.go": {
+      "relevant": false,
+      "reason": "fields.go: This file converts map/slice fields through appendFields and has its own marshaler handling (fields.go:22-40, 303\u2013308); it is a separate API, not Event.Interface."
+    },
+    "ctx_test.go": {
+      "relevant": false,
+      "reason": "ctx_test.go: The test ctx_test.go:85-100 checks Context.Interface with an object marshaler; it does not test the specifically requested Event.Interface method."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context.Interface is a separate logger-context method (context.go:435-441); its dispatch does not establish Event.Interface behavior."
+    },
+    "cmd/lint/lint.go": {
+      "relevant": false,
+      "reason": "cmd/lint/lint.go: This command scans Event method calls and recognized chain finishers (cmd/lint/lint.go:20, 52\u201360); it does not inspect Interface values or serialization."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "log.go: Logger configuration and level methods do not implement or test Event.Interface value dispatch. Source anchor: log.go:230-246."
+    },
+    "internal/json/types.go": {
+      "relevant": true,
+      "reason": "internal/json/types.go: AppendInterface serializes non-object values via JSONMarshalFunc and appends encoded bytes (internal/json/types.go:384-392), which is the Event.Interface fallback after the object-marshaler check."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "benchmark_test.go: These benchmarks measure general logger event throughput (benchmark_test.go:12-26); they do not compare Event.Interface dispatch behavior."
+    },
+    "internal/cbor/types_test.go": {
+      "relevant": true,
+      "reason": "internal/cbor/types_test.go: The CBOR encoder tests exercise AppendInterface for ordinary and nil values (internal/cbor/types_test.go:72-103), covering the alternate encoder\u2019s fallback serialization used by Event.Interface."
+    }
+  },
+  "h-zerolog-conceptual-msg-completion": {
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "binary_test.go: These examples show completed Info().Msg calls and their output (binary_test.go:20-26), but do not demonstrate that a chain lacking Msg emits nothing."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: This file specifies what happens when a writer receives Write/WriteLevel; it does not show that adding Event fields without a finisher never calls the writer. Source anchor: writer.go:13-23."
+    },
+    "diode/internal/diodes/waiter.go": {
+      "relevant": false,
+      "reason": "diode/internal/diodes/waiter.go: This file coordinates reads from a diode queue; its wait protocol is unrelated to completing an Event chain. Source anchor: diode/internal/diodes/waiter.go:8-15."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "console.go: ConsoleWriter formats records after receiving bytes; it does not determine when a chained Event is emitted. Source anchor: console.go:102-143."
+    },
+    "fields.go": {
+      "relevant": false,
+      "reason": "fields.go: appendFields serializes map and slice fields (fields.go:22-40); it does not establish the Event finisher requirement."
+    },
+    "journald/journald_test.go": {
+      "relevant": false,
+      "reason": "journald/journald_test.go: These tests check already emitted records in journald output; they do not test an unfinished Event chain. Source anchor: journald/journald_test.go:55-75."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: The slog handler explicitly ends its own record with Event.Msg (slog.go:71-72), but this concerns adapter implementation, not a chained Logger call that a developer leaves unfinished."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "fixtures_test.go: This file provides value fixtures for encoding tests; it does not test Event completion or writer invocation. Source anchor: fixtures_test.go:12-22."
+    },
+    "log_example_test.go": {
+      "relevant": true,
+      "reason": "log_example_test.go: The examples consistently complete the fluent field chain with Msg/Send (for log_example_test.go:106-115 and 128\u2013136), illustrating the public finishing call needed to produce a record."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "event_test.go: The Msg and MsgFunc tests show that Event completion methods trigger event behavior, while the ordinary field methods in the nil-receiver coverage are separate chain operations (event_test.go:159-180, 379\u2013395)."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "hook.go: Hooks run when an Event is completed, but this interface file only defines hook callbacks (hook.go:3-24) and does not explain why an unfinished chain does not emit."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context methods accumulate fields on a child logger; they do not implement event completion or a record writer call. Source anchor: context.go:11-19."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "log_test.go: The tests build a Logger.Log/Info event, add fields, then call Msg and assert emitted output (log_test.go:19-47, 51\u201380), supporting the completion boundary in the fluent API."
+    }
+  },
+  "h-zerolog-conceptual-slog-groups": {
+    "slog_test.go": {
+      "relevant": true,
+      "reason": "slog_test.go: The tests attach attrs with WithAttrs and verify they appear in the subsequent record (slog_test.go:181-203), and check derived-handler immutability (slog_test.go:393-407), directly evidencing pre-attached attribute behavior."
+    },
+    "journald/journald_test.go": {
+      "relevant": false,
+      "reason": "journald/journald_test.go: This file checks journalD serialization of ordinary log records; it does not exercise SlogHandler.WithAttrs or when handler attributes are applied. Source anchor: journald/journald_test.go:55-75."
+    },
+    "cmd/prettylog/prettylog.go": {
+      "relevant": false,
+      "reason": "cmd/prettylog/prettylog.go: This command configures a ConsoleWriter to display records; it does not create or alter SlogHandler attributes. Source anchor: cmd/prettylog/prettylog.go:20-37."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "event.go: Event supplies field-building and completion methods, but it contains no SlogHandler.WithAttrs accumulation or record-time application logic. Source anchor: event.go:81-96."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "log/log_example_test.go: These examples exercise the legacy log adapter; they do not use SlogHandler.WithAttrs. Source anchor: log/log_example_test.go:37-53."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package attaches HTTP request data to zerolog loggers; it does not accumulate slog handler attributes. Source anchor: hlog/hlog.go:23-37."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "event_test.go: These tests exercise Event fields and completion directly, not SlogHandler.WithAttrs state across derived handlers. Source anchor: event_test.go:22-47."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context accumulates logger fields before event creation; this is distinct from SlogHandler.WithAttrs attributes and their application to each slog record. Source anchor: context.go:11-19."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_example_test.go: This example adds HTTP request fields to a logger and emits a record; it does not configure slog handler attributes. Source anchor: hlog/hlog_example_test.go:39-53."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "array.go: Array encodes array elements and does not participate in slog handler attribute accumulation or record handling. Source anchor: array.go:18-28."
+    }
+  },
+  "h-zerolog-disc-msgf-disabled-allocation": {
+    "ctx_test.go": {
+      "relevant": false,
+      "reason": "ctx_test.go: The tests cover attaching and retrieving Logger instances from context.Context (ctx_test.go:14-40), not disabled-event Msgf behavior."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "event_test.go: The nil receiver coverage calls Msgf and MsgFunc on a nil Event; it asserts the MsgFunc callback is not called (event_test.go:159-164, 356\u2013376), directly confirming the nil-event no-op."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "slog_test.go: These tests exercise SlogHandler levels and attributes, not Logger.Msgf on a disabled logger. slog_test.go:181-203."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "log/log.go: This adapter forwards formatted messages to Logger.Debug().Msgf (log/log.go:124), but it does not explain what core Logger returns when disabled or how Event.Msgf handles nil."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "benchmark_test.go: BenchmarkDisabled measures generic disabled logging throughput (benchmark_test.go:25-31); it does not isolate Msgf allocation or explain nil Event handling."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "log.go: Logger.newEvent returns nil when should rejects a level (log.go:490-497), and should rejects disabled loggers (log.go:513-525), directly establishing how disabled logging produces a nil Event."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: The slog Handle method has its own nil-event branch (slog.go:40-45), but that is separate from the requested Logger.Msgf call path."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "binary_test.go: These examples verify binary log output for completed calls; they do not cover disabled Msgf or nil receivers. binary_test.go:20-26."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: This file builds logger context fields and arrays; it does not define disabled level checks or Event.Msgf. context.go:37-54."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "hook.go: Hook callbacks run on events and have no role in a disabled logger\u2019s nil Event or Msgf guard. hook.go:3-14."
+    },
+    "ctx.go": {
+      "relevant": false,
+      "reason": "ctx.go: This file stores/retrieves loggers in Go contexts and handles disabled logger attachment (ctx.go:33-50), not Event creation or Msgf on nil."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "globals.go: The file declares the Disabled level among global constants, but does not implement the nil Event or Msgf behavior. globals.go:11-32."
+    },
+    "sampler.go": {
+      "relevant": false,
+      "reason": "sampler.go: Sampler decisions happen after level filtering and do not define Msgf\u2019s nil receiver behavior. sampler.go:18-45."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests assert normal logger outputs and field encoding (log_test.go:19-80); they do not exercise the disabled Msgf path."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: Writer adapters only act after an event has bytes to write; they do not handle nil Events or Msgf formatting. writer.go:13-27."
+    }
+  },
+  "h-zerolog-disc-slog-group-shape": {
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: The writer interfaces forward byte payloads and optional levels (writer.go:13-27); they do not determine whether slog groups become nested objects or dotted keys."
+    },
+    "fields.go": {
+      "relevant": false,
+      "reason": "fields.go: This helper serializes map/slice fields and object marshalers (fields.go:22-50); it does not implement SlogHandler.WithGroup prefixing."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "array.go: Array methods encode array elements and nested dictionaries; they do not establish the shape produced by SlogHandler.WithGroup. array.go:20-31."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "fixtures_test.go: These fixtures supply generic serialization values; they do not assert slog group output shape. fixtures_test.go:80-100."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "log_example_test.go: These are core zerolog logging examples, not slog WithGroup records or assertions about flattened keys. log_example_test.go:16-31."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "log.go: Logger creation and level configuration do not implement slog group nesting or key flattening. log.go:490-506."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "event_test.go: These tests cover Event methods, not SlogHandler.WithGroup output shape. event_test.go:159-180."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "internal/cbor/decode_stream.go: This decoder parses CBOR values and has no SlogHandler group conversion or test assertion. internal/cbor/decode_stream.go:424-437."
+    },
+    "internal/json/float_test.go": {
+      "relevant": false,
+      "reason": "internal/json/float_test.go: These tests validate floating-point encoding edge cases, not nested slog group shape. internal/json/float_test.go:410-424."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "benchmark_test.go: These benchmarks measure event serialization throughput; they do not compare nested and dotted slog output. benchmark_test.go:25-31."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context adds zerolog fields and arrays; it does not define SlogHandler.WithGroup behavior. context.go:37-54."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_example_test.go: This example attaches HTTP request fields to ordinary log records; it does not configure slog groups or assert their shape. hlog/hlog_example_test.go:61-73."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "event.go: Event encodes fields after the slog handler has chosen attribute keys; it does not decide how WithGroup maps keys. event.go:21-32."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_test.go: These tests cover HTTP middleware and request fields, not slog group structure. hlog/hlog_test.go:350-365."
+    }
+  },
+  "h-zerolog-disc-write-method": {
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_test.go: These tests exercise HTTP request logging and middleware; they do not inspect New\u2019s writer type assertion. hlog/hlog_test.go:350-365."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: SlogHandler creates and completes Events, but does not implement Logger.New\u2019s LevelWriter selection. slog.go:38-60."
+    },
+    "writer_test.go": {
+      "relevant": true,
+      "reason": "writer_test.go: The test writer implements both Write and WriteLevel (writer_test.go:31-43), and the syslog routing test asserts level-aware delivery for emitted events (writer_test.go:45-62), exercising the alternative method."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "event_test.go: Event tests construct Events with a LevelWriterAdapter and invoke write/Msg paths (event_test.go:35-43, 67\u201380), supporting the event\u2019s final writer dispatch behavior."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests assert serialized logger output but use ordinary buffers; they do not distinguish New\u2019s LevelWriter branch or the method called. log_test.go:19-47."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "event.go: Event.write sends an encoded record through its writer and dispatches to WriteLevel when the writer supports that interface (event.go:81-100), directly answering which method receives the event."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "benchmark_test.go: The benchmarks compare event-building throughput, not LevelWriter implementation selection. benchmark_test.go:25-31."
+    },
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "diode/diode.go: Diode.Writer is an io.Writer wrapper with its own queue (diode/diode.go:27-34); it does not show how Logger.New recognizes LevelWriter."
+    },
+    "diode/diode_test.go": {
+      "relevant": false,
+      "reason": "diode/diode_test.go: These tests verify asynchronous diode delivery; they do not assert New\u2019s LevelWriter type assertion. diode/diode_test.go:19-35."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "log/log_example_test.go: These examples use the legacy log adapter and do not test New with a LevelWriter. log/log_example_test.go:110-125."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context builds child logger fields and has no role in the output writer type assertion. context.go:37-54."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package injects request loggers and updates their fields; it does not handle LevelWriter selection. hlog/hlog.go:24-38."
+    }
+  },
+  "h-zerolog-exact-context-array": {
+    "binary_test.go": {
+      "relevant": true,
+      "reason": "binary_test.go: The Context.Array example constructs an array with ctx.CreateArray and embeds it in the logger context (binary_test.go:431-440), directly confirming the method name and usage."
+    },
+    "array.go": {
+      "relevant": true,
+      "reason": "array.go: Array stores the stack flag, Go context, and hook slice (array.go:22-31), identifying the state fields that a Context-created Array carries."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "event_test.go: These tests cover Event marshaling and nil Event receivers (event_test.go:159-180); they do not test Context.CreateArray metadata."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "event.go: The Event.CreateArray counterpart copies stack, ctx, and hooks into an Array (event.go:212-223), providing the closely related implementation mechanism for the requested Context method."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests cover ordinary field values and Logger output, not Context-created arrays carrying metadata. log_test.go:19-47."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: This file adapts slog records and attributes; it does not create Context arrays. slog.go:38-60."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "log.go: Logger stores stack, Go context, and hooks as state (log.go:230-238), the source values that a Context-created Array carries."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "hook.go: This file defines hook callbacks, but does not show the Context method assigning logger hooks into an Array. hook.go:3-14."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: HTTP middleware copies loggers and attaches request fields (hlog/hlog.go:23-33); it does not implement Context.CreateArray."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: Writer adapters handle encoded output and do not participate in constructing Context arrays. writer.go:13-27."
+    },
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "hook_test.go: These tests exercise hooks across logger levels and Go contexts (hook_test.go:138-154, 206\u2013264), not Context.CreateArray\u2019s assignments."
+    },
+    "context_test.go": {
+      "relevant": false,
+      "reason": "context_test.go: These tests cover error and stack marshaling on Context (context_test.go:13-31 onward), but do not test CreateArray or its copied metadata."
+    },
+    "pkgerrors/stacktrace_test.go": {
+      "relevant": false,
+      "reason": "pkgerrors/stacktrace_test.go: These tests verify stack-trace serialization through errors; they do not establish the Context array builder\u2019s stored state. pkgerrors/stacktrace_test.go:47-63."
+    },
+    "log_example_test.go": {
+      "relevant": true,
+      "reason": "log_example_test.go: The Context_Array example calls ctx.CreateArray and supplies its result to ctx.Array (log_example_test.go:426-437), directly demonstrating the queried method in use."
+    }
+  },
+  "h-zerolog-exact-diode-selection": {
+    "diode/internal/diodes/waiter.go": {
+      "relevant": true,
+      "reason": "diode/internal/diodes/waiter.go: Waiter implements the condition-based reader selected as the no-polling alternative (diode/internal/diodes/waiter.go:8-10, 29\u201338, 55\u201378), describing one branch\u2019s mechanism."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "writer_test.go: These tests exercise syslog and filtered level writers; they do not cover diode.NewWriter\u2019s interval-based branch. writer_test.go:209-227."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_test.go: These tests cover HTTP logging fields and middleware, not diode polling selection. hlog/hlog_test.go:350-365."
+    },
+    "console_test.go": {
+      "relevant": false,
+      "reason": "console_test.go: These tests cover ConsoleWriter formatting and ordering, unrelated to diode reader selection. console_test.go:17-22."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "event.go: Event writes completed records to its output; it does not choose a diode poller or waiter. event.go:21-32."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "console.go: ConsoleWriter formats JSON records and has no diode NewWriter selection logic. console.go:186-215."
+    },
+    "diode/internal/diodes/poller.go": {
+      "relevant": true,
+      "reason": "diode/internal/diodes/poller.go: Poller repeatedly checks TryNext and sleeps for its configured interval (diode/internal/diodes/poller.go:14-18, 24\u201329, 56\u201370), describing the polling branch\u2019s mechanism."
+    },
+    "diode/internal/diodes/many_to_one.go": {
+      "relevant": false,
+      "reason": "diode/internal/diodes/many_to_one.go: ManyToOne is the shared ring buffer used behind the reader, not the NewWriter condition that chooses poller versus waiter. diode/internal/diodes/many_to_one.go:41-70."
+    },
+    "diode/internal/diodes/one_to_one.go": {
+      "relevant": false,
+      "reason": "diode/internal/diodes/one_to_one.go: OneToOne is a separate diode implementation; its writer/reader mechanics do not show NewWriter\u2019s pollInterval selection. diode/internal/diodes/one_to_one.go:35-62."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "internal/cbor/decode_stream.go: This file decodes CBOR values and is unrelated to the diode reader strategy. internal/cbor/decode_stream.go:424-437."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "array.go: Array marshaling is unrelated to selecting a queue consumer. array.go:20-31."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "log.go: Logger level and event handling do not decide between diode.NewPoller and NewWaiter. log.go:490-506."
+    },
+    "hlog/internal/mutil/writer_proxy.go": {
+      "relevant": false,
+      "reason": "hlog/internal/mutil/writer_proxy.go: This proxy serializes writes to an HTTP logging writer; it is a separate concurrency mechanism from diode.NewWriter. hlog/internal/mutil/writer_proxy.go:1-28."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: These are generic output writer wrappers and do not choose the diode consumer implementation. writer.go:13-27."
+    },
+    "diode/diode_example_test.go": {
+      "relevant": false,
+      "reason": "diode/diode_example_test.go: The example passes a zero poll interval to NewWriter (diode/diode_example_test.go:13-17), but it does not assert or explain which implementation NewWriter selects."
+    },
+    "diode/diode_test.go": {
+      "relevant": false,
+      "reason": "diode/diode_test.go: The tests exercise NewWriter with interval zero and delivery (diode/diode_test.go:19-37) but do not inspect the selected waiter/poller implementation or compare the branch."
+    }
+  },
+  "h-zerolog-exact-msgfunc": {
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "log/log_example_test.go: This example uses Msgf with a format string (log/log_example_test.go:120), not Event.MsgFunc\u2019s lazy callback or nil-receiver behavior."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests cover Logger output and fields, but contain no Event.MsgFunc callback or nil receiver assertion. log_test.go:19-47."
+    },
+    "cmd/lint/lint.go": {
+      "relevant": false,
+      "reason": "cmd/lint/lint.go: The linter recognizes Msg and Msgf as chain finishers (cmd/lint/lint.go:16-21, 124\u2013133), but does not identify MsgFunc or describe its nil receiver guard."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: SlogHandler.Handle completes its event with Msg(record.Message) (slog.go:71-72); it does not use MsgFunc or cover a nil receiver."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: HTTP middleware updates logger context fields; it does not invoke Event.MsgFunc. hlog/hlog.go:24-38."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "log_example_test.go: The examples use Msg, Send, or Msgf to complete log events; they do not show a callback-based MsgFunc call or nil-event semantics. log_example_test.go:16-31."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "log.go: Logger creates events by level, but this file does not define Event.MsgFunc or its nil-receiver behavior. log.go:490-506."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "array.go: Array methods build structured values and have no message callback or Event receiver. array.go:20-31."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "binary_test.go: These tests demonstrate ordinary completed binary log calls; they do not test MsgFunc or nil receiver behavior. binary_test.go:20-26."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context methods add logger-level fields; they do not define the Event.MsgFunc callback method. context.go:37-54."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: Writer adapters accept encoded bytes after completion; they do not implement Event.MsgFunc or its nil guard. writer.go:13-27."
+    }
+  },
+  "h-zerolog-exact-sanitize-prefix": {
+    "internal/cbor/cbor.go": {
+      "relevant": false,
+      "reason": "internal/cbor/cbor.go: This file encodes CBOR tags and integer prefixes (internal/cbor/cbor.go:34, 74); it does not sanitize journald field names."
+    },
+    "internal/cbor/time.go": {
+      "relevant": false,
+      "reason": "internal/cbor/time.go: This file encodes time and duration values into CBOR; its type-prefix calls are unrelated to journald key normalization. internal/cbor/time.go:46-55."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "log.go: Logger setup and event filtering do not sanitize keys for journald output. log.go:490-506."
+    },
+    "internal/cbor/base.go": {
+      "relevant": false,
+      "reason": "internal/cbor/base.go: This file provides CBOR primitive encoding helpers, not journald key sanitization. internal/cbor/base.go:11-19."
+    },
+    "internal/cbor/string.go": {
+      "relevant": false,
+      "reason": "internal/cbor/string.go: This file encodes CBOR strings and byte strings; it does not normalize journald keys. internal/cbor/string.go:22-37."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "slog_test.go: These tests cover slog handler levels, attributes and group keys, not journald key sanitization. slog_test.go:181-203."
+    },
+    "internal/json/base.go": {
+      "relevant": false,
+      "reason": "internal/json/base.go: This file implements JSON primitive encoding, not journald field-name transformation. internal/json/base.go:11-19."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: Context methods store structured log fields; they do not sanitize keys for journald. context.go:37-54."
+    },
+    "journald/journald_windows_test.go": {
+      "relevant": false,
+      "reason": "journald/journald_windows_test.go: This platform-specific test checks journald writer behavior on Windows; it contains no key sanitization cases or expected prefix values. journald/journald_windows_test.go:5-14."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: SlogHandler converts attribute names into zerolog field keys, but does not apply journald\u2019s environment key normalization. slog.go:38-60."
+    },
+    "internal/json/base_test.go": {
+      "relevant": false,
+      "reason": "internal/json/base_test.go: These tests verify JSON base encoding, not journald key sanitation. internal/json/base_test.go:8-20."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests assert generic logger field serialization; they do not pass keys through journald sanitization. log_test.go:19-47."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "event.go: Event stores and encodes field keys for the configured encoder, but does not apply journald-specific normalization. event.go:21-32."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "internal/cbor/decode_stream.go: This file decodes CBOR streams and has no journald key sanitizer or prefix rule. internal/cbor/decode_stream.go:424-437."
+    },
+    "internal/cbor/types.go": {
+      "relevant": false,
+      "reason": "internal/cbor/types.go: This file encodes CBOR primitive types and prefixes; its prefixes are binary format markers, not the requested journald key prefix. internal/cbor/types.go:478-492."
+    }
+  },
+  "h-zerolog-exact-update-context": {
+    "context.go": {
+      "relevant": false,
+      "reason": "context.go: This file implements Context field methods and Context.Logger (context.go:11-26), but does not define Logger.UpdateContext or document its concurrency safety."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: This file adapts slog levels and attributes; it does not mutate a Logger\u2019s existing contextual fields through UpdateContext. slog.go:38-60."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": true,
+      "reason": "hlog/hlog_test.go: The HTTP handler tests invoke UpdateContext through request middleware (hlog/hlog_test.go:358), directly exercising the existing-logger field update use case."
+    },
+    "fields.go": {
+      "relevant": false,
+      "reason": "fields.go: appendFields serializes field maps and slices (fields.go:22-40); it is a helper, not the Logger callback API or its concurrency contract."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "event_test.go: These tests cover event marshaling and Event receiver behavior; they do not test Logger.UpdateContext. event_test.go:159-180."
+    },
+    "internal/cbor/types.go": {
+      "relevant": false,
+      "reason": "internal/cbor/types.go: This file encodes CBOR types and has no logger context mutation or concurrency behavior. internal/cbor/types.go:478-492."
+    },
+    "log_example_test.go": {
+      "relevant": false,
+      "reason": "log_example_test.go: The examples show creating loggers with pre-attached fields; they do not use UpdateContext\u2019s callback API. log_example_test.go:16-31."
+    },
+    "sampler.go": {
+      "relevant": false,
+      "reason": "sampler.go: This file controls event sampling, unrelated to mutating a Logger\u2019s contextual fields. sampler.go:18-45."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "slog_test.go: These tests cover the slog handler and group attributes, not Logger.UpdateContext. slog_test.go:181-203."
+    },
+    "hlog/hlog.go": {
+      "relevant": true,
+      "reason": "hlog/hlog.go: The middleware calls UpdateContext with a callback that adds request fields (hlog/hlog.go:36-46, 50\u201360, 64\u201374); NewHandler\u2019s comment says it copies the logger to prevent a data race (hlog/hlog.go:23-33), directly grounding the concurrency caveat."
+    },
+    "hook.go": {
+      "relevant": false,
+      "reason": "hook.go: Hook callbacks run on events and do not update logger contextual fields through the API in question. hook.go:3-14."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "log_test.go: These tests exercise regular logger output and fields; they do not test or document UpdateContext concurrency. log_test.go:19-47."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "writer.go: Writer synchronization wrappers protect output calls, not concurrent mutation of Logger context fields. writer.go:13-27."
+    }
+  },
+  "h-zerolog-exact-warning-level": {
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "internal/cbor/decode_stream.go: This file parses CBOR values and IP prefixes; it does not parse zerolog levels. internal/cbor/decode_stream.go:424-437."
+    },
+    "sampler.go": {
+      "relevant": false,
+      "reason": "sampler.go: This file samples events by level but does not parse level strings or custom numeric level ranges. sampler.go:18-45."
+    },
+    "internal/testcases.go": {
+      "relevant": false,
+      "reason": "internal/testcases.go: These are encoder test vectors, including signed integer values (for internal/testcases.go:81); they do not test ParseLevel acceptance or errors."
+    },
+    "journald/journald.go": {
+      "relevant": false,
+      "reason": "journald/journald.go: Journald converts output level labels into journal priorities (journald/journald.go:53), but it discards ParseLevel\u2019s error and does not establish the parser\u2019s accepted numeric range or out-of-range result."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "slog.go: This file maps slog levels to zerolog levels; it does not parse custom numeric level strings. slog.go:38-60."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "console.go: ConsoleWriter parses a serialized level string through ParseLevel (console.go:488), but does not define or assert the numeric range and out-of-range return behavior."
+    },
+    "journald/journald_test.go": {
+      "relevant": false,
+      "reason": "journald/journald_test.go: These tests verify journald key sanitization and output mapping, not ParseLevel\u2019s custom numeric bounds. journald/journald_test.go:55-80."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "globals.go: This file declares named level constants and serialized level values; it does not define ParseLevel\u2019s numeric validation. globals.go:11-32."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "hlog/hlog_test.go: These tests cover HTTP logging handlers and fields, not numeric parsing of custom log levels. hlog/hlog_test.go:350-365."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "log/log.go: This adapter exposes logger level configuration but does not parse numeric level strings or test ParseLevel bounds. log/log.go:118-128."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "log/log_example_test.go: These examples demonstrate legacy log output and formatting, not ParseLevel\u2019s numeric range. log/log_example_test.go:110-125."
+    },
+    "console_test.go": {
+      "relevant": false,
+      "reason": "console_test.go: These tests verify ConsoleWriter formatting, not the custom numeric level parser\u2019s boundary behavior. console_test.go:17-22."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "hlog/hlog.go: This package adds request metadata and middleware around loggers; it does not parse custom level strings. hlog/hlog.go:24-38."
+    }
+  },
+  "h-zerolog-impact-diode-pool-cap": {
+    "diode/internal/diodes/many_to_one.go": {
+      "relevant": false,
+      "reason": "The ring buffer implementation stores queued items but does not copy or pool the byte slices after the consumer writes them (diode/internal/diodes/many_to_one.go:11-41)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "This file caps reuse for TriggerLevelWriter buffers, a different writer pool from the asynchronous diode byte-buffer pool (writer.go:337-350)."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "putEvent caps Event objects in eventPool; it does not enforce the diode writer\u2019s byte-slice reuse rule (event.go:34-53)."
+    },
+    "journald/journald_test.go": {
+      "relevant": false,
+      "reason": "These tests assert journald serialization and priority results, not how diode buffers are retained (journald/journald_test.go:124-155)."
+    },
+    "internal/cbor/types_64_test.go": {
+      "relevant": false,
+      "reason": "The 64-bit integer encoding cases test CBOR representation, not buffer capacity or pool admission (internal/cbor/types_64_test.go:24-34)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "The disabled-level test checks logger filtering and has no diode writer or pooled-buffer size assertion (log_test.go:937-962)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "The 64 KiB constant here governs TriggerLevelWriterBufferReuseLimit, not diode.bufPool (globals.go:168-173)."
+    },
+    "internal/json/types_test.go": {
+      "relevant": false,
+      "reason": "These cases verify JSON interface encoding and do not exercise the asynchronous writer pool (internal/json/types_test.go:105-129)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "The nil-event and event lifecycle tests do not assert the diode writer\u2019s buffer reuse limit (event_test.go:49-59)."
+    },
+    "internal/cbor/types_test.go": {
+      "relevant": false,
+      "reason": "These tests exercise CBOR scalar and interface encodings, not the diode writer buffer pool (internal/cbor/types_test.go:72-109)."
+    },
+    "diode/internal/diodes/poller.go": {
+      "relevant": false,
+      "reason": "Poller controls how queued data is retrieved; it has no byte-buffer copy or pool return path (diode/internal/diodes/poller.go:14-29)."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "The global logger examples demonstrate level and message calls, without a diode writer or capacity behavior (log/log_example_test.go:37-52)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "Slog tests assert record conversion and attribute shape, not asynchronous buffer reuse (slog_test.go:41-56)."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "These HTTP middleware tests inspect request fields and do not construct or inspect diode buffer pools (hlog/hlog_test.go:30-44)."
+    },
+    "diode/diode_example_test.go": {
+      "relevant": false,
+      "reason": "The example demonstrates using NewWriter and closing it, but does not expose the copy buffer\u2019s pool cutoff (diode/diode_example_test.go:13-22)."
+    },
+    "diode/diode_test.go": {
+      "relevant": false,
+      "reason": "These tests check emitted records and Close behavior, without asserting the buffer capacity condition before pool return (diode/diode_test.go:19-35)."
+    },
+    "diode/internal/diodes/waiter.go": {
+      "relevant": false,
+      "reason": "Waiter wakes the consumer when data arrives; it does not own the copied byte buffers or decide their reuse (diode/internal/diodes/waiter.go:10-39)."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "putArray applies a separate 64 KiB limit to Array objects in arrayPool, not the diode writer\u2019s byte slices (array.go:20-44)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger.Print and level methods create log events but do not control diode buffer copying or pool admission (log.go:456-480)."
+    }
+  },
+  "h-zerolog-impact-slog-disabled": {
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The compatibility package forwards formatted calls through the global logger; it does not define nil Event callback handling (log/log.go:118-128)."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "Array methods build structured array values and contain no disabled Logger event or message callback path (array.go:20-31)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "These tests cover SlogHandler levels and attributes, not nil Event.MsgFunc behavior or lazy callback assertions (slog_test.go:41-56)."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "ConsoleWriter formats already serialized records and cannot establish whether disabled Logger levels yield nil Events (console.go:122-145)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "The Disabled level constant names a level but does not show callback guarding or its regression test (globals.go:11-32)."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "The benchmarks measure logging and encoding costs rather than nil-guarded message callback semantics (benchmark_test.go:179-188)."
+    },
+    "ctx_test.go": {
+      "relevant": false,
+      "reason": "Context retrieval tests do not cover disabled logger events or MsgFunc callback execution (ctx_test.go:14-40)."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "These examples show completed ordinary events; none asserts that a disabled event skips a lazy callback (binary_test.go:83-103)."
+    },
+    "error_marshal_test.go": {
+      "relevant": false,
+      "reason": "These cases exercise error marshaling and stack fields, not disabled message callback execution (error_marshal_test.go:1-25)."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "This file defines reusable serialization fixtures; it has no disabled-level or lazy callback assertion (fixtures_test.go:12-24)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context methods attach fields and create child values, not nil Events or message callbacks (context.go:17-30)."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "TestDisabledLevel checks filtered logger behavior, grounding the disabled path whose nil Event makes callback guards matter; it does not itself test MsgFunc laziness (log_test.go:937-962)."
+    }
+  },
+  "h-zerolog-impact-warning-alias": {
+    "fields.go": {
+      "relevant": true,
+      "reason": "appendObject invokes LogObjectMarshaler for structured object encoding, the encoding path reached when Event.Interface dispatches to Object (fields.go:44-54)."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "The Interface field case supplies fixtureObj and asserts the serialized object field, directly exercising this dispatch path (log_test.go:664-710)."
+    },
+    "internal/testcases.go": {
+      "relevant": false,
+      "reason": "These shared cases describe primitive CBOR values and do not include an Event.Interface LogObjectMarshaler assertion (internal/testcases.go:1-30)."
+    },
+    "ctx_test.go": {
+      "relevant": false,
+      "reason": "The interface-marshaler test here is for logger Context fields, not Event.Interface\u2019s event field behavior (ctx_test.go:80-100)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context.Interface has its own dispatch to Context.Object; it does not implement the Event.Interface branch asked about (context.go:436-441)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger configuration and level methods do not decide how Event.Interface encodes a marshaler value (log.go:450-480)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "Slog attribute tests check handler output and do not supply a LogObjectMarshaler to Event.Interface (slog_test.go:96-120)."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "Array.Interface dispatches array elements to Array.Object, a separate API from the Event field method in question (array.go:238-243)."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "Interface(Object) benchmark cases measure speed but do not assert the changed JSON/CBOR shape or serve as the requested test case (benchmark_test.go:179-188)."
+    },
+    "context_test.go": {
+      "relevant": false,
+      "reason": "Context.Interface tests concern logger-level fields and cannot verify the Event.Interface test case (context_test.go:70-100)."
+    }
+  },
+  "h-zerolog-trace-dict-array": {
+    "array.go": {
+      "relevant": true,
+      "reason": "Array.Dict shows the same nested-event finalization step: append an end marker, append the encoded dictionary, then call putEvent to dispose it (array.go:265-270)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These assertions cover syslog severity routing and CEE prefixes, not nested dictionary Event cleanup (syslog_test.go:54-74)."
+    },
+    "binary_test.go": {
+      "relevant": true,
+      "reason": "ExampleContext_Dict demonstrates the queried Context.Dict call with a CreateDict Event and completed output (binary_test.go:417-430)."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "Event.Dict appends the nested event\u2019s end marker and encoded bytes; putEvent clears its state and returns eligible buffers to eventPool (event.go:182-190; event.go:34-53)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "Logger output tests do not trace Context.Dict\u2019s temporary Event disposal or assert that it is returned after embedding (log_test.go:101-128)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "Slog handler tests exercise record and attribute conversion, not Context.Dict nested Event lifecycle (slog_test.go:41-56)."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "The dictionary test builds a temporary Event with CreateDict and passes it to Dict, directly exercising this nested-event path (event_test.go:280-300)."
+    },
+    "log_example_test.go": {
+      "relevant": true,
+      "reason": "ExampleContext_Dict shows the logger-context API creating and attaching the dictionary Event (log_example_test.go:412-426)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global adapter exposes logging convenience methods and does not finalize nested dictionary Events (log/log.go:19-30)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger.With configures logger context but the Context.Dict append and temporary Event disposal are implemented elsewhere (log.go:280-315)."
+    }
+  },
+  "h-zerolog-trace-diode-lifecycle": {
+    "error_marshal_test.go": {
+      "relevant": false,
+      "reason": "Error stack tests exercise event field encoding, not the asynchronous diode consumer or its Close synchronization (error_marshal_test.go:1-25)."
+    },
+    "diode/internal/diodes/poller.go": {
+      "relevant": true,
+      "reason": "Poller.Next repeatedly consumes queued data and exits when its polling context is done, the consumer mechanism used by positive-interval diode writers (diode/internal/diodes/poller.go:55-80)."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "These tests cover LevelWriter adapters and trigger-buffer behavior, not diode.NewWriter\u2019s background consumer lifecycle (writer_test.go:284-299)."
+    },
+    "internal/cbor/types_test.go": {
+      "relevant": false,
+      "reason": "CBOR type tests validate encoding primitives and have no relation to diode queue consumption or Close (internal/cbor/types_test.go:72-98)."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "This example wires HTTP handlers to a request logger and does not use a diode writer (hlog/hlog_example_test.go:20-40)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger methods create and finalize events but do not forward records through diode or wait for its consumer (log.go:450-480)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "The logger tests cover level and output behavior without exercising diode writer shutdown and destination closing (log_test.go:876-905)."
+    },
+    "diode/diode_example_test.go": {
+      "relevant": true,
+      "reason": "The example constructs diode.NewWriter, emits a log line, then calls Close before observing the wrapped output (diode/diode_example_test.go:13-22)."
+    },
+    "hlog/internal/mutil/writer_proxy.go": {
+      "relevant": false,
+      "reason": "This proxy adapts HTTP ResponseWriter interfaces; it has no diode queue or background shutdown handling (hlog/internal/mutil/writer_proxy.go:58-77)."
+    },
+    "diode/diode_test.go": {
+      "relevant": true,
+      "reason": "TestNewWriter verifies a queued record reaches the wrapped buffer after Close, and TestClose exercises shutdown of a writer (diode/diode_test.go:19-40)."
+    },
+    "diode/internal/diodes/waiter.go": {
+      "relevant": true,
+      "reason": "Waiter.Next blocks for queued data and returns nil after its context is canceled, explaining the zero-interval consumer shutdown path (diode/internal/diodes/waiter.go:30-49)."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "HTTP middleware adds request metadata to zerologgers and does not manage diode consumer lifecycle (hlog/hlog.go:19-38)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "The Close methods here belong to level and trigger writers; they do not wait for diode.poll or close its wrapped destination (writer.go:329-350)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests verify syslog severity output and adapter Close, not diode background-consumer completion (syslog_test.go:191-222)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logger adapter delegates convenience calls but does not create or close diode writers (log/log.go:19-30)."
+    }
+  },
+  "h-zerolog-trace-journald-write": {
+    "context.go": {
+      "relevant": false,
+      "reason": "Context methods attach fields before serialization, but do not map a completed JSON record to journald priority and arguments (context.go:111-127)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests assert syslog writer severity calls, a different backend from journald\u2019s priority and argument mapping (syslog_test.go:54-74)."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "SlogHandler maps slog records into zerolog Events; it does not convert serialized events into journald calls (slog.go:40-65)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logging adapter creates zerolog events but contains no journald writer conversion (log/log.go:19-30)."
+    },
+    "journald/journald_test.go": {
+      "relevant": true,
+      "reason": "WriteWithAllLevels and WriteOutputs assert journald priority, key/value arguments, and the serialized JSON payload passed as the message (journald/journald_test.go:155-235)."
+    },
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "The diode writer copies and asynchronously forwards byte slices; it does not decode records into journald priority or key/value arguments (diode/diode.go:51-80)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "Event tests verify event encoding and writer dispatch, not journald\u2019s backend argument mapping (event_test.go:379-397)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger event creation and Print methods do not implement journald\u2019s JSON-to-priority conversion (log.go:456-480)."
+    },
+    "internal/json/types_test.go": {
+      "relevant": false,
+      "reason": "These tests validate JSON primitive/interface encoding, not journald priority or its extra original-record argument (internal/json/types_test.go:105-129)."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "Global logger examples demonstrate ordinary log calls, without inspecting the journald writer\u2019s arguments (log/log_example_test.go:37-52)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "These tests assert SlogHandler\u2019s event shape; they do not inspect journald SendFunc arguments (slog_test.go:41-56)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "Core logger output tests stop at serialized event bytes and do not exercise the journald writer adapter (log_test.go:19-51)."
+    }
+  },
+  "h-zerolog-trace-print-event": {
+    "event.go": {
+      "relevant": true,
+      "reason": "CallerSkipFrame stores an additional frame skip that the Print method applies before emitting the event, supporting the adjusted-caller step (event.go:847-856)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "This package-level adapter has separate Print forwarding behavior; it does not implement the receiver method Logger.Print being traced (log/log.go:35-52)."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "HTTP middleware and request field handlers do not call Logger.Print or determine its message/caller adjustment (hlog/hlog.go:19-38)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "The core logger tests cover field, level, and output behavior but provide no Logger.Print-specific assertion (log_test.go:19-51)."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "The global package Print example exercises a different package-level convenience function, not the Logger receiver method (log/log_example_test.go:37-45)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context methods configure persistent fields and hooks; they do not define Logger.Print\u2019s level or formatting (context.go:11-30)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "Writer adapters receive serialized output after Logger.Print has chosen its event behavior (writer.go:15-32)."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "These tests validate HTTP request handlers and metadata, with no Logger.Print caller or message assertion (hlog/hlog_test.go:30-44)."
+    },
+    "internal/cbor/time_test.go": {
+      "relevant": false,
+      "reason": "Time encoding cases verify CBOR timestamp representation, not Print formatting or call-site adjustment (internal/cbor/time_test.go:1-25)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "Event tests cover event-level methods but do not invoke the Logger.Print convenience method (event_test.go:379-397)."
+    },
+    "log_example_test.go": {
+      "relevant": true,
+      "reason": "The Logger.Print example demonstrates the emitted debug event and the text produced from its arguments (log_example_test.go:80-91)."
+    },
+    "binary_test.go": {
+      "relevant": true,
+      "reason": "ExampleLogger_Print checks the debug-level output produced by Logger.Print, providing an executable example of the convenience path (binary_test.go:83-92)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "globals.go assigns display colors and labels to level values, but the implementation of Logger.Print already names Debug directly and this file does not trace Print or caller adjustment (globals.go:149-163)."
+    },
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "Hook tests assert hook callback and event behavior, not Logger.Print\u2019s message formatting or caller skip (hook_test.go:1-20)."
+    }
+  },
+  "h-zerolog-trace-slog-handle": {
+    "ctx.go": {
+      "relevant": false,
+      "reason": "This file attaches Logger values to Go contexts; Handle attaches the supplied context to the Event instead (ctx.go:12-32)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logger adapter exposes package-level calls but does not implement SlogHandler.Handle\u2019s level or attribute conversion (log/log.go:19-30)."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "Logger.WithLevel creates an Event for the mapped severity, which is the event source used by SlogHandler.Handle (log.go:421-434)."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "These examples demonstrate core logging calls and marshaling, not slog Record conversion (binary_test.go:83-103)."
+    },
+    "syslog.go": {
+      "relevant": false,
+      "reason": "SyslogWriter maps completed zerolog levels to syslog calls, downstream of SlogHandler\u2019s event construction (syslog.go:44-65)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "LevelWriter interfaces govern event output after Handle finishes building its Event; they do not map slog records (writer.go:15-32)."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "HTTP handlers attach request-derived logger fields and do not participate in SlogHandler.Handle (hlog/hlog.go:19-38)."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "Event.Ctx attaches the supplied context, event fields accept converted attributes, and Msg finalizes the record (event.go:499-510; event.go:115-155)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "These tests assert ordinary zerolog levels and fields, not the SlogHandler.Handle record path (log_test.go:19-51)."
+    },
+    "slog_test.go": {
+      "relevant": true,
+      "reason": "SlogHandler tests assert mapped levels, attrs, and emitted messages, directly checking the handler\u2019s event output (slog_test.go:41-120)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests check syslog output after logging and contain no slog.Handle context or attribute assertions (syslog_test.go:54-74)."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "The example builds an HTTP request logger and does not create or call a SlogHandler (hlog/hlog_example_test.go:20-40)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context.Ctx stores context on a Logger, while the requested path is Record context attached to an Event in Handle (context.go:232-238)."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "The event context tests verify context attachment and access used by Handle\u2019s context propagation step (event_test.go:90-120)."
+    }
+  },
+  "h-zerolog-trace-warning-parse-test": {
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "Hook tests verify event callback behavior and do not parse level strings or exercise the WARNING alias regression (hook_test.go:1-20)."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "These examples build log events and do not call ParseLevel with WARNING (binary_test.go:83-103)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "The level declarations name WarnLevel but do not parse the WARNING text or assert its returned error (globals.go:11-32)."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "Serialization fixtures provide sample field values and do not contain parser inputs or expected ParseLevel outcomes (fixtures_test.go:12-24)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "Event tests exercise event lifecycle and fields; they do not test public level parsing (event_test.go:379-397)."
+    },
+    "journald/journald.go": {
+      "relevant": false,
+      "reason": "The journald adapter parses serialized level names for priority routing, but it contains no WARNING alias regression or public parser result assertion (journald/journald.go:52-75)."
+    },
+    "syslog.go": {
+      "relevant": false,
+      "reason": "Syslog routes numeric Level values to syslog severities and does not parse the public WARNING string (syslog.go:44-65)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests validate syslog routing for Level values, not ParseLevel\u2019s case-insensitive alias and error result (syslog_test.go:124-180)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "Writer interfaces and adapters handle output bytes; they do not parse log-level text (writer.go:15-32)."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "Event methods consume already-selected Level values and do not implement string parsing or the WARNING regression case (event.go:81-103)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logger adapter forwards logging calls and does not expose or test the ParseLevel parser (log/log.go:19-30)."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "The CBOR decoder parses serialized data types, not zerolog level strings or their aliases (internal/cbor/decode_stream.go:424-437)."
+    }
+  }
+}

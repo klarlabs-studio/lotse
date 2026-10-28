@@ -1,0 +1,29 @@
+{
+  "judge_id": "zerolog-2-independent-source-review",
+  "model": "gpt-6-luna",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "9b480a1e676d28fde0c7f8711f5d86b19d9024b1f80fcda02d398c3aa7173287",
+  "source_manifest_sha256": "5bebbe70bd709485f9ef83008c3ee625f90e29f0461d49a8444bc7070bc48dd1",
+  "judgments_sha256": "38b46aa66fcbcc6bfc0978fa3437945caabcb2534bdc059d318bdf23848972de",
+  "reviewed_query_ids": [
+    "h-zerolog-disc-msgf-disabled-allocation",
+    "h-zerolog-disc-slog-group-shape",
+    "h-zerolog-disc-write-method",
+    "h-zerolog-exact-context-array",
+    "h-zerolog-exact-diode-selection",
+    "h-zerolog-exact-msgfunc",
+    "h-zerolog-exact-sanitize-prefix",
+    "h-zerolog-exact-update-context",
+    "h-zerolog-exact-warning-level"
+  ],
+  "pair_count": 123,
+  "unresolved_issues": [],
+  "limitations": [
+    "No API token or cost accounting is available from the session tools.",
+    "All 88 source-manifest hashes and all cited source line bounds were checked.",
+    "The review certifies relevance of supplied pairs only; the following direct sources were absent from their pools and therefore could not be considered by the retrieval set: slog.go and the WithGroup assertion test for the group-shape query; log.go for New LevelWriter construction; context.go for Context.CreateArray; diode/diode.go for NewWriter selection; event.go and event_test.go for MsgFunc; journald/journald.go and journald/journald_test.go for prefix sanitization; log.go for UpdateContext API contract and ParseLevel bounds. These omissions are retrieval coverage limitations, not uncertainty about the supplied pairs."
+  ]
+}

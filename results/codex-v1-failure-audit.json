@@ -1,0 +1,756 @@
+{
+  "batch": "codex-v1",
+  "mode": "offline_saved_artifacts_only",
+  "cases": [
+    {
+      "trial": "codex-v1-undici-5520-graphify_orient-2",
+      "task": "undici-5520",
+      "arm": "graphify_orient",
+      "attempt": 2,
+      "passed": false,
+      "agent_called_finish": false,
+      "reported_tokens": 110236,
+      "cached_input_tokens": 89088,
+      "native_reply_content_tokens_cl100k": 10784,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "search",
+        "read",
+        "read",
+        "read",
+        "finish"
+      ],
+      "successful_edit_paths": [],
+      "overlapping_requested_read_lines": 28,
+      "failed_tests": []
+    },
+    {
+      "trial": "codex-v1-undici-5520-graf_current_orient-2",
+      "task": "undici-5520",
+      "arm": "graf_current_orient",
+      "attempt": 2,
+      "passed": false,
+      "agent_called_finish": true,
+      "reported_tokens": 204132,
+      "cached_input_tokens": 172800,
+      "native_reply_content_tokens_cl100k": 11808,
+      "operations": [
+        "orient",
+        "retrieve",
+        "search",
+        "read",
+        "retrieve",
+        "read",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "retrieve",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "lib/dispatcher/client-h1.js"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 10,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": true,
+          "expected_argument_error_visible": true,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-undici-5520-search_only-2",
+      "task": "undici-5520",
+      "arm": "search_only",
+      "attempt": 2,
+      "passed": false,
+      "agent_called_finish": true,
+      "reported_tokens": 129265,
+      "cached_input_tokens": 97152,
+      "native_reply_content_tokens_cl100k": 9505,
+      "operations": [
+        "search",
+        "read",
+        "read",
+        "search",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "lib/dispatcher/client-h1.js"
+      ],
+      "overlapping_requested_read_lines": 18,
+      "failed_tests": [
+        {
+          "tool_number": 8,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": true,
+          "expected_argument_error_visible": true,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-click-1884-search_only-1",
+      "task": "click-1884",
+      "arm": "search_only",
+      "attempt": 1,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 178754,
+      "cached_input_tokens": 144640,
+      "native_reply_content_tokens_cl100k": 7057,
+      "operations": [
+        "search",
+        "read",
+        "read",
+        "search",
+        "read",
+        "search",
+        "test",
+        "read",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "src/click/decorators.py",
+        "src/click/decorators.py"
+      ],
+      "overlapping_requested_read_lines": 56,
+      "failed_tests": [
+        {
+          "tool_number": 7,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        },
+        {
+          "tool_number": 10,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-click-1884-graphify_orient-1",
+      "task": "click-1884",
+      "arm": "graphify_orient",
+      "attempt": 1,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 177474,
+      "cached_input_tokens": 136064,
+      "native_reply_content_tokens_cl100k": 7080,
+      "operations": [
+        "orient",
+        "read",
+        "retrieve",
+        "read",
+        "search",
+        "read",
+        "test",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "src/click/decorators.py",
+        "src/click/decorators.py"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 7,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        },
+        {
+          "tool_number": 9,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-click-1884-graf_current_orient-1",
+      "task": "click-1884",
+      "arm": "graf_current_orient",
+      "attempt": 1,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 211831,
+      "cached_input_tokens": 179072,
+      "native_reply_content_tokens_cl100k": 8287,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "read",
+        "edit",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "src/click/decorators.py",
+        "src/click/decorators.py",
+        "src/click/decorators.py",
+        "src/click/decorators.py"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 6,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        },
+        {
+          "tool_number": 10,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-click-1884-graf_current_orient-2",
+      "task": "click-1884",
+      "arm": "graf_current_orient",
+      "attempt": 2,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 165547,
+      "cached_input_tokens": 134144,
+      "native_reply_content_tokens_cl100k": 7513,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "search",
+        "search",
+        "edit",
+        "test",
+        "retrieve",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "src/click/decorators.py",
+        "src/click/decorators.py"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 7,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-click-1884-graphify_orient-2",
+      "task": "click-1884",
+      "arm": "graphify_orient",
+      "attempt": 2,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 181278,
+      "cached_input_tokens": 147584,
+      "native_reply_content_tokens_cl100k": 10220,
+      "operations": [
+        "orient",
+        "read",
+        "read",
+        "retrieve",
+        "read",
+        "search",
+        "test",
+        "read",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "src/click/decorators.py"
+      ],
+      "overlapping_requested_read_lines": 44,
+      "failed_tests": [
+        {
+          "tool_number": 7,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-click-1884-search_only-2",
+      "task": "click-1884",
+      "arm": "search_only",
+      "attempt": 2,
+      "passed": false,
+      "agent_called_finish": true,
+      "reported_tokens": 73064,
+      "cached_input_tokens": 54144,
+      "native_reply_content_tokens_cl100k": 5777,
+      "operations": [
+        "search",
+        "read",
+        "search",
+        "read",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 5,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-undici-5520-graf_current_orient-1",
+      "task": "undici-5520",
+      "arm": "graf_current_orient",
+      "attempt": 1,
+      "passed": false,
+      "agent_called_finish": true,
+      "reported_tokens": 265612,
+      "cached_input_tokens": 221440,
+      "native_reply_content_tokens_cl100k": 15046,
+      "operations": [
+        "orient",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "search",
+        "retrieve",
+        "read",
+        "read",
+        "edit",
+        "retrieve",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "lib/core/util.js",
+        "lib/web/fetch/body.js",
+        "lib/web/fetch/body.js"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 12,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": true,
+          "expected_argument_error_visible": true,
+          "subsequent_successful_edit": true
+        },
+        {
+          "tool_number": 14,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": true,
+          "expected_argument_error_visible": true,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-undici-5520-search_only-1",
+      "task": "undici-5520",
+      "arm": "search_only",
+      "attempt": 1,
+      "passed": false,
+      "agent_called_finish": true,
+      "reported_tokens": 115833,
+      "cached_input_tokens": 97536,
+      "native_reply_content_tokens_cl100k": 8743,
+      "operations": [
+        "search",
+        "read",
+        "search",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "read",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "lib/dispatcher/client-h1.js"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 7,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": true,
+          "expected_argument_error_visible": true,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-undici-5520-graphify_orient-1",
+      "task": "undici-5520",
+      "arm": "graphify_orient",
+      "attempt": 1,
+      "passed": false,
+      "agent_called_finish": false,
+      "reported_tokens": 295601,
+      "cached_input_tokens": 268544,
+      "native_reply_content_tokens_cl100k": 12836,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "search",
+        "read",
+        "read",
+        "read",
+        "read",
+        "read",
+        "search",
+        "read",
+        "read",
+        "read",
+        "edit",
+        "edit",
+        "test",
+        "read",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "lib/dispatcher/client-h1.js",
+        "lib/dispatcher/client-h2.js"
+      ],
+      "overlapping_requested_read_lines": 14,
+      "failed_tests": [
+        {
+          "tool_number": 16,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": true,
+          "expected_argument_error_visible": true,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-gin-2718-search_only-2",
+      "task": "gin-2718",
+      "arm": "search_only",
+      "attempt": 2,
+      "passed": false,
+      "agent_called_finish": false,
+      "reported_tokens": 80530,
+      "cached_input_tokens": 60032,
+      "native_reply_content_tokens_cl100k": 5872,
+      "operations": [
+        "search",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "read",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "context.go"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 5,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-gin-2718-graphify_orient-2",
+      "task": "gin-2718",
+      "arm": "graphify_orient",
+      "attempt": 2,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 81545,
+      "cached_input_tokens": 58752,
+      "native_reply_content_tokens_cl100k": 2902,
+      "operations": [
+        "orient",
+        "read",
+        "search",
+        "read",
+        "edit",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "context.go",
+        "context.go"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": []
+    },
+    {
+      "trial": "codex-v1-gin-2718-graf_current_orient-2",
+      "task": "gin-2718",
+      "arm": "graf_current_orient",
+      "attempt": 2,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 96330,
+      "cached_input_tokens": 82176,
+      "native_reply_content_tokens_cl100k": 3693,
+      "operations": [
+        "orient",
+        "read",
+        "search",
+        "read",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "context.go",
+        "context.go"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": [
+        {
+          "tool_number": 6,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-gin-2718-graf_current_orient-1",
+      "task": "gin-2718",
+      "arm": "graf_current_orient",
+      "attempt": 1,
+      "passed": false,
+      "agent_called_finish": true,
+      "reported_tokens": 127210,
+      "cached_input_tokens": 109696,
+      "native_reply_content_tokens_cl100k": 6198,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "context.go",
+        "context.go"
+      ],
+      "overlapping_requested_read_lines": 5,
+      "failed_tests": [
+        {
+          "tool_number": 6,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": true
+        },
+        {
+          "tool_number": 8,
+          "reply_matches_prefix_policy": true,
+          "output_truncated": false,
+          "connection_error_visible": false,
+          "expected_argument_error_visible": false,
+          "subsequent_successful_edit": false
+        }
+      ]
+    },
+    {
+      "trial": "codex-v1-gin-2718-search_only-1",
+      "task": "gin-2718",
+      "arm": "search_only",
+      "attempt": 1,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 56494,
+      "cached_input_tokens": 47104,
+      "native_reply_content_tokens_cl100k": 2383,
+      "operations": [
+        "search",
+        "read",
+        "edit",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "context.go",
+        "context.go"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": []
+    },
+    {
+      "trial": "codex-v1-gin-2718-graphify_orient-1",
+      "task": "gin-2718",
+      "arm": "graphify_orient",
+      "attempt": 1,
+      "passed": true,
+      "agent_called_finish": true,
+      "reported_tokens": 61228,
+      "cached_input_tokens": 39680,
+      "native_reply_content_tokens_cl100k": 2658,
+      "operations": [
+        "orient",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "successful_edit_paths": [
+        "context.go"
+      ],
+      "overlapping_requested_read_lines": 0,
+      "failed_tests": []
+    }
+  ],
+  "totals": {
+    "cases": 18,
+    "failed_repairs": 9,
+    "missing_agent_finish": 3,
+    "failed_test_calls": 19,
+    "truncated_failed_test_outputs": 0,
+    "failed_tests_without_subsequent_edit": 8
+  },
+  "source_artifact_sha256": {
+    "results/codex-v1.json": "bb545e7e426b3765febdc4a9e031622d2f636d03b1c5f33e289be4223934cb05",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-2/summary.json": "ffa94c743a460cd4af28051bad91fd867fde02e47352cc5bd48fd6d1084de8e3",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-2/tool-events.jsonl": "fda63cdc5446eb45a75add7b69c71207539c6f40a86b2a5e86e83cc6b50b9a0d",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/summary.json": "5597c2fca3f32cf869de3acdfbbc015bb39af7712a19c8b2df27ca279bd4f149",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/tool-events.jsonl": "cc0e37febfff2ba88a707af0a42a6f67a31573516feaea3f8d9606c8251823e9",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/verification-10.json": "5775e044366d3a8905ff1c16b44c1b9b2709c1a87df359980736673d8097030f",
+    ".research/trials/codex-v1-undici-5520-search_only-2/summary.json": "bd4922573a67913be0156161708d680d440f829f665abed3b2356c963afad25a",
+    ".research/trials/codex-v1-undici-5520-search_only-2/tool-events.jsonl": "0e9e40f9741029bd09ecfa21bfea38c05ce7431294e0e8ed402d17ebafafe487",
+    ".research/trials/codex-v1-undici-5520-search_only-2/verification-8.json": "503e600266e5722095f3c9ace41a7bd2f219cfd503c9c3be11a583d02c1a96f5",
+    ".research/trials/codex-v1-click-1884-search_only-1/summary.json": "52090a6f84810156e72f84a3e3b0cb9805900dceee3113961e717b61921e444f",
+    ".research/trials/codex-v1-click-1884-search_only-1/tool-events.jsonl": "87867ef7b9c795ef754f0d7e6a7df7bcf384c53ef8c7cbf1c3bd10bbd8fe771e",
+    ".research/trials/codex-v1-click-1884-search_only-1/verification-7.json": "cba73043c285417b8ca17afad088b70a390e0e7739c281b0b3e8e265e096877f",
+    ".research/trials/codex-v1-click-1884-search_only-1/verification-10.json": "da7e796d98933bc90c619255a503a4f8a0c9a4c20c69e9421c22f28633386dc6",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/summary.json": "a4b6f185285f9d40ec5a57ebe241068dea2cdab90aaf39ef1878beb782172375",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/tool-events.jsonl": "8d31aede147deb2d129a35ff52c54f98e2317a6a34f281ba38eb3b8538b1eb9c",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/verification-7.json": "43e1f8bc30253000161431dfbdaec326176e1b9714265f0d164e5ff2bbe9c828",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/verification-9.json": "5d8460713fd4f83ba01169f205a275aad91a0914eb681a92b3b46920a934352d",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/summary.json": "057bf5f12e5a8e0b855908b0316cc72b33092d1bc2db11cce7854adebbcddd8d",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/tool-events.jsonl": "9af2a1f7e98e530d00162ec9872045cbf39ba5e7d2066d3fc29b2f22ae4a2e35",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/verification-6.json": "9e5cdc16a81d96cb3ee74482a0cd6e8cda8467746b607543ef028bdb8d4ec690",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/verification-10.json": "7288b0ef897565bedcaf839745867bb61f47ab92a980e8ad195b8a57ac029a75",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/summary.json": "82bf66aeabbec1492c47876ac99ed73a776b473b7fb06c4eea5e034644bce0c4",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/tool-events.jsonl": "6c97bc1cac1bfdd97b404e4c3572a2b67ed4ba7f1fa8c485d8b213dafe38d92e",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/verification-7.json": "a95e072bf079ccbe19760763df8e265ddf08d8773fce4bdc5036cec40151a1f5",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/summary.json": "7ec5a81047312ce293fa0910dff17890a76ed7007422ca30d39266196240cdf5",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/tool-events.jsonl": "2e819027e5984fc201f17491f53973c082bc1caae96012029cc5b5f4aaa612cd",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/verification-7.json": "3fd627f78fd26c566101d81b8408a2440ca0f58ba4515c2aa02ba3db07c5e35c",
+    ".research/trials/codex-v1-click-1884-search_only-2/summary.json": "5b577240872fa045ed4713047990684caca81a731bc1332c064687520e8af71e",
+    ".research/trials/codex-v1-click-1884-search_only-2/tool-events.jsonl": "3013eedbc3e6bdb86e77a5d62a6fd7e8d859e5310adbf8ad4ba512c7d7f6b58f",
+    ".research/trials/codex-v1-click-1884-search_only-2/verification-5.json": "0aec84e4187fbe74a14f86507a4376e47ec533f6e87c95049a6dbd181e08cd85",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/summary.json": "c8eb8016a8b76872bc9e51e2a46e97e391843007310bb663da5f2b437adf2ca3",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/tool-events.jsonl": "b4ffd64220d4c395d5209434713f7489401750c1a639038549334bd4b80b1cea",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/verification-12.json": "1d1f960f1f4f417b834d909ddc26f1cbf39b871eda4b4a1a1a051b00432433cd",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/verification-14.json": "a569682fd259e10461340622e2f77fce2a0fd2f992c602d251df4bb6d069fb32",
+    ".research/trials/codex-v1-undici-5520-search_only-1/summary.json": "5e9be11802972cd16dffcc4a84702047608db97f90cd42c041abc51d55746397",
+    ".research/trials/codex-v1-undici-5520-search_only-1/tool-events.jsonl": "2f9219db46613a95ff0e87a10e2b5ac704ea2ebb2a9beb6126b29ae6839b2dff",
+    ".research/trials/codex-v1-undici-5520-search_only-1/verification-7.json": "2dc4b528fbe16daffad882e2b49c706e791f33519e7f7a156a232e6c15228f1e",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/summary.json": "0dda0d69a0b4c69ea9c24d4650b4db3d9ace0e7df361630129ef0bda47bafcc1",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/tool-events.jsonl": "b59d9f041e5992792d6f5532d3d216fb897921da446dd40a23feb53c0d786a71",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/verification-16.json": "297e1ba06e83762207d1951777791912a4af8d1ad916bae743df5b455a70aef7",
+    ".research/trials/codex-v1-gin-2718-search_only-2/summary.json": "598260e45db545b046b0ef2daffc4b8f4f37bab9d59b5753977913b59787259f",
+    ".research/trials/codex-v1-gin-2718-search_only-2/tool-events.jsonl": "c172f762fa3f3475df2d77ccc32e596f115aae578719659c66f5e74d3882f810",
+    ".research/trials/codex-v1-gin-2718-search_only-2/verification-5.json": "8dd0b5d949013f3af3eb045dcbb5dd6e3380321c3c15d6816ee6edea486be480",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-2/summary.json": "d0b7b5668f8437af1dd2732bbc46745ca3602b2b1c573c88705d326ec8ad3371",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-2/tool-events.jsonl": "23a721dcc7c02c9427b84540d6648b32b769bfdccb6268de97986ccfe2e59377",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/summary.json": "96ef0640c13d40a0a98d1628fcc5239232b255c42c5fc6306945113773f2222f",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/tool-events.jsonl": "fc4b79dd1a3755a4df53d255bb615416de86966c8b13f65e4fe9d3eb25365b6e",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/verification-6.json": "cee7ae9121f162b72f1cd30777f8893923fc47ea105952229ea4cb2819d0f5d9",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/summary.json": "09b625f32d14fcbd595a49841a0f3b27822959ba785460d2784093e8384152c0",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/tool-events.jsonl": "ecdc1e5cb4e151019cd7abf0a7931c706c583c4cdb8e1a798a80f8b5f2e235f9",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/verification-6.json": "e09baecbd4caffa00be8dd3deeca5cae3ae1ac04ef64f4a1dd92bde66a89e947",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/verification-8.json": "5732d12a7ba818a088db75a98605c5abf7dc33e64ad2f8abe93510002cb3b7d6",
+    ".research/trials/codex-v1-gin-2718-search_only-1/summary.json": "8a4f156c7fbc493841d61a1e6a8a7fc087630968902f8104f48de10af38dc457",
+    ".research/trials/codex-v1-gin-2718-search_only-1/tool-events.jsonl": "452f8d8d5b5d437e2f566c406862e4505855b385e79c732021aaf785fb01fb05",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-1/summary.json": "9e0fb1d4522e5c48bc008808b5ef0bed36c7404f0617d6c4223427f298a5cb4f",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-1/tool-events.jsonl": "87af222b9d93993ddb87b885177e907a8441fd8fd724cce0c09d8ee7e450fcb9"
+  },
+  "limitations": "Requested read overlap is not repeated delivered text. cl100k reply sizes and provider tokens use different accounting; their difference cannot be attributed to retrieval or repeated context. Cached input is included in reported tokens. No causal effect, efficiency gain or promotion established.",
+  "agent_efficiency_acceptance_pass": false,
+  "product_promotion_pass": false
+}

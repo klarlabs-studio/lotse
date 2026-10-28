@@ -1,6 +1,9 @@
-"""Prepare isolated synthetic tasks and verify a repair. Does not invoke an agent.
+"""Prepare isolated repair tasks and verify a repair. Does not invoke an agent.
 
 Fault definitions and reference evidence stay outside the agent's working copy.
+A task's fault is one replacement ("fault") or several ("faults", e.g. a reverted
+real fix). A natural task also lists "hidden_tests": the fix's test changes are
+reverted in the agent's copy and installed from the corpus only while grading.
 Dependencies must be provisioned before verification; nonzero exit is never success.
 """
 import argparse
@@ -9,15 +12,34 @@ import math
 import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
+import tempfile
+import threading
 import time
 
 BASE = Path(__file__).resolve().parents[1]
 
 
-def tasks():
-    return json.loads((BASE / "benchmark/agent-tasks.json").read_text())
+def tasks(catalog=BASE / "benchmark/agent-tasks.json"):
+    return json.loads(Path(catalog).read_text())
+
+
+def task_faults(task):
+    return task["faults"] if "faults" in task else [task["fault"]]
+
+
+def _apply(root, edits):
+    for edit in edits:
+        path = root / edit["path"]
+        if edit.get("added"):  # Absent at the pin when upstream later removed it (e.g. a consumed changeset).
+            path.unlink(missing_ok=True)
+            continue
+        text = path.read_text()
+        if text.count(edit["before"]) != 1:
+            raise ValueError(f"Fault must have exactly one source match in {edit['path']}")
+        path.write_text(text.replace(edit["before"], edit["after"], 1))
 
 
 def prepare(task, trial_id):
@@ -29,35 +51,135 @@ def prepare(task, trial_id):
     shutil.copytree(BASE / ".research/corpora" / task["repo"], dest,
                     ignore=shutil.ignore_patterns(".graf", "graphify-out", ".git", "__pycache__",
                                                  ".pytest_cache", "node_modules", "target"))
-    fault = task["fault"]
-    path = dest / fault["path"]
-    text = path.read_text()
-    if text.count(fault["before"]) != 1:
-        raise ValueError("Fault must have exactly one source match")
-    path.write_text(text.replace(fault["before"], fault["after"], 1))
+    _apply(dest, [*task_faults(task), *task.get("hidden_tests", [])])
+    runtime = task.get("runtime", "fastify" if task["repo"] == "fastify" else None)
+    if runtime:  # Provisioned dependencies, shared read-only; never part of the indexed source.
+        (dest / "node_modules").symlink_to(BASE / ".research/task-runtime" / runtime / "node_modules",
+                                           target_is_directory=True)
     (dest.parent / "issue.txt").write_text(task["issue"] + "\n")
     (dest.parent / "task.json").write_text(json.dumps({"task": task["id"]}) + "\n")
     print(dest)
 
 
-def verify(task, workspace):
+def verify(task, workspace, timeout=180):
     root = workspace.resolve()
     allowed = (BASE / ".research/trials").resolve()
     if not root.is_relative_to(allowed) or not root.is_dir():
         raise ValueError("Verification is restricted to prepared trial workspaces")
     if json.loads((root.parent / "task.json").read_text())["task"] != task["id"]:
         raise ValueError("Task identity does not match this workspace")
-    command = [str(BASE / ".research/venv/bin/python") if a == "{python}" else a for a in task["verify"]]
+    venv = BASE / ".research/task-runtime" / task["python_runtime"] if "python_runtime" in task else BASE / ".research/venv"
+    command = [str(venv / "bin/python") if a == "{python}" else a for a in task["verify"]]
     env = dict(os.environ)
     env.update(GOCACHE=str(BASE / ".research/go-cache"), GOMODCACHE=str(BASE / ".research/go-modules"),
                PYTHONPATH=str(root / "src"), PYTHONDONTWRITEBYTECODE="1")
+    hidden = {e["path"]: root / e["path"] for e in task.get("hidden_tests", [])}
+    agent_view = {name: path.read_text() if path.is_file() else None for name, path in hidden.items()}
     start = time.perf_counter()
-    run = subprocess.run(command, cwd=root, env=env, capture_output=True, text=True, timeout=180)
+    try:
+        for name, path in hidden.items():
+            path.write_text((BASE / ".research/corpora" / task["repo"] / name).read_text())
+        run = run_group(command, root, env, timeout)
+    finally:
+        for name, path in hidden.items():
+            if agent_view[name] is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_text(agent_view[name])
     result = dict(task=task["id"], command=command, returncode=run.returncode,
                   verification_passed=run.returncode == 0, wall_s=time.perf_counter()-start,
                   stdout=run.stdout, stderr=run.stderr)
     print(json.dumps(result, indent=2))
     return run.returncode
+
+
+SAMPLE_SECONDS = 0.25
+
+
+def run_group(command, cwd, env, timeout):
+    """Run a test or tool command and, when it ends or times out, kill everything it started: its process group,
+    then every descendant seen while it ran. Playwright detaches its browser into a new session, which killpg
+    never reaches; the browser is a descendant until its launcher dies. Output goes to files, so a detached
+    descendant holding a pipe cannot stall the run."""
+    with tempfile.TemporaryFile() as out, tempfile.TemporaryFile() as err:
+        process = subprocess.Popen(command, cwd=cwd, env=env, stdout=out, stderr=err, start_new_session=True)
+        watcher = _DescendantWatcher(process.pid)
+        watcher.start()
+        try:
+            process.wait(timeout=timeout)
+        finally:
+            watcher.stop()
+            _kill_group(process.pid)
+            _kill_seen(watcher.seen)
+            process.wait()
+        out.seek(0)
+        err.seek(0)
+        return subprocess.CompletedProcess(command, process.returncode, out.read().decode(errors="replace"),
+                                           err.read().decode(errors="replace"))
+
+
+def _kill_group(pid):
+    try:
+        os.killpg(pid, signal.SIGKILL)
+    except (ProcessLookupError, PermissionError):
+        pass
+
+
+def _process_table():
+    """{pid: (ppid, start time)} for every process (macOS no longer shows other processes' environments)."""
+    listing = subprocess.run(["ps", "-A", "-o", "pid=,ppid=,lstart="], capture_output=True, text=True).stdout
+    table = {}
+    for line in listing.splitlines():
+        pid, ppid, start = line.split(None, 2)
+        table[int(pid)] = (int(ppid), start)
+    return table
+
+
+def _descendants(root, table):
+    children = {}
+    for pid, (ppid, _) in table.items():
+        children.setdefault(ppid, []).append(pid)
+    found, stack = {}, [root]
+    while stack:
+        for child in children.get(stack.pop(), []):
+            found[child] = table[child][1]
+            stack.append(child)
+    return found
+
+
+class _DescendantWatcher(threading.Thread):
+    def __init__(self, root):
+        super().__init__(daemon=True)
+        self.root, self.seen, self.done = root, {}, threading.Event()
+
+    def sample(self):
+        self.seen.update(_descendants(self.root, _process_table()))
+
+    def run(self):
+        while not self.done.wait(SAMPLE_SECONDS):
+            self.sample()
+
+    def stop(self):
+        self.done.set()
+        self.join()
+        self.sample()  # The tree as it stands at the end, before anything is killed.
+
+
+def _kill_seen(seen, grace=2.0):
+    """Kill recorded descendants that still run with the same start time (a reused pid is left alone)."""
+    def alive():
+        table = _process_table()
+        return [pid for pid, start in seen.items() if pid in table and table[pid][1] == start]
+    for sig in (signal.SIGTERM, signal.SIGKILL):
+        pids = alive()
+        for pid in pids:
+            try:
+                os.kill(pid, sig)
+            except (ProcessLookupError, PermissionError):
+                pass
+        deadline = time.monotonic() + grace
+        while pids and time.monotonic() < deadline and alive():
+            time.sleep(0.1)
 
 
 def audit_trace(path):
@@ -86,9 +208,14 @@ def audit_trace(path):
                     or (event["reasoning_tokens"] is not None and event["reasoning_tokens"] > event["output_tokens"])):
                 raise ValueError("Cached input and reasoning must be subsets of their totals")
             usage.append(event)
-    if not usage or not events or events[-1].get("type") != "verification":
+    verdicts = [i for i, e in enumerate(events) if e["type"] == "verification"]
+    if not usage or len(verdicts) != 1:
         raise ValueError("Incomplete trace; cannot score an agent trial")
-    if not isinstance(events[-1].get("passed"), bool):
+    # A solver may issue calls alongside finish; they are refused after the verdict and change nothing.
+    if any(e["type"] != "tool" or e.get("response", {}).get("ok") is not False for e in events[verdicts[0] + 1:]):
+        raise ValueError("Only refused tool calls may follow the verification")
+    verdict = events[verdicts[0]]
+    if not isinstance(verdict.get("passed"), bool):
         raise ValueError("Verification must report a boolean result")
     # Reasoning and cached tokens are breakdowns, not additions to totals.
     def measured_sum(key):
@@ -100,7 +227,7 @@ def audit_trace(path):
                 cost_usd=measured_sum("cost_usd"),
                 unmeasured_fields=[k for k in ("cached_input_tokens", "reasoning_tokens", "cost_usd") if any(e[k] is None for e in usage)],
                 tool_calls=sum(e["type"] == "tool" for e in events),
-                verification_passed=events[-1].get("passed") is True)
+                verification_passed=verdict["passed"] is True)
 
 
 if __name__ == "__main__":

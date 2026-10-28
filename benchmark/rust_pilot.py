@@ -37,7 +37,7 @@ def main():
         "binary_sha256": hashlib.sha256(binary.read_bytes()).hexdigest(),
         "source_hashes": {
             str(p.relative_to(BASE)): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in [BASE / "Cargo.toml", BASE / "Cargo.lock", BASE / "src/lib.rs", BASE / "src/main.rs"]
+            for p in [BASE / "Cargo.toml", BASE / "Cargo.lock", *sorted((BASE / "src").rglob("*.rs"))]
         },
         "platform": platform.platform(), "repositories": {}, "rows": [],
     }

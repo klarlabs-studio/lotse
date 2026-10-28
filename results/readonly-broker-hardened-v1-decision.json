@@ -1,0 +1,3351 @@
+{
+  "status": "not_passed",
+  "product_promotion_allowed": false,
+  "workload": "development",
+  "preregistration_sha256": "3e1ff132e0c423641f2ffcbb81f915f7462fcb09ce9efd25cb7c4b05bf8294a7",
+  "comparison_sha256": "6984e0e331d4e4c5f17b0c991d9ad06730849047ed8c8257b698042ded8d5f6f",
+  "evaluator_sha256": "c4a7df0f1d9059cf5d85c81f7d27a01c1c177a34da3b56f74190d888f952b6e5",
+  "judging": null,
+  "arms": [
+    {
+      "status": "not_passed",
+      "candidate": "graf_evidence_selective",
+      "workload": "development",
+      "product_promotion_allowed": false,
+      "promotion_requires": "preregistered agent trials with complete usage accounting",
+      "blockers": [
+        "development workload: the decision rule applies only to the frozen held-out set",
+        "Only 30 queries; preregistered minimum is 110",
+        "Insufficient scored queries: frozen pilot/minimum requires 110 per guardrail"
+      ],
+      "primary": {
+        "metric": "output_tokens",
+        "budget": 2000,
+        "hypothesis": "candidate delivers fewer tokens than the comparator",
+        "test": "one-sided paired sign-flip permutation on comparator minus candidate",
+        "alpha": 0.0015625,
+        "family": 32,
+        "queries": 30,
+        "mean_reduction": 782.9333333333333,
+        "p_value": 0.0004899951000489995,
+        "passed": true
+      },
+      "guardrails": [
+        {
+          "metric": "code_file_hint_recall",
+          "budget": 2000,
+          "queries": 27,
+          "mean_difference": 0.1111111111111111,
+          "sd_difference": 0.28327886186626583,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall",
+          "budget": 8000,
+          "queries": 27,
+          "mean_difference": 0.1111111111111111,
+          "sd_difference": 0.28327886186626583,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_5",
+          "budget": 2000,
+          "queries": 27,
+          "mean_difference": 0.16666666666666666,
+          "sd_difference": 0.3600411499115478,
+          "p_value": 6.999930000699993e-05,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_5",
+          "budget": 8000,
+          "queries": 27,
+          "mean_difference": 0.16666666666666666,
+          "sd_difference": 0.3600411499115478,
+          "p_value": 6.999930000699993e-05,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_10",
+          "budget": 2000,
+          "queries": 27,
+          "mean_difference": 0.09259259259259259,
+          "sd_difference": 0.2734226492635815,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_10",
+          "budget": 8000,
+          "queries": 27,
+          "mean_difference": 0.09259259259259259,
+          "sd_difference": 0.2734226492635815,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        }
+      ],
+      "tail": {
+        "severe_loss": "candidate code_file_hint_recall is 0 at any budget where the comparator's is above 0",
+        "max_wilson_upper": 0.15,
+        "confidence": 0.95,
+        "queries": 27,
+        "severe_queries": [],
+        "wilson_interval": [
+          0.0,
+          0.12455502974186701
+        ],
+        "passed": true
+      },
+      "sample_size": {
+        "minimum_queries": 110,
+        "required_scored_queries": 110
+      },
+      "planning": {
+        "method": "paired one-sided non-inferiority, normal approximation, true difference 0",
+        "per_guardrail": {
+          "code_file_hint_recall@2000": 50,
+          "code_file_hint_recall@8000": 50,
+          "code_file_hint_recall_at_5@2000": 81,
+          "code_file_hint_recall_at_5@8000": 81,
+          "code_file_hint_recall_at_10@2000": 47,
+          "code_file_hint_recall_at_10@8000": 47
+        },
+        "required_queries": 110
+      },
+      "cases": [
+        {
+          "id": "cobra-01",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1555,
+              "graphify": 1810
+            },
+            "median_ms": {
+              "candidate": 239.3654159968719,
+              "graphify": 279.2277499975171
+            }
+          }
+        },
+        {
+          "id": "cobra-01",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3821,
+              "graphify": 21167
+            },
+            "median_ms": {
+              "candidate": 214.54320900375023,
+              "graphify": 279.56479199929163
+            }
+          }
+        },
+        {
+          "id": "cobra-02",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1301,
+              "graphify": 10276
+            },
+            "median_ms": {
+              "candidate": 218.88608299195766,
+              "graphify": 282.00045801349916
+            }
+          }
+        },
+        {
+          "id": "cobra-02",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 2791,
+              "graphify": 10276
+            },
+            "median_ms": {
+              "candidate": 199.75962498574518,
+              "graphify": 254.23687498550862
+            }
+          }
+        },
+        {
+          "id": "cobra-03",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1730,
+              "graphify": 1859
+            },
+            "median_ms": {
+              "candidate": 229.40595902036875,
+              "graphify": 265.65612500417046
+            }
+          }
+        },
+        {
+          "id": "cobra-03",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4078,
+              "graphify": 6799
+            },
+            "median_ms": {
+              "candidate": 235.60833299416117,
+              "graphify": 261.0783750133123
+            }
+          }
+        },
+        {
+          "id": "cobra-04",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1229,
+              "graphify": 1842
+            },
+            "median_ms": {
+              "candidate": 234.60475000320002,
+              "graphify": 335.50770799047314
+            }
+          }
+        },
+        {
+          "id": "cobra-04",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4388,
+              "graphify": 6790
+            },
+            "median_ms": {
+              "candidate": 216.86862499336712,
+              "graphify": 274.43316698190756
+            }
+          }
+        },
+        {
+          "id": "cobra-05",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1093,
+              "graphify": 1824
+            },
+            "median_ms": {
+              "candidate": 234.32254197541624,
+              "graphify": 269.62933302274905
+            }
+          }
+        },
+        {
+          "id": "cobra-05",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3890,
+              "graphify": 6813
+            },
+            "median_ms": {
+              "candidate": 259.61558299604803,
+              "graphify": 273.1234169914387
+            }
+          }
+        },
+        {
+          "id": "cobra-06",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1392,
+              "graphify": 316
+            },
+            "median_ms": {
+              "candidate": 219.63958299602382,
+              "graphify": 285.09495899197645
+            }
+          }
+        },
+        {
+          "id": "cobra-06",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4006,
+              "graphify": 316
+            },
+            "median_ms": {
+              "candidate": 223.02587499143556,
+              "graphify": 295.52954199607484
+            }
+          }
+        },
+        {
+          "id": "cobra-07",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1505,
+              "graphify": 1786
+            },
+            "median_ms": {
+              "candidate": 237.60049999691546,
+              "graphify": 280.07141599664465
+            }
+          }
+        },
+        {
+          "id": "cobra-07",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4085,
+              "graphify": 38217
+            },
+            "median_ms": {
+              "candidate": 264.92533399141394,
+              "graphify": 295.7807080238126
+            }
+          }
+        },
+        {
+          "id": "cobra-08",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1600,
+              "graphify": 1889
+            },
+            "median_ms": {
+              "candidate": 219.32608299539424,
+              "graphify": 253.1479580211453
+            }
+          }
+        },
+        {
+          "id": "cobra-08",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 2799,
+              "graphify": 25685
+            },
+            "median_ms": {
+              "candidate": 217.96433298732154,
+              "graphify": 276.8316669971682
+            }
+          }
+        },
+        {
+          "id": "cobra-09",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1424,
+              "graphify": 1825
+            },
+            "median_ms": {
+              "candidate": 235.05499999737367,
+              "graphify": 289.1700410109479
+            }
+          }
+        },
+        {
+          "id": "cobra-09",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3861,
+              "graphify": 11720
+            },
+            "median_ms": {
+              "candidate": 298.2937079796102,
+              "graphify": 258.6086659866851
+            }
+          }
+        },
+        {
+          "id": "cobra-10",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 1228,
+              "graphify": 1850
+            },
+            "median_ms": {
+              "candidate": 230.04862500238232,
+              "graphify": 263.5336660023313
+            }
+          }
+        },
+        {
+          "id": "cobra-10",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 3393,
+              "graphify": 21528
+            },
+            "median_ms": {
+              "candidate": 217.05295800347812,
+              "graphify": 274.0646660095081
+            }
+          }
+        },
+        {
+          "id": "fastify-01",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1730,
+              "graphify": 1837
+            },
+            "median_ms": {
+              "candidate": 288.6740420071874,
+              "graphify": 298.4837499971036
+            }
+          }
+        },
+        {
+          "id": "fastify-01",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3148,
+              "graphify": 7618
+            },
+            "median_ms": {
+              "candidate": 231.03208298562095,
+              "graphify": 286.7434580111876
+            }
+          }
+        },
+        {
+          "id": "fastify-02",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1773,
+              "graphify": 3539
+            },
+            "median_ms": {
+              "candidate": 253.9482499996666,
+              "graphify": 264.1087500087451
+            }
+          }
+        },
+        {
+          "id": "fastify-02",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4009,
+              "graphify": 3463
+            },
+            "median_ms": {
+              "candidate": 176.30250001093373,
+              "graphify": 253.5818750038743
+            }
+          }
+        },
+        {
+          "id": "fastify-03",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1824,
+              "graphify": 1742
+            },
+            "median_ms": {
+              "candidate": 231.28066599019803,
+              "graphify": 231.7565000266768
+            }
+          }
+        },
+        {
+          "id": "fastify-03",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 4536,
+              "graphify": 7181
+            },
+            "median_ms": {
+              "candidate": 178.24320899671875,
+              "graphify": 223.58433398767374
+            }
+          }
+        },
+        {
+          "id": "fastify-04",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1711,
+              "graphify": 1759
+            },
+            "median_ms": {
+              "candidate": 187.0373749989085,
+              "graphify": 267.36550001078285
+            }
+          }
+        },
+        {
+          "id": "fastify-04",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3834,
+              "graphify": 27495
+            },
+            "median_ms": {
+              "candidate": 208.07466699625365,
+              "graphify": 333.47462498932146
+            }
+          }
+        },
+        {
+          "id": "fastify-05",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1739,
+              "graphify": 3267
+            },
+            "median_ms": {
+              "candidate": 255.2917499851901,
+              "graphify": 267.3043340037111
+            }
+          }
+        },
+        {
+          "id": "fastify-05",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 4482,
+              "graphify": 3191
+            },
+            "median_ms": {
+              "candidate": 238.74816700117663,
+              "graphify": 278.7643749907147
+            }
+          }
+        },
+        {
+          "id": "fastify-06",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1900,
+              "graphify": 1790
+            },
+            "median_ms": {
+              "candidate": 268.8811249972787,
+              "graphify": 305.4069159843493
+            }
+          }
+        },
+        {
+          "id": "fastify-06",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4326,
+              "graphify": 8419
+            },
+            "median_ms": {
+              "candidate": 247.34770800569095,
+              "graphify": 298.530625004787
+            }
+          }
+        },
+        {
+          "id": "fastify-07",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "output_tokens": {
+              "candidate": 1621,
+              "graphify": 3145
+            },
+            "median_ms": {
+              "candidate": 277.45349999167956,
+              "graphify": 264.77362497826107
+            }
+          }
+        },
+        {
+          "id": "fastify-07",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "output_tokens": {
+              "candidate": 3972,
+              "graphify": 3069
+            },
+            "median_ms": {
+              "candidate": 187.79249998624437,
+              "graphify": 268.6957080150023
+            }
+          }
+        },
+        {
+          "id": "fastify-08",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 0.5,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1600,
+              "graphify": 6123
+            },
+            "median_ms": {
+              "candidate": 201.92529098130763,
+              "graphify": 224.89700000733137
+            }
+          }
+        },
+        {
+          "id": "fastify-08",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 0.5,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 3587,
+              "graphify": 6047
+            },
+            "median_ms": {
+              "candidate": 178.80945798242465,
+              "graphify": 223.32754099625163
+            }
+          }
+        },
+        {
+          "id": "fastify-09",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1792,
+              "graphify": 1823
+            },
+            "median_ms": {
+              "candidate": 221.6851669945754,
+              "graphify": 221.67395800352097
+            }
+          }
+        },
+        {
+          "id": "fastify-09",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4067,
+              "graphify": 8166
+            },
+            "median_ms": {
+              "candidate": 195.18162499298342,
+              "graphify": 242.03716599731706
+            }
+          }
+        },
+        {
+          "id": "fastify-10",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 1704,
+              "graphify": 1872
+            },
+            "median_ms": {
+              "candidate": 264.1357909888029,
+              "graphify": 321.54412497766316
+            }
+          }
+        },
+        {
+          "id": "fastify-10",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 3964,
+              "graphify": 15456
+            },
+            "median_ms": {
+              "candidate": 239.637374994345,
+              "graphify": 344.2343750211876
+            }
+          }
+        },
+        {
+          "id": "flask-01",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1601,
+              "graphify": 1826
+            },
+            "median_ms": {
+              "candidate": 232.8385410073679,
+              "graphify": 356.47062500356697
+            }
+          }
+        },
+        {
+          "id": "flask-01",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3619,
+              "graphify": 11030
+            },
+            "median_ms": {
+              "candidate": 228.07391599053517,
+              "graphify": 348.50762502173893
+            }
+          }
+        },
+        {
+          "id": "flask-02",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.5,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1914,
+              "graphify": 1890
+            },
+            "median_ms": {
+              "candidate": 321.83379199705087,
+              "graphify": 350.71358300046995
+            }
+          }
+        },
+        {
+          "id": "flask-02",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.5,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 5883,
+              "graphify": 16813
+            },
+            "median_ms": {
+              "candidate": 238.62249997910112,
+              "graphify": 372.1290410030633
+            }
+          }
+        },
+        {
+          "id": "flask-03",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1566,
+              "graphify": 3399
+            },
+            "median_ms": {
+              "candidate": 249.93008299497887,
+              "graphify": 304.9465420190245
+            }
+          }
+        },
+        {
+          "id": "flask-03",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 3044,
+              "graphify": 3323
+            },
+            "median_ms": {
+              "candidate": 224.10441600368358,
+              "graphify": 308.4234160196502
+            }
+          }
+        },
+        {
+          "id": "flask-04",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1809,
+              "graphify": 1899
+            },
+            "median_ms": {
+              "candidate": 226.52212498360313,
+              "graphify": 309.2405420029536
+            }
+          }
+        },
+        {
+          "id": "flask-04",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4303,
+              "graphify": 17685
+            },
+            "median_ms": {
+              "candidate": 226.24483300023712,
+              "graphify": 332.88129200809635
+            }
+          }
+        },
+        {
+          "id": "flask-05",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1600,
+              "graphify": 1873
+            },
+            "median_ms": {
+              "candidate": 230.48937501152977,
+              "graphify": 335.95687500201166
+            }
+          }
+        },
+        {
+          "id": "flask-05",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3777,
+              "graphify": 6918
+            },
+            "median_ms": {
+              "candidate": 226.41416700207628,
+              "graphify": 328.69958400260657
+            }
+          }
+        },
+        {
+          "id": "flask-06",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1976,
+              "graphify": 1897
+            },
+            "median_ms": {
+              "candidate": 254.78387498878874,
+              "graphify": 396.81974999257363
+            }
+          }
+        },
+        {
+          "id": "flask-06",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4900,
+              "graphify": 6807
+            },
+            "median_ms": {
+              "candidate": 251.09662499744445,
+              "graphify": 455.6672909820918
+            }
+          }
+        },
+        {
+          "id": "flask-07",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1800,
+              "graphify": 1878
+            },
+            "median_ms": {
+              "candidate": 264.71154199680313,
+              "graphify": 353.75249999924563
+            }
+          }
+        },
+        {
+          "id": "flask-07",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4627,
+              "graphify": 32074
+            },
+            "median_ms": {
+              "candidate": 247.69954098155722,
+              "graphify": 365.2315419749357
+            }
+          }
+        },
+        {
+          "id": "flask-08",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 2000,
+              "graphify": 1880
+            },
+            "median_ms": {
+              "candidate": 235.26920899166726,
+              "graphify": 298.1039580190554
+            }
+          }
+        },
+        {
+          "id": "flask-08",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 5474,
+              "graphify": 20052
+            },
+            "median_ms": {
+              "candidate": 182.32541700126603,
+              "graphify": 287.4077500018757
+            }
+          }
+        },
+        {
+          "id": "flask-09",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1717,
+              "graphify": 1874
+            },
+            "median_ms": {
+              "candidate": 301.78074998548254,
+              "graphify": 298.0691669799853
+            }
+          }
+        },
+        {
+          "id": "flask-09",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3877,
+              "graphify": 29145
+            },
+            "median_ms": {
+              "candidate": 215.20287499879487,
+              "graphify": 311.5592079993803
+            }
+          }
+        },
+        {
+          "id": "flask-10",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 1509,
+              "graphify": 1841
+            },
+            "median_ms": {
+              "candidate": 196.3835829810705,
+              "graphify": 274.89979201345704
+            }
+          }
+        },
+        {
+          "id": "flask-10",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 3021,
+              "graphify": 6885
+            },
+            "median_ms": {
+              "candidate": 186.56104200636037,
+              "graphify": 306.7270829924382
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "not_passed",
+      "candidate": "graf_evidence_rescue",
+      "workload": "development",
+      "product_promotion_allowed": false,
+      "promotion_requires": "preregistered agent trials with complete usage accounting",
+      "blockers": [
+        "development workload: the decision rule applies only to the frozen held-out set",
+        "Only 30 queries; preregistered minimum is 110",
+        "Insufficient scored queries: frozen pilot/minimum requires 110 per guardrail"
+      ],
+      "primary": {
+        "metric": "output_tokens",
+        "budget": 2000,
+        "hypothesis": "candidate delivers fewer tokens than the comparator",
+        "test": "one-sided paired sign-flip permutation on comparator minus candidate",
+        "alpha": 0.0015625,
+        "family": 32,
+        "queries": 30,
+        "mean_reduction": 857.0333333333333,
+        "p_value": 2.999970000299997e-05,
+        "passed": true
+      },
+      "guardrails": [
+        {
+          "metric": "code_file_hint_recall",
+          "budget": 2000,
+          "queries": 27,
+          "mean_difference": 0.1111111111111111,
+          "sd_difference": 0.28327886186626583,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall",
+          "budget": 8000,
+          "queries": 27,
+          "mean_difference": 0.1111111111111111,
+          "sd_difference": 0.28327886186626583,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_5",
+          "budget": 2000,
+          "queries": 27,
+          "mean_difference": 0.16666666666666666,
+          "sd_difference": 0.3600411499115478,
+          "p_value": 6.999930000699993e-05,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_5",
+          "budget": 8000,
+          "queries": 27,
+          "mean_difference": 0.16666666666666666,
+          "sd_difference": 0.3600411499115478,
+          "p_value": 6.999930000699993e-05,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_10",
+          "budget": 2000,
+          "queries": 27,
+          "mean_difference": 0.09259259259259259,
+          "sd_difference": 0.2734226492635815,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        },
+        {
+          "metric": "code_file_hint_recall_at_10",
+          "budget": 8000,
+          "queries": 27,
+          "mean_difference": 0.09259259259259259,
+          "sd_difference": 0.2734226492635815,
+          "p_value": 9.99990000099999e-06,
+          "non_inferior": true
+        }
+      ],
+      "tail": {
+        "severe_loss": "candidate code_file_hint_recall is 0 at any budget where the comparator's is above 0",
+        "max_wilson_upper": 0.15,
+        "confidence": 0.95,
+        "queries": 27,
+        "severe_queries": [],
+        "wilson_interval": [
+          0.0,
+          0.12455502974186701
+        ],
+        "passed": true
+      },
+      "sample_size": {
+        "minimum_queries": 110,
+        "required_scored_queries": 110
+      },
+      "planning": {
+        "method": "paired one-sided non-inferiority, normal approximation, true difference 0",
+        "per_guardrail": {
+          "code_file_hint_recall@2000": 50,
+          "code_file_hint_recall@8000": 50,
+          "code_file_hint_recall_at_5@2000": 81,
+          "code_file_hint_recall_at_5@8000": 81,
+          "code_file_hint_recall_at_10@2000": 47,
+          "code_file_hint_recall_at_10@8000": 47
+        },
+        "required_queries": 110
+      },
+      "cases": [
+        {
+          "id": "cobra-01",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1472,
+              "graphify": 1810
+            },
+            "median_ms": {
+              "candidate": 264.2973339825403,
+              "graphify": 279.2277499975171
+            }
+          }
+        },
+        {
+          "id": "cobra-01",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3738,
+              "graphify": 21167
+            },
+            "median_ms": {
+              "candidate": 195.38912500138395,
+              "graphify": 279.56479199929163
+            }
+          }
+        },
+        {
+          "id": "cobra-02",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1269,
+              "graphify": 10276
+            },
+            "median_ms": {
+              "candidate": 162.78012498514727,
+              "graphify": 282.00045801349916
+            }
+          }
+        },
+        {
+          "id": "cobra-02",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 2759,
+              "graphify": 10276
+            },
+            "median_ms": {
+              "candidate": 168.27908300911076,
+              "graphify": 254.23687498550862
+            }
+          }
+        },
+        {
+          "id": "cobra-03",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1659,
+              "graphify": 1859
+            },
+            "median_ms": {
+              "candidate": 178.76508299377747,
+              "graphify": 265.65612500417046
+            }
+          }
+        },
+        {
+          "id": "cobra-03",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4007,
+              "graphify": 6799
+            },
+            "median_ms": {
+              "candidate": 176.86791700543836,
+              "graphify": 261.0783750133123
+            }
+          }
+        },
+        {
+          "id": "cobra-04",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1229,
+              "graphify": 1842
+            },
+            "median_ms": {
+              "candidate": 192.85404199035838,
+              "graphify": 335.50770799047314
+            }
+          }
+        },
+        {
+          "id": "cobra-04",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4339,
+              "graphify": 6790
+            },
+            "median_ms": {
+              "candidate": 182.0930420071818,
+              "graphify": 274.43316698190756
+            }
+          }
+        },
+        {
+          "id": "cobra-05",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1022,
+              "graphify": 1824
+            },
+            "median_ms": {
+              "candidate": 186.52266598655842,
+              "graphify": 269.62933302274905
+            }
+          }
+        },
+        {
+          "id": "cobra-05",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3855,
+              "graphify": 6813
+            },
+            "median_ms": {
+              "candidate": 192.6292080024723,
+              "graphify": 273.1234169914387
+            }
+          }
+        },
+        {
+          "id": "cobra-06",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1315,
+              "graphify": 316
+            },
+            "median_ms": {
+              "candidate": 223.4132919984404,
+              "graphify": 285.09495899197645
+            }
+          }
+        },
+        {
+          "id": "cobra-06",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3929,
+              "graphify": 316
+            },
+            "median_ms": {
+              "candidate": 175.1791250135284,
+              "graphify": 295.52954199607484
+            }
+          }
+        },
+        {
+          "id": "cobra-07",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1505,
+              "graphify": 1786
+            },
+            "median_ms": {
+              "candidate": 182.6652089948766,
+              "graphify": 280.07141599664465
+            }
+          }
+        },
+        {
+          "id": "cobra-07",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3942,
+              "graphify": 38217
+            },
+            "median_ms": {
+              "candidate": 191.27937499433756,
+              "graphify": 295.7807080238126
+            }
+          }
+        },
+        {
+          "id": "cobra-08",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1600,
+              "graphify": 1889
+            },
+            "median_ms": {
+              "candidate": 179.8824169964064,
+              "graphify": 253.1479580211453
+            }
+          }
+        },
+        {
+          "id": "cobra-08",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 2799,
+              "graphify": 25685
+            },
+            "median_ms": {
+              "candidate": 163.45029100193642,
+              "graphify": 276.8316669971682
+            }
+          }
+        },
+        {
+          "id": "cobra-09",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1392,
+              "graphify": 1825
+            },
+            "median_ms": {
+              "candidate": 196.2737500143703,
+              "graphify": 289.1700410109479
+            }
+          }
+        },
+        {
+          "id": "cobra-09",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3829,
+              "graphify": 11720
+            },
+            "median_ms": {
+              "candidate": 183.869832981145,
+              "graphify": 258.6086659866851
+            }
+          }
+        },
+        {
+          "id": "cobra-10",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 1228,
+              "graphify": 1850
+            },
+            "median_ms": {
+              "candidate": 182.22012498881668,
+              "graphify": 263.5336660023313
+            }
+          }
+        },
+        {
+          "id": "cobra-10",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 3393,
+              "graphify": 21528
+            },
+            "median_ms": {
+              "candidate": 179.01166700175963,
+              "graphify": 274.0646660095081
+            }
+          }
+        },
+        {
+          "id": "fastify-01",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1546,
+              "graphify": 1837
+            },
+            "median_ms": {
+              "candidate": 217.3122499953024,
+              "graphify": 298.4837499971036
+            }
+          }
+        },
+        {
+          "id": "fastify-01",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3148,
+              "graphify": 7618
+            },
+            "median_ms": {
+              "candidate": 156.27641600440256,
+              "graphify": 286.7434580111876
+            }
+          }
+        },
+        {
+          "id": "fastify-02",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1633,
+              "graphify": 3539
+            },
+            "median_ms": {
+              "candidate": 198.54645899613388,
+              "graphify": 264.1087500087451
+            }
+          }
+        },
+        {
+          "id": "fastify-02",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3869,
+              "graphify": 3463
+            },
+            "median_ms": {
+              "candidate": 142.73820800008252,
+              "graphify": 253.5818750038743
+            }
+          }
+        },
+        {
+          "id": "fastify-03",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1756,
+              "graphify": 1742
+            },
+            "median_ms": {
+              "candidate": 173.23754099197686,
+              "graphify": 231.7565000266768
+            }
+          }
+        },
+        {
+          "id": "fastify-03",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 4468,
+              "graphify": 7181
+            },
+            "median_ms": {
+              "candidate": 144.40916699822992,
+              "graphify": 223.58433398767374
+            }
+          }
+        },
+        {
+          "id": "fastify-04",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1571,
+              "graphify": 1759
+            },
+            "median_ms": {
+              "candidate": 164.66516701621003,
+              "graphify": 267.36550001078285
+            }
+          }
+        },
+        {
+          "id": "fastify-04",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3694,
+              "graphify": 27495
+            },
+            "median_ms": {
+              "candidate": 154.79566698195413,
+              "graphify": 333.47462498932146
+            }
+          }
+        },
+        {
+          "id": "fastify-05",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1617,
+              "graphify": 3267
+            },
+            "median_ms": {
+              "candidate": 179.218832985498,
+              "graphify": 267.3043340037111
+            }
+          }
+        },
+        {
+          "id": "fastify-05",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 4353,
+              "graphify": 3191
+            },
+            "median_ms": {
+              "candidate": 188.72299999929965,
+              "graphify": 278.7643749907147
+            }
+          }
+        },
+        {
+          "id": "fastify-06",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1760,
+              "graphify": 1790
+            },
+            "median_ms": {
+              "candidate": 197.68537499476224,
+              "graphify": 305.4069159843493
+            }
+          }
+        },
+        {
+          "id": "fastify-06",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4186,
+              "graphify": 8419
+            },
+            "median_ms": {
+              "candidate": 198.10858299024403,
+              "graphify": 298.530625004787
+            }
+          }
+        },
+        {
+          "id": "fastify-07",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "output_tokens": {
+              "candidate": 1455,
+              "graphify": 3145
+            },
+            "median_ms": {
+              "candidate": 202.3392500123009,
+              "graphify": 264.77362497826107
+            }
+          }
+        },
+        {
+          "id": "fastify-07",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "output_tokens": {
+              "candidate": 3806,
+              "graphify": 3069
+            },
+            "median_ms": {
+              "candidate": 149.73062500939704,
+              "graphify": 268.6957080150023
+            }
+          }
+        },
+        {
+          "id": "fastify-08",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 0.5,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1600,
+              "graphify": 6123
+            },
+            "median_ms": {
+              "candidate": 166.35433299234137,
+              "graphify": 224.89700000733137
+            }
+          }
+        },
+        {
+          "id": "fastify-08",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 0.5,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 3475,
+              "graphify": 6047
+            },
+            "median_ms": {
+              "candidate": 141.91733399638906,
+              "graphify": 223.32754099625163
+            }
+          }
+        },
+        {
+          "id": "fastify-09",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1652,
+              "graphify": 1823
+            },
+            "median_ms": {
+              "candidate": 168.82108300342225,
+              "graphify": 221.67395800352097
+            }
+          }
+        },
+        {
+          "id": "fastify-09",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3927,
+              "graphify": 8166
+            },
+            "median_ms": {
+              "candidate": 146.64074999745935,
+              "graphify": 242.03716599731706
+            }
+          }
+        },
+        {
+          "id": "fastify-10",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 1506,
+              "graphify": 1872
+            },
+            "median_ms": {
+              "candidate": 234.85291600809433,
+              "graphify": 321.54412497766316
+            }
+          }
+        },
+        {
+          "id": "fastify-10",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 3964,
+              "graphify": 15456
+            },
+            "median_ms": {
+              "candidate": 177.1196250047069,
+              "graphify": 344.2343750211876
+            }
+          }
+        },
+        {
+          "id": "flask-01",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1573,
+              "graphify": 1826
+            },
+            "median_ms": {
+              "candidate": 192.6085840095766,
+              "graphify": 356.47062500356697
+            }
+          }
+        },
+        {
+          "id": "flask-01",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3439,
+              "graphify": 11030
+            },
+            "median_ms": {
+              "candidate": 179.74691599374637,
+              "graphify": 348.50762502173893
+            }
+          }
+        },
+        {
+          "id": "flask-02",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.5,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1799,
+              "graphify": 1890
+            },
+            "median_ms": {
+              "candidate": 198.53504200000316,
+              "graphify": 350.71358300046995
+            }
+          }
+        },
+        {
+          "id": "flask-02",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.5,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 5835,
+              "graphify": 16813
+            },
+            "median_ms": {
+              "candidate": 190.37691698758863,
+              "graphify": 372.1290410030633
+            }
+          }
+        },
+        {
+          "id": "flask-03",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 1461,
+              "graphify": 3399
+            },
+            "median_ms": {
+              "candidate": 223.06275001028553,
+              "graphify": 304.9465420190245
+            }
+          }
+        },
+        {
+          "id": "flask-03",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 0.0,
+              "graphify": 0.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 0.0
+            },
+            "output_tokens": {
+              "candidate": 3044,
+              "graphify": 3323
+            },
+            "median_ms": {
+              "candidate": 179.73479098873213,
+              "graphify": 308.4234160196502
+            }
+          }
+        },
+        {
+          "id": "flask-04",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1750,
+              "graphify": 1899
+            },
+            "median_ms": {
+              "candidate": 184.66287502087653,
+              "graphify": 309.2405420029536
+            }
+          }
+        },
+        {
+          "id": "flask-04",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4244,
+              "graphify": 17685
+            },
+            "median_ms": {
+              "candidate": 182.6539580069948,
+              "graphify": 332.88129200809635
+            }
+          }
+        },
+        {
+          "id": "flask-05",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1600,
+              "graphify": 1873
+            },
+            "median_ms": {
+              "candidate": 185.67854102002457,
+              "graphify": 335.95687500201166
+            }
+          }
+        },
+        {
+          "id": "flask-05",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3528,
+              "graphify": 6918
+            },
+            "median_ms": {
+              "candidate": 184.61200001183897,
+              "graphify": 328.69958400260657
+            }
+          }
+        },
+        {
+          "id": "flask-06",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1976,
+              "graphify": 1897
+            },
+            "median_ms": {
+              "candidate": 205.4647499753628,
+              "graphify": 396.81974999257363
+            }
+          }
+        },
+        {
+          "id": "flask-06",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4778,
+              "graphify": 6807
+            },
+            "median_ms": {
+              "candidate": 252.91370900231414,
+              "graphify": 455.6672909820918
+            }
+          }
+        },
+        {
+          "id": "flask-07",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1800,
+              "graphify": 1878
+            },
+            "median_ms": {
+              "candidate": 249.6041250124108,
+              "graphify": 353.75249999924563
+            }
+          }
+        },
+        {
+          "id": "flask-07",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 4421,
+              "graphify": 32074
+            },
+            "median_ms": {
+              "candidate": 180.95770801301114,
+              "graphify": 365.2315419749357
+            }
+          }
+        },
+        {
+          "id": "flask-08",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1885,
+              "graphify": 1880
+            },
+            "median_ms": {
+              "candidate": 146.37345800292678,
+              "graphify": 298.1039580190554
+            }
+          }
+        },
+        {
+          "id": "flask-08",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 0.5
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 5359,
+              "graphify": 20052
+            },
+            "median_ms": {
+              "candidate": 169.95887499069795,
+              "graphify": 287.4077500018757
+            }
+          }
+        },
+        {
+          "id": "flask-09",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 1624,
+              "graphify": 1874
+            },
+            "median_ms": {
+              "candidate": 193.2325419911649,
+              "graphify": 298.0691669799853
+            }
+          }
+        },
+        {
+          "id": "flask-09",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": 1.0,
+              "graphify": 1.0
+            },
+            "output_tokens": {
+              "candidate": 3784,
+              "graphify": 29145
+            },
+            "median_ms": {
+              "candidate": 144.25066698458977,
+              "graphify": 311.5592079993803
+            }
+          }
+        },
+        {
+          "id": "flask-10",
+          "budget": 2000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 1465,
+              "graphify": 1841
+            },
+            "median_ms": {
+              "candidate": 138.59429099829867,
+              "graphify": 274.89979201345704
+            }
+          }
+        },
+        {
+          "id": "flask-10",
+          "budget": 8000,
+          "metrics": {
+            "code_file_hint_recall": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_5": {
+              "candidate": null,
+              "graphify": null
+            },
+            "code_file_hint_recall_at_10": {
+              "candidate": null,
+              "graphify": null
+            },
+            "output_tokens": {
+              "candidate": 2977,
+              "graphify": 6885
+            },
+            "median_ms": {
+              "candidate": 176.664124999661,
+              "graphify": 306.7270829924382
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

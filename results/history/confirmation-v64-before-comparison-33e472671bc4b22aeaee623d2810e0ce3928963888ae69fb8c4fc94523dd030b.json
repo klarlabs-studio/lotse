@@ -1,0 +1,38 @@
+{
+  "status": "frozen_ready_for_comparison",
+  "preregistration_sha256": "36eb017f5348c8533123373c571ff5157fa146a141459ba0a863025eb766cb58",
+  "queries_sha256": "cbbdef34c9d16d5e9ffbfda1969914ff0fbaa8f5953a2408ca3b096b0d8d9f29",
+  "queries": 123,
+  "scored_queries": 111,
+  "source_review_complete": true,
+  "comparative_data_collected": false,
+  "agent_savings": "unmeasured",
+  "product_promotion_allowed": false,
+  "python_tests": 211,
+  "harness_parity_report": "results/harness-v63-report.json",
+  "source_files": {
+    "zerolog": 88,
+    "rich": 318,
+    "pino": 175
+  },
+  "independence_limit": "Isolated AI source-only authors and different AI source reviewers; weaker than independent human authoring. Session scope is recorded, not provable by schema validation.",
+  "caveats": [
+    "Two Pino tasks compare literal documented/internal option defaults; they do not establish user-visible behavior differences.",
+    "First freeze attempt rejected anchors and expected labels; all errors and intermediate versions retained before successful validation."
+  ],
+  "authoring_provenance": {
+    "model": "gpt-6-luna",
+    "author_sessions_completed": 3,
+    "author_sessions_failed": 1,
+    "fresh_source_reviewer_sessions": 3,
+    "followup_repairs": true,
+    "model_tokens_and_spend": "unavailable from collaboration tools; not measured as agent-efficiency evidence"
+  },
+  "remaining": [
+    "Run benchmark/compare_graphify.py using benchmark/confirmation-v64/run-plan.json and native-cli-v2.",
+    "Pool top-10 files and obtain blind source-relevance judgments independently of the retrieval results.",
+    "Run acceptance.py and decision.py against the fresh comparison; preserve reports and nonzero gates.",
+    "Natural agent tasks with matched solver/spend limits and complete usage accounting before product promotion."
+  ],
+  "acceptance": "not passed; no fresh comparison collected"
+}

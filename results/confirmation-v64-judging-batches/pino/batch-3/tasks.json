@@ -1,0 +1,212 @@
+{
+  "h-pino-21": {
+    "repo": "pino",
+    "query": "Trace how fatal logging differs from info after the line is emitted.",
+    "files": [
+      "test/multistream.test.js",
+      "test/transport/pipeline.test.js",
+      "test/browser.test.js",
+      "test/is-level-enabled.test.js",
+      "lib/caller.js",
+      "test/basic.test.js",
+      "test/transport/core.test.js",
+      "lib/constants.js",
+      "examples/transport.js",
+      "test/transport/module-link.test.js",
+      "test/helper.js",
+      "pino.js",
+      "test/syncfalse.test.js",
+      "browser.js",
+      "benchmarks/multistream.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts"
+    ]
+  },
+  "h-pino-22": {
+    "repo": "pino",
+    "query": "Trace how a multistream determines which destinations receive one record when dedupe is enabled.",
+    "files": [
+      "test/is-level-enabled.test.js",
+      "pino.d.ts",
+      "test/transport/module-link.test.js",
+      "lib/levels.js",
+      "test/types/pino-multistream.tst.ts",
+      "test/syncfalse.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino.tst.ts",
+      "pino.js",
+      "test/multistream.test.js",
+      "benchmarks/multistream.js",
+      "lib/caller.js",
+      "test/browser-is-level-enabled.test.js",
+      "lib/transport.js"
+    ]
+  },
+  "h-pino-23": {
+    "repo": "pino",
+    "query": "Trace how a transport configured with multiple targets builds its worker-side routing stream.",
+    "files": [
+      "test/helper.js",
+      "pino.js",
+      "lib/transport.js",
+      "test/transport/targets.test.js",
+      "lib/transport-stream.js",
+      "lib/caller.js",
+      "test/transport/bundlers-support.test.js",
+      "test/transport/node-options.test.js",
+      "lib/tools.js",
+      "examples/transport.js",
+      "test/transport/native-type-stripping.test.mjs",
+      "test/transport/big.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino.tst.ts"
+    ]
+  },
+  "h-pino-24": {
+    "repo": "pino",
+    "query": "Trace how the logger\u2019s flush method behaves when its destination has no flush method.",
+    "files": [
+      "test/levels.test.js",
+      "test/esm/named-exports.mjs",
+      "pino.js",
+      "test/stdout-protection.test.js",
+      "lib/transport.js",
+      "test/browser.test.js",
+      "lib/levels.js",
+      "test/multistream.test.js",
+      "test/types/pino.ts",
+      "test/transport/native-type-stripping.test.mjs",
+      "test/syncfalse.test.js",
+      "examples/transport.js",
+      "test/browser-transmit.test.js",
+      "pino.d.ts",
+      "test/types/pino-top-export.tst.ts",
+      "test/types/pino-import.tst.js",
+      "lib/caller.js"
+    ]
+  },
+  "h-pino-25": {
+    "repo": "pino",
+    "query": "Which modules divide responsibility for logger construction, logger behavior, level mapping, and redaction?",
+    "files": [
+      "test/esm/named-exports.mjs",
+      "examples/transport.js",
+      "test/types/pino-top-export.tst.ts",
+      "test/custom-levels.test.js",
+      "test/transport/module-link.test.js",
+      "pino.d.ts",
+      "lib/tools.js",
+      "test/types/pino-type-only.tst.ts",
+      "test/browser-redaction.test.js",
+      "test/browser-child.test.js",
+      "test/levels.test.js",
+      "lib/transport-stream.js"
+    ]
+  },
+  "h-pino-26": {
+    "repo": "pino",
+    "query": "How are logger instances tied to EventEmitter behavior while sharing a prototype created by a factory?",
+    "files": [
+      "pino.d.ts",
+      "benchmarks/utils/wrap-log-level.js",
+      "test/basic.test.js",
+      "test/transport/core.test.js",
+      "test/transport/node-options.test.js",
+      "examples/transport.js",
+      "test/syncfalse.test.js",
+      "test/transport/module-link.test.js",
+      "test/transport/sync-false.test.js",
+      "test/diagnostics.test.js",
+      "test/helper.js",
+      "test/redact.test.js",
+      "test/formatters.test.js",
+      "browser.js",
+      "lib/levels.js",
+      "test/transport/pipeline.test.js"
+    ]
+  },
+  "h-pino-27": {
+    "repo": "pino",
+    "query": "What is the transport architecture boundary between application-thread logging and target processing?",
+    "files": [
+      "pino.js",
+      "lib/tools.js",
+      "test/transport/native-type-stripping.test.mjs",
+      "lib/symbols.js",
+      "test/transport/node-options.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino.tst.ts",
+      "examples/transport.js",
+      "test/types/pino-top-export.tst.ts",
+      "lib/transport.js",
+      "test/transport/sync-false.test.js",
+      "pino.d.ts",
+      "test/helper.js",
+      "lib/transport-stream.js",
+      "test/transport/targets.test.js"
+    ]
+  },
+  "h-pino-28": {
+    "repo": "pino",
+    "query": "How does multi-target transport setup represent target routing state and shutdown behavior?",
+    "files": [
+      "test/types/pino.tst.ts",
+      "lib/transport.js",
+      "test/transport/module-link.test.js",
+      "test/transport/targets.test.js",
+      "test/transport/sync-false.test.js",
+      "examples/transport.js",
+      "test/helper.js",
+      "test/multistream.test.js",
+      "browser.js",
+      "test/transport/pipeline.test.js",
+      "test/transport/core.test.js",
+      "pino.js",
+      "pino.d.ts",
+      "lib/tools.js"
+    ]
+  },
+  "h-pino-29": {
+    "repo": "pino",
+    "query": "If a change renames the numeric level property in formatter output, what multi-target behavior and warning path should be reviewed?",
+    "files": [
+      "test/formatters.test.js",
+      "lib/proto.js",
+      "lib/tools.js",
+      "test/multistream.test.js",
+      "test/transport/targets.test.js",
+      "test/internals/version.test.js",
+      "lib/transport.js",
+      "pino.d.ts",
+      "test/syncfalse.test.js",
+      "lib/deprecations.js",
+      "test/transport/sync-false.test.js",
+      "test/transport/core.test.js",
+      "test/transport/sync-true.test.js",
+      "benchmarks/multi-arg.bench.js"
+    ]
+  },
+  "h-pino-30": {
+    "repo": "pino",
+    "query": "If child loggers are changed to merge bindings into objects instead of appending chindings, which documented duplicate-key behavior and tests are affected?",
+    "files": [
+      "test/browser-child.test.js",
+      "test/helper.js",
+      "pino.d.ts",
+      "test/browser-redaction.test.js",
+      "lib/proto.js",
+      "lib/tools.js",
+      "test/mixin-merge-strategy.test.js",
+      "test/transport/core.transpiled.test.ts",
+      "test/browser-set-bindings.test.js",
+      "lib/symbols.js",
+      "browser.js",
+      "test/complex-objects.test.js",
+      "test/error-key.test.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "pino.js",
+      "test/browser-bindings.test.js",
+      "test/browser-serializers.test.js"
+    ]
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "id": "codex-preserved-telemetry-classification-v1",
+  "scope": "post-hoc diagnostic; historical failed gates remain unchanged",
+  "cases": {
+    "codex-otel-probe-v1/plain_final": {
+      "classifier_version": "codex-otel-classification-v1",
+      "observed_http_requests": 1,
+      "observed_websocket_requests": 2,
+      "observed_response_completed_events": 2,
+      "observed_response_completed_markers": 0,
+      "observed_usage_records": 2,
+      "usage_records": [
+        {
+          "input_tokens": 1873,
+          "output_tokens": 0,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "cache_write_token_count": 0,
+          "tool_token_count": 1873
+        },
+        {
+          "input_tokens": 2999,
+          "output_tokens": 5,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "cache_write_token_count": 0,
+          "tool_token_count": 3004
+        }
+      ],
+      "usage_totals": {
+        "input_tokens": 4872,
+        "output_tokens": 5,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": 0,
+        "cache_write_token_count": 0,
+        "tool_token_count": 4877
+      },
+      "optional_token_field_observations": {
+        "cache_write_token_count": 2,
+        "tool_token_count": 2
+      },
+      "usage_totals_scope": "observed valid records only; missing optional fields are unknown",
+      "invalid_usage_records": 0,
+      "duplicate_identifiable_usage_records": 0,
+      "correlation": {
+        "available": false,
+        "key_names": [],
+        "identifiable_usage_records": 0,
+        "uncorrelated_usage_records": 2
+      },
+      "errors": [
+        "usage_records_uncorrelated_completeness_unproven"
+      ],
+      "diagnostic_only": true,
+      "complete_agent_accounting": false,
+      "product_promotion": false,
+      "live_token_cap": "unverified",
+      "reconciliation_pass": false,
+      "cli_exit_code": 0,
+      "timeout": false,
+      "capture_count": 3,
+      "collector_error_count": 0,
+      "decode_error_count": 0,
+      "evidence_sha256": {
+        ".research/evidence/codex-otel-probe-v1/plain_final/command.json": "611d97479f63c0e20420f46909382ee34b2790977043d083f922cf3e6300bcc4",
+        ".research/evidence/codex-otel-probe-v1/plain_final/decoded-events.json": "67339d978331637df28a064e4284af75c8061e05912e0778c7217b27348655eb",
+        ".research/evidence/codex-otel-probe-v1/plain_final/instructions.txt": "6593fba2fe4f08f3afe36fdbe3f4ef083840e7ff6ed497931deab394febb0bb1",
+        ".research/evidence/codex-otel-probe-v1/plain_final/prompt.txt": "2ae42d6366a407f578fd5fdd753435d8dc2cf6fd2f33008bab9ce2e8c807364e",
+        ".research/evidence/codex-otel-probe-v1/plain_final/receipt.json": "bddb3439c99964095ee9d5fb4477ed0f78b8505a5ac8c8850129986ff180369c",
+        ".research/evidence/codex-otel-probe-v1/plain_final/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/codex-otel-probe-v1/plain_final/stream.jsonl": "fa2e78bc2cdc098487894813387e776897ffd892f47da8f20f00b0bf1df84c25",
+        ".research/evidence/codex-otel-probe-v1/plain_final/telemetry/capture-0001.json": "c90860454d078a5acafea98454ab2d8ebe18a7922a8bf847555e4e222f0434cf",
+        ".research/evidence/codex-otel-probe-v1/plain_final/telemetry/capture-0002.json": "1194ab7ac7ee97ec0675b9a09cb754ec1b29b0b75164340e1a40dbb723757d27",
+        ".research/evidence/codex-otel-probe-v1/plain_final/telemetry/capture-0003.json": "6e42902769886306e2f75e895e3187c0a727fb6d5fb48e6eebe37978f4b46d8b",
+        ".research/evidence/codex-otel-probe-v1/plain_final/telemetry/receipts.jsonl": "55af03b5a951a18dbae623f79c56d3e6560eb8e1d0721512af5b5d5633b76ccb"
+      }
+    },
+    "codex-otel-probe-v1/one_synthetic_mcp_ping": {
+      "classifier_version": "codex-otel-classification-v1",
+      "observed_http_requests": 2,
+      "observed_websocket_requests": 4,
+      "observed_response_completed_events": 4,
+      "observed_response_completed_markers": 0,
+      "observed_usage_records": 4,
+      "usage_records": [
+        {
+          "input_tokens": 2653,
+          "output_tokens": 0,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "cache_write_token_count": 0,
+          "tool_token_count": 2653
+        },
+        {
+          "input_tokens": 3797,
+          "output_tokens": 40,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "cache_write_token_count": 0,
+          "tool_token_count": 3837
+        },
+        {
+          "input_tokens": 3918,
+          "output_tokens": 25,
+          "cached_input_tokens": 3584,
+          "reasoning_output_tokens": 0,
+          "cache_write_token_count": 0,
+          "tool_token_count": 3943
+        },
+        {
+          "input_tokens": 3984,
+          "output_tokens": 5,
+          "cached_input_tokens": 3712,
+          "reasoning_output_tokens": 0,
+          "cache_write_token_count": 0,
+          "tool_token_count": 3989
+        }
+      ],
+      "usage_totals": {
+        "input_tokens": 14352,
+        "output_tokens": 70,
+        "cached_input_tokens": 7296,
+        "reasoning_output_tokens": 0,
+        "cache_write_token_count": 0,
+        "tool_token_count": 14422
+      },
+      "optional_token_field_observations": {
+        "cache_write_token_count": 4,
+        "tool_token_count": 4
+      },
+      "usage_totals_scope": "observed valid records only; missing optional fields are unknown",
+      "invalid_usage_records": 0,
+      "duplicate_identifiable_usage_records": 0,
+      "correlation": {
+        "available": false,
+        "key_names": [],
+        "identifiable_usage_records": 0,
+        "uncorrelated_usage_records": 4
+      },
+      "errors": [
+        "usage_records_uncorrelated_completeness_unproven"
+      ],
+      "diagnostic_only": true,
+      "complete_agent_accounting": false,
+      "product_promotion": false,
+      "live_token_cap": "unverified",
+      "reconciliation_pass": false,
+      "cli_exit_code": 0,
+      "timeout": false,
+      "capture_count": 5,
+      "collector_error_count": 0,
+      "decode_error_count": 0,
+      "evidence_sha256": {
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/command.json": "66b8074d6f949ff31655471a942cc6a7120050d0500deefb07f017c3b0ebcbab",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/decoded-events.json": "a0105c5ff406074ae7356bcf7ad9fad5757aeddc6154e0d43302b1da6f46fa27",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/instructions.txt": "6593fba2fe4f08f3afe36fdbe3f4ef083840e7ff6ed497931deab394febb0bb1",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/ping.jsonl": "6a967d7935e96bcaa9360f30e4e78878aa01a38e984d74f52faae6110faa700e",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/prompt.txt": "1b6f8c2eb5cf159f904f43dfaaf8a92989d942228fec744a6f48e4f66b1da120",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/receipt.json": "66ea3c2b3d9f27ebd8641deac6da7881c0b5631b0a65e7f1e2f63e1d3980ab3d",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/stream.jsonl": "b6908f14fbec522e0198fe6bca6dc20bebb705eb81475e9cd68107b5c46a7aa6",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/telemetry/capture-0001.json": "fc0f9565e231e0815a23f6a2f9596c6ca3ebcd9f05d7d80ae6935a0d5588423a",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/telemetry/capture-0002.json": "c8efb773a65e9f9637e1ae30613c2615b4dddc113e4cab7be4e50ee79d10eca3",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/telemetry/capture-0003.json": "8ca003ff6b1bddf655bab9ea0092d4c111beee802709e5126a01dc97a214ac15",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/telemetry/capture-0004.json": "5e826d685ef3621c849fdcff29ac4d76a369b4cccb26ff277c94cb080ebc2648",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/telemetry/capture-0005.json": "8fc221dc01bdd27f5d4aeefb1d9e2dcdea1dfd0ff7a59169e35456d5c03a4010",
+        ".research/evidence/codex-otel-probe-v1/one_synthetic_mcp_ping/telemetry/receipts.jsonl": "da8f7d839425363ebe9cc538d34bb58d8b2b5af9700c305bae9ae7a15f8efd2e"
+      }
+    },
+    "codex-otel-probe-v2/plain_http": {
+      "classifier_version": "codex-otel-classification-v1",
+      "observed_http_requests": 4,
+      "observed_websocket_requests": 0,
+      "observed_response_completed_events": 2,
+      "observed_response_completed_markers": 1,
+      "observed_usage_records": 1,
+      "usage_records": [
+        {
+          "input_tokens": 2999,
+          "output_tokens": 5,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "cache_write_token_count": 0,
+          "tool_token_count": 3004
+        }
+      ],
+      "usage_totals": {
+        "input_tokens": 2999,
+        "output_tokens": 5,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": 0,
+        "cache_write_token_count": 0,
+        "tool_token_count": 3004
+      },
+      "optional_token_field_observations": {
+        "cache_write_token_count": 1,
+        "tool_token_count": 1
+      },
+      "usage_totals_scope": "observed valid records only; missing optional fields are unknown",
+      "invalid_usage_records": 0,
+      "duplicate_identifiable_usage_records": 0,
+      "correlation": {
+        "available": false,
+        "key_names": [],
+        "identifiable_usage_records": 0,
+        "uncorrelated_usage_records": 1
+      },
+      "errors": [
+        "usage_records_uncorrelated_completeness_unproven"
+      ],
+      "diagnostic_only": true,
+      "complete_agent_accounting": false,
+      "product_promotion": false,
+      "live_token_cap": "unverified",
+      "reconciliation_pass": false,
+      "cli_exit_code": 0,
+      "timeout": false,
+      "capture_count": 3,
+      "collector_error_count": 0,
+      "decode_error_count": 0,
+      "evidence_sha256": {
+        ".research/evidence/codex-otel-probe-v2/plain_http/command.json": "c290a8cf0d77b769c5d644e1e668fd2cb0a593013a0c983c13c396cfb4e100f1",
+        ".research/evidence/codex-otel-probe-v2/plain_http/decoded-events.json": "1780a349dea3f8634c63001185b3af522881527428f81d4a7cbf7f030aaa97cc",
+        ".research/evidence/codex-otel-probe-v2/plain_http/instructions.txt": "6593fba2fe4f08f3afe36fdbe3f4ef083840e7ff6ed497931deab394febb0bb1",
+        ".research/evidence/codex-otel-probe-v2/plain_http/prompt.txt": "2ae42d6366a407f578fd5fdd753435d8dc2cf6fd2f33008bab9ce2e8c807364e",
+        ".research/evidence/codex-otel-probe-v2/plain_http/receipt.json": "67f00ab9e49e29c339ad8f84bcdf70404fa4a178e50502309add1f7998045457",
+        ".research/evidence/codex-otel-probe-v2/plain_http/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/codex-otel-probe-v2/plain_http/stream.jsonl": "0cf7cf423cfd83c3ef002dc24d1ebe75c5e0428d65f73c790763c7a4dc336539",
+        ".research/evidence/codex-otel-probe-v2/plain_http/telemetry/capture-0001.json": "975054d14390d3b0e0021f7decd9344c380566521a25a3d9daddc6ddf48dfe01",
+        ".research/evidence/codex-otel-probe-v2/plain_http/telemetry/capture-0002.json": "1ffe0896f574f3458c95622ee83a94a90c5d114cb2e589bc02832060221f5478",
+        ".research/evidence/codex-otel-probe-v2/plain_http/telemetry/capture-0003.json": "182fc32c31889cba6bbc359c26a14e5913dab71146a5ab0c2d7173353e049f92",
+        ".research/evidence/codex-otel-probe-v2/plain_http/telemetry/receipts.jsonl": "dfb29a0f48f93d5c9286621847731b97b07d301a46303c7fef3ebdebe1918b28"
+      }
+    }
+  },
+  "analysis_sha256": {
+    "benchmark/codex_otel_classification.py": "15a7a795b63c20ff660b01ce4af02ec4f5ba2a594b6c8c5e640ad4629c01dbd4",
+    "benchmark/test_codex_otel_classification.py": "a062c0437ac6ec4ef36f7bf49abd73b1e006a675220abea38848643a5e56ab79",
+    "benchmark/report_codex_classification.py": "b1bf530a25b47a1ccac7d6682ee9b3c1c5e9f39ad0b68b02d5d358db2be3e9b0"
+  },
+  "complete_agent_accounting_pass": false,
+  "product_promotion_pass": false,
+  "live_token_cap": "unverified",
+  "agent_savings": "unmeasured"
+}

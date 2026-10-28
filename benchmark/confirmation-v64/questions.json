@@ -1,0 +1,3390 @@
+[
+  {
+    "id": "h-zerolog-exact-warning-level",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What signed numeric range does ParseLevel accept for custom levels, and what result does it return for out-of-range values?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 200,
+        "end": 207,
+        "anchor": "\ti, err := strconv.Atoi(levelStr)",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log_test.go",
+        "start": 1470,
+        "end": 1477,
+        "anchor": "func TestParseLevelOutOfBounds(t *testing.T) {",
+        "file_sha256": "dd139c3795a378cff0b25ea7dd71541daf52029d0f2f5b08f760087e79aa1ee2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-update-context",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What method mutates an existing Logger\u2019s contextual fields through a callback, and what concurrency caveat does its API document?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 298,
+        "end": 300,
+        "anchor": "func (l *Logger) UpdateContext(update func(c Context) Context) {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 296,
+        "end": 298,
+        "anchor": "// Caution: This method is not concurrency safe.",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-msgfunc",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "Which Event method takes a callback to create the message lazily, and what happens when the Event receiver is nil?",
+    "evidence": [
+      {
+        "path": "event.go",
+        "start": 143,
+        "end": 146,
+        "anchor": "func (e *Event) MsgFunc(createMsg func() string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event_test.go",
+        "start": 369,
+        "end": 377,
+        "anchor": "\tcalled := false",
+        "file_sha256": "69c96d1d2115f7bb25de111814a1a9d728de7c9a953443bbde2ecbdedafc9f0e"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-levelwriter",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What interface lets a writer receive both a zerolog level and the encoded payload?",
+    "evidence": [
+      {
+        "path": "writer.go",
+        "start": 15,
+        "end": 17,
+        "anchor": "type LevelWriter interface {",
+        "file_sha256": "437630a3c7adb307d58bb5991b2965512cbb2cc5d4da88b760f1ad5444ffeff2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-diode-selection",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "How does diode.NewWriter choose between its waiter and poller implementations?",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 62,
+        "end": 64,
+        "anchor": "\tif pollInterval > 0 {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 67,
+        "end": 69,
+        "anchor": "\t\tdw.d = diodes.NewWaiter(d,",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-sanitize-prefix",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What prefix does journald key sanitization add when the normalized key is empty or begins with a digit or underscore?",
+    "evidence": [
+      {
+        "path": "journald/journald.go",
+        "start": 88,
+        "end": 90,
+        "anchor": "\tif len(sanitized) == 0 || sanitized[0] >= '0' && sanitized[0] <= '9' || sanitized[0] == '_' {",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      },
+      {
+        "path": "journald/journald_test.go",
+        "start": 69,
+        "end": 71,
+        "anchor": "\t\t{\"123\", \"X123\"},",
+        "file_sha256": "cef464a1ef4066d80f4e3bd86c91c28ecde1db9eb51d5b2ac86786f8624f11f6"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-context-array",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "Which Context method creates an Array that carries over the logger\u2019s stack setting, context, and hooks?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 49,
+        "end": 51,
+        "anchor": "func (c Context) CreateArray() *Array {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 53,
+        "end": 55,
+        "anchor": "\ta.ch = c.l.hooks",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-exact-log-level-names",
+    "repo": "zerolog",
+    "category": "exact",
+    "query": "What integer values are assigned to DebugLevel through PanicLevel, and what value is used for TraceLevel?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 131,
+        "end": 150,
+        "anchor": "\tDebugLevel Level = iota",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-msg-completion",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "Why can a chained logging call compile yet emit nothing if the developer only adds fields and never finishes the event?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 342,
+        "end": 344,
+        "anchor": "// You must call Msg on the returned event in order to send the event.",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "event.go",
+        "start": 115,
+        "end": 117,
+        "anchor": "func (e *Event) Msg(msg string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-field-input-shapes",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "When using Context.Fields to add several fields at once, which input container shapes and element arrangement does the API accept?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 22,
+        "end": 24,
+        "anchor": "// Only map[string]interface{} and []interface{} are accepted. []interface{} must",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 25,
+        "end": 27,
+        "anchor": "\tc.l.context = appendFields(c.l.context, fields, c.l.stack, c.l.ctx, c.l.hooks)",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-sampler-count",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "How does BasicSampler decide which events to pass when N is greater than one, and what do N=0 and N=1 mean?",
+    "evidence": [
+      {
+        "path": "sampler.go",
+        "start": 39,
+        "end": 41,
+        "anchor": "type BasicSampler struct {",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      },
+      {
+        "path": "sampler.go",
+        "start": 47,
+        "end": 55,
+        "anchor": "\tif n == 0 {",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-burst-sampling",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "How does BurstSampler behave after its initial per-period burst is exhausted, including when there is no follow-on sampler?",
+    "evidence": [
+      {
+        "path": "sampler.go",
+        "start": 57,
+        "end": 83,
+        "anchor": "// BurstSampler lets Burst events pass per Period then pass the decision to",
+        "file_sha256": "4f8999490815dee3baea615bce8a849d3a454cc86edd4b174c5ac665f6d34894"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-slog-groups",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "How do repeated SlogHandler.WithAttrs calls accumulate pre-attached attributes, and when are those attributes added to each record?",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 86,
+        "end": 94,
+        "anchor": "// WithAttrs returns a new Handler with the given attributes pre-attached.",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 53,
+        "end": 55,
+        "anchor": "\t// Add pre-attached attrs from WithAttrs",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-console-pipeline",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "What does ConsoleWriter do to an incoming log record before producing human-readable output, and how can callers control part ordering?",
+    "evidence": [
+      {
+        "path": "console.go",
+        "start": 122,
+        "end": 145,
+        "anchor": "func (w ConsoleWriter) Write(p []byte) (n int, err error) {",
+        "file_sha256": "66b97a2b98a57462931cc62d213be96ab1f8e0290b67dafde7000e4a814982f7"
+      },
+      {
+        "path": "console.go",
+        "start": 154,
+        "end": 173,
+        "anchor": "\tfor _, p := range w.PartsOrder {",
+        "file_sha256": "66b97a2b98a57462931cc62d213be96ab1f8e0290b67dafde7000e4a814982f7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-context-fallback",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "What logger does zerolog.Ctx return when the context has no attached logger, and how can the package-level fallback be disabled?",
+    "evidence": [
+      {
+        "path": "ctx.go",
+        "start": 44,
+        "end": 46,
+        "anchor": "func Ctx(ctx context.Context) *Logger {",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      },
+      {
+        "path": "ctx.go",
+        "start": 47,
+        "end": 49,
+        "anchor": "\t} else if l = DefaultContextLogger; l != nil {",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      },
+      {
+        "path": "ctx.go",
+        "start": 50,
+        "end": 51,
+        "anchor": "\treturn disabledLogger",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-conceptual-interface-reflection",
+    "repo": "zerolog",
+    "category": "conceptual",
+    "query": "How does an Event\u2019s Interface field method handle values that implement the package\u2019s object-marshaling interface versus other values?",
+    "evidence": [
+      {
+        "path": "event.go",
+        "start": 825,
+        "end": 833,
+        "anchor": "func (e *Event) Interface(key string, i interface{}) *Event {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-warning-parse-test",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace parsing \"WARNING\" from the public parser through the regression test: what level and error outcome should a caller get?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 187,
+        "end": 189,
+        "anchor": "\t\tstrings.EqualFold(levelStr, \"warning\"):",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log_test.go",
+        "start": 1464,
+        "end": 1466,
+        "anchor": "\tl, err = ParseLevel(\"WARNING\")",
+        "file_sha256": "dd139c3795a378cff0b25ea7dd71541daf52029d0f2f5b08f760087e79aa1ee2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-print-event",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Follow Logger.Print from the convenience method to the emitted event: which level does it use, how is the caller adjusted, and what message string is sent?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 456,
+        "end": 458,
+        "anchor": "func (l *Logger) Print(v ...interface{}) {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 458,
+        "end": 460,
+        "anchor": "\t\te.CallerSkipFrame(1).Msg(fmt.Sprint(v...))",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-event-send-hooks",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "When an Event is finalized with Msg, where do hooks run relative to message insertion and the writer call?",
+    "evidence": [
+      {
+        "path": "event.go",
+        "start": 150,
+        "end": 163,
+        "anchor": "func (e *Event) msg(msg string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event.go",
+        "start": 81,
+        "end": 90,
+        "anchor": "func (e *Event) write() (err error) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-context-roundtrip",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace the logger/context round trip: where is a Logger stored by WithContext, and what object is returned by Ctx when that value exists?",
+    "evidence": [
+      {
+        "path": "ctx.go",
+        "start": 38,
+        "end": 40,
+        "anchor": "\treturn context.WithValue(ctx, ctxKey{}, &l)",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      },
+      {
+        "path": "ctx.go",
+        "start": 45,
+        "end": 47,
+        "anchor": "\tif l, ok := ctx.Value(ctxKey{}).(*Logger); ok {",
+        "file_sha256": "13d62e33ab6ed36877f82671e7547b7cd799f2c1b9725096e602bc3ac0b7f6f3"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-diode-lifecycle",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace a log line through diode.NewWriter to the wrapped writer, then explain how Close waits for the background consumer and closes the destination when supported.",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 51,
+        "end": 71,
+        "anchor": "func NewWriter(w io.Writer, size int, pollInterval time.Duration, f Alerter) Writer {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 74,
+        "end": 80,
+        "anchor": "func (dw Writer) Write(p []byte) (n int, err error) {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 82,
+        "end": 90,
+        "anchor": "// Close releases the diode poller and call Close on the wrapped writer if",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 93,
+        "end": 111,
+        "anchor": "func (dw Writer) poll() {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-slog-handle",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace how SlogHandler.Handle maps a slog level, attaches the supplied context, adds record attributes, and emits the message.",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 40,
+        "end": 44,
+        "anchor": "func (h *SlogHandler) Handle(ctx context.Context, record slog.Record) error {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 49,
+        "end": 62,
+        "anchor": "\tif ctx != nil {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 67,
+        "end": 72,
+        "anchor": "\tif !record.Time.IsZero() && !h.hasTimestampHook() {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-journald-write",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace a JSON record through the journald writer: how are priority and key/value arguments derived, and what extra argument contains the original record?",
+    "evidence": [
+      {
+        "path": "journald/journald.go",
+        "start": 49,
+        "end": 75,
+        "anchor": "// levelToJPrio converts zerolog Level string into",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      },
+      {
+        "path": "journald/journald.go",
+        "start": 106,
+        "end": 133,
+        "anchor": "\tif l, ok := event[zerolog.LevelFieldName].(string); ok {",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      },
+      {
+        "path": "journald/journald.go",
+        "start": 135,
+        "end": 140,
+        "anchor": "\targs[\"JSON\"] = string(p)",
+        "file_sha256": "f1bf4ed5e546b26eed9fa742163bafff5546ac52e24045511f2b0990eda75729"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-trace-dict-array",
+    "repo": "zerolog",
+    "category": "trace",
+    "query": "Trace a Context.Dict call to finalization: how is the nested Event terminated and appended, and how is that temporary Event disposed?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 30,
+        "end": 32,
+        "anchor": "func (c Context) Dict(key string, dict *Event) Context {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 31,
+        "end": 33,
+        "anchor": "\tdict.buf = enc.AppendEndMarker(dict.buf)",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 33,
+        "end": 35,
+        "anchor": "\tputEvent(dict)",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-logger-event-encoder",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "Describe the path from a Logger method such as Info to an Event and then to the writer, including where the level is filtered and where the message is encoded.",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 357,
+        "end": 359,
+        "anchor": "func (l *Logger) Info() *Event {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 490,
+        "end": 506,
+        "anchor": "func (l *Logger) newEvent(level Level, done func(string)) *Event {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 519,
+        "end": 527,
+        "anchor": "func (l *Logger) should(lvl Level) bool {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "event.go",
+        "start": 150,
+        "end": 163,
+        "anchor": "func (e *Event) msg(msg string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event.go",
+        "start": 81,
+        "end": 90,
+        "anchor": "func (e *Event) write() (err error) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-context-builders",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "Which logger-associated state do Context.CreateDict and Context.CreateArray copy into temporary dictionary and array values?",
+    "evidence": [
+      {
+        "path": "context.go",
+        "start": 41,
+        "end": 43,
+        "anchor": "func (c Context) CreateDict() *Event {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      },
+      {
+        "path": "context.go",
+        "start": 49,
+        "end": 54,
+        "anchor": "func (c Context) CreateArray() *Array {",
+        "file_sha256": "2ecd45c064fc6712af8c25f480062fb24fca2f1e6376ed1e24928d6ade8bab09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-diode-components",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "What components make diode.Writer non-blocking for producers while a separate consumer writes to the destination, and what role does the poll interval play?",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 51,
+        "end": 71,
+        "anchor": "func NewWriter(w io.Writer, size int, pollInterval time.Duration, f Alerter) Writer {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 93,
+        "end": 99,
+        "anchor": "func (dw Writer) poll() {",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-arch-slog-adapter",
+    "repo": "zerolog",
+    "category": "architecture",
+    "query": "How is standard-library slog integrated with zerolog, from handler construction through level conversion and attribute conversion?",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 21,
+        "end": 23,
+        "anchor": "func NewSlogHandler(logger Logger) *SlogHandler {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 128,
+        "end": 140,
+        "anchor": "func slogToZerologLevel(level slog.Level) Level {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 179,
+        "end": 220,
+        "anchor": "func appendSlogAttr(event *Event, attr slog.Attr, prefix string) *Event {",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-warning-alias",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If Event.Interface stopped dispatching LogObjectMarshaler values to Object, what encoding behavior would change and which interface-field test case exercises that path?",
+    "evidence": [
+      {
+        "path": "event.go",
+        "start": 825,
+        "end": 833,
+        "anchor": "func (e *Event) Interface(key string, i interface{}) *Event {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event_test.go",
+        "start": 297,
+        "end": 307,
+        "anchor": "\t\t\"Interface\": func() *Event {",
+        "file_sha256": "69c96d1d2115f7bb25de111814a1a9d728de7c9a953443bbde2ecbdedafc9f0e"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-field-name",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If the package changed its default timestamp field key, which shared configuration and event-encoding paths determine the resulting field name?",
+    "evidence": [
+      {
+        "path": "globals.go",
+        "start": 41,
+        "end": 43,
+        "anchor": "\tTimestampFieldName = \"time\"",
+        "file_sha256": "64b06cb2d8d1cb3a761ef98a975d656aa586ec98360bd54825885f0b8bb98067"
+      },
+      {
+        "path": "event.go",
+        "start": 760,
+        "end": 762,
+        "anchor": "\te.buf = enc.AppendTime(enc.AppendKey(e.buf, TimestampFieldName), TimestampFunc(), TimeFieldFormat)",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-slog-disabled",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If disabled loggers began returning non-nil Events, which nil-guarded message callback behavior would be at risk, and what test currently protects the lazy callback contract?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 490,
+        "end": 495,
+        "anchor": "func (l *Logger) newEvent(level Level, done func(string)) *Event {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "event.go",
+        "start": 143,
+        "end": 146,
+        "anchor": "func (e *Event) MsgFunc(createMsg func() string) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event_test.go",
+        "start": 367,
+        "end": 377,
+        "anchor": "\t}",
+        "file_sha256": "69c96d1d2115f7bb25de111814a1a9d728de7c9a953443bbde2ecbdedafc9f0e"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-diode-pool-cap",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "What would change if the 64 KiB cap before returning diode buffers to the pool were raised or removed, and where is that cap enforced?",
+    "evidence": [
+      {
+        "path": "diode/diode.go",
+        "start": 109,
+        "end": 111,
+        "anchor": "\t\tconst maxSize = 1 << 16 // 64KiB",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      },
+      {
+        "path": "diode/diode.go",
+        "start": 111,
+        "end": 113,
+        "anchor": "\t\t\tbufPool.Put(p[:0])",
+        "file_sha256": "5d9f18182f59819b25753cc388e55e2bd5679250ccd065acf0651fb854c742dc"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-impact-global-level",
+    "repo": "zerolog",
+    "category": "impact",
+    "query": "If the global minimum level check were removed from Logger.should, which filtering behavior and user-visible guarantee would change?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 519,
+        "end": 525,
+        "anchor": "func (l *Logger) should(lvl Level) bool {",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "README.md",
+        "start": 131,
+        "end": 133,
+        "anchor": "You can set the Global logging level to any of these options using the `SetGlobalLevel` function in the zerolog package, passing in one of the given constants above, e.g. `zerolog.InfoLevel` would be the \"info\" level. Whichever level is chosen, all logs with a level greater than or equal to that level will be written. To turn off logging entirely, pass the `zerolog.Disabled` constant.",
+        "file_sha256": "1bd6e0eef76d6161e62b991ec88f0693c44562da508d14adbb66d635b82bfdf6"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-print-level",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The README says the default level for package log.Print is trace; what level does the implementation actually use, and what discrepancy should be corrected?",
+    "evidence": [
+      {
+        "path": "README.md",
+        "start": 65,
+        "end": 67,
+        "anchor": "> Note: The default log level for `log.Print` is _trace_",
+        "file_sha256": "1bd6e0eef76d6161e62b991ec88f0693c44562da508d14adbb66d635b82bfdf6"
+      },
+      {
+        "path": "log/log.go",
+        "start": 118,
+        "end": 120,
+        "anchor": "\tLogger.Debug().CallerSkipFrame(1).Msg(fmt.Sprint(v...))",
+        "file_sha256": "006ce1ea3ac6cc156b42536d4b987d7cc67599ac2847823aac04884928be9d09"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-msgf-disabled-allocation",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The README warns that Msgf allocates even when logging is disabled; what does the implementation do when a disabled logger yields a nil Event?",
+    "evidence": [
+      {
+        "path": "README.md",
+        "start": 313,
+        "end": 315,
+        "anchor": "> NOTE: Using `Msgf` generates one allocation even when the logger is disabled.",
+        "file_sha256": "1bd6e0eef76d6161e62b991ec88f0693c44562da508d14adbb66d635b82bfdf6"
+      },
+      {
+        "path": "event.go",
+        "start": 136,
+        "end": 138,
+        "anchor": "func (e *Event) Msgf(format string, v ...interface{}) {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      },
+      {
+        "path": "event.go",
+        "start": 82,
+        "end": 84,
+        "anchor": "\tif e == nil {",
+        "file_sha256": "5a0c8656d6aa369535121593c3958c333164dc3ef5f65fe82794ce2ca9fc146d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-slog-group-shape",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The SlogHandler.WithGroup documentation describes attributes as nested under a group. Does the implementation emit nested objects or flattened dotted keys, and what test demonstrates the actual shape?",
+    "evidence": [
+      {
+        "path": "slog.go",
+        "start": 98,
+        "end": 100,
+        "anchor": "// attributes will be nested under this group name in the output.",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog.go",
+        "start": 174,
+        "end": 176,
+        "anchor": "\treturn prefix + \".\" + key",
+        "file_sha256": "82ae7ed7854565721fb8c60be4b8740fd5259e096eee895dedaab231a6c29e7f"
+      },
+      {
+        "path": "slog_test.go",
+        "start": 229,
+        "end": 231,
+        "anchor": "\tif m[\"request.method\"] != \"GET\" {",
+        "file_sha256": "40e65850be0cac0208a141eb9d1b6777a9b8aa94dbf10315093ee3c5952afbd2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-disc-write-method",
+    "repo": "zerolog",
+    "category": "discrepancy",
+    "query": "The Logger type comment says an event calls the writer\u2019s Write method; how does New handle LevelWriter implementations, and which method receives the event instead?",
+    "evidence": [
+      {
+        "path": "log.go",
+        "start": 244,
+        "end": 246,
+        "anchor": "// Each logging operation makes a single call to the Writer's Write method. There is no",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "log.go",
+        "start": 241,
+        "end": 243,
+        "anchor": "// the LevelWriter interface, the WriteLevel method will be called instead of the Write",
+        "file_sha256": "a5b8e41f59bcc5f61c5e5b2608a971f3a0f3b14d99a1968c9f6bcebd30924f07"
+      },
+      {
+        "path": "writer.go",
+        "start": 17,
+        "end": 19,
+        "anchor": "\tWriteLevel(level Level, p []byte) (n int, err error)",
+        "file_sha256": "437630a3c7adb307d58bb5991b2965512cbb2cc5d4da88b760f1ad5444ffeff2"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-midnight-rotation",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "How does zerolog rotate a file at midnight and retain the previous 30 days of log files?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-at-rest-encryption",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "Which built-in API encrypts each log record before it is written to a file?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-http-ingest",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "What HTTP endpoint does NewJournalDWriter call to upload a log record to a remote server?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-zerolog-no-config-watcher",
+    "repo": "zerolog",
+    "category": "no_evidence",
+    "query": "Which built-in watcher reloads a YAML logging configuration and changes the global level when the file is edited?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-01",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which Console method writes positional objects as strings with a separator, disables markup and wrapping, and calls print with crop=False?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1639,
+        "end": 1639,
+        "anchor": "        raw_output: str = sep.join(str(_object) for _object in objects)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "            markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1646,
+        "end": 1646,
+        "anchor": "            no_wrap=True,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1648,
+        "end": 1648,
+        "anchor": "            crop=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-02",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What is the named helper that divides available table width among flexible columns by their ratios?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 549,
+        "end": 549,
+        "anchor": "flex_widths = ratio_distribute(flexible_width, ratios, flex_minimum)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-03",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which Text method yields rendered Segment objects and accepts an optional ending string?",
+    "evidence": [
+      {
+        "path": "rich/text.py",
+        "start": 719,
+        "end": 719,
+        "anchor": "def render(self, console: \"Console\", end: str = \"\")",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-04",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What method is called to make a Progress display table from a sequence of Task values?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1562,
+        "end": 1562,
+        "anchor": "def make_tasks_table(self, tasks: Iterable[Task]) -> Table:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-05",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which function turns markup input into a Text instance and defaults emoji replacement on?",
+    "evidence": [
+      {
+        "path": "rich/markup.py",
+        "start": 106,
+        "end": 106,
+        "anchor": "def render(",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 109,
+        "end": 109,
+        "anchor": "emoji: bool = True,",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-06",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What method calculates the map from leaf Layout objects to rendered lines and terminal regions?",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 366,
+        "end": 366,
+        "anchor": "def render(self, console: Console, options: ConsoleOptions) -> RenderMap:",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-07",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which Segment class method splits rendered segments into lines and optionally crops and pads each line to a target length?",
+    "evidence": [
+      {
+        "path": "rich/segment.py",
+        "start": 307,
+        "end": 307,
+        "anchor": "    def split_and_crop_lines(",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 310,
+        "end": 310,
+        "anchor": "        length: int,",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 315,
+        "end": 315,
+        "anchor": "        \"\"\"Split segments in to lines, and crop lines greater than a given length.",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 322,
+        "end": 322,
+        "anchor": "            pad (bool): Enable padding of lines that are less than `length`.",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-08",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What is the Live method for replacing the displayed renderable, with an optional immediate refresh?",
+    "evidence": [
+      {
+        "path": "rich/live.py",
+        "start": 230,
+        "end": 230,
+        "anchor": "def update(self, renderable: RenderableType, *, refresh: bool = False) -> None:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-09",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Console.out differ from Console.print when handling arbitrary objects and markup?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1639,
+        "end": 1639,
+        "anchor": "raw_output: str = sep.join(str(_object) for _object in objects)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1652,
+        "end": 1652,
+        "anchor": "def print(",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-10",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How are table column widths measured and then constrained when the table cannot fit?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 530,
+        "end": 530,
+        "anchor": "self._measure_column(console, options, column) for column in columns",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 557,
+        "end": 557,
+        "anchor": "widths = self._collapse_widths(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 563,
+        "end": 563,
+        "anchor": "# last resort, reduce columns evenly",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-11",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "What does soft wrapping change in the Console.print option setup?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1697,
+        "end": 1697,
+        "anchor": "if soft_wrap:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1699,
+        "end": 1699,
+        "anchor": "no_wrap = True",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1702,
+        "end": 1702,
+        "anchor": "crop = False",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-12",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Rich resolve overlapping markup closing tags rather than requiring strictly nested tags?",
+    "evidence": [
+      {
+        "path": "rich/markup.py",
+        "start": 146,
+        "end": 146,
+        "anchor": "    def pop_style(style_name: str) -> Tuple[int, Tag]:",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 148,
+        "end": 148,
+        "anchor": "        for index, (_, tag) in enumerate(reversed(style_stack), 1):",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 150,
+        "end": 150,
+        "anchor": "                return pop(-index)",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-13",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Align determine the width it renders at when no explicit width was provided?",
+    "evidence": [
+      {
+        "path": "rich/align.py",
+        "start": 147,
+        "end": 147,
+        "anchor": "width = console.measure(self.renderable, options=options).maximum",
+        "file_sha256": "6bc31b3fe8898e8385a27c6a8283f76247ad28c594dd61596b18ea02fd907391"
+      },
+      {
+        "path": "rich/align.py",
+        "start": 150,
+        "end": 150,
+        "anchor": "width if self.width is None else min(width, self.width)",
+        "file_sha256": "6bc31b3fe8898e8385a27c6a8283f76247ad28c594dd61596b18ea02fd907391"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-14",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Layout render child panels into the final rows of Segments?",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 390,
+        "end": 390,
+        "anchor": "layout.renderable, update_dimensions(region.width, region.height)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 410,
+        "end": 410,
+        "anchor": "row.extend(line)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 415,
+        "end": 415,
+        "anchor": "yield new_line",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-15",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does the progress renderer translate visible tasks and configured columns into a Table?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1579,
+        "end": 1579,
+        "anchor": "table = Table.grid(*table_columns, padding=(0, 1), expand=self.expand)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1582,
+        "end": 1582,
+        "anchor": "if task.visible:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1586,
+        "end": 1586,
+        "anchor": "column.format(task=task)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-16",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Text compute its measurement range from plain text?",
+    "evidence": [
+      {
+        "path": "rich/text.py",
+        "start": 712,
+        "end": 712,
+        "anchor": "        max_text_width = max(cell_len(line) for line in lines) if lines else 0",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 713,
+        "end": 713,
+        "anchor": "        words = text.split()",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 715,
+        "end": 715,
+        "anchor": "            max(cell_len(word) for word in words) if words else max_text_width",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 717,
+        "end": 717,
+        "anchor": "        return Measurement(min_text_width, max_text_width)",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-17",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace a string passed to Console.out through preparation to output: how are multiple arguments combined and which print flags prevent markup and overflow handling?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1639,
+        "end": 1639,
+        "anchor": "raw_output: str = sep.join(str(_object) for _object in objects)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1647,
+        "end": 1647,
+        "anchor": "overflow=\"ignore\",",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-18",
+    "repo": "rich",
+    "category": "trace",
+    "query": "When a Table is printed, where does it calculate widths and how do title, body, and caption get emitted?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 488,
+        "end": 488,
+        "anchor": "        widths = self._calculate_column_widths(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 509,
+        "end": 509,
+        "anchor": "        if self.title:",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 515,
+        "end": 515,
+        "anchor": "        yield from self._render(console, render_options, widths)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 516,
+        "end": 516,
+        "anchor": "        if self.caption:",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-19",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace a Rich Text object through console rendering: how do options choose wrap behavior and how are wrapped lines converted to segments?",
+    "evidence": [
+      {
+        "path": "rich/text.py",
+        "start": 694,
+        "end": 694,
+        "anchor": "        overflow = self.overflow or options.overflow or DEFAULT_OVERFLOW",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 696,
+        "end": 696,
+        "anchor": "        lines = self.wrap(",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 700,
+        "end": 700,
+        "anchor": "            overflow=overflow,",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 702,
+        "end": 702,
+        "anchor": "            no_wrap=pick_bool(self.no_wrap, options.no_wrap, False),",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 705,
+        "end": 705,
+        "anchor": "        yield from all_lines.render(console, end=self.end)",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-20",
+    "repo": "rich",
+    "category": "trace",
+    "query": "How does adding a progress task connect to later display rows? Include the task insertion and table conversion paths.",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1559,
+        "end": 1559,
+        "anchor": "        table = self.make_tasks_table(self.tasks)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1625,
+        "end": 1625,
+        "anchor": "            task = Task(",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1635,
+        "end": 1635,
+        "anchor": "            self._tasks[self._task_index] = task",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1583,
+        "end": 1583,
+        "anchor": "                table.add_row(",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-21",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace Live.update when passed a string with refresh=True. What conversion and synchronization occur?",
+    "evidence": [
+      {
+        "path": "rich/live.py",
+        "start": 237,
+        "end": 237,
+        "anchor": "        if isinstance(renderable, str):",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 238,
+        "end": 238,
+        "anchor": "            renderable = self.console.render_str(renderable)",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 239,
+        "end": 239,
+        "anchor": "        with self._lock:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 240,
+        "end": 240,
+        "anchor": "            self._renderable = renderable",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 241,
+        "end": 241,
+        "anchor": "            if refresh:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 242,
+        "end": 242,
+        "anchor": "                self.refresh()",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-22",
+    "repo": "rich",
+    "category": "trace",
+    "query": "What is the sequence for parsing markup into styled text, including the fast path when no opening bracket exists?",
+    "evidence": [
+      {
+        "path": "rich/markup.py",
+        "start": 128,
+        "end": 128,
+        "anchor": "    if \"[\" not in markup:",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 133,
+        "end": 133,
+        "anchor": "    text = Text(style=style)",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 153,
+        "end": 153,
+        "anchor": "    for position, plain_text, tag in _parse(markup):",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 155,
+        "end": 155,
+        "anchor": "            # Handle open brace escapes, where the brace is not part of a tag.",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-23",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace a Layout render from terminal dimensions to leaf renderables and final output rows.",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 376,
+        "end": 376,
+        "anchor": "        render_width = options.max_width",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 377,
+        "end": 377,
+        "anchor": "        render_height = options.height or console.height",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 378,
+        "end": 378,
+        "anchor": "        region_map = self._make_region_map(render_width, render_height)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 382,
+        "end": 382,
+        "anchor": "            if not layout.children",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 389,
+        "end": 389,
+        "anchor": "            lines = render_lines(",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 410,
+        "end": 410,
+        "anchor": "                    row.extend(line)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 415,
+        "end": 415,
+        "anchor": "                yield new_line",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-24",
+    "repo": "rich",
+    "category": "trace",
+    "query": "How does Segment.split_and_crop_lines treat newline characters inside a normal text segment?",
+    "evidence": [
+      {
+        "path": "rich/segment.py",
+        "start": 307,
+        "end": 307,
+        "anchor": "    def split_and_crop_lines(",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 337,
+        "end": 337,
+        "anchor": "                    _text, new_line, text = text.partition(\"\\n\")",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 341,
+        "end": 341,
+        "anchor": "                        cropped_line = adjust_line_length(",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 347,
+        "end": 347,
+        "anchor": "                        line.clear()",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-25",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "Which rendering protocol hooks let a custom object either return one renderable or yield several, and what parameters does the multi-render hook receive?",
+    "evidence": [
+      {
+        "path": "docs/source/protocol.rst",
+        "start": 27,
+        "end": 27,
+        "anchor": "The ``__rich__`` method is limited to a single renderable object. For more advanced rendering, add a ``__rich_console__`` method to your class.",
+        "file_sha256": "06748b8d2baa9b2aa3f804d38c9f7e5a3bb542d4b6e004196ad63e1b3ce3e8e8"
+      },
+      {
+        "path": "docs/source/protocol.rst",
+        "start": 29,
+        "end": 29,
+        "anchor": "The ``__rich_console__`` method should accept a :class:`~rich.console.Console` and a :class:`~rich.console.ConsoleOptions` instance. It should return an iterable of other renderable objects. Although that means it *could* return a container such as a list, it generally easier implemented by using the ``yield`` statement (making the method a generator).",
+        "file_sha256": "06748b8d2baa9b2aa3f804d38c9f7e5a3bb542d4b6e004196ad63e1b3ce3e8e8"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1319,
+        "end": 1319,
+        "anchor": "            render_iterable = renderable.__rich_console__(self, _options)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-26",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "How does the Layout subsystem divide responsibility between region allocation and leaf rendering?",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 345,
+        "end": 345,
+        "anchor": "    def _make_region_map(self, width: int, height: int) -> RegionMap:",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 357,
+        "end": 357,
+        "anchor": "                for child_and_region in layout.splitter.divide(children, region):",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 382,
+        "end": 382,
+        "anchor": "            if not layout.children",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 390,
+        "end": 390,
+        "anchor": "                layout.renderable, update_dimensions(region.width, region.height)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 392,
+        "end": 392,
+        "anchor": "            render_map[layout] = LayoutRender(region, lines)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-27",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "What does the table rendering pipeline delegate to _measure_column and _render after its public Rich console hook?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 475,
+        "end": 475,
+        "anchor": "    def __rich_console__(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 488,
+        "end": 488,
+        "anchor": "        widths = self._calculate_column_widths(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 515,
+        "end": 515,
+        "anchor": "        yield from self._render(console, render_options, widths)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 530,
+        "end": 530,
+        "anchor": "            self._measure_column(console, options, column) for column in columns",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-28",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "How does make_tasks_table convert string column specs and ProgressColumn specs into the columns passed to Table.grid?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1571,
+        "end": 1571,
+        "anchor": "        table_columns = (",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1574,
+        "end": 1574,
+        "anchor": "                if isinstance(_column, str)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1575,
+        "end": 1575,
+        "anchor": "                else _column.get_table_column().copy()",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1579,
+        "end": 1579,
+        "anchor": "        table = Table.grid(*table_columns, padding=(0, 1), expand=self.expand)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-29",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If soft_wrap=True is used while no_wrap=False and overflow='fold' are explicitly supplied, which settings survive, and how does cropping change?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1697,
+        "end": 1697,
+        "anchor": "        if soft_wrap:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1698,
+        "end": 1698,
+        "anchor": "            if no_wrap is None:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1699,
+        "end": 1699,
+        "anchor": "                no_wrap = True",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1700,
+        "end": 1700,
+        "anchor": "            if overflow is None:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1701,
+        "end": 1701,
+        "anchor": "                overflow = \"ignore\"",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1702,
+        "end": 1702,
+        "anchor": "            crop = False",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-30",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If a table exceeds the available width, which columns are initially eligible for width collapse and what happens if it still does not fit?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 559,
+        "end": 559,
+        "anchor": "[(column.width is None and not column.no_wrap) for column in columns]",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 566,
+        "end": 566,
+        "anchor": "widths = ratio_reduce(excess_width, [1] * len(widths), widths, widths)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-31",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If Live.update receives a string and refresh is false, what changes immediately and what rendering work is deferred?",
+    "evidence": [
+      {
+        "path": "rich/live.py",
+        "start": 237,
+        "end": 237,
+        "anchor": "        if isinstance(renderable, str):",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 238,
+        "end": 238,
+        "anchor": "            renderable = self.console.render_str(renderable)",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 239,
+        "end": 239,
+        "anchor": "        with self._lock:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 240,
+        "end": 240,
+        "anchor": "            self._renderable = renderable",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 241,
+        "end": 241,
+        "anchor": "            if refresh:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 242,
+        "end": 242,
+        "anchor": "                self.refresh()",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-32",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If a Progress task is hidden, how does that affect the task table?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1582,
+        "end": 1582,
+        "anchor": "if task.visible:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1583,
+        "end": 1583,
+        "anchor": "table.add_row(",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-33",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If the same progress task update changes total and advances completed, what reset and sampling behavior follows?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1445,
+        "end": 1445,
+        "anchor": "            if total is not None and total != task.total:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1447,
+        "end": 1447,
+        "anchor": "                task._reset()",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1448,
+        "end": 1448,
+        "anchor": "            if advance is not None:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1457,
+        "end": 1457,
+        "anchor": "            update_completed = task.completed - completed_start",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1466,
+        "end": 1466,
+        "anchor": "            if update_completed > 0:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1467,
+        "end": 1467,
+        "anchor": "                _progress.append(ProgressSample(current_time, update_completed))",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-34",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The docs call fold the default overflow. What does Console.print pass to its render options when overflow is omitted, and what value does its soft_wrap path substitute?",
+    "evidence": [
+      {
+        "path": "docs/source/console.rst",
+        "start": 173,
+        "end": 173,
+        "anchor": "You can specify how Rich should handle overflow with the ``overflow`` argument to :meth:`~rich.console.Console.print` which should be one of the following strings: \"fold\", \"crop\", \"ellipsis\", or \"ignore\". The default is \"fold\" which will put any excess characters on the following line, creating as many new lines as required to fit the text.",
+        "file_sha256": "03e860daae5166adec2957bc83ae5b17ab44f6af63e7f627749c0ddb4b5ac9d1"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1659,
+        "end": 1659,
+        "anchor": "        overflow: Optional[OverflowMethod] = None,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1697,
+        "end": 1697,
+        "anchor": "        if soft_wrap:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1700,
+        "end": 1700,
+        "anchor": "            if overflow is None:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1701,
+        "end": 1701,
+        "anchor": "                overflow = \"ignore\"",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1716,
+        "end": 1716,
+        "anchor": "            render_options = self.options.update(",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1718,
+        "end": 1718,
+        "anchor": "                overflow=overflow,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-35",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The docs describe Console.out as not applying word wrap. Which explicit flags in implementation also disable markup, emoji replacement, and cropping?",
+    "evidence": [
+      {
+        "path": "docs/source/console.rst",
+        "start": 97,
+        "end": 97,
+        "anchor": "In additional to :meth:`~rich.console.Console.print` and :meth:`~rich.console.Console.log`, Rich has an :meth:`~rich.console.Console.out` method which provides a lower-level way of writing to the terminal. The out() method converts all the positional arguments to strings and won't pretty print, word wrap, or apply markup to the output, but can apply a basic style and will optionally do highlighting.",
+        "file_sha256": "03e860daae5166adec2957bc83ae5b17ab44f6af63e7f627749c0ddb4b5ac9d1"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1644,
+        "end": 1644,
+        "anchor": "            emoji=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "            markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1648,
+        "end": 1648,
+        "anchor": "            crop=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-36",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The docs say disabling Live auto-refresh requires manual refresh or update(refresh=True). Does Live.update refresh by default?",
+    "evidence": [
+      {
+        "path": "docs/source/live.rst",
+        "start": 92,
+        "end": 92,
+        "anchor": "If you disable auto-refresh you will need to call",
+        "file_sha256": "b07bdf74cefe63dec401cca03ae8c300c2f88e0fb6e48d7bdbb4d1e7fd807668"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 230,
+        "end": 230,
+        "anchor": "def update(self, renderable: RenderableType, *, refresh: bool = False) -> None:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-37",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The Text docs list fold, crop, and ellipsis but not ignore. When Console.print's soft_wrap path supplies ignore, what value does Text use for wrapping?",
+    "evidence": [
+      {
+        "path": "docs/source/text.rst",
+        "start": 48,
+        "end": 48,
+        "anchor": "- ``overflow`` should be \"fold\", \"crop\", or \"ellipsis\", and will override default overflow.",
+        "file_sha256": "e220b1d4920df9a0e2ed42da7a3ace92699baf0b714b11fc523817def40f1895"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1701,
+        "end": 1701,
+        "anchor": "                overflow = \"ignore\"",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 694,
+        "end": 694,
+        "anchor": "        overflow = self.overflow or options.overflow or DEFAULT_OVERFLOW",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 700,
+        "end": 700,
+        "anchor": "            overflow=overflow,",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-38",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "Which Rich API renders a pandas DataFrame with automatic column type inference and SQL export?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-39",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "What command-line flag configures Rich to send terminal output over a network socket?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-40",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "Which Rich function produces an interactive browser-based dashboard from Progress tasks?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-41",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "What database backend does Rich use to persist Live display history across process restarts?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-01",
+    "repo": "pino",
+    "category": "exact",
+    "query": "Which option controls Pino\u2019s maximum depth and breadth when its fallback serializer handles a value?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "depthLimit: 5",
+        "start": 82,
+        "end": 82,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "maximumDepth: depthLimit",
+        "start": 121,
+        "end": 121,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-02",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What exact warning code is emitted when a custom level formatter may break multi-target routing?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "code: 'PINO_TRANSPORT_MULTI_TARGETS_LEVEL_FORMATTER'",
+        "start": 188,
+        "end": 188,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-03",
+    "repo": "pino",
+    "category": "exact",
+    "query": "How does a child logger expose the logger version and read-only numeric level value?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "get levelVal () { return this[levelValSym] }",
+        "start": 66,
+        "end": 66,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "set levelVal (n) { throw Error('levelVal is read-only')",
+        "start": 67,
+        "end": 67,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 63,
+        "end": 63,
+        "anchor": "version,",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-04",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What is the built-in censor text used when redaction does not specify a censor?",
+    "evidence": [
+      {
+        "path": "lib/redaction.js",
+        "anchor": "const CENSOR = '[Redacted]'",
+        "start": 9,
+        "end": 9,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-05",
+    "repo": "pino",
+    "category": "exact",
+    "query": "How does the library handle an explicit useOnlyCustomLevels setting when customLevels is absent?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "if (useOnlyCustomLevels && !customLevels) throw Error",
+        "start": 164,
+        "end": 164,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-06",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What default values does Pino use for messageKey and errorKey?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "messageKey: 'msg'",
+        "start": 57,
+        "end": 57,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "errorKey: 'err'",
+        "start": 58,
+        "end": 58,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-07",
+    "repo": "pino",
+    "category": "exact",
+    "query": "When a child receives msgPrefix, how is its prefix derived from the parent?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "instance[msgPrefixSym] = (this[msgPrefixSym] || '') + options.msgPrefix",
+        "start": 168,
+        "end": 168,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-08",
+    "repo": "pino",
+    "category": "exact",
+    "query": "What metadata fields does a logger write onto a metadata-aware destination before writing the serialized line?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (stream[needsMetadataGsym] === true)",
+        "start": 236,
+        "end": 236,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "stream.lastLogger = this // for child loggers",
+        "start": 241,
+        "end": 241,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 237,
+        "end": 237,
+        "anchor": "stream.lastLevel = num",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-09",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "Why can a logger created with base:null omit pid and hostname, and what path adds its initial bindings otherwise?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "if (base !== null)",
+        "start": 151,
+        "end": 151,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "chindings = coreChindings(Object.assign({}, base, { name }))",
+        "start": 155,
+        "end": 155,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-10",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How does the default mixin merge resolve a key supplied by both the log call and mixin?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "function defaultMixinMergeStrategy",
+        "start": 202,
+        "end": 202,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "return Object.assign(mixinObject, mergeObject)",
+        "start": 203,
+        "end": 203,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-11",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "What distinction does Pino make between an Error passed as the log object and an ordinary object with an error field?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "} else if (_obj instanceof Error)",
+        "start": 217,
+        "end": 217,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (msg === undefined && _obj[messageKey] === undefined && _obj[errorKey])",
+        "start": 224,
+        "end": 224,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-12",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How do child bindings become part of output, and why can repeated binding names appear in the serialized line?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "instance[chindingsSym] = asChindings(instance, bindings)",
+        "start": 106,
+        "end": 106,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "docs/child-loggers.md",
+        "anchor": "This is why duplicate keys between",
+        "start": 115,
+        "end": 115,
+        "file_sha256": "0eda746b1e651987fabb7af61a2c18883b35edb91a4fcf5531e2f4a7eaa6e385"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-13",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "What is the distinction between logger-level gating and per-destination level filtering for a multistream?",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "function setLevel (level)",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (dest.level <= level)",
+        "start": 67,
+        "end": 67,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/levels.js",
+        "start": 91,
+        "end": 91,
+        "anchor": "if (levelComparison(values[key], levelVal) === false) {",
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-14",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How does Pino preserve redaction when an object is interpolated into the message string?",
+    "evidence": [
+      {
+        "path": "lib/redaction.js",
+        "anchor": "provides top level redaction for instances where",
+        "start": 73,
+        "end": 73,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "{ stringify: stringifiers[redactFmtSym] }",
+        "start": 138,
+        "end": 138,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-15",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "Why does a no-options child creation take a separate fast path, and what does it still reset or invoke?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "If an `options` object was not supplied",
+        "start": 93,
+        "end": 93,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (this.onChild !== noop)",
+        "start": 108,
+        "end": 108,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 98,
+        "end": 98,
+        "anchor": "if (instance[formattersSym].bindings !== resetChildingsFormatter) {",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-16",
+    "repo": "pino",
+    "category": "conceptual",
+    "query": "How are standard level methods disabled or generated when the level threshold changes?",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "if (levelComparison(values[key], levelVal) === false)",
+        "start": 91,
+        "end": 91,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "this[key] = isStandardLevel(key, useOnlyCustomLevelsVal)",
+        "start": 95,
+        "end": 95,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-17",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace the path from calling logger.info(object, message) to bytes written, including the mixin and streamWrite hook.",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "info: (hook) => genLog(DEFAULT_LEVELS.info, hook)",
+        "start": 32,
+        "end": 32,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "function write (_obj, msg, num)",
+        "start": 206,
+        "end": 206,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "stream.write(streamWriteHook ? streamWriteHook(s) : s)",
+        "start": 243,
+        "end": 243,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/tools.js",
+        "start": 59,
+        "end": 59,
+        "anchor": "formatParams = [null]",
+        "file_sha256": "f40299d3a55ef799489dc8cc91bd8c1b3546e7cbf8d2be4c7dba80416bb4dd4b"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-18",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a custom level added at logger construction becomes a callable method and how changing logger.level updates that method set.",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "function mappings (customLevels = null, useOnlyCustomLevels = false)",
+        "start": 152,
+        "end": 152,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "function setLevel (level)",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "start": 95,
+        "end": 95,
+        "anchor": "this[key] = isStandardLevel(key, useOnlyCustomLevelsVal) ? levelMethods[key](hook) : genLog(values[key], hook)",
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-19",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Follow a redact path from logger initialization into serialization and identify where redaction is applied.",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "const stringifiers = redact",
+        "start": 134,
+        "end": 134,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "const formatOpts = redact",
+        "start": 137,
+        "end": 137,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "const s = this[asJsonSym](obj, msg, num, t)",
+        "start": 233,
+        "end": 233,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "pino.js",
+        "start": 144,
+        "end": 144,
+        "anchor": "[stringifiersSym]: stringifiers,",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-20",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a child logger with new bindings and a custom serializer option is assembled.",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "const instance = Object.create(this)",
+        "start": 91,
+        "end": 91,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "if (options.hasOwnProperty('serializers') === true)",
+        "start": 115,
+        "end": 115,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "instance[chindingsSym] = asChindings(instance, bindings)",
+        "start": 106,
+        "end": 106,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 126,
+        "end": 126,
+        "anchor": "}",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-21",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how fatal logging differs from info after the line is emitted.",
+    "evidence": [
+      {
+        "path": "lib/levels.js",
+        "anchor": "fatal: (hook) =>",
+        "start": 16,
+        "end": 16,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "if (typeof stream.flushSync === 'function')",
+        "start": 21,
+        "end": 21,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "info: (hook) => genLog(DEFAULT_LEVELS.info, hook)",
+        "start": 32,
+        "end": 32,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-22",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a multistream determines which destinations receive one record when dedupe is enabled.",
+    "evidence": [
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (opts.dedupe)",
+        "start": 81,
+        "end": 81,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (recordedLevel !== 0 && recordedLevel !== dest.level)",
+        "start": 68,
+        "end": 68,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "stream.write(data)",
+        "start": 80,
+        "end": 80,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "lib/multistream.js",
+        "start": 140,
+        "end": 140,
+        "anchor": "streams.sort(compareByLevel)",
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-23",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how a transport configured with multiple targets builds its worker-side routing stream.",
+    "evidence": [
+      {
+        "path": "lib/worker.js",
+        "anchor": "const multi = pino.multistream(targetStreams, { levels, dedupe })",
+        "start": 154,
+        "end": 154,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "multi.write(chunk + '\\n')",
+        "start": 164,
+        "end": 164,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "start": 157,
+        "end": 157,
+        "anchor": "const { lastTime, lastMsg, lastObj, lastLevel } = this",
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-24",
+    "repo": "pino",
+    "category": "trace",
+    "query": "Trace how the logger\u2019s flush method behaves when its destination has no flush method.",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "function flush (cb)",
+        "start": 246,
+        "end": 246,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "} else if (cb) cb()",
+        "start": 255,
+        "end": 255,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-25",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "Which modules divide responsibility for logger construction, logger behavior, level mapping, and redaction?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "function pino (...args)",
+        "start": 90,
+        "end": 90,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "const prototype =",
+        "start": 56,
+        "end": 56,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/levels.js",
+        "anchor": "function mappings",
+        "start": 152,
+        "end": 152,
+        "file_sha256": "91c7b328eaaf2954474b5d62b2584359d3099f00064ffbc0ea7a2d1f3e9427f7"
+      },
+      {
+        "path": "lib/redaction.js",
+        "anchor": "function redaction",
+        "start": 12,
+        "end": 12,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-26",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "How are logger instances tied to EventEmitter behavior while sharing a prototype created by a factory?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "Object.setPrototypeOf(prototype, EventEmitter.prototype)",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "return Object.create(prototype)",
+        "start": 81,
+        "end": 81,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "pino.js",
+        "anchor": "Object.setPrototypeOf(instance, proto())",
+        "start": 228,
+        "end": 228,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-27",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "What is the transport architecture boundary between application-thread logging and target processing?",
+    "evidence": [
+      {
+        "path": "docs/transports.md",
+        "anchor": "The transport code will be executed in a separate worker thread.",
+        "start": 49,
+        "end": 49,
+        "file_sha256": "acad328084ca317441bb4d0e684ce30ad495f3ec057458792e7e0ea104be8520"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "function process (stream)",
+        "start": 153,
+        "end": 153,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-28",
+    "repo": "pino",
+    "category": "architecture",
+    "query": "How does multi-target transport setup represent target routing state and shutdown behavior?",
+    "evidence": [
+      {
+        "path": "lib/worker.js",
+        "anchor": "const targetStreams = []",
+        "start": 77,
+        "end": 77,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "transport.stream.end()",
+        "start": 140,
+        "end": 140,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      },
+      {
+        "path": "lib/worker.js",
+        "start": 86,
+        "end": 86,
+        "anchor": "stream",
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-29",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If a change renames the numeric level property in formatter output, what multi-target behavior and warning path should be reviewed?",
+    "evidence": [
+      {
+        "path": "pino.js",
+        "anchor": "formatted.level === sampleNumber",
+        "start": 180,
+        "end": 180,
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/multistream.js",
+        "anchor": "const level = typeof this.lastLevel === 'string'",
+        "start": 55,
+        "end": 55,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "docs/transports.md",
+        "anchor": "custom `formatters.level` must not remove",
+        "start": 164,
+        "end": 164,
+        "file_sha256": "acad328084ca317441bb4d0e684ce30ad495f3ec057458792e7e0ea104be8520"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-30",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If child loggers are changed to merge bindings into objects instead of appending chindings, which documented duplicate-key behavior and tests are affected?",
+    "evidence": [
+      {
+        "path": "docs/child-loggers.md",
+        "anchor": "Notice how there are two keys named `a`",
+        "start": 94,
+        "end": 94,
+        "file_sha256": "0eda746b1e651987fabb7af61a2c18883b35edb91a4fcf5531e2f4a7eaa6e385"
+      },
+      {
+        "path": "test/basic.test.js",
+        "anchor": "children with same names render in correct order",
+        "start": 645,
+        "end": 645,
+        "file_sha256": "093ce3ce3edd7c6e712fa3667394ce9f6267a34c44057b16880fad14d19e5fab"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-31",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If streamWrite hook behavior changes, what assertions should be checked about hook execution and the write path?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "stream.write(streamWriteHook ? streamWriteHook(s) : s)",
+        "start": 243,
+        "end": 243,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "test/hooks.test.js",
+        "anchor": "streamWrite",
+        "start": 99,
+        "end": 99,
+        "file_sha256": "d194f4a0876d61a1cb20e6d42e3bed904fa138e035d1ce21dd42021fde64d58d"
+      },
+      {
+        "path": "test/hooks.test.js",
+        "start": 100,
+        "end": 100,
+        "anchor": "test('gets invoked', async () => {",
+        "file_sha256": "d194f4a0876d61a1cb20e6d42e3bed904fa138e035d1ce21dd42021fde64d58d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-32",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If a child-level redact override changes, which ordering constraint protects bindings and what serializer state must be rebuilt?",
+    "evidence": [
+      {
+        "path": "lib/proto.js",
+        "anchor": "// redact must place before asChindings",
+        "start": 157,
+        "end": 157,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "anchor": "const stringifiers = redaction(instance.redact, stringify)",
+        "start": 160,
+        "end": 160,
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      },
+      {
+        "path": "lib/proto.js",
+        "start": 171,
+        "end": 171,
+        "anchor": "instance[chindingsSym] = asChindings(instance, bindings)",
+        "file_sha256": "ea4a0bed0ffb711a76493967d5841464dfbb85e03ae9ca5f424cf1e45738c4b9"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-33",
+    "repo": "pino",
+    "category": "impact",
+    "query": "If multistream dedupe sorting changes, which routing invariant and tests should guard delivery to streams at equal versus different levels?",
+    "evidence": [
+      {
+        "path": "lib/multistream.js",
+        "anchor": "if (recordedLevel !== 0 && recordedLevel !== dest.level)",
+        "start": 68,
+        "end": 68,
+        "file_sha256": "9fb3d6d70e898488b5643628ab6174a395f6ebbc0073987f3c5c8a803b8cf94b"
+      },
+      {
+        "path": "test/multistream.test.js",
+        "anchor": "dedupe",
+        "start": 466,
+        "end": 466,
+        "file_sha256": "98bf1aa451cfbd4fe0d371766ad948a6672acf2952280cb08315705241c8ed5c"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-34",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The redaction guide says the implementation is built on fast-redact. What dependency does this source revision actually import?",
+    "evidence": [
+      {
+        "path": "docs/redaction.md",
+        "anchor": "built on top of [`fast-redact`]",
+        "start": 114,
+        "end": 114,
+        "file_sha256": "9d96ac0fe5cf5d323e30016a6c403a8120dfc8c3346dfdfeac1c3aee04e9da87"
+      },
+      {
+        "path": "lib/redaction.js",
+        "anchor": "require('@pinojs/redact')",
+        "start": 3,
+        "end": 3,
+        "file_sha256": "ee316f69ce74cabd9877cf1ecdc8eca6100b10c48e22e37d0c24989ec03058c1"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-35",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The API lists `redact` default as `undefined`. When callers omit it, what value is merged into options internally, and does that value enter the redactor setup branch?",
+    "evidence": [
+      {
+        "path": "docs/api.md",
+        "start": 336,
+        "end": 336,
+        "anchor": "Default: `undefined`",
+        "file_sha256": "c28381258d16f470f32c7a60da3102d54be87432db9403265ce307a5c03b3978"
+      },
+      {
+        "path": "pino.js",
+        "start": 79,
+        "end": 79,
+        "anchor": "redact: null,",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/tools.js",
+        "start": 351,
+        "end": 351,
+        "anchor": "opts = Object.assign({}, defaultOptions, opts)",
+        "file_sha256": "f40299d3a55ef799489dc8cc91bd8c1b3546e7cbf8d2be4c7dba80416bb4dd4b"
+      },
+      {
+        "path": "pino.js",
+        "start": 134,
+        "end": 134,
+        "anchor": "const stringifiers = redact",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-36",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The transport guide says transport.level is ignored with a single target. What does the worker do when that target has a level?",
+    "evidence": [
+      {
+        "path": "docs/transports.md",
+        "anchor": "transport.level` is not used in this path",
+        "start": 117,
+        "end": 117,
+        "file_sha256": "acad328084ca317441bb4d0e684ce30ad495f3ec057458792e7e0ea104be8520"
+      },
+      {
+        "path": "lib/worker.js",
+        "anchor": "When a `level` is set on the single target/pipeline",
+        "start": 127,
+        "end": 127,
+        "file_sha256": "e1d2d9cab77f243f0925db97b7586945602e38aa669c0d1fda4364520209729f"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-37",
+    "repo": "pino",
+    "category": "discrepancy",
+    "query": "The API reference lists the default for `customLevels` as `undefined`. For an omitted option, what default enters normalized logger options?",
+    "evidence": [
+      {
+        "path": "docs/api.md",
+        "start": 101,
+        "end": 101,
+        "anchor": "Default: `undefined`",
+        "file_sha256": "c28381258d16f470f32c7a60da3102d54be87432db9403265ce307a5c03b3978"
+      },
+      {
+        "path": "pino.js",
+        "start": 80,
+        "end": 80,
+        "anchor": "customLevels: null",
+        "file_sha256": "db8b1be5cc434d867af1a76fe4d3a69068a8564c346bce728933916425c3b714"
+      },
+      {
+        "path": "lib/tools.js",
+        "start": 351,
+        "end": 351,
+        "anchor": "opts = Object.assign({}, defaultOptions, opts)",
+        "file_sha256": "f40299d3a55ef799489dc8cc91bd8c1b3546e7cbf8d2be4c7dba80416bb4dd4b"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-38",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "Where does Pino implement built-in token-bucket rate limiting for log emission?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-39",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "Which Pino option encrypts log records before they are written to a destination?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-40",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "How does Pino persist logger configuration across process restarts by writing it to a local configuration database?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-pino-41",
+    "repo": "pino",
+    "category": "no_evidence",
+    "query": "Which Pino API automatically retries a failed transport with exponential backoff?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  }
+]

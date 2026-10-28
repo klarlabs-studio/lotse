@@ -1,0 +1,307 @@
+{
+  "id": "claude-failures-v2",
+  "scope": "synthetic_failure_accounting_diagnostic",
+  "plan_sha256": "32576306cd2768af6b173190a28c822cc296b051548f44c5689d626d72c24404",
+  "cases": [
+    {
+      "case": "tool_retry",
+      "exit_code": 0,
+      "termination": "exited",
+      "wall_seconds": 5.927324042015243,
+      "diagnostic_pass": true,
+      "tool_calls": 2,
+      "accounting": {
+        "event_counts": {
+          "assistant": 3,
+          "rate_limit_event": 1,
+          "result": 1,
+          "stream_event": 18,
+          "system": 4,
+          "user": 2
+        },
+        "event_count": 29,
+        "result_count": 1,
+        "assistant_count": 3,
+        "assistant_message_ids": [
+          "msg_011CgLd1ZF5gQ7J9nHjWvJFJ",
+          "msg_011CgLd1dU5e8Pkie8sFW4Y8",
+          "msg_011CgLd1iPzvgMGc3AAsjekU"
+        ],
+        "usage_bearing_event_count": 11,
+        "model_usage_event_count": 1,
+        "result_usage_event_count": 1,
+        "usage_observation_event_count": 10,
+        "init_models": [
+          "claude-haiku-5-5"
+        ],
+        "assistant_models": [
+          "claude-haiku-5-5",
+          "claude-haiku-5-5",
+          "claude-haiku-5-5"
+        ],
+        "model_usage_keys": [
+          "claude-haiku-5-5"
+        ],
+        "model_usage": {
+          "claude-haiku-5-5": {
+            "inputTokens": 6,
+            "cacheCreationInputTokens": 592,
+            "cacheReadInputTokens": 3702,
+            "outputTokens": 68,
+            "costUSD": 0.00019002
+          }
+        },
+        "model_usage_totals": {
+          "inputTokens": 6,
+          "cacheCreationInputTokens": 592,
+          "cacheReadInputTokens": 3702,
+          "outputTokens": 68,
+          "costUSD": 0.00019002,
+          "inputTokensTotal": 4300
+        },
+        "result_usage": {
+          "inputTokens": 4300,
+          "cacheCreationInputTokens": 592,
+          "cacheReadInputTokens": 3702,
+          "outputTokens": 68
+        },
+        "result_usage_valid": true,
+        "permission_denial_count": 0,
+        "totals_match": true,
+        "diagnostic_success": true,
+        "diagnostic_pass": true,
+        "estimated_cost_label": "Claude Code stream modelUsage costUSD observation; not verified billing",
+        "complete_accounting": false,
+        "product_promotion_pass": false,
+        "agent_savings": "unmeasured",
+        "live_cap": "unverified",
+        "task_outcome": "success",
+        "result_type": "result",
+        "result_subtype": "success",
+        "result_is_error": false,
+        "exposed_usage": {
+          "inputTokens": 4300,
+          "cacheCreationInputTokens": 592,
+          "cacheReadInputTokens": 3702,
+          "outputTokens": 68
+        },
+        "exposed_model_usage": {
+          "claude-haiku-5-5": {
+            "inputTokens": 6,
+            "cacheCreationInputTokens": 592,
+            "cacheReadInputTokens": 3702,
+            "outputTokens": 68,
+            "costUSD": 0.00019002
+          }
+        },
+        "exposed_usage_totals": {
+          "inputTokens": 6,
+          "cacheCreationInputTokens": 592,
+          "cacheReadInputTokens": 3702,
+          "outputTokens": 68,
+          "costUSD": 0.00019002,
+          "inputTokensTotal": 4300
+        },
+        "exposed_estimated_cost": 0.00019002,
+        "accounting_status": "reported_terminal_consistent",
+        "internal_provider_attempts": "unmeasured",
+        "hardcap_verified": false,
+        "promotion": false,
+        "savings": "unmeasured"
+      }
+    },
+    {
+      "case": "turn_limit",
+      "exit_code": 1,
+      "termination": "exited",
+      "wall_seconds": 2.446724874986103,
+      "diagnostic_pass": true,
+      "tool_calls": 1,
+      "accounting": {
+        "event_counts": {
+          "assistant": 1,
+          "rate_limit_event": 1,
+          "result": 1,
+          "stream_event": 6,
+          "system": 2,
+          "user": 1
+        },
+        "event_count": 12,
+        "result_count": 1,
+        "assistant_count": 1,
+        "assistant_message_ids": [
+          "msg_011CgLd1xhj6Y5pEuRS7LHNh"
+        ],
+        "usage_bearing_event_count": 5,
+        "model_usage_event_count": 1,
+        "result_usage_event_count": 1,
+        "usage_observation_event_count": 4,
+        "init_models": [
+          "claude-haiku-5-5"
+        ],
+        "assistant_models": [
+          "claude-haiku-5-5"
+        ],
+        "model_usage_keys": [
+          "claude-haiku-5-5"
+        ],
+        "model_usage": {
+          "claude-haiku-5-5": {
+            "inputTokens": 2,
+            "cacheCreationInputTokens": 1317,
+            "cacheReadInputTokens": 0,
+            "outputTokens": 32,
+            "costUSD": 0.0002796
+          }
+        },
+        "model_usage_totals": {
+          "inputTokens": 2,
+          "cacheCreationInputTokens": 1317,
+          "cacheReadInputTokens": 0,
+          "outputTokens": 32,
+          "costUSD": 0.0002796,
+          "inputTokensTotal": 1319
+        },
+        "result_usage": {
+          "inputTokens": 1319,
+          "cacheCreationInputTokens": 1317,
+          "cacheReadInputTokens": 0,
+          "outputTokens": 32
+        },
+        "result_usage_valid": true,
+        "permission_denial_count": 0,
+        "totals_match": true,
+        "diagnostic_success": false,
+        "diagnostic_pass": false,
+        "estimated_cost_label": "Claude Code stream modelUsage costUSD observation; not verified billing",
+        "complete_accounting": false,
+        "product_promotion_pass": false,
+        "agent_savings": "unmeasured",
+        "live_cap": "unverified",
+        "task_outcome": "error_max_turns",
+        "result_type": "result",
+        "result_subtype": "error_max_turns",
+        "result_is_error": true,
+        "exposed_usage": {
+          "inputTokens": 1319,
+          "cacheCreationInputTokens": 1317,
+          "cacheReadInputTokens": 0,
+          "outputTokens": 32
+        },
+        "exposed_model_usage": {
+          "claude-haiku-5-5": {
+            "inputTokens": 2,
+            "cacheCreationInputTokens": 1317,
+            "cacheReadInputTokens": 0,
+            "outputTokens": 32,
+            "costUSD": 0.0002796
+          }
+        },
+        "exposed_usage_totals": {
+          "inputTokens": 2,
+          "cacheCreationInputTokens": 1317,
+          "cacheReadInputTokens": 0,
+          "outputTokens": 32,
+          "costUSD": 0.0002796,
+          "inputTokensTotal": 1319
+        },
+        "exposed_estimated_cost": 0.0002796,
+        "accounting_status": "reported_terminal_consistent",
+        "internal_provider_attempts": "unmeasured",
+        "hardcap_verified": false,
+        "promotion": false,
+        "savings": "unmeasured"
+      }
+    },
+    {
+      "case": "interrupted_tool",
+      "exit_code": -9,
+      "termination": "intentional_interruption_after_tool_begin",
+      "wall_seconds": 2.2803820419940166,
+      "diagnostic_pass": true,
+      "tool_calls": 1,
+      "accounting": {
+        "event_counts": {
+          "assistant": 1,
+          "rate_limit_event": 1,
+          "stream_event": 6,
+          "system": 2
+        },
+        "event_count": 10,
+        "result_count": 0,
+        "assistant_count": 1,
+        "assistant_message_ids": [
+          "msg_011CgLd29T8pQWfYko1F1DeL"
+        ],
+        "usage_bearing_event_count": 3,
+        "model_usage_event_count": 0,
+        "result_usage_event_count": 0,
+        "usage_observation_event_count": 3,
+        "init_models": [
+          "claude-haiku-5-5"
+        ],
+        "assistant_models": [
+          "claude-haiku-5-5"
+        ],
+        "model_usage_keys": [],
+        "model_usage": null,
+        "model_usage_totals": null,
+        "result_usage": null,
+        "result_usage_valid": false,
+        "permission_denial_count": 0,
+        "totals_match": false,
+        "diagnostic_success": false,
+        "diagnostic_pass": false,
+        "estimated_cost_label": "Claude Code stream modelUsage costUSD observation; not verified billing",
+        "complete_accounting": false,
+        "product_promotion_pass": false,
+        "agent_savings": "unmeasured",
+        "live_cap": "unverified",
+        "task_outcome": "interrupted",
+        "result_type": null,
+        "result_subtype": null,
+        "result_is_error": null,
+        "exposed_usage": null,
+        "exposed_model_usage": null,
+        "exposed_usage_totals": null,
+        "exposed_estimated_cost": null,
+        "accounting_status": "unknown",
+        "internal_provider_attempts": "unmeasured",
+        "hardcap_verified": false,
+        "promotion": false,
+        "savings": "unmeasured"
+      }
+    }
+  ],
+  "cli_invocations": 3,
+  "complete_accounting": false,
+  "hard_token_cap": "unverified",
+  "internal_provider_attempts": "unmeasured",
+  "agent_savings": "unmeasured",
+  "product_promotion_pass": false,
+  "graphify_comparison": "unchanged",
+  "status": "completed",
+  "exit_code": 0,
+  "raw_artifacts": {
+    "run/auth-status.json": "b84aba6a1ac3ea3c8084abef47321e86e52e7e27d57c1b4a4487dcbe35a72537",
+    "run/interrupted_tool/analysis.json": "5dbf7e438be33802108ec98c58cf5a8b05d43a027f7e2658642457d3545c985c",
+    "run/interrupted_tool/blocked.json": "78f91cd306c29b0f8003490ade1a15900465600d731cea336d9482fd164314e9",
+    "run/interrupted_tool/command.json": "57c06233323540ca92e4acf4216834233d12cc82df355cf11db57fb9aea9c0ac",
+    "run/interrupted_tool/mcp.json": "2ba925cb63ccf8799aed538ae91852cf19b11093c011e89dcd7af1f7b915e909",
+    "run/interrupted_tool/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run/interrupted_tool/stream.jsonl": "3d747e327ff713f2a2eff60af039b7eb5fadf2b82fd04b7a2629d4624a4780f7",
+    "run/interrupted_tool/tool.jsonl": "ffb72e749fcbf44573de7e13ff17081418dd7b82f6c4ef24f5b75e5bd96526fc",
+    "run/tool_retry/analysis.json": "c5f1babd1332a396610727ae554f2c02842a883e0955330befb207fd8d44d508",
+    "run/tool_retry/command.json": "d22ff39971ae51dac2455618f62e7a64a90908a0c209c75061392858d50f732a",
+    "run/tool_retry/mcp.json": "d6d0dd393f5b7f4b68e452ea7eaf8d216c750a4076369a12289e4edb62e2eefc",
+    "run/tool_retry/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run/tool_retry/stream.jsonl": "9aaf0161166eae78de299f27b1a97f69c670b69b3511ae30153649ed9a556fc5",
+    "run/tool_retry/tool.jsonl": "165279df527e81e52f901c1b70a3cc889ac0da4fe7401074548538ae8e13b215",
+    "run/turn_limit/analysis.json": "fc14ff84cada7ece6e66971008ae26e46d3092487ac193646a622a317628d8e2",
+    "run/turn_limit/command.json": "0f69cdca673c58858096bdccfead2e79ac13d18e3a684160a938771b191c3d19",
+    "run/turn_limit/mcp.json": "bde384122c353ede5da6217eec13278f9a5d7c38726431b447703708b53ad616",
+    "run/turn_limit/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run/turn_limit/stream.jsonl": "54134f02e14c44b3c841dd2809e9acb505e52b9b346ea0c01525eb652f11d61e",
+    "run/turn_limit/tool.jsonl": "f1c1c7bb1036be7f3d32399633b610a64322b42e54a5d465fbed463d96ed42bd"
+  }
+}

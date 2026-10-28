@@ -1,0 +1,849 @@
+{
+  "id": "harness-v63",
+  "role": "Exposed development harness parity diagnostic; no retrieval implementation changes",
+  "comparison": "results/harness-v63-comparison.json",
+  "audit_passed": true,
+  "python_tests": 211,
+  "frozen_versions": {
+    "candidate": "v61",
+    "experimental_control": "v59"
+  },
+  "context_parity": [
+    {
+      "id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-01",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-01",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-02",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-02",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-03",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-03",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-03",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-03",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-04",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-04",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-04",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-04",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-05",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-05",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-05",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-05",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-06",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-06",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-06",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-06",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-07",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-07",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-07",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-07",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-08",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-08",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-08",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-08",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-09",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-09",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-09",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-09",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-10",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-10",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-10",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "cobra-10",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-01",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-01",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-02",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-02",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-03",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-03",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-03",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-03",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-04",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-04",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-04",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-04",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-05",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-05",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-05",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-05",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-06",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-06",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-06",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-06",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-07",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-07",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-07",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-07",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-08",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-08",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-08",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-08",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-09",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-09",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-09",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-09",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-10",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-10",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "flask-10",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "flask-10",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-01",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-01",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-02",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-02",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-03",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-03",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-03",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-03",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-04",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-04",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-04",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-04",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-05",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-05",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-05",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-05",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-06",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-06",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-06",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-06",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-07",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-07",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-07",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-07",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-08",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-08",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-08",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-08",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-09",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-09",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-09",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-09",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-10",
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-10",
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-10",
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "context_identical": true
+    },
+    {
+      "id": "fastify-10",
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "context_identical": true
+    }
+  ],
+  "all_graf_contexts_identical": true,
+  "summary": {
+    "2000": {
+      "graf_evidence_selective": {
+        "code_file_hint_recall": 0.9814814814814815,
+        "scored_queries": 27,
+        "code_file_hint_recall_at_5": 0.8703703703703703,
+        "code_file_hint_recall_at_10": 0.9259259259259259,
+        "median_cited_files": 21.0,
+        "median_query_ms": 569.6688960015308,
+        "median_output_tokens": 1662.5,
+        "over_cl100k_budget": 0
+      },
+      "graf_evidence_rescue": {
+        "code_file_hint_recall": 0.9814814814814815,
+        "scored_queries": 27,
+        "code_file_hint_recall_at_5": 0.8703703703703703,
+        "code_file_hint_recall_at_10": 0.9259259259259259,
+        "median_cited_files": 21.0,
+        "median_query_ms": 500.33477100078017,
+        "median_output_tokens": 1586.5,
+        "over_cl100k_budget": 0
+      },
+      "graphify": {
+        "code_file_hint_recall": 0.8703703703703703,
+        "scored_queries": 27,
+        "code_file_hint_recall_at_5": 0.7037037037037037,
+        "code_file_hint_recall_at_10": 0.8333333333333334,
+        "median_cited_files": 17.5,
+        "median_query_ms": 794.8957920016255,
+        "median_output_tokens": 1861.5,
+        "over_cl100k_budget": 6
+      }
+    },
+    "8000": {
+      "graf_evidence_selective": {
+        "code_file_hint_recall": 0.9814814814814815,
+        "scored_queries": 27,
+        "code_file_hint_recall_at_5": 0.8703703703703703,
+        "code_file_hint_recall_at_10": 0.9259259259259259,
+        "median_cited_files": 21.0,
+        "median_query_ms": 605.7509170059348,
+        "median_output_tokens": 3968.0,
+        "over_cl100k_budget": 0
+      },
+      "graf_evidence_rescue": {
+        "code_file_hint_recall": 0.9814814814814815,
+        "scored_queries": 27,
+        "code_file_hint_recall_at_5": 0.8703703703703703,
+        "code_file_hint_recall_at_10": 0.9259259259259259,
+        "median_cited_files": 21.0,
+        "median_query_ms": 434.88212549709715,
+        "median_output_tokens": 3862.0,
+        "over_cl100k_budget": 0
+      },
+      "graphify": {
+        "code_file_hint_recall": 0.8703703703703703,
+        "scored_queries": 27,
+        "code_file_hint_recall_at_5": 0.7037037037037037,
+        "code_file_hint_recall_at_10": 0.8333333333333334,
+        "median_cited_files": 24.5,
+        "median_query_ms": 726.8753960088361,
+        "median_output_tokens": 8288.5,
+        "over_cl100k_budget": 16
+      }
+    }
+  },
+  "evaluation_commands": [
+    {
+      "command": [
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+        "benchmark/check_comparison.py",
+        "--comparison",
+        "results/harness-v63-comparison.json"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+        "benchmark/acceptance.py",
+        "--comparison",
+        "results/harness-v63-comparison.json"
+      ],
+      "returncode": 1
+    },
+    {
+      "command": [
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+        "benchmark/decision.py",
+        "--comparison",
+        "results/harness-v63-comparison.json",
+        "--workload",
+        "development"
+      ],
+      "returncode": 1
+    }
+  ],
+  "acceptance_status": "not_passed",
+  "decision_status": "not_passed",
+  "product_promotion_allowed": false,
+  "agent_savings": "unmeasured",
+  "cache": "fresh indexes and subprocesses; OS caches uncontrolled/warm after builds; one invocation, no latency inference",
+  "baseline": "Pinned native code-only Graphify; hint recall only, no documentation-task conclusion",
+  "mean_output_tokens": {
+    "2000": {
+      "graf_evidence_selective": 1631.4333333333334,
+      "graf_evidence_rescue": 1557.3333333333333,
+      "graphify": 2410.366666666667
+    },
+    "8000": {
+      "graf_evidence_selective": 3985.4,
+      "graf_evidence_rescue": 3896.3,
+      "graphify": 13000.933333333332
+    }
+  }
+}

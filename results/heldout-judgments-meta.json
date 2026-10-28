@@ -1,0 +1,9 @@
+{
+  "judges": "9 Claude Sonnet subagents (Claude Code general-purpose, model sonnet), one batch of ~12 queries each",
+  "blinding": "judges saw only the query text and the shuffled pooled file list; no author labels, no system names, no retrieval output",
+  "definition": "relevant if a developer would need to read the file to fully and correctly answer the question",
+  "judgments": 1751,
+  "relevant": 134,
+  "operator_audit": "12 random judgments (6 relevant, 6 not) re-checked by the orchestrating model: 11 agreed, 1 borderline (h-fastify-26 test/internals/schema-controller-perf.test.js)",
+  "date": "2026-10-19"
+}

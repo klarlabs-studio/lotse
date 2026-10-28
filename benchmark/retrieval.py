@@ -1,11 +1,16 @@
 """Exploratory retrievers. No gold annotations or task-specific query rewrites."""
 from collections import Counter, defaultdict
 import hashlib
+import importlib.metadata
+import json
 import math
 import os
 from pathlib import Path
 import re
+import subprocess
+import sys
 import time
+import tomllib
 
 import numpy as np
 import tiktoken
@@ -16,7 +21,40 @@ os.environ["HF_HOME"] = str(BASE / ".research/huggingface")
 os.environ["HF_HUB_OFFLINE"] = "1"
 ENCODING = tiktoken.get_encoding("cl100k_base")
 EXTENSIONS = {".go", ".py", ".js", ".mjs", ".cjs", ".ts", ".md", ".mdx", ".rst", ".txt"}
+EXTENSIONS_V2 = EXTENSIONS | {".tsx", ".jsx"}  # TypeScript screens (preregistration v25); earlier corpora keep V1.
+GRAPHIFY = Path(sys.executable).parent / "graphify"  # Each Graphify revision has its own virtualenv.
 STOP = set("a an the is are be to of for and or in on with its it this that which what where how why can as by from if should does do need find locate explain check claim against changes change implementation test tests".split())
+
+
+def graphify_baselines(manifest=None):
+    """Every pinned Graphify revision in a corpora manifest (a dict, a path, or benchmark/corpora.json)."""
+    if not isinstance(manifest, dict):
+        manifest = json.loads((manifest or BASE / "benchmark/corpora.json").read_text())
+    return [r for r in manifest["repositories"] if r["role"] == "baseline" and r["id"].startswith("graphify")]
+
+
+def graphify_baseline(version=None, installed=None, manifest=None, corpora=None):
+    """The benchmark/corpora.json baseline whose pinned snapshot this interpreter's Graphify matches.
+
+    Revisions live side by side (.research/corpora/<id>, one virtualenv each), so updating the
+    baseline never replaces the one earlier results used. Any source difference is refused.
+    """
+    if installed is None:
+        import graphify
+        installed = Path(graphify.__file__).parent
+    version = version or importlib.metadata.version("graphifyy")
+    corpora = corpora or BASE / ".research/corpora"
+    for pin in graphify_baselines(manifest):
+        root = corpora / pin["id"]
+        project = root / "pyproject.toml"
+        if not project.is_file() or tomllib.loads(project.read_text())["project"]["version"] != version:
+            continue
+        for path in installed.rglob("*.py"):
+            original = root / "graphify" / path.relative_to(installed)
+            if not original.is_file() or path.read_bytes() != original.read_bytes():
+                raise ValueError(f"Installed Graphify source differs from the pinned snapshot: {path.name}")
+        return pin
+    raise ValueError(f"Installed Graphify {version} has no pinned baseline in benchmark/corpora.json")
 
 
 def tokens(text):
@@ -54,11 +92,26 @@ def chunks_from(path, text):
     return result
 
 
-def load_documents(root):
+def graf_artifact(root):
+    """The index file graf wrote under `root`: schema 2 `.graf/index.bin`, else schema 1 JSON."""
+    compact = Path(root) / ".graf/index.bin"
+    return compact if compact.is_file() else Path(root) / ".graf/index.json"
+
+
+def graf_index(binary, root):
+    """The index under `root` in the schema 1 JSON layout, whichever schema the build wrote."""
+    artifact = graf_artifact(root)
+    if artifact.suffix == ".json":
+        return json.loads(artifact.read_text())
+    return json.loads(subprocess.run([str(binary), "--root", str(root), "export-index"], check=True,
+                                     capture_output=True, text=True).stdout)
+
+
+def load_documents(root, extensions=EXTENSIONS):
     files = {}
     for path in sorted(root.rglob("*")):
         rel = path.relative_to(root)
-        if path.is_symlink() or not path.is_file() or path.suffix not in EXTENSIONS:
+        if path.is_symlink() or not path.is_file() or path.suffix not in extensions:
             continue
         if any(p.startswith(".") or p in {"node_modules", "vendor", "graphify-out"} for p in rel.parts):
             continue

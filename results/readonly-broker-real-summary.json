@@ -1,0 +1,110 @@
+{
+  "scope": "30 exposed development queries; regression and integration diagnostic only; code-only Graphify does not establish documentation-task performance",
+  "comparison": "results/readonly-broker-real-v1-comparison.json",
+  "metrics": [
+    {
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "mean_output_tokens": 1631.4333333333334,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "mean_output_tokens": 1557.3333333333333,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 2000,
+      "arm": "graphify",
+      "mean_output_tokens": 2413.366666666667,
+      "code_file_hint_recall": 0.8703703703703703,
+      "code_file_hint_recall_at_5": 0.7037037037037037,
+      "code_file_hint_recall_at_10": 0.8333333333333334,
+      "scored_queries": 27,
+      "over_cl100k_budget": 6
+    },
+    {
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "mean_output_tokens": 3985.4,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "mean_output_tokens": 3896.3,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 8000,
+      "arm": "graphify",
+      "mean_output_tokens": 13003.933333333332,
+      "code_file_hint_recall": 0.8703703703703703,
+      "code_file_hint_recall_at_5": 0.7037037037037037,
+      "code_file_hint_recall_at_10": 0.8333333333333334,
+      "scored_queries": 27,
+      "over_cl100k_budget": 16
+    }
+  ],
+  "exit_codes": {
+    "comparison": 0,
+    "acceptance": 1,
+    "decision": 1,
+    "broker_v1": 1,
+    "broker_v2": 0,
+    "focused_tests": 0
+  },
+  "acceptance": {
+    "status": "not_passed",
+    "regressing_query_budget_cases": {
+      "graf_evidence_selective": 11,
+      "graf_evidence_rescue": 10
+    }
+  },
+  "decision_status": "not_passed",
+  "broker_v1": {
+    "status": "failed",
+    "failed_cases": 31,
+    "failure": "Graphify stdout differs with inherited unset PYTHONHASHSEED"
+  },
+  "broker_v2": {
+    "status": "passed",
+    "passed_cases": 180,
+    "subprocess_environment": {
+      "PYTHONHASHSEED": "0"
+    }
+  },
+  "cache_conditions": "after sequential comparison; OS caches uncontrolled; no latency inference",
+  "invocations": {
+    "comparison_native_queries": 180,
+    "broker_native_queries_including_failed_run": 360,
+    "broker_source_reads": 360,
+    "comparison_index_builds": 6,
+    "solver_calls": 0
+  },
+  "agent_savings": "unmeasured",
+  "product_promotion_allowed": false,
+  "next_prerequisites": [
+    "Authenticate index and graph artifacts inside the broker; refuse stale indexes",
+    "Enforce the comparison subprocess environment in the actual broker launcher",
+    "Handle and test Graphify native no-match exit 4 without poisoning the backend",
+    "Complete provider attempt accounting and shared hard limits before fresh natural agent trials"
+  ]
+}

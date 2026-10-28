@@ -1,0 +1,881 @@
+{
+  "preregistration_version": 14,
+  "batch": "t3",
+  "passed": false,
+  "reasons": [
+    "no candidate passed both the cost and success tests"
+  ],
+  "comparators": [
+    "search_only",
+    "graphify"
+  ],
+  "comparisons": {
+    "graf_floor": {
+      "role": "candidate",
+      "passed": false,
+      "versus": {
+        "search_only": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": 4.3914444444444714e-05,
+            "p": 0.41660583394166056,
+            "alpha": 0.05,
+            "passed": false
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": 6.1679056923619804e-18,
+            "margin": 0.1,
+            "p": 0.00047999520004799953,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": false,
+          "cheaper_tasks": 8,
+          "secondary": {
+            "mean_token_reduction": -8637.133333333337,
+            "token_reduction_p": 0.8972110278897211
+          }
+        },
+        "graphify": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": -2.094033333333321e-05,
+            "p": 0.5239847601523985,
+            "alpha": 0.05,
+            "passed": false
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": -0.022222222222222223,
+            "margin": 0.1,
+            "p": 0.00924990750092499,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": false,
+          "cheaper_tasks": 13,
+          "secondary": {
+            "mean_token_reduction": -5787.31111111111,
+            "token_reduction_p": 0.6535234647653524
+          }
+        }
+      }
+    }
+  },
+  "arms": {
+    "graf_floor": {
+      "attempts": 90,
+      "passes": 83,
+      "success_rate": 0.9222222222222223,
+      "success_wilson95": [
+        0.8480613981740799,
+        0.961815184682711
+      ],
+      "pass_hat_k": [
+        0.9222222222222223,
+        0.8666666666666667,
+        0.8277777777777778,
+        0.8,
+        0.7777777777777778
+      ],
+      "total_cost_usd": 0.40250039000000004,
+      "total_tokens": 8439315.0
+    },
+    "search_only": {
+      "attempts": 90,
+      "passes": 83,
+      "success_rate": 0.9222222222222223,
+      "success_wilson95": [
+        0.8480613981740799,
+        0.961815184682711
+      ],
+      "pass_hat_k": [
+        0.9222222222222223,
+        0.8722222222222222,
+        0.8444444444444444,
+        0.8333333333333334,
+        0.8333333333333334
+      ],
+      "total_cost_usd": 0.40645269000000006,
+      "total_tokens": 7661973.0
+    },
+    "graphify": {
+      "attempts": 90,
+      "passes": 85,
+      "success_rate": 0.9444444444444444,
+      "success_wilson95": [
+        0.8764626377820048,
+        0.976039028383038
+      ],
+      "pass_hat_k": [
+        0.9444444444444444,
+        0.8944444444444445,
+        0.8500000000000001,
+        0.8111111111111111,
+        0.7777777777777778
+      ],
+      "total_cost_usd": 0.40061576000000004,
+      "total_tokens": 7918457.0
+    }
+  },
+  "tasks": [
+    {
+      "task": "cobra-1257",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 4,
+        "mean_cost_usd": 0.01258447,
+        "mean_tokens": 298405.0,
+        "pass_hat_k": [
+          0.8,
+          0.6,
+          0.4,
+          0.2,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 3,
+        "mean_cost_usd": 0.014543458,
+        "mean_tokens": 317356.8,
+        "pass_hat_k": [
+          0.6,
+          0.3,
+          0.1,
+          0.0,
+          0.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 3,
+        "mean_cost_usd": 0.010416596,
+        "mean_tokens": 209157.2,
+        "pass_hat_k": [
+          0.6,
+          0.3,
+          0.1,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "cobra-1651",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.002428678,
+        "mean_tokens": 38838.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00240957,
+        "mean_tokens": 31927.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.003058988,
+        "mean_tokens": 49789.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cobra-1816",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00143369,
+        "mean_tokens": 23829.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.001565402,
+        "mean_tokens": 24407.0,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.001796366,
+        "mean_tokens": 30814.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cobra-2060",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00359842,
+        "mean_tokens": 77474.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0030582120000000003,
+        "mean_tokens": 54674.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00419009,
+        "mean_tokens": 88201.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cobra-2257",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0032615860000000003,
+        "mean_tokens": 61317.4,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0029127420000000003,
+        "mean_tokens": 52733.4,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.003282694,
+        "mean_tokens": 57225.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-4327",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 2,
+        "mean_cost_usd": 0.01343078,
+        "mean_tokens": 376191.4,
+        "pass_hat_k": [
+          0.4,
+          0.1,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 3,
+        "mean_cost_usd": 0.012839218000000003,
+        "mean_tokens": 311041.6,
+        "pass_hat_k": [
+          0.6,
+          0.3,
+          0.1,
+          0.0,
+          0.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 4,
+        "mean_cost_usd": 0.009459388,
+        "mean_tokens": 207810.2,
+        "pass_hat_k": [
+          0.8,
+          0.6,
+          0.4,
+          0.2,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-4424",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.008098965999999999,
+        "mean_tokens": 187156.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.006509390000000001,
+        "mean_tokens": 115378.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00682297,
+        "mean_tokens": 141231.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-6371",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 4,
+        "mean_cost_usd": 0.006682136000000001,
+        "mean_tokens": 137774.6,
+        "pass_hat_k": [
+          0.8,
+          0.6,
+          0.4,
+          0.2,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.005630382000000001,
+        "mean_tokens": 105939.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 4,
+        "mean_cost_usd": 0.006844500000000001,
+        "mean_tokens": 156160.2,
+        "pass_hat_k": [
+          0.8,
+          0.6,
+          0.4,
+          0.2,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-6411",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 3,
+        "mean_cost_usd": 0.00562656,
+        "mean_tokens": 112516.4,
+        "pass_hat_k": [
+          0.6,
+          0.3,
+          0.1,
+          0.0,
+          0.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 2,
+        "mean_cost_usd": 0.0057669520000000005,
+        "mean_tokens": 104612.6,
+        "pass_hat_k": [
+          0.4,
+          0.1,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 4,
+        "mean_cost_usd": 0.008518378000000002,
+        "mean_tokens": 222982.2,
+        "pass_hat_k": [
+          0.8,
+          0.6,
+          0.4,
+          0.2,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-6512",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00450472,
+        "mean_tokens": 76961.0,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.005835716,
+        "mean_tokens": 115946.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.004857374,
+        "mean_tokens": 81881.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-6652",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0008324480000000001,
+        "mean_tokens": 15014.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00080777,
+        "mean_tokens": 13365.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.000835908,
+        "mean_tokens": 14761.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-6674",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.002443414,
+        "mean_tokens": 38096.0,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.002647354,
+        "mean_tokens": 39221.0,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0028557920000000002,
+        "mean_tokens": 43402.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-6988",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0015000060000000001,
+        "mean_tokens": 25209.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.001457484,
+        "mean_tokens": 21733.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.001961152,
+        "mean_tokens": 34544.4,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-7073",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.004026184,
+        "mean_tokens": 65280.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.003481936,
+        "mean_tokens": 47245.0,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0031899540000000005,
+        "mean_tokens": 46663.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "fastify-7117",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0035351460000000003,
+        "mean_tokens": 51430.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0044988020000000005,
+        "mean_tokens": 61971.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0033876260000000004,
+        "mean_tokens": 50800.0,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "flask-3628",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.001473362,
+        "mean_tokens": 24160.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.00113885,
+        "mean_tokens": 18233.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0020523060000000003,
+        "mean_tokens": 36275.4,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "flask-5258",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0018883220000000002,
+        "mean_tokens": 32529.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.001935058,
+        "mean_tokens": 28573.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.002825778,
+        "mean_tokens": 51443.2,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "flask-6093",
+      "graf_floor": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0031511900000000003,
+        "mean_tokens": 45678.6,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "search_only": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.004252242,
+        "mean_tokens": 68033.8,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "graphify": {
+        "attempts": 5,
+        "passes": 5,
+        "mean_cost_usd": 0.0037672919999999998,
+        "mean_tokens": 60546.0,
+        "pass_hat_k": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself"
+}

@@ -1,0 +1,5063 @@
+[
+ {
+  "id": "h-cobra-01",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "Where is RangeArgs implemented, and which test checks that an argument count outside the min/max bounds is rejected?",
+  "evidence": [
+   {
+    "path": "args.go",
+    "start": 117,
+    "end": 117,
+    "anchor": "func RangeArgs(",
+    "file_sha256": "15b870d1e8a0a10341675ddee8e20bef92a21883257b6b3b11110944a573a2e7"
+   },
+   {
+    "path": "args_test.go",
+    "start": 395,
+    "end": 395,
+    "anchor": "func TestRangeArgs_WithInvalidCount(t",
+    "file_sha256": "37058f718eb5ffc7d70f917d694c04aa11fc39ba32ad8d1db9766e9d8eb009ae"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-02",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "Show me NoDuplicateArgs and the test where the same positional value is passed twice.",
+  "evidence": [
+   {
+    "path": "args.go",
+    "start": 69,
+    "end": 69,
+    "anchor": "func NoDuplicateArgs(",
+    "file_sha256": "15b870d1e8a0a10341675ddee8e20bef92a21883257b6b3b11110944a573a2e7"
+   },
+   {
+    "path": "args_test.go",
+    "start": 175,
+    "end": 175,
+    "anchor": "func TestNoDuplicateArgs_WithDuplicateArgs(",
+    "file_sha256": "37058f718eb5ffc7d70f917d694c04aa11fc39ba32ad8d1db9766e9d8eb009ae"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-03",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "RegisterFlagCompletionFunc: where is it defined, how is the registry guarded, and which test registers completion functions from multiple goroutines?",
+  "evidence": [
+   {
+    "path": "completions.go",
+    "start": 170,
+    "end": 170,
+    "anchor": "func (c *Command) RegisterFlagCompletionFunc(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 41,
+    "end": 41,
+    "anchor": "var flagCompletionMutex",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 2121,
+    "end": 2121,
+    "anchor": "func TestFlagCompletionConcurrentRegistration(",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-04",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "How do SetErrPrefix and ErrPrefix work when a subcommand has no prefix of its own, and where is that tested?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 376,
+    "end": 376,
+    "anchor": "func (c *Command) SetErrPrefix(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 643,
+    "end": 643,
+    "anchor": "func (c *Command) ErrPrefix()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1267,
+    "end": 1267,
+    "anchor": "func TestRootErrPrefixExecutedOnSubcommand(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1280,
+    "end": 1280,
+    "anchor": "func TestRootAndSubErrPrefix(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-05",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "Find the FixedCompletions helper and the tests that exercise it.",
+  "evidence": [
+   {
+    "path": "completions.go",
+    "start": 160,
+    "end": 160,
+    "anchor": "func FixedCompletions(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 2980,
+    "end": 2980,
+    "anchor": "func TestFixedCompletions(t",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 3007,
+    "end": 3007,
+    "anchor": "func TestFixedCompletionsWithCompletionHelpers(",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-06",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "Where is GenManTreeFromOpts and what separator/section defaults does it apply? Point me to the man tree test too.",
+  "evidence": [
+   {
+    "path": "doc/man_docs.go",
+    "start": 48,
+    "end": 48,
+    "anchor": "func GenManTreeFromOpts(",
+    "file_sha256": "7f72248e811ea9842d85030280e600e545fcdd419a010aefa3d395c9c2428709"
+   },
+   {
+    "path": "doc/man_docs.go",
+    "start": 38,
+    "end": 38,
+    "anchor": "func GenManTree(",
+    "file_sha256": "7f72248e811ea9842d85030280e600e545fcdd419a010aefa3d395c9c2428709"
+   },
+   {
+    "path": "doc/man_docs_test.go",
+    "start": 164,
+    "end": 164,
+    "anchor": "func TestGenManTree(",
+    "file_sha256": "3af3faa35a5f2042b76c76e58c4a2ec9425456aced698eb9f47da40b6d7b3eeb"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-07",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "CalledAs returns the alias used to invoke a command; where is it recorded during lookup and which test covers it?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 1562,
+    "end": 1562,
+    "anchor": "func (c *Command) CalledAs()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 798,
+    "end": 798,
+    "anchor": "func (c *Command) findNext(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 2477,
+    "end": 2477,
+    "anchor": "func TestCalledAs(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-08",
+  "repo": "cobra",
+  "category": "exact",
+  "query": "Where is MarkFlagsOneRequired implemented, where is the 'at least one of' rule checked at run time, and which test table covers it?",
+  "evidence": [
+   {
+    "path": "flag_groups.go",
+    "start": 49,
+    "end": 49,
+    "anchor": "func (c *Command) MarkFlagsOneRequired(",
+    "file_sha256": "3b0572e1fc2fc6e8ef62319b4294cdda86259fb0b1afebc18b03fa643e431251"
+   },
+   {
+    "path": "flag_groups.go",
+    "start": 167,
+    "end": 167,
+    "anchor": "func validateOneRequiredFlagGroups(",
+    "file_sha256": "3b0572e1fc2fc6e8ef62319b4294cdda86259fb0b1afebc18b03fa643e431251"
+   },
+   {
+    "path": "flag_groups.go",
+    "start": 81,
+    "end": 81,
+    "anchor": "func (c *Command) ValidateFlagGroups()",
+    "file_sha256": "3b0572e1fc2fc6e8ef62319b4294cdda86259fb0b1afebc18b03fa643e431251"
+   },
+   {
+    "path": "flag_groups_test.go",
+    "start": 22,
+    "end": 22,
+    "anchor": "func TestValidateFlagGroups(",
+    "file_sha256": "3a13a270c02f712ea0597e2cb85a039c92c52cc166a127189d902ea0e41b9913"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-09",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "When someone mistypes a subcommand, how does the library come up with the 'Did you mean this?' list, and what closeness threshold applies by default?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 863,
+    "end": 863,
+    "anchor": "func (c *Command) SuggestionsFor(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 781,
+    "end": 781,
+    "anchor": "func (c *Command) findSuggestions(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "cobra.go",
+    "start": 192,
+    "end": 192,
+    "anchor": "func ld(",
+    "file_sha256": "aae7502e789e42469bcb2fc110af87fd02451d3b509c5b0bed782ada17338c5f"
+   },
+   {
+    "path": "args.go",
+    "start": 28,
+    "end": 28,
+    "anchor": "func legacyArgs(",
+    "file_sha256": "15b870d1e8a0a10341675ddee8e20bef92a21883257b6b3b11110944a573a2e7"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1431,
+    "end": 1431,
+    "anchor": "func TestSuggestions(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-10",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "Is there a way to let users type only the first few letters of a subcommand or its alias, and what happens when the abbreviation matches more than one command?",
+  "evidence": [
+   {
+    "path": "cobra.go",
+    "start": 55,
+    "end": 55,
+    "anchor": "var EnablePrefixMatching",
+    "file_sha256": "aae7502e789e42469bcb2fc110af87fd02451d3b509c5b0bed782ada17338c5f"
+   },
+   {
+    "path": "command.go",
+    "start": 798,
+    "end": 798,
+    "anchor": "func (c *Command) findNext(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1571,
+    "end": 1571,
+    "anchor": "func (c *Command) hasNameOrAliasPrefix(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 305,
+    "end": 305,
+    "anchor": "func TestEnablePrefixMatching(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 334,
+    "end": 334,
+    "anchor": "func TestAliasPrefixMatching(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-11",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "During tab completion, how does the code tell whether the word under the cursor is a value for a flag rather than a positional argument, including the `-x=value` form and bundled short flags like `-abc`?",
+  "evidence": [
+   {
+    "path": "completions.go",
+    "start": 657,
+    "end": 657,
+    "anchor": "func checkIfFlagCompletion(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 932,
+    "end": 932,
+    "anchor": "func findFlag(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 2694,
+    "end": 2694,
+    "anchor": "func TestMultipleShorthandFlagCompletion(",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-12",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "If a command is marked obsolete, what message does the user see when running it, and how is it kept out of the list of available commands?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 105,
+    "end": 105,
+    "anchor": "Deprecated string",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 911,
+    "end": 911,
+    "anchor": "c.Printf(\"Command %q is deprecated",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1607,
+    "end": 1607,
+    "anchor": "func (c *Command) IsAvailableCommand()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1628,
+    "end": 1628,
+    "anchor": "func TestDeprecatedCommand(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-13",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "What happens when a Windows user double-clicks the CLI executable from Explorer instead of running it in a console, and how can a program disable that behavior?",
+  "evidence": [
+   {
+    "path": "command_win.go",
+    "start": 30,
+    "end": 30,
+    "anchor": "func preExecHook(",
+    "file_sha256": "a9f85ba76b54df4b2589546562b325c7b1225388d5b177214d4b193516556390"
+   },
+   {
+    "path": "command_notwin.go",
+    "start": 20,
+    "end": 20,
+    "anchor": "var preExecHookFn",
+    "file_sha256": "505a8334864917e8439b3012e8e47d880643793bf5741bc048884a85037a8ac2"
+   },
+   {
+    "path": "cobra.go",
+    "start": 72,
+    "end": 72,
+    "anchor": "var MousetrapHelpText",
+    "file_sha256": "aae7502e789e42469bcb2fc110af87fd02451d3b509c5b0bed782ada17338c5f"
+   },
+   {
+    "path": "cobra.go",
+    "start": 81,
+    "end": 81,
+    "anchor": "var MousetrapDisplayDuration",
+    "file_sha256": "aae7502e789e42469bcb2fc110af87fd02451d3b509c5b0bed782ada17338c5f"
+   },
+   {
+    "path": "command.go",
+    "start": 1095,
+    "end": 1095,
+    "anchor": "if preExecHookFn != nil {",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-14",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "How can I make my CLI accept command names typed in any letter case, and is the same rule applied to aliases?",
+  "evidence": [
+   {
+    "path": "cobra.go",
+    "start": 62,
+    "end": 62,
+    "anchor": "var EnableCaseInsensitive",
+    "file_sha256": "aae7502e789e42469bcb2fc110af87fd02451d3b509c5b0bed782ada17338c5f"
+   },
+   {
+    "path": "command.go",
+    "start": 1928,
+    "end": 1928,
+    "anchor": "func commandNameMatches(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1551,
+    "end": 1551,
+    "anchor": "func (c *Command) HasAlias(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1478,
+    "end": 1478,
+    "anchor": "func TestCaseInsensitive(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-15",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "I want to capture a command's normal output and its error output in buffers during tests. How are the writers redirected, and where does printing go when nothing has been configured?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 296,
+    "end": 296,
+    "anchor": "func (c *Command) SetOut(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 302,
+    "end": 302,
+    "anchor": "func (c *Command) SetErr(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 393,
+    "end": 393,
+    "anchor": "func (c *Command) OutOrStdout()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 412,
+    "end": 412,
+    "anchor": "func (c *Command) getOut(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1435,
+    "end": 1435,
+    "anchor": "func (c *Command) Print(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 2137,
+    "end": 2137,
+    "anchor": "func TestSetOut(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 2177,
+    "end": 2177,
+    "anchor": "func TestCommandPrintRedirection(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-16",
+  "repo": "cobra",
+  "category": "conceptual",
+  "query": "Can a command be told to ignore unrecognized flags instead of failing to parse, and does that tolerance carry over to parent or child commands?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 42,
+    "end": 42,
+    "anchor": "type FParseErrWhitelist",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1868,
+    "end": 1868,
+    "anchor": "func (c *Command) ParseFlags(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 2509,
+    "end": 2509,
+    "anchor": "func TestFParseErrWhitelistSameCommand(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 2525,
+    "end": 2525,
+    "anchor": "func TestFParseErrWhitelistParentCommand(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 2549,
+    "end": 2549,
+    "anchor": "func TestFParseErrWhitelistChildCommand(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-17",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "The user guide's 'Version Flag' section says a --version flag appears when a version is set and its output can be templated. Where is that flag added, where is it acted on, and which tests confirm it?",
+  "evidence": [
+   {
+    "path": "site/content/user_guide.md",
+    "start": 672,
+    "end": 672,
+    "anchor": "## Version Flag",
+    "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+   },
+   {
+    "path": "command.go",
+    "start": 1238,
+    "end": 1238,
+    "anchor": "func (c *Command) InitDefaultVersionFlag()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 905,
+    "end": 905,
+    "anchor": "func (c *Command) execute(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 367,
+    "end": 367,
+    "anchor": "func (c *Command) SetVersionTemplate(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 2064,
+    "end": 2064,
+    "anchor": "const defaultVersionTemplate",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1168,
+    "end": 1168,
+    "anchor": "func TestVersionFlagExecuted(t",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1243,
+    "end": 1243,
+    "anchor": "func TestVersionTemplate(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-18",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "Following the guide section on grouping commands in help output: where are groups registered, where does the program panic on an undefined group, and what tests cover grouped usage?",
+  "evidence": [
+   {
+    "path": "site/content/user_guide.md",
+    "start": 604,
+    "end": 604,
+    "anchor": "### Grouping commands in help",
+    "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+   },
+   {
+    "path": "command.go",
+    "start": 1396,
+    "end": 1396,
+    "anchor": "func (c *Command) AddGroup(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1205,
+    "end": 1205,
+    "anchor": "func (c *Command) checkCommandGroups()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 343,
+    "end": 343,
+    "anchor": "func (c *Command) SetHelpCommandGroupID(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 352,
+    "end": 352,
+    "anchor": "func (c *Command) SetCompletionCommandGroupID(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1956,
+    "end": 1956,
+    "anchor": "func TestUsageWithGroup(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 2051,
+    "end": 2051,
+    "anchor": "func TestWrongGroupFirstLevel(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-19",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "The guide's 'Required flags' section shows marking local and persistent flags as mandatory. Trace that to the code that records the requirement, the check that produces the missing-flag error, and the tests.",
+  "evidence": [
+   {
+    "path": "site/content/user_guide.md",
+    "start": 316,
+    "end": 316,
+    "anchor": "### Required flags",
+    "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+   },
+   {
+    "path": "shell_completions.go",
+    "start": 24,
+    "end": 24,
+    "anchor": "func (c *Command) MarkFlagRequired(",
+    "file_sha256": "38244d5514d8de4c7bd1e03890992a9ee73885af53aab4294d8bed2d76f8938d"
+   },
+   {
+    "path": "shell_completions.go",
+    "start": 31,
+    "end": 31,
+    "anchor": "func (c *Command) MarkPersistentFlagRequired(",
+    "file_sha256": "38244d5514d8de4c7bd1e03890992a9ee73885af53aab4294d8bed2d76f8938d"
+   },
+   {
+    "path": "shell_completions.go",
+    "start": 38,
+    "end": 38,
+    "anchor": "func MarkFlagRequired(",
+    "file_sha256": "38244d5514d8de4c7bd1e03890992a9ee73885af53aab4294d8bed2d76f8938d"
+   },
+   {
+    "path": "command.go",
+    "start": 1180,
+    "end": 1180,
+    "anchor": "func (c *Command) ValidateRequiredFlags()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 853,
+    "end": 853,
+    "anchor": "func TestRequiredFlags(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 871,
+    "end": 871,
+    "anchor": "func TestPersistentRequiredFlags(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-20",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "The completions doc explains limiting a flag's value completion to certain file extensions. Which code stores the allowed extensions, where does the completion engine turn them into a filtering directive, and which test proves it?",
+  "evidence": [
+   {
+    "path": "site/content/completions/_index.md",
+    "start": 351,
+    "end": 351,
+    "anchor": "### Specify valid filename extensions for flags that take a filename",
+    "file_sha256": "ee3a3296ef412fc61a2620c7f080df2d77f063e683a1b3cd18df76ec96443f08"
+   },
+   {
+    "path": "shell_completions.go",
+    "start": 44,
+    "end": 44,
+    "anchor": "func (c *Command) MarkFlagFilename(",
+    "file_sha256": "38244d5514d8de4c7bd1e03890992a9ee73885af53aab4294d8bed2d76f8938d"
+   },
+   {
+    "path": "shell_completions.go",
+    "start": 67,
+    "end": 67,
+    "anchor": "func MarkFlagFilename(",
+    "file_sha256": "38244d5514d8de4c7bd1e03890992a9ee73885af53aab4294d8bed2d76f8938d"
+   },
+   {
+    "path": "completions.go",
+    "start": 407,
+    "end": 407,
+    "anchor": "if validExts, present := flag.Annotations[BashCompFilenameExt]; present {",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 1038,
+    "end": 1038,
+    "anchor": "func TestFlagFileExtFilterCompletionInGo(",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-21",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "The completions docs describe changing the default directive so file completion is turned off for a command and everything below it. Where is that option stored, how is it inherited when completing, and where is it tested?",
+  "evidence": [
+   {
+    "path": "site/content/completions/_index.md",
+    "start": 308,
+    "end": 308,
+    "anchor": "#### Change the default ShellCompDirective",
+    "file_sha256": "ee3a3296ef412fc61a2620c7f080df2d77f063e683a1b3cd18df76ec96443f08"
+   },
+   {
+    "path": "completions.go",
+    "start": 107,
+    "end": 107,
+    "anchor": "type CompletionOptions struct",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 123,
+    "end": 123,
+    "anchor": "func (receiver *CompletionOptions) SetDefaultShellCompDirective(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 495,
+    "end": 495,
+    "anchor": "if cmd.CompletionOptions.DefaultShellCompDirective != nil {",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 4019,
+    "end": 4019,
+    "anchor": "func TestCustomDefaultShellCompDirective(",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-22",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "The Active Help page describes letting end users configure or switch off hints through an environment variable, plus a global off switch. Where is that variable name derived and read, and where are those behaviors tested?",
+  "evidence": [
+   {
+    "path": "site/content/active_help.md",
+    "start": 95,
+    "end": 95,
+    "anchor": "## User control of Active Help",
+    "file_sha256": "c8d33092799705c026683285b11b204601522ca7754fa41c6125922ded4ca5d7"
+   },
+   {
+    "path": "active_help.go",
+    "start": 47,
+    "end": 47,
+    "anchor": "func GetActiveHelpConfig(",
+    "file_sha256": "92bde33086d33e413b9ac945ddb38f7487f9ce91067453a7ce97fd62fa59cdc5"
+   },
+   {
+    "path": "active_help.go",
+    "start": 58,
+    "end": 58,
+    "anchor": "func activeHelpEnvVar(",
+    "file_sha256": "92bde33086d33e413b9ac945ddb38f7487f9ce91067453a7ce97fd62fa59cdc5"
+   },
+   {
+    "path": "completions.go",
+    "start": 1006,
+    "end": 1006,
+    "anchor": "func configEnvVar(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "active_help_test.go",
+    "start": 266,
+    "end": 266,
+    "anchor": "func TestConfigActiveHelp(",
+    "file_sha256": "7ae9d42bd41c7acb4fb5a9fb2ab67c43f3118b3631986e2da50df2111fb7a246"
+   },
+   {
+    "path": "active_help_test.go",
+    "start": 319,
+    "end": 319,
+    "anchor": "func TestDisableActiveHelp(",
+    "file_sha256": "7ae9d42bd41c7acb4fb5a9fb2ab67c43f3118b3631986e2da50df2111fb7a246"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-23",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "The shell completion docs suggest debugging dynamic completions by invoking a hidden command directly and using provided debug-print helpers. Where is that hidden command built and how do the debug helpers decide where to write?",
+  "evidence": [
+   {
+    "path": "site/content/completions/_index.md",
+    "start": 240,
+    "end": 240,
+    "anchor": "#### Debugging",
+    "file_sha256": "ee3a3296ef412fc61a2620c7f080df2d77f063e683a1b3cd18df76ec96443f08"
+   },
+   {
+    "path": "completions.go",
+    "start": 31,
+    "end": 31,
+    "anchor": "ShellCompRequestCmd = \"__complete\"",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 231,
+    "end": 231,
+    "anchor": "func (c *Command) initCompleteCmd(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 955,
+    "end": 955,
+    "anchor": "func CompDebug(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 985,
+    "end": 985,
+    "anchor": "func CompError(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-24",
+  "repo": "cobra",
+  "category": "trace",
+  "query": "The YAML doc-generation page describes producing reference files for one command or a whole tree. Which code does that, and what tests check the output?",
+  "evidence": [
+   {
+    "path": "site/content/docgen/yaml.md",
+    "start": 1,
+    "end": 1,
+    "anchor": "# Generating Yaml Docs For Your Own cobra.Command",
+    "file_sha256": "6a943f327e328b62d49f9dde4eb20fa7a9d5388459b993a84ca3bc69ac14b468"
+   },
+   {
+    "path": "doc/yaml_docs.go",
+    "start": 53,
+    "end": 53,
+    "anchor": "func GenYamlTree(",
+    "file_sha256": "44ff045c89a827987fc328e57697c4d89f5afa08e003fee3542fc88cacce85f9"
+   },
+   {
+    "path": "doc/yaml_docs.go",
+    "start": 60,
+    "end": 60,
+    "anchor": "func GenYamlTreeCustom(",
+    "file_sha256": "44ff045c89a827987fc328e57697c4d89f5afa08e003fee3542fc88cacce85f9"
+   },
+   {
+    "path": "doc/yaml_docs.go",
+    "start": 93,
+    "end": 93,
+    "anchor": "func GenYamlCustom(",
+    "file_sha256": "44ff045c89a827987fc328e57697c4d89f5afa08e003fee3542fc88cacce85f9"
+   },
+   {
+    "path": "doc/yaml_docs_test.go",
+    "start": 27,
+    "end": 27,
+    "anchor": "func TestGenYamlDoc(",
+    "file_sha256": "751db0b0b51d8c6ea0f57b2c6df85c9b9094b5045f7d33a246e0df11eb76d357"
+   },
+   {
+    "path": "doc/yaml_docs_test.go",
+    "start": 57,
+    "end": 57,
+    "anchor": "func TestGenYamlTree(",
+    "file_sha256": "751db0b0b51d8c6ea0f57b2c6df85c9b9094b5045f7d33a246e0df11eb76d357"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-25",
+  "repo": "cobra",
+  "category": "architecture",
+  "query": "Before the target command runs, what setup does the top-level execute path perform: finding the command, injecting the hidden completion-request command, adding default help and completion commands, and validating command groups? How do those pieces fit together?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 1084,
+    "end": 1084,
+    "anchor": "func (c *Command) ExecuteC()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1263,
+    "end": 1263,
+    "anchor": "func (c *Command) InitDefaultHelpCmd()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1205,
+    "end": 1205,
+    "anchor": "func (c *Command) checkCommandGroups()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "completions.go",
+    "start": 231,
+    "end": 231,
+    "anchor": "func (c *Command) initCompleteCmd(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 748,
+    "end": 748,
+    "anchor": "func (c *Command) InitDefaultCompletionCmd(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-26",
+  "repo": "cobra",
+  "category": "architecture",
+  "query": "Explain how help text and usage text are produced: the default templates, how a custom function or template set on a parent is picked up by children, and where extra template functions get registered.",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 484,
+    "end": 484,
+    "anchor": "func (c *Command) HelpFunc()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 444,
+    "end": 444,
+    "anchor": "func (c *Command) UsageFunc()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 464,
+    "end": 464,
+    "anchor": "func (c *Command) getUsageTemplateFunc()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1942,
+    "end": 1942,
+    "anchor": "const defaultUsageTemplate",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1974,
+    "end": 1974,
+    "anchor": "func defaultUsageFunc(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "cobra.go",
+    "start": 32,
+    "end": 32,
+    "anchor": "var templateFuncs",
+    "file_sha256": "aae7502e789e42469bcb2fc110af87fd02451d3b509c5b0bed782ada17338c5f"
+   },
+   {
+    "path": "cobra.go",
+    "start": 85,
+    "end": 85,
+    "anchor": "func AddTemplateFunc(",
+    "file_sha256": "aae7502e789e42469bcb2fc110af87fd02451d3b509c5b0bed782ada17338c5f"
+   },
+   {
+    "path": "command_test.go",
+    "start": 1129,
+    "end": 1129,
+    "anchor": "func TestSetUsageTemplate(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-27",
+  "repo": "cobra",
+  "category": "architecture",
+  "query": "How do flags declared on ancestor commands become usable on a descendant? Walk me through how the complete, local, inherited and persistent flag sets are built and how a child flag can shadow a parent's.",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 1898,
+    "end": 1898,
+    "anchor": "func (c *Command) mergePersistentFlags()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1907,
+    "end": 1907,
+    "anchor": "func (c *Command) updateParentsPflags()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1716,
+    "end": 1716,
+    "anchor": "func (c *Command) LocalFlags()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1744,
+    "end": 1744,
+    "anchor": "func (c *Command) InheritedFlags()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command_test.go",
+    "start": 818,
+    "end": 818,
+    "anchor": "func TestPersistentFlagsOnChild(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   },
+   {
+    "path": "command_test.go",
+    "start": 789,
+    "end": 789,
+    "anchor": "func TestChildFlagShadowsParentPersistentFlag(",
+    "file_sha256": "710a689a1512af3ca376a0aaaa2c0b77d10ea174f7e27db85c2f2316a087d0f3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-28",
+  "repo": "cobra",
+  "category": "architecture",
+  "query": "How is the documentation generator organized across its output formats (man, markdown, reStructuredText, YAML), and which shared logic decides which commands get their own file and which appear in the 'see also' section?",
+  "evidence": [
+   {
+    "path": "doc/util.go",
+    "start": 26,
+    "end": 26,
+    "anchor": "func hasSeeAlso(",
+    "file_sha256": "472bf86d75b3d9d73ba036391d7ad91a10bd76604d5333eebec659efbd3a9b6f"
+   },
+   {
+    "path": "doc/md_docs.go",
+    "start": 133,
+    "end": 133,
+    "anchor": "func GenMarkdownTreeCustom(",
+    "file_sha256": "b6f51d89c0d9963df27b489066fd1617a58f805ec3ff7e0d3036088a13927daf"
+   },
+   {
+    "path": "doc/man_docs.go",
+    "start": 48,
+    "end": 48,
+    "anchor": "func GenManTreeFromOpts(",
+    "file_sha256": "7f72248e811ea9842d85030280e600e545fcdd419a010aefa3d395c9c2428709"
+   },
+   {
+    "path": "doc/rest_docs.go",
+    "start": 145,
+    "end": 145,
+    "anchor": "func GenReSTTreeCustom(",
+    "file_sha256": "4ffa45d039448b87c77cbec3ab5c827cb2a77038e8cf6f8ec75046b9d7d4dd26"
+   },
+   {
+    "path": "doc/yaml_docs.go",
+    "start": 60,
+    "end": 60,
+    "anchor": "func GenYamlTreeCustom(",
+    "file_sha256": "44ff045c89a827987fc328e57697c4d89f5afa08e003fee3542fc88cacce85f9"
+   },
+   {
+    "path": "command.go",
+    "start": 1628,
+    "end": 1628,
+    "anchor": "func (c *Command) IsAdditionalHelpTopicCommand()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-29",
+  "repo": "cobra",
+  "category": "impact",
+  "query": "If I changed how per-program configuration environment variable names are formed (uppercasing the program name and replacing non-alphanumerics), what else would be affected?",
+  "evidence": [
+   {
+    "path": "completions.go",
+    "start": 1006,
+    "end": 1006,
+    "anchor": "func configEnvVar(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 1018,
+    "end": 1018,
+    "anchor": "func getEnvConfig(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "active_help.go",
+    "start": 58,
+    "end": 58,
+    "anchor": "func activeHelpEnvVar(",
+    "file_sha256": "92bde33086d33e413b9ac945ddb38f7487f9ce91067453a7ce97fd62fa59cdc5"
+   },
+   {
+    "path": "fish_completions.go",
+    "start": 25,
+    "end": 25,
+    "anchor": "func genFishComp(",
+    "file_sha256": "637e46a5a81a45a5e9d509aa8a834e023e9a13dccf30ac815957f8ce7ec74fe0"
+   },
+   {
+    "path": "powershell_completions.go",
+    "start": 28,
+    "end": 28,
+    "anchor": "func genPowerShellComp(",
+    "file_sha256": "6357a6d1adc9e798f21731cded574fc3e6e95240c92ee471541d61478b63351a"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 3737,
+    "end": 3737,
+    "anchor": "func TestGetEnvConfig(",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   },
+   {
+    "path": "active_help_test.go",
+    "start": 266,
+    "end": 266,
+    "anchor": "func TestConfigActiveHelp(",
+    "file_sha256": "7ae9d42bd41c7acb4fb5a9fb2ab67c43f3118b3631986e2da50df2111fb7a246"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-30",
+  "repo": "cobra",
+  "category": "impact",
+  "query": "Suppose I renamed the flag annotation key that marks a flag as mandatory. Which code reads or writes that key and would break?",
+  "evidence": [
+   {
+    "path": "bash_completions.go",
+    "start": 32,
+    "end": 32,
+    "anchor": "BashCompOneRequiredFlag = ",
+    "file_sha256": "7370190d5344eec0325b2fd2dd7a0f39ca2acc5881f818adb5124b16ee7ac507"
+   },
+   {
+    "path": "shell_completions.go",
+    "start": 38,
+    "end": 38,
+    "anchor": "func MarkFlagRequired(",
+    "file_sha256": "38244d5514d8de4c7bd1e03890992a9ee73885af53aab4294d8bed2d76f8938d"
+   },
+   {
+    "path": "command.go",
+    "start": 1180,
+    "end": 1180,
+    "anchor": "func (c *Command) ValidateRequiredFlags()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "completions.go",
+    "start": 632,
+    "end": 632,
+    "anchor": "func completeRequireFlags(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "bash_completions.go",
+    "start": 593,
+    "end": 593,
+    "anchor": "func writeRequiredFlag(",
+    "file_sha256": "7370190d5344eec0325b2fd2dd7a0f39ca2acc5881f818adb5124b16ee7ac507"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-31",
+  "repo": "cobra",
+  "category": "impact",
+  "query": "If the signature of the dynamic completion callback (command, args, partially typed word -> candidates plus directive) changed, what code would need to be updated?",
+  "evidence": [
+   {
+    "path": "completions.go",
+    "start": 139,
+    "end": 139,
+    "anchor": "type CompletionFunc = ",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "command.go",
+    "start": 90,
+    "end": 90,
+    "anchor": "ValidArgsFunction CompletionFunc",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "completions.go",
+    "start": 151,
+    "end": 151,
+    "anchor": "func NoFileCompletions(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 160,
+    "end": 160,
+    "anchor": "func FixedCompletions(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 170,
+    "end": 170,
+    "anchor": "func (c *Command) RegisterFlagCompletionFunc(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 316,
+    "end": 316,
+    "anchor": "func (c *Command) getCompletions(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "command.go",
+    "start": 1263,
+    "end": 1263,
+    "anchor": "func (c *Command) InitDefaultHelpCmd()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-32",
+  "repo": "cobra",
+  "category": "impact",
+  "query": "What depends on how a command's name is derived from the first word of its usage line? If I changed that parsing, which lookup, path and suggestion code would be affected?",
+  "evidence": [
+   {
+    "path": "command.go",
+    "start": 1541,
+    "end": 1541,
+    "anchor": "func (c *Command) Name()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 798,
+    "end": 798,
+    "anchor": "func (c *Command) findNext(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1465,
+    "end": 1465,
+    "anchor": "func (c *Command) CommandPath()",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 863,
+    "end": 863,
+    "anchor": "func (c *Command) SuggestionsFor(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "command.go",
+    "start": 1571,
+    "end": 1571,
+    "anchor": "func (c *Command) hasNameOrAliasPrefix(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-33",
+  "repo": "cobra",
+  "category": "impact",
+  "query": "If I changed the output format of the hidden completion request command (one candidate per line followed by a colon-prefixed directive number), which generated shell scripts would have to change too?",
+  "evidence": [
+   {
+    "path": "completions.go",
+    "start": 289,
+    "end": 289,
+    "anchor": "fmt.Fprintf(out, \":%d\\n\", directive)",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions.go",
+    "start": 231,
+    "end": 231,
+    "anchor": "func (c *Command) initCompleteCmd(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "bash_completionsV2.go",
+    "start": 31,
+    "end": 31,
+    "anchor": "func genBashComp(",
+    "file_sha256": "906f68743cdae6ddb3228ca42e4b56d2a51371d7f135f67e4476342abffc6215"
+   },
+   {
+    "path": "bash_completions.go",
+    "start": 36,
+    "end": 36,
+    "anchor": "func writePreamble(",
+    "file_sha256": "7370190d5344eec0325b2fd2dd7a0f39ca2acc5881f818adb5124b16ee7ac507"
+   },
+   {
+    "path": "zsh_completions.go",
+    "start": 87,
+    "end": 87,
+    "anchor": "func genZshComp(",
+    "file_sha256": "a80998389020b259308582d539cb3ae0979f83b55e8ffa68b20c46b015feae24"
+   },
+   {
+    "path": "fish_completions.go",
+    "start": 25,
+    "end": 25,
+    "anchor": "func genFishComp(",
+    "file_sha256": "637e46a5a81a45a5e9d509aa8a834e023e9a13dccf30ac815957f8ce7ec74fe0"
+   },
+   {
+    "path": "powershell_completions.go",
+    "start": 28,
+    "end": 28,
+    "anchor": "func genPowerShellComp(",
+    "file_sha256": "6357a6d1adc9e798f21731cded574fc3e6e95240c92ee471541d61478b63351a"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-34",
+  "repo": "cobra",
+  "category": "discrepancy",
+  "query": "The user guide says that when a command leaves its positional-argument validator unset it behaves like accepting any arguments. Is that what actually happens for a root command that has subcommands?",
+  "evidence": [
+   {
+    "path": "site/content/user_guide.md",
+    "start": 452,
+    "end": 452,
+    "anchor": "If `Args` is undefined or `nil`, it defaults to `ArbitraryArgs`.",
+    "file_sha256": "f8f09aadc3d11e2d41ade0238e83e8c55e446f0ffbcd70f4b93be86f598cedc3"
+   },
+   {
+    "path": "command.go",
+    "start": 757,
+    "end": 757,
+    "anchor": "func (c *Command) Find(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "args.go",
+    "start": 28,
+    "end": 28,
+    "anchor": "func legacyArgs(",
+    "file_sha256": "15b870d1e8a0a10341675ddee8e20bef92a21883257b6b3b11110944a573a2e7"
+   },
+   {
+    "path": "command.go",
+    "start": 1172,
+    "end": 1172,
+    "anchor": "func (c *Command) ValidateArgs(",
+    "file_sha256": "f79613721ad04c9b438dfb30fe0ac3deca85c487658b0aa04a1ae6e4395bfd90"
+   },
+   {
+    "path": "args_test.go",
+    "start": 421,
+    "end": 421,
+    "anchor": "func TestRootTakesNoArgs(",
+    "file_sha256": "37058f718eb5ffc7d70f917d694c04aa11fc39ba32ad8d1db9766e9d8eb009ae"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-35",
+  "repo": "cobra",
+  "category": "discrepancy",
+  "query": "The completions page claims that if a program has no other subcommands, the built-in completion command is hidden but still works. Does the implementation hide it, or does it do something else?",
+  "evidence": [
+   {
+    "path": "site/content/completions/_index.md",
+    "start": 12,
+    "end": 12,
+    "anchor": "default `completion` command will be hidden, but still functional.",
+    "file_sha256": "ee3a3296ef412fc61a2620c7f080df2d77f063e683a1b3cd18df76ec96443f08"
+   },
+   {
+    "path": "completions.go",
+    "start": 748,
+    "end": 748,
+    "anchor": "func (c *Command) InitDefaultCompletionCmd(",
+    "file_sha256": "b28a4f6c509acde7367323e835cfb4f4939fe656dd3214320d76f53e91743c89"
+   },
+   {
+    "path": "completions_test.go",
+    "start": 2461,
+    "end": 2461,
+    "anchor": "func TestDefaultCompletionCmd(",
+    "file_sha256": "3f8a8aabe2d279b84313fbfa08a08728008a8bc61744ab3522e7cee73b3faba9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-36",
+  "repo": "cobra",
+  "category": "discrepancy",
+  "query": "The Active Help docs list only two shells as supported. Do the generated scripts for the other shells match that claim, and what do they do with the hints?",
+  "evidence": [
+   {
+    "path": "site/content/active_help.md",
+    "start": 22,
+    "end": 22,
+    "anchor": "Active Help is currently only supported for the following shells:",
+    "file_sha256": "c8d33092799705c026683285b11b204601522ca7754fa41c6125922ded4ca5d7"
+   },
+   {
+    "path": "fish_completions.go",
+    "start": 55,
+    "end": 55,
+    "anchor": "# Disable ActiveHelp which is not supported for fish shell",
+    "file_sha256": "637e46a5a81a45a5e9d509aa8a834e023e9a13dccf30ac815957f8ce7ec74fe0"
+   },
+   {
+    "path": "powershell_completions.go",
+    "start": 124,
+    "end": 124,
+    "anchor": "# First disable ActiveHelp which is not supported for Powershell",
+    "file_sha256": "6357a6d1adc9e798f21731cded574fc3e6e95240c92ee471541d61478b63351a"
+   },
+   {
+    "path": "bash_completionsV2.go",
+    "start": 250,
+    "end": 250,
+    "anchor": "__%[1]s_extract_activeHelp() {",
+    "file_sha256": "906f68743cdae6ddb3228ca42e4b56d2a51371d7f135f67e4476342abffc6215"
+   },
+   {
+    "path": "zsh_completions.go",
+    "start": 182,
+    "end": 182,
+    "anchor": "local activeHelpMarker=",
+    "file_sha256": "a80998389020b259308582d539cb3ae0979f83b55e8ffa68b20c46b015feae24"
+   },
+   {
+    "path": "fish_completions_test.go",
+    "start": 89,
+    "end": 89,
+    "anchor": "func TestFishCompletionNoActiveHelp(",
+    "file_sha256": "67a619ebf06e11d44b04544830ee2838d853bb27cea2616b0238d9a8b7298701"
+   },
+   {
+    "path": "powershell_completions_test.go",
+    "start": 23,
+    "end": 23,
+    "anchor": "func TestPwshCompletionNoActiveHelp(",
+    "file_sha256": "fd72b2a669d4ebc8d05999e5b782bcaa6e291edb5b780b8b7522f940f4a29c5b"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-37",
+  "repo": "cobra",
+  "category": "discrepancy",
+  "query": "The Markdown docgen page shows the customizable single-command generator writing into a bytes buffer. Does the real function signature match what the page shows?",
+  "evidence": [
+   {
+    "path": "site/content/docgen/md.md",
+    "start": 83,
+    "end": 83,
+    "anchor": "func GenMarkdownCustom(cmd *Command, out *bytes.Buffer",
+    "file_sha256": "c31db20884568d9c3a7c875b9e10693e0c42ff47e4c560a28d58ce6c880b4475"
+   },
+   {
+    "path": "doc/md_docs.go",
+    "start": 57,
+    "end": 57,
+    "anchor": "func GenMarkdownCustom(",
+    "file_sha256": "b6f51d89c0d9963df27b489066fd1617a58f805ec3ff7e0d3036088a13927daf"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-38",
+  "repo": "cobra",
+  "category": "no_evidence",
+  "query": "What was the root cause of the outage that took down the Cobra documentation website last spring, and how long did recovery take?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-39",
+  "repo": "cobra",
+  "category": "no_evidence",
+  "query": "Which companies hold paid support agreements for Cobra, and when do their contracts come up for renewal?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-40",
+  "repo": "cobra",
+  "category": "no_evidence",
+  "query": "On what date is Cobra v2 scheduled to ship, and which features has the steering committee committed to it?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-cobra-41",
+  "repo": "cobra",
+  "category": "no_evidence",
+  "query": "According to the project's usage telemetry, how many developers run Cobra-based CLIs each day and which country has the most users?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-01",
+  "repo": "flask",
+  "category": "exact",
+  "query": "Where is TaggedJSONSerializer.register implemented, and which test checks that registering an already-used tag key raises KeyError unless force=True is passed?",
+  "evidence": [
+   {
+    "path": "src/flask/json/tag.py",
+    "start": 256,
+    "end": 256,
+    "anchor": "def register(",
+    "file_sha256": "0e168dc2e20e85db7647be28382f58e19f19a6bc4562245be5d50fe5bcb220dc"
+   },
+   {
+    "path": "tests/test_json_tag.py",
+    "start": 32,
+    "end": 32,
+    "anchor": "def test_duplicate_tag():",
+    "file_sha256": "a581f4c910c544328b7140ce65fa3b3c0399f0981d5079ea02b09359427d463c"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-02",
+  "repo": "flask",
+  "category": "exact",
+  "query": "Locate FlaskClient.session_transaction and the tests covering both its normal use and its failure modes (cookies disabled, session backend that opens no session).",
+  "evidence": [
+   {
+    "path": "src/flask/testing.py",
+    "start": 136,
+    "end": 136,
+    "anchor": "def session_transaction(",
+    "file_sha256": "629d481658aaec7076a55913eda38c270ec45d430b34b2f9d38b2eec2b0ad3da"
+   },
+   {
+    "path": "tests/test_testing.py",
+    "start": 157,
+    "end": 157,
+    "anchor": "def test_session_transactions(app, client):",
+    "file_sha256": "5b3a6244c709b4102e921f79a949ac82f0db99efd59e671c464731fdfceab63d"
+   },
+   {
+    "path": "tests/test_testing.py",
+    "start": 188,
+    "end": 188,
+    "anchor": "def test_session_transactions_no_null_sessions():",
+    "file_sha256": "5b3a6244c709b4102e921f79a949ac82f0db99efd59e671c464731fdfceab63d"
+   },
+   {
+    "path": "tests/test_testing.py",
+    "start": 206,
+    "end": 206,
+    "anchor": "def test_session_transaction_needs_cookies(app):",
+    "file_sha256": "5b3a6244c709b4102e921f79a949ac82f0db99efd59e671c464731fdfceab63d"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-03",
+  "repo": "flask",
+  "category": "exact",
+  "query": "How does MethodView.dispatch_request handle a HEAD request when the class only defines get(), and where is that tested?",
+  "evidence": [
+   {
+    "path": "src/flask/views.py",
+    "start": 182,
+    "end": 182,
+    "anchor": "def dispatch_request(self, **kwargs",
+    "file_sha256": "d0d5ceecd117533169c924cdbb01ea5bb0ee74b7b1c4b22855f73f0e4dea0ee7"
+   },
+   {
+    "path": "tests/test_views.py",
+    "start": 152,
+    "end": 152,
+    "anchor": "def test_implicit_head(app, client):",
+    "file_sha256": "1fb41b3d4d3228624c9ec60ca66ac8ad7614626d78497c9f057d6aca312cd0e0"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-04",
+  "repo": "flask",
+  "category": "exact",
+  "query": "Where does Response.max_cookie_size read the MAX_COOKIE_SIZE setting, what is the default value, and which test checks the 'cookie is too large' warning?",
+  "evidence": [
+   {
+    "path": "src/flask/wrappers.py",
+    "start": 247,
+    "end": 247,
+    "anchor": "def max_cookie_size(self) -> int:",
+    "file_sha256": "8d492fe2655e93622ae21c3177846faab20c6faf41bf43c49438162e6779391a"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 234,
+    "end": 234,
+    "anchor": "\"MAX_COOKIE_SIZE\": 4093,",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1931,
+    "end": 1931,
+    "anchor": "def test_max_cookie_size(app, client, recwarn):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   },
+   {
+    "path": "docs/config.rst",
+    "start": 385,
+    "end": 385,
+    "anchor": ".. py:data:: MAX_COOKIE_SIZE",
+    "file_sha256": "2ad5bb5692512847144f87f100ec801aa9b9862c919331c9cf93ac3686ef6e3d"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-05",
+  "repo": "flask",
+  "category": "exact",
+  "query": "Show me routes_command in flask.cli and the TestRoutes tests for its --sort and --all-methods options.",
+  "evidence": [
+   {
+    "path": "src/flask/cli.py",
+    "start": 1060,
+    "end": 1060,
+    "anchor": "def routes_command(sort: str, all_methods: bool) -> None:",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 445,
+    "end": 445,
+    "anchor": "class TestRoutes:",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 473,
+    "end": 473,
+    "anchor": "def test_sort(self, app, invoke):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 488,
+    "end": 488,
+    "anchor": "def test_all_methods(self, invoke):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-06",
+  "repo": "flask",
+  "category": "exact",
+  "query": "Where does find_app_by_string turn an app spec like 'create_app2(\"foo\", \"bar\")' into a factory call with literal arguments, and which parametrized locate_app tests and fixture module exercise it?",
+  "evidence": [
+   {
+    "path": "src/flask/cli.py",
+    "start": 120,
+    "end": 120,
+    "anchor": "def find_app_by_string(module: ModuleType, app_name: str) -> Flask:",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 241,
+    "end": 241,
+    "anchor": "def locate_app(",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 194,
+    "end": 194,
+    "anchor": "def test_locate_app(test_apps, iname, aname, result):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 216,
+    "end": 216,
+    "anchor": "def test_locate_app_raises(test_apps, iname, aname):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   },
+   {
+    "path": "tests/test_apps/cliapp/factory.py",
+    "start": 8,
+    "end": 8,
+    "anchor": "def create_app2(foo, bar):",
+    "file_sha256": "3a93cd69f200848e8ffef6b2abdaa5803fb5044981ab64297f8c7d6541820570"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-07",
+  "repo": "flask",
+  "category": "exact",
+  "query": "In Flask.url_for, where is the ValueError raised when _scheme is given but _external=False, and which test covers it?",
+  "evidence": [
+   {
+    "path": "src/flask/app.py",
+    "start": 1102,
+    "end": 1102,
+    "anchor": "    def url_for(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1200,
+    "end": 1200,
+    "anchor": "raise ValueError(\"When specifying '_scheme', '_external' must be True.\")",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/helpers.py",
+    "start": 200,
+    "end": 200,
+    "anchor": "def url_for(",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "tests/test_helpers.py",
+    "start": 112,
+    "end": 112,
+    "anchor": "def test_url_for_with_scheme_not_external(self, app, req_ctx):",
+    "file_sha256": "04d700b48f3d5e3139ebe1e162df30bf9a223213c82c50b4f77b3692b111c011"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-08",
+  "repo": "flask",
+  "category": "exact",
+  "query": "Where is the category_filter argument of get_flashed_messages applied, and which test verifies filtering both with and without with_categories?",
+  "evidence": [
+   {
+    "path": "src/flask/helpers.py",
+    "start": 360,
+    "end": 360,
+    "anchor": "def get_flashed_messages(",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 629,
+    "end": 629,
+    "anchor": "def test_extended_flashing(app):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-09",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "I want to set one key inside a nested dict in my app settings from an environment variable (e.g. a database host inside a DB settings dict). How does the env-var loader split the variable name and create missing intermediate dicts, and where is that tested?",
+  "evidence": [
+   {
+    "path": "src/flask/config.py",
+    "start": 126,
+    "end": 126,
+    "anchor": "def from_prefixed_env(",
+    "file_sha256": "3e2a85d033da9ba1d6d051f8087d61a574c17b7d0d4b38cf10ec2bcf56fa92dd"
+   },
+   {
+    "path": "tests/test_config.py",
+    "start": 79,
+    "end": 79,
+    "anchor": "def test_from_prefixed_env_nested(monkeypatch):",
+    "file_sha256": "7d110748a4a2aad90c33489f4a50da0ac6aa19d64aab5414929be8a3fbb44dcf"
+   },
+   {
+    "path": "tests/test_config.py",
+    "start": 48,
+    "end": 48,
+    "anchor": "def test_from_prefixed_env(monkeypatch):",
+    "file_sha256": "7d110748a4a2aad90c33489f4a50da0ac6aa19d64aab5414929be8a3fbb44dcf"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-10",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "When I point the command-line tool at a module without naming the application object, how does it decide which object to use, and what happens if the module contains two application instances?",
+  "evidence": [
+   {
+    "path": "src/flask/cli.py",
+    "start": 41,
+    "end": 41,
+    "anchor": "def find_best_app(module: ModuleType) -> Flask:",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 47,
+    "end": 47,
+    "anchor": "def test_find_best_app(test_apps):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-11",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "My module starts the development server at import time without an if-main guard. Why doesn't that block or start a second server when I launch the app through the command-line tool?",
+  "evidence": [
+   {
+    "path": "src/flask/app.py",
+    "start": 630,
+    "end": 630,
+    "anchor": "    def run(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 695,
+    "end": 695,
+    "anchor": "if os.environ.get(\"FLASK_RUN_FROM_CLI\") == \"true\":",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 667,
+    "end": 667,
+    "anchor": "os.environ[\"FLASK_RUN_FROM_CLI\"] = \"true\"",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-12",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "After I configured a handler on the root logger, my application's logger stopped getting its default stream handler. What decides whether that default handler gets attached, and how does it pick the stream it writes to during a request?",
+  "evidence": [
+   {
+    "path": "src/flask/logging.py",
+    "start": 31,
+    "end": 31,
+    "anchor": "def has_level_handler(",
+    "file_sha256": "f2c33758c4ee6e2d5c05bd9cfe53e45a937427c74c02aae029160b2e2d5d0952"
+   },
+   {
+    "path": "src/flask/logging.py",
+    "start": 58,
+    "end": 58,
+    "anchor": "def create_logger(",
+    "file_sha256": "f2c33758c4ee6e2d5c05bd9cfe53e45a937427c74c02aae029160b2e2d5d0952"
+   },
+   {
+    "path": "src/flask/logging.py",
+    "start": 16,
+    "end": 16,
+    "anchor": "def wsgi_errors_stream()",
+    "file_sha256": "f2c33758c4ee6e2d5c05bd9cfe53e45a937427c74c02aae029160b2e2d5d0952"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 441,
+    "end": 441,
+    "anchor": "def logger(self) -> logging.Logger:",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "tests/test_logging.py",
+    "start": 48,
+    "end": 48,
+    "anchor": "def test_existing_handler(app):",
+    "file_sha256": "311ea43751a836c3d585a40f08fa54a60d783a232aa50c5ea1225b689e9ac683"
+   },
+   {
+    "path": "tests/test_logging.py",
+    "start": 54,
+    "end": 54,
+    "anchor": "def test_wsgi_errors_stream(app, client):",
+    "file_sha256": "311ea43751a836c3d585a40f08fa54a60d783a232aa50c5ea1225b689e9ac683"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-13",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "In debug mode an upload view fails with a long explanation about the form's encoding type instead of a plain missing-key error. Where is that friendlier error produced, and under what conditions is it swapped in?",
+  "evidence": [
+   {
+    "path": "src/flask/wrappers.py",
+    "start": 197,
+    "end": 197,
+    "anchor": "def _load_form_data(self) -> None:",
+    "file_sha256": "8d492fe2655e93622ae21c3177846faab20c6faf41bf43c49438162e6779391a"
+   },
+   {
+    "path": "src/flask/debughelpers.py",
+    "start": 81,
+    "end": 81,
+    "anchor": "def attach_enctype_error_multidict(",
+    "file_sha256": "75c8258dc3487e1d0857dc5d3c7ca471fac1a254282570fa57e56d71aada037e"
+   },
+   {
+    "path": "src/flask/debughelpers.py",
+    "start": 23,
+    "end": 23,
+    "anchor": "class DebugFilesKeyError(KeyError, AssertionError):",
+    "file_sha256": "75c8258dc3487e1d0857dc5d3c7ca471fac1a254282570fa57e56d71aada037e"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1129,
+    "end": 1129,
+    "anchor": "def test_enctype_debug_helper(app, client):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-14",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "Posting a form to a URL that lacks its trailing slash raises an assertion about the canonical URL, but only while debugging. Which code decides to raise that instead of letting the redirect happen, and which redirect codes are exempt?",
+  "evidence": [
+   {
+    "path": "src/flask/app.py",
+    "start": 560,
+    "end": 560,
+    "anchor": "def raise_routing_exception(self, request: Request) -> t.NoReturn:",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/debughelpers.py",
+    "start": 50,
+    "end": 50,
+    "anchor": "class FormDataRoutingRedirect(AssertionError):",
+    "file_sha256": "75c8258dc3487e1d0857dc5d3c7ca471fac1a254282570fa57e56d71aada037e"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1722,
+    "end": 1722,
+    "anchor": "def test_routing_redirect_debugging(monkeypatch, app, client):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-15",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "If one of my end-of-request cleanup callbacks throws, do the remaining cleanup callbacks and the tear-down signals still run? How are several failures reported back to the caller?",
+  "evidence": [
+   {
+    "path": "src/flask/app.py",
+    "start": 1420,
+    "end": 1420,
+    "anchor": "def do_teardown_request(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1453,
+    "end": 1453,
+    "anchor": "def do_teardown_appcontext(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/helpers.py",
+    "start": 654,
+    "end": 654,
+    "anchor": "class _CollectErrors:",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "src/flask/ctx.py",
+    "start": 446,
+    "end": 446,
+    "anchor": "def pop(self, exc",
+    "file_sha256": "e21952d044159438765eb27848b0fe4c75f83faee8645181a09a1eccb1d5cab7"
+   },
+   {
+    "path": "tests/test_appctx.py",
+    "start": 214,
+    "end": 214,
+    "anchor": "def test_robust_teardown(",
+    "file_sha256": "0cef6858e010be5ae233f622972ce04d90efb0a8cc2a57eab1a80afc12e87fe2"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-16",
+  "repo": "flask",
+  "category": "conceptual",
+  "query": "How can I strip a language code out of every matched URL before my views run and have it put back automatically whenever links are generated?",
+  "evidence": [
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 567,
+    "end": 567,
+    "anchor": "def url_value_preprocessor(",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 592,
+    "end": 592,
+    "anchor": "def url_defaults(self, f",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1366,
+    "end": 1366,
+    "anchor": "def preprocess_request(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 961,
+    "end": 961,
+    "anchor": "def inject_url_defaults(",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1645,
+    "end": 1645,
+    "anchor": "def test_url_processors(app, client):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   },
+   {
+    "path": "docs/patterns/urlprocessors.rst",
+    "start": 16,
+    "end": 16,
+    "anchor": "Internationalized Application URLs",
+    "file_sha256": "816aa72b588023fbed0f46986cd413132040b8d0a144596781cd3c2fd2a865e5"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-17",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The CLI docs section on registering commands with blueprints says commands are nested under a group named after the blueprint by default, can be renamed, or merged into the top level. Where is that grouping decided when the blueprint is registered, and which tests verify it?",
+  "evidence": [
+   {
+    "path": "docs/cli.rst",
+    "start": 366,
+    "end": 366,
+    "anchor": "Registering Commands with Blueprints",
+    "file_sha256": "e8e5e9b220a5159e9c9c8b413de499aa5a51cd0ca487681e2352bbdf6f9b0cda"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 337,
+    "end": 337,
+    "anchor": "cli_resolved_group = options.get(",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "src/flask/blueprints.py",
+    "start": 49,
+    "end": 49,
+    "anchor": "self.cli = AppGroup()",
+    "file_sha256": "a79404da5635f0622d6ddaff44a46967c0e8d7b8343ef4062206644940e15f69"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 649,
+    "end": 649,
+    "anchor": "def test_cli_blueprints(app):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 692,
+    "end": 692,
+    "anchor": "def test_cli_empty(app):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-18",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The deferred request callbacks pattern page describes registering, from anywhere during a request, a function that only runs for that request's response. Trace it to the implementation and a test.",
+  "evidence": [
+   {
+    "path": "docs/patterns/deferredcallbacks.rst",
+    "start": 20,
+    "end": 20,
+    "anchor": "As an alternative, you can use",
+    "file_sha256": "b9d44479bb2af5827b5ee0a953ab3138db11dda8d1cd7ada68963b55b5031adf"
+   },
+   {
+    "path": "src/flask/ctx.py",
+    "start": 118,
+    "end": 118,
+    "anchor": "def after_this_request(",
+    "file_sha256": "e21952d044159438765eb27848b0fe4c75f83faee8645181a09a1eccb1d5cab7"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1394,
+    "end": 1394,
+    "anchor": "def process_response(self, ctx",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 762,
+    "end": 762,
+    "anchor": "def test_after_request_processing(app, client):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-19",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The class-based views guide says a new view instance is created for every request unless you opt out, in which case a single instance is reused. Find where that choice is made and the test showing the constructor runs only once.",
+  "evidence": [
+   {
+    "path": "docs/views.rst",
+    "start": 125,
+    "end": 125,
+    "anchor": "View Lifetime and ``self``",
+    "file_sha256": "225deb1feed5e285a23c151c1ffd9ae7be3106b436f94d2f3f179c2b438b01d6"
+   },
+   {
+    "path": "src/flask/views.py",
+    "start": 76,
+    "end": 76,
+    "anchor": "init_every_request: t.ClassVar[bool] = True",
+    "file_sha256": "d0d5ceecd117533169c924cdbb01ea5bb0ee74b7b1c4b22855f73f0e4dea0ee7"
+   },
+   {
+    "path": "src/flask/views.py",
+    "start": 86,
+    "end": 86,
+    "anchor": "def as_view(",
+    "file_sha256": "d0d5ceecd117533169c924cdbb01ea5bb0ee74b7b1c4b22855f73f0e4dea0ee7"
+   },
+   {
+    "path": "tests/test_views.py",
+    "start": 256,
+    "end": 256,
+    "anchor": "def test_init_once(app, client):",
+    "file_sha256": "1fb41b3d4d3228624c9ec60ca66ac8ad7614626d78497c9f057d6aca312cd0e0"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-20",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The signals documentation shows a test helper that records which templates were rendered and with what context. Where is that signal defined and emitted, and where is the behavior tested?",
+  "evidence": [
+   {
+    "path": "docs/signals.rst",
+    "start": 27,
+    "end": 27,
+    "anchor": "Subscribing to Signals",
+    "file_sha256": "ff0f7fbda361f07a6b05d992586bc3863011c0db153a003802c30666f03cccba"
+   },
+   {
+    "path": "src/flask/signals.py",
+    "start": 8,
+    "end": 8,
+    "anchor": "template_rendered = _signals.signal(\"template-rendered\")",
+    "file_sha256": "57b94c530c3b0aa809d93854067d4f89ab59b506a73b2b7b399a6ed86648fb7e"
+   },
+   {
+    "path": "src/flask/templating.py",
+    "start": 123,
+    "end": 123,
+    "anchor": "def _render(ctx: AppContext",
+    "file_sha256": "3ed7a044a96c911267e855b7359d9f159f06321f75fbe678a6656923d5e0989e"
+   },
+   {
+    "path": "tests/test_signals.py",
+    "start": 4,
+    "end": 4,
+    "anchor": "def test_template_rendered(app, client):",
+    "file_sha256": "eaa27de84a44ad1f1b0baa883ec7b76793ee0973362646a7f93ebb7d5e3b2abe"
+   },
+   {
+    "path": "tests/test_signals.py",
+    "start": 25,
+    "end": 25,
+    "anchor": "def test_before_render_template():",
+    "file_sha256": "eaa27de84a44ad1f1b0baa883ec7b76793ee0973362646a7f93ebb7d5e3b2abe"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-21",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The configuration docs on instance folders say an explicitly passed path must be absolute, and otherwise a default location is chosen depending on whether the app is an uninstalled module/package or installed under a prefix. Trace this to the code and tests.",
+  "evidence": [
+   {
+    "path": "docs/config.rst",
+    "start": 760,
+    "end": 760,
+    "anchor": "Instance Folders",
+    "file_sha256": "2ad5bb5692512847144f87f100ec801aa9b9862c919331c9cf93ac3686ef6e3d"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 303,
+    "end": 303,
+    "anchor": "elif not os.path.isabs(instance_path):",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 508,
+    "end": 508,
+    "anchor": "def auto_find_instance_path(self) -> str:",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 762,
+    "end": 762,
+    "anchor": "def find_package(import_name: str)",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "tests/test_instance_config.py",
+    "start": 8,
+    "end": 8,
+    "anchor": "def test_explicit_instance_paths(modules_tmp_path):",
+    "file_sha256": "26466b388aabecbce19f2122bf0631e964bb79fdab84eae4716fe488d71b3857"
+   },
+   {
+    "path": "tests/test_instance_config.py",
+    "start": 80,
+    "end": 80,
+    "anchor": "def test_installed_package_paths(",
+    "file_sha256": "26466b388aabecbce19f2122bf0631e964bb79fdab84eae4716fe488d71b3857"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-22",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The testing guide has a section on invoking custom commands in tests with an isolated runner. Which code creates that runner and makes it load the application under test, and which tests cover it?",
+  "evidence": [
+   {
+    "path": "docs/testing.rst",
+    "start": 245,
+    "end": 245,
+    "anchor": "Running Commands with the CLI Runner",
+    "file_sha256": "756a677ef4d1443cc9415787be2077e49d6a611f904b69e1160dd38b4502a066"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 813,
+    "end": 813,
+    "anchor": "def test_cli_runner(self, **kwargs",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/testing.py",
+    "start": 265,
+    "end": 265,
+    "anchor": "class FlaskCliRunner(CliRunner):",
+    "file_sha256": "629d481658aaec7076a55913eda38c270ec45d430b34b2f9d38b2eec2b0ad3da"
+   },
+   {
+    "path": "src/flask/testing.py",
+    "start": 275,
+    "end": 275,
+    "anchor": "def invoke(  # type",
+    "file_sha256": "629d481658aaec7076a55913eda38c270ec45d430b34b2f9d38b2eec2b0ad3da"
+   },
+   {
+    "path": "tests/test_testing.py",
+    "start": 340,
+    "end": 340,
+    "anchor": "def test_cli_runner_class(app):",
+    "file_sha256": "5b3a6244c709b4102e921f79a949ac82f0db99efd59e671c464731fdfceab63d"
+   },
+   {
+    "path": "tests/test_testing.py",
+    "start": 352,
+    "end": 352,
+    "anchor": "def test_cli_invoke(app):",
+    "file_sha256": "5b3a6244c709b4102e921f79a949ac82f0db99efd59e671c464731fdfceab63d"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-23",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The streaming patterns page says the request proxy is gone once a view returns a generator, and offers a wrapper that keeps the request alive while the body is produced. Trace that wrapper to its implementation and tests.",
+  "evidence": [
+   {
+    "path": "docs/patterns/streaming.rst",
+    "start": 64,
+    "end": 64,
+    "anchor": "Streaming with Context",
+    "file_sha256": "abad5bfafabd7755d281a8bd2fa2d74e644fd2c7d90c10a0d1d9328747347ba9"
+   },
+   {
+    "path": "src/flask/helpers.py",
+    "start": 63,
+    "end": 63,
+    "anchor": "def stream_with_context(",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "tests/test_helpers.py",
+    "start": 228,
+    "end": 228,
+    "anchor": "class TestStreaming:",
+    "file_sha256": "04d700b48f3d5e3139ebe1e162df30bf9a223213c82c50b4f77b3692b111c011"
+   },
+   {
+    "path": "tests/test_helpers.py",
+    "start": 287,
+    "end": 287,
+    "anchor": "def test_stream_keeps_session(self, app, client):",
+    "file_sha256": "04d700b48f3d5e3139ebe1e162df30bf9a223213c82c50b4f77b3692b111c011"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-24",
+  "repo": "flask",
+  "category": "trace",
+  "query": "The blueprints guide says a blueprint's template folder has lower priority than the application's, the first registered blueprint wins on conflicts, and a config flag can log every lookup attempt. Show the lookup-order implementation, the logging of attempts, and the tests.",
+  "evidence": [
+   {
+    "path": "docs/blueprints.rst",
+    "start": 230,
+    "end": 230,
+    "anchor": "The template folder is added to the search path",
+    "file_sha256": "5e5c3e70b8837c02c446e90ff0ba75e213d2490549f26bd6e8217cc4f499001e"
+   },
+   {
+    "path": "src/flask/templating.py",
+    "start": 98,
+    "end": 98,
+    "anchor": "def _iter_loaders(self, template",
+    "file_sha256": "3ed7a044a96c911267e855b7359d9f159f06321f75fbe678a6656923d5e0989e"
+   },
+   {
+    "path": "src/flask/templating.py",
+    "start": 57,
+    "end": 57,
+    "anchor": "    def get_source(",
+    "file_sha256": "3ed7a044a96c911267e855b7359d9f159f06321f75fbe678a6656923d5e0989e"
+   },
+   {
+    "path": "src/flask/debughelpers.py",
+    "start": 124,
+    "end": 124,
+    "anchor": "def explain_template_loading_attempts(",
+    "file_sha256": "75c8258dc3487e1d0857dc5d3c7ca471fac1a254282570fa57e56d71aada037e"
+   },
+   {
+    "path": "tests/test_templating.py",
+    "start": 488,
+    "end": 488,
+    "anchor": "def test_template_loader_debugging(test_apps, monkeypatch):",
+    "file_sha256": "fe9037d2bc5c67c031e9a78df9686ce84f919e973498a3e9706c40fddb360f4e"
+   },
+   {
+    "path": "tests/test_apps/blueprintapp/__init__.py",
+    "start": 8,
+    "end": 8,
+    "anchor": "app.register_blueprint(admin)",
+    "file_sha256": "87622ebc37bcfe87d81be1437e4b97a4c2a8341eb3df38461dd37a0b89db07d3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-25",
+  "repo": "flask",
+  "category": "architecture",
+  "query": "Walk me through how an exception raised in a view reaches a particular handler: how handlers are registered by status code or exception class, how handlers on the matched blueprint take priority over app-wide ones, how the exception's class hierarchy is searched, and what happens when nothing matches.",
+  "evidence": [
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 650,
+    "end": 650,
+    "anchor": "def register_error_handler(",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 665,
+    "end": 665,
+    "anchor": "def _get_exc_class_and_code(",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 869,
+    "end": 869,
+    "anchor": "def _find_error_handler(",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 865,
+    "end": 865,
+    "anchor": "def handle_user_exception(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 830,
+    "end": 830,
+    "anchor": "def handle_http_exception(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 897,
+    "end": 897,
+    "anchor": "def handle_exception(self, ctx",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "tests/test_user_error_handler.py",
+    "start": 136,
+    "end": 136,
+    "anchor": "def test_error_handler_blueprint(app):",
+    "file_sha256": "f05213bb275e08d354bf9750eb3a37aeb8fc713a8beee7edcdd3078d11af9d60"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1021,
+    "end": 1021,
+    "anchor": "def test_errorhandler_precedence(app, client):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-26",
+  "repo": "flask",
+  "category": "architecture",
+  "query": "When blueprints are nested inside other blueprints, how are URL prefixes, subdomains and dotted endpoint names combined at registration time, and how do the child's request hooks and error handlers end up attached to the application?",
+  "evidence": [
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 571,
+    "end": 571,
+    "anchor": "def register_blueprint(self, blueprint",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 273,
+    "end": 273,
+    "anchor": "def register(self, app: App",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 34,
+    "end": 34,
+    "anchor": "class BlueprintSetupState:",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 87,
+    "end": 87,
+    "anchor": "def add_url_rule(",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 379,
+    "end": 379,
+    "anchor": "def _merge_blueprint_funcs(",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "tests/test_blueprints.py",
+    "start": 862,
+    "end": 862,
+    "anchor": "def test_nested_blueprint(app, client):",
+    "file_sha256": "9c7e1a3caf96db080ed22d52dcab8994f7e64381a06b5aa7f605eff62e8b21fc"
+   },
+   {
+    "path": "tests/test_blueprints.py",
+    "start": 1000,
+    "end": 1000,
+    "anchor": "def test_nesting_url_prefixes(",
+    "file_sha256": "9c7e1a3caf96db080ed22d52dcab8994f7e64381a06b5aa7f605eff62e8b21fc"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-27",
+  "repo": "flask",
+  "category": "architecture",
+  "query": "How does the flask command get from the app option (or no option at all) to a loaded application object? Explain the pieces involved, including how a file path becomes an import name and which files it falls back to in the current directory.",
+  "evidence": [
+   {
+    "path": "docs/cli.rst",
+    "start": 14,
+    "end": 14,
+    "anchor": "Application Discovery",
+    "file_sha256": "e8e5e9b220a5159e9c9c8b413de499aa5a51cd0ca487681e2352bbdf6f9b0cda"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 440,
+    "end": 440,
+    "anchor": "def _set_app(",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 333,
+    "end": 333,
+    "anchor": "def load_app(self) -> Flask:",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 200,
+    "end": 200,
+    "anchor": "def prepare_import(path: str) -> str:",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 241,
+    "end": 241,
+    "anchor": "def locate_app(",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 41,
+    "end": 41,
+    "anchor": "def find_best_app(module: ModuleType) -> Flask:",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 246,
+    "end": 246,
+    "anchor": "def test_scriptinfo(test_apps, monkeypatch):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-28",
+  "repo": "flask",
+  "category": "architecture",
+  "query": "How is static file serving wired up end to end for both the application and blueprints: where the URL rule gets added, how the folder and URL path are derived, and which function finally sends the file with cache settings?",
+  "evidence": [
+   {
+    "path": "src/flask/app.py",
+    "start": 349,
+    "end": 349,
+    "anchor": "if self.has_static_folder:",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 224,
+    "end": 224,
+    "anchor": "def static_folder(self) -> str | None:",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 249,
+    "end": 249,
+    "anchor": "def static_url_path(self) -> str | None:",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 390,
+    "end": 390,
+    "anchor": "def send_static_file(self, filename",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 323,
+    "end": 323,
+    "anchor": "if self.has_static_folder:",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "src/flask/helpers.py",
+    "start": 543,
+    "end": 543,
+    "anchor": "def send_from_directory(",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "src/flask/helpers.py",
+    "start": 402,
+    "end": 402,
+    "anchor": "def _prepare_send_file_kwargs(",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1435,
+    "end": 1435,
+    "anchor": "def test_static_url_path():",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   },
+   {
+    "path": "tests/test_blueprints.py",
+    "start": 175,
+    "end": 175,
+    "anchor": "def test_templates_and_static(test_apps):",
+    "file_sha256": "9c7e1a3caf96db080ed22d52dcab8994f7e64381a06b5aa7f605eff62e8b21fc"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-29",
+  "repo": "flask",
+  "category": "impact",
+  "query": "If I change how the application computes the default browser cache lifetime for files it serves, what else must change so blueprint static files stay consistent, and which tests would catch a mismatch?",
+  "evidence": [
+   {
+    "path": "src/flask/app.py",
+    "start": 363,
+    "end": 363,
+    "anchor": "def get_send_file_max_age(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/blueprints.py",
+    "start": 55,
+    "end": 55,
+    "anchor": "def get_send_file_max_age(",
+    "file_sha256": "a79404da5635f0622d6ddaff44a46967c0e8d7b8343ef4062206644940e15f69"
+   },
+   {
+    "path": "src/flask/helpers.py",
+    "start": 402,
+    "end": 402,
+    "anchor": "def _prepare_send_file_kwargs(",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "tests/test_helpers.py",
+    "start": 44,
+    "end": 44,
+    "anchor": "def test_static_file(self, app, req_ctx):",
+    "file_sha256": "04d700b48f3d5e3139ebe1e162df30bf9a223213c82c50b4f77b3692b111c011"
+   },
+   {
+    "path": "tests/test_blueprints.py",
+    "start": 221,
+    "end": 221,
+    "anchor": "def test_default_static_max_age(",
+    "file_sha256": "9c7e1a3caf96db080ed22d52dcab8994f7e64381a06b5aa7f605eff62e8b21fc"
+   },
+   {
+    "path": "tests/test_blueprints.py",
+    "start": 175,
+    "end": 175,
+    "anchor": "def test_templates_and_static(test_apps):",
+    "file_sha256": "9c7e1a3caf96db080ed22d52dcab8994f7e64381a06b5aa7f605eff62e8b21fc"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-30",
+  "repo": "flask",
+  "category": "impact",
+  "query": "If I changed the parameters of the application method that logs unhandled exceptions, which callers and backward-compatibility shims for subclasses with old signatures would be affected, and which test overrides it in a subclass?",
+  "evidence": [
+   {
+    "path": "src/flask/app.py",
+    "start": 950,
+    "end": 950,
+    "anchor": "def log_exception(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 897,
+    "end": 897,
+    "anchor": "def handle_exception(self, ctx",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 252,
+    "end": 252,
+    "anchor": "def __init_subclass__(cls, **kwargs",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 85,
+    "end": 85,
+    "anchor": "def remove_ctx(f: F) -> F:",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 97,
+    "end": 97,
+    "anchor": "def add_ctx(f: F) -> F:",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "tests/test_subclassing.py",
+    "start": 6,
+    "end": 6,
+    "anchor": "def test_suppressed_exception_logging():",
+    "file_sha256": "8d2b60b6f231bb0af1dc89cbe02e61c1f0907bbb1d23a1d1a5916699118694c5"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-31",
+  "repo": "flask",
+  "category": "impact",
+  "query": "If I change the signature of the JSON provider's serialize-to-string method, which callers across the package (module-level helpers, the test request builder, the template environment) depend on it, and which tests would break?",
+  "evidence": [
+   {
+    "path": "src/flask/json/provider.py",
+    "start": 41,
+    "end": 41,
+    "anchor": "def dumps(self, obj",
+    "file_sha256": "cefdd0dfdde6bb6f73e7b853aa789de432e2af52a8c920c1c2af17228235b72c"
+   },
+   {
+    "path": "src/flask/json/provider.py",
+    "start": 166,
+    "end": 166,
+    "anchor": "def dumps(self, obj",
+    "file_sha256": "cefdd0dfdde6bb6f73e7b853aa789de432e2af52a8c920c1c2af17228235b72c"
+   },
+   {
+    "path": "src/flask/json/__init__.py",
+    "start": 13,
+    "end": 13,
+    "anchor": "def dumps(obj",
+    "file_sha256": "b402bd0b89b87250f932bf4b8e2bec7af7130a8ebdc3ff5a0bba3865e9984173"
+   },
+   {
+    "path": "src/flask/testing.py",
+    "start": 88,
+    "end": 88,
+    "anchor": "def json_dumps(self, obj",
+    "file_sha256": "629d481658aaec7076a55913eda38c270ec45d430b34b2f9d38b2eec2b0ad3da"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 504,
+    "end": 504,
+    "anchor": "rv.policies[\"json.dumps_function\"] = self.json.dumps",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 327,
+    "end": 327,
+    "anchor": "self.json: JSONProvider = self.json_provider_class(self)",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "tests/test_json.py",
+    "start": 223,
+    "end": 223,
+    "anchor": "def test_json_customization(app, client):",
+    "file_sha256": "f6c73c61a602ee3b8b87bfa90284fbc96e567b77c3a6d86c0e3919c5f12b64c6"
+   },
+   {
+    "path": "tests/test_testing.py",
+    "start": 109,
+    "end": 109,
+    "anchor": "def test_environbuilder_json_dumps(app):",
+    "file_sha256": "5b3a6244c709b4102e921f79a949ac82f0db99efd59e671c464731fdfceab63d"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-32",
+  "repo": "flask",
+  "category": "impact",
+  "query": "If I altered the guard that forbids adding routes and hooks after the app has served its first request (or after a blueprint has been registered), which definitions and state flags are involved, and which test checks the error message?",
+  "evidence": [
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 42,
+    "end": 42,
+    "anchor": "def setupmethod(f: F) -> F:",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/sansio/scaffold.py",
+    "start": 220,
+    "end": 220,
+    "anchor": "def _check_setup_finished(self, f_name",
+    "file_sha256": "d6578d2b5f06d227482e4110f8b750d04c8d94c9525c8857f9183f727ee2858b"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 411,
+    "end": 411,
+    "anchor": "def _check_setup_finished(self, f_name",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 213,
+    "end": 213,
+    "anchor": "def _check_setup_finished(self, f_name",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1010,
+    "end": 1010,
+    "anchor": "self._got_first_request = True",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/sansio/blueprints.py",
+    "start": 320,
+    "end": 320,
+    "anchor": "self._got_registered_once = True",
+    "file_sha256": "da960c5792daf2f1cef8c14113d9c95c8ce389a9689abb395fe867f4054d0ba1"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1707,
+    "end": 1707,
+    "anchor": "def test_no_setup_after_first_request(app, client):",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-33",
+  "repo": "flask",
+  "category": "impact",
+  "query": "Suppose I change how the list of blueprint names for the current request (the matched blueprint plus its parents) is computed or ordered. Which request-handling code consumes that list and would behave differently?",
+  "evidence": [
+   {
+    "path": "src/flask/wrappers.py",
+    "start": 181,
+    "end": 181,
+    "anchor": "def blueprints(self) -> list[str]:",
+    "file_sha256": "8d492fe2655e93622ae21c3177846faab20c6faf41bf43c49438162e6779391a"
+   },
+   {
+    "path": "src/flask/helpers.py",
+    "start": 645,
+    "end": 645,
+    "anchor": "def _split_blueprint_path(",
+    "file_sha256": "4e2b647be02a93f655ddd058105c5ed8e9ffe3daef398ef3dd21e3a3817623fb"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1366,
+    "end": 1366,
+    "anchor": "def preprocess_request(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1394,
+    "end": 1394,
+    "anchor": "def process_response(self, ctx",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1420,
+    "end": 1420,
+    "anchor": "def do_teardown_request(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 588,
+    "end": 588,
+    "anchor": "def update_template_context(",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 869,
+    "end": 869,
+    "anchor": "def _find_error_handler(",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "tests/test_blueprints.py",
+    "start": 911,
+    "end": 911,
+    "anchor": "def test_nested_callback_order(app, client):",
+    "file_sha256": "9c7e1a3caf96db080ed22d52dcab8994f7e64381a06b5aa7f605eff62e8b21fc"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-34",
+  "repo": "flask",
+  "category": "discrepancy",
+  "query": "The docstring of the merged app/request context class says the session is now loaded the first time it is accessed rather than when the context is pushed. Does the push logic actually behave that way? Compare it with the code and the tests that touch the session during URL matching.",
+  "evidence": [
+   {
+    "path": "src/flask/ctx.py",
+    "start": 296,
+    "end": 296,
+    "anchor": "The session is loaded the first time it is accessed, rather than when",
+    "file_sha256": "e21952d044159438765eb27848b0fe4c75f83faee8645181a09a1eccb1d5cab7"
+   },
+   {
+    "path": "src/flask/ctx.py",
+    "start": 416,
+    "end": 416,
+    "anchor": "def push(self) -> None:",
+    "file_sha256": "e21952d044159438765eb27848b0fe4c75f83faee8645181a09a1eccb1d5cab7"
+   },
+   {
+    "path": "src/flask/ctx.py",
+    "start": 381,
+    "end": 381,
+    "anchor": "def _get_session(self) -> SessionMixin:",
+    "file_sha256": "e21952d044159438765eb27848b0fe4c75f83faee8645181a09a1eccb1d5cab7"
+   },
+   {
+    "path": "tests/test_converters.py",
+    "start": 29,
+    "end": 29,
+    "anchor": "def test_context_available(app, client):",
+    "file_sha256": "4f529ca6ee85a88c487a488807ff30cb8e4672307b9017f348174a67a5984347"
+   },
+   {
+    "path": "tests/test_session_interface.py",
+    "start": 6,
+    "end": 6,
+    "anchor": "def test_open_session_with_endpoint():",
+    "file_sha256": "e898a1d162e524d36325f474e353a748ddeb3c2d5ac7b863c32c78ca219b25c3"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-35",
+  "repo": "flask",
+  "category": "discrepancy",
+  "query": "The templating docs list the file extensions that get autoescaping by default. Does the extension check in the application match that list, how does it treat upper-case extensions, and what do the escaping tests cover?",
+  "evidence": [
+   {
+    "path": "docs/templating.rst",
+    "start": 20,
+    "end": 20,
+    "anchor": "autoescaping is enabled for all templates ending in",
+    "file_sha256": "07629ba71b8c84ba39c5be34455e253a2c691be57eabcba721a10c181f972063"
+   },
+   {
+    "path": "src/flask/sansio/app.py",
+    "start": 534,
+    "end": 534,
+    "anchor": "def select_jinja_autoescape(",
+    "file_sha256": "cf5df9f2972be7cad9878df7ea321804617d769f47823984abbe0a9b1cbc460b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 482,
+    "end": 482,
+    "anchor": "options[\"autoescape\"] = self.select_jinja_autoescape",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "CHANGES.rst",
+    "start": 29,
+    "end": 29,
+    "anchor": "uses case-insensitive comparison",
+    "file_sha256": "8e0ad527bda63245343653668bb3969c55d1fe3a79cbb7a280e3d8c46dec4aad"
+   },
+   {
+    "path": "tests/test_templating.py",
+    "start": 71,
+    "end": 71,
+    "anchor": "def test_escaping(app, client):",
+    "file_sha256": "fe9037d2bc5c67c031e9a78df9686ce84f919e973498a3e9706c40fddb360f4e"
+   },
+   {
+    "path": "tests/test_templating.py",
+    "start": 91,
+    "end": 91,
+    "anchor": "def test_no_escaping(app, client):",
+    "file_sha256": "fe9037d2bc5c67c031e9a78df9686ce84f919e973498a3e9706c40fddb360f4e"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-36",
+  "repo": "flask",
+  "category": "discrepancy",
+  "query": "The CLI docs quote the exact tip that is printed when .env files exist but python-dotenv is not installed. Does the message the command actually prints match the documented text?",
+  "evidence": [
+   {
+    "path": "docs/cli.rst",
+    "start": 240,
+    "end": 240,
+    "anchor": "Tip: There are .env files present.",
+    "file_sha256": "e8e5e9b220a5159e9c9c8b413de499aa5a51cd0ca487681e2352bbdf6f9b0cda"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 737,
+    "end": 737,
+    "anchor": "Tip: There are .env files present. Install python-dotenv",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "src/flask/cli.py",
+    "start": 698,
+    "end": 698,
+    "anchor": "def load_dotenv(",
+    "file_sha256": "1f476f816464b4250caaf6cc6fdf3f5fc956456a7da61cb7d0a1e03e3e7e5f3b"
+   },
+   {
+    "path": "tests/test_cli.py",
+    "start": 568,
+    "end": 568,
+    "anchor": "def test_dotenv_optional(monkeypatch):",
+    "file_sha256": "066c90f03644783021eef5cc99bb82a0b8795bd4281397190ca6182179060137"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-37",
+  "repo": "flask",
+  "category": "discrepancy",
+  "query": "When a view returns a response object plus a headers mapping in a tuple, the docs describe those headers as additional/extended. Does the response conversion append to existing same-named headers or replace them, and what does the test assert?",
+  "evidence": [
+   {
+    "path": "docs/quickstart.rst",
+    "start": 653,
+    "end": 653,
+    "anchor": "Such tuples have to be in the form",
+    "file_sha256": "c17e0dac53c25f5cca0c18fd00e4f9549038f16d6ac5569ec2c97c7178744629"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1256,
+    "end": 1256,
+    "anchor": "overwrites the exiting value and ``headers`` are",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "src/flask/app.py",
+    "start": 1362,
+    "end": 1362,
+    "anchor": "rv.headers.update(headers)",
+    "file_sha256": "510b83880097af4450933561cba96e5a1c432bf53ea9264ca947da53752e3a2b"
+   },
+   {
+    "path": "tests/test_basic.py",
+    "start": 1217,
+    "end": 1217,
+    "anchor": "assert rv.headers.getlist(\"X-Foo\") == [\"Bar\"]",
+    "file_sha256": "0d0d7928be4dbb0c9471d9ab8f47d954d0201634790c606dfff9453619914390"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-38",
+  "repo": "flask",
+  "category": "no_evidence",
+  "query": "What caused the outage of Flask's hosted documentation site last spring, and how many hours of downtime did the postmortem report?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-39",
+  "repo": "flask",
+  "category": "no_evidence",
+  "query": "How many production deployments of Flask does the maintainers' telemetry count per month, broken down by country and cloud provider?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-40",
+  "repo": "flask",
+  "category": "no_evidence",
+  "query": "Which law firm represented the Pallets project in its trademark dispute, and what settlement terms were agreed?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-flask-41",
+  "repo": "flask",
+  "category": "no_evidence",
+  "query": "Who is on this month's on-call rotation for the security response team, and what is the pager escalation policy for critical reports?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-01",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "Where is FST_ERR_REP_ALREADY_SENT created when reply.send() is called a second time, and which tests check that warning after reply.hijack()?",
+  "evidence": [
+   {
+    "path": "lib/reply.js",
+    "start": 162,
+    "end": 162,
+    "anchor": "this.log.warn({ err: new FST_ERR_REP_ALREADY_SENT(",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 134,
+    "end": 134,
+    "anchor": "Reply.prototype.hijack = function",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "lib/errors.js",
+    "start": 270,
+    "end": 270,
+    "anchor": "FST_ERR_REP_ALREADY_SENT: createError(",
+    "file_sha256": "2ad05656e637f9e136df780138a4d34ee81bbbe563b5f778997c9d7b82d46e94"
+   },
+   {
+    "path": "test/skip-reply-send.test.js",
+    "start": 269,
+    "end": 269,
+    "anchor": "test('Calling reply.send() after hijacking logs a warning'",
+    "file_sha256": "2eeb49f7318984d85d1d87d9b2482dd1cf9a3a2ef01943bc04647b053b991153"
+   },
+   {
+    "path": "test/internals/errors.test.js",
+    "start": 413,
+    "end": 413,
+    "anchor": "test('FST_ERR_REP_ALREADY_SENT'",
+    "file_sha256": "60e1178e3359fdcd4de9882f51f12b08172ab639bf59e2a46f9422f25102690a"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-02",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "How does addHttpMethod register a non-standard verb such as MKCOL, and where is the rule against silently overriding an existing method tested?",
+  "evidence": [
+   {
+    "path": "fastify.js",
+    "start": 830,
+    "end": 830,
+    "anchor": "function addHttpMethod (method",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "types/instance.d.ts",
+    "start": 666,
+    "end": 666,
+    "anchor": "addHttpMethod(method: string",
+    "file_sha256": "ed88904685c88c8b3afc0dfd977187ac5ed144ff0933089ea16a3e7e8ead32a5"
+   },
+   {
+    "path": "test/http-methods/custom-http-methods.test.js",
+    "start": 116,
+    "end": 116,
+    "anchor": "test('addHttpMethod rejects an implicit override of an existing method'",
+    "file_sha256": "b563ad870457692c2d9872a5d94f1b938c2e731dda411b8d82881502229048b5"
+   },
+   {
+    "path": "test/http-methods/custom-http-methods.test.js",
+    "start": 92,
+    "end": 92,
+    "anchor": "test('addHttpMethod adds a new custom method with body'",
+    "file_sha256": "b563ad870457692c2d9872a5d94f1b938c2e731dda411b8d82881502229048b5"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-03",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "reply.trailer() throws FST_ERR_BAD_TRAILER_NAME for some header names. Which names are forbidden and where is that covered by tests?",
+  "evidence": [
+   {
+    "path": "lib/reply.js",
+    "start": 325,
+    "end": 325,
+    "anchor": "Reply.prototype.trailer = function (key, fn)",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 328,
+    "end": 328,
+    "anchor": "throw new FST_ERR_BAD_TRAILER_NAME(key)",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "lib/errors.js",
+    "start": 292,
+    "end": 292,
+    "anchor": "FST_ERR_BAD_TRAILER_NAME: createError(",
+    "file_sha256": "2ad05656e637f9e136df780138a4d34ee81bbbe563b5f778997c9d7b82d46e94"
+   },
+   {
+    "path": "test/reply-trailers.test.js",
+    "start": 687,
+    "end": 687,
+    "anchor": "test('throw error when trailer header name is not allowed'",
+    "file_sha256": "ecf25f35bc4f4f84b8b00db90ad2d130a007a374ee8045e0f2904b486ee768c6"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-04",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "What triggers FST_ERR_PLUGIN_INVALID_ASYNC_HANDLER during plugin registration?",
+  "evidence": [
+   {
+    "path": "lib/plugin-utils.js",
+    "start": 141,
+    "end": 141,
+    "anchor": "function checkPluginHealthiness (fn, pluginName)",
+    "file_sha256": "ce48d076b27d298042e5050a473165fd82225e0f0a1132765df10439c49cf516"
+   },
+   {
+    "path": "lib/errors.js",
+    "start": 497,
+    "end": 497,
+    "anchor": "FST_ERR_PLUGIN_INVALID_ASYNC_HANDLER: createError(",
+    "file_sha256": "2ad05656e637f9e136df780138a4d34ee81bbbe563b5f778997c9d7b82d46e94"
+   },
+   {
+    "path": "test/plugin.4.test.js",
+    "start": 465,
+    "end": 465,
+    "anchor": "test('registering anonymous plugin with mixed style should throw'",
+    "file_sha256": "fddd59b70dea9b24ce6c8093163d7da87bfe9da1a45bcbf3d0a25d8239ad04f6"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-05",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "When is the FSTSEC001 security warning emitted for RegExp content-type parsers, and which test spies on it?",
+  "evidence": [
+   {
+    "path": "lib/content-type-parser.js",
+    "start": 425,
+    "end": 425,
+    "anchor": "function validateRegExp (regexp)",
+    "file_sha256": "6b005fc3fe19c26951757461929e587e166b2f92125826e47f7eb9fc1419e2df"
+   },
+   {
+    "path": "lib/warnings.js",
+    "start": 31,
+    "end": 31,
+    "anchor": "const FSTSEC001 = createWarning({",
+    "file_sha256": "b0437ff744c5bfb820b9902d4763c28f2a988032f960fd1864aaa5a5a4da89cd"
+   },
+   {
+    "path": "test/content-parser.test.js",
+    "start": 493,
+    "end": 493,
+    "anchor": "test('Warning against improper content-type - regexp'",
+    "file_sha256": "eb978b4b679d3141d556beb1f6d12574ec00aba9833d9f5781c56ecf664ca21a"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-06",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "withTypeProvider seems to do nothing at runtime. Where is it defined in JS, how is it typed, and where are its type tests?",
+  "evidence": [
+   {
+    "path": "fastify.js",
+    "start": 578,
+    "end": 578,
+    "anchor": "function withTypeProvider ()",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "types/instance.d.ts",
+    "start": 134,
+    "end": 134,
+    "anchor": "withTypeProvider<Provider extends FastifyTypeProvider>()",
+    "file_sha256": "ed88904685c88c8b3afc0dfd977187ac5ed144ff0933089ea16a3e7e8ead32a5"
+   },
+   {
+    "path": "types/type-provider.d.ts",
+    "start": 9,
+    "end": 9,
+    "anchor": "export interface FastifyTypeProvider {",
+    "file_sha256": "9f6d49a0b21b0a5adeb354ec8f42aca672a8e8c1b8196f062ea5309395f03380"
+   },
+   {
+    "path": "test/types/type-provider.tst.ts",
+    "start": 32,
+    "end": 32,
+    "anchor": "server.withTypeProvider<NumberProvider>().get(",
+    "file_sha256": "ac59c8e10e6d958156963e27356952121495861ac165681cfb67ada240b5a5f8"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-07",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "Show me findRoute: what does it return for a match, and which tests make sure it does not expose the internal route store?",
+  "evidence": [
+   {
+    "path": "lib/route.js",
+    "start": 182,
+    "end": 182,
+    "anchor": "function findRoute (options)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "fastify.js",
+    "start": 219,
+    "end": 219,
+    "anchor": "findRoute: function _findRoute (options)",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "types/instance.d.ts",
+    "start": 220,
+    "end": 220,
+    "anchor": "findRoute<",
+    "file_sha256": "ed88904685c88c8b3afc0dfd977187ac5ed144ff0933089ea16a3e7e8ead32a5"
+   },
+   {
+    "path": "test/find-route.test.js",
+    "start": 24,
+    "end": 24,
+    "anchor": "test('findRoute should return an immutable route to avoid leaking and runtime route modifications'",
+    "file_sha256": "0a87f13874b8bb0387ca8ab490881b210459b489667245b670ae7aad4a1426a6"
+   },
+   {
+    "path": "test/find-route.test.js",
+    "start": 171,
+    "end": 171,
+    "anchor": "test('findRoute should not expose store'",
+    "file_sha256": "0a87f13874b8bb0387ca8ab490881b210459b489667245b670ae7aad4a1426a6"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-08",
+  "repo": "fastify",
+  "category": "exact",
+  "query": "Where does FST_ERR_SEND_INSIDE_ONERR get thrown, and how does the reply know it is currently inside an onError hook?",
+  "evidence": [
+   {
+    "path": "lib/reply.js",
+    "start": 158,
+    "end": 158,
+    "anchor": "throw new FST_ERR_SEND_INSIDE_ONERR()",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 962,
+    "end": 962,
+    "anchor": "reply[kReplyIsRunningOnErrorHook] = true",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "lib/error-handler.js",
+    "start": 31,
+    "end": 31,
+    "anchor": "reply[kReplyIsRunningOnErrorHook] = false",
+    "file_sha256": "2de5817324cdf5888bd89314127959c83e36f8db87fe26f2830c6a4de316965d"
+   },
+   {
+    "path": "lib/errors.js",
+    "start": 280,
+    "end": 280,
+    "anchor": "FST_ERR_SEND_INSIDE_ONERR: createError(",
+    "file_sha256": "2ad05656e637f9e136df780138a4d34ee81bbbe563b5f778997c9d7b82d46e94"
+   },
+   {
+    "path": "test/hooks.test.js",
+    "start": 2507,
+    "end": 2507,
+    "anchor": "test('reply.send should throw if called inside the onError hook'",
+    "file_sha256": "09fd8c6092e2c7e982ffd0d56c06498770a70473230613d5be307d70cd03cfd9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-09",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "When I define a GET endpoint, a HEAD endpoint for the same path shows up automatically. How is it generated, and how is the body dropped while the length header stays correct?",
+  "evidence": [
+   {
+    "path": "lib/route.js",
+    "start": 455,
+    "end": 455,
+    "anchor": "if (shouldExposeHead && isGetRoute && !isHeadRoute && !hasHEADHandler)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/head-route.js",
+    "start": 2,
+    "end": 2,
+    "anchor": "function headRouteOnSendHandler (req, reply, payload, done)",
+    "file_sha256": "442e4f45ee8bbd57325f0daa4a968cfe9bbd4d1ed087b43b615eaabcc2efb23b"
+   },
+   {
+    "path": "test/route.5.test.js",
+    "start": 103,
+    "end": 103,
+    "anchor": "test('Creates a HEAD route for each GET one (default)'",
+    "file_sha256": "db251c34fa880e42cf76dbcdc3584c1ec7da4e3349fdf7c041a628366dd3e5c5"
+   },
+   {
+    "path": "test/route.6.test.js",
+    "start": 94,
+    "end": 94,
+    "anchor": "test('HEAD route should handle properly each response type'",
+    "file_sha256": "7773fb89bf4ff10e769affe6ed60c9bdc51577b4c4cbee51fab3d99c269439bd"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-10",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "After shutdown starts, requests that still arrive on open keep-alive sockets get a 503 with Connection: close. Where is that short-circuit, and what flips the server into that state?",
+  "evidence": [
+   {
+    "path": "lib/route.js",
+    "start": 498,
+    "end": 498,
+    "anchor": "if (return503OnClosing) {",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 121,
+    "end": 121,
+    "anchor": "closeRoutes: () => { closing = true }",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "fastify.js",
+    "start": 393,
+    "end": 393,
+    "anchor": "router.closeRoutes()",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "test/close.test.js",
+    "start": 256,
+    "end": 256,
+    "anchor": "test('Current opened connection should not accept new incoming connections'",
+    "file_sha256": "974b14ad612691aba7e5c0cfd15f46ece5370d36bfc9b218ad325ba911e39001"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-11",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "Request ids in the logs look like req-1, req-2 and so on. Where is that counter, why does it wrap around, and how is an id taken from an incoming header with a fallback?",
+  "evidence": [
+   {
+    "path": "lib/req-id-gen-factory.js",
+    "start": 31,
+    "end": 31,
+    "anchor": "function buildDefaultGenReqId ()",
+    "file_sha256": "87d0a1ed81f313ba12d57c90efbfbac721651f2b0852405e5d1e9cf53c59b373"
+   },
+   {
+    "path": "lib/req-id-gen-factory.js",
+    "start": 46,
+    "end": 46,
+    "anchor": "function buildOptionalHeaderReqId (requestIdHeader, genReqId)",
+    "file_sha256": "87d0a1ed81f313ba12d57c90efbfbac721651f2b0852405e5d1e9cf53c59b373"
+   },
+   {
+    "path": "fastify.js",
+    "start": 883,
+    "end": 883,
+    "anchor": "const requestIdHeader = typeof options.requestIdHeader === 'string'",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "test/internals/req-id-gen-factory.test.js",
+    "start": 53,
+    "end": 53,
+    "anchor": "test('should handle requestIdHeader and fallback if id is not provided in header'",
+    "file_sha256": "d1dad5b43cd183e035aeaf87f73711dd7ac3b63d6f6e606b028b7ea1bed66686"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-12",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "What happens by default if a client posts JSON with a __proto__ or constructor key, and how do I switch it to strip the key instead of rejecting the request?",
+  "evidence": [
+   {
+    "path": "lib/content-type-parser.js",
+    "start": 339,
+    "end": 339,
+    "anchor": "function getDefaultJsonParser (onProtoPoisoning, onConstructorPoisoning)",
+    "file_sha256": "6b005fc3fe19c26951757461929e587e166b2f92125826e47f7eb9fc1419e2df"
+   },
+   {
+    "path": "fastify.js",
+    "start": 167,
+    "end": 167,
+    "anchor": "(options.onProtoPoisoning || defaultInitOptions.onProtoPoisoning),",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "build/build-validation.js",
+    "start": 33,
+    "end": 33,
+    "anchor": "onProtoPoisoning",
+    "file_sha256": "1b42c3651869cb30bfa5482cfa0880e81cb1185ea6fa437a791bc984b67b31a9"
+   },
+   {
+    "path": "test/proto-poisoning.test.js",
+    "start": 6,
+    "end": 6,
+    "anchor": "test('proto-poisoning error'",
+    "file_sha256": "3f39535a8e51f2b8c3cf5acd6711295ad7cc043274e51b8114bd3adf61282232"
+   },
+   {
+    "path": "test/proto-poisoning.test.js",
+    "start": 29,
+    "end": 29,
+    "anchor": "test('proto-poisoning remove'",
+    "file_sha256": "3f39535a8e51f2b8c3cf5acd6711295ad7cc043274e51b8114bd3adf61282232"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-13",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "We run a release-candidate build and a third-party plugin that declares support for the previous major still loads. Why does the version check let it through?",
+  "evidence": [
+   {
+    "path": "lib/plugin-utils.js",
+    "start": 109,
+    "end": 109,
+    "anchor": "function checkVersion (fn)",
+    "file_sha256": "ce48d076b27d298042e5050a473165fd82225e0f0a1132765df10439c49cf516"
+   },
+   {
+    "path": "lib/plugin-utils.js",
+    "start": 17,
+    "end": 17,
+    "anchor": "const rcRegex =",
+    "file_sha256": "ce48d076b27d298042e5050a473165fd82225e0f0a1132765df10439c49cf516"
+   },
+   {
+    "path": "test/plugin.4.test.js",
+    "start": 212,
+    "end": 212,
+    "anchor": "describe('fastify-rc loads prior version plugins'",
+    "file_sha256": "fddd59b70dea9b24ce6c8093163d7da87bfe9da1a45bcbf3d0a25d8239ad04f6"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-14",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "An async route that returns nothing and never sends still answers with an empty 200. Where is that decided, and how does it avoid writing to a socket the client already closed?",
+  "evidence": [
+   {
+    "path": "lib/wrap-thenable.js",
+    "start": 12,
+    "end": 12,
+    "anchor": "function wrapThenable (thenable, reply, store)",
+    "file_sha256": "23e41424f4a19f947c0fe58cb21ee3fa97d15917d7d6dc668f375d71d8bf786b"
+   },
+   {
+    "path": "lib/wrap-thenable.js",
+    "start": 31,
+    "end": 31,
+    "anchor": "if (payload !== undefined || //",
+    "file_sha256": "23e41424f4a19f947c0fe58cb21ee3fa97d15917d7d6dc668f375d71d8bf786b"
+   },
+   {
+    "path": "test/async-await.test.js",
+    "start": 406,
+    "end": 406,
+    "anchor": "test('promise was fulfilled with undefined'",
+    "file_sha256": "38871e4228212292ab202acba6c9e0a87185d321353b955cf354efd08589b738"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-15",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "If my custom error handler itself throws, who handles that new error, and what finally answers once every handler up the plugin tree has failed?",
+  "evidence": [
+   {
+    "path": "lib/error-handler.js",
+    "start": 30,
+    "end": 30,
+    "anchor": "function handleError (reply, error, cb)",
+    "file_sha256": "2de5817324cdf5888bd89314127959c83e36f8db87fe26f2830c6a4de316965d"
+   },
+   {
+    "path": "lib/error-handler.js",
+    "start": 49,
+    "end": 49,
+    "anchor": "reply[kReplyNextErrorHandler] = Object.getPrototypeOf(errorHandler)",
+    "file_sha256": "2de5817324cdf5888bd89314127959c83e36f8db87fe26f2830c6a4de316965d"
+   },
+   {
+    "path": "lib/error-handler.js",
+    "start": 124,
+    "end": 124,
+    "anchor": "function buildErrorHandler (parent = rootErrorHandler, func)",
+    "file_sha256": "2de5817324cdf5888bd89314127959c83e36f8db87fe26f2830c6a4de316965d"
+   },
+   {
+    "path": "fastify.js",
+    "start": 773,
+    "end": 773,
+    "anchor": "function setErrorHandler (func)",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "test/encapsulated-error-handler.test.js",
+    "start": 134,
+    "end": 134,
+    "anchor": "test('encapuslates many synchronous error handlers that rethrow errors'",
+    "file_sha256": "cb53d5adbad3298ea6629e7362fc227cef203a7096a0c0d99a40b3753d6602ed"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-16",
+  "repo": "fastify",
+  "category": "conceptual",
+  "query": "With HTTP/2 enabled, how are idle client sessions timed out, and how are the open sessions tracked so they can be torn down when the server shuts down?",
+  "evidence": [
+   {
+    "path": "lib/server.js",
+    "start": 319,
+    "end": 319,
+    "anchor": "server.on('session', (session) => session.setTimeout(options.http2SessionTimeout",
+    "file_sha256": "c43b6db5ae74e51a24996a0819f93985620e67d1155a58936c34e642d9a4ce3a"
+   },
+   {
+    "path": "lib/server.js",
+    "start": 402,
+    "end": 402,
+    "anchor": "function createCloseHttp2SessionsByHttp2Server (http2Server)",
+    "file_sha256": "c43b6db5ae74e51a24996a0819f93985620e67d1155a58936c34e642d9a4ce3a"
+   },
+   {
+    "path": "fastify.js",
+    "start": 416,
+    "end": 416,
+    "anchor": "instance.server.closeHttp2Sessions()",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "test/http2/closing.test.js",
+    "start": 152,
+    "end": 152,
+    "anchor": "test('http/2 server side session emits a timeout event'",
+    "file_sha256": "0b8fab2fa58da065071a08d6d1f17042a33c8e0a6ee8a3da6adb0b64db4d279c"
+   },
+   {
+    "path": "test/http2/closing.test.js",
+    "start": 203,
+    "end": 203,
+    "anchor": "test('http/2 sessions should be closed when setting forceClosedConnections to true'",
+    "file_sha256": "0b8fab2fa58da065071a08d6d1f17042a33c8e0a6ee8a3da6adb0b64db4d279c"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-17",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "The server reference describes a rewriteUrl callback that runs before routing. Where is it invoked, what happens when it returns a non-string, and which tests cover it?",
+  "evidence": [
+   {
+    "path": "docs/Reference/Server.md",
+    "start": 826,
+    "end": 826,
+    "anchor": "### `rewriteUrl`",
+    "file_sha256": "5639a2a9a1086e5a0928c98de8e4ed73d88d242e79269cc6863903f356eae302"
+   },
+   {
+    "path": "fastify.js",
+    "start": 804,
+    "end": 804,
+    "anchor": "function wrapRouting (router, { rewriteUrl, logger })",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/errors.js",
+    "start": 458,
+    "end": 458,
+    "anchor": "FST_ERR_ROUTE_REWRITE_NOT_STR",
+    "file_sha256": "2ad05656e637f9e136df780138a4d34ee81bbbe563b5f778997c9d7b82d46e94"
+   },
+   {
+    "path": "test/url-rewriting.test.js",
+    "start": 63,
+    "end": 63,
+    "anchor": "test('Should throw an error'",
+    "file_sha256": "367595e1355e74550dec593a5eb71e76fb1c7417cd058a47f04cb9103de288c5"
+   },
+   {
+    "path": "test/url-rewriting.test.js",
+    "start": 93,
+    "end": 93,
+    "anchor": "test('Should rewrite url but keep originalUrl unchanged'",
+    "file_sha256": "367595e1355e74550dec593a5eb71e76fb1c7417cd058a47f04cb9103de288c5"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-18",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "The hooks docs describe a hook that fires when the client closes the connection before processing finishes. Trace it to the code that listens for the disconnect and to its tests.",
+  "evidence": [
+   {
+    "path": "docs/Reference/Hooks.md",
+    "start": 289,
+    "end": 289,
+    "anchor": "### onRequestAbort",
+    "file_sha256": "98a1ee68e44aec6463892f70232f581479500347bd7c5a9f2960e87ad2f0c497"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 581,
+    "end": 581,
+    "anchor": "if (context.onRequestAbort !== null) {",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/hooks.js",
+    "start": 374,
+    "end": 374,
+    "anchor": "function onRequestAbortHookRunner (functions, request, cb)",
+    "file_sha256": "02b428780d90101e5329e693121ebaf8bfe4a88f506ed1ae0d63687a774d5d67"
+   },
+   {
+    "path": "test/hooks.test.js",
+    "start": 3357,
+    "end": 3357,
+    "anchor": "test('onRequestAbort should be triggered'",
+    "file_sha256": "09fd8c6092e2c7e982ffd0d56c06498770a70473230613d5be307d70cd03cfd9"
+   },
+   {
+    "path": "test/hooks.test.js",
+    "start": 3470,
+    "end": 3470,
+    "anchor": "test('onRequestAbort should handle errors / 1'",
+    "file_sha256": "09fd8c6092e2c7e982ffd0d56c06498770a70473230613d5be307d70cd03cfd9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-19",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "Server.md documents an application-level handlerTimeout that returns 503 and aborts request.signal. Where are the timer, the signal, and the hijack cleanup implemented, and which tests verify them?",
+  "evidence": [
+   {
+    "path": "docs/Reference/Server.md",
+    "start": 228,
+    "end": 228,
+    "anchor": "### `handlerTimeout`",
+    "file_sha256": "5639a2a9a1086e5a0928c98de8e4ed73d88d242e79269cc6863903f356eae302"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 535,
+    "end": 535,
+    "anchor": "const handlerTimeout = context.handlerTimeout",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 638,
+    "end": 638,
+    "anchor": "function validateHandlerTimeoutOption (handlerTimeout)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/request.js",
+    "start": 222,
+    "end": 222,
+    "anchor": "signal: {",
+    "file_sha256": "0cb858105fda2eef2358d3209fb4f4a0190217756e662765ab60eb73eed33dce"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 134,
+    "end": 134,
+    "anchor": "Reply.prototype.hijack = function",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "test/handler-timeout.test.js",
+    "start": 95,
+    "end": 95,
+    "anchor": "test('slow handler returns 503 with FST_ERR_HANDLER_TIMEOUT'",
+    "file_sha256": "6da711358b7d39c0d1f3750446ee96d8708dac99548a9d487734fdaaf6344e82"
+   },
+   {
+    "path": "test/handler-timeout.test.js",
+    "start": 206,
+    "end": 206,
+    "anchor": "test('reply.hijack() clears timeout timer'",
+    "file_sha256": "6da711358b7d39c0d1f3750446ee96d8708dac99548a9d487734fdaaf6344e82"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-20",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "The validation guide's section on header name case says header schemas are lowercased and external $refs are not. Find the normalization code, the warning it emits, and the tests.",
+  "evidence": [
+   {
+    "path": "docs/Reference/Validation-and-Serialization.md",
+    "start": 170,
+    "end": 170,
+    "anchor": "##### Header name case",
+    "file_sha256": "42433f0dd22568d71914d2a2ecdca12e820837bf9dfb06a31cabb82041ff78a1"
+   },
+   {
+    "path": "lib/validation.js",
+    "start": 78,
+    "end": 78,
+    "anchor": "function lowerCaseHeadersSchema (schema, insidePropertyNames = false)",
+    "file_sha256": "c694443b5bd2dd0045272d20e133fa0b923398b6b4667639d6ecc5647011de2d"
+   },
+   {
+    "path": "lib/validation.js",
+    "start": 300,
+    "end": 300,
+    "anchor": "FSTSEC002(method, url, externalRef)",
+    "file_sha256": "c694443b5bd2dd0045272d20e133fa0b923398b6b4667639d6ecc5647011de2d"
+   },
+   {
+    "path": "lib/warnings.js",
+    "start": 38,
+    "end": 38,
+    "anchor": "const FSTSEC002 = createWarning({",
+    "file_sha256": "b0437ff744c5bfb820b9902d4763c28f2a988032f960fd1864aaa5a5a4da89cd"
+   },
+   {
+    "path": "test/schema-validation.test.js",
+    "start": 1621,
+    "end": 1621,
+    "anchor": "test('header schema dependencies with canonical-case names are enforced'",
+    "file_sha256": "8df73d924e75060d4f4c14a58950561eeb26dea3b42e0719aa73bc21e8de9770"
+   },
+   {
+    "path": "test/schema-validation.test.js",
+    "start": 1863,
+    "end": 1863,
+    "anchor": "test('header schema with an external $ref emits FSTSEC002",
+    "file_sha256": "8df73d924e75060d4f4c14a58950561eeb26dea3b42e0719aa73bc21e8de9770"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-21",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "The server docs list an ordered shutdown lifecycle (mark as closing, pre-close hooks, drain connections, stop listening, close hooks). Which code carries out that sequence and where is the ordering tested?",
+  "evidence": [
+   {
+    "path": "docs/Reference/Server.md",
+    "start": 1492,
+    "end": 1492,
+    "anchor": "##### Shutdown lifecycle",
+    "file_sha256": "5639a2a9a1086e5a0928c98de8e4ed73d88d242e79269cc6863903f356eae302"
+   },
+   {
+    "path": "fastify.js",
+    "start": 391,
+    "end": 391,
+    "anchor": "fastify.onClose((instance, done) => {",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/server.js",
+    "start": 130,
+    "end": 130,
+    "anchor": "let forceCloseConnections = options.forceCloseConnections",
+    "file_sha256": "c43b6db5ae74e51a24996a0819f93985620e67d1155a58936c34e642d9a4ce3a"
+   },
+   {
+    "path": "test/close.test.js",
+    "start": 702,
+    "end": 702,
+    "anchor": "test('preClose execution order'",
+    "file_sha256": "974b14ad612691aba7e5c0cfd15f46ece5370d36bfc9b218ad325ba911e39001"
+   },
+   {
+    "path": "test/close.test.js",
+    "start": 742,
+    "end": 742,
+    "anchor": "test('does not destroy connections with in-flight requests (forceCloseConnections - idle)'",
+    "file_sha256": "974b14ad612691aba7e5c0cfd15f46ece5370d36bfc9b218ad325ba911e39001"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-22",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "Decorators.md describes getDecorator and setDecorator throwing when a decorator was never declared. Where are these implemented for the instance, request, and reply, and where are they tested?",
+  "evidence": [
+   {
+    "path": "docs/Reference/Decorators.md",
+    "start": 369,
+    "end": 369,
+    "anchor": "#### `getDecorator(name)`",
+    "file_sha256": "434868b09a9c1f780d9e0fc263c76760a7c4c2608b77976a779ba817e10ba1ec"
+   },
+   {
+    "path": "lib/decorate.js",
+    "start": 36,
+    "end": 36,
+    "anchor": "function getInstanceDecorator (name)",
+    "file_sha256": "8b33c5fb73b04c6c95483277c5aad87ede9257af040e273f9b0df6ea1b7ab339"
+   },
+   {
+    "path": "lib/request.js",
+    "start": 157,
+    "end": 157,
+    "anchor": "function assertsRequestDecoration (request, name)",
+    "file_sha256": "0cb858105fda2eef2358d3209fb4f4a0190217756e662765ab60eb73eed33dce"
+   },
+   {
+    "path": "lib/request.js",
+    "start": 392,
+    "end": 392,
+    "anchor": "setDecorator: {",
+    "file_sha256": "0cb858105fda2eef2358d3209fb4f4a0190217756e662765ab60eb73eed33dce"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 511,
+    "end": 511,
+    "anchor": "Reply.prototype.getDecorator = function (name)",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "test/decorator.test.js",
+    "start": 1160,
+    "end": 1160,
+    "anchor": "test('getDecorator should return the decorator'",
+    "file_sha256": "eb1bcd226b57284481692105a67fb0c911d213e57109ac44d30c3c48ca8b44af"
+   },
+   {
+    "path": "test/decorator.test.js",
+    "start": 1295,
+    "end": 1295,
+    "anchor": "test('Request.setDecorator should update an existing decorator'",
+    "file_sha256": "eb1bcd226b57284481692105a67fb0c911d213e57109ac44d30c3c48ca8b44af"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-23",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "The Routes reference explains version constraints matched on the Accept-Version header and says a request without the header gets a 404. Follow that to the routing code and the tests.",
+  "evidence": [
+   {
+    "path": "docs/Reference/Routes.md",
+    "start": 653,
+    "end": 653,
+    "anchor": "#### Version Constraints",
+    "file_sha256": "97b65870843ed2965eaad4da04413b35238d2630f993b572a0700955059f2c80"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 363,
+    "end": 363,
+    "anchor": "router.on(opts.method, opts.url, { constraints }, routeHandler, context)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "fastify.js",
+    "start": 640,
+    "end": 640,
+    "anchor": "function defaultRoute (req, res)",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 525,
+    "end": 525,
+    "anchor": "req.headers['accept-version'] = req.headers[kRequestAcceptVersion]",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "test/versioned-routes.test.js",
+    "start": 212,
+    "end": 212,
+    "anchor": "test('Versioned route but not version header should return a 404'",
+    "file_sha256": "6db2cc22bdc20330c4c9be790188af612135830ca3adeeba8c95b4c3374cefff"
+   },
+   {
+    "path": "test/versioned-routes.test.js",
+    "start": 304,
+    "end": 304,
+    "anchor": "test('The not found handler should not erase the Accept-Version header'",
+    "file_sha256": "6db2cc22bdc20330c4c9be790188af612135830ca3adeeba8c95b4c3374cefff"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-24",
+  "repo": "fastify",
+  "category": "trace",
+  "query": "Request.md documents request.validateInput(data, schema, httpPart). Where is it implemented, how are compiled validators cached, and where are the tests?",
+  "evidence": [
+   {
+    "path": "docs/Reference/Request.md",
+    "start": 283,
+    "end": 283,
+    "anchor": "### .validateInput(data, [schema | httpPart], [httpPart])",
+    "file_sha256": "0b67b4c2fd8cb656b53f49d026c685ffaf385d1900d00185e56fb048d229a8f6"
+   },
+   {
+    "path": "lib/request.js",
+    "start": 348,
+    "end": 348,
+    "anchor": "validateInput: {",
+    "file_sha256": "0cb858105fda2eef2358d3209fb4f4a0190217756e662765ab60eb73eed33dce"
+   },
+   {
+    "path": "lib/request.js",
+    "start": 310,
+    "end": 310,
+    "anchor": "compileValidationSchema: {",
+    "file_sha256": "0cb858105fda2eef2358d3209fb4f4a0190217756e662765ab60eb73eed33dce"
+   },
+   {
+    "path": "test/internals/request-validate.test.js",
+    "start": 446,
+    "end": 446,
+    "anchor": "test('#validate'",
+    "file_sha256": "9422bceac877a34a06041bb53a6c8bb24acf05e2dcd9ac5d088e754825be3948"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-25",
+  "repo": "fastify",
+  "category": "architecture",
+  "query": "Walk me through how a raw Node request travels to my route handler: routing, the early lifecycle hooks, body parsing, validation, and finally writing the response.",
+  "evidence": [
+   {
+    "path": "fastify.js",
+    "start": 804,
+    "end": 804,
+    "anchor": "function wrapRouting (router, { rewriteUrl, logger })",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 463,
+    "end": 463,
+    "anchor": "function routeHandler (req, res, params, context, query)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 654,
+    "end": 654,
+    "anchor": "function runPreParsing (err, request, reply)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/handle-request.js",
+    "start": 24,
+    "end": 24,
+    "anchor": "function handleRequest (err, request, reply)",
+    "file_sha256": "14f3c8b213ab287131f54b03710a5c4afaad59a267b1580f9f694667cfc952dc"
+   },
+   {
+    "path": "lib/content-type-parser.js",
+    "start": 192,
+    "end": 192,
+    "anchor": "ContentTypeParser.prototype.run = function",
+    "file_sha256": "6b005fc3fe19c26951757461929e587e166b2f92125826e47f7eb9fc1419e2df"
+   },
+   {
+    "path": "lib/handle-request.js",
+    "start": 171,
+    "end": 171,
+    "anchor": "function preHandlerCallbackInner (err, request, reply, store)",
+    "file_sha256": "14f3c8b213ab287131f54b03710a5c4afaad59a267b1580f9f694667cfc952dc"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 156,
+    "end": 156,
+    "anchor": "Reply.prototype.send = function (payload)",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-26",
+  "repo": "fastify",
+  "category": "architecture",
+  "query": "How do shared schemas, per-plugin schema stores, and the Ajv and fast-json-stringify compilers fit together when a route with a schema is registered?",
+  "evidence": [
+   {
+    "path": "fastify.js",
+    "start": 631,
+    "end": 631,
+    "anchor": "function addSchema (schema)",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/schema-controller.js",
+    "start": 11,
+    "end": 11,
+    "anchor": "function buildSchemaController (parentSchemaCtrl, opts)",
+    "file_sha256": "3be70596efc88bf028022cf9d4a77dfef31c2970f608a21d346a6a438c576559"
+   },
+   {
+    "path": "lib/schemas.js",
+    "start": 17,
+    "end": 17,
+    "anchor": "function Schemas (initStore)",
+    "file_sha256": "6e47ddae7fd37e8b443ebe18732669c5ade3ee523d3ed07dc7e4ff42ff876509"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 413,
+    "end": 413,
+    "anchor": "context.schema = normalizeSchema(context.schema, this.initialConfig)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/validation.js",
+    "start": 273,
+    "end": 273,
+    "anchor": "function compileSchemasForValidation (context, compile, isCustom)",
+    "file_sha256": "c694443b5bd2dd0045272d20e133fa0b923398b6b4667639d6ecc5647011de2d"
+   },
+   {
+    "path": "lib/validation.js",
+    "start": 18,
+    "end": 18,
+    "anchor": "function compileSchemasForSerialization (context, compile)",
+    "file_sha256": "c694443b5bd2dd0045272d20e133fa0b923398b6b4667639d6ecc5647011de2d"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-27",
+  "repo": "fastify",
+  "category": "architecture",
+  "query": "Which pieces produce the per-request \"incoming request\" and \"request completed\" log lines, and how do the logger factory, the pino wrapper, child loggers, and the overridable log controller relate?",
+  "evidence": [
+   {
+    "path": "lib/logger-factory.js",
+    "start": 82,
+    "end": 82,
+    "anchor": "function createLogger (options)",
+    "file_sha256": "43a7fa4ae7590921f3a8ef8b25fe0465cf0a7dd4ac253b935873f3ff76240c6c"
+   },
+   {
+    "path": "lib/logger-factory.js",
+    "start": 29,
+    "end": 29,
+    "anchor": "function createChildLogger (context, logger, req, reqId, loggerOpts)",
+    "file_sha256": "43a7fa4ae7590921f3a8ef8b25fe0465cf0a7dd4ac253b935873f3ff76240c6c"
+   },
+   {
+    "path": "lib/logger-factory.js",
+    "start": 132,
+    "end": 132,
+    "anchor": "function createLogController (options)",
+    "file_sha256": "43a7fa4ae7590921f3a8ef8b25fe0465cf0a7dd4ac253b935873f3ff76240c6c"
+   },
+   {
+    "path": "lib/logger-pino.js",
+    "start": 15,
+    "end": 15,
+    "anchor": "function createPinoLogger (opts)",
+    "file_sha256": "51ecedc135fa6a9cd44e66c1edb032f41b633e83f146f502e483d31b77e3e881"
+   },
+   {
+    "path": "lib/log-controller.js",
+    "start": 10,
+    "end": 10,
+    "anchor": "class LogController {",
+    "file_sha256": "b8a7659984a16a8a3cc6ec72be4be8085d2018ed7de85abfc2ffbff509c6adb8"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 532,
+    "end": 532,
+    "anchor": "context.server[kLogController].incomingRequest(request, reply)",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 1020,
+    "end": 1020,
+    "anchor": "kLogController].requestCompleted",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-28",
+  "repo": "fastify",
+  "category": "architecture",
+  "query": "How do the main router, the separate not-found router, and prefixed plugin scopes cooperate so an unmatched URL under /api reaches the /api plugin\u2019s own not-found handler?",
+  "evidence": [
+   {
+    "path": "fastify.js",
+    "start": 648,
+    "end": 648,
+    "anchor": "fourOhFour.router.lookup(req, res)",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/four-oh-four.js",
+    "start": 128,
+    "end": 128,
+    "anchor": "function _setNotFoundHandler (prefix, opts, handler, avvio, routeHandler)",
+    "file_sha256": "65877583e3ade09a818a762ff76d829ca431450f7d46bdbd692f56b341add44f"
+   },
+   {
+    "path": "lib/four-oh-four.js",
+    "start": 44,
+    "end": 44,
+    "anchor": "function arrange404 (instance)",
+    "file_sha256": "65877583e3ade09a818a762ff76d829ca431450f7d46bdbd692f56b341add44f"
+   },
+   {
+    "path": "lib/plugin-override.js",
+    "start": 68,
+    "end": 68,
+    "anchor": "instance[kFourOhFour].arrange404(instance)",
+    "file_sha256": "1718ff0f184e29bf57a15494c84406943f4e8dd35800447514b129910b7deb21"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 1053,
+    "end": 1053,
+    "anchor": "function notFound (reply)",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "test/404s.test.js",
+    "start": 320,
+    "end": 320,
+    "anchor": "test('encapsulated 404'",
+    "file_sha256": "73e9c1da0d560fe9434bb5da0c8b4e392d1b48f7ae60e45431c22f4ade74cfc9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-29",
+  "repo": "fastify",
+  "category": "impact",
+  "query": "If I change how a plugin prefix is joined to its parent prefix (the slash handling for nested registers), what else reads the resulting prefix and which tests would catch a regression?",
+  "evidence": [
+   {
+    "path": "lib/plugin-override.js",
+    "start": 76,
+    "end": 76,
+    "anchor": "function buildRoutePrefix (instancePrefix, pluginPrefix)",
+    "file_sha256": "1718ff0f184e29bf57a15494c84406943f4e8dd35800447514b129910b7deb21"
+   },
+   {
+    "path": "lib/plugin-override.js",
+    "start": 48,
+    "end": 48,
+    "anchor": "instance[kRoutePrefix] = buildRoutePrefix(",
+    "file_sha256": "1718ff0f184e29bf57a15494c84406943f4e8dd35800447514b129910b7deb21"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 249,
+    "end": 249,
+    "anchor": "const prefix = this[kRoutePrefix]",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/four-oh-four.js",
+    "start": 85,
+    "end": 85,
+    "anchor": "const prefix = this[kRoutePrefix] || '/'",
+    "file_sha256": "65877583e3ade09a818a762ff76d829ca431450f7d46bdbd692f56b341add44f"
+   },
+   {
+    "path": "test/route-prefix.test.js",
+    "start": 244,
+    "end": 244,
+    "anchor": "test('Prefix with trailing / and nested prefix without leading /'",
+    "file_sha256": "80b9704e850c65c179287f20e9d8117e5ba23768de63dcf4cff8dfaef80fa979"
+   },
+   {
+    "path": "test/route-prefix.test.js",
+    "start": 278,
+    "end": 278,
+    "anchor": "test('Prefix works multiple levels deep'",
+    "file_sha256": "80b9704e850c65c179287f20e9d8117e5ba23768de63dcf4cff8dfaef80fa979"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-30",
+  "repo": "fastify",
+  "category": "impact",
+  "query": "I want to add a new FST_ERR_* code. Besides defining it, what other files have to be updated so the test suite still passes?",
+  "evidence": [
+   {
+    "path": "lib/errors.js",
+    "start": 9,
+    "end": 9,
+    "anchor": "FST_ERR_NOT_FOUND: createError(",
+    "file_sha256": "2ad05656e637f9e136df780138a4d34ee81bbbe563b5f778997c9d7b82d46e94"
+   },
+   {
+    "path": "test/internals/errors.test.js",
+    "start": 8,
+    "end": 8,
+    "anchor": "const expectedErrors =",
+    "file_sha256": "60e1178e3359fdcd4de9882f51f12b08172ab639bf59e2a46f9422f25102690a"
+   },
+   {
+    "path": "test/internals/errors.test.js",
+    "start": 995,
+    "end": 995,
+    "anchor": "test('Ensure that all errors are in errors.d.ts'",
+    "file_sha256": "60e1178e3359fdcd4de9882f51f12b08172ab639bf59e2a46f9422f25102690a"
+   },
+   {
+    "path": "test/internals/errors.test.js",
+    "start": 969,
+    "end": 969,
+    "anchor": "test('Ensure that all errors are in Errors.md documented'",
+    "file_sha256": "60e1178e3359fdcd4de9882f51f12b08172ab639bf59e2a46f9422f25102690a"
+   },
+   {
+    "path": "types/errors.d.ts",
+    "start": 3,
+    "end": 3,
+    "anchor": "export type FastifyErrorCodes = Record<",
+    "file_sha256": "eea29ac2b510a79328db8212d0909a555161408b470421ba024bef79fe0b70e9"
+   },
+   {
+    "path": "docs/Reference/Errors.md",
+    "start": 318,
+    "end": 318,
+    "anchor": "### Fastify Error Codes",
+    "file_sha256": "7ab1af0e63e6571f7cc27e639bad31928416c0324638be1b14cbc78e96c3612d"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-31",
+  "repo": "fastify",
+  "category": "impact",
+  "query": "If I add a new top-level server option with a default value, which build script, generated validator, config freezing, typing, and tests are affected?",
+  "evidence": [
+   {
+    "path": "build/build-validation.js",
+    "start": 25,
+    "end": 25,
+    "anchor": "const defaultInitOptions = {",
+    "file_sha256": "1b42c3651869cb30bfa5482cfa0880e81cb1185ea6fa437a791bc984b67b31a9"
+   },
+   {
+    "path": "build/build-validation.js",
+    "start": 51,
+    "end": 51,
+    "anchor": "const schema = {",
+    "file_sha256": "1b42c3651869cb30bfa5482cfa0880e81cb1185ea6fa437a791bc984b67b31a9"
+   },
+   {
+    "path": "lib/config-validator.js",
+    "start": 1187,
+    "end": 1187,
+    "anchor": "module.exports.defaultInitOptions =",
+    "file_sha256": "ebb8a69d00399315492e67fe3588c65fca047ee784f931d13f7f5970b30285ed"
+   },
+   {
+    "path": "lib/initial-config-validation.js",
+    "start": 7,
+    "end": 7,
+    "anchor": "function validateInitialConfig (options)",
+    "file_sha256": "14426e4b89d806cf924fd412ea267b27801d1bb61c6ac9ebdc94be5866f1c82f"
+   },
+   {
+    "path": "fastify.js",
+    "start": 923,
+    "end": 923,
+    "anchor": "const initialConfig = getSecuredInitialConfig(options)",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "types/instance.d.ts",
+    "start": 693,
+    "end": 693,
+    "anchor": "initialConfig: Readonly<{",
+    "file_sha256": "ed88904685c88c8b3afc0dfd977187ac5ed144ff0933089ea16a3e7e8ead32a5"
+   },
+   {
+    "path": "test/internals/initial-config.test.js",
+    "start": 29,
+    "end": 29,
+    "anchor": "test('without options passed to Fastify, initialConfig should expose default values'",
+    "file_sha256": "b41a59ae085e27924f7d412ce7f27ebfdcdd033f777330f30d110823e9ac23be"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-32",
+  "repo": "fastify",
+  "category": "impact",
+  "query": "What would break if the generic hook runner changed how it treats a rejected promise or how it calls the final callback?",
+  "evidence": [
+   {
+    "path": "lib/hooks.js",
+    "start": 230,
+    "end": 230,
+    "anchor": "function hookRunnerGenerator (iterator)",
+    "file_sha256": "02b428780d90101e5329e693121ebaf8bfe4a88f506ed1ae0d63687a774d5d67"
+   },
+   {
+    "path": "lib/route.js",
+    "start": 571,
+    "end": 571,
+    "anchor": "onRequestHookRunner(",
+    "file_sha256": "cde91dcdc6709d7b8b1c0204ac28ba5819fe54c4fbff4793199cff731b41cf8a"
+   },
+   {
+    "path": "lib/handle-request.js",
+    "start": 92,
+    "end": 92,
+    "anchor": "preValidationHookRunner(",
+    "file_sha256": "14f3c8b213ab287131f54b03710a5c4afaad59a267b1580f9f694667cfc952dc"
+   },
+   {
+    "path": "lib/handle-request.js",
+    "start": 138,
+    "end": 138,
+    "anchor": "preHandlerHookRunner(",
+    "file_sha256": "14f3c8b213ab287131f54b03710a5c4afaad59a267b1580f9f694667cfc952dc"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 1064,
+    "end": 1064,
+    "anchor": "preHandlerHookRunner(",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "test/internals/hook-runner.test.js",
+    "start": 146,
+    "end": 146,
+    "anchor": "test('hookRunner - In case of error should skip to done (with promises)'",
+    "file_sha256": "e598a0342e9de4ffab84952c79d1897f6978ccc34b2ce72c94fd873def4176f9"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-33",
+  "repo": "fastify",
+  "category": "impact",
+  "query": "If I add a field to the default error response body, where does the serializer come from, what consumes it, and which test checks the generated file is current?",
+  "evidence": [
+   {
+    "path": "build/build-error-serializer.js",
+    "start": 8,
+    "end": 8,
+    "anchor": "const code = FJS({",
+    "file_sha256": "7541ec31c78a78b14b66316cc622088be267c996a381aa36436560ba0442310e"
+   },
+   {
+    "path": "lib/error-serializer.js",
+    "start": 1,
+    "end": 1,
+    "anchor": "This file is autogenerated by build/build-error-serializer.js",
+    "file_sha256": "086d2389e9d108f793c2102cfc2e639a1fe1fd200245602d31832328c92f8568"
+   },
+   {
+    "path": "lib/error-handler.js",
+    "start": 22,
+    "end": 22,
+    "anchor": "const serializeError = require('./error-serializer')",
+    "file_sha256": "2de5817324cdf5888bd89314127959c83e36f8db87fe26f2830c6a4de316965d"
+   },
+   {
+    "path": "lib/error-handler.js",
+    "start": 85,
+    "end": 85,
+    "anchor": "function fallbackErrorHandler (error, reply, cb)",
+    "file_sha256": "2de5817324cdf5888bd89314127959c83e36f8db87fe26f2830c6a4de316965d"
+   },
+   {
+    "path": "test/build/error-serializer.test.js",
+    "start": 29,
+    "end": 29,
+    "anchor": "test('ensure the current error serializer is latest'",
+    "file_sha256": "889bca3be99a8dab3e370b23b168e0ebfcc4acefdfd5f38ea1db04d2cf8821a5"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-34",
+  "repo": "fastify",
+  "category": "discrepancy",
+  "query": "The hooks documentation says that when a hook swaps the outgoing payload for null, no Content-Length header is sent. Does the response-writing code agree?",
+  "evidence": [
+   {
+    "path": "docs/Reference/Hooks.md",
+    "start": 236,
+    "end": 236,
+    "anchor": "whereas the `Content-Length` header will not be set if the payload is",
+    "file_sha256": "98a1ee68e44aec6463892f70232f581479500347bd7c5a9f2960e87ad2f0c497"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 599,
+    "end": 599,
+    "anchor": "function onSendEnd (reply, payload)",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   },
+   {
+    "path": "lib/reply.js",
+    "start": 658,
+    "end": 658,
+    "anchor": "if (statusCode >= 200 && statusCode !== 204 && statusCode !== 304",
+    "file_sha256": "1090e81f35f34d2cd885e8fb248693ebcb0ab4c1b565d4373b53a2d2264e1f03"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-35",
+  "repo": "fastify",
+  "category": "discrepancy",
+  "query": "The content-type parser docs say DELETE and OPTIONS bodies are only parsed with a valid content-type and never go through the catch-all parser. Is that what the request handling code does?",
+  "evidence": [
+   {
+    "path": "docs/Reference/ContentTypeParser.md",
+    "start": 30,
+    "end": 30,
+    "anchor": "Note that for `GET` and `HEAD` requests, the payload is never parsed. For",
+    "file_sha256": "55cb9b03869797e3f751354c473233f902fab37d5b648bb6627362b912244e02"
+   },
+   {
+    "path": "lib/handle-request.js",
+    "start": 67,
+    "end": 67,
+    "anchor": "request[kRouteContext].contentTypeParser.run('', handler, request, reply)",
+    "file_sha256": "14f3c8b213ab287131f54b03710a5c4afaad59a267b1580f9f694667cfc952dc"
+   },
+   {
+    "path": "lib/handle-request.js",
+    "start": 39,
+    "end": 39,
+    "anchor": "if (this[kSupportedHTTPMethods].bodywith.has(method)) {",
+    "file_sha256": "14f3c8b213ab287131f54b03710a5c4afaad59a267b1580f9f694667cfc952dc"
+   },
+   {
+    "path": "fastify.js",
+    "start": 139,
+    "end": 139,
+    "anchor": "bodywith: new Set([",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/content-type-parser.js",
+    "start": 160,
+    "end": 160,
+    "anchor": "return this.customParsers.get('')",
+    "file_sha256": "6b005fc3fe19c26951757461929e587e166b2f92125826e47f7eb9fc1419e2df"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-36",
+  "repo": "fastify",
+  "category": "discrepancy",
+  "query": "Server.md says that when a parameter exceeds the max length the not-found route is invoked. Check that against what the server actually sends back.",
+  "evidence": [
+   {
+    "path": "docs/Reference/Server.md",
+    "start": 1075,
+    "end": 1075,
+    "anchor": "If the maximum length limit is reached, the not found route will",
+    "file_sha256": "5639a2a9a1086e5a0928c98de8e4ed73d88d242e79269cc6863903f356eae302"
+   },
+   {
+    "path": "fastify.js",
+    "start": 676,
+    "end": 676,
+    "anchor": "function onMaxParamLength (path, req, res)",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "test/router-options.test.js",
+    "start": 77,
+    "end": 77,
+    "anchor": "test('Should honor maxParamLength option'",
+    "file_sha256": "acd6e672d3c7e097555c5ec62ec8926f03482b0bfb4e8274db6b8bb93d31a8fc"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-37",
+  "repo": "fastify",
+  "category": "discrepancy",
+  "query": "The pluginTimeout docs say ready() fails with error code 'ERR_AVVIO_PLUGIN_TIMEOUT'. Is that the code users actually see?",
+  "evidence": [
+   {
+    "path": "docs/Reference/Server.md",
+    "start": 617,
+    "end": 617,
+    "anchor": "[`ready`](#ready) will complete with an `Error` with code",
+    "file_sha256": "5639a2a9a1086e5a0928c98de8e4ed73d88d242e79269cc6863903f356eae302"
+   },
+   {
+    "path": "fastify.js",
+    "start": 562,
+    "end": 562,
+    "anchor": "AVVIO_ERRORS_MAP[err.code] != null",
+    "file_sha256": "5add794a377ebe58962363b1ca59ade93e404ba3b82ef37fc7434ddeb993af53"
+   },
+   {
+    "path": "lib/errors.js",
+    "start": 548,
+    "end": 548,
+    "anchor": "AVV_ERR_PLUGIN_EXEC_TIMEOUT: codes.FST_ERR_PLUGIN_TIMEOUT",
+    "file_sha256": "2ad05656e637f9e136df780138a4d34ee81bbbe563b5f778997c9d7b82d46e94"
+   },
+   {
+    "path": "test/plugin.4.test.js",
+    "start": 8,
+    "end": 8,
+    "anchor": "test('pluginTimeout', (t, testDone)",
+    "file_sha256": "fddd59b70dea9b24ce6c8093163d7da87bfe9da1a45bcbf3d0a25d8239ad04f6"
+   }
+  ],
+  "expected": "retrieve_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-38",
+  "repo": "fastify",
+  "category": "no_evidence",
+  "query": "Summarize the postmortem for last month's outage of the maintainers' CI runners: root cause, timeline, and who owns the remediation items.",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-39",
+  "repo": "fastify",
+  "category": "no_evidence",
+  "query": "How many weekly active developers run Fastify in each country, according to the project's opt-in usage telemetry?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-40",
+  "repo": "fastify",
+  "category": "no_evidence",
+  "query": "Which user-research interview participants asked for a GraphQL layer built into core, and how was that request ranked in the private product backlog?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ },
+ {
+  "id": "h-fastify-41",
+  "repo": "fastify",
+  "category": "no_evidence",
+  "query": "What were the results of the A/B experiment the core team ran on the wording of the default 404 response, and how did it change user retention?",
+  "evidence": [],
+  "expected": "insufficient_repository_evidence",
+  "annotation_status": "drafted_without_retrieval_tools_not_independently_reviewed"
+ }
+]

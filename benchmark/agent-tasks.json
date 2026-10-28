@@ -34,5 +34,89 @@
     "issue": "A route configured with a fractional bodyLimit is accepted during registration. Restore validation of the route payload limit option.",
     "fault": {"path": "lib/route.js", "before": "if (!Number.isInteger(bodyLimit) || bodyLimit <= 0) {", "after": "if (typeof bodyLimit !== 'number' || bodyLimit <= 0) {"},
     "verify": ["node", "--test", "test/route.2.test.js"]
+  },
+  {
+    "id": "cobra-persistent-prerun-order", "repo": "cobra",
+    "issue": "PersistentPreRun runs the wrong hook. My CLI has a root command and a subcommand, and both define PersistentPreRun. With default settings, only the hook closest to the command being executed should run, so running `app child` should run the child's PersistentPreRun. Instead the root's PersistentPreRun runs and the child's is skipped. When I set EnableTraverseRunHooks = true, all persistent pre-run hooks do run, but in the wrong order: the child's hook runs before the parent's instead of root-first. Persistent post-run hooks look fine.",
+    "fault": {"path": "command.go", "before": "\t\tif EnableTraverseRunHooks {\n\t\t\t// When EnableTraverseRunHooks is set:", "after": "\t\tif !EnableTraverseRunHooks {\n\t\t\t// When EnableTraverseRunHooks is set:"},
+    "verify": ["go", "test", ".", "-run", "^TestPersistentHooks$", "-count=1"]
+  },
+  {
+    "id": "cobra-suggestion-distance", "repo": "cobra",
+    "issue": "\"Did you mean this?\" suggestions miss typos that are exactly at the allowed distance. With the default settings (SuggestionsMinimumDistance is 2), typing `root tiems` for a subcommand named `times` prints only `Error: unknown command \"tiems\" for \"root\"` and no suggestion. One-character typos like `tims` or `rimes` still get suggestions. The documentation says commands within the minimum distance should be suggested, so a distance of 2 should be included.",
+    "fault": {"path": "command.go", "before": "levenshteinDistance <= c.SuggestionsMinimumDistance", "after": "levenshteinDistance < c.SuggestionsMinimumDistance"},
+    "verify": ["go", "test", ".", "-run", "^TestSuggestions$", "-count=1"]
+  },
+  {
+    "id": "cobra-required-together-partial", "repo": "cobra",
+    "issue": "MarkFlagsRequiredTogether does not report a group that is missing only one flag. I grouped `--a` and `--b` with MarkFlagsRequiredTogether(\"a\", \"b\"). Passing only `--a` should fail with `if any flags in the group [a b] are set they must all be set; missing [b]`, but the command runs without error. If two or more flags of the group are missing, the error does appear. Mutually exclusive and one-required groups are not affected.",
+    "fault": {"path": "flag_groups.go", "before": "|| len(unset) == 0 {", "after": "|| len(unset) <= 1 {"},
+    "verify": ["go", "test", ".", "-run", "^TestValidateFlagGroups$", "-count=1"]
+  },
+  {
+    "id": "cobra-completion-help-cmd", "repo": "cobra",
+    "issue": "Shell completion no longer offers the `help` subcommand. When I press TAB after my program name (or request `__complete \"\"`), all my subcommands are listed except `help`. Running `app help` still works by hand, and other available subcommands complete normally. Earlier versions included `help` among the completed subcommand names.",
+    "fault": {"path": "completions.go", "before": "if subCmd.IsAvailableCommand() || subCmd == finalCmd.helpCommand {", "after": "if subCmd.IsAvailableCommand() {"},
+    "verify": ["go", "test", ".", "-run", "^TestCmdNameCompletionInGo$", "-count=1"]
+  },
+  {
+    "id": "cobra-alias-prefix-matching", "repo": "cobra",
+    "issue": "With EnablePrefixMatching = true, abbreviated aliases are not resolved. My `echo` command has aliases `say` and `tell`. Typing an abbreviation of the command name (`ec times one two`) works, but an abbreviation of an alias (`sa times one two`) fails with `unknown command \"sa\"`. Only the full alias (`say`) works. Prefix matching should apply to aliases as well as names.",
+    "fault": {"path": "command.go", "before": "if strings.HasPrefix(alias, prefix) {", "after": "if strings.HasPrefix(prefix, alias) {"},
+    "verify": ["go", "test", ".", "-run", "^TestAliasPrefixMatching$", "-count=1"]
+  },
+  {
+    "id": "flask-nested-blueprint-subdomain", "repo": "flask",
+    "issue": "Nested blueprint subdomains are combined in the wrong order. I register a child blueprint created with subdomain=\"api\" on a parent blueprint, then register the parent on the app with subdomain=\"parent\" (SERVER_NAME=\"example.test\", subdomain_matching enabled). I expect the child's routes to be served at api.parent.example.test, but requests to http://api.parent.example.test/ return 404. The route seems to be registered under parent.api.example.test instead, i.e. the parent's subdomain ends up on the left of the child's.",
+    "fault": {"path": "src/flask/sansio/blueprints.py", "before": "bp_options[\"subdomain\"] = bp_subdomain + \".\" + state.subdomain", "after": "bp_options[\"subdomain\"] = state.subdomain + \".\" + bp_subdomain"},
+    "verify": ["{python}", "-m", "pytest", "-q", "tests/test_blueprints.py::test_child_and_parent_subdomain"]
+  },
+  {
+    "id": "flask-prefixed-env-nested", "repo": "flask",
+    "issue": "app.config.from_prefixed_env() does not build nested config for keys containing a double underscore. With FLASK_EXIST__ok=1 and FLASK_NEW__K=\"v\" set in the environment, I expect app.config[\"NEW\"] == {\"K\": \"v\"} and the existing dict app.config[\"EXIST\"] to gain an \"ok\" entry. Instead the leaf keys land directly at the top level of app.config (app.config[\"K\"] == \"v\") and the intermediate dicts stay empty, so nested settings are effectively lost.",
+    "fault": {"path": "src/flask/config.py", "before": "                current = current[part]\n", "after": ""},
+    "verify": ["{python}", "-m", "pytest", "-q", "tests/test_config.py::test_from_prefixed_env_nested"]
+  },
+  {
+    "id": "flask-flash-category-filter", "repo": "flask",
+    "issue": "get_flashed_messages(category_filter=[...]) returns the wrong messages. After flashing messages with categories \"message\", \"error\" and \"warning\", calling get_flashed_messages(category_filter=[\"message\"]) gives me the error and warning messages but not the one in the \"message\" category. The filter behaves like an exclusion list instead of selecting only the requested categories. Calling it without a filter returns all messages as expected.",
+    "fault": {"path": "src/flask/helpers.py", "before": "filter(lambda f: f[0] in category_filter, flashes)", "after": "filter(lambda f: f[0] not in category_filter, flashes)"},
+    "verify": ["{python}", "-m", "pytest", "-q", "tests/test_basic.py::test_extended_flashing"]
+  },
+  {
+    "id": "flask-tagged-json-dict-key", "repo": "flask",
+    "issue": "Session data does not round-trip when a dict has a single key that matches one of the session serializer's internal tag names. With flask.json.tag.TaggedJSONSerializer, s.loads(s.dumps({\" t\": (1, 2, 3)})) returns {\" t_\": (1, 2, 3)} and {\" di\": \" di\"} comes back as {\" di_\": \" di\"}: the key gains a stray trailing underscore. Ordinary dicts, tuples, bytes, Markup, UUIDs and datetimes round-trip fine, so values stored in the session under such keys silently move to a different key.",
+    "fault": {"path": "src/flask/json/tag.py", "before": "return {key[:-2]: value[key]}", "after": "return {key[:-1]: value[key]}"},
+    "verify": ["{python}", "-m", "pytest", "-q", "tests/test_json_tag.py::test_dump_load_unchanged"]
+  },
+  {
+    "id": "flask-test-client-full-url-host", "repo": "flask",
+    "issue": "The test client ignores the host when a full URL is passed as the path. Calling client.get(\"https://example.com/\") or building flask.testing.EnvironBuilder(app, \"https://example.com/\") keeps the scheme from the URL (https) but the request host is \"localhost\" (or SERVER_NAME) instead of \"example.com\". This breaks tests for host-based routing and multi-domain apps, which previously could target a host by passing an absolute URL.",
+    "fault": {"path": "src/flask/testing.py", "before": "{url.netloc or http_host}", "after": "{http_host or url.netloc}"},
+    "verify": ["{python}", "-m", "pytest", "-q", "tests/test_testing.py::test_path_is_url"]
+  },
+  {
+    "id": "fastify-request-id-header-case", "repo": "fastify",
+    "issue": "Custom request id header is ignored when configured with uppercase letters.\n\nI create the server with `Fastify({ requestIdHeader: 'X-Request-Id' })` (the casing our load balancer documents) and send requests with an `X-Request-Id: abc-123` header. `request.id` is always a generated id like `req-1` instead of `abc-123`, and the logs don't show our correlation id either. If I write the option as `'x-request-id'` it works. Header names are case-insensitive, so the option should be honored regardless of how it is capitalized.",
+    "fault": {"path": "fastify.js", "before": "options.requestIdHeader.toLowerCase()", "after": "options.requestIdHeader"},
+    "verify": ["node", "--test", "test/request-id.test.js"]
+  },
+  {
+    "id": "fastify-regexp-parser-global-flag", "repo": "fastify",
+    "issue": "Content-type parser registered with a RegExp matches only every other request.\n\nI register a body parser with `fastify.addContentTypeParser(/^application\\/.*\\+json$/g, { parseAs: 'string' }, parser)`. The first request with `Content-Type: application/vnd.api+json` is parsed by my parser, but an identical request right after fails with 415 Unsupported Media Type, then the next one works again, and so on. Removing the `g` flag from the regex makes it work every time. A parser's flags should not make matching depend on previous requests.",
+    "fault": {"path": "lib/content-type-parser.js", "before": "    // A parser registered with a `g`/`y` flagged RegExp keeps a mutable\n    // lastIndex between calls, so a plain `.test()` would skip part of the\n    // next content type and match inconsistently. Reset it before testing.\n    parserRegExp.lastIndex = 0\n", "after": ""},
+    "verify": ["node", "--test", "test/content-parser.test.js"]
+  },
+  {
+    "id": "fastify-hooks-run-after-reply-sent", "repo": "fastify",
+    "issue": "Hooks keep running after an earlier hook has already sent a response.\n\nI have an authentication `onRequest` hook that does `reply.code(401).send({ error: 'unauthorized' })` and returns early when the token is missing. A second `onRequest` hook and the route's `preHandler` hooks registered after it still execute for those rejected requests (they hit our database and log as if the request was authorized), and sometimes we see \"Reply was already sent\" warnings. Once a hook has sent the reply, the remaining hooks in that lifecycle step should be skipped. This happens with both callback-style and async hooks, and for preValidation/preHandler as well.",
+    "fault": {"path": "lib/hooks.js", "before": "  if (reply.sent === true) return undefined\n  return fn(request, reply, next)", "after": "  return fn(request, reply, next)"},
+    "verify": ["node", "--test", "test/hooks-async.test.js", "test/route-hooks.test.js"]
+  },
+  {
+    "id": "fastify-trust-proxy-forwarded-last-entry", "repo": "fastify",
+    "issue": "With trustProxy enabled, request.protocol and request.host pick the wrong value from multi-valued forwarded headers.\n\nOur app runs behind two proxies with `Fastify({ trustProxy: true })`. Requests arrive with `X-Forwarded-Proto: http, https` and `X-Forwarded-Host: internal.lb, api.example.com`. Fastify reports `request.protocol === 'http'` and `request.host === 'internal.lb'`, so our generated absolute URLs point to the wrong scheme and host. With a single value in each header everything is correct. When a forwarded header has several comma-separated entries, the value appended by the closest proxy (the last one) should be used.",
+    "fault": {"path": "lib/request.js", "before": "headerValue.slice(lastIndex + 1).trim()", "after": "headerValue.slice(0, lastIndex).trim()"},
+    "verify": ["node", "--test", "test/trust-proxy.test.js"]
   }
 ]

@@ -1,0 +1,53 @@
+{
+  "status": "retrieval_rule_passed_product_unproven",
+  "preregistration_sha256": "36eb017f5348c8533123373c571ff5157fa146a141459ba0a863025eb766cb58",
+  "queries_sha256": "cbbdef34c9d16d5e9ffbfda1969914ff0fbaa8f5953a2408ca3b096b0d8d9f29",
+  "queries": 123,
+  "scored_queries": 111,
+  "source_review_complete": true,
+  "comparative_data_collected": true,
+  "agent_savings": "unmeasured",
+  "product_promotion_allowed": false,
+  "python_tests": 211,
+  "harness_parity_report": "results/harness-v63-report.json",
+  "source_files": {
+    "zerolog": 88,
+    "rich": 318,
+    "pino": 175
+  },
+  "independence_limit": "Isolated AI source-only authors and different AI source reviewers; weaker than independent human authoring. Session scope is recorded, not provable by schema validation.",
+  "caveats": [
+    "Two Pino tasks compare literal documented/internal option defaults; they do not establish user-visible behavior differences.",
+    "First freeze attempt rejected anchors and expected labels; all errors and intermediate versions retained before successful validation."
+  ],
+  "authoring_provenance": {
+    "model": "gpt-6-luna",
+    "author_sessions_completed": 3,
+    "author_sessions_failed": 1,
+    "fresh_source_reviewer_sessions": 3,
+    "followup_repairs": true,
+    "model_tokens_and_spend": "unavailable from collaboration tools; not measured as agent-efficiency evidence"
+  },
+  "remaining": [
+    "Fresh preregistered natural agent tasks with matched solver, source access, spend limits, task outcomes and complete usage accounting before product promotion.",
+    "Address Rich all-file recall and Zerolog top-5 losses experimentally; any tuning requires a new unseen confirmation workload."
+  ],
+  "acceptance": "not_passed; per-case diagnostic; exit 1; legacy non-held-out wording is inapplicable",
+  "decision": "passed; both frozen Graf arms; exit 0",
+  "output_audit": "passed",
+  "timing_samples": 738,
+  "judgment_pairs": 1575,
+  "blind_judging_status": "complete; certified small source-only AI batches",
+  "report": "results/confirmation-v64-report.json",
+  "limitations": [
+    "AI labels are weaker than independent human judgments. Incomplete/generic drafts were excluded and replaced with certified source-only small batches.",
+    "No latency inference, documentation-task result, source-anchor comparison, or measured agent savings.",
+    "v59 matches v61 shared file recall with lower output tokens; no measured agent benefit for v61 extra source evidence."
+  ],
+  "decision_attempt_before_judgments": {
+    "exit": 1,
+    "reason": "Missing completed blind judgments; evaluator refused a held-out decision",
+    "log": ".research/evidence/confirmation-v64-run/decision-before-complete-judgments.log",
+    "prior_alias": "results/decision.json remains the prior v63 result"
+  }
+}

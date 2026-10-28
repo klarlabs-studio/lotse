@@ -1,0 +1,27 @@
+{
+  "judge_id": "pino-4",
+  "model": "gpt-6-luna",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "5382c1610758377e3935c4ea2b98a4bc4cfbc12d5d3eed727a8d7c9e619535ca",
+  "source_manifest_sha256": "f4727e7f68d65fc1ee0e1476ad70a549801540bfcc6aaf761f466e8c557ac77e",
+  "judgments_sha256": "7ffe8dea523f3bf3582d654c7074baa374657c09592558f0991ff1e4185552cf",
+  "reviewed_query_ids": [
+    "h-pino-31",
+    "h-pino-32",
+    "h-pino-33",
+    "h-pino-34",
+    "h-pino-35",
+    "h-pino-36",
+    "h-pino-37"
+  ],
+  "pair_count": 99,
+  "limitations": [
+    "Source relevance review only; session tools do not expose measured API cost or token counts.",
+    "Coverage limitation: h-pino-31 pool omits lib/proto.js and test/hooks.test.js, the direct streamWrite implementation and execution test, so no pooled file directly establishes runtime hook ordering.",
+    "Coverage limitation: h-pino-37 pool omits pino.js and lib/tools.js, the logger constructor and option normalizer needed to state the internal customLevels default."
+  ],
+  "unresolved_issues": []
+}

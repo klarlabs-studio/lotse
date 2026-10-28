@@ -1,0 +1,179 @@
+{
+  "h-zerolog-disc-msgf-disabled-allocation": {
+    "repo": "zerolog",
+    "query": "The README warns that Msgf allocates even when logging is disabled; what does the implementation do when a disabled logger yields a nil Event?",
+    "files": [
+      "ctx_test.go",
+      "event_test.go",
+      "slog_test.go",
+      "log/log.go",
+      "benchmark_test.go",
+      "log.go",
+      "slog.go",
+      "binary_test.go",
+      "context.go",
+      "hook.go",
+      "ctx.go",
+      "globals.go",
+      "sampler.go",
+      "log_test.go",
+      "writer.go"
+    ]
+  },
+  "h-zerolog-disc-slog-group-shape": {
+    "repo": "zerolog",
+    "query": "The SlogHandler.WithGroup documentation describes attributes as nested under a group. Does the implementation emit nested objects or flattened dotted keys, and what test demonstrates the actual shape?",
+    "files": [
+      "writer.go",
+      "fields.go",
+      "array.go",
+      "fixtures_test.go",
+      "log_example_test.go",
+      "log.go",
+      "event_test.go",
+      "internal/cbor/decode_stream.go",
+      "internal/json/float_test.go",
+      "benchmark_test.go",
+      "context.go",
+      "hlog/hlog_example_test.go",
+      "event.go",
+      "hlog/hlog_test.go"
+    ]
+  },
+  "h-zerolog-disc-write-method": {
+    "repo": "zerolog",
+    "query": "The Logger type comment says an event calls the writer\u2019s Write method; how does New handle LevelWriter implementations, and which method receives the event instead?",
+    "files": [
+      "hlog/hlog_test.go",
+      "slog.go",
+      "writer_test.go",
+      "event_test.go",
+      "log_test.go",
+      "event.go",
+      "benchmark_test.go",
+      "diode/diode.go",
+      "diode/diode_test.go",
+      "log/log_example_test.go",
+      "context.go",
+      "hlog/hlog.go"
+    ]
+  },
+  "h-zerolog-exact-context-array": {
+    "repo": "zerolog",
+    "query": "Which Context method creates an Array that carries over the logger\u2019s stack setting, context, and hooks?",
+    "files": [
+      "binary_test.go",
+      "array.go",
+      "event_test.go",
+      "event.go",
+      "log_test.go",
+      "slog.go",
+      "log.go",
+      "hook.go",
+      "hlog/hlog.go",
+      "writer.go",
+      "hook_test.go",
+      "context_test.go",
+      "pkgerrors/stacktrace_test.go",
+      "log_example_test.go"
+    ]
+  },
+  "h-zerolog-exact-diode-selection": {
+    "repo": "zerolog",
+    "query": "How does diode.NewWriter choose between its waiter and poller implementations?",
+    "files": [
+      "diode/internal/diodes/waiter.go",
+      "writer_test.go",
+      "hlog/hlog_test.go",
+      "console_test.go",
+      "event.go",
+      "console.go",
+      "diode/internal/diodes/poller.go",
+      "diode/internal/diodes/many_to_one.go",
+      "diode/internal/diodes/one_to_one.go",
+      "internal/cbor/decode_stream.go",
+      "array.go",
+      "log.go",
+      "hlog/internal/mutil/writer_proxy.go",
+      "writer.go",
+      "diode/diode_example_test.go",
+      "diode/diode_test.go"
+    ]
+  },
+  "h-zerolog-exact-msgfunc": {
+    "repo": "zerolog",
+    "query": "Which Event method takes a callback to create the message lazily, and what happens when the Event receiver is nil?",
+    "files": [
+      "log/log_example_test.go",
+      "log_test.go",
+      "cmd/lint/lint.go",
+      "slog.go",
+      "hlog/hlog.go",
+      "log_example_test.go",
+      "log.go",
+      "array.go",
+      "binary_test.go",
+      "context.go",
+      "writer.go"
+    ]
+  },
+  "h-zerolog-exact-sanitize-prefix": {
+    "repo": "zerolog",
+    "query": "What prefix does journald key sanitization add when the normalized key is empty or begins with a digit or underscore?",
+    "files": [
+      "internal/cbor/cbor.go",
+      "internal/cbor/time.go",
+      "log.go",
+      "internal/cbor/base.go",
+      "internal/cbor/string.go",
+      "slog_test.go",
+      "internal/json/base.go",
+      "context.go",
+      "journald/journald_windows_test.go",
+      "slog.go",
+      "internal/json/base_test.go",
+      "log_test.go",
+      "event.go",
+      "internal/cbor/decode_stream.go",
+      "internal/cbor/types.go"
+    ]
+  },
+  "h-zerolog-exact-update-context": {
+    "repo": "zerolog",
+    "query": "What method mutates an existing Logger\u2019s contextual fields through a callback, and what concurrency caveat does its API document?",
+    "files": [
+      "context.go",
+      "slog.go",
+      "hlog/hlog_test.go",
+      "fields.go",
+      "event_test.go",
+      "internal/cbor/types.go",
+      "log_example_test.go",
+      "sampler.go",
+      "slog_test.go",
+      "hlog/hlog.go",
+      "hook.go",
+      "log_test.go",
+      "writer.go"
+    ]
+  },
+  "h-zerolog-exact-warning-level": {
+    "repo": "zerolog",
+    "query": "What signed numeric range does ParseLevel accept for custom levels, and what result does it return for out-of-range values?",
+    "files": [
+      "internal/cbor/decode_stream.go",
+      "sampler.go",
+      "internal/testcases.go",
+      "journald/journald.go",
+      "slog.go",
+      "console.go",
+      "journald/journald_test.go",
+      "globals.go",
+      "hlog/hlog_test.go",
+      "log/log.go",
+      "log/log_example_test.go",
+      "console_test.go",
+      "hlog/hlog.go"
+    ]
+  }
+}

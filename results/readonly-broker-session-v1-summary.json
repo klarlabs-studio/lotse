@@ -1,0 +1,451 @@
+{
+  "scope": "Exposed development lifecycle diagnostic; descriptive only, no significance test or promotion",
+  "passed": true,
+  "arms": {
+    "graf_v61": {
+      "fresh": {
+        "groups": 9,
+        "failures": 0,
+        "session_count": 36,
+        "median_four_pair_phase_subtotal_ms": 8506.93649900495,
+        "median_four_pair_actual_wall_ms": 8826.318208011799,
+        "median_amortized_pair_phase_ms": 2066.311651640717,
+        "median_setup_cleanup_ms_per_pair": 1358.1714790052501,
+        "median_native_child_ms": 320.9811875130981,
+        "diagnostic_payload_tokens": 147361
+      },
+      "reused": {
+        "groups": 9,
+        "failures": 0,
+        "session_count": 9,
+        "median_four_pair_phase_subtotal_ms": 2266.2260440411046,
+        "median_four_pair_actual_wall_ms": 2319.2833329958376,
+        "median_amortized_pair_phase_ms": 579.1007817533682,
+        "median_setup_cleanup_ms_per_pair": 184.6734692589962,
+        "median_native_child_ms": 255.65756250580307,
+        "diagnostic_payload_tokens": 147327
+      }
+    },
+    "graf_v59": {
+      "fresh": {
+        "groups": 9,
+        "failures": 0,
+        "session_count": 36,
+        "median_four_pair_phase_subtotal_ms": 4915.371378039708,
+        "median_four_pair_actual_wall_ms": 5102.93129098136,
+        "median_amortized_pair_phase_ms": 1237.5090947462013,
+        "median_setup_cleanup_ms_per_pair": 825.3621357580414,
+        "median_native_child_ms": 230.41481248219498,
+        "diagnostic_payload_tokens": 143096
+      },
+      "reused": {
+        "groups": 9,
+        "failures": 0,
+        "session_count": 9,
+        "median_four_pair_phase_subtotal_ms": 2140.9068350621965,
+        "median_four_pair_actual_wall_ms": 2190.1625829923432,
+        "median_amortized_pair_phase_ms": 557.2212658953504,
+        "median_setup_cleanup_ms_per_pair": 194.2589479876915,
+        "median_native_child_ms": 218.392541501089,
+        "diagnostic_payload_tokens": 143082
+      }
+    },
+    "graphify": {
+      "fresh": {
+        "groups": 9,
+        "failures": 0,
+        "session_count": 36,
+        "median_four_pair_phase_subtotal_ms": 3287.8199580009095,
+        "median_four_pair_actual_wall_ms": 3319.843374978518,
+        "median_amortized_pair_phase_ms": 833.6349111232266,
+        "median_setup_cleanup_ms_per_pair": 275.0738539980375,
+        "median_native_child_ms": 395.6875415024115,
+        "diagnostic_payload_tokens": 303089
+      },
+      "reused": {
+        "groups": 9,
+        "failures": 0,
+        "session_count": 9,
+        "median_four_pair_phase_subtotal_ms": 2215.654875995824,
+        "median_four_pair_actual_wall_ms": 2237.345917004859,
+        "median_amortized_pair_phase_ms": 573.8567289954517,
+        "median_setup_cleanup_ms_per_pair": 53.86561475461349,
+        "median_native_child_ms": 383.11472900386434,
+        "diagnostic_payload_tokens": 303123
+      }
+    }
+  },
+  "paired_groups": [
+    {
+      "arm": "graf_v61",
+      "repo": "cobra",
+      "repetition": 1,
+      "fresh_phase_ms": 2568.487211072352,
+      "reused_phase_ms": 1193.1342889729422,
+      "fresh_minus_reused_phase_ms": 1375.3529220994096
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "cobra",
+      "repetition": 2,
+      "fresh_phase_ms": 2782.8459599986672,
+      "reused_phase_ms": 1528.8254970218986,
+      "fresh_minus_reused_phase_ms": 1254.0204629767686
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "cobra",
+      "repetition": 3,
+      "fresh_phase_ms": 3667.8636699798517,
+      "reused_phase_ms": 1765.063790982822,
+      "fresh_minus_reused_phase_ms": 1902.7998789970297
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "fastify",
+      "repetition": 1,
+      "fresh_phase_ms": 8749.407920055091,
+      "reused_phase_ms": 3190.2214190049563,
+      "fresh_minus_reused_phase_ms": 5559.186501050135
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "fastify",
+      "repetition": 2,
+      "fresh_phase_ms": 18747.03875204432,
+      "reused_phase_ms": 20326.510417013196,
+      "fresh_minus_reused_phase_ms": -1579.471664968878
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "fastify",
+      "repetition": 3,
+      "fresh_phase_ms": 9737.613666977268,
+      "reused_phase_ms": 4720.324248977704,
+      "fresh_minus_reused_phase_ms": 5017.289417999564
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "flask",
+      "repetition": 1,
+      "fresh_phase_ms": 9986.902414064389,
+      "reused_phase_ms": 2266.2260440411046,
+      "fresh_minus_reused_phase_ms": 7720.676370023284
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "flask",
+      "repetition": 2,
+      "fresh_phase_ms": 8506.93649900495,
+      "reused_phase_ms": 3516.211292037042,
+      "fresh_minus_reused_phase_ms": 4990.725206967909
+    },
+    {
+      "arm": "graf_v61",
+      "repo": "flask",
+      "repetition": 3,
+      "fresh_phase_ms": 5022.813166957349,
+      "reused_phase_ms": 2258.5781670350116,
+      "fresh_minus_reused_phase_ms": 2764.234999922337
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "cobra",
+      "repetition": 1,
+      "fresh_phase_ms": 2094.6806690481026,
+      "reused_phase_ms": 1152.8940829157364,
+      "fresh_minus_reused_phase_ms": 941.7865861323662
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "cobra",
+      "repetition": 2,
+      "fresh_phase_ms": 2668.0942100356333,
+      "reused_phase_ms": 1484.411378070945,
+      "fresh_minus_reused_phase_ms": 1183.6828319646884
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "cobra",
+      "repetition": 3,
+      "fresh_phase_ms": 3235.727501043584,
+      "reused_phase_ms": 2042.177794064628,
+      "fresh_minus_reused_phase_ms": 1193.5497069789562
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "fastify",
+      "repetition": 1,
+      "fresh_phase_ms": 7641.44608497736,
+      "reused_phase_ms": 2875.0608759582974,
+      "fresh_minus_reused_phase_ms": 4766.385209019063
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "fastify",
+      "repetition": 2,
+      "fresh_phase_ms": 6590.046917001018,
+      "reused_phase_ms": 7235.419628035743,
+      "fresh_minus_reused_phase_ms": -645.3727110347245
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "fastify",
+      "repetition": 3,
+      "fresh_phase_ms": 10250.278293038718,
+      "reused_phase_ms": 4357.502374943579,
+      "fresh_minus_reused_phase_ms": 5892.77591809514
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "flask",
+      "repetition": 1,
+      "fresh_phase_ms": 4915.371378039708,
+      "reused_phase_ms": 2086.437917081639,
+      "fresh_minus_reused_phase_ms": 2828.933460958069
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "flask",
+      "repetition": 2,
+      "fresh_phase_ms": 7755.120041954797,
+      "reused_phase_ms": 2880.881583027076,
+      "fresh_minus_reused_phase_ms": 4874.238458927721
+    },
+    {
+      "arm": "graf_v59",
+      "repo": "flask",
+      "repetition": 3,
+      "fresh_phase_ms": 4749.874917033594,
+      "reused_phase_ms": 2140.9068350621965,
+      "fresh_minus_reused_phase_ms": 2608.9680819713976
+    },
+    {
+      "arm": "graphify",
+      "repo": "cobra",
+      "repetition": 1,
+      "fresh_phase_ms": 1224.9969581025653,
+      "reused_phase_ms": 1094.6316659683362,
+      "fresh_minus_reused_phase_ms": 130.3652921342291
+    },
+    {
+      "arm": "graphify",
+      "repo": "cobra",
+      "repetition": 2,
+      "fresh_phase_ms": 1531.2939580762759,
+      "reused_phase_ms": 1399.1920829575974,
+      "fresh_minus_reused_phase_ms": 132.10187511867844
+    },
+    {
+      "arm": "graphify",
+      "repo": "cobra",
+      "repetition": 3,
+      "fresh_phase_ms": 1907.789458957268,
+      "reused_phase_ms": 1933.157582039712,
+      "fresh_minus_reused_phase_ms": -25.36812308244407
+    },
+    {
+      "arm": "graphify",
+      "repo": "fastify",
+      "repetition": 1,
+      "fresh_phase_ms": 3250.373207993107,
+      "reused_phase_ms": 2199.3007070268504,
+      "fresh_minus_reused_phase_ms": 1051.0725009662565
+    },
+    {
+      "arm": "graphify",
+      "repo": "fastify",
+      "repetition": 2,
+      "fresh_phase_ms": 18505.145205039298,
+      "reused_phase_ms": 5966.174208035227,
+      "fresh_minus_reused_phase_ms": 12538.970997004071
+    },
+    {
+      "arm": "graphify",
+      "repo": "fastify",
+      "repetition": 3,
+      "fresh_phase_ms": 4706.6250430070795,
+      "reused_phase_ms": 3401.61591800279,
+      "fresh_minus_reused_phase_ms": 1305.0091250042897
+    },
+    {
+      "arm": "graphify",
+      "repo": "flask",
+      "repetition": 1,
+      "fresh_phase_ms": 8168.44945793855,
+      "reused_phase_ms": 2215.654875995824,
+      "fresh_minus_reused_phase_ms": 5952.794581942726
+    },
+    {
+      "arm": "graphify",
+      "repo": "flask",
+      "repetition": 2,
+      "fresh_phase_ms": 4237.149666907499,
+      "reused_phase_ms": 3758.990791015094,
+      "fresh_minus_reused_phase_ms": 478.15887589240447
+    },
+    {
+      "arm": "graphify",
+      "repo": "flask",
+      "repetition": 3,
+      "fresh_phase_ms": 3287.8199580009095,
+      "reused_phase_ms": 2561.541457020212,
+      "fresh_minus_reused_phase_ms": 726.2785009806976
+    }
+  ],
+  "group_count": 54,
+  "pairs": 216,
+  "stdio": [
+    {
+      "arm": "graf_v61",
+      "checks": [
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "arm": "graf_v59",
+      "checks": [
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "arm": "graphify",
+      "checks": [
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        },
+        {
+          "retrieve_success": true,
+          "stdout": true,
+          "stderr": true,
+          "status": true,
+          "payload_tokens": true,
+          "read_success": true,
+          "source_hash": true,
+          "source_text": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "product_promotion_allowed": false,
+  "agent_savings": "unmeasured",
+  "benchmark_solver_calls": 0,
+  "limitations": [
+    "Existing stdio v4 already reuses a snapshot. This formalizes and measures an existing lifecycle, not a new retrieval algorithm.",
+    "Same four query/budget pairs per group; per-pair setup allocation is amortized, not observed isolated-request latency.",
+    "Initial live index builds, imports/authentication and provider solving excluded; no cross-request cache invalidation measured.",
+    "OS caches uncontrolled, competitors sequential and order rotated; no cold-cache claims.",
+    "Source and artifact checks retained per native call; Graf still rebuilds once per private root.",
+    "Native comparison Graphify module launch and broker Graphify executable startup differ; no cross-boundary timing subtraction.",
+    "Native retrieval acceptance remains unpassed; formal decision rejects incomplete six-query subset.",
+    "Graphify code-only hint recall does not establish source-anchor or documentation quality; no accepted Graf baseline exists."
+  ]
+}
