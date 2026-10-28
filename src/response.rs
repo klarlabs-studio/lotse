@@ -43,7 +43,8 @@ pub struct LocateResponse {
 
 #[derive(Debug, Serialize)]
 pub struct Excerpt {
-    /// Anchor ID usable with expand; expansion retains the search anchor ID.
+    /// ID usable with expand: a chunk anchor, or range:anchor:start:end for
+    /// evidence's delivered physical lines. Range expansion retains that ID.
     pub id: String,
     pub path: String,
     pub start: usize,
@@ -62,4 +63,19 @@ pub struct Response {
     pub matched_chunks: usize,
     pub excerpts: Vec<Excerpt>,
     pub context: String,
+}
+
+/// Experimental locate-ranked exact source windows, one per selected file.
+#[derive(Debug, Serialize)]
+pub struct EvidenceResponse {
+    pub status: String,
+    pub output_kind: &'static str,
+    pub tokenizer: &'static str,
+    pub budget_scope: &'static str,
+    pub budget: usize,
+    pub context_tokens: usize,
+    pub matched_files: usize,
+    pub excerpts: Vec<Excerpt>,
+    pub context: String,
+    pub experimental: &'static str,
 }

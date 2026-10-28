@@ -1,0 +1,43 @@
+{
+  "id": "readonly-broker-profile-v1",
+  "purpose": "Exposed diagnostic of per-request verification cost and profiler perturbation; all production checks unchanged, no promotion",
+  "arms": [
+    "graf_evidence_selective",
+    "graf_evidence_rescue",
+    "graphify"
+  ],
+  "repeats": 3,
+  "budgets": [
+    2000,
+    8000
+  ],
+  "tokenizer": "cl100k_base",
+  "output": "results/readonly-broker-profile-v1-comparison.json",
+  "graphify_adapter": "native-cli-v2",
+  "queries": {
+    "path": "benchmark/readonly-broker-overhead-v1-queries.json",
+    "sha256": "7e4bc37824772b2f8a4cded3b5042a5d89a27d1bd6b2f3cd5ca787f13efc566e"
+  },
+  "corpora": {
+    "path": "benchmark/corpora.json",
+    "sha256": "6cfe85fb5dad9a84e132d11fbb06e3270682dd435ea6a8403f0cb3262e20e95f"
+  },
+  "snapshots": {
+    "path": "results/snapshots.json",
+    "sha256": "7fed7306270848ffb49996a741abcffbcacefd5264d5c5e7ae743339e590e2f1"
+  },
+  "index_binary": {
+    "path": ".research/bin/graf-v61",
+    "sha256": "934616324941b44651892058caeda96d08a5b1b8f17d0a8e012332361f880694"
+  },
+  "binaries": {
+    "graf_evidence_selective": {
+      "path": ".research/bin/graf-v61",
+      "sha256": "934616324941b44651892058caeda96d08a5b1b8f17d0a8e012332361f880694"
+    },
+    "graf_evidence_rescue": {
+      "path": ".research/bin/graf-v59",
+      "sha256": "ba75b04cd449534f25aaae7c7b86bc96be82daafa73c1a242044cecab37243ab"
+    }
+  }
+}

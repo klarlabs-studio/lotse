@@ -22,6 +22,7 @@ import sys
 
 from acceptance import number
 from paired_stats import holm, non_inferiority_p, required_n, sign_flip_p, wilson
+from reports import write_decision
 
 BASE = Path(__file__).resolve().parents[1]
 
@@ -109,9 +110,16 @@ def evaluate(rows, expected, candidate, prereg, role, family=1):
     primary = _primary(table, prereg, family)
     guardrails = _guardrails(table, expected, prereg)
     tail = _tail(table, expected, prereg)
+    held = prereg["workloads"]["held_out"]
+    minimum = held["minimum_queries"]
+    planned = max(minimum, held.get("pilot_required_queries", {}).get(candidate, minimum))
     blockers = []
     if role != "held_out":
         blockers.append(f"{role} workload: the decision rule applies only to the frozen held-out set")
+    if primary["queries"] < minimum:
+        blockers.append(f"Only {primary['queries']} queries; preregistered minimum is {minimum}")
+    if any(g["queries"] < planned for g in guardrails):
+        blockers.append(f"Insufficient scored queries: frozen pilot/minimum requires {planned} per guardrail")
     if not primary["passed"]:
         blockers.append("No significant reduction in the primary metric")
     blockers += [f"Not non-inferior: {g['metric']} at {g['budget']}"
@@ -122,6 +130,7 @@ def evaluate(rows, expected, candidate, prereg, role, family=1):
             "workload": role, "product_promotion_allowed": False,
             "promotion_requires": "preregistered agent trials with complete usage accounting",
             "blockers": blockers, "primary": primary, "guardrails": guardrails, "tail": tail,
+            "sample_size": {"minimum_queries": minimum, "required_scored_queries": planned},
             "planning": _planning(guardrails, prereg), "cases": _cases(table, quality)}
 
 
@@ -159,6 +168,8 @@ def main():
     from compare_graphify import GRAF_ARMS, code_hint_recall
     parser.add_argument("--arm", action="append", choices=tuple(GRAF_ARMS))
     parser.add_argument("--workload", choices=("development", "held_out"), default="development")
+    parser.add_argument("--comparison", type=Path,
+                        help="Saved comparison for this workload (default: standard workload path)")
     args = parser.parse_args()
     prereg_path = BASE / "benchmark/preregistration.json"
     prereg = json.loads(prereg_path.read_text())
@@ -166,15 +177,17 @@ def main():
     queries = json.loads(query_path.read_text())
     budgets = sorted({prereg["primary"]["budget"], *prereg["guardrails"]["budgets"]})
     expected = {(q["id"], b): code_hint_recall(q, []) is not None for q in queries for b in budgets}
-    source = BASE / ("results/heldout-comparison.json" if role == "held_out"
-                     else "results/graphify-comparison.json")
+    source = (args.comparison.resolve() if args.comparison else BASE /
+              ("results/heldout-comparison.json" if role == "held_out"
+               else "results/graphify-comparison.json"))
     # Authenticate saved outputs against their source receipts before evaluating.
     audit = subprocess.run([sys.executable, str(BASE / "benchmark/check_comparison.py"),
                             "--comparison", str(source)], capture_output=True, text=True)
     if audit.returncode:
-        result = {"status": "invalid_evidence", "product_promotion_allowed": False,
+        result = {"status": "invalid_evidence", "product_promotion_allowed": False, "workload": role,
+                  "comparison_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
                   "audit_stdout": audit.stdout, "audit_stderr": audit.stderr}
-        (BASE / "results/decision.json").write_text(json.dumps(result, indent=2) + "\n")
+        write_decision(result)
         print(json.dumps({"status": result["status"], "audit_stderr": audit.stderr[-500:]}, indent=2))
         return 1
     data = json.loads(source.read_text())
@@ -183,19 +196,26 @@ def main():
     rows, judging = data["rows"], None
     if role == "held_out":
         from pool_judgments import JUDGMENTS, POOL, check_judgments
-        if not (POOL.is_file() and JUDGMENTS.is_file()):
+        held = prereg["workloads"]["held_out"]
+        pool_path = BASE / held["pool"] if "pool" in held else POOL
+        judgments_path = BASE / held["judgments"] if "judgments" in held else JUDGMENTS
+        if not (pool_path.is_file() and judgments_path.is_file()):
             raise RuntimeError("Pooled blind judgments are required before a held-out decision")
-        pool = {q: v["files"] for q, v in json.loads(POOL.read_text())["queries"].items()}
-        judgments = json.loads(JUDGMENTS.read_text())
+        pool_data = json.loads(pool_path.read_text())
+        if "run_plan" in data and (pool_data.get("comparison_sha256") != hashlib.sha256(source.read_bytes()).hexdigest()
+                                   or pool_data.get("query_sha256") != data["query_sha256"]):
+            raise RuntimeError("Blind pool does not authenticate this comparison and question set")
+        pool = {q: v["files"] for q, v in pool_data["queries"].items()}
+        judgments = json.loads(judgments_path.read_text())
         if errors := check_judgments(pool, judgments):
             raise RuntimeError(f"Incomplete judgments: {errors[:3]}")
         rows = rescore(rows, {q["id"]: q for q in queries}, judgments)
-        judging = {"pool_sha256": hashlib.sha256(POOL.read_bytes()).hexdigest(),
-                   "judgments_sha256": hashlib.sha256(JUDGMENTS.read_bytes()).hexdigest()}
+        judging = {"pool_sha256": hashlib.sha256(pool_path.read_bytes()).hexdigest(),
+                   "judgments_sha256": hashlib.sha256(judgments_path.read_bytes()).hexdigest()}
     experimental = prereg["arms"]["experimental"]
     arms = [evaluate(rows, expected, arm, prereg, role,
                      family=len(experimental) if arm in experimental else 1)
-            for arm in args.arm or GRAF_ARMS]
+            for arm in args.arm or [a for a in data["arms"] if a in GRAF_ARMS]]
     result = {"status": "passed" if all(a["status"] == "passed" for a in arms) else "not_passed",
               "product_promotion_allowed": False, "workload": role,
               "preregistration_sha256": hashlib.sha256(prereg_path.read_bytes()).hexdigest(),
@@ -203,8 +223,7 @@ def main():
               "evaluator_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "judging": judging,
               "arms": arms}
-    dest = BASE / "results/decision.json"
-    dest.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
+    dest = write_decision(result)
     print(json.dumps({"status": result["status"], "workload": role, "report": str(dest),
                       "arms": [{"candidate": a["candidate"], "blockers": a["blockers"]} for a in arms]},
                      indent=2))

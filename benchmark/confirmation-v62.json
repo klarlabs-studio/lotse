@@ -1,0 +1,139 @@
+{
+  "id": "confirmation-v62",
+  "status": "preparation_only_questions_not_frozen",
+  "date": "2026-10-24",
+  "repositories": [
+    {
+      "id": "zerolog",
+      "repository": "rs/zerolog",
+      "commit": "20ca4734f29c37a6781c3c502442c349b306dee3",
+      "language": "Go",
+      "role": "prospective_confirmation",
+      "archive_sha256": "a936d51e0c014b8474a01c380086371137091b7a7c3416c0a1a7b22e11a4abb3",
+      "files": 101,
+      "url": "https://codeload.github.com/rs/zerolog/tar.gz/20ca4734f29c37a6781c3c502442c349b306dee3"
+    },
+    {
+      "id": "rich",
+      "repository": "Textualize/rich",
+      "commit": "9d8f9a372cc5916fd4781fec207ced7ddac2f08f",
+      "language": "Python",
+      "role": "prospective_confirmation",
+      "archive_sha256": "ff350d1e0052136c093b0162908821d213a57a863cc8498c99fac5cc82d661a6",
+      "files": 553,
+      "url": "https://codeload.github.com/Textualize/rich/tar.gz/9d8f9a372cc5916fd4781fec207ced7ddac2f08f"
+    },
+    {
+      "id": "pino",
+      "repository": "pinojs/pino",
+      "commit": "b29dbe97820630e7128e464c50263b427965ec99",
+      "language": "JavaScript",
+      "role": "prospective_confirmation",
+      "archive_sha256": "e318547c7a5e4b1d06b7e8f6af4fc936693236e595b0f7e1107c014058bbd5cc",
+      "files": 218,
+      "url": "https://codeload.github.com/pinojs/pino/tar.gz/b29dbe97820630e7128e464c50263b427965ec99"
+    }
+  ],
+  "category_quota": {
+    "exact": 8,
+    "conceptual": 8,
+    "trace": 8,
+    "architecture": 4,
+    "impact": 5,
+    "discrepancy": 4,
+    "no_evidence": 4
+  },
+  "minimum_scored_queries": 110,
+  "planned_queries": 123,
+  "planned_scored_queries": 111,
+  "pilot_receipts": [
+    {
+      "arm": "graf_evidence_selective",
+      "decision": "results/selective-evidence-v61-decision.json",
+      "sha256": "959f6989b493584dda7d5f6fbbc494ad0ff80346dc423a6340bee8b44245fcb9",
+      "required_queries": 110
+    },
+    {
+      "arm": "graf_evidence_rescue",
+      "decision": "results/rescue-evidence-v59-decision.json",
+      "sha256": "871c0572dc12152c2bd257c1e3610aec851b97fe015c57e1527bb4f70f375dd9",
+      "required_queries": 110
+    }
+  ],
+  "candidate": {
+    "arm": "graf_evidence_selective",
+    "binary": ".research/bin/graf-v61",
+    "sha256": "934616324941b44651892058caeda96d08a5b1b8f17d0a8e012332361f880694"
+  },
+  "ablation_control": {
+    "arm": "graf_evidence_rescue",
+    "binary": ".research/bin/graf-v59",
+    "sha256": "ba75b04cd449534f25aaae7c7b86bc96be82daafa73c1a242044cecab37243ab",
+    "role": "experimental control; no accepted graf release exists"
+  },
+  "graphify": {
+    "id": "graphify",
+    "repository": "Graphify-Labs/graphify",
+    "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+    "language": "Python",
+    "role": "baseline"
+  },
+  "primary": {
+    "metric": "output_tokens",
+    "budget": 2000,
+    "unit": "query",
+    "alpha": 0.0015625,
+    "historical_experimental_family": 32,
+    "test": "one-sided paired sign-flip permutation"
+  },
+  "guardrails": {
+    "metrics": [
+      "code_file_hint_recall",
+      "code_file_hint_recall_at_5",
+      "code_file_hint_recall_at_10"
+    ],
+    "budgets": [
+      2000,
+      8000
+    ],
+    "margin": 0.1,
+    "correction": "holm",
+    "alpha": 0.05
+  },
+  "tail": {
+    "definition": "candidate code-file recall zero where Graphify is positive at either budget",
+    "max_wilson_upper": 0.15,
+    "confidence": 0.95
+  },
+  "run_plan": {
+    "tokenizer": "cl100k_base",
+    "budgets": [
+      2000,
+      8000
+    ],
+    "paired_repetitions": 1,
+    "sequential_competitors": true,
+    "cache": "fresh indexes, prebuilt unit caches, uncontrolled shared warm OS cache; no latency inference",
+    "graphify_adapter": "native-cli-v2",
+    "graphify_mode": "code_only_no_clustering",
+    "build_timeout_seconds": 180,
+    "query_timeout_seconds": 90,
+    "graphify_build_workers": 2,
+    "external_solver_calls": 0,
+    "latency_inference": false
+  },
+  "required_before_comparison": [
+    "independent source-only questions and source review",
+    "freeze exact query hash in a new active preregistration version",
+    "record generalized driver, corpora manifest and snapshot receipt hashes; existing driver is restricted to original three repositories",
+    "validate frozen source sets and complete run plan"
+  ],
+  "required_after_comparison": [
+    "blind pooled top-10 code-file relevance judgments, independently reviewed",
+    "run benchmark/acceptance.py and benchmark/decision.py with actual nonzero exits retained",
+    "preserve raw commands, outputs, sources and every timing sample"
+  ],
+  "promotion_allowed": false,
+  "agent_savings": "unmeasured; requires separate natural task evaluation with matched solver/spend/accounting",
+  "independence_limit": "Local exposure audit cannot establish global independence. Packet is prepared by the tuning session; independent authors and reviewers must use only the exported source packet."
+}

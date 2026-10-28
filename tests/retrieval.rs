@@ -897,6 +897,111 @@ fn mcp_server_indexes_on_demand_and_follows_edits() {
 }
 
 #[test]
+fn mcp_refreshes_membership_and_new_terms_before_ranking() {
+    let dir = agent_fixture();
+    let mut server = graf::mcp::Server::new(dir.path()).unwrap();
+    server
+        .call("triage", &serde_json::json!({"issue": "serialize payload"}))
+        .unwrap();
+
+    fs::write(
+        dir.path().join("lib/new.js"),
+        "function zebrabridge() { return 42 }\n",
+    )
+    .unwrap();
+    for tool in ["locate", "search", "units", "triage"] {
+        let args = if tool == "triage" {
+            serde_json::json!({"issue": "zebrabridge"})
+        } else {
+            serde_json::json!({"query": "zebrabridge"})
+        };
+        let text = server.call(tool, &args).unwrap();
+        assert!(text.contains("lib/new.js"), "{tool}: {text}");
+    }
+
+    // This term was absent from the postings; no old matching excerpt could trigger an error.
+    fs::write(
+        dir.path().join("lib/new.js"),
+        "function otterbridge() { return 42 }\n",
+    )
+    .unwrap();
+    assert!(
+        server
+            .call("units", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .contains("otterbridge")
+    );
+    assert!(
+        server
+            .call("locate", &serde_json::json!({"query": "zebrabridge"}))
+            .unwrap()
+            .is_empty()
+    );
+
+    fs::rename(
+        dir.path().join("lib/new.js"),
+        dir.path().join("lib/renamed.js"),
+    )
+    .unwrap();
+    let renamed = server
+        .call("locate", &serde_json::json!({"query": "otterbridge"}))
+        .unwrap();
+    assert!(renamed.contains("lib/renamed.js") && !renamed.contains("lib/new.js"));
+    fs::write(dir.path().join(".gitignore"), "lib/renamed.js\n").unwrap();
+    assert!(
+        server
+            .call("locate", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .is_empty()
+    );
+    fs::write(dir.path().join(".gitignore"), "").unwrap();
+    assert!(
+        !server
+            .call("locate", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .is_empty()
+    );
+    fs::remove_file(dir.path().join("lib/renamed.js")).unwrap();
+    assert!(
+        server
+            .call("units", &serde_json::json!({"query": "otterbridge"}))
+            .unwrap()
+            .is_empty()
+    );
+}
+
+#[test]
+fn mcp_search_handles_expand_and_fit_the_budget() {
+    let dir = agent_fixture();
+    let mut server = graf::mcp::Server::new(dir.path()).unwrap();
+    let bpe = tiktoken_rs::cl100k_base().unwrap();
+    for budget in [20, 40, 100, 2000] {
+        let text = server
+            .call(
+                "search",
+                &serde_json::json!({"query": "serialize payload", "budget": budget}),
+            )
+            .unwrap();
+        assert!(bpe.encode_ordinary(&text).len() <= budget);
+        if text.is_empty() {
+            continue;
+        }
+        let handle = text
+            .lines()
+            .find_map(|line| line.strip_prefix("id="))
+            .unwrap();
+        let expanded = server
+            .call("expand", &serde_json::json!({"id": handle}))
+            .unwrap();
+        assert!(expanded.contains("serialize"), "{expanded}");
+    }
+    let text = server
+        .call("search", &serde_json::json!({"query": "serialize payload"}))
+        .unwrap();
+    assert!(text.contains("id="));
+}
+
+#[test]
 fn mcp_cli_speaks_newline_delimited_json_rpc() {
     use std::io::Write as _;
     let dir = agent_fixture();

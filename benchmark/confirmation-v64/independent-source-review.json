@@ -1,0 +1,1159 @@
+{
+  "reviewers": [
+    {
+      "reviewer_id": "codex-independent-source-review-zerolog-02",
+      "source_only": true,
+      "independent_of_tuning": true,
+      "independent_of_author": true,
+      "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+      "queries_sha256": "4d716de41e1aeb17fa79ceba0d507bae71b6f981f878ea37d4ea74fb912fb2ae",
+      "verified_case_ids": [
+        "h-zerolog-exact-warning-level",
+        "h-zerolog-exact-update-context",
+        "h-zerolog-exact-msgfunc",
+        "h-zerolog-exact-levelwriter",
+        "h-zerolog-exact-diode-selection",
+        "h-zerolog-exact-sanitize-prefix",
+        "h-zerolog-exact-context-array",
+        "h-zerolog-exact-log-level-names",
+        "h-zerolog-conceptual-msg-completion",
+        "h-zerolog-conceptual-field-input-shapes",
+        "h-zerolog-conceptual-sampler-count",
+        "h-zerolog-conceptual-burst-sampling",
+        "h-zerolog-conceptual-slog-groups",
+        "h-zerolog-conceptual-console-pipeline",
+        "h-zerolog-conceptual-context-fallback",
+        "h-zerolog-conceptual-interface-reflection",
+        "h-zerolog-trace-warning-parse-test",
+        "h-zerolog-trace-print-event",
+        "h-zerolog-trace-event-send-hooks",
+        "h-zerolog-trace-context-roundtrip",
+        "h-zerolog-trace-diode-lifecycle",
+        "h-zerolog-trace-slog-handle",
+        "h-zerolog-trace-journald-write",
+        "h-zerolog-trace-dict-array",
+        "h-zerolog-arch-logger-event-encoder",
+        "h-zerolog-arch-context-builders",
+        "h-zerolog-arch-diode-components",
+        "h-zerolog-arch-slog-adapter",
+        "h-zerolog-impact-warning-alias",
+        "h-zerolog-impact-field-name",
+        "h-zerolog-impact-slog-disabled",
+        "h-zerolog-impact-diode-pool-cap",
+        "h-zerolog-impact-global-level",
+        "h-zerolog-disc-print-level",
+        "h-zerolog-disc-msgf-disabled-allocation",
+        "h-zerolog-disc-slog-group-shape",
+        "h-zerolog-disc-write-method",
+        "h-zerolog-no-midnight-rotation",
+        "h-zerolog-no-at-rest-encryption",
+        "h-zerolog-no-http-ingest",
+        "h-zerolog-no-config-watcher"
+      ],
+      "per_case_findings": [
+        {
+          "case_id": "h-zerolog-exact-warning-level",
+          "review_result": "verified",
+          "finding": "Re-authored as a distinct numeric ParseLevel boundary task. The parser accepts -128 through 127; the out-of-range test expects an error and NoLevel."
+        },
+        {
+          "case_id": "h-zerolog-exact-update-context",
+          "review_result": "verified",
+          "finding": "Verified UpdateContext is the mutating callback API and its comments warn it is not concurrency safe, recommending a child logger for concurrent updates."
+        },
+        {
+          "case_id": "h-zerolog-exact-msgfunc",
+          "review_result": "verified",
+          "finding": "Verified MsgFunc returns immediately for a nil Event; the cited test now includes the callback flag and nil-receiver invocation."
+        },
+        {
+          "case_id": "h-zerolog-exact-levelwriter",
+          "review_result": "verified",
+          "finding": "Verified LevelWriter embeds io.Writer and adds WriteLevel(level, payload)."
+        },
+        {
+          "case_id": "h-zerolog-exact-diode-selection",
+          "review_result": "verified",
+          "finding": "Verified positive poll interval selects Poller with interval/context options; zero or negative selects Waiter."
+        },
+        {
+          "case_id": "h-zerolog-exact-sanitize-prefix",
+          "review_result": "verified",
+          "finding": "Verified empty, digit-leading, and underscore-leading normalized journald keys are prefixed with X; the cited test includes empty and digit cases."
+        },
+        {
+          "case_id": "h-zerolog-exact-context-array",
+          "review_result": "verified",
+          "finding": "Verified CreateArray copies stack, context, and hooks from the context logger."
+        },
+        {
+          "case_id": "h-zerolog-exact-log-level-names",
+          "review_result": "verified",
+          "finding": "Verified the enum ordering and explicit TraceLevel=-1 from the complete cited constant block."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-msg-completion",
+          "review_result": "verified",
+          "finding": "Verified the API comment requires Msg to send the event; Msg also nil-guards its receiver."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-field-input-shapes",
+          "review_result": "verified",
+          "finding": "Verified Fields accepts map[string]interface{} or alternating key/value []interface{} and ignores extras."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-sampler-count",
+          "review_result": "verified",
+          "finding": "Verified N=0 rejects, N=1 passes, and N>1 passes calls where the atomically incremented counter modulo N equals 1."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-burst-sampling",
+          "review_result": "verified",
+          "finding": "Verified the BurstSampler contract and code: after the burst it delegates to NextSampler, and returns false when none is configured."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-slog-groups",
+          "review_result": "verified",
+          "finding": "Re-authored to avoid duplicating the separate documentation/implementation group-shape discrepancy. Verified WithAttrs clones and appends attributes; Handle adds pre-attached attributes before record attributes."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-console-pipeline",
+          "review_result": "verified",
+          "finding": "Verified Write decodes JSON/CBOR input, runs optional preparation, writes ordered parts and remaining fields, applies extra formatting, then writes a newline to Out."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-context-fallback",
+          "review_result": "verified",
+          "finding": "Verified Ctx returns an attached logger, then DefaultContextLogger when set, otherwise the disabled logger."
+        },
+        {
+          "case_id": "h-zerolog-conceptual-interface-reflection",
+          "review_result": "verified",
+          "finding": "Verified Interface dispatches LogObjectMarshaler values through Object and all other values through encoder reflection."
+        },
+        {
+          "case_id": "h-zerolog-trace-warning-parse-test",
+          "review_result": "verified",
+          "finding": "Verified case-insensitive WARNING parsing resolves to WarnLevel without error, and the regression test exercises it."
+        },
+        {
+          "case_id": "h-zerolog-trace-print-event",
+          "review_result": "verified",
+          "finding": "Verified package Logger.Print uses Debug, adjusts caller skip by one frame, and sends fmt.Sprint(v...)."
+        },
+        {
+          "case_id": "h-zerolog-trace-event-send-hooks",
+          "review_result": "verified",
+          "finding": "Evidence now includes hook execution, optional message-field encoding, and the downstream write path; hooks run before message insertion and writing."
+        },
+        {
+          "case_id": "h-zerolog-trace-context-roundtrip",
+          "review_result": "verified",
+          "finding": "Verified WithContext stores a pointer to a logger under the private key and Ctx returns that logger when present."
+        },
+        {
+          "case_id": "h-zerolog-trace-diode-lifecycle",
+          "review_result": "verified",
+          "finding": "Evidence now traces NewWriter selection and consumer startup, producer buffer-copy/enqueue, poll consumption and destination Write, then Close cancellation, drain wait, and optional destination Close."
+        },
+        {
+          "case_id": "h-zerolog-trace-slog-handle",
+          "review_result": "verified",
+          "finding": "Evidence now includes level mapping, event creation, context propagation, pre-attached and record attributes, timestamp handling, and final message emission."
+        },
+        {
+          "case_id": "h-zerolog-trace-journald-write",
+          "review_result": "verified",
+          "finding": "Evidence now includes priority conversion, field filtering and value conversion, original JSON argument, and the SendFunc/journal.Send call."
+        },
+        {
+          "case_id": "h-zerolog-trace-dict-array",
+          "review_result": "verified",
+          "finding": "Verified Dict appends the end marker and nested bytes, then returns the temporary Event to the pool."
+        },
+        {
+          "case_id": "h-zerolog-arch-logger-event-encoder",
+          "review_result": "verified",
+          "finding": "Evidence covers Info creation, Logger.should filtering, newEvent level/context setup, message encoding, and Event.write destination call."
+        },
+        {
+          "case_id": "h-zerolog-arch-context-builders",
+          "review_result": "verified",
+          "finding": "Reworded for precision: these builders copy logger-associated context, stack, and hooks into temporary values; the evidence includes those fields."
+        },
+        {
+          "case_id": "h-zerolog-arch-diode-components",
+          "review_result": "verified",
+          "finding": "Evidence now shows the many-to-one diode, interval-based Poller/Waiter choice, launched consumer, and consumer writes to the wrapped destination."
+        },
+        {
+          "case_id": "h-zerolog-arch-slog-adapter",
+          "review_result": "verified",
+          "finding": "Evidence now covers handler construction, the full level conversion switch, and attribute resolution/group/type-specific field conversion."
+        },
+        {
+          "case_id": "h-zerolog-impact-warning-alias",
+          "review_result": "verified",
+          "finding": "Re-authored to remove the duplicate warning-alias hypothetical. Verified the Object dispatch path and the Interface(Object) test case that exercises a marshaler value."
+        },
+        {
+          "case_id": "h-zerolog-impact-field-name",
+          "review_result": "verified",
+          "finding": "Verified the shared timestamp key is configurable and Event.Time uses it when encoding the timestamp field."
+        },
+        {
+          "case_id": "h-zerolog-impact-slog-disabled",
+          "review_result": "verified",
+          "finding": "Verified disabled event construction returns nil and MsgFunc nil-guards; the cited test setup now shows the callback is not invoked."
+        },
+        {
+          "case_id": "h-zerolog-impact-diode-pool-cap",
+          "review_result": "verified",
+          "finding": "Verified only buffers with capacity at most 64 KiB return to the pool; raising/removing the cap permits larger retained buffers."
+        },
+        {
+          "case_id": "h-zerolog-impact-global-level",
+          "review_result": "verified",
+          "finding": "Verified Logger.should enforces both local and global thresholds; added README evidence for the user-facing global-minimum guarantee."
+        },
+        {
+          "case_id": "h-zerolog-disc-print-level",
+          "review_result": "verified",
+          "finding": "Verified the README says trace while package log.Print calls Debug; evidence directly supports the discrepancy."
+        },
+        {
+          "case_id": "h-zerolog-disc-msgf-disabled-allocation",
+          "review_result": "verified",
+          "finding": "Verified Msgf returns immediately for a nil Event while the README retains its allocation warning; this is a valid source-level tension because caller-side argument evaluation/allocation is not ruled out by the nil guard."
+        },
+        {
+          "case_id": "h-zerolog-disc-slog-group-shape",
+          "review_result": "verified",
+          "finding": "Verified docs describe nesting while implementation joins group/key with dots and the test asserts request.method as a flat key."
+        },
+        {
+          "case_id": "h-zerolog-disc-write-method",
+          "review_result": "verified",
+          "finding": "Verified New documents the LevelWriter exception to the generic Write comment and the interface specifies WriteLevel."
+        },
+        {
+          "case_id": "h-zerolog-no-midnight-rotation",
+          "review_result": "verified",
+          "finding": "Negative control verified: no rotation, retention, rolling-file, or midnight implementation terms occur in the packet source search."
+        },
+        {
+          "case_id": "h-zerolog-no-at-rest-encryption",
+          "review_result": "verified",
+          "finding": "Negative control verified: no encryption/cipher/at-rest implementation occurs in the packet source search."
+        },
+        {
+          "case_id": "h-zerolog-no-http-ingest",
+          "review_result": "verified",
+          "finding": "Negative control verified: source exposes local journald SendFunc/journal.Send and no HTTP upload/ingestion client or endpoint."
+        },
+        {
+          "case_id": "h-zerolog-no-config-watcher",
+          "review_result": "verified",
+          "finding": "Negative control verified: YAML is referenced only for level text marshaling; no watcher, reload, or filesystem notification implementation occurs."
+        }
+      ],
+      "searches_for_negatives": [
+        {
+          "case_id": "h-zerolog-no-midnight-rotation",
+          "patterns": [
+            "rotate",
+            "rotation",
+            "retention",
+            "rolling.?file",
+            "midnight"
+          ],
+          "result": "No matches in sources/zerolog.",
+          "conclusion": "No file rotation or retention feature is evidenced."
+        },
+        {
+          "case_id": "h-zerolog-no-at-rest-encryption",
+          "patterns": [
+            "encrypt",
+            "encryption",
+            "cipher",
+            "aes",
+            "chacha",
+            "at.?rest"
+          ],
+          "result": "No matches in sources/zerolog.",
+          "conclusion": "No built-in record encryption stage is evidenced."
+        },
+        {
+          "case_id": "h-zerolog-no-http-ingest",
+          "patterns": [
+            "http\\.Post",
+            "http\\.NewRequest",
+            "upload",
+            "ingest",
+            "endpoint",
+            "journal\\.Send",
+            "SendFunc"
+          ],
+          "result": "Only local journald SendFunc/journal.Send matches; no HTTP request, upload, or ingestion endpoint matches.",
+          "conclusion": "NewJournalDWriter sends to the journald integration, not a source-evidenced remote HTTP endpoint."
+        },
+        {
+          "case_id": "h-zerolog-no-config-watcher",
+          "patterns": [
+            "fsnotify",
+            "watcher",
+            "watch\\(",
+            "yaml",
+            "reload",
+            "config"
+          ],
+          "result": "YAML matches only level MarshalText/UnmarshalText comments; other config matches are unrelated options/docs. No watcher or reload implementation matches.",
+          "conclusion": "The packet does not evidence automatic YAML configuration reload."
+        }
+      ],
+      "changes": [
+        {
+          "case_ids": [
+            "h-zerolog-exact-warning-level"
+          ],
+          "change": "Replaced repeated warning-alias lookup with a distinct numeric ParseLevel range/bounds question."
+        },
+        {
+          "case_ids": [
+            "h-zerolog-conceptual-slog-groups"
+          ],
+          "change": "Replaced duplicated group-flattening behavior with WithAttrs accumulation and record-application behavior."
+        },
+        {
+          "case_ids": [
+            "h-zerolog-impact-warning-alias"
+          ],
+          "change": "Replaced repeated warning-alias impact hypothetical with Event.Interface marshaler dispatch impact."
+        },
+        {
+          "case_ids": [
+            "h-zerolog-arch-context-builders"
+          ],
+          "change": "Clarified the question to ask which logger-associated state is copied into temporary values."
+        },
+        {
+          "case_ids": [
+            "h-zerolog-exact-msgfunc",
+            "h-zerolog-conceptual-sampler-count",
+            "h-zerolog-conceptual-console-pipeline",
+            "h-zerolog-conceptual-interface-reflection",
+            "h-zerolog-trace-diode-lifecycle",
+            "h-zerolog-trace-event-send-hooks",
+            "h-zerolog-trace-slog-handle",
+            "h-zerolog-trace-journald-write",
+            "h-zerolog-arch-logger-event-encoder",
+            "h-zerolog-arch-context-builders",
+            "h-zerolog-arch-diode-components",
+            "h-zerolog-arch-slog-adapter",
+            "h-zerolog-impact-slog-disabled",
+            "h-zerolog-impact-global-level"
+          ],
+          "change": "Expanded cited evidence to include implementation steps, regression setup, or user-facing guarantee needed to answer the question."
+        },
+        {
+          "change": "Saved the pre-review question file as submission/zerolog-questions.before-review.json and updated zerolog-review.json queries_sha256; negative rationales were unchanged."
+        },
+        {
+          "change": "Preserved the pre-anchor-fix reviewed questions and review files; corrected all 30 failing evidence entries by setting anchors to the exact start line and moving three ranges forward from blank start lines. Recomputed author and reviewer query hashes."
+        }
+      ],
+      "unresolved_issues": [],
+      "anchor_validation": {
+        "evidence_checked": 84,
+        "start_line_anchor_passes": 84,
+        "anchor_errors": 0,
+        "source_hash_mismatches": 0,
+        "method": "For every evidence item, checked anchor in source_path.read_text().splitlines()[start-1]; independently checked file_sha256 against source bytes."
+      }
+    },
+    {
+      "reviewer_id": "independent-rich-source-reviewer",
+      "source_only": true,
+      "independent_of_tuning": true,
+      "independent_of_author": true,
+      "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+      "queries_sha256": "89f03b3bc7c133e5fd94fcd73e65c955e739648b6ad7fc1435593110c668fa43",
+      "verified_case_ids": [
+        "h-rich-01",
+        "h-rich-02",
+        "h-rich-03",
+        "h-rich-04",
+        "h-rich-05",
+        "h-rich-06",
+        "h-rich-07",
+        "h-rich-08",
+        "h-rich-09",
+        "h-rich-10",
+        "h-rich-11",
+        "h-rich-12",
+        "h-rich-13",
+        "h-rich-14",
+        "h-rich-15",
+        "h-rich-16",
+        "h-rich-17",
+        "h-rich-18",
+        "h-rich-19",
+        "h-rich-20",
+        "h-rich-21",
+        "h-rich-22",
+        "h-rich-23",
+        "h-rich-24",
+        "h-rich-25",
+        "h-rich-26",
+        "h-rich-27",
+        "h-rich-28",
+        "h-rich-29",
+        "h-rich-30",
+        "h-rich-31",
+        "h-rich-32",
+        "h-rich-33",
+        "h-rich-34",
+        "h-rich-35",
+        "h-rich-36",
+        "h-rich-37",
+        "h-rich-38",
+        "h-rich-39",
+        "h-rich-40",
+        "h-rich-41"
+      ],
+      "per_case_findings": [
+        {
+          "id": "h-rich-01",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Distinct exact-symbol lookup for Console.out; related to h-rich-09 and h-rich-17, which ask comparison and execution trace.",
+          "finding": "Added markup=False and no_wrap=True anchors; positional string conversion and crop=False were already supported."
+        },
+        {
+          "id": "h-rich-02",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique helper-name lookup.",
+          "finding": "ratio_distribute is explicitly called for flexible widths using the remaining width, ratios, and minimums."
+        },
+        {
+          "id": "h-rich-03",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Text method signature lookup.",
+          "finding": "The declaration names render and its optional end parameter; the docstring confirms Segment rendering."
+        },
+        {
+          "id": "h-rich-04",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Progress method lookup.",
+          "finding": "The declaration identifies make_tasks_table with Iterable[Task] input and Table result."
+        },
+        {
+          "id": "h-rich-05",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique markup function lookup.",
+          "finding": "Function declaration, emoji=True default, and Text return annotation support the requested identification."
+        },
+        {
+          "id": "h-rich-06",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique exact Layout.render method lookup.",
+          "finding": "The method declaration returns RenderMap; its docstring describes Layout-to-region/lines mapping."
+        },
+        {
+          "id": "h-rich-07",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-24 but asks method identity and supported crop/pad behavior, while h-rich-24 asks newline handling.",
+          "finding": "Added method documentation and target-length/padding anchors to support the behavior beyond the method name."
+        },
+        {
+          "id": "h-rich-08",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Live method signature lookup.",
+          "finding": "The update declaration explicitly provides refresh=False."
+        },
+        {
+          "id": "h-rich-09",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-01 and h-rich-17 but separately asks a conceptual comparison with Console.print.",
+          "finding": "Console.out stringifies objects and calls print with markup disabled; Console.print is separately declared."
+        },
+        {
+          "id": "h-rich-10",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-30, which asks collapse eligibility and fallback, while this asks measurement and constraint sequence.",
+          "finding": "Measurements, _collapse_widths, and the even-reduction fallback are evidenced."
+        },
+        {
+          "id": "h-rich-11",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-29 and h-rich-34; this is the general soft-wrap option setup, while those ask explicit overrides and a docs/default comparison.",
+          "finding": "The code defaults no_wrap and overflow only when unspecified and always sets crop=False in soft-wrap mode."
+        },
+        {
+          "id": "h-rich-12",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique markup-stack behavior.",
+          "finding": "Added the reverse-stack search line; matching close tags pop the matching earlier stack entry."
+        },
+        {
+          "id": "h-rich-13",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Align width behavior.",
+          "finding": "Align measures the renderable maximum and uses it when width is unset."
+        },
+        {
+          "id": "h-rich-14",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-23 and h-rich-26, but focused on joining child lines into output rows.",
+          "finding": "Child renderables are rendered to lines, extended into layout rows, and emitted with line segments."
+        },
+        {
+          "id": "h-rich-15",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-20 and h-rich-28; asks task-row formatting, while h-rich-20 traces insertion and h-rich-28 isolates column-spec conversion.",
+          "finding": "Table construction, visibility filtering, and string/custom column formatting are evidenced."
+        },
+        {
+          "id": "h-rich-16",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Text measurement algorithm.",
+          "finding": "Added the Measurement return anchor; minimum width is the longest word and maximum is the widest line."
+        },
+        {
+          "id": "h-rich-17",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-01 and h-rich-09, but asks the argument-to-output path.",
+          "finding": "String conversion, markup disabling, and overflow=\"ignore\" are directly evidenced."
+        },
+        {
+          "id": "h-rich-18",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique table emission trace covering title, body, and caption.",
+          "finding": "Added the missing title branch; width calculation, body delegation, and caption branch are anchored."
+        },
+        {
+          "id": "h-rich-19",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Text render trace; h-rich-16 concerns measurement rather than rendering.",
+          "finding": "Added the resolved overflow and no_wrap arguments so option selection and segment conversion are both evidenced."
+        },
+        {
+          "id": "h-rich-20",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-15 but traces task creation/insertion through the renderable-to-table connection.",
+          "finding": "Added get_renderables-to-make_tasks_table and retained task insertion and row conversion anchors."
+        },
+        {
+          "id": "h-rich-21",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-31, but tests the refresh=True branch; h-rich-31 asks deferred refresh=False behavior.",
+          "finding": "Replaced unrelated constructor/start references with string conversion, lock, assignment, and conditional refresh in update."
+        },
+        {
+          "id": "h-rich-22",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique markup parse sequence.",
+          "finding": "Fast path, styled Text initialization, and parsed-tag iteration are anchored."
+        },
+        {
+          "id": "h-rich-23",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-14 and h-rich-26; this follows dimensions through leaf rendering to output rows.",
+          "finding": "Added dimensions, leaf filtering, and final row assembly/output anchors."
+        },
+        {
+          "id": "h-rich-24",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-07 but asks newline splitting and line flush behavior.",
+          "finding": "Removed anchors from a separate Segment splitting method and cited split_and_crop_lines newline partition, crop, and line-clear operations."
+        },
+        {
+          "id": "h-rich-25",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique rendering protocol question spanning docs and dispatch implementation.",
+          "finding": "Added the docs line that states the Console and ConsoleOptions parameters for __rich_console__; implementation dispatch is also cited."
+        },
+        {
+          "id": "h-rich-26",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-06 and h-rich-23, but asks architecture roles of partitioning versus leaf rendering.",
+          "finding": "Removed an unrelated update-path anchor and cited region division, leaf filtering, and render_lines."
+        },
+        {
+          "id": "h-rich-27",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Table pipeline delegation question.",
+          "finding": "Added the public __rich_console__ hook; width calculation and _measure_column/_render operations are evidenced."
+        },
+        {
+          "id": "h-rich-28",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Reworded to focus on conversion of string versus ProgressColumn specs; distinct from h-rich-15 task visibility and row formatting.",
+          "finding": "The source shows string specs become no-wrap Columns, ProgressColumn specs provide copied table columns, and Table.grid receives them."
+        },
+        {
+          "id": "h-rich-29",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Reworded as an explicit-override impact scenario; no_wrap=False and overflow=\"fold\" survive while crop is forced false.",
+          "finding": "The conditional assignments demonstrate which explicit values remain and which setting changes."
+        },
+        {
+          "id": "h-rich-30",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-10 but asks initial eligibility and fallback behavior.",
+          "finding": "Unfixed, wrappable columns are initially eligible; ratio_reduce is the last-resort fallback."
+        },
+        {
+          "id": "h-rich-31",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Related to h-rich-21 but asks refresh=False; the immediate state change and gated refresh are distinct outcomes.",
+          "finding": "Replaced unrelated constructor/start references with conversion, lock, assignment, and refresh guard anchors."
+        },
+        {
+          "id": "h-rich-32",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique visibility impact question.",
+          "finding": "Only visible tasks enter the table.add_row branch."
+        },
+        {
+          "id": "h-rich-33",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique total-reset and progress-sampling impact question.",
+          "finding": "Added advance delta and positive-sample condition; changed total resets samples before update sampling."
+        },
+        {
+          "id": "h-rich-34",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Reworded to compare the docs default statement with the actual omitted-argument and soft-wrap paths; distinct from h-rich-29 explicit overrides.",
+          "finding": "Docs say fold is default; Console.print parameter defaults to None, soft_wrap substitutes ignore, and per-call render options receive the selected value."
+        },
+        {
+          "id": "h-rich-35",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique docs/implementation comparison for Console.out flags.",
+          "finding": "Added missing markup=False anchor alongside emoji=False and crop=False."
+        },
+        {
+          "id": "h-rich-36",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique Live docs/signature discrepancy check.",
+          "finding": "Docs require explicit refresh under disabled auto-refresh; update defaults refresh=False."
+        },
+        {
+          "id": "h-rich-37",
+          "answerable": true,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Corrected a false premise: Text docs include fold, but omit ignore; this asks how the supplied ignore value reaches Text.wrap.",
+          "finding": "Text docs list fold/crop/ellipsis; Console soft_wrap supplies ignore; Text rendering chooses self.overflow, then options.overflow, then DEFAULT_OVERFLOW."
+        },
+        {
+          "id": "h-rich-38",
+          "answerable": false,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique negative control about a nonexistent DataFrame plus SQL-export API.",
+          "finding": "The changelog records Pandas pretty-printing support, but no requested DataFrame type-inference and SQL-export API exists."
+        },
+        {
+          "id": "h-rich-39",
+          "answerable": false,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique negative control about a CLI socket-output flag.",
+          "finding": "No such flag or built-in Rich socket transport appears in the supplied source tree."
+        },
+        {
+          "id": "h-rich-40",
+          "answerable": false,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique negative control about a Progress-to-browser dashboard API.",
+          "finding": "Progress produces terminal renderables; the benchmark dashboard references describe separate ASV benchmark output."
+        },
+        {
+          "id": "h-rich-41",
+          "answerable": false,
+          "anchors_valid": true,
+          "evidence_complete": true,
+          "distinctness": "Unique negative control about durable Live history.",
+          "finding": "Live is an in-context terminal display; source/docs reveal no database persistence across process restarts."
+        }
+      ],
+      "negative_control_searches": [
+        {
+          "case_id": "h-rich-38",
+          "scope": "sources/rich inventory and full source tree",
+          "queries": [
+            "pandas",
+            "DataFrame",
+            "SQL",
+            "export"
+          ],
+          "result": "The only relevant hit is a changelog entry for Pandas pretty-printing; no DataFrame API with type inference and SQL export."
+        },
+        {
+          "case_id": "h-rich-39",
+          "scope": "full source tree plus Console output setup",
+          "queries": [
+            "socket",
+            "socketserver",
+            "network output",
+            "CLI/argument parsing",
+            "output transport"
+          ],
+          "result": "No Rich command-line socket flag or built-in socket output transport found."
+        },
+        {
+          "case_id": "h-rich-40",
+          "scope": "Progress implementation, docs, examples, and full source inventory",
+          "queries": [
+            "browser dashboard",
+            "dashboard",
+            "webserver",
+            "Progress"
+          ],
+          "result": "Progress code builds terminal renderables and Table. Benchmark docs mention an unrelated ASV dashboard; no Progress browser dashboard API found."
+        },
+        {
+          "case_id": "h-rich-41",
+          "scope": "Live implementation, docs, and full source tree",
+          "queries": [
+            "database",
+            "persist",
+            "history storage",
+            "Live"
+          ],
+          "result": "Live manages a terminal renderable for the context lifetime; history hits are readline input, and no persistent Live history backend is present."
+        }
+      ],
+      "changes": [
+        "Preserved the authored file as rich-questions.before-review.json before edits.",
+        "Corrected incomplete evidence for Console.out flags, markup stack matching, table title emission, Text wrapping options, progress task trace, Live.update, markup parsing, Layout rendering, Segment splitting, protocol parameters, Table delegation, and Progress column conversion.",
+        "Changed h-rich-24 to remove evidence from a different Segment method.",
+        "Reworded h-rich-29 and h-rich-34 to reduce overlap and make their distinct conditions explicit.",
+        "Reworded h-rich-37 because the original claimed the Text docs omitted fold, but fold is listed; the corrected question addresses omitted ignore.",
+        "Updated rich-review.json query hash and strengthened negative-control search rationales."
+      ],
+      "unresolved_issues": []
+    },
+    {
+      "reviewer_id": "independent-pino-source-reviewer",
+      "source_only": true,
+      "independent_of_tuning": true,
+      "independent_of_author": true,
+      "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+      "queries_sha256": "d6f14d4187066a03321c6c7420f99d41677f5ddd866d95e31d9eade70fea83be",
+      "verified_case_ids": [
+        "h-pino-01",
+        "h-pino-02",
+        "h-pino-03",
+        "h-pino-04",
+        "h-pino-05",
+        "h-pino-06",
+        "h-pino-07",
+        "h-pino-08",
+        "h-pino-09",
+        "h-pino-10",
+        "h-pino-11",
+        "h-pino-12",
+        "h-pino-13",
+        "h-pino-14",
+        "h-pino-15",
+        "h-pino-16",
+        "h-pino-17",
+        "h-pino-18",
+        "h-pino-19",
+        "h-pino-20",
+        "h-pino-21",
+        "h-pino-22",
+        "h-pino-23",
+        "h-pino-24",
+        "h-pino-25",
+        "h-pino-26",
+        "h-pino-27",
+        "h-pino-28",
+        "h-pino-29",
+        "h-pino-30",
+        "h-pino-31",
+        "h-pino-32",
+        "h-pino-33",
+        "h-pino-34",
+        "h-pino-35",
+        "h-pino-36",
+        "h-pino-37",
+        "h-pino-38",
+        "h-pino-39",
+        "h-pino-40",
+        "h-pino-41"
+      ],
+      "per_case_findings": [
+        {
+          "case_id": "h-pino-01",
+          "category": "exact",
+          "finding": "Answerable: defaults are 5 and 100, and construction wires them to maximumDepth and maximumBreadth; cited lines support both."
+        },
+        {
+          "case_id": "h-pino-02",
+          "category": "exact",
+          "finding": "Answerable: warning code and trigger are supported by the formatter probe and warning branch."
+        },
+        {
+          "case_id": "h-pino-03",
+          "category": "exact",
+          "finding": "Answerable after adding the version export line; getter returns numeric levelVal and setter throws."
+        },
+        {
+          "case_id": "h-pino-04",
+          "category": "exact",
+          "finding": "Answerable: CENSOR is [Redacted]."
+        },
+        {
+          "case_id": "h-pino-05",
+          "category": "exact",
+          "finding": "Answerable: construction throws when useOnlyCustomLevels is true and customLevels is absent."
+        },
+        {
+          "case_id": "h-pino-06",
+          "category": "exact",
+          "finding": "Answerable: defaultOptions sets messageKey=msg and errorKey=err."
+        },
+        {
+          "case_id": "h-pino-07",
+          "category": "exact",
+          "finding": "Answerable: child prefix concatenates inherited prefix (or empty string) with supplied prefix."
+        },
+        {
+          "case_id": "h-pino-08",
+          "category": "exact",
+          "finding": "Corrected expected answer to include lastLevel, which implementation writes alongside lastObj, lastMsg, lastTime, and lastLogger for metadata-aware streams."
+        },
+        {
+          "case_id": "h-pino-09",
+          "category": "conceptual",
+          "finding": "Answerable: base null leaves initial chindings empty; otherwise base is serialized, with name merged when supplied."
+        },
+        {
+          "case_id": "h-pino-10",
+          "category": "conceptual",
+          "finding": "Answerable: default merge assigns user log fields onto mixin result, so conflicting user fields win."
+        },
+        {
+          "case_id": "h-pino-11",
+          "category": "conceptual",
+          "finding": "Answerable: Error instances wrap under errorKey and provide message; ordinary objects infer message from errorKey only under the stated missing-message conditions."
+        },
+        {
+          "case_id": "h-pino-12",
+          "category": "conceptual",
+          "finding": "Answerable: child bindings are serialized/appended as chindings; documentation explains duplicate keys and parse order."
+        },
+        {
+          "case_id": "h-pino-13",
+          "category": "conceptual",
+          "finding": "Answerable: added the method-generation comparison line; logger methods are gated before multistream destination thresholds."
+        },
+        {
+          "case_id": "h-pino-14",
+          "category": "conceptual",
+          "finding": "Answerable: redaction creates the top-level formatter used for interpolation and installs it as stringify in formatOpts."
+        },
+        {
+          "case_id": "h-pino-15",
+          "category": "conceptual",
+          "finding": "Answerable: no-options child branch resets bindings formatter when needed, serializes bindings, invokes onChild, and returns; added fast-path branch evidence."
+        },
+        {
+          "case_id": "h-pino-16",
+          "category": "conceptual",
+          "finding": "Answerable: setLevel loops over levels, disables below-threshold methods, and chooses specialized standard methods or generated custom methods."
+        },
+        {
+          "case_id": "h-pino-17",
+          "category": "trace",
+          "finding": "Answerable: generated info method reaches write; write normalizes input, applies mixin, serializes, then applies streamWrite before stream.write; added genLog write-call evidence."
+        },
+        {
+          "case_id": "h-pino-18",
+          "category": "trace",
+          "finding": "Answerable: custom level mappings create labels/values and setLevel rebuilds methods; added method assignment evidence."
+        },
+        {
+          "case_id": "h-pino-19",
+          "category": "trace",
+          "finding": "Answerable: redaction creates stringifiers/format options, instance stores serializer state, and JSON path consumes it; added symbol assignment evidence."
+        },
+        {
+          "case_id": "h-pino-20",
+          "category": "trace",
+          "finding": "Answerable: child inherits with Object.create, overlays serializer/formatter options, serializes bindings, and invokes onChild; evidence includes formatter setup."
+        },
+        {
+          "case_id": "h-pino-21",
+          "category": "trace",
+          "finding": "Answerable: fatal writes then attempts flushSync (swallowing flush errors); info uses normal genLog."
+        },
+        {
+          "case_id": "h-pino-22",
+          "category": "trace",
+          "finding": "Answerable: multistream orders destinations and dedupe writes to eligible destinations at the highest eligible level, allowing equal-level destinations; added sort evidence."
+        },
+        {
+          "case_id": "h-pino-23",
+          "category": "trace",
+          "finding": "Answerable: worker builds multistream, relays metadata, then writes each parsed chunk; added metadata relay evidence."
+        },
+        {
+          "case_id": "h-pino-24",
+          "category": "trace",
+          "finding": "Answerable: flush validates callback, calls stream.flush when present, otherwise invokes a supplied callback immediately."
+        },
+        {
+          "case_id": "h-pino-25",
+          "category": "architecture",
+          "finding": "Answerable: the cited modules divide construction, logger behavior, level mappings, and redaction responsibilities."
+        },
+        {
+          "case_id": "h-pino-26",
+          "category": "architecture",
+          "finding": "Answerable: shared prototype inherits EventEmitter; factory creates an object inheriting it and instances use that object as prototype."
+        },
+        {
+          "case_id": "h-pino-27",
+          "category": "architecture",
+          "finding": "Answerable: docs state worker-thread boundary; worker code parses and routes records to target streams. Scope is architectural overview."
+        },
+        {
+          "case_id": "h-pino-28",
+          "category": "architecture",
+          "finding": "Answerable: worker stores target/level pairs and ends each target stream, waiting for all close events; added target creation evidence."
+        },
+        {
+          "case_id": "h-pino-29",
+          "category": "impact",
+          "finding": "Answerable: formatter probe checks numeric level, routing consumes lastLevel and resolves labels, and docs warn about preserving numeric field."
+        },
+        {
+          "case_id": "h-pino-30",
+          "category": "impact",
+          "finding": "Answerable: docs show duplicate parent/child keys and test verifies parsed output gives the logged object precedence."
+        },
+        {
+          "case_id": "h-pino-31",
+          "category": "impact",
+          "finding": "Repaired query: supplied source does not show hook-type validation. It now asks what to assert about execution/write path; code and test show hook runs immediately before write."
+        },
+        {
+          "case_id": "h-pino-32",
+          "category": "impact",
+          "finding": "Answerable: child redaction state is rebuilt before bindings are serialized; added the asChindings call evidence."
+        },
+        {
+          "case_id": "h-pino-33",
+          "category": "impact",
+          "finding": "Answerable: routing code plus dedupe tests support equal-level delivery and different-level cutoff. This is a change-impact task distinct in intent from h-pino-22 trace."
+        },
+        {
+          "case_id": "h-pino-34",
+          "category": "discrepancy",
+          "finding": "Answerable as a package-name comparison: docs name fast-redact and wrapper imports @pinojs/redact. Do not infer dependency internals from this snapshot."
+        },
+        {
+          "case_id": "h-pino-35",
+          "category": "discrepancy",
+          "finding": "Revised and verified: API says undefined, omitted options merge defaultOptions.redact=null, and the falsy redact branch skips redactor setup. This is a literal default-value difference with no behavioral difference for the omitted option; the added normalization/branch path makes it distinct from the customLevels default lookup in h-pino-37."
+        },
+        {
+          "case_id": "h-pino-36",
+          "category": "discrepancy",
+          "finding": "Answerable discrepancy: docs say transport.level is unused for single-target path; worker honors a level by taking the multistream path."
+        },
+        {
+          "case_id": "h-pino-37",
+          "category": "conceptual",
+          "finding": "Verified: API lists undefined; defaultOptions supplies null and the normalizer merges it for omitted options. The task is a literal default comparison, without asserting a user-visible behavior change."
+        },
+        {
+          "case_id": "h-pino-38",
+          "category": "no_evidence",
+          "finding": "Negative control supported: supplied source/docs/tests contain no evidence of built-in token-bucket emission limiting."
+        },
+        {
+          "case_id": "h-pino-39",
+          "category": "no_evidence",
+          "finding": "Negative control supported: supplied source/docs/tests contain no encryption option or record-encryption stage."
+        },
+        {
+          "case_id": "h-pino-40",
+          "category": "no_evidence",
+          "finding": "Negative control supported: supplied construction/docs/tests show no local configuration database or restart persistence."
+        },
+        {
+          "case_id": "h-pino-41",
+          "category": "no_evidence",
+          "finding": "Negative control supported: supplied transport implementation/docs/tests show no retry or exponential-backoff API."
+        }
+      ],
+      "searches_for_negatives": [
+        {
+          "case_id": "h-pino-38",
+          "search_terms": [
+            "token bucket",
+            "token-bucket",
+            "rate limit",
+            "rate limiting"
+          ],
+          "scope": "supplied sources/pino implementation, docs, and tests",
+          "result": "No built-in logger emission limiter or token bucket found."
+        },
+        {
+          "case_id": "h-pino-39",
+          "search_terms": [
+            "encrypt",
+            "encryption",
+            "cipher",
+            "crypto"
+          ],
+          "scope": "supplied sources/pino implementation, docs, and tests",
+          "result": "No record encryption option or encryption stage before destination writes found."
+        },
+        {
+          "case_id": "h-pino-40",
+          "search_terms": [
+            "configuration database",
+            "persist configuration",
+            "local database",
+            "restart configuration"
+          ],
+          "scope": "supplied sources/pino construction, docs, and tests",
+          "result": "No configuration persistence or restart restore facility found."
+        },
+        {
+          "case_id": "h-pino-41",
+          "search_terms": [
+            "retry",
+            "retries",
+            "backoff",
+            "exponential"
+          ],
+          "scope": "supplied sources/pino transport implementation, docs, and tests",
+          "result": "No failed-transport retry policy or exponential backoff API found."
+        }
+      ],
+      "changes": [
+        {
+          "file": "submission/pino-questions.json",
+          "change": "Preserved original reviewer snapshot as pino-independent-review.before-repair.json. Rechecked author revisions to h-pino-35 and h-pino-37; expanded h-pino-35 to trace omitted-option normalization and the redactor branch, explicitly noting the literal default difference does not imply behavior change. Retained h-pino-37 as the distinct customLevels default comparison. Earlier review corrections to other cases remain."
+        },
+        {
+          "file": "submission/pino-review.json",
+          "change": "Verified queries_sha256 matches final pino-questions.json; retained source-search rationales for all four negative controls."
+        }
+      ],
+      "structural_checks": {
+        "question_count": 41,
+        "evidence_anchor_errors": [],
+        "source_hash_errors": [],
+        "category_counts": {
+          "exact": 8,
+          "conceptual": 8,
+          "trace": 8,
+          "architecture": 4,
+          "impact": 5,
+          "discrepancy": 4,
+          "no_evidence": 4
+        },
+        "expected_category_quota": {
+          "architecture": 4,
+          "conceptual": 8,
+          "discrepancy": 4,
+          "exact": 8,
+          "impact": 5,
+          "no_evidence": 4,
+          "trace": 8
+        }
+      },
+      "unresolved_issues": [],
+      "caveats": [
+        {
+          "topic": "h-pino-35 and h-pino-37 similarity",
+          "note": "h-pino-35 and h-pino-37 both compare documented undefined defaults with internal null defaults for different options. h-pino-35 additionally follows the redactor setup branch; h-pino-37 verifies the customLevels value is merged for omitted options. Neither answer implies user-visible behavior differences.",
+          "reviewer_judgment": "Resolved for authoring purposes: these questions compare different options and now cover different source paths; they meet the distinctness requirement in AUTHORING.md. The default-value differences are literal and do not establish user-visible behavior differences."
+        }
+      ]
+    }
+  ],
+  "queries_sha256": "cbbdef34c9d16d5e9ffbfda1969914ff0fbaa8f5953a2408ca3b096b0d8d9f29",
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a"
+}

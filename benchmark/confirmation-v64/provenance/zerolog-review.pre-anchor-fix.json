@@ -1,0 +1,13 @@
+{
+  "author_id": "codex-source-author-zerolog-01",
+  "independent_of_tuning": true,
+  "source_only": true,
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+  "queries_sha256": "575e1d180759ae2f82022e664713fc673f69b1ead42d9c9e182487380f3f2d5d",
+  "no_evidence_rationales": {
+    "h-zerolog-no-midnight-rotation": "The allowed packet contains no rotation or retention implementation: the source inventory has no rolling-file package, and the inspected root writer API (writer.go) and output setup (log.go) expose writer adaptation rather than file lifecycle management. The query requires a time-based rotation and retention policy absent from these repository sources.",
+    "h-zerolog-no-at-rest-encryption": "No encryption API or encryption stage is present in the allowed repository source inventory. The inspected event writer path in event.go and writer abstractions in writer.go encode and pass payloads to io.Writer; neither supplies a key, cipher, or persistence layer. The packet provides no evidence for record-at-rest encryption.",
+    "h-zerolog-no-http-ingest": "journald/journald.go sends records through journal.Send (or its test replacement SendFunc) to the local journald integration; it does not specify a remote HTTP destination. The source inventory includes HTTP middleware helpers under hlog, but no remote log-ingestion endpoint or upload client, so the requested endpoint cannot be established.",
+    "h-zerolog-no-config-watcher": "The packet contains level parsing and global-level APIs in log.go but no YAML configuration loader or filesystem watcher. The repository source inventory has no configuration-reload component; therefore automatic reload behavior is unsupported by the inspected sources."
+  }
+}

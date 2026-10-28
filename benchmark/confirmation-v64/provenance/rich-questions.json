@@ -1,0 +1,1325 @@
+[
+  {
+    "id": "h-rich-01",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which Console method writes positional objects as strings with a separator, disables markup and wrapping, and calls print with crop=False?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1639,
+        "end": 1639,
+        "anchor": "        raw_output: str = sep.join(str(_object) for _object in objects)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "            markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1646,
+        "end": 1646,
+        "anchor": "            no_wrap=True,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1648,
+        "end": 1648,
+        "anchor": "            crop=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-02",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What is the named helper that divides available table width among flexible columns by their ratios?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 549,
+        "end": 549,
+        "anchor": "flex_widths = ratio_distribute(flexible_width, ratios, flex_minimum)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-03",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which Text method yields rendered Segment objects and accepts an optional ending string?",
+    "evidence": [
+      {
+        "path": "rich/text.py",
+        "start": 719,
+        "end": 719,
+        "anchor": "def render(self, console: \"Console\", end: str = \"\")",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-04",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What method is called to make a Progress display table from a sequence of Task values?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1562,
+        "end": 1562,
+        "anchor": "def make_tasks_table(self, tasks: Iterable[Task]) -> Table:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-05",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which function turns markup input into a Text instance and defaults emoji replacement on?",
+    "evidence": [
+      {
+        "path": "rich/markup.py",
+        "start": 106,
+        "end": 106,
+        "anchor": "def render(",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 109,
+        "end": 109,
+        "anchor": "emoji: bool = True,",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-06",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What method calculates the map from leaf Layout objects to rendered lines and terminal regions?",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 366,
+        "end": 366,
+        "anchor": "def render(self, console: Console, options: ConsoleOptions) -> RenderMap:",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-07",
+    "repo": "rich",
+    "category": "exact",
+    "query": "Which Segment class method splits rendered segments into lines and optionally crops and pads each line to a target length?",
+    "evidence": [
+      {
+        "path": "rich/segment.py",
+        "start": 307,
+        "end": 307,
+        "anchor": "    def split_and_crop_lines(",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 310,
+        "end": 310,
+        "anchor": "        length: int,",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 315,
+        "end": 315,
+        "anchor": "        \"\"\"Split segments in to lines, and crop lines greater than a given length.",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 322,
+        "end": 322,
+        "anchor": "            pad (bool): Enable padding of lines that are less than `length`.",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-08",
+    "repo": "rich",
+    "category": "exact",
+    "query": "What is the Live method for replacing the displayed renderable, with an optional immediate refresh?",
+    "evidence": [
+      {
+        "path": "rich/live.py",
+        "start": 230,
+        "end": 230,
+        "anchor": "def update(self, renderable: RenderableType, *, refresh: bool = False) -> None:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-09",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Console.out differ from Console.print when handling arbitrary objects and markup?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1639,
+        "end": 1639,
+        "anchor": "raw_output: str = sep.join(str(_object) for _object in objects)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1652,
+        "end": 1652,
+        "anchor": "def print(",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-10",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How are table column widths measured and then constrained when the table cannot fit?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 530,
+        "end": 530,
+        "anchor": "self._measure_column(console, options, column) for column in columns",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 557,
+        "end": 557,
+        "anchor": "widths = self._collapse_widths(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 563,
+        "end": 563,
+        "anchor": "# last resort, reduce columns evenly",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-11",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "What does soft wrapping change in the Console.print option setup?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1697,
+        "end": 1697,
+        "anchor": "if soft_wrap:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1699,
+        "end": 1699,
+        "anchor": "no_wrap = True",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1702,
+        "end": 1702,
+        "anchor": "crop = False",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-12",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Rich resolve overlapping markup closing tags rather than requiring strictly nested tags?",
+    "evidence": [
+      {
+        "path": "rich/markup.py",
+        "start": 146,
+        "end": 146,
+        "anchor": "    def pop_style(style_name: str) -> Tuple[int, Tag]:",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 148,
+        "end": 148,
+        "anchor": "        for index, (_, tag) in enumerate(reversed(style_stack), 1):",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 150,
+        "end": 150,
+        "anchor": "                return pop(-index)",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-13",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Align determine the width it renders at when no explicit width was provided?",
+    "evidence": [
+      {
+        "path": "rich/align.py",
+        "start": 147,
+        "end": 147,
+        "anchor": "width = console.measure(self.renderable, options=options).maximum",
+        "file_sha256": "6bc31b3fe8898e8385a27c6a8283f76247ad28c594dd61596b18ea02fd907391"
+      },
+      {
+        "path": "rich/align.py",
+        "start": 150,
+        "end": 150,
+        "anchor": "width if self.width is None else min(width, self.width)",
+        "file_sha256": "6bc31b3fe8898e8385a27c6a8283f76247ad28c594dd61596b18ea02fd907391"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-14",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Layout render child panels into the final rows of Segments?",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 390,
+        "end": 390,
+        "anchor": "layout.renderable, update_dimensions(region.width, region.height)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 410,
+        "end": 410,
+        "anchor": "row.extend(line)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 415,
+        "end": 415,
+        "anchor": "yield new_line",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-15",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does the progress renderer translate visible tasks and configured columns into a Table?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1579,
+        "end": 1579,
+        "anchor": "table = Table.grid(*table_columns, padding=(0, 1), expand=self.expand)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1582,
+        "end": 1582,
+        "anchor": "if task.visible:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1586,
+        "end": 1586,
+        "anchor": "column.format(task=task)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-16",
+    "repo": "rich",
+    "category": "conceptual",
+    "query": "How does Text compute its measurement range from plain text?",
+    "evidence": [
+      {
+        "path": "rich/text.py",
+        "start": 712,
+        "end": 712,
+        "anchor": "        max_text_width = max(cell_len(line) for line in lines) if lines else 0",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 713,
+        "end": 713,
+        "anchor": "        words = text.split()",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 715,
+        "end": 715,
+        "anchor": "            max(cell_len(word) for word in words) if words else max_text_width",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 717,
+        "end": 717,
+        "anchor": "        return Measurement(min_text_width, max_text_width)",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-17",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace a string passed to Console.out through preparation to output: how are multiple arguments combined and which print flags prevent markup and overflow handling?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1639,
+        "end": 1639,
+        "anchor": "raw_output: str = sep.join(str(_object) for _object in objects)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1647,
+        "end": 1647,
+        "anchor": "overflow=\"ignore\",",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-18",
+    "repo": "rich",
+    "category": "trace",
+    "query": "When a Table is printed, where does it calculate widths and how do title, body, and caption get emitted?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 488,
+        "end": 488,
+        "anchor": "        widths = self._calculate_column_widths(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 509,
+        "end": 509,
+        "anchor": "        if self.title:",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 515,
+        "end": 515,
+        "anchor": "        yield from self._render(console, render_options, widths)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 516,
+        "end": 516,
+        "anchor": "        if self.caption:",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-19",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace a Rich Text object through console rendering: how do options choose wrap behavior and how are wrapped lines converted to segments?",
+    "evidence": [
+      {
+        "path": "rich/text.py",
+        "start": 694,
+        "end": 694,
+        "anchor": "        overflow = self.overflow or options.overflow or DEFAULT_OVERFLOW",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 696,
+        "end": 696,
+        "anchor": "        lines = self.wrap(",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 700,
+        "end": 700,
+        "anchor": "            overflow=overflow,",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 702,
+        "end": 702,
+        "anchor": "            no_wrap=pick_bool(self.no_wrap, options.no_wrap, False),",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 705,
+        "end": 705,
+        "anchor": "        yield from all_lines.render(console, end=self.end)",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-20",
+    "repo": "rich",
+    "category": "trace",
+    "query": "How does adding a progress task connect to later display rows? Include the task insertion and table conversion paths.",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1559,
+        "end": 1559,
+        "anchor": "        table = self.make_tasks_table(self.tasks)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1625,
+        "end": 1625,
+        "anchor": "            task = Task(",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1635,
+        "end": 1635,
+        "anchor": "            self._tasks[self._task_index] = task",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1583,
+        "end": 1583,
+        "anchor": "                table.add_row(",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-21",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace Live.update when passed a string with refresh=True. What conversion and synchronization occur?",
+    "evidence": [
+      {
+        "path": "rich/live.py",
+        "start": 237,
+        "end": 237,
+        "anchor": "        if isinstance(renderable, str):",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 238,
+        "end": 238,
+        "anchor": "            renderable = self.console.render_str(renderable)",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 239,
+        "end": 239,
+        "anchor": "        with self._lock:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 240,
+        "end": 240,
+        "anchor": "            self._renderable = renderable",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 241,
+        "end": 241,
+        "anchor": "            if refresh:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 242,
+        "end": 242,
+        "anchor": "                self.refresh()",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-22",
+    "repo": "rich",
+    "category": "trace",
+    "query": "What is the sequence for parsing markup into styled text, including the fast path when no opening bracket exists?",
+    "evidence": [
+      {
+        "path": "rich/markup.py",
+        "start": 128,
+        "end": 128,
+        "anchor": "    if \"[\" not in markup:",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 133,
+        "end": 133,
+        "anchor": "    text = Text(style=style)",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 153,
+        "end": 153,
+        "anchor": "    for position, plain_text, tag in _parse(markup):",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      },
+      {
+        "path": "rich/markup.py",
+        "start": 155,
+        "end": 155,
+        "anchor": "            # Handle open brace escapes, where the brace is not part of a tag.",
+        "file_sha256": "6eda6bdbbd412e18824758cd825467bf606923355c35e7d8c1231e5bdb5e0db7"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-23",
+    "repo": "rich",
+    "category": "trace",
+    "query": "Trace a Layout render from terminal dimensions to leaf renderables and final output rows.",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 376,
+        "end": 376,
+        "anchor": "        render_width = options.max_width",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 377,
+        "end": 377,
+        "anchor": "        render_height = options.height or console.height",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 378,
+        "end": 378,
+        "anchor": "        region_map = self._make_region_map(render_width, render_height)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 382,
+        "end": 382,
+        "anchor": "            if not layout.children",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 389,
+        "end": 389,
+        "anchor": "            lines = render_lines(",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 410,
+        "end": 410,
+        "anchor": "                    row.extend(line)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 415,
+        "end": 415,
+        "anchor": "                yield new_line",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-24",
+    "repo": "rich",
+    "category": "trace",
+    "query": "How does Segment.split_and_crop_lines treat newline characters inside a normal text segment?",
+    "evidence": [
+      {
+        "path": "rich/segment.py",
+        "start": 307,
+        "end": 307,
+        "anchor": "    def split_and_crop_lines(",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 337,
+        "end": 337,
+        "anchor": "                    _text, new_line, text = text.partition(\"\\n\")",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 341,
+        "end": 341,
+        "anchor": "                        cropped_line = adjust_line_length(",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      },
+      {
+        "path": "rich/segment.py",
+        "start": 347,
+        "end": 347,
+        "anchor": "                        line.clear()",
+        "file_sha256": "d7b240c386e6b15fcbac9f0f9e123d5c7d8368df9f3843c5fbc9a0c7b8e82c33"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-25",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "Which rendering protocol hooks let a custom object either return one renderable or yield several, and what parameters does the multi-render hook receive?",
+    "evidence": [
+      {
+        "path": "docs/source/protocol.rst",
+        "start": 27,
+        "end": 27,
+        "anchor": "The ``__rich__`` method is limited to a single renderable object. For more advanced rendering, add a ``__rich_console__`` method to your class.",
+        "file_sha256": "06748b8d2baa9b2aa3f804d38c9f7e5a3bb542d4b6e004196ad63e1b3ce3e8e8"
+      },
+      {
+        "path": "docs/source/protocol.rst",
+        "start": 29,
+        "end": 29,
+        "anchor": "The ``__rich_console__`` method should accept a :class:`~rich.console.Console` and a :class:`~rich.console.ConsoleOptions` instance. It should return an iterable of other renderable objects. Although that means it *could* return a container such as a list, it generally easier implemented by using the ``yield`` statement (making the method a generator).",
+        "file_sha256": "06748b8d2baa9b2aa3f804d38c9f7e5a3bb542d4b6e004196ad63e1b3ce3e8e8"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1319,
+        "end": 1319,
+        "anchor": "            render_iterable = renderable.__rich_console__(self, _options)",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-26",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "How does the Layout subsystem divide responsibility between region allocation and leaf rendering?",
+    "evidence": [
+      {
+        "path": "rich/layout.py",
+        "start": 345,
+        "end": 345,
+        "anchor": "    def _make_region_map(self, width: int, height: int) -> RegionMap:",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 357,
+        "end": 357,
+        "anchor": "                for child_and_region in layout.splitter.divide(children, region):",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 382,
+        "end": 382,
+        "anchor": "            if not layout.children",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 390,
+        "end": 390,
+        "anchor": "                layout.renderable, update_dimensions(region.width, region.height)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      },
+      {
+        "path": "rich/layout.py",
+        "start": 392,
+        "end": 392,
+        "anchor": "            render_map[layout] = LayoutRender(region, lines)",
+        "file_sha256": "591f0f092ae8627b5e213df36b0c50de4dda775b103b9c061b54993a8781b813"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-27",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "What does the table rendering pipeline delegate to _measure_column and _render after its public Rich console hook?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 475,
+        "end": 475,
+        "anchor": "    def __rich_console__(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 488,
+        "end": 488,
+        "anchor": "        widths = self._calculate_column_widths(",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 515,
+        "end": 515,
+        "anchor": "        yield from self._render(console, render_options, widths)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 530,
+        "end": 530,
+        "anchor": "            self._measure_column(console, options, column) for column in columns",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-28",
+    "repo": "rich",
+    "category": "architecture",
+    "query": "How does make_tasks_table convert string column specs and ProgressColumn specs into the columns passed to Table.grid?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1571,
+        "end": 1571,
+        "anchor": "        table_columns = (",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1574,
+        "end": 1574,
+        "anchor": "                if isinstance(_column, str)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1575,
+        "end": 1575,
+        "anchor": "                else _column.get_table_column().copy()",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1579,
+        "end": 1579,
+        "anchor": "        table = Table.grid(*table_columns, padding=(0, 1), expand=self.expand)",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-29",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If soft_wrap=True is used while no_wrap=False and overflow='fold' are explicitly supplied, which settings survive, and how does cropping change?",
+    "evidence": [
+      {
+        "path": "rich/console.py",
+        "start": 1697,
+        "end": 1697,
+        "anchor": "        if soft_wrap:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1698,
+        "end": 1698,
+        "anchor": "            if no_wrap is None:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1699,
+        "end": 1699,
+        "anchor": "                no_wrap = True",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1700,
+        "end": 1700,
+        "anchor": "            if overflow is None:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1701,
+        "end": 1701,
+        "anchor": "                overflow = \"ignore\"",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1702,
+        "end": 1702,
+        "anchor": "            crop = False",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-30",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If a table exceeds the available width, which columns are initially eligible for width collapse and what happens if it still does not fit?",
+    "evidence": [
+      {
+        "path": "rich/table.py",
+        "start": 559,
+        "end": 559,
+        "anchor": "[(column.width is None and not column.no_wrap) for column in columns]",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      },
+      {
+        "path": "rich/table.py",
+        "start": 566,
+        "end": 566,
+        "anchor": "widths = ratio_reduce(excess_width, [1] * len(widths), widths, widths)",
+        "file_sha256": "eb2bfbc0c2d76603ac1a0cc40e9297a5e71740ec1c2c11cd3a7f8c61c6e8d599"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-31",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If Live.update receives a string and refresh is false, what changes immediately and what rendering work is deferred?",
+    "evidence": [
+      {
+        "path": "rich/live.py",
+        "start": 237,
+        "end": 237,
+        "anchor": "        if isinstance(renderable, str):",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 238,
+        "end": 238,
+        "anchor": "            renderable = self.console.render_str(renderable)",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 239,
+        "end": 239,
+        "anchor": "        with self._lock:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 240,
+        "end": 240,
+        "anchor": "            self._renderable = renderable",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 241,
+        "end": 241,
+        "anchor": "            if refresh:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 242,
+        "end": 242,
+        "anchor": "                self.refresh()",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-32",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If a Progress task is hidden, how does that affect the task table?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1582,
+        "end": 1582,
+        "anchor": "if task.visible:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1583,
+        "end": 1583,
+        "anchor": "table.add_row(",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-33",
+    "repo": "rich",
+    "category": "impact",
+    "query": "If the same progress task update changes total and advances completed, what reset and sampling behavior follows?",
+    "evidence": [
+      {
+        "path": "rich/progress.py",
+        "start": 1445,
+        "end": 1445,
+        "anchor": "            if total is not None and total != task.total:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1447,
+        "end": 1447,
+        "anchor": "                task._reset()",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1448,
+        "end": 1448,
+        "anchor": "            if advance is not None:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1457,
+        "end": 1457,
+        "anchor": "            update_completed = task.completed - completed_start",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1466,
+        "end": 1466,
+        "anchor": "            if update_completed > 0:",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      },
+      {
+        "path": "rich/progress.py",
+        "start": 1467,
+        "end": 1467,
+        "anchor": "                _progress.append(ProgressSample(current_time, update_completed))",
+        "file_sha256": "67a633ea960edba2c55f1db87172af9366c45fa1648cad99e5ed9fcb406defcb"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-34",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The docs call fold the default overflow. What does Console.print pass to its render options when overflow is omitted, and what value does its soft_wrap path substitute?",
+    "evidence": [
+      {
+        "path": "docs/source/console.rst",
+        "start": 173,
+        "end": 173,
+        "anchor": "You can specify how Rich should handle overflow with the ``overflow`` argument to :meth:`~rich.console.Console.print` which should be one of the following strings: \"fold\", \"crop\", \"ellipsis\", or \"ignore\". The default is \"fold\" which will put any excess characters on the following line, creating as many new lines as required to fit the text.",
+        "file_sha256": "03e860daae5166adec2957bc83ae5b17ab44f6af63e7f627749c0ddb4b5ac9d1"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1659,
+        "end": 1659,
+        "anchor": "        overflow: Optional[OverflowMethod] = None,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1697,
+        "end": 1697,
+        "anchor": "        if soft_wrap:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1700,
+        "end": 1700,
+        "anchor": "            if overflow is None:",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1701,
+        "end": 1701,
+        "anchor": "                overflow = \"ignore\"",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1716,
+        "end": 1716,
+        "anchor": "            render_options = self.options.update(",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1718,
+        "end": 1718,
+        "anchor": "                overflow=overflow,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-35",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The docs describe Console.out as not applying word wrap. Which explicit flags in implementation also disable markup, emoji replacement, and cropping?",
+    "evidence": [
+      {
+        "path": "docs/source/console.rst",
+        "start": 97,
+        "end": 97,
+        "anchor": "In additional to :meth:`~rich.console.Console.print` and :meth:`~rich.console.Console.log`, Rich has an :meth:`~rich.console.Console.out` method which provides a lower-level way of writing to the terminal. The out() method converts all the positional arguments to strings and won't pretty print, word wrap, or apply markup to the output, but can apply a basic style and will optionally do highlighting.",
+        "file_sha256": "03e860daae5166adec2957bc83ae5b17ab44f6af63e7f627749c0ddb4b5ac9d1"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1644,
+        "end": 1644,
+        "anchor": "            emoji=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1645,
+        "end": 1645,
+        "anchor": "            markup=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1648,
+        "end": 1648,
+        "anchor": "            crop=False,",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-36",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The docs say disabling Live auto-refresh requires manual refresh or update(refresh=True). Does Live.update refresh by default?",
+    "evidence": [
+      {
+        "path": "docs/source/live.rst",
+        "start": 92,
+        "end": 92,
+        "anchor": "If you disable auto-refresh you will need to call",
+        "file_sha256": "b07bdf74cefe63dec401cca03ae8c300c2f88e0fb6e48d7bdbb4d1e7fd807668"
+      },
+      {
+        "path": "rich/live.py",
+        "start": 230,
+        "end": 230,
+        "anchor": "def update(self, renderable: RenderableType, *, refresh: bool = False) -> None:",
+        "file_sha256": "50abea2d2b92ccd1c8073e69c51ad4ed23ec9c6e3cbc9271d9330789a1e59a72"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-37",
+    "repo": "rich",
+    "category": "discrepancy",
+    "query": "The Text docs list fold, crop, and ellipsis but not ignore. When Console.print's soft_wrap path supplies ignore, what value does Text use for wrapping?",
+    "evidence": [
+      {
+        "path": "docs/source/text.rst",
+        "start": 48,
+        "end": 48,
+        "anchor": "- ``overflow`` should be \"fold\", \"crop\", or \"ellipsis\", and will override default overflow.",
+        "file_sha256": "e220b1d4920df9a0e2ed42da7a3ace92699baf0b714b11fc523817def40f1895"
+      },
+      {
+        "path": "rich/console.py",
+        "start": 1701,
+        "end": 1701,
+        "anchor": "                overflow = \"ignore\"",
+        "file_sha256": "4533fc66963623a2a21447b501d6f51f8cfee7e14775178093a5e6eb61dc135a"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 694,
+        "end": 694,
+        "anchor": "        overflow = self.overflow or options.overflow or DEFAULT_OVERFLOW",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      },
+      {
+        "path": "rich/text.py",
+        "start": 700,
+        "end": 700,
+        "anchor": "            overflow=overflow,",
+        "file_sha256": "b7627c88caaec11d015148209be715369df45b1c3933c7c817fa748e2a18455d"
+      }
+    ],
+    "expected": "retrieve_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-38",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "Which Rich API renders a pandas DataFrame with automatic column type inference and SQL export?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-39",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "What command-line flag configures Rich to send terminal output over a network socket?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-40",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "Which Rich function produces an interactive browser-based dashboard from Progress tasks?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  },
+  {
+    "id": "h-rich-41",
+    "repo": "rich",
+    "category": "no_evidence",
+    "query": "What database backend does Rich use to persist Live display history across process restarts?",
+    "evidence": [],
+    "expected": "insufficient_repository_evidence",
+    "annotation_status": "independent_source_only_pending_blind_pool_review"
+  }
+]

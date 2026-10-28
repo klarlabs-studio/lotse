@@ -3,6 +3,7 @@ import copy
 import json
 from pathlib import Path
 import unittest
+from tempfile import TemporaryDirectory
 
 from decision import evaluate
 
@@ -25,9 +26,30 @@ class DecisionTests(unittest.TestCase):
         self.rows = [row(q, b, 1500, 1.0) for q in self.queries for b in (2000, 8000)]
 
     def run_rule(self, rows=None, role="held_out", expected=None):
+        prereg = copy.deepcopy(PREREG)
+        prereg["workloads"]["held_out"]["minimum_queries"] = 40
+        prereg["workloads"]["held_out"]["pilot_required_queries"] = {}
         return evaluate(self.rows if rows is None else rows,
                         self.expected if expected is None else expected,
-                        "cand", PREREG, role)
+                        "cand", prereg, role)
+
+    def test_production_minimum_blocks_an_otherwise_clear_small_win(self):
+        rows = self.rows[:60]
+        expected = {(r["id"], r["budget"]): True for r in rows}
+        result = evaluate(rows, expected, "cand", PREREG, "held_out")
+        self.assertEqual(result["status"], "not_passed")
+        self.assertTrue(result["primary"]["passed"])
+        self.assertTrue(all(g["non_inferior"] for g in result["guardrails"]))
+        self.assertIn("preregistered minimum", " ".join(result["blockers"]))
+
+    def test_frozen_pilot_size_is_enforced_for_scored_queries(self):
+        prereg = copy.deepcopy(PREREG)
+        prereg["workloads"]["held_out"]["minimum_queries"] = 30
+        prereg["workloads"]["held_out"]["pilot_required_queries"] = {"cand": 41}
+        result = evaluate(self.rows, self.expected, "cand", prereg, "held_out")
+        self.assertEqual(result["status"], "not_passed")
+        self.assertEqual(result["sample_size"]["required_scored_queries"], 41)
+        self.assertIn("Insufficient scored queries", " ".join(result["blockers"]))
 
     def test_clear_held_out_win_passes_but_never_authorizes_promotion_alone(self):
         result = self.run_rule()
@@ -83,7 +105,7 @@ class DecisionTests(unittest.TestCase):
             for m in QUALITY:
                 r["tools"]["cand"][m] = r["tools"]["graphify"][m] = None
         result = self.run_rule(rows, expected=expected)
-        self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["status"], "not_passed")
         self.assertEqual(result["primary"]["queries"], 40)
         self.assertEqual(result["guardrails"][0]["queries"], 39)
 
@@ -100,7 +122,7 @@ class DecisionTests(unittest.TestCase):
         rows = copy.deepcopy(self.rows)
         for i, r in enumerate(rows):
             r["tools"]["cand"]["code_file_hint_recall"] = 1.0 if i % 4 else 0.5
-        planning = self.run_rule(rows, role="development")["planning"]
+        planning = evaluate(rows, self.expected, "cand", PREREG, "development")["planning"]
         self.assertGreaterEqual(planning["required_queries"],
                                 PREREG["workloads"]["held_out"]["minimum_queries"])
 
@@ -119,6 +141,21 @@ class RescoreTests(unittest.TestCase):
         self.assertEqual(scored["tools"]["graphify"]["code_file_hint_recall"], 0.5)
         self.assertEqual(scored["tools"]["graphify"]["code_file_hint_recall_at_5"], 0.5)
         self.assertNotIn("relevant", rows[0]["tools"]["cand"], "input rows are not mutated")
+
+
+class ReportTests(unittest.TestCase):
+    def test_development_runs_preserve_heldout_and_latest_history(self):
+        from reports import write_decision
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            held = {"status": "not_passed", "workload": "held_out"}
+            dev = {"status": "not_passed", "workload": "development"}
+            archived = write_decision(held, root)
+            write_decision(dev, root)
+            self.assertEqual(json.loads(archived.read_text()), held)
+            self.assertEqual(json.loads((root / "results/decision-heldout.json").read_text()), held)
+            self.assertEqual(json.loads((root / "results/decision-development.json").read_text()), dev)
+            self.assertEqual(json.loads((root / "results/decision.json").read_text()), dev)
 
 class PreregistrationTests(unittest.TestCase):
     def test_driver_arms_match_the_frozen_definitions(self):

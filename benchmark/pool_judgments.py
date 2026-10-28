@@ -10,6 +10,7 @@ judge cannot tell who cited a file. Relevance then counts the author's labels
 plus every pooled file judged relevant (see research/protocol.md).
 """
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import random
@@ -75,18 +76,25 @@ def check_judgments(pool, judgments):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("action", choices=("pool", "check"))
+    parser.add_argument("--comparison", type=Path, default=COMPARISON)
+    parser.add_argument("--pool", type=Path, default=POOL)
+    parser.add_argument("--judgments", type=Path, default=JUDGMENTS)
     args = parser.parse_args()
-    comparison = json.loads(COMPARISON.read_text())
+    comparison = json.loads(args.comparison.read_text())
     cases = {c["id"]: c for c in json.loads((BASE / comparison["queries"]).read_text())}
     if args.action == "pool":
         pool = build_pool(comparison["rows"], cases)
-        POOL.write_text(json.dumps({"depth": POOL_DEPTH, "seed": SEED, "queries": {
+        if args.pool.exists():
+            raise ValueError("Refusing to overwrite an existing blind relevance pool")
+        args.pool.write_text(json.dumps({"depth": POOL_DEPTH, "seed": SEED,
+            "comparison_sha256": hashlib.sha256(args.comparison.read_bytes()).hexdigest(),
+            "query_sha256": comparison["query_sha256"], "queries": {
             q: {"repo": cases[q]["repo"], "query": cases[q]["query"], "files": files}
             for q, files in pool.items()}}, indent=1) + "\n")
-        print(f"{len(pool)} queries, {sum(map(len, pool.values()))} files to judge -> {POOL}")
+        print(f"{len(pool)} queries, {sum(map(len, pool.values()))} files to judge -> {args.pool}")
         return 0
-    pool = {q: v["files"] for q, v in json.loads(POOL.read_text())["queries"].items()}
-    errors = check_judgments(pool, json.loads(JUDGMENTS.read_text()))
+    pool = {q: v["files"] for q, v in json.loads(args.pool.read_text())["queries"].items()}
+    errors = check_judgments(pool, json.loads(args.judgments.read_text()))
     print("\n".join(errors[:20]) or "judgments complete")
     return 1 if errors else 0
 

@@ -1,0 +1,13 @@
+{
+  "author_id": "independent-pino-source-author",
+  "independent_of_tuning": true,
+  "source_only": true,
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+  "queries_sha256": "d6f14d4187066a03321c6c7420f99d41677f5ddd866d95e31d9eade70fea83be",
+  "no_evidence_rationales": {
+    "h-pino-38": "Searched all supplied Pino source files, documentation, and tests for token-bucket, rate-limit, and rate-limiting concepts; no built-in emission rate limiter or token-bucket API is evidenced.",
+    "h-pino-39": "Searched all supplied Pino source files, documentation, and tests for encrypt, encryption, cipher, and crypto logging stages; no option encrypting records before destination writes is evidenced.",
+    "h-pino-40": "Searched supplied Pino construction, docs, and tests for persistent configuration, local databases, and process-restart restoration; construction uses in-memory options and no persistence facility is evidenced.",
+    "h-pino-41": "Searched supplied transport implementation, docs, and transport tests for retry and backoff behavior; transports are created and closed without a retry policy or exponential-backoff API."
+  }
+}

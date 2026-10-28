@@ -7,6 +7,7 @@
 //! accepted improvement.
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::path::Path;
 use tiktoken_rs::CoreBPE;
 use tree_sitter::{Language, Node, Parser};
 
@@ -26,6 +27,7 @@ const FUNCTIONS: &[&str] = &[
     "decorated_definition",
     "generator_function_declaration",
     "method_definition",
+    "function_item",
     "function_expression",
     "arrow_function",
     "function",
@@ -171,6 +173,7 @@ fn language(path: &str) -> Option<Language> {
         "js" | "mjs" | "cjs" | "jsx" => Some(tree_sitter_javascript::LANGUAGE.into()),
         "ts" => Some(tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into()),
         "tsx" => Some(tree_sitter_typescript::LANGUAGE_TSX.into()),
+        "rs" => Some(tree_sitter_rust::LANGUAGE.into()),
         _ => None,
     }
 }
@@ -235,23 +238,52 @@ fn function_nodes(root: Node) -> Vec<Node> {
     found
 }
 
-fn calls(node: Node, source: &str) -> Vec<String> {
+fn rust_call_terminal(node: Node, source: &str) -> Option<String> {
+    if matches!(
+        node.kind(),
+        "identifier" | "field_identifier" | "type_identifier"
+    ) {
+        return Some(node_text(node, source).to_string());
+    }
+    let mut cursor = node.walk();
+    let named: Vec<Node> = node.named_children(&mut cursor).collect();
+    let candidate = match node.kind() {
+        "generic_function" => named.first().copied(),
+        "scoped_identifier" | "scoped_type_identifier" | "field_expression" => {
+            named.last().copied()
+        }
+        _ => None,
+    }?;
+    rust_call_terminal(candidate, source)
+}
+
+fn calls(node: Node, source: &str, rust: bool) -> Vec<String> {
     let mut names = Vec::new();
     let mut stack = vec![node];
     while let Some(current) = stack.pop() {
+        // Macro token trees do not establish ordinary Rust call edges.
+        if rust && matches!(current.kind(), "macro_invocation" | "token_tree") {
+            continue;
+        }
         let field = match current.kind() {
             "call_expression" | "call" => Some("function"),
             "new_expression" => Some("constructor"),
             _ => None,
         };
         if let Some(mut target) = field.and_then(|f| current.child_by_field_name(f)) {
-            for key in ["field", "attribute", "property"] {
-                if let Some(inner) = target.child_by_field_name(key) {
-                    target = inner;
-                    break;
+            if rust {
+                if let Some(name) = rust_call_terminal(target, source) {
+                    names.push(name);
                 }
+            } else {
+                for key in ["field", "attribute", "property"] {
+                    if let Some(inner) = target.child_by_field_name(key) {
+                        target = inner;
+                        break;
+                    }
+                }
+                names.push(node_text(target, source).to_string());
             }
-            names.push(node_text(target, source).to_string());
         }
         let mut cursor = current.walk();
         stack.extend(current.children(&mut cursor));
@@ -263,6 +295,21 @@ fn join(lines: &[&str], start: usize, end: usize) -> String {
     let from = start.saturating_sub(1).min(lines.len());
     let to = end.min(lines.len()).max(from);
     lines[from..to].join("\n")
+}
+
+/// Include Rust's contiguous outer attributes and documentation comments with
+/// the item they annotate. Inner crate/module attributes remain module text.
+fn rust_item_start(lines: &[&str], start: usize) -> usize {
+    let mut first = start;
+    while first > 1 {
+        let line = lines[first - 2].trim_start();
+        if line.starts_with("///") || line.starts_with("#[") {
+            first -= 1;
+        } else {
+            break;
+        }
+    }
+    first
 }
 
 fn windows(path: &str, lines: &[&str], start: usize, end: usize, kind: &'static str) -> Vec<Unit> {
@@ -285,10 +332,18 @@ fn windows(path: &str, lines: &[&str], start: usize, end: usize, kind: &'static 
 
 /// Partition a file into function units plus module (or text) windows covering every other line.
 pub fn code_units(path: &str, text: &str) -> Vec<Unit> {
-    let lines = split_lines(text, false);
+    let rust = path.ends_with(".rs");
+    let lines = if rust {
+        rust_physical_lines(text)
+    } else {
+        split_lines(text, false)
+    };
     let Some(language) = language(path) else {
         return windows(path, &lines, 1, lines.len(), "text");
     };
+    if text.is_empty() {
+        return Vec::new();
+    }
     let mut parser = Parser::new();
     parser
         .set_language(&language)
@@ -297,7 +352,11 @@ pub fn code_units(path: &str, text: &str) -> Vec<Unit> {
     let mut units = Vec::new();
     let mut covered = 0;
     for node in function_nodes(tree.root_node()) {
-        let (start, end) = span(node);
+        let (mut start, end) = span(node);
+        if rust {
+            start = rust_item_start(&lines, start);
+        }
+        let end = if rust { end.min(lines.len()) } else { end };
         if start <= covered {
             continue; // Two definitions on one line: the first owns it.
         }
@@ -311,7 +370,7 @@ pub fn code_units(path: &str, text: &str) -> Vec<Unit> {
             start,
             end,
             text: join(&lines, start, end),
-            calls: calls(node, text),
+            calls: calls(node, text, rust),
         });
         covered = end;
     }
@@ -411,6 +470,56 @@ pub fn unit_scores(bm25: &Bm25, edges: &[(usize, usize)], query: &str) -> Vec<f6
     propagate(&bm25.score(query), edges, WEIGHT)
 }
 
+/// Experimental field-aware ranking over cached metadata. Body/call scores
+/// retain their order; name/path BM25 and exact query identifiers provide
+/// additional signals without requiring source reads or inferred call edges.
+/// Weights are fixed for the experiment, not learned relevance probabilities.
+pub fn symbol_scores(units: &[Unit], body: &[f64], query: &str) -> Vec<f64> {
+    assert_eq!(units.len(), body.len());
+    if terms(query).is_empty() {
+        return vec![0.0; units.len()];
+    }
+    let fields: Vec<String> = units
+        .iter()
+        .map(|u| format!("{} {}", u.name.as_deref().unwrap_or_default(), u.path))
+        .collect();
+    let metadata = Bm25::new(fields.iter().map(String::as_str)).score(query);
+    let body_max = body.iter().copied().fold(0.0f64, f64::max);
+    let metadata_max = metadata.iter().copied().fold(0.0f64, f64::max);
+    let identifiers: BTreeSet<&str> = query
+        .split(|c: char| !c.is_alphanumeric() && c != '_')
+        .filter(|s| !s.is_empty())
+        .collect();
+    let paths: Vec<String> = query
+        .split(|c: char| !c.is_alphanumeric() && !matches!(c, '_' | '.' | '/' | '-' | '\\'))
+        .map(|s| s.trim_matches('.').replace('\\', "/"))
+        .filter(|s| s.rsplit('/').next().is_some_and(|name| name.contains('.')))
+        .collect();
+    units
+        .iter()
+        .enumerate()
+        .map(|(i, unit)| {
+            let normalize = |value: f64, max: f64| if max > 0.0 { value / max } else { 0.0 };
+            let symbol = unit.kind == "function"
+                && unit
+                    .name
+                    .as_deref()
+                    .is_some_and(|name| identifiers.contains(name));
+            let path = paths.iter().any(|p| {
+                unit.path == *p
+                    || unit
+                        .path
+                        .strip_suffix(p)
+                        .is_some_and(|prefix| prefix.ends_with('/'))
+            });
+            normalize(body[i], body_max)
+                + 0.5 * normalize(metadata[i], metadata_max)
+                + if symbol { 1.0 } else { 0.0 }
+                + if path { 2.0 } else { 0.0 }
+        })
+        .collect()
+}
+
 /// Indexes of the units packing can consider: positive scores at or above the floor.
 pub fn packing_candidates(scores: &[f64]) -> Vec<usize> {
     let best = scores.iter().copied().fold(0.0f64, f64::max);
@@ -419,9 +528,45 @@ pub fn packing_candidates(scores: &[f64]) -> Vec<usize> {
         .collect()
 }
 
+/// Experimental eligibility union: symbol bonuses may reorder candidates, but
+/// cannot remove a unit that passed the original body/call score floor.
+/// This preserves eligibility, not delivered coverage under a finite budget.
+pub fn retained_body_candidates(body: &[f64], symbols: &[f64]) -> Vec<usize> {
+    assert_eq!(body.len(), symbols.len());
+    let mut retained = vec![false; body.len()];
+    for i in packing_candidates(body)
+        .into_iter()
+        .chain(packing_candidates(symbols))
+    {
+        retained[i] = true;
+    }
+    retained
+        .iter()
+        .enumerate()
+        .filter_map(|(i, &keep)| keep.then_some(i))
+        .collect()
+}
+
 /// A unit's text from its file's text, exactly as [`code_units`] extracts it.
 pub fn unit_text(file_text: &str, start: usize, end: usize) -> String {
     join(&split_lines(file_text, false), start, end)
+}
+
+/// Extract unit lines, using LF-based physical rows for Rust files and the
+/// prototype's Python-compatible line boundaries for existing languages.
+pub fn unit_text_for_path(path: &str, file_text: &str, start: usize, end: usize) -> String {
+    if path.ends_with(".rs") {
+        join(&rust_physical_lines(file_text), start, end)
+    } else {
+        unit_text(file_text, start, end)
+    }
+}
+
+/// Match Rust physical line rows: LF and CRLF split lines, while Unicode
+/// separators inside literals do not. `str::lines` drops a trailing empty row,
+/// matching the line count used for unit coverage.
+fn rust_physical_lines(text: &str) -> Vec<&str> {
+    text.lines().collect()
 }
 
 /// The prototype's BM25 (k1 1.2, b 0.75) over unit texts.
@@ -547,6 +692,203 @@ pub fn pack_units(
         }
         picked.push(units[i].clone());
         text = candidate;
+    }
+    (picked, text)
+}
+
+/// Experimental alternative to prefix truncation. Only an oversized first unit
+/// is shortened: choose its strongest query line, then retain up to 24 adjacent
+/// lines. Every rendered range describes exactly the delivered source lines.
+/// This does not change unit ranking or the historical packer.
+pub fn pack_units_focused(
+    bpe: &CoreBPE,
+    units: &[Unit],
+    scores: &[f64],
+    query: &str,
+    budget: usize,
+    floor: f64,
+) -> (Vec<Unit>, String) {
+    let render = |u: &Unit| {
+        format!(
+            "{}:{}-{}\n{}\n\n",
+            serde_json::to_string(&u.path).expect("serialize source path"),
+            u.start,
+            u.end,
+            u.text
+        )
+    };
+    let mut order: Vec<usize> = (0..scores.len()).filter(|&i| scores[i] > 0.0).collect();
+    order.sort_by(|&a, &b| scores[b].total_cmp(&scores[a]).then(a.cmp(&b)));
+    let mut picked = Vec::new();
+    let mut text = String::new();
+    let Some(&first) = order.first() else {
+        return (picked, text);
+    };
+    for i in order {
+        if scores[i] < floor * scores[first] {
+            break;
+        }
+        let candidate = format!("{text}{}", render(&units[i]));
+        if bpe.encode_ordinary(&candidate).len() <= budget {
+            picked.push(units[i].clone());
+            text = candidate;
+            continue;
+        }
+        if picked.is_empty() {
+            let lines = if Path::new(&units[i].path)
+                .extension()
+                .is_some_and(|e| e == "rs")
+            {
+                units[i].text.lines().collect()
+            } else {
+                split_lines(&units[i].text, false)
+            };
+            if lines.is_empty() {
+                break;
+            }
+            let lexical = Bm25::new(lines.iter().copied()).score(query);
+            // Earliest line wins ties, including queries with no lexical hit.
+            let anchor =
+                lexical.iter().enumerate().fold(
+                    0,
+                    |best, (j, score)| {
+                        if *score > lexical[best] { j } else { best }
+                    },
+                );
+            let mut start = anchor.saturating_sub(8);
+            let mut end = (start + WINDOW).min(lines.len());
+            while start < end {
+                let excerpt = Unit {
+                    start: units[i].start + start,
+                    end: units[i].start + end - 1,
+                    text: lines[start..end].join("\n"),
+                    ..units[i].clone()
+                };
+                let candidate = render(&excerpt);
+                if bpe.encode_ordinary(&candidate).len() <= budget {
+                    picked.push(excerpt);
+                    text = candidate;
+                    break;
+                }
+                // Keep the anchor until it cannot fit even by itself.
+                if anchor - start > end - 1 - anchor {
+                    start += 1;
+                } else {
+                    end -= 1;
+                }
+            }
+        }
+        break;
+    }
+    (picked, text)
+}
+
+/// Experimental file diversity over an already eligibility-filtered candidate
+/// set. Visit each file's best unit before repeated units from any file. Within
+/// each pass use descending scores, with original index order breaking ties.
+/// The focused packer's source windows and stop-on-first-nonfit remain intact.
+pub fn pack_units_file_diverse(
+    bpe: &CoreBPE,
+    units: &[Unit],
+    scores: &[f64],
+    query: &str,
+    budget: usize,
+) -> (Vec<Unit>, String) {
+    assert_eq!(units.len(), scores.len());
+    let mut order: Vec<usize> = (0..scores.len()).filter(|&i| scores[i] > 0.0).collect();
+    order.sort_by(|&a, &b| scores[b].total_cmp(&scores[a]).then(a.cmp(&b)));
+    let mut seen = BTreeSet::new();
+    let (first, repeated): (Vec<_>, Vec<_>) = order
+        .into_iter()
+        .partition(|&i| seen.insert(units[i].path.as_str()));
+    let ordered: Vec<_> = first
+        .into_iter()
+        .chain(repeated)
+        .map(|i| units[i].clone())
+        .collect();
+    // Ordinal scores encode the two-pass order for the unchanged packer. They
+    // are ordering keys, not relevance estimates; eligibility was fixed earlier.
+    let ordinal: Vec<_> = (1..=ordered.len()).rev().map(|i| i as f64).collect();
+    pack_units_focused(bpe, &ordered, &ordinal, query, budget, 0.0)
+}
+
+/// Experimental bounded, directed same-file expansion of each file's first seed.
+/// Existing union eligibility selects seeds; positive body scores rank at most
+/// two directly called definitions per seed. Expansion is one hop, never recursive.
+pub fn linked_file_candidates(
+    units: &[Unit],
+    edges: &[(usize, usize)],
+    body: &[f64],
+    scores: &[f64],
+    candidates: &[usize],
+) -> Vec<usize> {
+    assert_eq!(units.len(), scores.len());
+    assert_eq!(units.len(), body.len());
+    let mut ranked = candidates.to_vec();
+    ranked.sort_by(|&a, &b| scores[b].total_cmp(&scores[a]).then(a.cmp(&b)));
+    let mut files = BTreeSet::new();
+    let (first, repeated): (Vec<_>, Vec<_>) = ranked
+        .into_iter()
+        .partition(|&i| files.insert(units[i].path.as_str()));
+    let mut seen = BTreeSet::new();
+    let mut ordered = Vec::new();
+    for seed in first {
+        if seen.insert(seed) {
+            ordered.push(seed);
+        }
+        let mut callees: Vec<_> = edges
+            .iter()
+            .filter_map(|&(caller, callee)| {
+                (caller == seed
+                    && callee != seed
+                    && units[callee].path == units[seed].path
+                    && body[callee] > 0.0)
+                    .then_some(callee)
+            })
+            .collect();
+        callees.sort_by(|&a, &b| body[b].total_cmp(&body[a]).then(a.cmp(&b)));
+        callees.dedup();
+        for callee in callees.into_iter().take(2) {
+            if seen.insert(callee) {
+                ordered.push(callee);
+            }
+        }
+    }
+    for i in repeated {
+        if seen.insert(i) {
+            ordered.push(i);
+        }
+    }
+    ordered
+}
+
+/// Append complete evidence units that fit without changing the existing prefix.
+/// Oversized extras are skipped; neither the prefix nor extras are truncated.
+pub fn append_units_within_budget(
+    bpe: &CoreBPE,
+    mut picked: Vec<Unit>,
+    mut text: String,
+    extras: &[Unit],
+    budget: usize,
+) -> (Vec<Unit>, String) {
+    for unit in extras {
+        if picked
+            .iter()
+            .any(|u| u.path == unit.path && u.start <= unit.start && u.end >= unit.end)
+        {
+            continue;
+        }
+        let candidate = format!(
+            "{text}{}:{}-{}\n{}\n\n",
+            serde_json::to_string(&unit.path).expect("serialize source path"),
+            unit.start,
+            unit.end,
+            unit.text
+        );
+        if bpe.encode_ordinary(&candidate).len() <= budget {
+            text = candidate;
+            picked.push(unit.clone());
+        }
     }
     (picked, text)
 }

@@ -1,0 +1,13 @@
+{
+  "author_id": "independent-rich-source-author",
+  "source_only": true,
+  "independent_of_tuning": true,
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+  "queries_sha256": "89f03b3bc7c133e5fd94fcd73e65c955e739648b6ad7fc1435593110c668fa43",
+  "no_evidence_rationales": {
+    "h-rich-38": "Searched the supplied Rich source inventory and source tree for pandas, DataFrame, SQL, and export APIs. The only pandas hit is a changelog note about pretty-printing Pandas objects; no Rich DataFrame/table API with automatic type inference and SQL export is present.",
+    "h-rich-39": "Searched the supplied source tree for socket, socketserver, network output, CLI/argument parsing, and output transport terms, and inspected the Console output setup. No Rich command-line flag or built-in socket transport is present; callers can supply their own file-like output, which is not a Rich socket flag.",
+    "h-rich-40": "Searched the Progress implementation, docs, examples, and source inventory for browser dashboards and web-server APIs. Progress builds terminal renderables and a Table. The benchmark README mentions an ASV-generated benchmark dashboard, which is unrelated to an interactive browser dashboard driven by Progress tasks; no such Rich API is present.",
+    "h-rich-41": "Inspected Live implementation and docs and searched the source tree for persistence, database, and history storage. Live updates a terminal renderable and docs say the display persists for the context duration; no backend stores Live display history across process restarts. Other history hits concern readline input."
+  }
+}

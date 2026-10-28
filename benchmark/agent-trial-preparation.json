@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "id": "agent-trial-preparation",
+  "scope": "preparation_only",
+  "created_on": "2026-10-24",
+  "purpose": "Check prerequisites before freezing a new natural-agent experiment. This is not an executable trial preregistration or fresh performance evidence.",
+  "solver": {
+    "model": "gpt-6-luna",
+    "reasoning_effort": "medium",
+    "version_observed": "codex-cli 0.156.1",
+    "accounting": {
+      "provider_token_totals": true,
+      "internal_model_request_count": false,
+      "all_tool_payloads": true,
+      "failed_attempts": true
+    },
+    "limits": {
+      "max_actions": 16,
+      "timeout_seconds": 180,
+      "token_limit_kind": "observed_after_turn",
+      "token_limit": 150000
+    },
+    "limitations": [
+      "Current exec JSONL has turn-level aggregate usage; internal provider requests and retries are not counted.",
+      "Provider tokens become available at turn completion; prior thresholds were exceeded.",
+      "Actual subscription charges and actual serving model identity are unverified. Requested model is recorded, not asserted as provider identity."
+    ]
+  },
+  "tasks": {
+    "catalog": null,
+    "sha256": null,
+    "fresh": false,
+    "outcome_checks": false,
+    "independent_review": false
+  },
+  "arms": [
+    {
+      "id": "graf_v59",
+      "binary": ".research/bin/graf-v59",
+      "binary_sha256": "ba75b04cd449534f25aaae7c7b86bc96be82daafa73c1a242044cecab37243ab",
+      "query_args": [
+        "evidence-rescue",
+        "{query}",
+        "--budget",
+        "{budget}",
+        "--limit",
+        "20",
+        "--text"
+      ],
+      "source_reads": true
+    },
+    {
+      "id": "graf_v61",
+      "binary": ".research/bin/graf-v61",
+      "binary_sha256": "934616324941b44651892058caeda96d08a5b1b8f17d0a8e012332361f880694",
+      "query_args": [
+        "evidence-selective",
+        "{query}",
+        "--budget",
+        "{budget}",
+        "--limit",
+        "20",
+        "--text"
+      ],
+      "source_reads": true
+    },
+    {
+      "id": "graphify",
+      "binary": ".research/venv/bin/graphify",
+      "binary_sha256": "e3f9ec68898c023f9b1f2ca6770edd81a7facabb1ec1e83bef7d460e33c03f01",
+      "query_args": [
+        "query",
+        "{query}",
+        "--graph",
+        "{graph}",
+        "--budget",
+        "{budget}"
+      ],
+      "source_reads": true
+    }
+  ],
+  "graphify_pin": {
+    "repository": "Graphify-Labs/graphify",
+    "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8"
+  },
+  "graphify_adapter": "native-cli-v2",
+  "comparison": {
+    "paired_repetitions": 2,
+    "seed": 20261024,
+    "sequential": true,
+    "shared_source_manifest": null,
+    "shared_source_sha256": null,
+    "shared_tokenizer": "cl100k_base",
+    "shared_output_budget": 2000,
+    "cache_conditions": "Proposed: isolated per-attempt source copies and indexes, sequential arms in frozen randomized order; shared warm OS/dependency caches and uncontrolled provider cache. Count cached provider input tokens in primary total.",
+    "quality_criteria": null,
+    "primary_metric": "total_provider_tokens",
+    "graphify_scope": "code_only_no_clustering",
+    "last_accepted_graf": null,
+    "note": "Repetition count and seed are preparation defaults, not an inferential design. Freeze sample size, task outcomes, margins, severe loss limits and paired rule before any new data."
+  },
+  "broker_contract": {
+    "status": "command_builder_only_not_integrated_with_solver",
+    "shared_tools_proposed": [
+      "retrieve",
+      "read",
+      "search",
+      "edit",
+      "test",
+      "finish"
+    ],
+    "all_payloads": "Preserve initial issue/schema/orientation, requests, responses, refusals, failures and native output overruns. Separately report local cl100k payload counts and provider totals.",
+    "graphify": "Pinned native code-only hints followed by the same source read/search/edit/test tools. No documentation-task or source-anchor claim from hints.",
+    "timing": "Proposed shared attempt boundary: orientation through unconditional final verification; report index construction separately and count it for end-to-end setup."
+  },
+  "historical_constraints": {
+    "codex_v3": "Stopped; may_resume false. Do not raise limits, replace attempts, or pool with a new batch.",
+    "v64": "Retrieval results unchanged. Now exposed; cannot be reused as unseen confirmation after tuning.",
+    "active_preregistration": {
+      "path": "benchmark/preregistration.json",
+      "sha256": "36eb017f5348c8533123373c571ff5157fa146a141459ba0a863025eb766cb58"
+    }
+  },
+  "preflight_receipts": [
+    {
+      "path": ".research/evidence/agent-trial-preparation/preflight-01.json",
+      "sha256": "17b5e4ec3033836b9dbe7656b9eb608fa0e29789c866502149862e6e396d86a1",
+      "exit_code": 0
+    },
+    {
+      "path": ".research/evidence/agent-trial-preparation/preflight-02.json",
+      "sha256": "5ee99f2fc03ed23203a13ecad4c4b451d4bcde9a2eeab7ea6cf627e38c36be93",
+      "exit_code": 0
+    },
+    {
+      "path": ".research/evidence/agent-trial-preparation/preflight-03.json",
+      "sha256": "7446bbb70622b51d1c556ce01de492406f094c2cf2abf6ef576eb1faa55cd5f1",
+      "exit_code": 0
+    },
+    {
+      "path": ".research/evidence/agent-trial-preparation/preflight-04.json",
+      "sha256": "03d77dc1393d23274687df2ad3f790dd1a11631532a35da8045e7fb7ac88cea7",
+      "exit_code": 0
+    },
+    {
+      "path": ".research/evidence/agent-trial-preparation/preflight-05.json",
+      "sha256": "ac276ab8891dd7858156c7ea4b4d13e9948f927ba6b53628e97a01f820c5372c",
+      "exit_code": 0
+    }
+  ],
+  "implementation_sha256": {
+    "benchmark/agent_backend.py": "6485157ae6899d323c3bc62c9214e32e23e079fd7170cee344e178696baba6ad",
+    "benchmark/agent_readiness.py": "6f5ea00839514319615e69504ed5afbdf2d0d4b15848aa90d21a747ebd152b09",
+    "benchmark/test_agent_backend.py": "b680706bc3116a860a15c6ae50f5eaa77af61cf47eab12ae14ea9b2b5440997e",
+    "benchmark/test_agent_readiness.py": "21763f131cf7a70e976c4c9b9d578c4e327fb48f37a33586b8d541de818195f2"
+  },
+  "provenance_note": "Graphify sources are an exported archive, not a Git checkout. invalid-git-probe.json is retained: git -C inherited the parent Graf repository and is not baseline provenance. Installed Python sources passed equality against the exported snapshot; archive pin comes from the preserved snapshot receipt.",
+  "execution_authorized": false,
+  "product_promotion_pass": false,
+  "agent_savings": "unmeasured"
+}

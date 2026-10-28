@@ -1,0 +1,16 @@
+{
+  "baseline_commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+  "revisions": {
+    "library-v1": {
+      "historical_driver_sha256": "fa95faf9cbc9cdf6cdf4ed31e495e980fab8d1205c309971f19690747ed4e426",
+      "invocation": "_query_graph_text(_read_graph(path).to_undirected(), query, token_budget=budget)",
+      "native_cli_equivalent": false,
+      "note": "Preserved historical default: depth 3, missing CLI direction stamping and graph header. Do not reinterpret historical outcomes as native CLI results."
+    },
+    "native-cli-v2": {
+      "invocation": "python -m graphify query QUERY --graph PATH --budget BUDGET",
+      "status": "diagnostic_only_until_new_preregistration",
+      "note": "Executes pinned native CLI without reimplementing loading, traversal or rendering. Includes CLI startup, imports, loading, rendering, stdout and native query bookkeeping in timing. Native approximate budget semantics are unchanged."
+    }
+  }
+}

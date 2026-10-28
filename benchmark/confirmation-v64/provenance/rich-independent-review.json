@@ -1,0 +1,437 @@
+{
+  "reviewer_id": "independent-rich-source-reviewer",
+  "source_only": true,
+  "independent_of_tuning": true,
+  "independent_of_author": true,
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+  "queries_sha256": "89f03b3bc7c133e5fd94fcd73e65c955e739648b6ad7fc1435593110c668fa43",
+  "verified_case_ids": [
+    "h-rich-01",
+    "h-rich-02",
+    "h-rich-03",
+    "h-rich-04",
+    "h-rich-05",
+    "h-rich-06",
+    "h-rich-07",
+    "h-rich-08",
+    "h-rich-09",
+    "h-rich-10",
+    "h-rich-11",
+    "h-rich-12",
+    "h-rich-13",
+    "h-rich-14",
+    "h-rich-15",
+    "h-rich-16",
+    "h-rich-17",
+    "h-rich-18",
+    "h-rich-19",
+    "h-rich-20",
+    "h-rich-21",
+    "h-rich-22",
+    "h-rich-23",
+    "h-rich-24",
+    "h-rich-25",
+    "h-rich-26",
+    "h-rich-27",
+    "h-rich-28",
+    "h-rich-29",
+    "h-rich-30",
+    "h-rich-31",
+    "h-rich-32",
+    "h-rich-33",
+    "h-rich-34",
+    "h-rich-35",
+    "h-rich-36",
+    "h-rich-37",
+    "h-rich-38",
+    "h-rich-39",
+    "h-rich-40",
+    "h-rich-41"
+  ],
+  "per_case_findings": [
+    {
+      "id": "h-rich-01",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Distinct exact-symbol lookup for Console.out; related to h-rich-09 and h-rich-17, which ask comparison and execution trace.",
+      "finding": "Added markup=False and no_wrap=True anchors; positional string conversion and crop=False were already supported."
+    },
+    {
+      "id": "h-rich-02",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique helper-name lookup.",
+      "finding": "ratio_distribute is explicitly called for flexible widths using the remaining width, ratios, and minimums."
+    },
+    {
+      "id": "h-rich-03",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Text method signature lookup.",
+      "finding": "The declaration names render and its optional end parameter; the docstring confirms Segment rendering."
+    },
+    {
+      "id": "h-rich-04",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Progress method lookup.",
+      "finding": "The declaration identifies make_tasks_table with Iterable[Task] input and Table result."
+    },
+    {
+      "id": "h-rich-05",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique markup function lookup.",
+      "finding": "Function declaration, emoji=True default, and Text return annotation support the requested identification."
+    },
+    {
+      "id": "h-rich-06",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique exact Layout.render method lookup.",
+      "finding": "The method declaration returns RenderMap; its docstring describes Layout-to-region/lines mapping."
+    },
+    {
+      "id": "h-rich-07",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-24 but asks method identity and supported crop/pad behavior, while h-rich-24 asks newline handling.",
+      "finding": "Added method documentation and target-length/padding anchors to support the behavior beyond the method name."
+    },
+    {
+      "id": "h-rich-08",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Live method signature lookup.",
+      "finding": "The update declaration explicitly provides refresh=False."
+    },
+    {
+      "id": "h-rich-09",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-01 and h-rich-17 but separately asks a conceptual comparison with Console.print.",
+      "finding": "Console.out stringifies objects and calls print with markup disabled; Console.print is separately declared."
+    },
+    {
+      "id": "h-rich-10",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-30, which asks collapse eligibility and fallback, while this asks measurement and constraint sequence.",
+      "finding": "Measurements, _collapse_widths, and the even-reduction fallback are evidenced."
+    },
+    {
+      "id": "h-rich-11",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-29 and h-rich-34; this is the general soft-wrap option setup, while those ask explicit overrides and a docs/default comparison.",
+      "finding": "The code defaults no_wrap and overflow only when unspecified and always sets crop=False in soft-wrap mode."
+    },
+    {
+      "id": "h-rich-12",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique markup-stack behavior.",
+      "finding": "Added the reverse-stack search line; matching close tags pop the matching earlier stack entry."
+    },
+    {
+      "id": "h-rich-13",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Align width behavior.",
+      "finding": "Align measures the renderable maximum and uses it when width is unset."
+    },
+    {
+      "id": "h-rich-14",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-23 and h-rich-26, but focused on joining child lines into output rows.",
+      "finding": "Child renderables are rendered to lines, extended into layout rows, and emitted with line segments."
+    },
+    {
+      "id": "h-rich-15",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-20 and h-rich-28; asks task-row formatting, while h-rich-20 traces insertion and h-rich-28 isolates column-spec conversion.",
+      "finding": "Table construction, visibility filtering, and string/custom column formatting are evidenced."
+    },
+    {
+      "id": "h-rich-16",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Text measurement algorithm.",
+      "finding": "Added the Measurement return anchor; minimum width is the longest word and maximum is the widest line."
+    },
+    {
+      "id": "h-rich-17",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-01 and h-rich-09, but asks the argument-to-output path.",
+      "finding": "String conversion, markup disabling, and overflow=\"ignore\" are directly evidenced."
+    },
+    {
+      "id": "h-rich-18",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique table emission trace covering title, body, and caption.",
+      "finding": "Added the missing title branch; width calculation, body delegation, and caption branch are anchored."
+    },
+    {
+      "id": "h-rich-19",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Text render trace; h-rich-16 concerns measurement rather than rendering.",
+      "finding": "Added the resolved overflow and no_wrap arguments so option selection and segment conversion are both evidenced."
+    },
+    {
+      "id": "h-rich-20",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-15 but traces task creation/insertion through the renderable-to-table connection.",
+      "finding": "Added get_renderables-to-make_tasks_table and retained task insertion and row conversion anchors."
+    },
+    {
+      "id": "h-rich-21",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-31, but tests the refresh=True branch; h-rich-31 asks deferred refresh=False behavior.",
+      "finding": "Replaced unrelated constructor/start references with string conversion, lock, assignment, and conditional refresh in update."
+    },
+    {
+      "id": "h-rich-22",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique markup parse sequence.",
+      "finding": "Fast path, styled Text initialization, and parsed-tag iteration are anchored."
+    },
+    {
+      "id": "h-rich-23",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-14 and h-rich-26; this follows dimensions through leaf rendering to output rows.",
+      "finding": "Added dimensions, leaf filtering, and final row assembly/output anchors."
+    },
+    {
+      "id": "h-rich-24",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-07 but asks newline splitting and line flush behavior.",
+      "finding": "Removed anchors from a separate Segment splitting method and cited split_and_crop_lines newline partition, crop, and line-clear operations."
+    },
+    {
+      "id": "h-rich-25",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique rendering protocol question spanning docs and dispatch implementation.",
+      "finding": "Added the docs line that states the Console and ConsoleOptions parameters for __rich_console__; implementation dispatch is also cited."
+    },
+    {
+      "id": "h-rich-26",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-06 and h-rich-23, but asks architecture roles of partitioning versus leaf rendering.",
+      "finding": "Removed an unrelated update-path anchor and cited region division, leaf filtering, and render_lines."
+    },
+    {
+      "id": "h-rich-27",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Table pipeline delegation question.",
+      "finding": "Added the public __rich_console__ hook; width calculation and _measure_column/_render operations are evidenced."
+    },
+    {
+      "id": "h-rich-28",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Reworded to focus on conversion of string versus ProgressColumn specs; distinct from h-rich-15 task visibility and row formatting.",
+      "finding": "The source shows string specs become no-wrap Columns, ProgressColumn specs provide copied table columns, and Table.grid receives them."
+    },
+    {
+      "id": "h-rich-29",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Reworded as an explicit-override impact scenario; no_wrap=False and overflow=\"fold\" survive while crop is forced false.",
+      "finding": "The conditional assignments demonstrate which explicit values remain and which setting changes."
+    },
+    {
+      "id": "h-rich-30",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-10 but asks initial eligibility and fallback behavior.",
+      "finding": "Unfixed, wrappable columns are initially eligible; ratio_reduce is the last-resort fallback."
+    },
+    {
+      "id": "h-rich-31",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Related to h-rich-21 but asks refresh=False; the immediate state change and gated refresh are distinct outcomes.",
+      "finding": "Replaced unrelated constructor/start references with conversion, lock, assignment, and refresh guard anchors."
+    },
+    {
+      "id": "h-rich-32",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique visibility impact question.",
+      "finding": "Only visible tasks enter the table.add_row branch."
+    },
+    {
+      "id": "h-rich-33",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique total-reset and progress-sampling impact question.",
+      "finding": "Added advance delta and positive-sample condition; changed total resets samples before update sampling."
+    },
+    {
+      "id": "h-rich-34",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Reworded to compare the docs default statement with the actual omitted-argument and soft-wrap paths; distinct from h-rich-29 explicit overrides.",
+      "finding": "Docs say fold is default; Console.print parameter defaults to None, soft_wrap substitutes ignore, and per-call render options receive the selected value."
+    },
+    {
+      "id": "h-rich-35",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique docs/implementation comparison for Console.out flags.",
+      "finding": "Added missing markup=False anchor alongside emoji=False and crop=False."
+    },
+    {
+      "id": "h-rich-36",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique Live docs/signature discrepancy check.",
+      "finding": "Docs require explicit refresh under disabled auto-refresh; update defaults refresh=False."
+    },
+    {
+      "id": "h-rich-37",
+      "answerable": true,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Corrected a false premise: Text docs include fold, but omit ignore; this asks how the supplied ignore value reaches Text.wrap.",
+      "finding": "Text docs list fold/crop/ellipsis; Console soft_wrap supplies ignore; Text rendering chooses self.overflow, then options.overflow, then DEFAULT_OVERFLOW."
+    },
+    {
+      "id": "h-rich-38",
+      "answerable": false,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique negative control about a nonexistent DataFrame plus SQL-export API.",
+      "finding": "The changelog records Pandas pretty-printing support, but no requested DataFrame type-inference and SQL-export API exists."
+    },
+    {
+      "id": "h-rich-39",
+      "answerable": false,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique negative control about a CLI socket-output flag.",
+      "finding": "No such flag or built-in Rich socket transport appears in the supplied source tree."
+    },
+    {
+      "id": "h-rich-40",
+      "answerable": false,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique negative control about a Progress-to-browser dashboard API.",
+      "finding": "Progress produces terminal renderables; the benchmark dashboard references describe separate ASV benchmark output."
+    },
+    {
+      "id": "h-rich-41",
+      "answerable": false,
+      "anchors_valid": true,
+      "evidence_complete": true,
+      "distinctness": "Unique negative control about durable Live history.",
+      "finding": "Live is an in-context terminal display; source/docs reveal no database persistence across process restarts."
+    }
+  ],
+  "negative_control_searches": [
+    {
+      "case_id": "h-rich-38",
+      "scope": "sources/rich inventory and full source tree",
+      "queries": [
+        "pandas",
+        "DataFrame",
+        "SQL",
+        "export"
+      ],
+      "result": "The only relevant hit is a changelog entry for Pandas pretty-printing; no DataFrame API with type inference and SQL export."
+    },
+    {
+      "case_id": "h-rich-39",
+      "scope": "full source tree plus Console output setup",
+      "queries": [
+        "socket",
+        "socketserver",
+        "network output",
+        "CLI/argument parsing",
+        "output transport"
+      ],
+      "result": "No Rich command-line socket flag or built-in socket output transport found."
+    },
+    {
+      "case_id": "h-rich-40",
+      "scope": "Progress implementation, docs, examples, and full source inventory",
+      "queries": [
+        "browser dashboard",
+        "dashboard",
+        "webserver",
+        "Progress"
+      ],
+      "result": "Progress code builds terminal renderables and Table. Benchmark docs mention an unrelated ASV dashboard; no Progress browser dashboard API found."
+    },
+    {
+      "case_id": "h-rich-41",
+      "scope": "Live implementation, docs, and full source tree",
+      "queries": [
+        "database",
+        "persist",
+        "history storage",
+        "Live"
+      ],
+      "result": "Live manages a terminal renderable for the context lifetime; history hits are readline input, and no persistent Live history backend is present."
+    }
+  ],
+  "changes": [
+    "Preserved the authored file as rich-questions.before-review.json before edits.",
+    "Corrected incomplete evidence for Console.out flags, markup stack matching, table title emission, Text wrapping options, progress task trace, Live.update, markup parsing, Layout rendering, Segment splitting, protocol parameters, Table delegation, and Progress column conversion.",
+    "Changed h-rich-24 to remove evidence from a different Segment method.",
+    "Reworded h-rich-29 and h-rich-34 to reduce overlap and make their distinct conditions explicit.",
+    "Reworded h-rich-37 because the original claimed the Text docs omitted fold, but fold is listed; the corrected question addresses omitted ignore.",
+    "Updated rich-review.json query hash and strengthened negative-control search rationales."
+  ],
+  "unresolved_issues": []
+}

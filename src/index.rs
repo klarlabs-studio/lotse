@@ -1,12 +1,13 @@
 //! The persisted snapshot: scanning, postings, validation, and source freshness.
-use crate::source::{Chunk, Source, digest, supported};
+use crate::source::{CHUNK_LINES, Chunk, Source, digest, kind, supported};
 use crate::terms::Analyzer;
-use anyhow::{Context, Result, ensure};
+use anyhow::{Context, Result, bail, ensure};
+use bincode::Options;
 use ignore::WalkBuilder;
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
-use std::io::{BufWriter, Write};
+use std::io::{BufWriter, Read, Write};
 use std::path::{Component, Path, PathBuf};
 
 /// Schema 2: compact binary storage without excerpt text (read from the checked source).
@@ -15,9 +16,11 @@ const SCHEMA: u32 = 2;
 const LEGACY_SCHEMA: u32 = 1;
 const MAX_PATH_WEIGHT: u32 = 10;
 const MAX_FILE_BYTES: u64 = 1_000_000;
+/// Keep damaged or unexpectedly large snapshots from consuming unbounded memory.
+const MAX_INDEX_BYTES: u64 = 128 * 1024 * 1024;
 const SKIPPED_DIRS: [&str; 5] = ["node_modules", "vendor", "target", "dist", "__pycache__"];
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Posting {
     /// Ordinal of the chunk in [`Index::chunks`] order.
     pub chunk: u32,
@@ -60,6 +63,8 @@ pub struct BuildReport {
 #[derive(Default)]
 struct Scan {
     files: BTreeMap<String, Source>,
+    /// Files whose source and postings can both be carried forward unchanged.
+    reused_paths: BTreeSet<String>,
     changed: usize,
     reused: usize,
     skipped: usize,
@@ -67,6 +72,39 @@ struct Scan {
 
 pub fn index_path(root: &Path) -> PathBuf {
     root.join(".graf/index.bin")
+}
+
+/// Return `None` only when the snapshot is absent. Oversized snapshots are a
+/// resource-limit error, not corruption: automatic rebuilding them on every
+/// request would repeatedly rescan large repositories and discard valid data.
+fn read_index_bytes(root: &Path) -> Result<Option<Vec<u8>>> {
+    let path = index_path(root);
+    let file = match fs::File::open(&path) {
+        Ok(file) => file,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+        Err(error) => return Err(error).context("Cannot open index"),
+    };
+    let size = file.metadata().context("Cannot inspect index")?.len();
+    if size > MAX_INDEX_BYTES {
+        bail!("Index exceeds the {MAX_INDEX_BYTES}-byte resource limit");
+    }
+    let mut bytes = Vec::with_capacity(size as usize);
+    file.take(MAX_INDEX_BYTES + 1)
+        .read_to_end(&mut bytes)
+        .context("Cannot read index")?;
+    if bytes.len() as u64 > MAX_INDEX_BYTES {
+        bail!("Index exceeds the {MAX_INDEX_BYTES}-byte resource limit");
+    }
+    Ok(Some(bytes))
+}
+
+fn deserialize_index(bytes: &[u8]) -> Result<Index> {
+    bincode::DefaultOptions::new()
+        .with_fixint_encoding()
+        .with_limit(MAX_INDEX_BYTES)
+        .allow_trailing_bytes()
+        .deserialize(bytes)
+        .context("Invalid index serialization")
 }
 
 /// Where schema 1 lived; removed when a schema 2 index is written.
@@ -82,12 +120,38 @@ impl Index {
     }
 
     pub fn load(root: &Path) -> Result<Self> {
-        let index: Self = bincode::deserialize(
-            &fs::read(index_path(root)).context("No readable index; run `graf index` first")?,
-        )
-        .context("Invalid index; rebuild with `graf index --rebuild`")?;
+        let bytes = read_index_bytes(root)?.context("No readable index; run `graf index` first")?;
+        let index = deserialize_index(&bytes)
+            .context("Invalid index; rebuild with `graf index --rebuild`")?;
         index.validate(root)?;
         Ok(index)
+    }
+
+    /// Load an index for an MCP request, rebuilding only when its snapshot is
+    /// absent or invalid. Filesystem and permission errors are returned to the
+    /// caller. A readable analyzer is retained across recoverable data damage.
+    /// Ordinary [`Index::load`] remains strict for CLI callers.
+    pub fn load_or_rebuild_for_mcp(root: &Path) -> Result<Self> {
+        let bytes = read_index_bytes(root)?;
+        let parsed = bytes
+            .as_deref()
+            .and_then(|data| deserialize_index(data).ok());
+        if let Some(index) = parsed.as_ref()
+            && index.validate(root).is_ok()
+        {
+            return Ok(parsed.expect("parsed index exists"));
+        }
+
+        // The analyzer is independent of the derived postings. Keep it when it
+        // decoded successfully and passed its own bounds, even if other index
+        // data or the schema needs rebuilding.
+        let analyzer = parsed
+            .as_ref()
+            .map(|index| index.analyzer)
+            .filter(Self::valid_analyzer)
+            .unwrap_or_default();
+        Self::build_with(root, true, analyzer)?;
+        Self::load(root)
     }
 
     fn validate(&self, root: &Path) -> Result<()> {
@@ -101,38 +165,115 @@ impl Index {
         );
         let chunk_count = self.chunks().count();
         ensure!(
-            (1..=MAX_PATH_WEIGHT).contains(&self.analyzer.path_weight),
+            Self::valid_analyzer(&self.analyzer),
             "Invalid analyzer; run `graf index --rebuild`"
         );
         ensure!(
             self.lengths.len() == chunk_count,
             "Invalid chunk counts; run `graf index --rebuild`"
         );
+        let mut calculated_lengths = vec![0u32; chunk_count];
+        for (path, source) in &self.files {
+            let components = Path::new(path).components();
+            let normalized_path = components
+                .map(|component| match component {
+                    Component::Normal(part) => part.to_str(),
+                    _ => None,
+                })
+                .collect::<Option<Vec<_>>>()
+                .map(|parts| parts.join("/"));
+            ensure!(
+                !path.is_empty()
+                    && !path.contains('\\')
+                    && normalized_path.as_deref() == Some(path.as_str())
+                    && supported(Path::new(path)),
+                "Invalid source path; run `graf index --rebuild`"
+            );
+            ensure!(
+                source.bytes <= MAX_FILE_BYTES as usize
+                    && source.lines <= source.bytes
+                    && source.hash.len() == 64
+                    && source.hash.bytes().all(|b| b.is_ascii_hexdigit())
+                    && source.kind == kind(path),
+                "Invalid source metadata; run `graf index --rebuild`"
+            );
+            let mut previous_end = 0usize;
+            for chunk in &source.chunks {
+                ensure!(
+                    chunk.path == *path
+                        && chunk.start > previous_end
+                        && chunk.start > 0
+                        && chunk.start <= chunk.end
+                        && chunk.end <= source.lines
+                        && chunk.end - chunk.start < CHUNK_LINES
+                        && (chunk.start - 1) % CHUNK_LINES == 0
+                        && chunk.id.len() == 64
+                        && chunk.id
+                            == digest(&format!(
+                                "{path}\0{}\0{}\0{}",
+                                source.hash, chunk.start, chunk.end
+                            )),
+                    "Invalid source ranges; run `graf index --rebuild`"
+                );
+                previous_end = chunk.end;
+            }
+        }
+        for (term, postings) in &self.postings {
+            ensure!(
+                !term.is_empty() && !postings.is_empty(),
+                "Invalid postings; run `graf index --rebuild`"
+            );
+            let mut previous = None;
+            for posting in postings {
+                let ordinal = posting.chunk as usize;
+                ensure!(
+                    ordinal < chunk_count
+                        && posting.count > 0
+                        && previous.is_none_or(|p| p < ordinal),
+                    "Invalid postings; run `graf index --rebuild`"
+                );
+                previous = Some(ordinal);
+                calculated_lengths[ordinal] = calculated_lengths[ordinal]
+                    .checked_add(posting.count)
+                    .context("Invalid postings; run `graf index --rebuild`")?;
+            }
+        }
         ensure!(
-            self.postings
-                .values()
-                .flatten()
-                .all(|p| (p.chunk as usize) < chunk_count && p.count > 0),
-            "Invalid postings; run `graf index --rebuild`"
-        );
-        ensure!(
-            self.files.iter().all(
-                |(path, source)| source.chunks.iter().all(|c| c.path == *path
-                    && c.start > 0
-                    && c.start <= c.end
-                    && c.end <= source.lines)
-            ),
-            "Invalid source ranges; run `graf index --rebuild`"
+            calculated_lengths == self.lengths,
+            "Invalid chunk lengths; run `graf index --rebuild`"
         );
         Ok(())
+    }
+
+    fn valid_analyzer(analyzer: &Analyzer) -> bool {
+        (1..=MAX_PATH_WEIGHT).contains(&analyzer.path_weight)
     }
 
     pub fn build(root: &Path, rebuild: bool) -> Result<BuildReport> {
         Self::build_with(root, rebuild, Analyzer::default())
     }
 
-    /// Build with an experimental analyzer. Postings are always rebuilt, so
-    /// switching analyzers reuses unchanged chunks safely.
+    /// Check the complete eligible source set, including new and removed files.
+    /// Hash content rather than trusting mtimes; unchanged snapshots are not rewritten.
+    pub(crate) fn refresh(&mut self) -> Result<bool> {
+        let scan = scan(&self.root, Some(self), true)?;
+        if scan.changed == 0 && scan.files.len() == self.files.len() {
+            return Ok(false);
+        }
+        let refreshed = Self::with_postings(
+            &self.root,
+            scan.files,
+            self.analyzer,
+            Some(self),
+            &scan.reused_paths,
+        );
+        refreshed.save()?;
+        *self = refreshed;
+        Ok(true)
+    }
+
+    /// Build with an experimental analyzer. Matching analyzers allow unchanged
+    /// source postings to be remapped; analyzer switches retokenize all sources.
     pub fn build_with(root: &Path, rebuild: bool, analyzer: Analyzer) -> Result<BuildReport> {
         ensure!(
             (1..=MAX_PATH_WEIGHT).contains(&analyzer.path_weight),
@@ -143,14 +284,23 @@ impl Index {
         } else {
             None
         };
-        let scan = scan(root, previous.as_ref())?;
+        let can_reuse_postings = previous
+            .as_ref()
+            .is_some_and(|previous| previous.analyzer == analyzer);
+        let scan = scan(root, previous.as_ref(), can_reuse_postings)?;
         let deleted = previous.as_ref().map_or(0, |p| {
             p.files
                 .keys()
                 .filter(|p| !scan.files.contains_key(*p))
                 .count()
         });
-        let index = Self::with_postings(root, scan.files, analyzer);
+        let index = Self::with_postings(
+            root,
+            scan.files,
+            analyzer,
+            previous.as_ref().filter(|_| can_reuse_postings),
+            &scan.reused_paths,
+        );
         index.save()?;
         Ok(BuildReport {
             changed_files: scan.changed,
@@ -161,7 +311,13 @@ impl Index {
         })
     }
 
-    fn with_postings(root: &Path, files: BTreeMap<String, Source>, analyzer: Analyzer) -> Self {
+    fn with_postings(
+        root: &Path,
+        files: BTreeMap<String, Source>,
+        analyzer: Analyzer,
+        previous: Option<&Index>,
+        reused_paths: &BTreeSet<String>,
+    ) -> Self {
         let mut index = Self {
             schema: SCHEMA,
             root: root.into(),
@@ -170,22 +326,98 @@ impl Index {
             lengths: Vec::new(),
             analyzer,
         };
+        let chunk_count = index.chunks().count();
+        let mut lengths = vec![0; chunk_count];
+        let mut old_to_new = Vec::new();
+        if let Some(previous) = previous {
+            old_to_new.resize(previous.lengths.len(), None);
+            let mut old_offsets = BTreeMap::new();
+            let mut offset = 0usize;
+            for (path, source) in &previous.files {
+                old_offsets.insert(path.as_str(), offset);
+                offset += source.chunks.len();
+            }
+            let mut new_ordinal = 0usize;
+            for (path, source) in &index.files {
+                if reused_paths.contains(path) {
+                    let old_source = &previous.files[path];
+                    let old_start = old_offsets[path.as_str()];
+                    for local in 0..source.chunks.len() {
+                        let old_ordinal = old_start + local;
+                        old_to_new[old_ordinal] = Some(new_ordinal);
+                        lengths[new_ordinal] = previous.lengths[old_ordinal];
+                        new_ordinal += 1;
+                    }
+                    debug_assert_eq!(source.chunks.len(), old_source.chunks.len());
+                } else {
+                    new_ordinal += source.chunks.len();
+                }
+            }
+        }
+
+        // Remap retained posting ordinals in one pass over the prior posting map.
+        // File order is stable for retained files, so these vectors remain sorted.
         let mut postings = BTreeMap::<String, Vec<Posting>>::new();
-        let mut lengths = Vec::new();
-        for chunk in index.chunks() {
-            // Paths contribute terms along with source text.
-            let mut counts = BTreeMap::new();
-            for term in analyzer.window_terms(&chunk.path, &chunk.text) {
-                *counts.entry(term).or_insert(0u32) += 1;
+        if let Some(previous) = previous {
+            for (term, old_list) in &previous.postings {
+                let retained: Vec<_> = old_list
+                    .iter()
+                    .filter_map(|posting| {
+                        old_to_new[posting.chunk as usize].map(|chunk| Posting {
+                            chunk: u32::try_from(chunk).expect("fewer than 2^32 chunks"),
+                            count: posting.count,
+                        })
+                    })
+                    .collect();
+                if !retained.is_empty() {
+                    postings.insert(term.clone(), retained);
+                }
             }
-            let ordinal = u32::try_from(lengths.len()).expect("fewer than 2^32 chunks");
-            lengths.push(counts.values().sum());
-            for (term, count) in counts {
-                postings.entry(term).or_default().push(Posting {
-                    chunk: ordinal,
-                    count,
-                });
+        }
+
+        // Tokenize only files that were not carried forward. Additions are kept
+        // separately, then merged with retained lists in ordinal order.
+        let mut additions = BTreeMap::<String, Vec<Posting>>::new();
+        let mut ordinal = 0usize;
+        for (path, source) in &index.files {
+            let reused = reused_paths.contains(path);
+            for chunk in &source.chunks {
+                if !reused {
+                    let mut counts = BTreeMap::new();
+                    for term in analyzer.window_terms(&chunk.path, &chunk.text) {
+                        *counts.entry(term).or_insert(0u32) += 1;
+                    }
+                    lengths[ordinal] = counts.values().sum();
+                    let chunk_ordinal = u32::try_from(ordinal).expect("fewer than 2^32 chunks");
+                    for (term, count) in counts {
+                        additions.entry(term).or_default().push(Posting {
+                            chunk: chunk_ordinal,
+                            count,
+                        });
+                    }
+                }
+                ordinal += 1;
             }
+        }
+        for (term, new_list) in additions {
+            let Some(old_list) = postings.remove(&term) else {
+                postings.insert(term, new_list);
+                continue;
+            };
+            let mut merged = Vec::with_capacity(old_list.len() + new_list.len());
+            let (mut old_idx, mut new_idx) = (0, 0);
+            while old_idx < old_list.len() && new_idx < new_list.len() {
+                if old_list[old_idx].chunk < new_list[new_idx].chunk {
+                    merged.push(old_list[old_idx].clone());
+                    old_idx += 1;
+                } else {
+                    merged.push(new_list[new_idx].clone());
+                    new_idx += 1;
+                }
+            }
+            merged.extend_from_slice(&old_list[old_idx..]);
+            merged.extend_from_slice(&new_list[new_idx..]);
+            postings.insert(term, merged);
         }
         index.postings = postings;
         index.lengths = lengths;
@@ -316,7 +548,7 @@ impl Index {
 }
 
 /// Walk the root once, reusing previous sources whose content hash is unchanged.
-fn scan(root: &Path, previous: Option<&Index>) -> Result<Scan> {
+fn scan(root: &Path, previous: Option<&Index>, reuse_unchanged: bool) -> Result<Scan> {
     let mut scan = Scan::default();
     // Respect repository/global ignore rules even in a directory without .git.
     let mut walk = WalkBuilder::new(root);
@@ -357,11 +589,16 @@ fn scan(root: &Path, previous: Option<&Index>) -> Result<Scan> {
             .and_then(|p| p.files.get(&rel))
             .filter(|s| s.hash == hash)
         {
-            Some(_) => {
-                // Excerpt text is not stored, so the unchanged source is re-split from the
-                // text just read; splitting is deterministic, so ids and ranges are unchanged.
-                scan.files
-                    .insert(rel.clone(), Source::new(&rel, &text, hash));
+            Some(old_source) => {
+                // Analyzer-preserving updates carry chunk metadata and postings
+                // forward. Analyzer changes need fresh chunk text for retokenization.
+                let source = if reuse_unchanged {
+                    scan.reused_paths.insert(rel.clone());
+                    old_source.clone()
+                } else {
+                    Source::new(&rel, &text, hash)
+                };
+                scan.files.insert(rel, source);
                 scan.reused += 1;
             }
             None => {
@@ -384,5 +621,106 @@ fn read_eligible(entry: &ignore::DirEntry) -> Result<Option<String>> {
         Ok(_) => Ok(None),
         Err(e) if e.kind() == std::io::ErrorKind::InvalidData => Ok(None),
         Err(e) => Err(e).context("Cannot read source file"),
+    }
+}
+
+#[cfg(test)]
+mod incremental_tests {
+    use super::*;
+
+    fn posting_values(index: &Index) -> BTreeMap<&str, Vec<(u32, u32)>> {
+        index
+            .postings
+            .iter()
+            .map(|(term, postings)| {
+                (
+                    term.as_str(),
+                    postings
+                        .iter()
+                        .map(|posting| (posting.chunk, posting.count))
+                        .collect(),
+                )
+            })
+            .collect()
+    }
+
+    #[test]
+    fn incremental_refresh_reuses_loaded_sources_and_matches_full_rebuild() {
+        let directory = tempfile::tempdir().unwrap();
+        let root = directory.path().canonicalize().unwrap();
+        fs::create_dir(root.join("src")).unwrap();
+        fs::write(root.join("src/alpha.rs"), "fn alpha_cache() { cache(); }\n").unwrap();
+        fs::write(root.join("src/beta.rs"), "fn beta_cache() { cache(); }\n").unwrap();
+        Index::build(&root, true).unwrap();
+        let previous = Index::load(&root).unwrap();
+        let old_beta = previous.files["src/beta.rs"].clone();
+
+        // The changed source is split with text for tokenization; the unchanged
+        // loaded source is cloned with its schema-stored ranges and empty text.
+        fs::write(
+            root.join("src/alpha.rs"),
+            "fn alpha_session() { refresh(); }\n",
+        )
+        .unwrap();
+        let incremental_scan = scan(&root, Some(&previous), true).unwrap();
+        assert!(incremental_scan.reused_paths.contains("src/beta.rs"));
+        let beta = &incremental_scan.files["src/beta.rs"];
+        assert!(beta.chunks.iter().all(|chunk| chunk.text.is_empty()));
+        assert_eq!(beta.hash, old_beta.hash);
+        assert_eq!(beta.chunks.len(), old_beta.chunks.len());
+        assert_eq!(beta.chunks[0].id, old_beta.chunks[0].id);
+        assert!(
+            !incremental_scan.files["src/alpha.rs"].chunks[0]
+                .text
+                .is_empty()
+        );
+
+        let incremental = Index::with_postings(
+            &root,
+            incremental_scan.files,
+            previous.analyzer,
+            Some(&previous),
+            &incremental_scan.reused_paths,
+        );
+        let full_scan = scan(&root, None, false).unwrap();
+        let full = Index::with_postings(
+            &root,
+            full_scan.files,
+            previous.analyzer,
+            None,
+            &full_scan.reused_paths,
+        );
+        assert_eq!(incremental.lengths, full.lengths);
+        assert_eq!(posting_values(&incremental), posting_values(&full));
+    }
+
+    #[test]
+    fn analyzer_switch_keeps_fresh_text_for_full_retokenization() {
+        let directory = tempfile::tempdir().unwrap();
+        let root = directory.path().canonicalize().unwrap();
+        fs::write(root.join("alpha.rs"), "fn alpha_cache() { cache(); }\n").unwrap();
+        Index::build(&root, true).unwrap();
+        let previous = Index::load(&root).unwrap();
+        let analyzer_scan = scan(&root, Some(&previous), false).unwrap();
+        assert!(analyzer_scan.reused_paths.is_empty());
+        assert!(
+            analyzer_scan.files["alpha.rs"].chunks[0]
+                .text
+                .contains("alpha_cache")
+        );
+
+        let analyzer = Analyzer {
+            stopwords: crate::terms::Stopwords::None,
+            full_identifiers: true,
+            path_weight: 2,
+        };
+        let rebuilt = Index::with_postings(
+            &root,
+            analyzer_scan.files,
+            analyzer,
+            None,
+            &analyzer_scan.reused_paths,
+        );
+        assert!(rebuilt.postings.contains_key("alpha_cache"));
     }
 }

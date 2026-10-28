@@ -1,0 +1,342 @@
+{
+  "reviewer_id": "independent-pino-source-reviewer",
+  "source_only": true,
+  "independent_of_tuning": true,
+  "independent_of_author": true,
+  "packet_sha256": "22a032fa5959f0357cbc893308b8e43f544f376da6cde9ddd0fbd1f53f1c457a",
+  "queries_sha256": "b7b34b19db42c74160c3407066d349fb9f2a8f4bb67f8b3cee4356269cc568ae",
+  "verified_case_ids": [
+    "h-pino-01",
+    "h-pino-02",
+    "h-pino-03",
+    "h-pino-04",
+    "h-pino-05",
+    "h-pino-06",
+    "h-pino-07",
+    "h-pino-08",
+    "h-pino-09",
+    "h-pino-10",
+    "h-pino-11",
+    "h-pino-12",
+    "h-pino-13",
+    "h-pino-14",
+    "h-pino-15",
+    "h-pino-16",
+    "h-pino-17",
+    "h-pino-18",
+    "h-pino-19",
+    "h-pino-20",
+    "h-pino-21",
+    "h-pino-22",
+    "h-pino-23",
+    "h-pino-24",
+    "h-pino-25",
+    "h-pino-26",
+    "h-pino-27",
+    "h-pino-28",
+    "h-pino-29",
+    "h-pino-30",
+    "h-pino-31",
+    "h-pino-32",
+    "h-pino-33",
+    "h-pino-34",
+    "h-pino-35",
+    "h-pino-36",
+    "h-pino-37",
+    "h-pino-38",
+    "h-pino-39",
+    "h-pino-40",
+    "h-pino-41"
+  ],
+  "per_case_findings": [
+    {
+      "case_id": "h-pino-01",
+      "category": "exact",
+      "finding": "Answerable: defaults are 5 and 100, and construction wires them to maximumDepth and maximumBreadth; cited lines support both."
+    },
+    {
+      "case_id": "h-pino-02",
+      "category": "exact",
+      "finding": "Answerable: warning code and trigger are supported by the formatter probe and warning branch."
+    },
+    {
+      "case_id": "h-pino-03",
+      "category": "exact",
+      "finding": "Answerable after adding the version export line; getter returns numeric levelVal and setter throws."
+    },
+    {
+      "case_id": "h-pino-04",
+      "category": "exact",
+      "finding": "Answerable: CENSOR is [Redacted]."
+    },
+    {
+      "case_id": "h-pino-05",
+      "category": "exact",
+      "finding": "Answerable: construction throws when useOnlyCustomLevels is true and customLevels is absent."
+    },
+    {
+      "case_id": "h-pino-06",
+      "category": "exact",
+      "finding": "Answerable: defaultOptions sets messageKey=msg and errorKey=err."
+    },
+    {
+      "case_id": "h-pino-07",
+      "category": "exact",
+      "finding": "Answerable: child prefix concatenates inherited prefix (or empty string) with supplied prefix."
+    },
+    {
+      "case_id": "h-pino-08",
+      "category": "exact",
+      "finding": "Corrected expected answer to include lastLevel, which implementation writes alongside lastObj, lastMsg, lastTime, and lastLogger for metadata-aware streams."
+    },
+    {
+      "case_id": "h-pino-09",
+      "category": "conceptual",
+      "finding": "Answerable: base null leaves initial chindings empty; otherwise base is serialized, with name merged when supplied."
+    },
+    {
+      "case_id": "h-pino-10",
+      "category": "conceptual",
+      "finding": "Answerable: default merge assigns user log fields onto mixin result, so conflicting user fields win."
+    },
+    {
+      "case_id": "h-pino-11",
+      "category": "conceptual",
+      "finding": "Answerable: Error instances wrap under errorKey and provide message; ordinary objects infer message from errorKey only under the stated missing-message conditions."
+    },
+    {
+      "case_id": "h-pino-12",
+      "category": "conceptual",
+      "finding": "Answerable: child bindings are serialized/appended as chindings; documentation explains duplicate keys and parse order."
+    },
+    {
+      "case_id": "h-pino-13",
+      "category": "conceptual",
+      "finding": "Answerable: added the method-generation comparison line; logger methods are gated before multistream destination thresholds."
+    },
+    {
+      "case_id": "h-pino-14",
+      "category": "conceptual",
+      "finding": "Answerable: redaction creates the top-level formatter used for interpolation and installs it as stringify in formatOpts."
+    },
+    {
+      "case_id": "h-pino-15",
+      "category": "conceptual",
+      "finding": "Answerable: no-options child branch resets bindings formatter when needed, serializes bindings, invokes onChild, and returns; added fast-path branch evidence."
+    },
+    {
+      "case_id": "h-pino-16",
+      "category": "conceptual",
+      "finding": "Answerable: setLevel loops over levels, disables below-threshold methods, and chooses specialized standard methods or generated custom methods."
+    },
+    {
+      "case_id": "h-pino-17",
+      "category": "trace",
+      "finding": "Answerable: generated info method reaches write; write normalizes input, applies mixin, serializes, then applies streamWrite before stream.write; added genLog write-call evidence."
+    },
+    {
+      "case_id": "h-pino-18",
+      "category": "trace",
+      "finding": "Answerable: custom level mappings create labels/values and setLevel rebuilds methods; added method assignment evidence."
+    },
+    {
+      "case_id": "h-pino-19",
+      "category": "trace",
+      "finding": "Answerable: redaction creates stringifiers/format options, instance stores serializer state, and JSON path consumes it; added symbol assignment evidence."
+    },
+    {
+      "case_id": "h-pino-20",
+      "category": "trace",
+      "finding": "Answerable: child inherits with Object.create, overlays serializer/formatter options, serializes bindings, and invokes onChild; evidence includes formatter setup."
+    },
+    {
+      "case_id": "h-pino-21",
+      "category": "trace",
+      "finding": "Answerable: fatal writes then attempts flushSync (swallowing flush errors); info uses normal genLog."
+    },
+    {
+      "case_id": "h-pino-22",
+      "category": "trace",
+      "finding": "Answerable: multistream orders destinations and dedupe writes to eligible destinations at the highest eligible level, allowing equal-level destinations; added sort evidence."
+    },
+    {
+      "case_id": "h-pino-23",
+      "category": "trace",
+      "finding": "Answerable: worker builds multistream, relays metadata, then writes each parsed chunk; added metadata relay evidence."
+    },
+    {
+      "case_id": "h-pino-24",
+      "category": "trace",
+      "finding": "Answerable: flush validates callback, calls stream.flush when present, otherwise invokes a supplied callback immediately."
+    },
+    {
+      "case_id": "h-pino-25",
+      "category": "architecture",
+      "finding": "Answerable: the cited modules divide construction, logger behavior, level mappings, and redaction responsibilities."
+    },
+    {
+      "case_id": "h-pino-26",
+      "category": "architecture",
+      "finding": "Answerable: shared prototype inherits EventEmitter; factory creates an object inheriting it and instances use that object as prototype."
+    },
+    {
+      "case_id": "h-pino-27",
+      "category": "architecture",
+      "finding": "Answerable: docs state worker-thread boundary; worker code parses and routes records to target streams. Scope is architectural overview."
+    },
+    {
+      "case_id": "h-pino-28",
+      "category": "architecture",
+      "finding": "Answerable: worker stores target/level pairs and ends each target stream, waiting for all close events; added target creation evidence."
+    },
+    {
+      "case_id": "h-pino-29",
+      "category": "impact",
+      "finding": "Answerable: formatter probe checks numeric level, routing consumes lastLevel and resolves labels, and docs warn about preserving numeric field."
+    },
+    {
+      "case_id": "h-pino-30",
+      "category": "impact",
+      "finding": "Answerable: docs show duplicate parent/child keys and test verifies parsed output gives the logged object precedence."
+    },
+    {
+      "case_id": "h-pino-31",
+      "category": "impact",
+      "finding": "Repaired query: supplied source does not show hook-type validation. It now asks what to assert about execution/write path; code and test show hook runs immediately before write."
+    },
+    {
+      "case_id": "h-pino-32",
+      "category": "impact",
+      "finding": "Answerable: child redaction state is rebuilt before bindings are serialized; added the asChindings call evidence."
+    },
+    {
+      "case_id": "h-pino-33",
+      "category": "impact",
+      "finding": "Answerable: routing code plus dedupe tests support equal-level delivery and different-level cutoff. This is a change-impact task distinct in intent from h-pino-22 trace."
+    },
+    {
+      "case_id": "h-pino-34",
+      "category": "discrepancy",
+      "finding": "Answerable as a package-name comparison: docs name fast-redact and wrapper imports @pinojs/redact. Do not infer dependency internals from this snapshot."
+    },
+    {
+      "case_id": "h-pino-35",
+      "category": "discrepancy",
+      "finding": "Partly overlapping h-pino-34: it asks about VM validation attribution. The wrapper import is visible, but dependency internals are absent, so whether VM validation remains true is unresolved."
+    },
+    {
+      "case_id": "h-pino-36",
+      "category": "discrepancy",
+      "finding": "Answerable discrepancy: docs say transport.level is unused for single-target path; worker honors a level by taking the multistream path."
+    },
+    {
+      "case_id": "h-pino-37",
+      "category": "conceptual",
+      "finding": "Reclassified from discrepancy to conceptual: implementation tries JSON.stringify and uses configured safe serializer on throw, matching the API text. This removes one false discrepancy annotation."
+    },
+    {
+      "case_id": "h-pino-38",
+      "category": "no_evidence",
+      "finding": "Negative control supported: supplied source/docs/tests contain no evidence of built-in token-bucket emission limiting."
+    },
+    {
+      "case_id": "h-pino-39",
+      "category": "no_evidence",
+      "finding": "Negative control supported: supplied source/docs/tests contain no encryption option or record-encryption stage."
+    },
+    {
+      "case_id": "h-pino-40",
+      "category": "no_evidence",
+      "finding": "Negative control supported: supplied construction/docs/tests show no local configuration database or restart persistence."
+    },
+    {
+      "case_id": "h-pino-41",
+      "category": "no_evidence",
+      "finding": "Negative control supported: supplied transport implementation/docs/tests show no retry or exponential-backoff API."
+    }
+  ],
+  "searches_for_negatives": [
+    {
+      "case_id": "h-pino-38",
+      "search_terms": [
+        "token bucket",
+        "token-bucket",
+        "rate limit",
+        "rate limiting"
+      ],
+      "scope": "supplied sources/pino implementation, docs, and tests",
+      "result": "No built-in logger emission limiter or token bucket found."
+    },
+    {
+      "case_id": "h-pino-39",
+      "search_terms": [
+        "encrypt",
+        "encryption",
+        "cipher",
+        "crypto"
+      ],
+      "scope": "supplied sources/pino implementation, docs, and tests",
+      "result": "No record encryption option or encryption stage before destination writes found."
+    },
+    {
+      "case_id": "h-pino-40",
+      "search_terms": [
+        "configuration database",
+        "persist configuration",
+        "local database",
+        "restart configuration"
+      ],
+      "scope": "supplied sources/pino construction, docs, and tests",
+      "result": "No configuration persistence or restart restore facility found."
+    },
+    {
+      "case_id": "h-pino-41",
+      "search_terms": [
+        "retry",
+        "retries",
+        "backoff",
+        "exponential"
+      ],
+      "scope": "supplied sources/pino transport implementation, docs, and tests",
+      "result": "No failed-transport retry policy or exponential backoff API found."
+    }
+  ],
+  "changes": [
+    {
+      "file": "submission/pino-questions.json",
+      "change": "Preserved pre-review copy as pino-questions.before-review.json; corrected h-pino-08 expected metadata list; added missing evidence for several trace/architecture answers; repaired h-pino-31 query to remove unsupported hook-type-validation premise; reclassified h-pino-37 as conceptual and corrected its answer; narrowed h-pino-34/35 answers to what the supplied source establishes."
+    },
+    {
+      "file": "submission/pino-review.json",
+      "change": "Updated queries_sha256 and expanded negative-control source-search rationales."
+    }
+  ],
+  "structural_checks": {
+    "question_count": 41,
+    "evidence_anchor_errors": [],
+    "source_hash_errors": [],
+    "category_counts": {
+      "exact": 8,
+      "conceptual": 9,
+      "trace": 8,
+      "architecture": 4,
+      "impact": 5,
+      "discrepancy": 3,
+      "no_evidence": 4
+    },
+    "expected_category_quota": {
+      "architecture": 4,
+      "conceptual": 8,
+      "discrepancy": 4,
+      "exact": 8,
+      "impact": 5,
+      "no_evidence": 4,
+      "trace": 8
+    }
+  },
+  "unresolved_issues": [
+    "h-pino-34 and h-pino-35 substantially overlap on the same fast-redact versus @pinojs/redact package-name discrepancy. The source packet lacks the imported dependency internals, so h-pino-35 cannot verify the VM behavior itself.",
+    "h-pino-37 was correctly reclassified as conceptual because implementation matches the API fallback description. The resulting category counts miss quota: discrepancy=3 (requires 4) and conceptual=9 (requires 8). Replace one duplicated discrepancy task with a distinct source-supported discrepancy before freezing; do not restore h-pino-37 to discrepancy.",
+    "No anchor or source-hash errors were found for cited evidence."
+  ]
+}

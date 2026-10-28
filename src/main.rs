@@ -124,7 +124,7 @@ impl QueryArgs {
 
 #[derive(Subcommand)]
 enum Command {
-    /// Create/update the index. Reuse unchanged chunks; rebuild lexical postings.
+    /// Create/update the index. Reuse unchanged chunks and matching-analyzer postings.
     /// The analyzer flags are experimental arms; without them the accepted analyzer is used.
     Index {
         /// Discard an incompatible or moved index.
@@ -144,6 +144,34 @@ enum Command {
     Search(QueryArgs),
     /// Return one compact source hint per file, with handles for expand.
     Locate(QueryArgs),
+    /// Experimental: locate-ranked files, then equally budgeted exact source windows.
+    Evidence(QueryArgs),
+    /// Experimental: complete fitting source units within locate-ranked files.
+    EvidenceUnits(QueryArgs),
+    /// Experimental: append fitting units from up to four cross-file call neighbours.
+    EvidenceLinked(QueryArgs),
+    /// Experimental: atomic linked functions with up to two direct local helpers.
+    EvidenceBundles(QueryArgs),
+    /// Experimental: reward distinct IDF-weighted query coverage before source delivery.
+    EvidenceCoverage(QueryArgs),
+    /// Experimental: bounded lexical families before structural source delivery.
+    EvidenceFamilies(QueryArgs),
+    /// Experimental: strongest full-file lexical passage within family-ranked files.
+    EvidencePassages(QueryArgs),
+    /// Experimental: preserve structural evidence and append novel-term passages.
+    EvidenceComplement(QueryArgs),
+    /// Experimental: interleave code, documentation and test file relevance ranks.
+    EvidenceStratified(QueryArgs),
+    /// Experimental: fuse chunk and symbol file ranks before artifact interleave.
+    EvidenceFused(QueryArgs),
+    /// Experimental: resolve explicit documentation symbols into source file ranks.
+    EvidenceReferenced(QueryArgs),
+    /// Experimental: preserve fused evidence and append fitting referenced functions.
+    EvidenceRescue(QueryArgs),
+    /// Experimental: append fitting direct local callees to rescued evidence.
+    EvidenceCallees(QueryArgs),
+    /// Experimental: one query-matching local callee with bounded added tokens.
+    EvidenceSelective(QueryArgs),
     /// Experimental: whole function units ranked by BM25 with one-hop call propagation.
     /// A port of the ast_graph screening arm; not an accepted improvement.
     Units {
@@ -158,6 +186,24 @@ enum Command {
         /// Experimental: query with the issue title plus code-like tokens.
         #[arg(long)]
         rewrite: bool,
+        /// Experimental: center an oversized first unit on its strongest query line.
+        #[arg(long)]
+        focus: bool,
+        /// Experimental: also rank exact symbols and file paths from the query.
+        #[arg(long)]
+        symbols: bool,
+        /// Experimental: retain candidates passing the body score cutoff as well.
+        #[arg(long, requires = "symbols")]
+        retain_body: bool,
+        /// Experimental: visit each candidate file before repeated units.
+        #[arg(long, requires_all = ["symbols", "retain_body", "focus"])]
+        file_diversity: bool,
+        /// Experimental: include up to two directly called same-file definitions.
+        #[arg(long, requires_all = ["symbols", "retain_body", "focus", "file_diversity"])]
+        linked: bool,
+        /// Experimental: append helpers only within unused file-diverse budget.
+        #[arg(long, requires_all = ["symbols", "retain_body", "focus", "file_diversity"], conflicts_with = "linked")]
+        linked_tail: bool,
     },
     /// Experimental: where to start on an issue. Lists likely files, then whole likely
     /// functions, within one budget. Pass the issue text (title on the first line).
@@ -174,6 +220,15 @@ enum Command {
     /// Experimental: a source file's functions with line ranges, to read one function, not the file.
     Outline {
         path: String,
+        /// Cap a page of complete entries in cl100k tokens, including continuation hints.
+        #[arg(long)]
+        budget: Option<usize>,
+        /// Zero-based function entry to start from (not a source line).
+        #[arg(long, default_value_t = 0)]
+        offset: usize,
+        /// Maximum functions in a page. Enables paging with a default budget of 1,500.
+        #[arg(long)]
+        limit: Option<usize>,
         /// Emit only context, without JSON metadata.
         #[arg(long)]
         text: bool,
@@ -307,6 +362,160 @@ fn run() -> Result<()> {
             )?;
             emit(args.text, &response.context, &response)
         }
+        Command::Evidence(args) => {
+            let response = index.evidence_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceUnits(args) => {
+            let response = index.evidence_units_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceLinked(args) => {
+            let response = index.evidence_linked_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceBundles(args) => {
+            let response = index.evidence_bundles_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceCoverage(args) => {
+            let response = index.evidence_coverage_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceFamilies(args) => {
+            let response = index.evidence_families_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidencePassages(args) => {
+            let response = index.evidence_passages_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceComplement(args) => {
+            let response = index.evidence_complement_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceStratified(args) => {
+            let response = index.evidence_stratified_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceFused(args) => {
+            let response = index.evidence_fused_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceReferenced(args) => {
+            let response = index.evidence_referenced_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceRescue(args) => {
+            let response = index.evidence_rescue_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceCallees(args) => {
+            let response = index.evidence_callees_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
+        Command::EvidenceSelective(args) => {
+            let response = index.evidence_selective_with(
+                &args.query(),
+                args.budget,
+                args.limit,
+                args.scope.as_deref(),
+                args.kind.as_ref().map(Kind::as_str),
+                args.policy(),
+            )?;
+            emit(args.text, &response.context, &response)
+        }
         Command::Expand {
             id,
             before,
@@ -326,6 +535,12 @@ fn run() -> Result<()> {
             budget,
             text,
             rewrite,
+            focus,
+            symbols,
+            retain_body,
+            file_diversity,
+            linked,
+            linked_tail,
         } => {
             let query = if rewrite {
                 graf::rewrite::rewrite_query(&query)
@@ -333,17 +548,44 @@ fn run() -> Result<()> {
                 query
             };
             let bpe = tiktoken_rs::cl100k_base()?;
-            let (units, context) = graf::triage::ranked_units(&bpe, &index, &query, budget)?;
+            let (units, context) = if linked_tail {
+                graf::triage::ranked_units_linked_tail(&bpe, &index, &query, budget)?
+            } else if linked {
+                graf::triage::ranked_units_linked(&bpe, &index, &query, budget)?
+            } else if file_diversity {
+                graf::triage::ranked_units_file_diverse(&bpe, &index, &query, budget)?
+            } else if retain_body {
+                graf::triage::ranked_units_retaining_body(&bpe, &index, &query, budget, focus)?
+            } else if symbols {
+                graf::triage::ranked_units_symbols(&bpe, &index, &query, budget, focus)?
+            } else if focus {
+                graf::triage::ranked_units_focused(&bpe, &index, &query, budget)?
+            } else {
+                graf::triage::ranked_units(&bpe, &index, &query, budget)?
+            };
             let cited: Vec<_> = units
                 .iter()
                 .map(|u| serde_json::json!({"path": u.path, "start": u.start, "end": u.end, "name": u.name}))
                 .collect();
-            emit(
-                text,
-                &context,
-                &serde_json::json!({"context": context, "units": cited, "budget": budget,
-                                    "experimental": "units: tree-sitter units with call propagation"}),
-            )
+            let mut response = serde_json::json!({"context": context, "units": cited, "budget": budget,
+                                    "focus": focus,
+                                    "experimental": "units: tree-sitter units with call propagation"});
+            if symbols {
+                response["symbols"] = true.into();
+            }
+            if retain_body {
+                response["retain_body"] = true.into();
+            }
+            if file_diversity {
+                response["file_diversity"] = true.into();
+            }
+            if linked {
+                response["linked"] = true.into();
+            }
+            if linked_tail {
+                response["linked_tail"] = true.into();
+            }
+            emit(text, &context, &response)
         }
         Command::Triage {
             issue,
@@ -354,9 +596,33 @@ fn run() -> Result<()> {
             let response = graf::triage::triage(&bpe, &index, &issue, budget)?;
             emit(text, &response.context, &response)
         }
-        Command::Outline { path, text } => {
-            let response = graf::triage::outline(&index, &path)?;
-            emit(text, &response.context, &response)
+        Command::Outline {
+            path,
+            budget,
+            offset,
+            limit,
+            text,
+        } => {
+            if budget.is_some() || offset != 0 || limit.is_some() {
+                let limit = limit.unwrap_or(100);
+                ensure!(
+                    (1..=1000).contains(&limit),
+                    "limit must be between 1 and 1000"
+                );
+                let bpe = tiktoken_rs::cl100k_base()?;
+                let response = graf::triage::outline_budgeted(
+                    &bpe,
+                    &index,
+                    &path,
+                    budget.unwrap_or(1500),
+                    offset,
+                    limit,
+                )?;
+                emit(text, &response.context, &response)
+            } else {
+                let response = graf::triage::outline(&index, &path)?;
+                emit(text, &response.context, &response)
+            }
         }
         Command::Stats => print_json(&index.stats()?),
         Command::ExportIndex => print_json(&index.export_legacy()?),

@@ -1,0 +1,47 @@
+{
+  "id": "confirmation-v64",
+  "purpose": "Fresh frozen source-only retrieval confirmation; no agent-efficiency or documentation-task claims",
+  "arms": [
+    "graf_evidence_selective",
+    "graf_evidence_rescue",
+    "graphify"
+  ],
+  "repeats": 1,
+  "budgets": [
+    2000,
+    8000
+  ],
+  "tokenizer": "cl100k_base",
+  "output": "results/confirmation-v64-comparison.json",
+  "graphify_adapter": "native-cli-v2",
+  "queries": {
+    "path": "benchmark/confirmation-v64/questions.json",
+    "sha256": "cbbdef34c9d16d5e9ffbfda1969914ff0fbaa8f5953a2408ca3b096b0d8d9f29"
+  },
+  "corpora": {
+    "path": "benchmark/confirmation-v64/corpora.json",
+    "sha256": "5ca146634e1e37932558eda20b22982b40476b808466274923f40d7626e99cf1"
+  },
+  "snapshots": {
+    "path": "benchmark/confirmation-v64/snapshots.json",
+    "sha256": "e133f82a96db983da3d06ad0f8380519a2cb13fa2f0993c38aa0f4cc9c54b4c4"
+  },
+  "index_binary": {
+    "path": ".research/bin/graf-v61",
+    "sha256": "934616324941b44651892058caeda96d08a5b1b8f17d0a8e012332361f880694"
+  },
+  "binaries": {
+    "graf_evidence_selective": {
+      "path": ".research/bin/graf-v61",
+      "sha256": "934616324941b44651892058caeda96d08a5b1b8f17d0a8e012332361f880694"
+    },
+    "graf_evidence_rescue": {
+      "path": ".research/bin/graf-v59",
+      "sha256": "ba75b04cd449534f25aaae7c7b86bc96be82daafa73c1a242044cecab37243ab"
+    }
+  },
+  "source_manifest": {
+    "path": "benchmark/confirmation-v64/source-manifest.json",
+    "sha256": "a78f928f6bf3ae86f151e86aec0902a3840532d19f5a129cd32a0c04046d02c4"
+  }
+}
