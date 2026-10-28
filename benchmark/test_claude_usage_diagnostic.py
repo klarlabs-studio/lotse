@@ -106,8 +106,9 @@ class ClaudeUsageDiagnosticTests(unittest.TestCase):
 
     def test_overflowing_integer_cost_is_invalid_without_raising(self):
         events = valid_events()
-        events[-1]["modelUsage"]["claude-test"]["costUSD"] = 10 ** 10000
-        report = analyze(stream(events))
+        events[-1]["modelUsage"]["claude-test"]["costUSD"] = "OVERFLOW"
+        # Python 3.11+ cannot serialize a 10,001-digit int, so splice its digits into the JSON text.
+        report = analyze(stream(events).replace(b'"OVERFLOW"', b"1" + b"0" * 10000))
         self.assertIsNone(report["model_usage_totals"])
         self.assertFalse(report["diagnostic_pass"])
 

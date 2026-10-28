@@ -5,7 +5,12 @@ use tiktoken_rs::cl100k_base;
 #[test]
 fn locate_first_evidence_shares_budget_and_preserves_exact_physical_source_ranges() {
     let dir = tempfile::tempdir().unwrap();
-    let name = "a\"file.rs";
+    // A quote must be escaped in the JSON context; Windows file names cannot contain one.
+    let name = if cfg!(windows) {
+        "a file.rs"
+    } else {
+        "a\"file.rs"
+    };
     let source = (1..=50)
         .map(|n| {
             if n == 25 {
@@ -68,7 +73,8 @@ fn locate_first_evidence_shares_budget_and_preserves_exact_physical_source_range
                     .context
                     .contains("needle café\u{2028}same physical line")
             );
-            assert!(response.context.contains("\"a\\\"file.rs\":"));
+            let key = format!("{}:", serde_json::to_string(name).unwrap());
+            assert!(response.context.contains(&key));
         }
     }
     let docs = index

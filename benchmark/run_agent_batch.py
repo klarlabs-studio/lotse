@@ -98,6 +98,14 @@ def trial_id(batch, task, k, arm):
     return f"{batch}-{task}-{arm}-{k}"
 
 
+def use_frozen_solver(batch):
+    """Run this batch's pinned solver copy, after checking it is byte-identical to the frozen one."""
+    binary = BASE / batch["solver_binary"]
+    if hashlib.sha256(binary.read_bytes()).hexdigest() != batch["solver_sha256"]:
+        raise SystemExit("Solver binary differs from this batch's frozen copy")
+    os.environ["CLAUDE_BINARY"] = str(binary)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--batch", help="batch id in agent_trials.batches (default: latest)")
@@ -109,10 +117,7 @@ def main():
     batch = prereg["batches"][batch_id]
     if not args.dry_run:
         if batch.get("solver_binary"):
-            binary = BASE / batch["solver_binary"]
-            if hashlib.sha256(binary.read_bytes()).hexdigest() != batch["solver_sha256"]:
-                raise SystemExit("Solver binary differs from this batch's frozen copy")
-            os.environ["CLAUDE_BINARY"] = str(binary)
+            use_frozen_solver(batch)
         if batch.get("solver_version"):
             version = subprocess.check_output([solver(), "--version"], text=True).strip()
             if version != batch["solver_version"]:

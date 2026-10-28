@@ -15,6 +15,7 @@ class NaturalSpecTests(unittest.TestCase):
     def test_changed_solver_stops_before_any_trial_is_run(self):
         with patch("sys.argv", ["run_agent_batch", "--batch", "t6"]), \
              patch.object(run_agent_batch.subprocess, "check_output", return_value="changed"), \
+             patch.object(run_agent_batch, "use_frozen_solver"), \
              patch.object(run_agent_batch, "run") as run:
             with self.assertRaisesRegex(SystemExit, "Solver version differs"):
                 run_agent_batch.main()
@@ -27,6 +28,7 @@ class NaturalSpecTests(unittest.TestCase):
              patch.object(run_agent_batch, "graphify_baseline",
                           return_value={"commit": AGENT["batches"]["t6"]["graphify_commit"]}), \
              patch.object(run_agent_batch, "preflight", return_value="changed"), \
+             patch.object(run_agent_batch, "use_frozen_solver"), \
              patch.object(run_agent_batch, "run") as run:
             with self.assertRaisesRegex(SystemExit, "frozen backend"):
                 run_agent_batch.main()
@@ -37,6 +39,7 @@ class NaturalSpecTests(unittest.TestCase):
         with patch("sys.argv", ["run_agent_batch", "--batch", "t4r"]), \
              patch.object(run_agent_batch.subprocess, "check_output", return_value=frozen), \
              patch.object(run_agent_batch, "graphify_baseline", return_value={"commit": "86c57be"}), \
+             patch.object(run_agent_batch, "use_frozen_solver"), \
              patch.object(run_agent_batch, "run") as run:
             with self.assertRaisesRegex(SystemExit, "Graphify baseline differs"):
                 run_agent_batch.main()

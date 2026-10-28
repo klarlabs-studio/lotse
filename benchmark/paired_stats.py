@@ -63,7 +63,10 @@ def wilson(successes, n, confidence=0.95):
     denominator = 1 + z * z / n
     center = (p + z * z / (2 * n)) / denominator
     half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denominator
-    return max(0.0, center - half), min(1.0, center + half)
+    # The bounds are exactly 0 and 1 at the ends; rounding can leave a residue of about 1e-18.
+    low = 0.0 if successes == 0 else max(0.0, center - half)
+    high = 1.0 if successes == n else min(1.0, center + half)
+    return low, high
 
 
 def required_n(sd, margin, alpha=0.05, power=0.80):

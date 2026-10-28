@@ -1,4 +1,5 @@
 """Mechanical CLI parity diagnostics, not retrieval/agent efficiency evidence."""
+import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
@@ -10,6 +11,8 @@ from audit_graphify_adapter import probe
 
 
 class AdapterTests(unittest.TestCase):
+    # CI installs no Graphify (it runs no comparison); the pinned virtualenvs do.
+    @unittest.skipUnless(importlib.util.find_spec("graphify"), "Graphify is not installed")
     def test_native_cli_fixtures(self):
         with tempfile.TemporaryDirectory() as directory:
             for row in probe(directory):
