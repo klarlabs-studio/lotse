@@ -71,6 +71,32 @@ struct Scan {
     skipped: usize,
 }
 
+/// Rename `temp` over `target` with `fs::rename`, which uses POSIX semantics on Windows 10+, so
+/// readers never see the target missing. Windows can still refuse briefly while another writer's
+/// rename is in flight; retry that a few times.
+pub(crate) fn replace(temp: tempfile::TempPath, target: &Path) -> std::io::Result<()> {
+    const ATTEMPTS: u32 = 20;
+    let mut attempt = 1;
+    loop {
+        match fs::rename(&temp, target) {
+            Ok(()) => {
+                // The file now lives at `target`; nothing is left to clean up.
+                let _ = temp.keep();
+                return Ok(());
+            }
+            Err(error)
+                if cfg!(windows)
+                    && error.kind() == std::io::ErrorKind::PermissionDenied
+                    && attempt < ATTEMPTS =>
+            {
+                std::thread::sleep(std::time::Duration::from_millis(5 * u64::from(attempt)));
+                attempt += 1;
+            }
+            Err(error) => return Err(error),
+        }
+    }
+}
+
 pub fn index_path(root: &Path) -> PathBuf {
     root.join(".graf/index.bin")
 }
@@ -445,8 +471,7 @@ impl Index {
             output.flush()?;
         }
         temp.as_file().sync_all()?;
-        temp.persist(index_path(&self.root))
-            .map_err(|e| e.error)
+        replace(temp.into_temp_path(), &index_path(&self.root))
             .context("Cannot save index atomically")?;
         let legacy = legacy_index_path(&self.root);
         if legacy.is_file() {

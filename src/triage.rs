@@ -224,8 +224,7 @@ fn save_cache(index: &Index, name: &str, cache: &impl Serialize) -> Result<()> {
     );
     let mut temp = tempfile::NamedTempFile::new_in(&dir)?;
     temp.write_all(&bincode::serialize(cache)?)?;
-    temp.persist(dir.join(name))
-        .map_err(|e| e.error)
+    crate::index::replace(temp.into_temp_path(), &dir.join(name))
         .context("Cannot save the unit cache")?;
     Ok(())
 }
