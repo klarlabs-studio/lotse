@@ -1,5 +1,5 @@
 {
-  "version": 111,
+  "version": 112,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1642,6 +1642,11 @@
       "version": 111,
       "date": "2026-10-28",
       "reason": "Freeze batch t9: graf_pointer_orient against Graphify 0.9.97 orientation on the 36 natural_tasks_t9 tasks, 144 runs on Claude Code 2.1.312"
+    },
+    {
+      "version": 112,
+      "date": "2026-10-28",
+      "reason": "Preregister find_replay_screen: offline replay of t7-t9 search-then-read pairs against graf find (95c9106) before any replay output is seen"
     }
   ],
   "arms": {
@@ -5424,5 +5429,22 @@
     "rule": "every new batch, screen or comparison is frozen on the latest release of Graphify, Claude Code and the Claude model, and the latest committed graf, checked with benchmark/check_latest.py (the model by hand) immediately before the freeze",
     "within_a_run": "versions never change mid-run: the solver runs from a pinned copy (solver_binary) that self-updates cannot replace, Graphify from its own virtualenv, graf from a pinned binary; a version that must change makes a new preregistration version and a restarted run, with the earlier trials kept and excluded",
     "baselines": "a newer Graphify is added as a separate baseline revision (benchmark/corpora.json, baseline_revisions); earlier results keep theirs"
+  },
+  "find_replay_screen": {
+    "purpose": "offline readiness gate for `graf find` (branch feat/find-units, commit 95c9106, pinned .research/bin/graf-95c9106, sha256 d9dacfbe8988fb0d...): would one find call have delivered the code an agent read right after a search? Decides only whether find earns an agent batch (the operator pre-agreed 144 Haiku runs on 2026-10-28 for one batch if this screen passes); no efficiency, superiority or promotion claim",
+    "motivation": "post-hoc diagnostic 56b91c6: on t8/t9 tasks both arms always solve, graf and Graphify cost the same; the gap comes from long sessions. Seen before this freeze (development data, disclosed): in t8 and t9, 265 of 651 graf-arm reads and 246 of 661 Graphify-arm reads opened lines around a hit of the immediately preceding search",
+    "data": "development only: every completed attempt of batches t7, t8 and t9 (both arms); all three are spent and their tasks are never reused for a held-out claim",
+    "pairs": "a search call immediately followed by one or more read calls (no other operation between), where a read's requested range contains a line the search reported for the same path; only calls before the attempt's first edit; a pair whose read source_hash differs from the replay snapshot's file is skipped and counted",
+    "replay": "the task's faulty state prepared again with task_session (no model); `graf-95c9106 find --text --budget B PATTERN` with the agent's own pattern and requested budget B (default 2000), bounded by the harness's bounded() like every tool",
+    "metrics": {
+      "read_line_recall": "per following read: share of the lines that read returned which the find output also shows (L<n>: lines of that path)",
+      "redundant_read": "a following read with read_line_recall >= 0.8",
+      "token_ratio": "per pair: cl100k tokens of the find output divided by tokens of the search output plus all its following reads' outputs",
+      "invalid_pattern": "patterns Rust regex rejects but ripgrep accepted; counted; an agent would get an error"
+    },
+    "pass_rule": "find passes if, over all pairs pooled across arms, the share of following reads that are redundant is at least 0.40 and the median token_ratio is at most 1.0, and invalid patterns are at most 5% of searches. Reported by batch and arm; per-pair rows preserved",
+    "outputs": "results/find-replay-screen.json (rows and summary); the script benchmark/find_replay.py",
+    "next_if_pass": "a new natural-task catalog (t10) under the v95 fill rule on fresh repositories, then a batch freezing arm graf_find_orient (graf_pointer_orient plus a graf-only find tool, as outline is graf-only) against graphify_orient, 144 runs, frozen before any model call",
+    "next_if_fail": "no batch; the result is reported and find stays experimental"
   }
 }
