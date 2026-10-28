@@ -4,7 +4,12 @@ use std::{fs, process::Command};
 #[test]
 fn evidence_handles_expand_the_delivered_range_and_widen_from_its_boundaries() {
     let dir = tempfile::tempdir().unwrap();
-    let name = "a\"file.rs";
+    // Windows file names cannot contain a quote.
+    let name = if cfg!(windows) {
+        "a file.rs"
+    } else {
+        "a\"file.rs"
+    };
     let lines: Vec<_> = (1..=80)
         .map(|n| match n {
             2 => "fn needle() {".to_string(),
