@@ -1,0 +1,1003 @@
+{
+  "batch": "codex-v2",
+  "preregistration_version": 37,
+  "cases": [
+    {
+      "task": "undici-5520",
+      "attempt": 2,
+      "trial": "codex-v2-undici-5520-graphify_orient-2",
+      "arm": "graphify_orient",
+      "initial_manifest_sha256": "c459a6910d015a5ee695874c7e2545bcadfa8041da5f6ad2916ac0c85ee7c5d9",
+      "reported_tokens": 290045,
+      "known_reported_token_lower_bound": 290045,
+      "cached_input_tokens": 260352,
+      "reasoning_tokens": 75,
+      "session_event_payload_tokens_cl100k": 17896,
+      "native_reply_content_tokens_cl100k": 16602,
+      "native_request_params_tokens_cl100k": 7193,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": false,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 50.62308458301413,
+      "agent_called_finish": true,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "retrieve",
+        "read",
+        "retrieve",
+        "read",
+        "read",
+        "read",
+        "read",
+        "edit",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false
+      ]
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 2,
+      "trial": "codex-v2-undici-5520-graf_current_orient-2",
+      "arm": "graf_current_orient",
+      "initial_manifest_sha256": "c459a6910d015a5ee695874c7e2545bcadfa8041da5f6ad2916ac0c85ee7c5d9",
+      "reported_tokens": 291935,
+      "known_reported_token_lower_bound": 291935,
+      "cached_input_tokens": 262656,
+      "reasoning_tokens": 120,
+      "session_event_payload_tokens_cl100k": 16100,
+      "native_reply_content_tokens_cl100k": 14721,
+      "native_request_params_tokens_cl100k": 6808,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": false,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 30.60541041599936,
+      "agent_called_finish": true,
+      "operations": [
+        "orient",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "search",
+        "read",
+        "retrieve",
+        "search",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "search",
+        "read",
+        "search",
+        "finish"
+      ],
+      "test_outcomes": [
+        false
+      ]
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 2,
+      "trial": "codex-v2-undici-5520-search_only-2",
+      "arm": "search_only",
+      "initial_manifest_sha256": "c459a6910d015a5ee695874c7e2545bcadfa8041da5f6ad2916ac0c85ee7c5d9",
+      "reported_tokens": 221176,
+      "known_reported_token_lower_bound": 221176,
+      "cached_input_tokens": 178048,
+      "reasoning_tokens": 539,
+      "session_event_payload_tokens_cl100k": 11530,
+      "native_reply_content_tokens_cl100k": 11872,
+      "native_request_params_tokens_cl100k": 7048,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": false,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 30.238334875000874,
+      "agent_called_finish": true,
+      "operations": [
+        "search",
+        "search",
+        "read",
+        "read",
+        "read",
+        "read",
+        "search",
+        "read",
+        "read",
+        "read",
+        "edit",
+        "edit",
+        "test",
+        "read",
+        "finish"
+      ],
+      "test_outcomes": [
+        false
+      ]
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-v2-click-1884-search_only-1",
+      "arm": "search_only",
+      "initial_manifest_sha256": "4d00e211f53abd02ac9776544e641bb5420f6e620ff57fd4790b1ea6e4f71859",
+      "reported_tokens": 163621,
+      "known_reported_token_lower_bound": 163621,
+      "cached_input_tokens": 132480,
+      "reasoning_tokens": 457,
+      "session_event_payload_tokens_cl100k": 5069,
+      "native_reply_content_tokens_cl100k": 5306,
+      "native_request_params_tokens_cl100k": 5945,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 13,
+      "broker_requests": 13,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": true,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 31.39533745800145,
+      "agent_called_finish": true,
+      "operations": [
+        "search",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "read",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-v2-click-1884-graphify_orient-1",
+      "arm": "graphify_orient",
+      "initial_manifest_sha256": "4d00e211f53abd02ac9776544e641bb5420f6e620ff57fd4790b1ea6e4f71859",
+      "reported_tokens": 228700,
+      "known_reported_token_lower_bound": 228700,
+      "cached_input_tokens": 207360,
+      "reasoning_tokens": 613,
+      "session_event_payload_tokens_cl100k": 10931,
+      "native_reply_content_tokens_cl100k": 9619,
+      "native_request_params_tokens_cl100k": 6298,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 13,
+      "broker_requests": 13,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": true,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 36.27019612499862,
+      "agent_called_finish": true,
+      "operations": [
+        "orient",
+        "read",
+        "read",
+        "search",
+        "retrieve",
+        "read",
+        "test",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "trial": "codex-v2-click-1884-graf_current_orient-1",
+      "arm": "graf_current_orient",
+      "initial_manifest_sha256": "4d00e211f53abd02ac9776544e641bb5420f6e620ff57fd4790b1ea6e4f71859",
+      "reported_tokens": 97808,
+      "known_reported_token_lower_bound": 97808,
+      "cached_input_tokens": 57984,
+      "reasoning_tokens": 0,
+      "session_event_payload_tokens_cl100k": 8615,
+      "native_reply_content_tokens_cl100k": 7214,
+      "native_request_params_tokens_cl100k": 2187,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 5,
+      "broker_requests": 5,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": false,
+      "protocol_error": null,
+      "infrastructure_error": false,
+      "wall_s": 18.56585595899378,
+      "agent_called_finish": false,
+      "operations": [
+        "orient",
+        "retrieve",
+        "retrieve",
+        "read",
+        "retrieve",
+        "search",
+        "finish"
+      ],
+      "test_outcomes": []
+    },
+    {
+      "task": "click-1884",
+      "attempt": 2,
+      "trial": "codex-v2-click-1884-graf_current_orient-2",
+      "arm": "graf_current_orient",
+      "initial_manifest_sha256": "4d00e211f53abd02ac9776544e641bb5420f6e620ff57fd4790b1ea6e4f71859",
+      "reported_tokens": 145265,
+      "known_reported_token_lower_bound": 145265,
+      "cached_input_tokens": 107008,
+      "reasoning_tokens": 343,
+      "session_event_payload_tokens_cl100k": 8030,
+      "native_reply_content_tokens_cl100k": 7495,
+      "native_request_params_tokens_cl100k": 4255,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 9,
+      "broker_requests": 9,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": true,
+      "protocol_error": null,
+      "infrastructure_error": false,
+      "wall_s": 23.37134787499963,
+      "agent_called_finish": true,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "retrieve",
+        "test",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "task": "click-1884",
+      "attempt": 2,
+      "trial": "codex-v2-click-1884-graphify_orient-2",
+      "arm": "graphify_orient",
+      "initial_manifest_sha256": "4d00e211f53abd02ac9776544e641bb5420f6e620ff57fd4790b1ea6e4f71859",
+      "reported_tokens": 242429,
+      "known_reported_token_lower_bound": 242429,
+      "cached_input_tokens": 204160,
+      "reasoning_tokens": 451,
+      "session_event_payload_tokens_cl100k": 10634,
+      "native_reply_content_tokens_cl100k": 9375,
+      "native_request_params_tokens_cl100k": 6789,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 14,
+      "broker_requests": 14,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": true,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 37.06968266700278,
+      "agent_called_finish": true,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "search",
+        "search",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "read",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "task": "click-1884",
+      "attempt": 2,
+      "trial": "codex-v2-click-1884-search_only-2",
+      "arm": "search_only",
+      "initial_manifest_sha256": "4d00e211f53abd02ac9776544e641bb5420f6e620ff57fd4790b1ea6e4f71859",
+      "reported_tokens": 171958,
+      "known_reported_token_lower_bound": 171958,
+      "cached_input_tokens": 155520,
+      "reasoning_tokens": 497,
+      "session_event_payload_tokens_cl100k": 6036,
+      "native_reply_content_tokens_cl100k": 6245,
+      "native_request_params_tokens_cl100k": 5376,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 11,
+      "broker_requests": 11,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": true,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 30.630390499994974,
+      "agent_called_finish": true,
+      "operations": [
+        "search",
+        "read",
+        "read",
+        "search",
+        "read",
+        "test",
+        "edit",
+        "test",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 1,
+      "trial": "codex-v2-undici-5520-graf_current_orient-1",
+      "arm": "graf_current_orient",
+      "initial_manifest_sha256": "c459a6910d015a5ee695874c7e2545bcadfa8041da5f6ad2916ac0c85ee7c5d9",
+      "reported_tokens": 357293,
+      "known_reported_token_lower_bound": 357293,
+      "cached_input_tokens": 320000,
+      "reasoning_tokens": 246,
+      "session_event_payload_tokens_cl100k": 22849,
+      "native_reply_content_tokens_cl100k": 21511,
+      "native_request_params_tokens_cl100k": 7396,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 16,
+      "broker_requests": 16,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": false,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 31.21205720900616,
+      "agent_called_finish": true,
+      "operations": [
+        "orient",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "retrieve",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "retrieve",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false,
+        false
+      ]
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 1,
+      "trial": "codex-v2-undici-5520-search_only-1",
+      "arm": "search_only",
+      "initial_manifest_sha256": "c459a6910d015a5ee695874c7e2545bcadfa8041da5f6ad2916ac0c85ee7c5d9",
+      "reported_tokens": 199413,
+      "known_reported_token_lower_bound": 199413,
+      "cached_input_tokens": 172416,
+      "reasoning_tokens": 356,
+      "session_event_payload_tokens_cl100k": 12113,
+      "native_reply_content_tokens_cl100k": 12381,
+      "native_request_params_tokens_cl100k": 5899,
+      "failed_broker_requests": 1,
+      "native_mcp_calls": 13,
+      "broker_requests": 13,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": false,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 24.55195629199443,
+      "agent_called_finish": true,
+      "operations": [
+        "search",
+        "read",
+        "read",
+        "read",
+        "search",
+        "read",
+        "read",
+        "read",
+        "read",
+        "read",
+        "read",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        false
+      ]
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 1,
+      "trial": "codex-v2-undici-5520-graphify_orient-1",
+      "arm": "graphify_orient",
+      "initial_manifest_sha256": "c459a6910d015a5ee695874c7e2545bcadfa8041da5f6ad2916ac0c85ee7c5d9",
+      "reported_tokens": 273060,
+      "known_reported_token_lower_bound": 273060,
+      "cached_input_tokens": 247296,
+      "reasoning_tokens": 428,
+      "session_event_payload_tokens_cl100k": 15614,
+      "native_reply_content_tokens_cl100k": 14326,
+      "native_request_params_tokens_cl100k": 6880,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 15,
+      "broker_requests": 15,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": false,
+      "protocol_error": "observed token stop threshold reached after native turn; may overshoot",
+      "infrastructure_error": false,
+      "wall_s": 42.74615754200204,
+      "agent_called_finish": true,
+      "operations": [
+        "orient",
+        "retrieve",
+        "read",
+        "search",
+        "read",
+        "read",
+        "read",
+        "read",
+        "read",
+        "read",
+        "read",
+        "read",
+        "edit",
+        "test",
+        "read",
+        "finish"
+      ],
+      "test_outcomes": [
+        false
+      ]
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 2,
+      "trial": "codex-v2-gin-2718-search_only-2",
+      "arm": "search_only",
+      "initial_manifest_sha256": "c501549a6d17070f5c8ef32a99690fe3161531f7ac3f921759cceb822d389f1a",
+      "reported_tokens": 85294,
+      "known_reported_token_lower_bound": 85294,
+      "cached_input_tokens": 74624,
+      "reasoning_tokens": 264,
+      "session_event_payload_tokens_cl100k": 3488,
+      "native_reply_content_tokens_cl100k": 3618,
+      "native_request_params_tokens_cl100k": 3237,
+      "failed_broker_requests": 0,
+      "native_mcp_calls": 7,
+      "broker_requests": 7,
+      "blocked_broker_requests": 0,
+      "policy_rejected_requests": 0,
+      "invocations": 1,
+      "passed": true,
+      "protocol_error": null,
+      "infrastructure_error": false,
+      "wall_s": 21.76188337500207,
+      "agent_called_finish": true,
+      "operations": [
+        "search",
+        "read",
+        "search",
+        "edit",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "test_outcomes": [
+        true
+      ]
+    }
+  ],
+  "arms": {
+    "graf_current_orient": {
+      "completed": 4,
+      "verifier_passes": 1,
+      "reported_tokens": null,
+      "wall_seconds": 103.75467145899893,
+      "native_mcp_calls": 45,
+      "by_task": {
+        "gin-2718": [],
+        "click-1884": [
+          {
+            "attempt": 1,
+            "passed": false,
+            "reported_tokens": 97808
+          },
+          {
+            "attempt": 2,
+            "passed": true,
+            "reported_tokens": 145265
+          }
+        ],
+        "undici-5520": [
+          {
+            "attempt": 2,
+            "passed": false,
+            "reported_tokens": 291935
+          },
+          {
+            "attempt": 1,
+            "passed": false,
+            "reported_tokens": 357293
+          }
+        ]
+      }
+    },
+    "graphify_orient": {
+      "completed": 4,
+      "verifier_passes": 2,
+      "reported_tokens": null,
+      "wall_seconds": 166.70912091701757,
+      "native_mcp_calls": 57,
+      "by_task": {
+        "gin-2718": [],
+        "click-1884": [
+          {
+            "attempt": 1,
+            "passed": true,
+            "reported_tokens": 228700
+          },
+          {
+            "attempt": 2,
+            "passed": true,
+            "reported_tokens": 242429
+          }
+        ],
+        "undici-5520": [
+          {
+            "attempt": 2,
+            "passed": false,
+            "reported_tokens": 290045
+          },
+          {
+            "attempt": 1,
+            "passed": false,
+            "reported_tokens": 273060
+          }
+        ]
+      }
+    },
+    "search_only": {
+      "completed": 5,
+      "verifier_passes": 3,
+      "reported_tokens": null,
+      "wall_seconds": 138.5779024999938,
+      "native_mcp_calls": 59,
+      "by_task": {
+        "gin-2718": [
+          {
+            "attempt": 2,
+            "passed": true,
+            "reported_tokens": 85294
+          }
+        ],
+        "click-1884": [
+          {
+            "attempt": 1,
+            "passed": true,
+            "reported_tokens": 163621
+          },
+          {
+            "attempt": 2,
+            "passed": true,
+            "reported_tokens": 171958
+          }
+        ],
+        "undici-5520": [
+          {
+            "attempt": 2,
+            "passed": false,
+            "reported_tokens": 221176
+          },
+          {
+            "attempt": 1,
+            "passed": false,
+            "reported_tokens": 199413
+          }
+        ]
+      }
+    }
+  },
+  "paired_cases": [
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "complete": false,
+      "identical_initial_source_manifests": false,
+      "arms": {}
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 2,
+      "complete": false,
+      "identical_initial_source_manifests": false,
+      "arms": {
+        "search_only": {
+          "passed": true,
+          "reported_tokens": 85294,
+          "wall_s": 21.76188337500207,
+          "broker_requests": 7
+        }
+      }
+    },
+    {
+      "task": "click-1884",
+      "attempt": 1,
+      "complete": true,
+      "identical_initial_source_manifests": true,
+      "arms": {
+        "search_only": {
+          "passed": true,
+          "reported_tokens": 163621,
+          "wall_s": 31.39533745800145,
+          "broker_requests": 13
+        },
+        "graphify_orient": {
+          "passed": true,
+          "reported_tokens": 228700,
+          "wall_s": 36.27019612499862,
+          "broker_requests": 13
+        },
+        "graf_current_orient": {
+          "passed": false,
+          "reported_tokens": 97808,
+          "wall_s": 18.56585595899378,
+          "broker_requests": 5
+        }
+      }
+    },
+    {
+      "task": "click-1884",
+      "attempt": 2,
+      "complete": true,
+      "identical_initial_source_manifests": true,
+      "arms": {
+        "graf_current_orient": {
+          "passed": true,
+          "reported_tokens": 145265,
+          "wall_s": 23.37134787499963,
+          "broker_requests": 9
+        },
+        "graphify_orient": {
+          "passed": true,
+          "reported_tokens": 242429,
+          "wall_s": 37.06968266700278,
+          "broker_requests": 14
+        },
+        "search_only": {
+          "passed": true,
+          "reported_tokens": 171958,
+          "wall_s": 30.630390499994974,
+          "broker_requests": 11
+        }
+      }
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 1,
+      "complete": true,
+      "identical_initial_source_manifests": true,
+      "arms": {
+        "graf_current_orient": {
+          "passed": false,
+          "reported_tokens": 357293,
+          "wall_s": 31.21205720900616,
+          "broker_requests": 16
+        },
+        "search_only": {
+          "passed": false,
+          "reported_tokens": 199413,
+          "wall_s": 24.55195629199443,
+          "broker_requests": 13
+        },
+        "graphify_orient": {
+          "passed": false,
+          "reported_tokens": 273060,
+          "wall_s": 42.74615754200204,
+          "broker_requests": 15
+        }
+      }
+    },
+    {
+      "task": "undici-5520",
+      "attempt": 2,
+      "complete": true,
+      "identical_initial_source_manifests": true,
+      "arms": {
+        "graphify_orient": {
+          "passed": false,
+          "reported_tokens": 290045,
+          "wall_s": 50.62308458301413,
+          "broker_requests": 15
+        },
+        "graf_current_orient": {
+          "passed": false,
+          "reported_tokens": 291935,
+          "wall_s": 30.60541041599936,
+          "broker_requests": 15
+        },
+        "search_only": {
+          "passed": false,
+          "reported_tokens": 221176,
+          "wall_s": 30.238334875000874,
+          "broker_requests": 15
+        }
+      }
+    }
+  ],
+  "source_parity_complete": false,
+  "reported_total_tokens": null,
+  "known_reported_token_lower_bound": 2767997,
+  "solver_validation": {
+    "expected_trials": 18,
+    "complete_unique_workload": false,
+    "arms": {
+      "graf_current_orient": {
+        "completed": 4,
+        "protocol_complete": 1,
+        "verifier_passes": 1,
+        "task_passes": {
+          "gin-2718": 0,
+          "click-1884": 1,
+          "undici-5520": 0
+        }
+      },
+      "graphify_orient": {
+        "completed": 4,
+        "protocol_complete": 0,
+        "verifier_passes": 2,
+        "task_passes": {
+          "gin-2718": 0,
+          "click-1884": 2,
+          "undici-5520": 0
+        }
+      },
+      "search_only": {
+        "completed": 5,
+        "protocol_complete": 1,
+        "verifier_passes": 3,
+        "task_passes": {
+          "gin-2718": 1,
+          "click-1884": 2,
+          "undici-5520": 0
+        }
+      }
+    },
+    "protocol_validation_pass": false,
+    "behavioral_validation_pass": false,
+    "solver_readiness_pass": false,
+    "severe_quality_losses": [
+      {
+        "task": "click-1884",
+        "attempt": 1,
+        "comparator": "graphify_orient"
+      },
+      {
+        "task": "click-1884",
+        "attempt": 1,
+        "comparator": "search_only"
+      }
+    ],
+    "product_promotion_pass": false,
+    "agent_efficiency_acceptance_pass": false,
+    "interpretation": "Development solver validation only. Readiness does not establish superiority, statistical significance, held-out quality or agent token savings."
+  },
+  "internal_provider_requests": null,
+  "subscription_charge_usd": null,
+  "api_equivalent_cost_usd": null,
+  "agent_efficiency_acceptance_pass": false,
+  "product_promotion_pass": false,
+  "payload_accounting": "Session-event payloads include orientation and serialized responses. Native content counts include all actual MCP text replies, including refusals. Request params are counted separately using canonical JSON. These are cl100k diagnostics, not provider usage; overlapping response measures must not be added. Full raw payloads are retained.",
+  "timing": "Pairs shuffled by frozen seed, then all three competitors sequentially in shuffled order within each task/repetition. Isolated workspaces/indexes; shared warm OS/dependency caches, including offline reference controls. Uncontrolled provider cache hits counted as input and separately logged. Wall includes orientation/index work, CLI startup, tools and final verification; excludes workspace preparation.",
+  "interpretation": "Three exposed development task units, two repetitions each. Report every failed/missing case and severe quality loss. No significance, held-out promotion or agent token-saving claim. Never pool earlier protocols. Batch stopped at the frozen observed token threshold after 13/18 attempts. Five cases missing. Compare shared metrics only on four complete three-arm groups; the extra search-only Go result is unmatched. All observed source manifests match freeze; source_parity_complete remains false because the planned workload is incomplete.",
+  "missing_cases": [
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "graf_current_orient"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "graphify_orient"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "search_only"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 2,
+      "arm": "graf_current_orient"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 2,
+      "arm": "graphify_orient"
+    }
+  ],
+  "reported_tokens_completed_cases": 2767997,
+  "observed_sources_match_freeze": true,
+  "completed_paired_groups": 4,
+  "budget_feedback": [
+    {
+      "trial": "codex-v2-undici-5520-graphify_orient-2",
+      "requests": 15,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 329,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-undici-5520-graf_current_orient-2",
+      "requests": 15,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 329,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-undici-5520-search_only-2",
+      "requests": 15,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 329,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-click-1884-search_only-1",
+      "requests": 13,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 255,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-click-1884-graphify_orient-1",
+      "requests": 13,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 255,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-click-1884-graf_current_orient-1",
+      "requests": 5,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 95,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-click-1884-graf_current_orient-2",
+      "requests": 9,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 179,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-click-1884-graphify_orient-2",
+      "requests": 14,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 292,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-click-1884-search_only-2",
+      "requests": 11,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 217,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-undici-5520-graf_current_orient-1",
+      "requests": 16,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 366,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-undici-5520-search_only-1",
+      "requests": 13,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 255,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-undici-5520-graphify_orient-1",
+      "requests": 15,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 329,
+      "native_broker_count_match": true
+    },
+    {
+      "trial": "codex-v2-gin-2718-search_only-2",
+      "requests": 7,
+      "every_reply_has_correct_remaining_budget": true,
+      "feedback_tokens_cl100k": 141,
+      "native_broker_count_match": true
+    }
+  ],
+  "stop_reason": "Frozen observed batch-token threshold reached after attempt 13; no remaining calls allowed under this plan."
+}

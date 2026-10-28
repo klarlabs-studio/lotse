@@ -1,0 +1,2411 @@
+{
+  "mode": "saved_evidence_summary",
+  "model_calls": 0,
+  "batches": [
+    {
+      "batch": "codex-v3",
+      "planned_trials": 18,
+      "recorded_trials": 13,
+      "missing_trials": 5,
+      "complete_matched_groups": 4,
+      "shared_totals": {
+        "graf_current_orient": {
+          "attempts": 4,
+          "verifier_passes": 2,
+          "reported_tokens": 730347,
+          "recorded_native_tool_calls": 43,
+          "recorded_cli_invocations": 4,
+          "descriptive_wall_s": 107.31112316597137,
+          "attempts_with_errors": 3,
+          "attempts_without_agent_finish": 0
+        },
+        "graphify_orient": {
+          "attempts": 4,
+          "verifier_passes": 3,
+          "reported_tokens": 1083118,
+          "recorded_native_tool_calls": 57,
+          "recorded_cli_invocations": 4,
+          "descriptive_wall_s": 167.31438141703256,
+          "attempts_with_errors": 4,
+          "attempts_without_agent_finish": 0
+        },
+        "search_only": {
+          "attempts": 4,
+          "verifier_passes": 2,
+          "reported_tokens": 876732,
+          "recorded_native_tool_calls": 55,
+          "recorded_cli_invocations": 4,
+          "descriptive_wall_s": 135.64547208393924,
+          "attempts_with_errors": 4,
+          "attempts_without_agent_finish": 0
+        }
+      },
+      "cases": [
+        {
+          "task": "click-1884",
+          "attempt": 1,
+          "arm": "graf_current_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "click-1884",
+            "attempt": 1,
+            "trial": "codex-v3-click-1884-graf_current_orient-1",
+            "arm": "graf_current_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "outline",
+                    "description": "List a source file's functions with line ranges, so you can read one function instead of the whole file.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 26.527906749979593,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 11,
+            "broker_requests": 11,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 7118,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 181693,
+              "cached_input_tokens": 161792,
+              "reasoning_tokens": 304,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 12,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "click-1884",
+          "attempt": 1,
+          "arm": "graphify_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "click-1884",
+            "attempt": 1,
+            "trial": "codex-v3-click-1884-graphify_orient-1",
+            "arm": "graphify_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 41.15361912501976,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 15,
+            "broker_requests": 15,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 12124,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 311030,
+              "cached_input_tokens": 265472,
+              "reasoning_tokens": 406,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 16,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "click-1884",
+          "attempt": 1,
+          "arm": "search_only",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "click-1884",
+            "attempt": 1,
+            "trial": "codex-v3-click-1884-search_only-1",
+            "arm": "search_only",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 33.31136691698339,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 12,
+            "broker_requests": 12,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 7508,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 199025,
+              "cached_input_tokens": 178304,
+              "reasoning_tokens": 528,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 12,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "click-1884",
+          "attempt": 2,
+          "arm": "graf_current_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "click-1884",
+            "attempt": 2,
+            "trial": "codex-v3-click-1884-graf_current_orient-2",
+            "arm": "graf_current_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "outline",
+                    "description": "List a source file's functions with line ranges, so you can read one function instead of the whole file.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 28.633624875015812,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 12,
+            "broker_requests": 12,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 8922,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 200254,
+              "cached_input_tokens": 159360,
+              "reasoning_tokens": 359,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 13,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "click-1884",
+          "attempt": 2,
+          "arm": "graphify_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "click-1884",
+            "attempt": 2,
+            "trial": "codex-v3-click-1884-graphify_orient-2",
+            "arm": "graphify_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 35.86747349999496,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 12,
+            "broker_requests": 12,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 10957,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 253361,
+              "cached_input_tokens": 227072,
+              "reasoning_tokens": 606,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 13,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "click-1884",
+          "attempt": 2,
+          "arm": "search_only",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "click-1884",
+            "attempt": 2,
+            "trial": "codex-v3-click-1884-search_only-2",
+            "arm": "search_only",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 40.20242274997872,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 14,
+            "broker_requests": 14,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 6930,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 208841,
+              "cached_input_tokens": 168320,
+              "reasoning_tokens": 622,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 14,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "gin-2718",
+          "attempt": 1,
+          "arm": "graf_current_orient",
+          "included_in_shared_totals": false,
+          "status": "missing",
+          "summary": null
+        },
+        {
+          "task": "gin-2718",
+          "attempt": 1,
+          "arm": "graphify_orient",
+          "included_in_shared_totals": false,
+          "status": "missing",
+          "summary": null
+        },
+        {
+          "task": "gin-2718",
+          "attempt": 1,
+          "arm": "search_only",
+          "included_in_shared_totals": false,
+          "status": "missing",
+          "summary": null
+        },
+        {
+          "task": "gin-2718",
+          "attempt": 2,
+          "arm": "graf_current_orient",
+          "included_in_shared_totals": false,
+          "status": "missing",
+          "summary": null
+        },
+        {
+          "task": "gin-2718",
+          "attempt": 2,
+          "arm": "graphify_orient",
+          "included_in_shared_totals": false,
+          "status": "missing",
+          "summary": null
+        },
+        {
+          "task": "gin-2718",
+          "attempt": 2,
+          "arm": "search_only",
+          "included_in_shared_totals": false,
+          "status": "recorded",
+          "summary": {
+            "task": "gin-2718",
+            "attempt": 2,
+            "trial": "codex-v3-gin-2718-search_only-2",
+            "arm": "search_only",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": null,
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 17.97933699999703,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 9,
+            "broker_requests": 9,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 4115,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 90649,
+              "cached_input_tokens": 72320,
+              "reasoning_tokens": 81,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 9,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "undici-5520",
+          "attempt": 1,
+          "arm": "graf_current_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "undici-5520",
+            "attempt": 1,
+            "trial": "codex-v3-undici-5520-graf_current_orient-1",
+            "arm": "graf_current_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "outline",
+                    "description": "List a source file's functions with line ranges, so you can read one function instead of the whole file.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": false,
+            "agent_called_finish": true,
+            "wall_s": 28.270397915999638,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 12,
+            "broker_requests": 12,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 10537,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 204262,
+              "cached_input_tokens": 162304,
+              "reasoning_tokens": 410,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 13,
+              "verification_passed": false
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "undici-5520",
+          "attempt": 1,
+          "arm": "graphify_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "undici-5520",
+            "attempt": 1,
+            "trial": "codex-v3-undici-5520-graphify_orient-1",
+            "arm": "graphify_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": false,
+            "agent_called_finish": true,
+            "wall_s": 46.14530637502321,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 15,
+            "broker_requests": 15,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 16688,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 280530,
+              "cached_input_tokens": 235008,
+              "reasoning_tokens": 239,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 16,
+              "verification_passed": false
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "undici-5520",
+          "attempt": 1,
+          "arm": "search_only",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "undici-5520",
+            "attempt": 1,
+            "trial": "codex-v3-undici-5520-search_only-1",
+            "arm": "search_only",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": false,
+            "agent_called_finish": true,
+            "wall_s": 27.97226729200338,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 15,
+            "broker_requests": 15,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 11129,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 216404,
+              "cached_input_tokens": 179200,
+              "reasoning_tokens": 374,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 15,
+              "verification_passed": false
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "undici-5520",
+          "attempt": 2,
+          "arm": "graf_current_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "undici-5520",
+            "attempt": 2,
+            "trial": "codex-v3-undici-5520-graf_current_orient-2",
+            "arm": "graf_current_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": null,
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "outline",
+                    "description": "List a source file's functions with line ranges, so you can read one function instead of the whole file.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": false,
+            "agent_called_finish": true,
+            "wall_s": 23.879193624976324,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 8,
+            "broker_requests": 8,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 10484,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 144138,
+              "cached_input_tokens": 104704,
+              "reasoning_tokens": 271,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 9,
+              "verification_passed": false
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "undici-5520",
+          "attempt": 2,
+          "arm": "graphify_orient",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "undici-5520",
+            "attempt": 2,
+            "trial": "codex-v3-undici-5520-graphify_orient-2",
+            "arm": "graphify_orient",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "retrieve",
+                    "description": "Find navigation hints for a query; follow with read. Requested cl100k text budget may be approximate for the backend.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": true,
+            "agent_called_finish": true,
+            "wall_s": 44.14798241699464,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 15,
+            "broker_requests": 15,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 12385,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 238197,
+              "cached_input_tokens": 208128,
+              "reasoning_tokens": 247,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 16,
+              "verification_passed": true
+            },
+            "promotion_eligible": false
+          }
+        },
+        {
+          "task": "undici-5520",
+          "attempt": 2,
+          "arm": "search_only",
+          "included_in_shared_totals": true,
+          "status": "recorded",
+          "summary": {
+            "task": "undici-5520",
+            "attempt": 2,
+            "trial": "codex-v3-undici-5520-search_only-2",
+            "arm": "search_only",
+            "graphify_adapter": "native-cli-v2",
+            "model": "gpt-6-luna",
+            "error": "observed token stop threshold reached after native turn; may overshoot",
+            "tool_discovery": {
+              "valid": true,
+              "errors": [],
+              "captured_tool_lists": [
+                [
+                  {
+                    "name": "read",
+                    "description": "Read repository source lines; paths in retrieval output are accepted. Source read fallback is identical for both backends.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 1
+                        },
+                        "lines": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 200,
+                          "default": 80
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "search",
+                    "description": "Fallback regex search over eligible repository code and docs using ripgrep; returns bounded matching lines.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "budget": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 8000,
+                          "default": 2000
+                        }
+                      },
+                      "required": [
+                        "pattern"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "edit",
+                    "description": "Replace exactly one matching source string. Test/harness files cannot be edited. Indexes refresh on the next retrieve call.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "old": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "new": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "old",
+                        "new"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "test",
+                    "description": "Run the trusted behavioral verification command; nonzero exit is a failure.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "name": "finish",
+                    "description": "End the attempt and independently run trusted verification again.",
+                    "inputSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  }
+                ]
+              ]
+            },
+            "passed": false,
+            "agent_called_finish": true,
+            "wall_s": 34.15941512497375,
+            "invocations": 1,
+            "completed_usage_records": 1,
+            "reported_usage_complete": true,
+            "native_mcp_calls": 14,
+            "broker_requests": 14,
+            "blocked_broker_requests": 0,
+            "policy_rejected_requests": 0,
+            "failed_broker_requests": 0,
+            "native_reply_content_tokens_cl100k": 11873,
+            "internal_model_request_count": null,
+            "subscription_charge_usd": null,
+            "api_equivalent_cost_usd": null,
+            "infrastructure_error": false,
+            "audit": {
+              "total_tokens": 252462,
+              "cached_input_tokens": 215040,
+              "reasoning_tokens": 404,
+              "cost_usd": null,
+              "unmeasured_fields": [
+                "cost_usd"
+              ],
+              "tool_calls": 14,
+              "verification_passed": false
+            },
+            "promotion_eligible": false
+          }
+        }
+      ],
+      "solver_validation": {
+        "expected_trials": 18,
+        "complete_unique_workload": false,
+        "arms": {
+          "graf_current_orient": {
+            "completed": 4,
+            "protocol_complete": 1,
+            "verifier_passes": 2,
+            "task_passes": {
+              "gin-2718": 0,
+              "click-1884": 2,
+              "undici-5520": 0
+            }
+          },
+          "graphify_orient": {
+            "completed": 4,
+            "protocol_complete": 0,
+            "verifier_passes": 3,
+            "task_passes": {
+              "gin-2718": 0,
+              "click-1884": 2,
+              "undici-5520": 1
+            }
+          },
+          "search_only": {
+            "completed": 5,
+            "protocol_complete": 1,
+            "verifier_passes": 3,
+            "task_passes": {
+              "gin-2718": 1,
+              "click-1884": 2,
+              "undici-5520": 0
+            }
+          }
+        },
+        "protocol_validation_pass": false,
+        "behavioral_validation_pass": false,
+        "solver_readiness_pass": false,
+        "severe_quality_losses": [
+          {
+            "task": "undici-5520",
+            "attempt": 2,
+            "comparator": "graphify_orient"
+          }
+        ],
+        "product_promotion_pass": false,
+        "agent_efficiency_acceptance_pass": false,
+        "interpretation": "Development solver validation only. Readiness does not establish superiority, statistical significance, held-out quality or agent token savings."
+      },
+      "frozen_configuration": {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "solver_version": "codex-cli 0.156.1",
+        "max_actions_per_attempt": 16,
+        "token_stop_threshold_per_attempt": 150000,
+        "token_stop_threshold_batch": 2700000,
+        "require_test_before_finish": true,
+        "show_action_budget": true,
+        "backend_sha256": {
+          "graf_current_orient": "580a2ea276d082cbecf5035e9eb84aaf59fd126fb3eef5edaad8b81ce609dbf2",
+          "graphify_orient": "e3f9ec68898c023f9b1f2ca6770edd81a7facabb1ec1e83bef7d460e33c03f01",
+          "search_only": "e97d666f32c3e86b2bd0e047cb1398d4385ea1f05bfb791a8201d3fa98a91bb9"
+        }
+      },
+      "product_promotion_pass": false,
+      "agent_efficiency_acceptance_pass": false,
+      "limitations": "Development tasks only. Shared totals include only groups with every planned arm; failed and protocol-invalid attempts remain included. Batches are separate configurations, not pooled or causal controls. Reported tokens include cached input. Provider internal request counts and charges are unknown; agent savings remain unmeasured. Wall times are descriptive; warm shared OS/dependency caches and uncontrolled provider caches prevent a speed claim. Graphify is the frozen code-only baseline plus source reads, not documentation evaluation."
+    }
+  ],
+  "source_sha256": {
+    "results/codex-v3.json": "ebc345038e3d026c2489a32d0f4986404a771ea5c0dd579efce63fc6ea831e4f",
+    ".research/evidence/codex-v3/spec.json": "59412d7e95bca5275cb56eba46a0e4597820faab5eaf7f979aaaefd93fd49ab7"
+  },
+  "generator_sha256": "324af64ea15a0b3e6d6b091af2f6b9b4fbe22abd604ecf6f55a254caff558544",
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false
+}

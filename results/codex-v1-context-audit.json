@@ -1,0 +1,790 @@
+{
+  "batch": "codex-v1",
+  "mode": "offline_only",
+  "cases": [
+    {
+      "trial": "codex-v1-undici-5520-graphify_orient-2",
+      "task": "undici-5520",
+      "attempt": 2,
+      "arm": "graphify_orient",
+      "passed": false,
+      "agent_called_finish": false,
+      "visible_cl100k_inventory": {
+        "prompt": 2652,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 548,
+        "native_request_params_canonical_json": 2837,
+        "native_reply_text": 10784
+      },
+      "reported_tokens": 110236,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "I couldn\u2019t complete the repair: the available broker tools did not allow me to make the source change."
+      ],
+      "successful_edits": 0,
+      "test_calls": 0,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 326,
+      "repeated_delivered_read_lines": 28,
+      "undici_faulted_gate_text_visible_at_tool_numbers": [
+        4
+      ]
+    },
+    {
+      "trial": "codex-v1-undici-5520-graf_current_orient-2",
+      "task": "undici-5520",
+      "attempt": 2,
+      "arm": "graf_current_orient",
+      "passed": false,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 2565,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 615,
+        "native_request_params_canonical_json": 4919,
+        "native_reply_text": 11808
+      },
+      "reported_tokens": 204132,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "outline",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "I couldn\u2019t complete the fix. The attempted change still allowed the request to reach connection setup, and the test failed because it expected an `InvalidArgumentError` before connecting. The broker\u2019s final verification also failed."
+      ],
+      "successful_edits": 1,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 233,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": [
+        3
+      ]
+    },
+    {
+      "trial": "codex-v1-undici-5520-search_only-2",
+      "task": "undici-5520",
+      "attempt": 2,
+      "arm": "search_only",
+      "passed": false,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1114,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 442,
+        "native_request_params_canonical_json": 4271,
+        "native_reply_text": 9505
+      },
+      "reported_tokens": 129265,
+      "tool_names_reconstructed": [
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "Need exact requested full issue truncated. Likely catch extract error and errorRequest return false. Need h2 too.",
+        "The attempted fix did not pass verification: the existing test still fails because the invalid FormData is rejected only after the client tries to connect. The attempt is finished without a successful fix."
+      ],
+      "successful_edits": 1,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 110,
+      "repeated_delivered_read_lines": 18,
+      "undici_faulted_gate_text_visible_at_tool_numbers": [
+        1
+      ]
+    },
+    {
+      "trial": "codex-v1-click-1884-search_only-1",
+      "task": "click-1884",
+      "attempt": 1,
+      "arm": "search_only",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1104,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 442,
+        "native_request_params_canonical_json": 6152,
+        "native_reply_text": 7057
+      },
+      "reported_tokens": 178754,
+      "tool_names_reconstructed": [
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "This traceback is the classic installed console-script case: decorator sees the Python module name (`cli`), but distribution metadata is named `click-issue-test`. Click 7's `pkg_resources` detection could discover the owning distribution from the entry point. The fix should restore that entry-point-based fallback when metadata lookup by module name fails.",
+        "Fixed `version_option` to resolve import package names to their installed distribution names via `importlib.metadata.packages_distributions()`, including a clear error when multiple distributions match.\n\nAll 109 tests passed, and finish verification succeeded."
+      ],
+      "successful_edits": 2,
+      "test_calls": 3,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 207,
+      "repeated_delivered_read_lines": 56,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-click-1884-graphify_orient-1",
+      "task": "click-1884",
+      "attempt": 1,
+      "arm": "graphify_orient",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 2633,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 548,
+        "native_request_params_canonical_json": 5337,
+        "native_reply_text": 7080
+      },
+      "reported_tokens": 177474,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "Cause: inferred name from module `cli`, but distribution name is click-issue-test. Historic behavior fallback? Need fix small: likely use distribution name inferred from entrypoint? issue likely older Click version around 8.0 historical fix fallback detect package name via entrypoints? Broker limits.",
+        "Updated `version_option` to resolve import-package names to a single installed distribution when direct version lookup fails, and report ambiguity when multiple distributions match.\n\nVerification passed: 109 tests."
+      ],
+      "successful_edits": 2,
+      "test_calls": 3,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 202,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-click-1884-graf_current_orient-1",
+      "task": "click-1884",
+      "attempt": 1,
+      "arm": "graf_current_orient",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1753,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 615,
+        "native_request_params_canonical_json": 5693,
+        "native_reply_text": 8287
+      },
+      "reported_tokens": 211831,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "outline",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "The initial test run exposed one closure issue and indicates that ambiguous import-to-distribution mappings must be handled rather than arbitrarily selecting a distribution. I\u2019m correcting that before rerunning verification.",
+        "Updated `version_option` to resolve an import name to its installed distribution when they differ, and to report ambiguous mappings clearly. Verification passed: 109 tests."
+      ],
+      "successful_edits": 4,
+      "test_calls": 3,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 143,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-click-1884-graf_current_orient-2",
+      "task": "click-1884",
+      "attempt": 2,
+      "arm": "graf_current_orient",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1753,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 615,
+        "native_request_params_canonical_json": 4816,
+        "native_reply_text": 7513
+      },
+      "reported_tokens": 165547,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "outline",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "The current implementation infers the import package name, but the regression here is entry-point launchers whose inferred package is `__main__` or a module name that differs from the installed distribution. I\u2019ll inspect the version option code and the prior expected behavior/tests before choosing the smallest compatible change.",
+        "Updated `version_option` to resolve import package names to their installed distributions, with a clear error when an import name maps to multiple distributions. Verification passed: 109 tests."
+      ],
+      "successful_edits": 2,
+      "test_calls": 2,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 2,
+      "delivered_read_lines": 120,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-click-1884-graphify_orient-2",
+      "task": "click-1884",
+      "attempt": 2,
+      "arm": "graphify_orient",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 2629,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 548,
+        "native_request_params_canonical_json": 4741,
+        "native_reply_text": 10220
+      },
+      "reported_tokens": 181278,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "Cause is inference from f_back (caller is click.decorators) rather than decorated function; need determine test baseline/intended change. Current inference package \"click\" maybe orientation version 8.0. Existing remedy inspect frame caller caller? decorator invocation call stack: version_option called as decorator expression, f_back is user's module? Actually inspect.currentframe inside function; f_back caller module yes, but decorated setup? decorator syntax invokes version_option at module level; should infer \"__main__\" or cli. In issue setuptools entrypoint module cli, inference picks cli but installed distribution name click-issue-test mismatch. Bug 8.0 changed from entry point metadata fallback. likely infer module distribution via entry_points? find source/tests.",
+        "Existing failing tests specify correct package distribution mapping. Implement packages_distributions fallback with ambiguity error.",
+        "Updated `version_option` to resolve import package names to their installed distributions, with an explicit error when multiple distributions match. Verification passed: 109 tests."
+      ],
+      "successful_edits": 1,
+      "test_calls": 2,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 377,
+      "repeated_delivered_read_lines": 44,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-click-1884-search_only-2",
+      "task": "click-1884",
+      "attempt": 2,
+      "arm": "search_only",
+      "passed": false,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1104,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 442,
+        "native_request_params_canonical_json": 2589,
+        "native_reply_text": 5777
+      },
+      "reported_tokens": 73064,
+      "tool_names_reconstructed": [
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "",
+        "I couldn\u2019t complete the fix. The test run revealed two failing checks: `version_option` doesn\u2019t resolve import names to distribution names, and it doesn\u2019t report ambiguous mappings. The attempt has ended without edits."
+      ],
+      "successful_edits": 0,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 140,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-undici-5520-graf_current_orient-1",
+      "task": "undici-5520",
+      "attempt": 1,
+      "arm": "graf_current_orient",
+      "passed": false,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 2565,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 615,
+        "native_request_params_canonical_json": 6573,
+        "native_reply_text": 15046
+      },
+      "reported_tokens": 265612,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "outline",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "I couldn\u2019t complete the fix. The verification still fails on `request rejects FormData bodies from another implementation`; my attempted change caused that failure, so I reverted it. The broker\u2019s final verification also failed."
+      ],
+      "successful_edits": 3,
+      "test_calls": 2,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 1,
+      "delivered_read_lines": 166,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-undici-5520-search_only-1",
+      "task": "undici-5520",
+      "attempt": 1,
+      "arm": "search_only",
+      "passed": false,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1114,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 442,
+        "native_request_params_canonical_json": 4272,
+        "native_reply_text": 8743
+      },
+      "reported_tokens": 115833,
+      "tool_names_reconstructed": [
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "The attempted fix did not pass verification: the cross-implementation FormData test still fails because the request connects before the error is raised. I couldn\u2019t complete the repair."
+      ],
+      "successful_edits": 1,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 135,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": [
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "trial": "codex-v1-undici-5520-graphify_orient-1",
+      "task": "undici-5520",
+      "attempt": 1,
+      "arm": "graphify_orient",
+      "passed": false,
+      "agent_called_finish": false,
+      "visible_cl100k_inventory": {
+        "prompt": 2652,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 548,
+        "native_request_params_canonical_json": 8022,
+        "native_reply_text": 12836
+      },
+      "reported_tokens": 295601,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "The hang occurs in the HTTP/1 body extraction path. I\u2019m checking the existing request validation so the fix rejects unsupported FormData before dispatch rather than allowing a null body.",
+        "I attempted to reject non-undici FormData in both HTTP/1 and HTTP/2 body extraction paths. The test suite failed: the existing HTTP/1 test shows the request attempts to connect before reaching that validation. I couldn\u2019t continue repairing within the broker attempt."
+      ],
+      "successful_edits": 2,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 577,
+      "repeated_delivered_read_lines": 14,
+      "undici_faulted_gate_text_visible_at_tool_numbers": [
+        4,
+        7
+      ]
+    },
+    {
+      "trial": "codex-v1-gin-2718-search_only-2",
+      "task": "gin-2718",
+      "attempt": 2,
+      "arm": "search_only",
+      "passed": false,
+      "agent_called_finish": false,
+      "visible_cl100k_inventory": {
+        "prompt": 210,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 442,
+        "native_request_params_canonical_json": 2745,
+        "native_reply_text": 5872
+      },
+      "reported_tokens": 80530,
+      "tool_names_reconstructed": [
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "The fix incorrectly treats every unparseable `RemoteAddr` as a trusted proxy, causing existing tests to return a forwarded header when `RemoteAddr` has no port. Tests fail, so the repair is incomplete."
+      ],
+      "successful_edits": 1,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 216,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-gin-2718-graphify_orient-2",
+      "task": "gin-2718",
+      "attempt": 2,
+      "arm": "graphify_orient",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1740,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 548,
+        "native_request_params_canonical_json": 3230,
+        "native_reply_text": 2902
+      },
+      "reported_tokens": 81545,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "Fixed `ClientIP()` so non-IP remote addresses, such as Unix sockets, can use forwarded client-IP headers. Tests and final verification passed."
+      ],
+      "successful_edits": 2,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 140,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-gin-2718-graf_current_orient-2",
+      "task": "gin-2718",
+      "attempt": 2,
+      "arm": "graf_current_orient",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1659,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 615,
+        "native_request_params_canonical_json": 3897,
+        "native_reply_text": 3693
+      },
+      "reported_tokens": 96330,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "outline",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "I'll adjust ClientIP's handling for non-IP remote addresses so unix-socket requests use forwarded client headers, while preserving existing IP proxy checks.",
+        "Fixed `ClientIP()` to treat non-IP remote addresses, such as Unix sockets, as trusted for forwarded-header lookup while still returning an empty string when no valid forwarded IP is available. Tests passed, and the repair was verified."
+      ],
+      "successful_edits": 2,
+      "test_calls": 2,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 205,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-gin-2718-graf_current_orient-1",
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "graf_current_orient",
+      "passed": false,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1659,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 615,
+        "native_request_params_canonical_json": 3749,
+        "native_reply_text": 6198
+      },
+      "reported_tokens": 127210,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "outline",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "The Unix-socket handling change is in place, but verification still fails: `TestContextClientIP` has two failures for cases that expect an empty result. The fix is not verified as successful."
+      ],
+      "successful_edits": 2,
+      "test_calls": 2,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 140,
+      "repeated_delivered_read_lines": 5,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-gin-2718-search_only-1",
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "search_only",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 210,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 442,
+        "native_request_params_canonical_json": 2833,
+        "native_reply_text": 2383
+      },
+      "reported_tokens": 56494,
+      "tool_names_reconstructed": [
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "Updated `ClientIP()` to process forwarded-IP headers when `RemoteIP()` cannot parse a network address, while preserving an empty result if no valid forwarded IP is found. Tests and final verification passed."
+      ],
+      "successful_edits": 2,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 65,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    },
+    {
+      "trial": "codex-v1-gin-2718-graphify_orient-1",
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "graphify_orient",
+      "passed": true,
+      "agent_called_finish": true,
+      "visible_cl100k_inventory": {
+        "prompt": 1740,
+        "instructions": 156,
+        "tool_definitions_reconstructed_canonical_json": 548,
+        "native_request_params_canonical_json": 2447,
+        "native_reply_text": 2658
+      },
+      "reported_tokens": 61228,
+      "tool_names_reconstructed": [
+        "retrieve",
+        "read",
+        "search",
+        "edit",
+        "test",
+        "finish"
+      ],
+      "actual_tools_list_captured": false,
+      "captured_tool_lists": [],
+      "agent_messages": [
+        "Updated `ClientIP()` to accept valid forwarded IP headers when `RemoteAddr` is non-IP, as with a Unix socket. Tests passed."
+      ],
+      "successful_edits": 1,
+      "test_calls": 1,
+      "exact_duplicate_retrieval_replies": 0,
+      "repeated_retrieved_unit_headers": 0,
+      "delivered_read_lines": 85,
+      "repeated_delivered_read_lines": 0,
+      "undici_faulted_gate_text_visible_at_tool_numbers": []
+    }
+  ],
+  "totals": {
+    "cases": 18,
+    "visible_cl100k_inventory": {
+      "prompt": 30856,
+      "instructions": 2808,
+      "tool_definitions_reconstructed_canonical_json": 9630,
+      "native_request_params_canonical_json": 79123,
+      "native_reply_text": 138362
+    },
+    "exact_duplicate_retrieval_replies": 0,
+    "repeated_retrieved_unit_headers": 3,
+    "repeated_delivered_read_lines": 165,
+    "actual_tools_list_captured": 0
+  },
+  "source_artifact_sha256": {
+    "results/codex-v1.json": "bb545e7e426b3765febdc4a9e031622d2f636d03b1c5f33e289be4223934cb05",
+    ".research/evidence/codex-v1/spec.json": "38bb3b0d6c51b8ed1e986deccaf3c178407e79200c7a1de66f261f4b12cd844f",
+    "benchmark/broker_mcp.py": "d9aab953ea8bd8a5061484aa5476b3494149823be3cddebd1db8b6f96557a858",
+    "benchmark/task_session.py": "7fd08c5834617afc2d2f2e2116d8a5f6e5c45780a94bb30cb624fb8683db0f13",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-2/call-001/prompt.txt": "6d095a179c1862742d522d067217d137cc37dd024c6c3e1bd290558f81fbfb76",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-2/tool-events.jsonl": "fda63cdc5446eb45a75add7b69c71207539c6f40a86b2a5e86e83cc6b50b9a0d",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-2/mcp-requests.jsonl": "70d2c7878cb7cea346d9a5a9821c1bcdef0bee8839f4f4069d8e8cfa802ae529",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-2/call-001/stream.jsonl": "d7fdb0263de99bc9b2b44d929a7b218d4520762e71f5837a913c23460486334b",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/call-001/prompt.txt": "b127956084fb3bc8526b498b190493e50064f7adf02db007b75ab674131a80d9",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/tool-events.jsonl": "cc0e37febfff2ba88a707af0a42a6f67a31573516feaea3f8d9606c8251823e9",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/mcp-requests.jsonl": "c3fa5ecdd6a71227d998bb279d0a2de0f13718235813fa1857b34af5228f916c",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-2/call-001/stream.jsonl": "a5e293c64598b8788f5359fdf3a903d398956eafc249bfb6e952ad7f52560973",
+    ".research/trials/codex-v1-undici-5520-search_only-2/call-001/prompt.txt": "7c7afd2d8c193fdde57cdf207bd30e54160f5b4d124deed3ae032deff40995cd",
+    ".research/trials/codex-v1-undici-5520-search_only-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-undici-5520-search_only-2/tool-events.jsonl": "0e9e40f9741029bd09ecfa21bfea38c05ce7431294e0e8ed402d17ebafafe487",
+    ".research/trials/codex-v1-undici-5520-search_only-2/mcp-requests.jsonl": "d8feb9666761e0ae2dca7d932be43bbff11b7f3bfac635176b61b030686200ab",
+    ".research/trials/codex-v1-undici-5520-search_only-2/call-001/stream.jsonl": "faaccbc6e8d6d0c941bd2f033e873fe8306159a3e94896a5f0e12f1371d62dc8",
+    ".research/trials/codex-v1-click-1884-search_only-1/call-001/prompt.txt": "d3742162dcf75280375155f782bb31324a0d337b8aa77261d56c54b6fdbad288",
+    ".research/trials/codex-v1-click-1884-search_only-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-click-1884-search_only-1/tool-events.jsonl": "87867ef7b9c795ef754f0d7e6a7df7bcf384c53ef8c7cbf1c3bd10bbd8fe771e",
+    ".research/trials/codex-v1-click-1884-search_only-1/mcp-requests.jsonl": "665c5e7d3b8ee7e1b1f7bbacde4fedb3e7fb33879621b070e773218159160868",
+    ".research/trials/codex-v1-click-1884-search_only-1/call-001/stream.jsonl": "e6ab938607d1f13a25759ca49ff6eca1486533ff83d414e9bdfb60a4789286ef",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/call-001/prompt.txt": "8633f361a7fc91589f5e3d69365404158d1d0e6af7f3b166fa1c49dc167b57a1",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/tool-events.jsonl": "8d31aede147deb2d129a35ff52c54f98e2317a6a34f281ba38eb3b8538b1eb9c",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/mcp-requests.jsonl": "7281c367aae395aa74b40dbe969f1462ace4495b88d449b85e1ae5697dc39c6b",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/call-001/stream.jsonl": "df11d46f03492c711bc4a656da36de02f567b578fea472801d65a952ab823a36",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/call-001/prompt.txt": "65b41c16d446aa8869c12b79a8d76829d125fc553949eedb841705207e81480b",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/tool-events.jsonl": "9af2a1f7e98e530d00162ec9872045cbf39ba5e7d2066d3fc29b2f22ae4a2e35",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/mcp-requests.jsonl": "8ef165723c5182a30312341d62ff28386c1b86fe076ab3ac6224bb096935fef9",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-1/call-001/stream.jsonl": "fd62bfaaf604d2bee0af55402577ef03cfcac17329a8e5b84c437a1129399322",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/call-001/prompt.txt": "65b41c16d446aa8869c12b79a8d76829d125fc553949eedb841705207e81480b",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/tool-events.jsonl": "6c97bc1cac1bfdd97b404e4c3572a2b67ed4ba7f1fa8c485d8b213dafe38d92e",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/mcp-requests.jsonl": "ef176247886bc038101857375db5f1a03118c9b66dde9f467e8d9f8c12f4ff57",
+    ".research/trials/codex-v1-click-1884-graf_current_orient-2/call-001/stream.jsonl": "5d28ee56d4e01befd00f31b2d818b96b7b7c7391f866e30b0b2b6dfd7fede029",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/call-001/prompt.txt": "579fdca892d5d9215af7de5ebc635dfb96b06de1b40851085aec156358b26e89",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/tool-events.jsonl": "2e819027e5984fc201f17491f53973c082bc1caae96012029cc5b5f4aaa612cd",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/mcp-requests.jsonl": "7154bb2afda3e1f2f57e550c05cacb3fbe99e76a26abcfa0748bfdaac742169f",
+    ".research/trials/codex-v1-click-1884-graphify_orient-2/call-001/stream.jsonl": "26faf3ae1e70657c6e5960ef030a3ba7116507443976ab22345908cafbcb9765",
+    ".research/trials/codex-v1-click-1884-search_only-2/call-001/prompt.txt": "d3742162dcf75280375155f782bb31324a0d337b8aa77261d56c54b6fdbad288",
+    ".research/trials/codex-v1-click-1884-search_only-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-click-1884-search_only-2/tool-events.jsonl": "3013eedbc3e6bdb86e77a5d62a6fd7e8d859e5310adbf8ad4ba512c7d7f6b58f",
+    ".research/trials/codex-v1-click-1884-search_only-2/mcp-requests.jsonl": "05ccaef83f94d6acb2dd8425ee8d02eb5afa5145ae8b25907a2ce692cfec912d",
+    ".research/trials/codex-v1-click-1884-search_only-2/call-001/stream.jsonl": "2640ab311188ff5291e0b56ad43db5d4fc06c2048fe22fcc0f13c68af324e246",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/call-001/prompt.txt": "b127956084fb3bc8526b498b190493e50064f7adf02db007b75ab674131a80d9",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/tool-events.jsonl": "b4ffd64220d4c395d5209434713f7489401750c1a639038549334bd4b80b1cea",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/mcp-requests.jsonl": "1f884c40e8765b8abdceccb5ef6dfca1583a7e9178e6d0818393e413b6c0a5a0",
+    ".research/trials/codex-v1-undici-5520-graf_current_orient-1/call-001/stream.jsonl": "def3628ef87872d921574126a2503a11f16cc46ae2ba67b94a55c415c6054409",
+    ".research/trials/codex-v1-undici-5520-search_only-1/call-001/prompt.txt": "7c7afd2d8c193fdde57cdf207bd30e54160f5b4d124deed3ae032deff40995cd",
+    ".research/trials/codex-v1-undici-5520-search_only-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-undici-5520-search_only-1/tool-events.jsonl": "2f9219db46613a95ff0e87a10e2b5ac704ea2ebb2a9beb6126b29ae6839b2dff",
+    ".research/trials/codex-v1-undici-5520-search_only-1/mcp-requests.jsonl": "8f33f075e5f3853949d8ca1e689974d73c60096aca87557004eb1d500e10256f",
+    ".research/trials/codex-v1-undici-5520-search_only-1/call-001/stream.jsonl": "90733e888c2473df1eac1676a817fc99ca05923f23e2eb9fda314c162caad2b0",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/call-001/prompt.txt": "6d095a179c1862742d522d067217d137cc37dd024c6c3e1bd290558f81fbfb76",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/tool-events.jsonl": "b59d9f041e5992792d6f5532d3d216fb897921da446dd40a23feb53c0d786a71",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/mcp-requests.jsonl": "9222d6286ca054e4c16c0f9a62bac1c08c03c14afee54d7d57873323ed8eebbb",
+    ".research/trials/codex-v1-undici-5520-graphify_orient-1/call-001/stream.jsonl": "f70738786c97d89a97cccdf06130f6ded98cc427a7f67cbb13812c8ecd8f8b9c",
+    ".research/trials/codex-v1-gin-2718-search_only-2/call-001/prompt.txt": "974a1f38f7692cd075098a2d18795964eca341b21ddf8a9142f6320f397bf918",
+    ".research/trials/codex-v1-gin-2718-search_only-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-gin-2718-search_only-2/tool-events.jsonl": "c172f762fa3f3475df2d77ccc32e596f115aae578719659c66f5e74d3882f810",
+    ".research/trials/codex-v1-gin-2718-search_only-2/mcp-requests.jsonl": "93a46dea08d1d2aab17ca058baff7cff4cb3494354a83e8ae083c2ea058de926",
+    ".research/trials/codex-v1-gin-2718-search_only-2/call-001/stream.jsonl": "e7a555aba7aaab2ffed0af436777c9665305af51e41d08b402930589ced8b665",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-2/call-001/prompt.txt": "37822d0609fe20f708b4206a26d8778f880b8229c9580909e6a9d8af02d0f676",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-2/tool-events.jsonl": "23a721dcc7c02c9427b84540d6648b32b769bfdccb6268de97986ccfe2e59377",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-2/mcp-requests.jsonl": "3ce628cac16a28c651454b34d305ddf25742950ff0538e89e8c135694c3059d3",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-2/call-001/stream.jsonl": "5968dd9eec14810fe9501d3c52e1590b4b8706eaa54ffebcbe418a92533b0fca",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/call-001/prompt.txt": "463b18fb9109800dd8a2eb920c5349b5f435dc0da58b8baee98e26427c8c8b7a",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/tool-events.jsonl": "fc4b79dd1a3755a4df53d255bb615416de86966c8b13f65e4fe9d3eb25365b6e",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/mcp-requests.jsonl": "e1cdc28074ed249c48321a3671580fc2e947de80864cdeef336748d9c653f3a9",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-2/call-001/stream.jsonl": "40b005ed645af0955192b7c2bf445143eb17adee026ab26a7976d9cda18730cc",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/call-001/prompt.txt": "463b18fb9109800dd8a2eb920c5349b5f435dc0da58b8baee98e26427c8c8b7a",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/tool-events.jsonl": "ecdc1e5cb4e151019cd7abf0a7931c706c583c4cdb8e1a798a80f8b5f2e235f9",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/mcp-requests.jsonl": "365d6f7199077909ae5dc37e6fa789f18ecb9b4e2d6b302bc359d5c1ff5d5f19",
+    ".research/trials/codex-v1-gin-2718-graf_current_orient-1/call-001/stream.jsonl": "75ff5e12894e8900cb5a3b510308140e369180bce801726d463d5fe7af5a21eb",
+    ".research/trials/codex-v1-gin-2718-search_only-1/call-001/prompt.txt": "974a1f38f7692cd075098a2d18795964eca341b21ddf8a9142f6320f397bf918",
+    ".research/trials/codex-v1-gin-2718-search_only-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-gin-2718-search_only-1/tool-events.jsonl": "452f8d8d5b5d437e2f566c406862e4505855b385e79c732021aaf785fb01fb05",
+    ".research/trials/codex-v1-gin-2718-search_only-1/mcp-requests.jsonl": "17ef266f0d48d8fd2194cde169b17c459e6c1fabfd7d47899b52ca6f11c1648c",
+    ".research/trials/codex-v1-gin-2718-search_only-1/call-001/stream.jsonl": "91bc6eb6bb0cbf8dc05a269bc305d92b5f2f054dbf57a6d5b3d127472b4bb579",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-1/call-001/prompt.txt": "37822d0609fe20f708b4206a26d8778f880b8229c9580909e6a9d8af02d0f676",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-1/call-001/instructions.txt": "6cb3915ab832e6852e37d843b2992e8d30b3ede6c34366890aa9bda9c7f92778",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-1/tool-events.jsonl": "87af222b9d93993ddb87b885177e907a8441fd8fd724cce0c09d8ee7e450fcb9",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-1/mcp-requests.jsonl": "074183b9d7b19f2e455c46a89a255c562560fa3f75e21513742585704234463f",
+    ".research/trials/codex-v1-gin-2718-graphify_orient-1/call-001/stream.jsonl": "283bfc2425e409b04a6a359e6bfb869ccba9513970b40bbe21613eec1d8f42da"
+  },
+  "limitations": "Visible cl100k text inventory only: no provider tokenizer, framing, hidden instructions, per-request replay or cache attribution. Fields use different serialization boundaries; do not subtract them from provider usage or interpret repeated text as measured savings. Reconstructed schemas are not proof of what the historical client received. Repeated unit headers need not mean unchanged source or identical surrounding text. Gate-text visibility is literal substring evidence, not proof of understanding or source-anchor recall. No performance comparison.",
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false
+}

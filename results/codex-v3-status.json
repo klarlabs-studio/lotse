@@ -1,0 +1,49 @@
+{
+  "batch": "codex-v3",
+  "status": "stopped_at_frozen_observed_batch_threshold",
+  "completed_trials": 13,
+  "planned_trials": 18,
+  "model": "gpt-6-luna",
+  "reasoning_effort": "medium",
+  "recorded_cli_invocations": 13,
+  "observed_reported_tokens": 2780846,
+  "batch_stop_threshold": 2700000,
+  "per_attempt_threshold_exceedances": 11,
+  "missing_trials": [
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "graf_current_orient"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "graphify_orient"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "arm": "search_only"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 2,
+      "arm": "graf_current_orient"
+    },
+    {
+      "task": "gin-2718",
+      "attempt": 2,
+      "arm": "graphify_orient"
+    }
+  ],
+  "may_resume": false,
+  "solver_readiness_pass": false,
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "integrity_checks_pass": true,
+  "source_parity_observed_cases": true,
+  "all_usage_records_present": true,
+  "all_captured_discovery_valid": true,
+  "baseline_python_sources_unchanged": true,
+  "interpretation": "Completed accounting and mechanical integrity checks are not an acceptance pass. Frozen batch threshold reached; do not resume or raise limits. Retrieval-only acceptance/decision artifacts unchanged: this was an agent diagnostic, not a paired retrieval comparison."
+}

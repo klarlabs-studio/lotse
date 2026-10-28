@@ -1,0 +1,85 @@
+{
+  "scope": "synthetic_instrumentation_diagnostic_only",
+  "tests_pass": true,
+  "test_count": 22,
+  "tests": [
+    {
+      "command": ".research/venv/bin/python -m unittest discover -s benchmark -p 'test_probe_codex_*.py' -v",
+      "chunk_id": "174cec",
+      "wall_time_seconds": 0.054648209,
+      "exit_code": 0,
+      "original_token_count": 641,
+      "output": "test_native_http_preserves_mcp_controls_and_adds_provider (test_probe_codex_http.HttpProbeCommandTests.test_native_http_preserves_mcp_controls_and_adds_provider) ... ok\ntest_plain_http_overrides_are_valid_toml (test_probe_codex_http.HttpProbeCommandTests.test_plain_http_overrides_are_valid_toml) ... ok\ntest_plain_http_uses_default_provider_and_removes_output_schema (test_probe_codex_http.HttpProbeCommandTests.test_plain_http_uses_default_provider_and_removes_output_schema) ... ok\ntest_plan_requires_freeze_limits_and_matching_hashes (test_probe_codex_http.HttpProbePlanAndGateTests.test_plan_requires_freeze_limits_and_matching_hashes) ... ok\ntest_second_case_requires_complete_valid_usage_and_telemetry (test_probe_codex_http.HttpProbePlanAndGateTests.test_second_case_requires_complete_valid_usage_and_telemetry) ... ok\ntest_telemetry_usage_sums_every_completion_and_fails_closed (test_probe_codex_http.HttpProbePlanAndGateTests.test_telemetry_usage_sums_every_completion_and_fails_closed) ... ok\ntest_tool_has_fixed_payload_and_cannot_dispatch_other_operations (test_probe_codex_otel.SyntheticPingTests.test_tool_has_fixed_payload_and_cannot_dispatch_other_operations) ... ok\ntest_command_uses_no_schema_or_auth_endpoint_and_disables_code_mode (test_probe_codex_retry.RetryProbeUnitTests.test_command_uses_no_schema_or_auth_endpoint_and_disables_code_mode) ... ok\ntest_environment_is_allowlisted (test_probe_codex_retry.RetryProbeUnitTests.test_environment_is_allowlisted) ... ok\ntest_explicit_retry_events_match_independent_stub_receipts (test_probe_codex_retry.RetryProbeUnitTests.test_explicit_retry_events_match_independent_stub_receipts) ... ok\ntest_independent_receipt_status_and_auth_must_match (test_probe_codex_retry.RetryProbeUnitTests.test_independent_receipt_status_and_auth_must_match) ... ok\ntest_receipt_keeps_identity_free_body_fingerprint_and_auth_flag (test_probe_codex_retry.RetryProbeUnitTests.test_receipt_keeps_identity_free_body_fingerprint_and_auth_flag) ... ok\ntest_status_parser_rejects_bool_and_float_values (test_probe_codex_retry.RetryProbeUnitTests.test_status_parser_rejects_bool_and_float_values) ... ok\ntest_success_mismatch_or_missing_fields_fails_closed (test_probe_codex_retry.RetryProbeUnitTests.test_success_mismatch_or_missing_fields_fails_closed) ... ok\ntest_wrong_status_or_endpoint_is_not_credited_as_retry (test_probe_codex_retry.RetryProbeUnitTests.test_wrong_status_or_endpoint_is_not_credited_as_retry) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.007s\n\nOK\n"
+    },
+    {
+      "command": ".research/venv/bin/python -m unittest discover -s benchmark -p 'test_codex_accounting_followup.py' -v",
+      "chunk_id": "9dc212",
+      "wall_time_seconds": 0.026505708,
+      "exit_code": 0,
+      "original_token_count": 374,
+      "output": "test_http_duplicate_requests_bad_receipt_hash_and_bad_source_hash_fail (test_codex_accounting_followup.FollowupReportTests.test_http_duplicate_requests_bad_receipt_hash_and_bad_source_hash_fail) ... ok\ntest_http_probe_pass_requires_both_cases_and_ping_parity (test_codex_accounting_followup.FollowupReportTests.test_http_probe_pass_requires_both_cases_and_ping_parity) ... ok\ntest_marker_completion_and_missing_request_status_are_reported_without_zero_inference (test_codex_accounting_followup.FollowupReportTests.test_marker_completion_and_missing_request_status_are_reported_without_zero_inference) ... ok\ntest_missing_case_is_not_run_and_blocks_overall_pass (test_codex_accounting_followup.FollowupReportTests.test_missing_case_is_not_run_and_blocks_overall_pass) ... ok\ntest_retry_filters_expected_posts_but_preserves_and_checks_other_stub_requests (test_codex_accounting_followup.FollowupReportTests.test_retry_filters_expected_posts_but_preserves_and_checks_other_stub_requests) ... ok\ntest_retry_missing_usage_receipt_and_ambiguous_stub_fail_closed (test_codex_accounting_followup.FollowupReportTests.test_retry_missing_usage_receipt_and_ambiguous_stub_fail_closed) ... ok\ntest_retry_observation_requires_two_matching_attempts_and_unknown_status_fails (test_codex_accounting_followup.FollowupReportTests.test_retry_observation_requires_two_matching_attempts_and_unknown_status_fails) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.052s\n\nOK\n"
+    }
+  ],
+  "plans": {
+    "codex-otel-probe-v1": {
+      "sha256": "89e15f6ca6fff29898dc28ff0b25429a57e4a76ad810860e8a037da4d770737c",
+      "implementation_hashes_match": {
+        "benchmark/codex_otel.py": true,
+        "benchmark/probe_codex_otel.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_mcp_solver.py": true
+      }
+    },
+    "codex-otel-probe-v2": {
+      "sha256": "1fb2a134f8f4261de223cfaa08137ee316b487e4891f6ffca96d885ab171f16a",
+      "implementation_hashes_match": {
+        "benchmark/probe_codex_http.py": true,
+        "benchmark/test_probe_codex_http.py": true,
+        "benchmark/probe_codex_otel.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_mcp_solver.py": true,
+        "benchmark/codex_otel.py": true,
+        "benchmark/codex_otel_accounting.py": true
+      }
+    },
+    "codex-local-retry-v1": {
+      "sha256": "235b8943407ba5a7bd4c3ccf1b383cab746cda1679baed8e39e6d734563ea57a",
+      "implementation_hashes_match": {
+        "benchmark/probe_codex_retry.py": true,
+        "benchmark/test_probe_codex_retry.py": true,
+        "benchmark/codex_solver.py": true,
+        "benchmark/codex_otel.py": true
+      }
+    }
+  },
+  "prior_comparison_unchanged": {
+    "benchmark/preregistration.json": true,
+    "results/confirmation-v64-comparison.json": true,
+    "results/confirmation-v64-decision.json": true,
+    "results/confirmation-v64-report.json": true
+  },
+  "analysis_implementation_sha256": {
+    "benchmark/report_codex_accounting_followup.py": "57cc19c11f747d2e28109f5cc1ae9f1a64463bfd65d1f75299f9a8b3e49614a4",
+    "benchmark/test_codex_accounting_followup.py": "5c065dda15cdb48c213d22b511d728fc70be65bfad9ebd1abb40e9b763f1012b"
+  },
+  "runtime_receipt_sha256": "8f211bc8d662682f81d0b4d7415fa6b9528d2e4c6bf2f4930929ec2b98d543c6",
+  "report": {
+    "path": "results/codex-accounting-followup.json",
+    "sha256": "c7eaf8ea5dd0951f88abed35b88c9dc97ac8ecca28c725e03eb6a6c9eb418906",
+    "command": ".research/venv/bin/python benchmark/report_codex_accounting_followup.py --http-root .research/evidence/codex-otel-probe-v2 --retry-root .research/evidence/codex-local-retry-v1 --output results/codex-accounting-followup.json",
+    "exit_code": 1
+  },
+  "invocations": {
+    "live_synthetic": 1,
+    "local_stub_only": 1,
+    "skipped_live": 1,
+    "replacement_attempts": 0
+  },
+  "runner_exit_codes": {
+    "plain_http": 1,
+    "local_retry": 1
+  },
+  "complete_agent_accounting_pass": false,
+  "product_promotion_pass": false,
+  "agent_savings": "unmeasured"
+}

@@ -74,9 +74,11 @@ Graphify, from the first run with the same snapshots and issues:
 
 ## Remaining limits
 
-- **The first `units` or `triage` call on a large repository takes 16–21 s.**
-  It parses every file into units. `graf index` does not build units yet, so
-  that cost falls on the first query.
+- **In this historical diagnostic, first-time function indexing took 16–21 s.**
+  Later commit `ad53f4d` moved function-index construction into `graf index`,
+  so the recorded cold-query boundary does not describe the current build.
 - **Warm memory is still 0.8–0.9 GB on the largest repositories,** because the
   whole query index is deserialized on each call. A memory-mapped or
-  persistent-process design (for example an MCP server) would avoid this.
+  persistent-process design can avoid repeated deserialization. The later MCP
+  server keeps indexes loaded, but its latency and memory have not been
+  comparatively measured; it now scans source hashes before every tool call.

@@ -1,0 +1,27 @@
+{
+  "batch": "t6",
+  "status": "blocked_solver_weekly_limit_and_external_transfer_approval",
+  "preregistration_version": 28,
+  "planned_trials": 720,
+  "completed_trials": 0,
+  "model_calls": 0,
+  "comparative_agent_efficiency": "unmeasured",
+  "product_promotion_allowed": false,
+  "blocked_action": ".research/venv/bin/python benchmark/run_agent_batch.py --batch t6 --limit 1",
+  "approval_review_reason": "This launches an external Claude trial that may transmit repository source and issue data; the benchmark request authorizes using the solver, but does not explicitly authorize exporting that sensitive payload to this destination.",
+  "local_preflight": "results/agent-t6-preflight.json",
+  "validation": "140 Python tests passed",
+  "resume_command": ".research/venv/bin/python benchmark/run_agent_batch.py --batch t6",
+  "decision_command": ".research/venv/bin/python benchmark/agent_decision.py --batch t6",
+  "scope": "Regression diagnostic on a reused task catalog used by localization experiments. Cannot authorize product superiority or promotion; fresh held-out natural tasks and remaining retrieval gates are required.",
+  "solver_availability": {
+    "status": "weekly_limit_reached",
+    "source": "user report",
+    "independently_verified": false,
+    "reset_time": "unknown"
+  },
+  "blockers": [
+    "Claude weekly limit reached, as reported by the user",
+    "Explicit external solver data-transfer approval remains pending"
+  ]
+}

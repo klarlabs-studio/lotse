@@ -1,0 +1,199 @@
+{
+  "id": "codex-local-retry-v2",
+  "scope": "synthetic_instrumentation_diagnostic_only",
+  "plan_sha256": "db28f7c970416297c3d38dd3239aa2092174e3d6284041d31562273516b057f1",
+  "implementation_hash_checks": {
+    "benchmark/probe_codex_retry_v2.py": true,
+    "benchmark/test_probe_codex_retry_v2.py": true,
+    "benchmark/probe_codex_retry.py": true,
+    "benchmark/codex_solver.py": true,
+    "benchmark/codex_otel.py": true
+  },
+  "cases": {
+    "analytics_disabled": {
+      "analytics_enabled": false,
+      "exit_code": 1,
+      "timeout": false,
+      "launch_error": null,
+      "request_count": 5,
+      "response_attempt_count": 2,
+      "telemetry_response_event_count": 0,
+      "auth_absent": true,
+      "stub_receipt_integrity": true,
+      "decode_errors": [],
+      "collector_errors": [],
+      "malformed_stream": false,
+      "diagnostic_observation_pass": false,
+      "completed_usage_count": 0,
+      "capture_count": 0,
+      "receipt_plan_hash_matches": true,
+      "runner_exit_code": 1,
+      "request_receipts": [
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:11.390715+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/analytics/codex/turn-costs",
+          "status": 404,
+          "body_sha256": "18ac4b25bc2a02481e3fb6074b61af52f1a9c76b82b1ba787b25e06537f770ad",
+          "body_size": 53,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:11.392318+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:11.406647+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "202b5451879e957f6616a129e3e49028cb7bd06acc9038d0e0a7e01a8825247b",
+          "body_size": 15864,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:11.780536+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "202b5451879e957f6616a129e3e49028cb7bd06acc9038d0e0a7e01a8825247b",
+          "body_size": 15864,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:12.000541+00:00"
+        }
+      ],
+      "errors": [
+        "missing_telemetry_captures",
+        "retry_telemetry_unverified"
+      ],
+      "command": [
+        ".research/venv/bin/python",
+        "benchmark/probe_codex_retry_v2.py",
+        "--plan",
+        ".research/evidence/codex-local-retry-v2/plan.json",
+        "--case",
+        "analytics_disabled"
+      ],
+      "evidence_sha256": {
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/command.json": "8e6cd84641d991e2012c80e867077ab22a2988b50dc58ef3d6dbcd4a483725c8",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/decoded-events.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/instructions.txt": "cb67ae0e8c6eeb3cbefd2ee8332c637206d50b34e1849a73ed94a97164e8b476",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/prompt.txt": "05669c1d0abb50c4fa83d2b9df405ec7e23214a46a1c2523d692c09308edb119",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/receipt.json": "17c65cdb0172cc68d807870c1a233bce9fcc153326739d42f9a0423699dd6598",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/requests.jsonl": "b6c21dd784810a817873a96c209fac575cfb98f62a4ec3b60d5b55d9db9b67d5",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/stderr.txt": "d1e2c3b78a88e80d3440068b2efaeaa7d1d8c7f961f24e6644ab2b0b21ba09a6",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_disabled/stream.jsonl": "f7cf70f5eb8576d4ae5a4b8f485633e57f606bfc64849f4f2caca6133abcd654"
+      }
+    },
+    "analytics_enabled": {
+      "analytics_enabled": true,
+      "exit_code": 1,
+      "timeout": false,
+      "launch_error": null,
+      "request_count": 5,
+      "response_attempt_count": 2,
+      "telemetry_response_event_count": 0,
+      "auth_absent": true,
+      "stub_receipt_integrity": true,
+      "decode_errors": [],
+      "collector_errors": [],
+      "malformed_stream": false,
+      "diagnostic_observation_pass": false,
+      "completed_usage_count": 0,
+      "capture_count": 0,
+      "receipt_plan_hash_matches": true,
+      "runner_exit_code": 1,
+      "request_receipts": [
+        {
+          "method": "POST",
+          "path": "/v1/analytics/codex/turn-costs",
+          "status": 404,
+          "body_sha256": "773361028c29862f97a588c2df194b68d3c3add6ee37ca72630e57fb69b78ab4",
+          "body_size": 53,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:18.150630+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:18.151079+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/v1/models?client_version=0.156.1",
+          "status": 404,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_size": 0,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:18.154837+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "aebe226bbb55e2e27d2d3f2ac9fdbd1b5cb20598f133b8f21ae1e2bc694af51b",
+          "body_size": 15861,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:18.444054+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "status": 503,
+          "body_sha256": "aebe226bbb55e2e27d2d3f2ac9fdbd1b5cb20598f133b8f21ae1e2bc694af51b",
+          "body_size": 15861,
+          "auth_present": false,
+          "received_time": "2026-10-24T06:04:18.638437+00:00"
+        }
+      ],
+      "errors": [
+        "missing_telemetry_captures",
+        "retry_telemetry_unverified"
+      ],
+      "command": [
+        ".research/venv/bin/python",
+        "benchmark/probe_codex_retry_v2.py",
+        "--plan",
+        ".research/evidence/codex-local-retry-v2/plan.json",
+        "--case",
+        "analytics_enabled"
+      ],
+      "evidence_sha256": {
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/command.json": "d463ed7adea148279592fd29cc7c403828d145277f7ef440e69625ce244a9404",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/decoded-events.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/instructions.txt": "cb67ae0e8c6eeb3cbefd2ee8332c637206d50b34e1849a73ed94a97164e8b476",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/prompt.txt": "05669c1d0abb50c4fa83d2b9df405ec7e23214a46a1c2523d692c09308edb119",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/receipt.json": "07de8c15226de45893682e73d0a439cb3e74c33cbb9c7629d3ff9de1055d91c1",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/requests.jsonl": "75f292e51e5f61d9ecb9f5a6636391f2f04478f876f65c7d83f12d030a81fd01",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/stderr.txt": "15644100cab5ba73e00db66589ea0effcce2485f9159835878e13ede16af40e0",
+        ".research/evidence/codex-local-retry-v2/local_retry_v2/analytics_enabled/stream.jsonl": "3a39718fe844a58661c8ee11cdcd7e58347309bbd7b4a2ffdd9f8c614a072175"
+      }
+    }
+  },
+  "diagnostic_observation_pass": false,
+  "interpretation": "Neither planned condition exported logs. Analytics setting did not resolve the gap here; cause remains unknown.",
+  "successful_model_inferences": 0,
+  "request_forwarding": false,
+  "complete_agent_accounting_pass": false,
+  "live_token_cap": "unverified",
+  "agent_savings": "unmeasured",
+  "product_promotion_pass": false,
+  "analysis_sha256": "34354d79cd351f7f75917621f3fae8a841d3088eab59e60e5b700fa03b26ecd0"
+}

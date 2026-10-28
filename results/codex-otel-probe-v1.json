@@ -1,0 +1,186 @@
+{
+  "id": "codex-otel-probe-v1",
+  "scope": "synthetic_instrumentation_diagnostic_only",
+  "plan_sha256": "89e15f6ca6fff29898dc28ff0b25429a57e4a76ad810860e8a037da4d770737c",
+  "frozen_implementation_hash_checks": {
+    "benchmark/codex_otel.py": true,
+    "benchmark/probe_codex_otel.py": true,
+    "benchmark/codex_solver.py": true,
+    "benchmark/codex_mcp_solver.py": true
+  },
+  "cases": {
+    "plain_final": {
+      "observed_websocket_requests": 2,
+      "observed_http_requests": 1,
+      "observed_model_request_events": 2,
+      "observed_failed_model_request_events": 0,
+      "observed_unknown_model_request_statuses": 0,
+      "observed_response_completions": 2,
+      "completion_usage": [
+        {
+          "input_tokens": 1873,
+          "output_tokens": 0,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        {
+          "input_tokens": 2999,
+          "output_tokens": 5,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "telemetry_usage_sum": {
+        "input_tokens": 4872,
+        "output_tokens": 5,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "cli_usage": {
+        "input_tokens": 2999,
+        "output_tokens": 5,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "telemetry_minus_cli": {
+        "input_tokens": 1873,
+        "output_tokens": 0,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "native_mcp_completed_calls": 0,
+      "broker_tool_calls": 0,
+      "telemetry_ping_results": 0,
+      "tool_receipt_parity": null,
+      "telemetry_tool_results": 0,
+      "cli_error_items": 1,
+      "errors": [
+        "cli_error_items_require_audit",
+        "cli_telemetry_usage_mismatch"
+      ],
+      "reconciliation_pass": false,
+      "request_retry_completeness": "unproven",
+      "live_token_cap": "unavailable",
+      "complete_agent_accounting_pass": false,
+      "product_promotion_pass": false,
+      "agent_savings": "unmeasured",
+      "exit_code": 0,
+      "timeout": false,
+      "capture_count": 3,
+      "decode_error_count": 0,
+      "collector_error_count": 0,
+      "evidence_sha256": {
+        "plain_final/command.json": "611d97479f63c0e20420f46909382ee34b2790977043d083f922cf3e6300bcc4",
+        "plain_final/decoded-events.json": "67339d978331637df28a064e4284af75c8061e05912e0778c7217b27348655eb",
+        "plain_final/instructions.txt": "6593fba2fe4f08f3afe36fdbe3f4ef083840e7ff6ed497931deab394febb0bb1",
+        "plain_final/prompt.txt": "2ae42d6366a407f578fd5fdd753435d8dc2cf6fd2f33008bab9ce2e8c807364e",
+        "plain_final/receipt.json": "bddb3439c99964095ee9d5fb4477ed0f78b8505a5ac8c8850129986ff180369c",
+        "plain_final/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "plain_final/stream.jsonl": "fa2e78bc2cdc098487894813387e776897ffd892f47da8f20f00b0bf1df84c25",
+        "plain_final/telemetry/capture-0001.json": "c90860454d078a5acafea98454ab2d8ebe18a7922a8bf847555e4e222f0434cf",
+        "plain_final/telemetry/capture-0002.json": "1194ab7ac7ee97ec0675b9a09cb754ec1b29b0b75164340e1a40dbb723757d27",
+        "plain_final/telemetry/capture-0003.json": "6e42902769886306e2f75e895e3187c0a727fb6d5fb48e6eebe37978f4b46d8b",
+        "plain_final/telemetry/receipts.jsonl": "55af03b5a951a18dbae623f79c56d3e6560eb8e1d0721512af5b5d5633b76ccb"
+      }
+    },
+    "one_synthetic_mcp_ping": {
+      "observed_websocket_requests": 4,
+      "observed_http_requests": 2,
+      "observed_model_request_events": 4,
+      "observed_failed_model_request_events": 0,
+      "observed_unknown_model_request_statuses": 0,
+      "observed_response_completions": 4,
+      "completion_usage": [
+        {
+          "input_tokens": 2653,
+          "output_tokens": 0,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        {
+          "input_tokens": 3797,
+          "output_tokens": 40,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        {
+          "input_tokens": 3918,
+          "output_tokens": 25,
+          "cached_input_tokens": 3584,
+          "reasoning_output_tokens": 0
+        },
+        {
+          "input_tokens": 3984,
+          "output_tokens": 5,
+          "cached_input_tokens": 3712,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "telemetry_usage_sum": {
+        "input_tokens": 14352,
+        "output_tokens": 70,
+        "cached_input_tokens": 7296,
+        "reasoning_output_tokens": 0
+      },
+      "cli_usage": {
+        "input_tokens": 11699,
+        "output_tokens": 70,
+        "cached_input_tokens": 7296,
+        "reasoning_output_tokens": 0
+      },
+      "telemetry_minus_cli": {
+        "input_tokens": 2653,
+        "output_tokens": 0,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "native_mcp_completed_calls": 1,
+      "broker_tool_calls": 1,
+      "telemetry_ping_results": 1,
+      "tool_receipt_parity": true,
+      "telemetry_tool_results": 3,
+      "cli_error_items": 0,
+      "errors": [
+        "cli_telemetry_usage_mismatch"
+      ],
+      "reconciliation_pass": false,
+      "request_retry_completeness": "unproven",
+      "live_token_cap": "unavailable",
+      "complete_agent_accounting_pass": false,
+      "product_promotion_pass": false,
+      "agent_savings": "unmeasured",
+      "exit_code": 0,
+      "timeout": false,
+      "capture_count": 5,
+      "decode_error_count": 0,
+      "collector_error_count": 0,
+      "evidence_sha256": {
+        "one_synthetic_mcp_ping/command.json": "66b8074d6f949ff31655471a942cc6a7120050d0500deefb07f017c3b0ebcbab",
+        "one_synthetic_mcp_ping/decoded-events.json": "a0105c5ff406074ae7356bcf7ad9fad5757aeddc6154e0d43302b1da6f46fa27",
+        "one_synthetic_mcp_ping/instructions.txt": "6593fba2fe4f08f3afe36fdbe3f4ef083840e7ff6ed497931deab394febb0bb1",
+        "one_synthetic_mcp_ping/ping.jsonl": "6a967d7935e96bcaa9360f30e4e78878aa01a38e984d74f52faae6110faa700e",
+        "one_synthetic_mcp_ping/prompt.txt": "1b6f8c2eb5cf159f904f43dfaaf8a92989d942228fec744a6f48e4f66b1da120",
+        "one_synthetic_mcp_ping/receipt.json": "66ea3c2b3d9f27ebd8641deac6da7881c0b5631b0a65e7f1e2f63e1d3980ab3d",
+        "one_synthetic_mcp_ping/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "one_synthetic_mcp_ping/stream.jsonl": "b6908f14fbec522e0198fe6bca6dc20bebb705eb81475e9cd68107b5c46a7aa6",
+        "one_synthetic_mcp_ping/telemetry/capture-0001.json": "fc0f9565e231e0815a23f6a2f9596c6ca3ebcd9f05d7d80ae6935a0d5588423a",
+        "one_synthetic_mcp_ping/telemetry/capture-0002.json": "c8efb773a65e9f9637e1ae30613c2615b4dddc113e4cab7be4e50ee79d10eca3",
+        "one_synthetic_mcp_ping/telemetry/capture-0003.json": "8ca003ff6b1bddf655bab9ea0092d4c111beee802709e5126a01dc97a214ac15",
+        "one_synthetic_mcp_ping/telemetry/capture-0004.json": "5e826d685ef3621c849fdcff29ac4d76a369b4cccb26ff277c94cb080ebc2648",
+        "one_synthetic_mcp_ping/telemetry/capture-0005.json": "8fc221dc01bdd27f5d4aeefb1d9e2dcdea1dfd0ff7a59169e35456d5c03a4010",
+        "one_synthetic_mcp_ping/telemetry/receipts.jsonl": "da8f7d839425363ebe9cc538d34bb58d8b2b5af9700c305bae9ae7a15f8efd2e"
+      }
+    }
+  },
+  "reconciliation_pass": false,
+  "billing_or_quota_impact": "unknown",
+  "complete_agent_accounting_pass": false,
+  "product_promotion_pass": false,
+  "agent_savings": "unmeasured",
+  "limitations": [
+    "Successful synthetic probes do not prove retry or failure-path completeness.",
+    "Token sums describe observed completion events, not verified billed usage.",
+    "No enforceable live token cap; no natural tasks or comparative Graphify run.",
+    "First zero-output completion is retained; attributing it to prewarm is an inference."
+  ]
+}

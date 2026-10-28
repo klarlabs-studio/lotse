@@ -1,0 +1,492 @@
+{
+  "h-zerolog-impact-diode-pool-cap": {
+    "diode/internal/diodes/many_to_one.go": {
+      "relevant": false,
+      "reason": "The ring buffer implementation stores queued items but does not copy or pool the byte slices after the consumer writes them (diode/internal/diodes/many_to_one.go:11-41)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "This file caps reuse for TriggerLevelWriter buffers, a different writer pool from the asynchronous diode byte-buffer pool (writer.go:337-350)."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "putEvent caps Event objects in eventPool; it does not enforce the diode writer\u2019s byte-slice reuse rule (event.go:34-53)."
+    },
+    "journald/journald_test.go": {
+      "relevant": false,
+      "reason": "These tests assert journald serialization and priority results, not how diode buffers are retained (journald/journald_test.go:124-155)."
+    },
+    "internal/cbor/types_64_test.go": {
+      "relevant": false,
+      "reason": "The 64-bit integer encoding cases test CBOR representation, not buffer capacity or pool admission (internal/cbor/types_64_test.go:24-34)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "The disabled-level test checks logger filtering and has no diode writer or pooled-buffer size assertion (log_test.go:937-962)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "The 64 KiB constant here governs TriggerLevelWriterBufferReuseLimit, not diode.bufPool (globals.go:168-173)."
+    },
+    "internal/json/types_test.go": {
+      "relevant": false,
+      "reason": "These cases verify JSON interface encoding and do not exercise the asynchronous writer pool (internal/json/types_test.go:105-129)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "The nil-event and event lifecycle tests do not assert the diode writer\u2019s buffer reuse limit (event_test.go:49-59)."
+    },
+    "internal/cbor/types_test.go": {
+      "relevant": false,
+      "reason": "These tests exercise CBOR scalar and interface encodings, not the diode writer buffer pool (internal/cbor/types_test.go:72-109)."
+    },
+    "diode/internal/diodes/poller.go": {
+      "relevant": false,
+      "reason": "Poller controls how queued data is retrieved; it has no byte-buffer copy or pool return path (diode/internal/diodes/poller.go:14-29)."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "The global logger examples demonstrate level and message calls, without a diode writer or capacity behavior (log/log_example_test.go:37-52)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "Slog tests assert record conversion and attribute shape, not asynchronous buffer reuse (slog_test.go:41-56)."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "These HTTP middleware tests inspect request fields and do not construct or inspect diode buffer pools (hlog/hlog_test.go:30-44)."
+    },
+    "diode/diode_example_test.go": {
+      "relevant": false,
+      "reason": "The example demonstrates using NewWriter and closing it, but does not expose the copy buffer\u2019s pool cutoff (diode/diode_example_test.go:13-22)."
+    },
+    "diode/diode_test.go": {
+      "relevant": false,
+      "reason": "These tests check emitted records and Close behavior, without asserting the buffer capacity condition before pool return (diode/diode_test.go:19-35)."
+    },
+    "diode/internal/diodes/waiter.go": {
+      "relevant": false,
+      "reason": "Waiter wakes the consumer when data arrives; it does not own the copied byte buffers or decide their reuse (diode/internal/diodes/waiter.go:10-39)."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "putArray applies a separate 64 KiB limit to Array objects in arrayPool, not the diode writer\u2019s byte slices (array.go:20-44)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger.Print and level methods create log events but do not control diode buffer copying or pool admission (log.go:456-480)."
+    }
+  },
+  "h-zerolog-impact-slog-disabled": {
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The compatibility package forwards formatted calls through the global logger; it does not define nil Event callback handling (log/log.go:118-128)."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "Array methods build structured array values and contain no disabled Logger event or message callback path (array.go:20-31)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "These tests cover SlogHandler levels and attributes, not nil Event.MsgFunc behavior or lazy callback assertions (slog_test.go:41-56)."
+    },
+    "console.go": {
+      "relevant": false,
+      "reason": "ConsoleWriter formats already serialized records and cannot establish whether disabled Logger levels yield nil Events (console.go:122-145)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "The Disabled level constant names a level but does not show callback guarding or its regression test (globals.go:11-32)."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "The benchmarks measure logging and encoding costs rather than nil-guarded message callback semantics (benchmark_test.go:179-188)."
+    },
+    "ctx_test.go": {
+      "relevant": false,
+      "reason": "Context retrieval tests do not cover disabled logger events or MsgFunc callback execution (ctx_test.go:14-40)."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "These examples show completed ordinary events; none asserts that a disabled event skips a lazy callback (binary_test.go:83-103)."
+    },
+    "error_marshal_test.go": {
+      "relevant": false,
+      "reason": "These cases exercise error marshaling and stack fields, not disabled message callback execution (error_marshal_test.go:1-25)."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "This file defines reusable serialization fixtures; it has no disabled-level or lazy callback assertion (fixtures_test.go:12-24)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context methods attach fields and create child values, not nil Events or message callbacks (context.go:17-30)."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "TestDisabledLevel checks filtered logger behavior, grounding the disabled path whose nil Event makes callback guards matter; it does not itself test MsgFunc laziness (log_test.go:937-962)."
+    }
+  },
+  "h-zerolog-impact-warning-alias": {
+    "fields.go": {
+      "relevant": true,
+      "reason": "appendObject invokes LogObjectMarshaler for structured object encoding, the encoding path reached when Event.Interface dispatches to Object (fields.go:44-54)."
+    },
+    "log_test.go": {
+      "relevant": true,
+      "reason": "The Interface field case supplies fixtureObj and asserts the serialized object field, directly exercising this dispatch path (log_test.go:664-710)."
+    },
+    "internal/testcases.go": {
+      "relevant": false,
+      "reason": "These shared cases describe primitive CBOR values and do not include an Event.Interface LogObjectMarshaler assertion (internal/testcases.go:1-30)."
+    },
+    "ctx_test.go": {
+      "relevant": false,
+      "reason": "The interface-marshaler test here is for logger Context fields, not Event.Interface\u2019s event field behavior (ctx_test.go:80-100)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context.Interface has its own dispatch to Context.Object; it does not implement the Event.Interface branch asked about (context.go:436-441)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger configuration and level methods do not decide how Event.Interface encodes a marshaler value (log.go:450-480)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "Slog attribute tests check handler output and do not supply a LogObjectMarshaler to Event.Interface (slog_test.go:96-120)."
+    },
+    "array.go": {
+      "relevant": false,
+      "reason": "Array.Interface dispatches array elements to Array.Object, a separate API from the Event field method in question (array.go:238-243)."
+    },
+    "benchmark_test.go": {
+      "relevant": false,
+      "reason": "Interface(Object) benchmark cases measure speed but do not assert the changed JSON/CBOR shape or serve as the requested test case (benchmark_test.go:179-188)."
+    },
+    "context_test.go": {
+      "relevant": false,
+      "reason": "Context.Interface tests concern logger-level fields and cannot verify the Event.Interface test case (context_test.go:70-100)."
+    }
+  },
+  "h-zerolog-trace-dict-array": {
+    "array.go": {
+      "relevant": true,
+      "reason": "Array.Dict shows the same nested-event finalization step: append an end marker, append the encoded dictionary, then call putEvent to dispose it (array.go:265-270)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These assertions cover syslog severity routing and CEE prefixes, not nested dictionary Event cleanup (syslog_test.go:54-74)."
+    },
+    "binary_test.go": {
+      "relevant": true,
+      "reason": "ExampleContext_Dict demonstrates the queried Context.Dict call with a CreateDict Event and completed output (binary_test.go:417-430)."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "Event.Dict appends the nested event\u2019s end marker and encoded bytes; putEvent clears its state and returns eligible buffers to eventPool (event.go:182-190; event.go:34-53)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "Logger output tests do not trace Context.Dict\u2019s temporary Event disposal or assert that it is returned after embedding (log_test.go:101-128)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "Slog handler tests exercise record and attribute conversion, not Context.Dict nested Event lifecycle (slog_test.go:41-56)."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "The dictionary test builds a temporary Event with CreateDict and passes it to Dict, directly exercising this nested-event path (event_test.go:280-300)."
+    },
+    "log_example_test.go": {
+      "relevant": true,
+      "reason": "ExampleContext_Dict shows the logger-context API creating and attaching the dictionary Event (log_example_test.go:412-426)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global adapter exposes logging convenience methods and does not finalize nested dictionary Events (log/log.go:19-30)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger.With configures logger context but the Context.Dict append and temporary Event disposal are implemented elsewhere (log.go:280-315)."
+    }
+  },
+  "h-zerolog-trace-diode-lifecycle": {
+    "error_marshal_test.go": {
+      "relevant": false,
+      "reason": "Error stack tests exercise event field encoding, not the asynchronous diode consumer or its Close synchronization (error_marshal_test.go:1-25)."
+    },
+    "diode/internal/diodes/poller.go": {
+      "relevant": true,
+      "reason": "Poller.Next repeatedly consumes queued data and exits when its polling context is done, the consumer mechanism used by positive-interval diode writers (diode/internal/diodes/poller.go:55-80)."
+    },
+    "writer_test.go": {
+      "relevant": false,
+      "reason": "These tests cover LevelWriter adapters and trigger-buffer behavior, not diode.NewWriter\u2019s background consumer lifecycle (writer_test.go:284-299)."
+    },
+    "internal/cbor/types_test.go": {
+      "relevant": false,
+      "reason": "CBOR type tests validate encoding primitives and have no relation to diode queue consumption or Close (internal/cbor/types_test.go:72-98)."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "This example wires HTTP handlers to a request logger and does not use a diode writer (hlog/hlog_example_test.go:20-40)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger methods create and finalize events but do not forward records through diode or wait for its consumer (log.go:450-480)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "The logger tests cover level and output behavior without exercising diode writer shutdown and destination closing (log_test.go:876-905)."
+    },
+    "diode/diode_example_test.go": {
+      "relevant": true,
+      "reason": "The example constructs diode.NewWriter, emits a log line, then calls Close before observing the wrapped output (diode/diode_example_test.go:13-22)."
+    },
+    "hlog/internal/mutil/writer_proxy.go": {
+      "relevant": false,
+      "reason": "This proxy adapts HTTP ResponseWriter interfaces; it has no diode queue or background shutdown handling (hlog/internal/mutil/writer_proxy.go:58-77)."
+    },
+    "diode/diode_test.go": {
+      "relevant": true,
+      "reason": "TestNewWriter verifies a queued record reaches the wrapped buffer after Close, and TestClose exercises shutdown of a writer (diode/diode_test.go:19-40)."
+    },
+    "diode/internal/diodes/waiter.go": {
+      "relevant": true,
+      "reason": "Waiter.Next blocks for queued data and returns nil after its context is canceled, explaining the zero-interval consumer shutdown path (diode/internal/diodes/waiter.go:30-49)."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "HTTP middleware adds request metadata to zerologgers and does not manage diode consumer lifecycle (hlog/hlog.go:19-38)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "The Close methods here belong to level and trigger writers; they do not wait for diode.poll or close its wrapped destination (writer.go:329-350)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests verify syslog severity output and adapter Close, not diode background-consumer completion (syslog_test.go:191-222)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logger adapter delegates convenience calls but does not create or close diode writers (log/log.go:19-30)."
+    }
+  },
+  "h-zerolog-trace-journald-write": {
+    "context.go": {
+      "relevant": false,
+      "reason": "Context methods attach fields before serialization, but do not map a completed JSON record to journald priority and arguments (context.go:111-127)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests assert syslog writer severity calls, a different backend from journald\u2019s priority and argument mapping (syslog_test.go:54-74)."
+    },
+    "slog.go": {
+      "relevant": false,
+      "reason": "SlogHandler maps slog records into zerolog Events; it does not convert serialized events into journald calls (slog.go:40-65)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logging adapter creates zerolog events but contains no journald writer conversion (log/log.go:19-30)."
+    },
+    "journald/journald_test.go": {
+      "relevant": true,
+      "reason": "WriteWithAllLevels and WriteOutputs assert journald priority, key/value arguments, and the serialized JSON payload passed as the message (journald/journald_test.go:155-235)."
+    },
+    "diode/diode.go": {
+      "relevant": false,
+      "reason": "The diode writer copies and asynchronously forwards byte slices; it does not decode records into journald priority or key/value arguments (diode/diode.go:51-80)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "Event tests verify event encoding and writer dispatch, not journald\u2019s backend argument mapping (event_test.go:379-397)."
+    },
+    "log.go": {
+      "relevant": false,
+      "reason": "Logger event creation and Print methods do not implement journald\u2019s JSON-to-priority conversion (log.go:456-480)."
+    },
+    "internal/json/types_test.go": {
+      "relevant": false,
+      "reason": "These tests validate JSON primitive/interface encoding, not journald priority or its extra original-record argument (internal/json/types_test.go:105-129)."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "Global logger examples demonstrate ordinary log calls, without inspecting the journald writer\u2019s arguments (log/log_example_test.go:37-52)."
+    },
+    "slog_test.go": {
+      "relevant": false,
+      "reason": "These tests assert SlogHandler\u2019s event shape; they do not inspect journald SendFunc arguments (slog_test.go:41-56)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "Core logger output tests stop at serialized event bytes and do not exercise the journald writer adapter (log_test.go:19-51)."
+    }
+  },
+  "h-zerolog-trace-print-event": {
+    "event.go": {
+      "relevant": true,
+      "reason": "CallerSkipFrame stores an additional frame skip that the Print method applies before emitting the event, supporting the adjusted-caller step (event.go:847-856)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "This package-level adapter has separate Print forwarding behavior; it does not implement the receiver method Logger.Print being traced (log/log.go:35-52)."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "HTTP middleware and request field handlers do not call Logger.Print or determine its message/caller adjustment (hlog/hlog.go:19-38)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "The core logger tests cover field, level, and output behavior but provide no Logger.Print-specific assertion (log_test.go:19-51)."
+    },
+    "log/log_example_test.go": {
+      "relevant": false,
+      "reason": "The global package Print example exercises a different package-level convenience function, not the Logger receiver method (log/log_example_test.go:37-45)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context methods configure persistent fields and hooks; they do not define Logger.Print\u2019s level or formatting (context.go:11-30)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "Writer adapters receive serialized output after Logger.Print has chosen its event behavior (writer.go:15-32)."
+    },
+    "hlog/hlog_test.go": {
+      "relevant": false,
+      "reason": "These tests validate HTTP request handlers and metadata, with no Logger.Print caller or message assertion (hlog/hlog_test.go:30-44)."
+    },
+    "internal/cbor/time_test.go": {
+      "relevant": false,
+      "reason": "Time encoding cases verify CBOR timestamp representation, not Print formatting or call-site adjustment (internal/cbor/time_test.go:1-25)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "Event tests cover event-level methods but do not invoke the Logger.Print convenience method (event_test.go:379-397)."
+    },
+    "log_example_test.go": {
+      "relevant": true,
+      "reason": "The Logger.Print example demonstrates the emitted debug event and the text produced from its arguments (log_example_test.go:80-91)."
+    },
+    "binary_test.go": {
+      "relevant": true,
+      "reason": "ExampleLogger_Print checks the debug-level output produced by Logger.Print, providing an executable example of the convenience path (binary_test.go:83-92)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "globals.go assigns display colors and labels to level values, but the implementation of Logger.Print already names Debug directly and this file does not trace Print or caller adjustment (globals.go:149-163)."
+    },
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "Hook tests assert hook callback and event behavior, not Logger.Print\u2019s message formatting or caller skip (hook_test.go:1-20)."
+    }
+  },
+  "h-zerolog-trace-slog-handle": {
+    "ctx.go": {
+      "relevant": false,
+      "reason": "This file attaches Logger values to Go contexts; Handle attaches the supplied context to the Event instead (ctx.go:12-32)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logger adapter exposes package-level calls but does not implement SlogHandler.Handle\u2019s level or attribute conversion (log/log.go:19-30)."
+    },
+    "log.go": {
+      "relevant": true,
+      "reason": "Logger.WithLevel creates an Event for the mapped severity, which is the event source used by SlogHandler.Handle (log.go:421-434)."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "These examples demonstrate core logging calls and marshaling, not slog Record conversion (binary_test.go:83-103)."
+    },
+    "syslog.go": {
+      "relevant": false,
+      "reason": "SyslogWriter maps completed zerolog levels to syslog calls, downstream of SlogHandler\u2019s event construction (syslog.go:44-65)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "LevelWriter interfaces govern event output after Handle finishes building its Event; they do not map slog records (writer.go:15-32)."
+    },
+    "hlog/hlog.go": {
+      "relevant": false,
+      "reason": "HTTP handlers attach request-derived logger fields and do not participate in SlogHandler.Handle (hlog/hlog.go:19-38)."
+    },
+    "event.go": {
+      "relevant": true,
+      "reason": "Event.Ctx attaches the supplied context, event fields accept converted attributes, and Msg finalizes the record (event.go:499-510; event.go:115-155)."
+    },
+    "log_test.go": {
+      "relevant": false,
+      "reason": "These tests assert ordinary zerolog levels and fields, not the SlogHandler.Handle record path (log_test.go:19-51)."
+    },
+    "slog_test.go": {
+      "relevant": true,
+      "reason": "SlogHandler tests assert mapped levels, attrs, and emitted messages, directly checking the handler\u2019s event output (slog_test.go:41-120)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests check syslog output after logging and contain no slog.Handle context or attribute assertions (syslog_test.go:54-74)."
+    },
+    "hlog/hlog_example_test.go": {
+      "relevant": false,
+      "reason": "The example builds an HTTP request logger and does not create or call a SlogHandler (hlog/hlog_example_test.go:20-40)."
+    },
+    "context.go": {
+      "relevant": false,
+      "reason": "Context.Ctx stores context on a Logger, while the requested path is Record context attached to an Event in Handle (context.go:232-238)."
+    },
+    "event_test.go": {
+      "relevant": true,
+      "reason": "The event context tests verify context attachment and access used by Handle\u2019s context propagation step (event_test.go:90-120)."
+    }
+  },
+  "h-zerolog-trace-warning-parse-test": {
+    "hook_test.go": {
+      "relevant": false,
+      "reason": "Hook tests verify event callback behavior and do not parse level strings or exercise the WARNING alias regression (hook_test.go:1-20)."
+    },
+    "binary_test.go": {
+      "relevant": false,
+      "reason": "These examples build log events and do not call ParseLevel with WARNING (binary_test.go:83-103)."
+    },
+    "globals.go": {
+      "relevant": false,
+      "reason": "The level declarations name WarnLevel but do not parse the WARNING text or assert its returned error (globals.go:11-32)."
+    },
+    "fixtures_test.go": {
+      "relevant": false,
+      "reason": "Serialization fixtures provide sample field values and do not contain parser inputs or expected ParseLevel outcomes (fixtures_test.go:12-24)."
+    },
+    "event_test.go": {
+      "relevant": false,
+      "reason": "Event tests exercise event lifecycle and fields; they do not test public level parsing (event_test.go:379-397)."
+    },
+    "journald/journald.go": {
+      "relevant": false,
+      "reason": "The journald adapter parses serialized level names for priority routing, but it contains no WARNING alias regression or public parser result assertion (journald/journald.go:52-75)."
+    },
+    "syslog.go": {
+      "relevant": false,
+      "reason": "Syslog routes numeric Level values to syslog severities and does not parse the public WARNING string (syslog.go:44-65)."
+    },
+    "syslog_test.go": {
+      "relevant": false,
+      "reason": "These tests validate syslog routing for Level values, not ParseLevel\u2019s case-insensitive alias and error result (syslog_test.go:124-180)."
+    },
+    "writer.go": {
+      "relevant": false,
+      "reason": "Writer interfaces and adapters handle output bytes; they do not parse log-level text (writer.go:15-32)."
+    },
+    "event.go": {
+      "relevant": false,
+      "reason": "Event methods consume already-selected Level values and do not implement string parsing or the WARNING regression case (event.go:81-103)."
+    },
+    "log/log.go": {
+      "relevant": false,
+      "reason": "The global logger adapter forwards logging calls and does not expose or test the ParseLevel parser (log/log.go:19-30)."
+    },
+    "internal/cbor/decode_stream.go": {
+      "relevant": false,
+      "reason": "The CBOR decoder parses serialized data types, not zerolog level strings or their aliases (internal/cbor/decode_stream.go:424-437)."
+    }
+  }
+}

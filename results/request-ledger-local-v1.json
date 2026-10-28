@@ -1,0 +1,471 @@
+{
+  "id": "request-ledger-local-v1",
+  "scope": "synthetic_fixture_only",
+  "plan_sha256": "d5437b0310f1dc3050d8a164403ea734a513e788c4c823675cdcf2a394edb00b",
+  "implementation_hash_checks": {
+    "benchmark/request_ledger.py": true,
+    "benchmark/request_gateway.py": true,
+    "benchmark/probe_request_ledger.py": true,
+    "benchmark/test_request_ledger.py": true,
+    "benchmark/test_request_gateway.py": true
+  },
+  "cases": {
+    "success": {
+      "summary": {
+        "request_count": 1,
+        "accepted_attempts": 1,
+        "denied_requests": 0,
+        "reserved_tokens": 24,
+        "actual_observed_tokens": 11,
+        "unknown_usage_attempts": 0,
+        "pending_attempts": 0,
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "complete_agent_accounting_pass": false,
+        "product_promotion_pass": false,
+        "live_token_cap": "real_provider_unverified",
+        "agent_savings": "unmeasured"
+      },
+      "upstream_requests": [
+        {
+          "index": 0,
+          "path": "/v1/responses",
+          "body_sha256": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+          "body_bytes": 65,
+          "auth_present": false
+        }
+      ],
+      "client_receipts": [
+        {
+          "status": 200,
+          "body_sha256": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0",
+          "body_bytes": 189
+        }
+      ],
+      "checks": {
+        "upstream_count_matches": true,
+        "all_upstream_bodies_match": true,
+        "no_auth_forwarded": true,
+        "reservation_matches": true,
+        "within_fixture_budget": true,
+        "no_pending_attempts": true,
+        "all_request_bodies_receipted": true,
+        "accepted_matches_upstream": true,
+        "one_successful_reply": true,
+        "observed_usage_exact": true,
+        "durable_config": true,
+        "durable_admissions_exact": true,
+        "durable_denials_exact": true,
+        "durable_request_numbers": true,
+        "durable_reservation_exact": true,
+        "durable_each_reservation_exact": true,
+        "durable_request_hashes": true,
+        "durable_outcomes_exact": true,
+        "durable_attempt_ids_match": true,
+        "durable_attempt_ids_unique": true,
+        "no_unexpected_journal_events": true
+      },
+      "fixture_diagnostic_pass": true,
+      "evidence_sha256": {
+        ".research/evidence/request-ledger-local-v1/run/success/client-response-0.bin": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0",
+        ".research/evidence/request-ledger-local-v1/run/success/ledger.jsonl": "ae9518875cb6ff290512547567cd60875f56c324f89521176c60c259b664360c",
+        ".research/evidence/request-ledger-local-v1/run/success/request.bin": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+        ".research/evidence/request-ledger-local-v1/run/success/upstream-receipts.jsonl": "68b52d58d57b673f02ac4afa0a16584ffd87ca65f77fde2a202b71fda30ef4f3",
+        ".research/evidence/request-ledger-local-v1/run/success/upstream-response-0.bin": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0"
+      }
+    },
+    "http_retry": {
+      "summary": {
+        "request_count": 2,
+        "accepted_attempts": 2,
+        "denied_requests": 0,
+        "reserved_tokens": 48,
+        "actual_observed_tokens": 11,
+        "unknown_usage_attempts": 1,
+        "pending_attempts": 0,
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "complete_agent_accounting_pass": false,
+        "product_promotion_pass": false,
+        "live_token_cap": "real_provider_unverified",
+        "agent_savings": "unmeasured"
+      },
+      "upstream_requests": [
+        {
+          "index": 0,
+          "path": "/v1/responses",
+          "body_sha256": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+          "body_bytes": 65,
+          "auth_present": false
+        },
+        {
+          "index": 1,
+          "path": "/v1/responses",
+          "body_sha256": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+          "body_bytes": 65,
+          "auth_present": false
+        }
+      ],
+      "client_receipts": [
+        {
+          "status": 503,
+          "body_sha256": "367b07460819b01dd5e5bad0d9c6f2edaca1c488206610206ae49897cae35dca",
+          "body_bytes": 29
+        },
+        {
+          "status": 200,
+          "body_sha256": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0",
+          "body_bytes": 189
+        }
+      ],
+      "checks": {
+        "upstream_count_matches": true,
+        "all_upstream_bodies_match": true,
+        "no_auth_forwarded": true,
+        "reservation_matches": true,
+        "within_fixture_budget": true,
+        "no_pending_attempts": true,
+        "all_request_bodies_receipted": true,
+        "accepted_matches_upstream": true,
+        "failed_usage_remains_unknown": true,
+        "one_successful_reply": true,
+        "observed_usage_exact": true,
+        "durable_config": true,
+        "durable_admissions_exact": true,
+        "durable_denials_exact": true,
+        "durable_request_numbers": true,
+        "durable_reservation_exact": true,
+        "durable_each_reservation_exact": true,
+        "durable_request_hashes": true,
+        "durable_outcomes_exact": true,
+        "durable_attempt_ids_match": true,
+        "durable_attempt_ids_unique": true,
+        "no_unexpected_journal_events": true
+      },
+      "fixture_diagnostic_pass": true,
+      "evidence_sha256": {
+        ".research/evidence/request-ledger-local-v1/run/http_retry/client-response-0.bin": "367b07460819b01dd5e5bad0d9c6f2edaca1c488206610206ae49897cae35dca",
+        ".research/evidence/request-ledger-local-v1/run/http_retry/client-response-1.bin": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0",
+        ".research/evidence/request-ledger-local-v1/run/http_retry/ledger.jsonl": "918a39f4afa3e226a9df80b17d31ce6f85b8591946ee5ae7fe9a36730ad1edbf",
+        ".research/evidence/request-ledger-local-v1/run/http_retry/request.bin": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+        ".research/evidence/request-ledger-local-v1/run/http_retry/upstream-receipts.jsonl": "efa77bd42e3ef90372150147fe0d56ae925aa3f6fa3d71f1e99935a28f2260cf",
+        ".research/evidence/request-ledger-local-v1/run/http_retry/upstream-response-0.bin": "367b07460819b01dd5e5bad0d9c6f2edaca1c488206610206ae49897cae35dca",
+        ".research/evidence/request-ledger-local-v1/run/http_retry/upstream-response-1.bin": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0"
+      }
+    },
+    "interrupted_stream": {
+      "summary": {
+        "request_count": 1,
+        "accepted_attempts": 1,
+        "denied_requests": 0,
+        "reserved_tokens": 24,
+        "actual_observed_tokens": 0,
+        "unknown_usage_attempts": 1,
+        "pending_attempts": 0,
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "complete_agent_accounting_pass": false,
+        "product_promotion_pass": false,
+        "live_token_cap": "real_provider_unverified",
+        "agent_savings": "unmeasured"
+      },
+      "upstream_requests": [
+        {
+          "index": 0,
+          "path": "/v1/responses",
+          "body_sha256": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+          "body_bytes": 65,
+          "auth_present": false
+        }
+      ],
+      "client_receipts": [
+        {
+          "status": 502,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_bytes": 0
+        }
+      ],
+      "checks": {
+        "upstream_count_matches": true,
+        "all_upstream_bodies_match": true,
+        "no_auth_forwarded": true,
+        "reservation_matches": true,
+        "within_fixture_budget": true,
+        "no_pending_attempts": true,
+        "all_request_bodies_receipted": true,
+        "accepted_matches_upstream": true,
+        "failed_usage_remains_unknown": true,
+        "durable_config": true,
+        "durable_admissions_exact": true,
+        "durable_denials_exact": true,
+        "durable_request_numbers": true,
+        "durable_reservation_exact": true,
+        "durable_each_reservation_exact": true,
+        "durable_request_hashes": true,
+        "durable_outcomes_exact": true,
+        "durable_attempt_ids_match": true,
+        "durable_attempt_ids_unique": true,
+        "no_unexpected_journal_events": true
+      },
+      "fixture_diagnostic_pass": true,
+      "evidence_sha256": {
+        ".research/evidence/request-ledger-local-v1/run/interrupted_stream/client-response-0.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/request-ledger-local-v1/run/interrupted_stream/ledger.jsonl": "aeb9a48d8166e1f2fb3f9583c40d02a4d3003b52c2f2820dd91af6bfb308afdd",
+        ".research/evidence/request-ledger-local-v1/run/interrupted_stream/request.bin": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+        ".research/evidence/request-ledger-local-v1/run/interrupted_stream/upstream-receipts.jsonl": "68b52d58d57b673f02ac4afa0a16584ffd87ca65f77fde2a202b71fda30ef4f3",
+        ".research/evidence/request-ledger-local-v1/run/interrupted_stream/upstream-response-0.bin": "694f18480132cccd4e9d7f446fcfefe2e663b7885775b8f0395a7e9449d72b62"
+      }
+    },
+    "budget_denial": {
+      "summary": {
+        "request_count": 1,
+        "accepted_attempts": 0,
+        "denied_requests": 1,
+        "reserved_tokens": 0,
+        "actual_observed_tokens": 0,
+        "unknown_usage_attempts": 0,
+        "pending_attempts": 0,
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "complete_agent_accounting_pass": false,
+        "product_promotion_pass": false,
+        "live_token_cap": "real_provider_unverified",
+        "agent_savings": "unmeasured"
+      },
+      "upstream_requests": [],
+      "client_receipts": [
+        {
+          "status": 429,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_bytes": 0
+        }
+      ],
+      "checks": {
+        "upstream_count_matches": true,
+        "all_upstream_bodies_match": true,
+        "no_auth_forwarded": true,
+        "reservation_matches": true,
+        "within_fixture_budget": true,
+        "no_pending_attempts": true,
+        "all_request_bodies_receipted": true,
+        "accepted_matches_upstream": true,
+        "client_denied": true,
+        "durable_config": true,
+        "durable_admissions_exact": true,
+        "durable_denials_exact": true,
+        "durable_request_numbers": true,
+        "durable_reservation_exact": true,
+        "durable_each_reservation_exact": true,
+        "durable_request_hashes": true,
+        "durable_outcomes_exact": true,
+        "durable_attempt_ids_match": true,
+        "durable_attempt_ids_unique": true,
+        "no_unexpected_journal_events": true,
+        "durable_denial_reason": true
+      },
+      "fixture_diagnostic_pass": true,
+      "evidence_sha256": {
+        ".research/evidence/request-ledger-local-v1/run/budget_denial/client-response-0.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/request-ledger-local-v1/run/budget_denial/ledger.jsonl": "40a8e7649e4a4b56615c3aa7fccecbe8c4ac72527faa9d919aa287a9c4d770d5",
+        ".research/evidence/request-ledger-local-v1/run/budget_denial/request.bin": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871"
+      }
+    },
+    "unknown_bound": {
+      "summary": {
+        "request_count": 1,
+        "accepted_attempts": 0,
+        "denied_requests": 1,
+        "reserved_tokens": 0,
+        "actual_observed_tokens": 0,
+        "unknown_usage_attempts": 0,
+        "pending_attempts": 0,
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "complete_agent_accounting_pass": false,
+        "product_promotion_pass": false,
+        "live_token_cap": "real_provider_unverified",
+        "agent_savings": "unmeasured"
+      },
+      "upstream_requests": [],
+      "client_receipts": [
+        {
+          "status": 429,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_bytes": 0
+        }
+      ],
+      "checks": {
+        "upstream_count_matches": true,
+        "all_upstream_bodies_match": true,
+        "no_auth_forwarded": true,
+        "reservation_matches": true,
+        "within_fixture_budget": true,
+        "no_pending_attempts": true,
+        "all_request_bodies_receipted": true,
+        "accepted_matches_upstream": true,
+        "client_denied": true,
+        "durable_config": true,
+        "durable_admissions_exact": true,
+        "durable_denials_exact": true,
+        "durable_request_numbers": true,
+        "durable_reservation_exact": true,
+        "durable_each_reservation_exact": true,
+        "durable_request_hashes": true,
+        "durable_outcomes_exact": true,
+        "durable_attempt_ids_match": true,
+        "durable_attempt_ids_unique": true,
+        "no_unexpected_journal_events": true,
+        "durable_denial_reason": true
+      },
+      "fixture_diagnostic_pass": true,
+      "evidence_sha256": {
+        ".research/evidence/request-ledger-local-v1/run/unknown_bound/client-response-0.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/request-ledger-local-v1/run/unknown_bound/ledger.jsonl": "48347020bcab610cd596e40a40528806c10742e161670df631a681b13c3a6661",
+        ".research/evidence/request-ledger-local-v1/run/unknown_bound/request.bin": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871"
+      }
+    },
+    "usage_violation": {
+      "summary": {
+        "request_count": 1,
+        "accepted_attempts": 1,
+        "denied_requests": 0,
+        "reserved_tokens": 24,
+        "actual_observed_tokens": 0,
+        "unknown_usage_attempts": 1,
+        "pending_attempts": 0,
+        "poisoned": true,
+        "scope": "synthetic_fixture_only",
+        "complete_agent_accounting_pass": false,
+        "product_promotion_pass": false,
+        "live_token_cap": "real_provider_unverified",
+        "agent_savings": "unmeasured"
+      },
+      "upstream_requests": [
+        {
+          "index": 0,
+          "path": "/v1/responses",
+          "body_sha256": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+          "body_bytes": 65,
+          "auth_present": false
+        }
+      ],
+      "client_receipts": [
+        {
+          "status": 503,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_bytes": 0
+        }
+      ],
+      "checks": {
+        "upstream_count_matches": true,
+        "all_upstream_bodies_match": true,
+        "no_auth_forwarded": true,
+        "reservation_matches": true,
+        "within_fixture_budget": true,
+        "no_pending_attempts": true,
+        "all_request_bodies_receipted": true,
+        "accepted_matches_upstream": true,
+        "failed_usage_remains_unknown": true,
+        "usage_violation_poisons_ledger": true,
+        "durable_config": true,
+        "durable_admissions_exact": true,
+        "durable_denials_exact": true,
+        "durable_request_numbers": true,
+        "durable_reservation_exact": true,
+        "durable_each_reservation_exact": true,
+        "durable_request_hashes": true,
+        "durable_outcomes_exact": true,
+        "durable_attempt_ids_match": true,
+        "durable_attempt_ids_unique": true,
+        "no_unexpected_journal_events": true,
+        "durable_invalid_usage": true
+      },
+      "fixture_diagnostic_pass": true,
+      "evidence_sha256": {
+        ".research/evidence/request-ledger-local-v1/run/usage_violation/client-response-0.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/request-ledger-local-v1/run/usage_violation/ledger.jsonl": "7ec0b86160296cab89c5b652034c03251655979562dc615354b05cc8dfffc336",
+        ".research/evidence/request-ledger-local-v1/run/usage_violation/request.bin": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+        ".research/evidence/request-ledger-local-v1/run/usage_violation/upstream-receipts.jsonl": "68b52d58d57b673f02ac4afa0a16584ffd87ca65f77fde2a202b71fda30ef4f3",
+        ".research/evidence/request-ledger-local-v1/run/usage_violation/upstream-response-0.bin": "2435327b162d6172355845f201c3768aa151507f214363fe746e2ea12d8e607f"
+      }
+    },
+    "concurrent_admission": {
+      "summary": {
+        "request_count": 2,
+        "accepted_attempts": 1,
+        "denied_requests": 1,
+        "reserved_tokens": 24,
+        "actual_observed_tokens": 11,
+        "unknown_usage_attempts": 0,
+        "pending_attempts": 0,
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "complete_agent_accounting_pass": false,
+        "product_promotion_pass": false,
+        "live_token_cap": "real_provider_unverified",
+        "agent_savings": "unmeasured"
+      },
+      "upstream_requests": [
+        {
+          "index": 0,
+          "path": "/v1/responses",
+          "body_sha256": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+          "body_bytes": 65,
+          "auth_present": false
+        }
+      ],
+      "client_receipts": [
+        {
+          "status": 200,
+          "body_sha256": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0",
+          "body_bytes": 189
+        },
+        {
+          "status": 429,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_bytes": 0
+        }
+      ],
+      "checks": {
+        "upstream_count_matches": true,
+        "all_upstream_bodies_match": true,
+        "no_auth_forwarded": true,
+        "reservation_matches": true,
+        "within_fixture_budget": true,
+        "no_pending_attempts": true,
+        "all_request_bodies_receipted": true,
+        "accepted_matches_upstream": true,
+        "one_concurrent_request_denied": true,
+        "one_successful_reply": true,
+        "observed_usage_exact": true,
+        "durable_config": true,
+        "durable_admissions_exact": true,
+        "durable_denials_exact": true,
+        "durable_request_numbers": true,
+        "durable_reservation_exact": true,
+        "durable_each_reservation_exact": true,
+        "durable_request_hashes": true,
+        "durable_outcomes_exact": true,
+        "durable_attempt_ids_match": true,
+        "durable_attempt_ids_unique": true,
+        "no_unexpected_journal_events": true,
+        "durable_denial_reason": true
+      },
+      "fixture_diagnostic_pass": true,
+      "evidence_sha256": {
+        ".research/evidence/request-ledger-local-v1/run/concurrent_admission/client-response-0.bin": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0",
+        ".research/evidence/request-ledger-local-v1/run/concurrent_admission/client-response-1.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".research/evidence/request-ledger-local-v1/run/concurrent_admission/ledger.jsonl": "e35470725d4daeccd16047ef6f7ee7a533261925f5d2f670e755ca4460a2fa91",
+        ".research/evidence/request-ledger-local-v1/run/concurrent_admission/request.bin": "4dba84296dd342ebaa5b93ff1a8fb9dec5e53c31b753d8b469a3e7bc5dc2a871",
+        ".research/evidence/request-ledger-local-v1/run/concurrent_admission/upstream-receipts.jsonl": "68b52d58d57b673f02ac4afa0a16584ffd87ca65f77fde2a202b71fda30ef4f3",
+        ".research/evidence/request-ledger-local-v1/run/concurrent_admission/upstream-response-0.bin": "7c515d9466a14c2f1ccddd0f71ff7ea8b4d100f64174cc2333399c75a91a95a0"
+      }
+    }
+  },
+  "fixture_diagnostic_pass": true,
+  "live_provider_invocations": 0,
+  "complete_agent_accounting_pass": false,
+  "live_token_cap": "real_provider_unverified",
+  "agent_savings": "unmeasured",
+  "product_promotion_pass": false
+}

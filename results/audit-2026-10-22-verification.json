@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-22",
+  "commands": [
+    {
+      "command": "cargo test --locked",
+      "exit_code": 0,
+      "unit_tests": 31,
+      "integration_tests": 28
+    },
+    {
+      "command": ".research/venv/bin/python -m unittest discover -s benchmark -p 'test_*.py'",
+      "exit_code": 0,
+      "tests": 137
+    },
+    {
+      "command": "cargo fmt --check",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo clippy --locked --all-targets -- -D warnings",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo build --release --locked",
+      "exit_code": 0
+    },
+    {
+      "command": ".research/venv/bin/python benchmark/compare_graphify.py --repeats 1 --output results/audit-2026-10-22-comparison.json",
+      "exit_code": 0
+    },
+    {
+      "command": ".research/venv/bin/python benchmark/acceptance.py --comparison results/audit-2026-10-22-comparison.json",
+      "exit_code": 1,
+      "status": "not_passed"
+    },
+    {
+      "command": ".research/venv/bin/python benchmark/decision.py --workload development --comparison results/audit-2026-10-22-comparison.json",
+      "exit_code": 1,
+      "status": "not_passed"
+    }
+  ],
+  "comparison_sha256": "55d9ee8974eae9ff7d0b4100f5ec2c96a65179d0fc9dd9d6d671085cc34eb957",
+  "preregistration_version": 26,
+  "preregistration_sha256": "f69dd5689c894463df2bb46b144c8275033a998502ef8d317ade28e85a572806",
+  "baseline_pin": {
+    "id": "graphify",
+    "repository": "Graphify-Labs/graphify",
+    "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+    "language": "Python",
+    "role": "baseline"
+  },
+  "cache_conditions": "fresh subprocess per query: startup, imports, index load, query, rendering, stdout; OS caches uncontrolled",
+  "preserved_source_binary_and_logs": ".research/evidence/audit-2026-10-22",
+  "source_bundle_role": "Snapshot of the compiled source and exact binary; original comparison scratch trees remain at the recorded path",
+  "current_agent_savings": "unmeasured",
+  "product_promotion_allowed": false
+}

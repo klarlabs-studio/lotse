@@ -1,0 +1,44 @@
+{
+  "id": "readonly-broker-local-v1",
+  "plan_sha256": "4fec2b14d45dd1c798ea289ad8e3fa4c5f6c6b949c0784722b7f503c2454e112",
+  "source_hashes_match": true,
+  "source_count": 9,
+  "prior_artifact_hashes_match": true,
+  "prior_artifact_count": 79,
+  "raw_hashes_match": true,
+  "raw_artifact_count": 99,
+  "local_tests": {
+    "passed": 33,
+    "exit_code": 0,
+    "output_sha256": "05aff9e3eeaf636cf26981a7a0943767b81dd12108793971124a8ab391f309a0"
+  },
+  "diagnostic_pass": true,
+  "diagnostic_exit_code": 0,
+  "per_arm": {
+    "graf_v59": {
+      "cases": 6,
+      "passed": 6
+    },
+    "graf_v61": {
+      "cases": 6,
+      "passed": 6
+    },
+    "graphify": {
+      "cases": 6,
+      "passed": 6
+    }
+  },
+  "solver_model_calls": 0,
+  "real_backend_invocations": 0,
+  "stdio_subprocesses": 3,
+  "complete_provider_accounting": false,
+  "product_promotion_pass": false,
+  "agent_savings": "unmeasured",
+  "graphify_comparison": "unchanged",
+  "limitations": [
+    "Read-only tool contract; no repair/edit/test/finish integration.",
+    "Graph/index build artifact attestation and live model integration not exercised.",
+    "Local hashes and input/output fixtures do not prove atomicity against concurrent external mutations.",
+    "Complete provider attempts, usage and hard token admission unverified."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "judge_id": "zerolog-1-independent-source-review",
+  "model": "gpt-6-luna",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "390419e774894acdc57b13fb3f68f8aa899855509a8e9e4294d32f00609fa4c7",
+  "source_manifest_sha256": "5bebbe70bd709485f9ef83008c3ee625f90e29f0461d49a8444bc7070bc48dd1",
+  "judgments_sha256": "5466b680e3f654e156539dcbbdee6e2b33e37806ec5718bf4e6db0357df87b5e",
+  "reviewed_query_ids": [
+    "h-zerolog-arch-context-builders",
+    "h-zerolog-arch-diode-components",
+    "h-zerolog-arch-logger-event-encoder",
+    "h-zerolog-arch-slog-adapter",
+    "h-zerolog-conceptual-burst-sampling",
+    "h-zerolog-conceptual-console-pipeline",
+    "h-zerolog-conceptual-interface-reflection",
+    "h-zerolog-conceptual-msg-completion",
+    "h-zerolog-conceptual-slog-groups"
+  ],
+  "pair_count": 124,
+  "unresolved_issues": [],
+  "limitations": [
+    "No measured API cost or token count is available from the session tools.",
+    "The supplied pools omit context.go, which directly implements Context.CreateDict/CreateArray; event.go provides related builder-state evidence, but the exact Context assignments are outside the judged pairs.",
+    "For the unfinished-chain query, the supplied pool omits event.go; the judged examples and tests provide only indirect evidence about completion behavior."
+  ]
+}

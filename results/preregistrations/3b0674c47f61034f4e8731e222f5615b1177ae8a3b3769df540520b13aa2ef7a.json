@@ -1,0 +1,1014 @@
+{
+  "version": 31,
+  "frozen_on": "2026-10-20",
+  "rationale": "research/next-experiments.md; sources in research/evidence.md",
+  "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
+  "workloads": {
+    "development": {
+      "queries": "benchmark/queries.json",
+      "role": "variance pilot and regression diagnostics; already used for tuning, so it cannot pass the decision rule"
+    },
+    "held_out": {
+      "queries": "benchmark/heldout-queries.json",
+      "sha256": "665e1fbacccc88a00b705d2bf90dc9ba89e07996cfa958caccfb445fed0576df",
+      "minimum_queries": 110,
+      "requirements": "authored and judged independently of graf tuning; pooled top-10 files of every arm and Graphify judged blind; freeze sha256 here before any arm runs",
+      "frozen_on": "2026-10-18",
+      "authoring": "123 queries (111 with code evidence) drafted by three Claude subagents, one per repository, that read only the pinned snapshots and had no access to graf, Graphify, or any retrieval output; the operator chose this over independent human authoring. A random sample of 9 was spot-checked, 4 line by line. Weaker independence than human authoring; report it with every result",
+      "judging": "after the run, pool the top-10 cited files of every arm and Graphify per query; a fresh agent that is not told which system cited a file judges each pooled file; recall uses author labels plus judged-relevant files",
+      "pilot_required_queries": {
+        "graf": 110,
+        "graf_locate": 110,
+        "graf_gap": 119,
+        "graf_floor": 134,
+        "graf_locate_gap": 110,
+        "graf_locate_floor": 134,
+        "graf_locate_damped": 110,
+        "graf_locate_english": 126,
+        "graf_locate_nostop": 110,
+        "graf_locate_fullid": 112,
+        "graf_locate_path3": 126,
+        "graf_locate_damped_gap": 110,
+        "graf_locate_damped_floor": 132
+      },
+      "pilot_receipt": "results/decisions/development-5cac921b0724278917c19de7a123932bd325cea84a66172916219005f826055d.json"
+    }
+  },
+  "unit": "query",
+  "comparators": [
+    "graphify (pin in benchmark/corpora.json)",
+    "last accepted graf version, once one exists"
+  ],
+  "primary": {
+    "metric": "output_tokens",
+    "budget": 2000,
+    "hypothesis": "candidate delivers fewer tokens than the comparator",
+    "test": "one-sided paired sign-flip permutation on comparator minus candidate",
+    "alpha": 0.05
+  },
+  "guardrails": {
+    "metrics": [
+      "code_file_hint_recall",
+      "code_file_hint_recall_at_5",
+      "code_file_hint_recall_at_10"
+    ],
+    "budgets": [
+      2000,
+      8000
+    ],
+    "test": "one-sided paired sign-flip non-inferiority on candidate minus comparator",
+    "margin": 0.1,
+    "alpha": 0.05,
+    "correction": "holm",
+    "scope": "queries whose annotations contain code evidence"
+  },
+  "tail": {
+    "severe_loss": "candidate code_file_hint_recall is 0 at any budget where the comparator's is above 0",
+    "max_wilson_upper": 0.15,
+    "confidence": 0.95
+  },
+  "latency": {
+    "gated": false,
+    "invocations_per_case": 15,
+    "report": "median and bootstrap interval; cold and warm cache separately",
+    "held_out_quality_run": "1 invocation per tool and case (outputs are deterministic and checked); timings from this run are not used for inference",
+    "latency_run": "15 alternating invocations per case on a quiet machine, only for arms that pass the decision rule, against Graphify"
+  },
+  "agent_trials": {
+    "minimum_tasks": 20,
+    "minimum_paired_trials_per_task_and_arm": 5,
+    "success": "non-inferiority, Wilson intervals, pass^k for k = 1..5",
+    "efficiency": "superiority on total cost across all attempts",
+    "solver": "Claude Code 2.1.302 headless: claude -p --model claude-haiku-5-5 --tools \"\" --strict-mcp-config --mcp-config <broker server for the arm> --setting-sources \"\" --disable-slash-commands --no-session-persistence --output-format stream-json --max-budget-usd 0.50; the broker (benchmark/task_session.py) is the only tool surface",
+    "model": "claude-haiku-5-5",
+    "spend_cap_usd": null,
+    "billing": "the operator's Claude Code Max 5x subscription; caps are usage-equivalent, not charges",
+    "per_run_cap": "--max-budget-usd 0.50 estimated; a run that hits the cap counts as a failure with its full usage",
+    "pacing": "batches sized to the subscription's usage windows; every attempt, including capped and errored runs, is recorded",
+    "usage_source": "stream-json usage per model call; estimated cost reported separately from tokens",
+    "max_budget_usd": 0.5,
+    "implementation": "benchmark/run_agent_trial.py (runner) and benchmark/broker_mcp.py (MCP adapter)",
+    "isolation_check": "2026-10-18 smoke call: empty cwd, no tools or MCP servers, ~730 input tokens total, model reported no personal instructions or recalled context",
+    "rule": {
+      "unit": "task; each task's 5 attempts per arm are averaged, and the 20 task means are paired across arms",
+      "primary": {
+        "metric": "cost_usd",
+        "aggregation": "mean list-price estimate over every attempt, including failed and capped ones",
+        "hypothesis": "candidate costs less than the comparator",
+        "test": "one-sided paired sign-flip permutation on comparator minus candidate",
+        "alpha": 0.05
+      },
+      "success": {
+        "metric": "verifier pass rate",
+        "margin": 0.1,
+        "test": "one-sided paired sign-flip non-inferiority on candidate minus comparator",
+        "alpha": 0.05
+      },
+      "secondary": [
+        "total_tokens (same pairing, reported, not gated)",
+        "pooled success with 95% Wilson intervals",
+        "pass^k for k = 1..5 (unbiased per-task estimator, averaged over tasks)"
+      ],
+      "completeness": "every planned task x trial x arm must have a summary with complete usage; infrastructure aborts are rerun from scratch and their partial runs are kept outside the plan",
+      "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself",
+      "multiplicity": "both alphas are divided by the number of tested arms (candidates plus controls) in a batch",
+      "comparators": "a batch may list several comparators; a candidate passes only if it passes against every one (intersection-union, no alpha split across comparators)"
+    },
+    "batches": {
+      "t": {
+        "arms": [
+          "graf",
+          "graphify"
+        ],
+        "candidates": [
+          "graf"
+        ],
+        "controls": [],
+        "comparator": "graphify",
+        "seed": 20261019,
+        "frozen_in_version": 10,
+        "outcome": "decided 2026-10-20 under v10: fail (graf cost more; results/agent-decision-t.json)"
+      },
+      "t2": {
+        "arms": [
+          "graf_floor",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "graf_floor"
+        ],
+        "controls": [
+          "search_only"
+        ],
+        "comparator": "graphify",
+        "seed": 20261020,
+        "frozen_in_version": 11,
+        "arm_definitions": {
+          "graf_floor": "retrieve runs graf locate --file-score damped --stop floor (the preregistered held-out arm graf_locate_damped_floor; constants unchanged); same system prompt as batch t",
+          "search_only": "no retrieve tool; read, search, edit, test, finish only; the system prompt omits the retrieve clause. A control: it can never pass the batch or be promoted",
+          "graphify": "as in batch t, rerun in this batch's interleaved order"
+        },
+        "rationale": "batch t: both arms solved 100/100, graf cost more because its retrieve payload fills the budget and stays in context; the closest held-out arm returns fewer tokens. The control asks whether any retrieve tool pays for itself on these tasks"
+      },
+      "t3": {
+        "arms": [
+          "graf_floor",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "graf_floor"
+        ],
+        "controls": [],
+        "comparators": [
+          "search_only",
+          "graphify"
+        ],
+        "catalog": "benchmark/natural-tasks.json",
+        "seed": 20261021,
+        "frozen_in_version": 12,
+        "arm_definitions": "as in batch t2; search_only is now a comparator, not a control",
+        "rationale": "batch t2 left graf_floor against search-only unresolved on ceiling-level synthetic tasks; natural held-out tasks test whether graf's retrieval pays for itself"
+      },
+      "t4": {
+        "arms": [
+          "ast_graph",
+          "search_only",
+          "graphify"
+        ],
+        "candidates": [
+          "ast_graph"
+        ],
+        "controls": [],
+        "comparators": [
+          "search_only",
+          "graphify"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261022,
+        "frozen_in_version": 18,
+        "arm_definitions": "ast_graph: retrieve runs the localization-screen ast_graph arm (tree-sitter units, BM25, one-hop call propagation 0.5, floor 0.5, whole units packed within the requested budget; Python prototype in benchmark/localization.py, hashed per run). search_only and graphify as in t3",
+        "secondary": "mean turns per run and turns before the first edit, reported descriptively",
+        "rationale": "ast_graph was the only arm to beat both graf_floor and Graphify on the held-out localization screen (unit Acc@5 0.365 vs 0.276 and 0.291); this batch tests whether that localization gain lowers agent cost against both comparators. A pass would justify a Rust implementation, not promotion of the prototype"
+      },
+      "t5": {
+        "arms": [
+          "graf_orient",
+          "graphify_orient",
+          "search_only"
+        ],
+        "candidates": [
+          "graf_orient"
+        ],
+        "controls": [],
+        "comparators": [
+          "graphify_orient",
+          "search_only"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261023,
+        "frozen_in_version": 22,
+        "arm_definitions": {
+          "graf_orient": "before the first turn the harness runs `graf triage --budget 1500 --text` on the issue and appends its output to the prompt under a fixed header; tools: retrieve (`graf units --text`, requested budget), outline (`graf outline --text`), read, search, edit, test, finish; system prompt names outline and says an orientation follows the issue",
+          "graphify_orient": "before the first turn the harness runs the pinned Graphify query on the issue text at token_budget 1500 and appends its output the same way; tools: retrieve (Graphify, as in t3), read, search, edit, test, finish; the same orientation sentence in the system prompt",
+          "search_only": "as in t3 and t4: no orientation, no retrieve"
+        },
+        "orientation_accounting": "the orientation call is a logged broker tool event; its text is part of the first prompt, so the provider-reported usage counts it in every turn",
+        "graf_binary": ".research/bin/graf-t5, a copy of target/release/graf built from commit 7ccfea3 (no Rust changes since), sha256 c95b576666d1021b21beae71d5486a660b17516453b90417d9f65d5572b51c46, hashed per run",
+        "rule": "the agent_trials.rule (cost superiority, success non-inferiority margin 0.10) against each comparator; intersection-union, so alpha is not split",
+        "secondary": "turns per run, turns before the first edit, tool calls by type, and the orientation's payload, reported descriptively",
+        "schedule": "runs after batch t4 completes; frozen before any t4 outcome was looked at",
+        "rationale": "tests whether one cheap up-front orientation (likely files, then whole likely functions) and function-level reads let an agent decide faster what to work on, against the same up-front orientation from Graphify",
+        "orientation_cap": "both orientations are cut to at most 1,500 cl100k tokens at whole lines by the harness (bounded); Graphify's native output exceeded its requested budget on the dry run (mean 2,304, max 4,903 tokens), graf's triage stayed within it (mean 1,192). The native size is logged"
+      },
+      "t6": {
+        "arms": [
+          "graf_current_orient",
+          "graphify_orient",
+          "search_only"
+        ],
+        "candidates": [
+          "graf_current_orient"
+        ],
+        "controls": [],
+        "comparators": [
+          "graphify_orient",
+          "search_only"
+        ],
+        "catalog": "benchmark/natural-tasks-t4.json",
+        "seed": 20261024,
+        "frozen_in_version": 28,
+        "arm_definitions": {
+          "graf_current_orient": "Same protocol, prompts, 1500-token cl100k orientation cap, units retrieval, outline, read, search, edit, test and finish as t5 graf_orient, using a separately pinned current binary. CLI broker workflow; does not measure persistent MCP transport.",
+          "graphify_orient": "Same code-only pinned Graphify orientation plus source reads as t5, rerun in this batch.",
+          "search_only": "Same read/search/edit/test/finish tools and prompt as t5, rerun in this batch."
+        },
+        "solver_version": "2.1.307 (Claude Code)",
+        "model": "claude-haiku-5-5",
+        "backend_sha256": {
+          "graf_current_orient": "f827c273265ccb027a0fab332624398821aa26afb379c8b5d591d69a1796d45b",
+          "graphify_orient": "e3f9ec68898c023f9b1f2ca6770edd81a7facabb1ec1e83bef7d460e33c03f01",
+          "search_only": "e97d666f32c3e86b2bd0e047cb1398d4385ea1f05bfb791a8201d3fa98a91bb9"
+        },
+        "graf_binary": ".research/bin/graf-t6; current target/release/graf, HEAD a9c9e4d plus audit repairs; exact Rust sources preserved in .research/evidence/agent-t6/source",
+        "primary": "agent_trials.rule primary: task-paired mean list-price cost across all five attempts, including failures/capped attempts; one-sided paired sign flip alpha .05 against each comparator",
+        "quality": "agent_trials.rule success: task-paired verifier pass-rate non-inferiority margin .10 against each comparator, intersection-union; every case reported",
+        "paired_plan": "48 frozen natural tasks x 5 attempts x 3 arms = 720, sequential fixed shuffled order, seed 20261024. No partial-data superiority decisions.",
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200,
+          "maximum_planned_usage_equivalent_usd": 360,
+          "tool_budget_tokens": "requested 1..8000 cl100k; orientation hard cap 1500"
+        },
+        "cache_conditions": "Per-attempt isolated workspace and retrieval indexes, built before first orientation or retrieval; OS and dependency caches warm/shared; source edits invalidate staged indexes. Provider prompt-cache tokens included in reported usage; cache hits uncontrolled and logged. Competitors sequentially interleaved.",
+        "stop_on_provider_error": true,
+        "promotion_eligible": false,
+        "scope": "Regression diagnostic on a reused task catalog used by localization experiments. Cannot authorize product superiority or promotion; fresh held-out natural tasks and remaining retrieval gates are required.",
+        "schedule": "Independent of unfinished t4 and unstarted t5; their plans and pinned binaries remain unchanged.",
+        "rationale": "User requests agent evidence for current triage, outlines and targeted reads; historical t3 tests older locate and t5 pins an older build. Freeze before first t6 model call.",
+        "index_validation": "Current schema-2 index is inspected with the pinned graf export-index command; exact selected-file-set parity checked against shared staged input. Legacy t5 JSON validation unchanged. Export artifacts preserved outside model workspace. Index build timing excludes the audit export; broker orientation event includes it, with cost as primary."
+      }
+    },
+    "natural_tasks": {
+      "catalog": "benchmark/natural-tasks.json",
+      "purpose": "held-out natural repair tasks hard enough to separate arms; frozen before any solver sees them",
+      "source": "merged upstream pull requests of the pinned Cobra, Flask, and Fastify repositories whose merge commit is an ancestor of the pinned commit and which close a GitHub issue",
+      "enumeration": "per repository, newest merge first, walking back from the pin; accept the first 10 candidates that meet every criterion; record every rejected candidate with its reason",
+      "criteria": [
+        "the closed issue reports incorrect existing behavior (a bug), judged from the issue title and body alone; feature requests, docs, typing-only, dependency, and CI changes are excluded",
+        "the pull request changes at least one non-test source file (.go, .py, .js) and at least one test file",
+        "non-test changes span at most 10 files and 400 changed lines (v13; was 5 and 150)",
+        "every non-test hunk reverts uniquely on the pinned snapshot (code, docs, and changelog are all reverted); a hunk whose context drifted reverts by removing its added block when that block is unique",
+        "fail-to-pass: with the fix's tests installed, the reverted snapshot fails and the pinned snapshot passes, within 180 s; a timeout is a rejection"
+      ],
+      "issue_text": "issue title, a blank line, then the issue body verbatim with HTML comments removed and truncated at 4,000 characters; no comments, links to the fix, or edits",
+      "hidden_tests": "the fix's test-file changes are reverted in the agent's copy and installed only during grading",
+      "verification": "Go: go test on the packages of the changed test files; Python: pytest on the changed test files; JavaScript: node --test on the changed test files",
+      "minimum_tasks": 18,
+      "contamination": "fixes may be in the solver's training data; this affects every arm equally and is reported",
+      "exclusions": "a candidate whose closing fix does not address the behavior its issue reports is excluded, with the reason recorded",
+      "runtime": "Fastify tasks run against .research/task-runtime/fastify-full: the pinned package.json with devDependencies, installed with --ignore-scripts, versions in its package-lock.json",
+      "frozen_catalog_sha256": "e2867b679cf9d5cdfd18a37604b4cf9f1b5c192b241b635dec6c777c4c603a35"
+    },
+    "natural_tasks_t4": {
+      "catalog": "benchmark/natural-tasks-t4.json",
+      "purpose": "fresh natural repair tasks for batch t4 from repositories never used to develop or select any arm (the localization screen selected ast_graph on Cobra, Flask, and Fastify, so those are excluded to avoid a winner's-curse bias)",
+      "repositories": {
+        "gin": {
+          "repository": "gin-gonic/gin",
+          "commit": "0f09c3a9b4626d9fe9979cf4d0521d6ae32ab646",
+          "language": "Go"
+        },
+        "urfave-cli": {
+          "repository": "urfave/cli",
+          "commit": "835fca1cc5c6d5064fd5519f8fa0378959640631",
+          "language": "Go"
+        },
+        "click": {
+          "repository": "pallets/click",
+          "commit": "2247b35ea1c47c727d7a06e51fa280e12a863ff6",
+          "language": "Python"
+        },
+        "jinja": {
+          "repository": "pallets/jinja",
+          "commit": "5ef70112a1ff19c05324ff889dd30405b1002044",
+          "language": "Python"
+        },
+        "express": {
+          "repository": "expressjs/express",
+          "commit": "0dee2c52c7c873498f8ed7d8ee4ddd0a04d3ada8",
+          "language": "JavaScript"
+        },
+        "undici": {
+          "repository": "nodejs/undici",
+          "commit": "25543f5bd5744ff673016ed89b4bb09455e4875a",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "two per language among the languages the unit parser supports; popular (over 7,000 stars), active, with issue-linked pull requests and a test suite that runs locally without services; pinned to the default branch head resolved on 2026-10-21; chosen before any candidate pull request was listed",
+      "selection": "the natural_tasks protocol (v12-v14) unchanged: criteria, enumeration (first 10 per repository, newest merge first), issue text, hidden tests, bug judgment from the issue alone, size bound of 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, mismatch exclusion",
+      "verification": "Go: go test on the changed test files' packages; Python: pytest on the changed test files with PYTHONPATH=src; express: its mocha runner on the changed test files; undici: node --test on the changed test files",
+      "runtime": "JavaScript dependencies from the pinned package.json including devDependencies, installed with --ignore-scripts into .research/task-runtime/<repo>-full; Go modules downloaded into the shared module cache before mining; Python test dependencies installed into the research venv and recorded",
+      "minimum_tasks": 20,
+      "if_fewer": "if fewer than 20 tasks qualify, the batch does not run on a loosened set; a new version must record any change before a solver sees a task",
+      "contamination": "as for t3: affects every arm equally, reported",
+      "frozen_catalog_sha256": "0555197e3a6454389d867493082b59840818f1f296d3673ec39b4e2cc5831020",
+      "yield": {
+        "gin": 10,
+        "urfave-cli": 10,
+        "click": 7,
+        "jinja": 10,
+        "express": 1,
+        "undici": 10,
+        "total": 48
+      }
+    }
+  },
+  "report_every_case": true,
+  "revisions": [
+    {
+      "version": 2,
+      "date": "2026-10-18",
+      "change": "adopted query-level rule with non-inferiority margin 0.05"
+    },
+    {
+      "version": 3,
+      "date": "2026-10-18",
+      "change": "margin 0.05 -> 0.10 and held-out minimum 70 -> 110, decided after the development-set variance pilot implied ~410-430 queries at 0.05; no held-out data existed"
+    },
+    {
+      "version": 4,
+      "date": "2026-10-18",
+      "change": "recorded the query-time candidate arm definitions, constants, and a Bonferroni split of the primary alpha across experimental arms before any run"
+    },
+    {
+      "version": 5,
+      "date": "2026-10-18",
+      "change": "added index-time arms B2 (path weight 3) and C1-C3 (English stopwords, none, English plus full identifiers) for locate before any run; primary alpha now split across 9 experimental arms"
+    },
+    {
+      "version": 6,
+      "date": "2026-10-18",
+      "change": "added combined arms (damped file score with gap or floor stopping) and fixed the agent model to claude-haiku-5-5, before any held-out data existed. The combination was proposed after seeing development-set diagnostics, so its held-out result is the only valid evidence; primary alpha now split across 11 experimental arms"
+    },
+    {
+      "version": 7,
+      "date": "2026-10-18",
+      "change": "specified the agent solver (headless Claude Code with Haiku, broker-only tools) and per-run cap under the operator's subscription; decision rule unchanged; machine-readable max_budget_usd and --disable-slash-commands added the same day, before any trial"
+    },
+    {
+      "version": 8,
+      "date": "2026-10-18",
+      "change": "froze the held-out workload (sha256 665e1fbacccc88a0...) before any retrieval tool saw it"
+    },
+    {
+      "version": 9,
+      "date": "2026-10-18",
+      "change": "split the held-out run into a 1-repeat quality/token run (any load) and a separate 15-repeat latency run for passing arms; 15 repeats of 14 tools over 246 cases would take ~6 h on a quiet machine. Decided before any held-out run"
+    },
+    {
+      "version": 10,
+      "date": "2026-10-19",
+      "change": "made the agent-trial success margin (0.10), primary cost test, and pairing unit explicit before outcome analysis; 20 of 200 trials had run and only the runner's per-trial pass/fail lines had been seen, with no aggregation or arm comparison"
+    },
+    {
+      "version": 11,
+      "date": "2026-10-20",
+      "change": "added agent batch t2 (graf_floor candidate, search_only control, graphify comparator; Bonferroni over tested arms) before any t2 run; moved batch t's arms into agent_trials.batches without changing its rule"
+    },
+    {
+      "version": 12,
+      "date": "2026-10-20",
+      "change": "froze the natural-task selection protocol and batch t3 (graf_floor against search_only and graphify, both required) before mining any candidate"
+    },
+    {
+      "version": 13,
+      "date": "2026-10-20",
+      "change": "raised the fix-size bound to 10 files and 400 lines because the v12 criteria yielded 17 valid tasks (Cobra 5, Flask 2, Fastify 10), below the minimum of 20; recorded the drift fallback, timeout rejection, mismatch exclusion, and Fastify dev-dependency runtime. No solver had seen any natural task"
+    },
+    {
+      "version": 14,
+      "date": "2026-10-20",
+      "change": "froze benchmark/natural-tasks.json (18 tasks: Cobra 5, Flask 3, Fastify 10; sha256 e2867b679cf9d5cd...) and set the minimum to that full yield instead of loosening the criteria further, which would admit feature work. Revert regions now keep per-region context. No solver had seen any natural task"
+    },
+    {
+      "version": 15,
+      "date": "2026-10-20",
+      "change": "added localization_screen: an offline, solver-free screen of AST-unit and call-graph retrieval against graf_floor and Graphify on issue-closing pull requests, frozen before any localization task was scored"
+    },
+    {
+      "version": 16,
+      "date": "2026-10-20",
+      "change": "after the 18-task dev run (debugging only; no held-out task scored): the primary metric becomes unit_acc@5 because 'any hit in the payload' rewards arms that cite many pointers (graf and Graphify cited about 40 spans, AST arms about 4); added ast_bounded and graf_floor_ids, motivated by research/code-representation-review.md; Holm now spans four candidate arms"
+    },
+    {
+      "version": 17,
+      "date": "2026-10-21",
+      "change": "the held-out run stopped at task 281 of 397 (fastify-4265: its only gold file is under .github/, which the corpus excludes). Added the path-only rule for gold outside the corpus and made the decision refuse partial splits. Deviation: before this fix, the decision script was run once on the 280 completed held-out tasks and its interim rates were seen; the rule, arms, metric, and tasks were not changed in response"
+    },
+    {
+      "version": 18,
+      "date": "2026-10-21",
+      "change": "added batch t4 (ast_graph vs search_only and Graphify) and its fresh task source on six repositories not used for any arm development; frozen before any candidate pull request in those repositories was listed"
+    },
+    {
+      "version": 19,
+      "date": "2026-10-21",
+      "change": "froze benchmark/natural-tasks-t4.json (48 tasks: gin 10, urfave-cli 10, click 7, jinja 10, express 1, undici 10; sha256 0555197e...). A second pull request closing an already-listed issue is excluded (urfave-cli-2229). Python test dependencies installed: trio 0.34.0, pytest-timeout 2.4.0. No solver had seen any t4 task"
+    },
+    {
+      "version": 20,
+      "date": "2026-10-21",
+      "change": "added localization_screen.replication on the six t4 repositories, frozen before any replication task was built or scored"
+    },
+    {
+      "version": 21,
+      "date": "2026-10-21",
+      "change": "added localization_screen.confirmation: ast_graph_ids (call graph plus query rewrite) against Graphify, ast_graph, and graf_floor_ids on six new repositories, frozen before any of their pull requests was listed"
+    },
+    {
+      "version": 22,
+      "date": "2026-10-22",
+      "change": "added batch t5 (graf_orient vs graphify_orient and search_only) on the t4 catalog, the user's chosen up-front orientation design; frozen before any t4 outcome was looked at; both orientations are capped at 1,500 tokens after a solver-free dry run showed Graphify's native output exceeds its requested budget"
+    },
+    {
+      "version": 23,
+      "date": "2026-10-22",
+      "change": "t5's graf binary is pinned to a copy (the same build the v22 freeze referred to) so graf development can continue; no t5 run had started"
+    },
+    {
+      "version": 24,
+      "date": "2026-10-22",
+      "change": "added localization_screen.file_screen: file_graph_ids (call-graph propagation over graf's file scores) against graf_floor_ids and Graphify on file_acc@5, on six new repositories, frozen before any of their pull requests was listed"
+    },
+    {
+      "version": 25,
+      "date": "2026-10-22",
+      "change": "added localization_screen.typescript: TypeScript/TSX/JSX unit extraction and a screen of file_graph_ids (files) and ast_graph_ids (units) against graf_floor_ids and Graphify on six TypeScript repositories, frozen before any of their pull requests was listed"
+    },
+    {
+      "version": 26,
+      "date": "2026-10-22",
+      "change": "Audit repair: enforce held-out minimum and frozen per-arm scored-query pilot sizes; preserve workload-specific and content-addressed decisions. Freeze a one-repeat development-only quality/token regression run before new results; latency and agent efficiency are not evaluated. Historical held-out results are not reinterpreted as a new acceptance opportunity."
+    },
+    {
+      "version": 27,
+      "date": "2026-10-22",
+      "change": "Freeze independent current-build t6 agent regression comparison before model calls; preserve t4/t5 pins and plans. Reused tasks explicitly ineligible for promotion; pin solver 2.1.307 and backend hashes, retain existing model and five paired attempts. Stop on missing usage or provider errors."
+    },
+    {
+      "version": 28,
+      "date": "2026-10-22",
+      "change": "Before any t6 solver call: local fixture check found schema-2 index/legacy broker incompatibility. Validate current-arm file-set parity via existing export-index; preserve failed local preflight. Solver launch was rejected by automatic approval review, so no task outcomes or model usage exist. Primary metric, paired plan, model, margins and binary pin unchanged."
+    },
+    {
+      "version": 29,
+      "date": "2026-10-22",
+      "change": "Freeze independent Codex subscription structured-action diagnostic before any Codex task call. Three reused natural tasks, nine trials, token/outcome descriptive pilot; internal request counts and dollar charges unknown keep full agent-efficiency gate unpassed. Preserve Claude plans and pins."
+    },
+    {
+      "version": 30,
+      "date": "2026-10-22",
+      "change": "Before codex-d2 task calls, preserve aborted codex-d1 (one raw-usage-bearing invocation, startup warning misclassified; no broker action). Freeze corrected structured-action adapter and same nine-case diagnostic, acknowledge protocol exposure. No promotion or full-efficiency claim. Claude and retrieval plans unchanged."
+    },
+    {
+      "version": 31,
+      "date": "2026-10-22",
+      "change": "After d2 protocol abort, freeze smaller three-arm one-task d3 validation before d3 calls. Dispatch first action, native JSON argument object, preserve discarded actions and all usage. Raise observed per-attempt token threshold after pilot showed 50K insufficient. All previous failures/pins retained. No promotion or statistical inference."
+    }
+  ],
+  "arms": {
+    "accepted": {
+      "graf": "search",
+      "graf_locate": "locate"
+    },
+    "experimental": {
+      "graf_gap": "search --stop gap",
+      "graf_floor": "search --stop floor",
+      "graf_locate_gap": "locate --stop gap",
+      "graf_locate_floor": "locate --stop floor",
+      "graf_locate_damped": "locate --file-score damped",
+      "graf_locate_english": "locate (index --stopwords english)",
+      "graf_locate_nostop": "locate (index --stopwords none)",
+      "graf_locate_fullid": "locate (index --stopwords english --full-identifiers)",
+      "graf_locate_path3": "locate (index --path-weight 3)",
+      "graf_locate_damped_gap": "locate --file-score damped --stop gap",
+      "graf_locate_damped_floor": "locate --file-score damped --stop floor"
+    },
+    "constants": "src/policy.rs: gap minimum 3, buffer 2, search share 0.9; floor ratio 0.5; damping 1, 0.5, 0.25. src/terms.rs: C1 is Lucene's 33-word EnglishAnalyzer stop set; C3 adds lowercased identifiers that split into two or more parts; B2 counts path terms 3 times (BM25F, integer weight, shared length normalization)",
+    "deferred": "index-time arms run with locate only: search fills the budget, so it cannot pass the token test whatever the analyzer",
+    "multiplicity": "the primary test for each experimental arm uses alpha / number of experimental arms (Bonferroni); guardrails and the tail cap apply unchanged; report every arm, including losing ones"
+  },
+  "localization_screen": {
+    "purpose": "offline screen, no solver: does a retriever's first answer reach the code a real fix changed? Decides which retrieval designs, including AST-unit and call-graph designs, earn a later agent batch. It cannot by itself support an efficiency or promotion claim",
+    "tasks": {
+      "source": "every merged pull request in .research/history/REPO-candidates.json (issue-closing, merged before the pin) for Cobra, Flask, and Fastify",
+      "criteria": [
+        "the merge commit and its first parent exist in the clone",
+        "at least one non-test source file (.go, .py, .js) is modified (exists before the fix)",
+        "non-test changes span at most 10 files and 400 changed lines",
+        "the cleaned issue text is nonempty"
+      ],
+      "no_bug_judgment": "feature and bug issues are both kept; localization from the issue is the question either way. Issue labels are recorded",
+      "corpus": "the first parent of the merge (pre-fix snapshot), filtered exactly like load_documents in benchmark/retrieval.py",
+      "query": "the issue text, built exactly as for natural tasks (title, blank line, body without HTML comments, at most 4,000 characters)",
+      "gold": "for each modified non-test source file: pre-fix lines the fix replaced or deleted; a pure insertion marks the lines on either side. Gold units are the code units (below) containing a gold line",
+      "dev_split": "the 18 tasks of benchmark/natural-tasks.json; used to debug the arms, never for the decision",
+      "heldout_split": "every other task meeting the criteria",
+      "catalog": "benchmark/localization-tasks.json, hashed in results before the held-out run",
+      "gold_outside_corpus": "gold files outside the load_documents corpus (hidden or vendored paths) are dropped and listed; a task left with no gold is excluded and listed (v17)"
+    },
+    "units": "tree-sitter (Go, Python, JavaScript): each outermost function, method, or function bound by a declaration, assignment, or object pair is one unit spanning its binding statement and decorators; every other line falls into 24-line module windows; non-code files use 24-line text windows",
+    "budget_tokens": 2000,
+    "tokenizer": "cl100k_base",
+    "arms": {
+      "graf": "graf locate --text, default flags (current graf)",
+      "graf_floor": "graf locate --text --file-score damped --stop floor (agent batch t2/t3 candidate)",
+      "graphify": "pinned code-only Graphify extract + query at token_budget 2000; navigation hints",
+      "file_bm25": "BM25 over whole files, ranked paths, stop below 0.5 x best score; a lexical file-ranking proxy, not the search-only agent",
+      "ast_units": "BM25 (retrieval.terms, k1 1.2, b 0.75) over code units; whole units in score order, stop below 0.5 x best score or when the next unit does not fit; an over-long best unit is cut to the budget. Idea: cAST structural chunking (Zhang et al. 2025), Agentless function-level localization (Xia et al. 2024)",
+      "ast_graph": "ast_units with call-graph propagation: score + 0.5 x best neighbour score over undirected call edges between function units, linked by called name; names defined by more than 3 units are not linked. Idea: RepoGraph (Ouyang et al. 2025), LocAgent (Chen et al. 2025)",
+      "ast_bounded": "ast_units with function units longer than 24 lines split into 24-line pieces aligned to the function start (size-bounded structural chunks). Idea: cAST (Zhang et al. 2025); Wu et al. 2026 found unbounded function chunks worst",
+      "graf_floor_ids": "graf_floor with a deterministic rewritten query: the issue title plus code-like tokens from the body (file paths, dotted names, camelCase, PascalCase with an inner capital, snake_case and constants, called names, and identifiers inside backticks or code blocks), deduplicated in order; the raw issue if none. Idea: BLIZZARD (Rahman and Roy 2018), Caumartin and Melo 2026"
+    },
+    "parameters_note": "0.5 floor, 0.5 propagation weight, 3-definition cap, and 2,000-token budget are round defaults chosen before any task was scored, not tuned",
+    "metrics": {
+      "ranking": "each arm's cited spans, in output order, map to the code units they overlap; each unit counts once at its first citation. Files rank in citation order",
+      "primary": "unit_acc@5: a gold unit is among the first 5 cited units (function-level Acc@5, the localization literature's standard)",
+      "secondary": [
+        "unit_acc@1 and @10; file_acc@1, @5, @10",
+        "unit_hit: a gold unit anywhere in the payload",
+        "gold_line_shown: a gold line's text appears in the payload inside a span covering it (code-returning arms only; Graphify hints return no code by design)",
+        "payload tokens and cited units"
+      ],
+      "labels": "Graphify is code-only and returns hints, not code; its order is its traversal order. file_bm25 has no spans and reports file metrics only"
+    },
+    "decision": {
+      "candidate_arms": [
+        "ast_units",
+        "ast_graph",
+        "ast_bounded",
+        "graf_floor_ids"
+      ],
+      "comparators": [
+        "graf_floor",
+        "graphify"
+      ],
+      "k": 5,
+      "test": "exact one-sided McNemar (binomial on discordant tasks) on unit_acc@5, per candidate arm against each comparator",
+      "rule": "an arm qualifies for a preregistered agent batch only if it beats every comparator (intersection-union: its p is the larger of the two), with Holm correction across the four candidate arms at family alpha 0.05",
+      "report": "every task and arm, all pairwise rates descriptively, and results by repository",
+      "completeness": "the decision runs only on the complete split; excluded tasks are reported"
+    },
+    "replication": {
+      "purpose": "replicate the held-out localization result on six repositories never used to develop or select any arm, before agent batch t4 finishes; offline, no solver",
+      "repositories": [
+        "gin",
+        "urfave-cli",
+        "click",
+        "jinja",
+        "express",
+        "undici"
+      ],
+      "pins": "agent_trials.natural_tasks_t4.repositories",
+      "tasks": "the localization_screen task rules (criteria, corpus, query, gold, gold outside the corpus) applied to every issue-closing pull request merged before each pin; all tasks form one split, 'replication'; catalog benchmark/localization-replication-tasks.json, hashed in the results",
+      "arms_metric_budget": "unchanged from v16-v17: the same eight arms and parameters, unit_acc@5 primary, 2,000 tokens",
+      "decision": {
+        "candidate_arms": [
+          "ast_graph",
+          "graf_floor_ids"
+        ],
+        "comparators": [
+          "graf_floor",
+          "graphify"
+        ],
+        "k": 5,
+        "test": "exact one-sided McNemar on unit_acc@5 per candidate against each comparator",
+        "rule": "a candidate replicates if it beats both comparators (intersection-union), with Holm correction across the two candidates at family alpha 0.05. ast_graph is the confirmatory hypothesis; graf_floor_ids narrowly failed against Graphify on the original held-out set and is retested",
+        "report": "every task and arm, by repository; agent batch t4 tasks are a subset and are also reported separately"
+      },
+      "independence": "the agent batch t4 rule and catalog are frozen (v19); this offline screen cannot change them"
+    },
+    "confirmation": {
+      "purpose": "test whether combining the two arms that replicated (ast_graph: index-side call graph; graf_floor_ids: query-side rewrite) adds to either, and confirm ast_graph against Graphify a third time, on six repositories never used for any arm; offline, no solver",
+      "repositories": {
+        "viper": {
+          "repository": "spf13/viper",
+          "commit": "528f7416c4b56a4948673984b190bf8713f0c3c4",
+          "language": "Go"
+        },
+        "chi": {
+          "repository": "go-chi/chi",
+          "commit": "9f8adb1aabaa8a91180a821111d3f8e668d1c0bf",
+          "language": "Go"
+        },
+        "httpx": {
+          "repository": "encode/httpx",
+          "commit": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+          "language": "Python"
+        },
+        "typer": {
+          "repository": "fastapi/typer",
+          "commit": "a5882dedf0bc7a46cd861fdfca020f88519e0f21",
+          "language": "Python"
+        },
+        "koa": {
+          "repository": "koajs/koa",
+          "commit": "a82feec38a7c28e14f4db7525b8f500801214a76",
+          "language": "JavaScript"
+        },
+        "axios": {
+          "repository": "axios/axios",
+          "commit": "e6b79d9cef796ca3a903bb83e51d4752b019fd67",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "two per supported language, popular (over 15,000 stars), with issue-linked pull requests; default branch heads resolved on 2026-10-21; chosen before any of their pull requests was listed",
+      "tasks": "the localization_screen task rules, one split 'confirmation'; catalog benchmark/localization-confirmation-tasks.json, hashed in the results",
+      "new_arm": {
+        "ast_graph_ids": "ast_graph scored with the graf_floor_ids rewritten query (rewrite_query); all other parameters unchanged"
+      },
+      "arms_metric_budget": "the eight v16 arms plus ast_graph_ids; unit_acc@5 primary; 2,000 tokens",
+      "decision": {
+        "candidate_arms": [
+          "ast_graph_ids"
+        ],
+        "comparators": [
+          "graphify",
+          "ast_graph",
+          "graf_floor_ids"
+        ],
+        "k": 5,
+        "test": "exact one-sided McNemar on unit_acc@5 against each comparator",
+        "rule": "ast_graph_ids qualifies only if it beats all three comparators (intersection-union) at alpha 0.05; one candidate, so no Holm step",
+        "secondary_confirmatory": "ast_graph against Graphify, one-sided exact McNemar at alpha 0.05, a third test of the replicated result",
+        "report": "every task and arm, by repository"
+      }
+    },
+    "file_screen": {
+      "purpose": "Graphify keeps the best file recall in all three localization screens (file Acc@5 0.63-0.68). Test whether propagating graf's file scores over cross-file call edges, the file-level analogue of ast_graph, closes that gap for triage's file list; offline, no solver",
+      "repositories": {
+        "echo": {
+          "repository": "labstack/echo",
+          "commit": "8fd0e184dd390ffdf082f5eda247c3ab41d5d290",
+          "language": "Go"
+        },
+        "resty": {
+          "repository": "go-resty/resty",
+          "commit": "78dfc5c1dff969d4d30313f7fde8b0987c681135",
+          "language": "Go"
+        },
+        "werkzeug": {
+          "repository": "pallets/werkzeug",
+          "commit": "665e760ca6325a348ce03e5cf780b17e4be01848",
+          "language": "Python"
+        },
+        "marshmallow": {
+          "repository": "marshmallow-code/marshmallow",
+          "commit": "b762ea2d59ca52fe5df76b90de14bed7e5ec5607",
+          "language": "Python"
+        },
+        "hapi": {
+          "repository": "hapijs/hapi",
+          "commit": "58630f377f819d3d172fcfb1c301f2aa29334f9e",
+          "language": "JavaScript"
+        },
+        "mocha": {
+          "repository": "mochajs/mocha",
+          "commit": "cb21a4eba550da665fb2c3fa1ce021777a191e23",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "two per supported language, popular (over 6,000 stars), never used for any arm; default branch heads resolved on 2026-10-22, before any of their pull requests was listed",
+      "tasks": "the localization_screen task rules, one split 'file_screen'; catalog benchmark/localization-file-screen-tasks.json, hashed in the results",
+      "new_arm": {
+        "file_graph_ids": "graf locate --file-score damped --stop floor --rewrite (graf_floor_ids) file scores s_f, raised to s_f + 0.5 x the best score among files linked to f by a cross-file call edge (ast_graph's unit call edges aggregated to files, undirected; names defined by more than 3 units not linked); files ranked by the raised score, ties by path; files with no score are not listed"
+      },
+      "arms_metric": "all arms of the confirmation screen plus file_graph_ids; primary metric file_acc@5 (a gold file among the first five cited files)",
+      "decision": {
+        "candidate_arms": [
+          "file_graph_ids"
+        ],
+        "comparators": [
+          "graf_floor_ids",
+          "graphify"
+        ],
+        "k": 5,
+        "metric": "file_acc",
+        "test": "exact one-sided McNemar on file_acc@5 against each comparator",
+        "rule": "file_graph_ids qualifies for triage's file list only if it beats both comparators (intersection-union) at alpha 0.05",
+        "report": "every task and arm, by repository, with unit metrics descriptively"
+      }
+    },
+    "typescript": {
+      "purpose": "extend unit extraction to TypeScript, TSX, and JSX and test the two components of graf triage (file_graph_ids files, ast_graph_ids units) against Graphify on TypeScript repositories; offline, no solver",
+      "repositories": {
+        "zod": {
+          "repository": "colinhacks/zod",
+          "commit": "afdac65e0f80c0ccf9e8909da97c411567908b57",
+          "language": "TypeScript"
+        },
+        "hono": {
+          "repository": "honojs/hono",
+          "commit": "5ca49b0720755c585c9a9835f0a479ceea36fb52",
+          "language": "TypeScript"
+        },
+        "trpc": {
+          "repository": "trpc/trpc",
+          "commit": "1c9bf51ea572fd46fa52fb725999b8d0c6950386",
+          "language": "TypeScript"
+        },
+        "tanstack-query": {
+          "repository": "TanStack/query",
+          "commit": "b923947be4b4db414046e6a91d5e5cb2aacf3d80",
+          "language": "TypeScript"
+        },
+        "vitest": {
+          "repository": "vitest-dev/vitest",
+          "commit": "7a5c083fc9ee460c5d724b062086f1ec62132ca9",
+          "language": "TypeScript"
+        },
+        "typeorm": {
+          "repository": "typeorm/typeorm",
+          "commit": "da473df40df3933c1846f72144575d673aeef1cd",
+          "language": "TypeScript"
+        }
+      },
+      "repository_choice": "popular (over 17,000 stars) TypeScript repositories with issue-linked pull requests, never used for any arm; default branch heads resolved on 2026-10-22, before any of their pull requests was listed",
+      "extraction": "units also parse .ts (TypeScript grammar), .tsx (TSX grammar), and .jsx (JavaScript grammar) with the same node rules as JavaScript (`code_units(..., typescript=True)`, `graf units` from this version); the corpus adds .tsx and .jsx (retrieval.EXTENSIONS_V2). Earlier splits keep their v1 extraction and corpus",
+      "tasks": "the localization_screen task rules; source files are .ts, .tsx, .js, .jsx outside test paths (test/, tests/, __tests__/, *.test.*, *.spec.*); one split 'typescript'; catalog benchmark/localization-typescript-tasks.json",
+      "arms_metric": "all file-screen arms; file_acc@5 for file rankings and unit_acc@5 for units",
+      "decision": {
+        "tests": [
+          {
+            "arm": "file_graph_ids",
+            "metric": "file_acc"
+          },
+          {
+            "arm": "ast_graph_ids",
+            "metric": "unit_acc"
+          }
+        ],
+        "comparators": [
+          "graf_floor_ids",
+          "graphify"
+        ],
+        "k": 5,
+        "test": "exact one-sided McNemar per test against each comparator; intersection-union within a test",
+        "rule": "each test passes if it beats both comparators, with Holm correction across the two tests at family alpha 0.05",
+        "report": "every task and arm, by repository"
+      }
+    }
+  },
+  "audit_regression": {
+    "frozen_on": "2026-10-22",
+    "workload": "benchmark/queries.json",
+    "query_sha256": "cea92fea4e0c592a5cf3f4798e749ca9602211d286a30e479523186c56033193",
+    "role": "development regression diagnostic only; cannot pass promotion",
+    "arms": "all arms in compare_graphify.GRAF_ARMS plus pinned code-only Graphify",
+    "budgets": [
+      2000,
+      8000
+    ],
+    "tokenizer": "cl100k_base",
+    "repetitions_per_tool_and_case": 1,
+    "timing": "sequential process startup through stdout completion; fresh builds then OS cache uncontrolled under machine load; latency is descriptive only",
+    "limits": "same driver timeouts (build 180s, query 90s); no solver or inference calls",
+    "quality": "report code-file hint recall total/@5/@10 per query at each budget",
+    "primary_metric": "delivered retrieval-text tokens; diagnostic only",
+    "margins": "unchanged primary, guardrails, and tail fields; development is ineligible for acceptance",
+    "baseline": "unchanged pin in benchmark/corpora.json; no accepted graf release exists",
+    "output": "results/audit-2026-10-22-comparison.json"
+  },
+  "codex_diagnostic": {
+    "id": "codex-d3",
+    "frozen_in_version": 31,
+    "solver_version": "codex-cli 0.156.1",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "authentication": "Existing ChatGPT Codex login; no API keys passed",
+    "catalog": "benchmark/natural-tasks-t4.json",
+    "catalog_sha256": "0555197e3a6454389d867493082b59840818f1f296d3673ec39b4e2cc5831020",
+    "task_ids": [
+      "click-1884"
+    ],
+    "selection": "One reused click task for paired protocol validation after d1/d2 adapter failures; selected before d3 outcomes, explicitly not held-out",
+    "attempts": 1,
+    "arms": [
+      "graf_current_orient",
+      "graphify_orient",
+      "search_only"
+    ],
+    "seed": 20261025,
+    "protocol": "Fresh codex exec per broker action, complete issue/tools/history re-sent. First JSON action dispatched; later action messages discarded and counted. JSON argument object with native newline/tab encoding. No native tools, no compaction; identical limits for every arm.",
+    "graf_binary": ".research/bin/graf-codex-d1",
+    "search_binary": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path/rg",
+    "backend_sha256": {
+      "graf_current_orient": "580a2ea276d082cbecf5035e9eb84aaf59fd126fb3eef5edaad8b81ce609dbf2",
+      "graphify_orient": "e3f9ec68898c023f9b1f2ca6770edd81a7facabb1ec1e83bef7d460e33c03f01",
+      "search_only": "e97d666f32c3e86b2bd0e047cb1398d4385ea1f05bfb791a8201d3fa98a91bb9"
+    },
+    "graphify_pin": {
+      "id": "graphify",
+      "repository": "Graphify-Labs/graphify",
+      "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+      "language": "Python",
+      "role": "baseline"
+    },
+    "implementation_sha256": {
+      "benchmark/codex_solver.py": "81fa42ab45889646fafc50abf60549a49c758644799686845d22fc7fc24a8703",
+      "benchmark/run_codex_batch.py": "da91f4c389fc51593985f30dbf10c31b90f73854095befbfe0ca387bff661205",
+      "benchmark/agent_trials.py": "a652c498124815f5ff06fa198ca1ac90470954d0a64674f4b44eaea28ce6f58b",
+      "benchmark/task_session.py": "7fd08c5834617afc2d2f2e2116d8a5f6e5c45780a94bb30cb624fb8683db0f13",
+      "benchmark/run_agent_trial.py": "b4a2d9f941dea44bac58b966db0fb251ac477ee74f584930fe2136ca8153000e",
+      "benchmark/retrieval.py": "f0e39421af2970e26ae4d3bfae20ba0743500909a9b2ac1f7b686b26a13603fa",
+      "benchmark/compare_graphify.py": "fa95faf9cbc9cdf6cdf4ed31e495e980fab8d1205c309971f19690747ed4e426",
+      "benchmark/corpora.json": "6cfe85fb5dad9a84e132d11fbb06e3270682dd435ea6a8403f0cb3262e20e95f"
+    },
+    "source_manifest_sha256": {
+      "click-1884": "1bf2c2d53d19c60776b1cfc575f3bc7b5c4d13cb82a39736191a11e765d4a6e5"
+    },
+    "primary": "Descriptive task-paired total provider-reported input plus output tokens, including cached input in total; no significance or promotion decision from this pilot.",
+    "quality": "Trusted verifier success, every task/arm reported; margin .10 reserved for future adequately sized held-out design, not tested on three tasks.",
+    "severe_loss": "Report every task where graf fails and a comparator passes; no acceptable-loss allowance or promotion decision from this pilot.",
+    "max_actions_per_attempt": 8,
+    "timeout_seconds_per_invocation": 60,
+    "timeout_seconds_per_attempt": 600,
+    "token_stop_threshold_per_attempt": 150000,
+    "token_stop_threshold_batch": 450000,
+    "limits_note": "Observed-token stop thresholds, not hard generation caps; last invocation/attempt can overshoot. Identical arm limits. Dollar cap unavailable with unmeasured subscription charge. Stop on provider/infrastructure/missing-usage errors; no replacement attempts.",
+    "cache_conditions": "Sequential fixed shuffled order; isolated per-attempt workspaces/indexes; shared warm OS/dependency caches; uncontrolled provider caches counted and logged. Each CLI startup included; trial wall time includes orientation and final verification; index work logged separately.",
+    "accounting": "Preserve prompts, commands, JSONL, stderr, source hashes, full broker payloads, verifier outputs, usage records, and failures. Count CLI invocations. Internal provider request count, subscription charge, API-equivalent cost remain unknown.",
+    "promotion_eligible": false,
+    "agent_efficiency_acceptance_pass": false,
+    "scope": "One reused public natural task x one attempt x three arms = three paired protocol diagnostics. No significance or promotion decision. Code-only Graphify; no docs/Rust or persistent MCP conclusion. No accepted graf baseline exists.",
+    "evidence": ".research/evidence/codex-d3",
+    "authorization": "User requested Codex for test batches and said Go. Issue/source/tool payloads sent to Codex using existing account; broker alone performs local edits and verification.",
+    "prior_failure": "d1 startup-warning rejection retained; d2 aborted after discovering last-action dispatch could skip edits, with two finished and one interrupted trial. Raw usage and partial attempts retained; no pooling."
+  },
+  "codex_diagnostic_history": [
+    {
+      "id": "codex-d1",
+      "frozen_in_version": 29,
+      "solver_version": "codex-cli 0.156.1",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "low",
+      "service_tier": "default",
+      "authentication": "Existing ChatGPT Codex login; no API keys passed",
+      "catalog": "benchmark/natural-tasks-t4.json",
+      "catalog_sha256": "0555197e3a6454389d867493082b59840818f1f296d3673ec39b4e2cc5831020",
+      "task_ids": [
+        "gin-2718",
+        "click-1884",
+        "undici-5520"
+      ],
+      "selection": "Lexicographically first task in each of gin, click and undici; before any Codex task outcome",
+      "attempts": 1,
+      "arms": [
+        "graf_current_orient",
+        "graphify_orient",
+        "search_only"
+      ],
+      "seed": 20261025,
+      "protocol": "Fresh codex exec per structured action; full issue/tools/history resubmitted, no compaction; parent broker executes operations. Empty cwd, native tools disabled and native tool events invalidate trial. No pooling with Claude results.",
+      "graf_binary": ".research/bin/graf-codex-d1",
+      "search_binary": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path/rg",
+      "backend_sha256": {
+        "graf_current_orient": "580a2ea276d082cbecf5035e9eb84aaf59fd126fb3eef5edaad8b81ce609dbf2",
+        "graphify_orient": "e3f9ec68898c023f9b1f2ca6770edd81a7facabb1ec1e83bef7d460e33c03f01",
+        "search_only": "e97d666f32c3e86b2bd0e047cb1398d4385ea1f05bfb791a8201d3fa98a91bb9"
+      },
+      "graphify_pin": {
+        "id": "graphify",
+        "repository": "Graphify-Labs/graphify",
+        "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+        "language": "Python",
+        "role": "baseline"
+      },
+      "implementation_sha256": {
+        "benchmark/codex_solver.py": "65a896926132d2a36193cd3b8ee5ccd5a655832c75f689610f3e0aa7d882ae55",
+        "benchmark/run_codex_batch.py": "c38e1befe69ef6c83b698dda42fa93fa559c1cff63a76687f5c3b0a48375bcd6",
+        "benchmark/agent_trials.py": "a652c498124815f5ff06fa198ca1ac90470954d0a64674f4b44eaea28ce6f58b",
+        "benchmark/task_session.py": "7fd08c5834617afc2d2f2e2116d8a5f6e5c45780a94bb30cb624fb8683db0f13",
+        "benchmark/run_agent_trial.py": "b4a2d9f941dea44bac58b966db0fb251ac477ee74f584930fe2136ca8153000e",
+        "benchmark/retrieval.py": "f0e39421af2970e26ae4d3bfae20ba0743500909a9b2ac1f7b686b26a13603fa",
+        "benchmark/compare_graphify.py": "fa95faf9cbc9cdf6cdf4ed31e495e980fab8d1205c309971f19690747ed4e426",
+        "benchmark/corpora.json": "6cfe85fb5dad9a84e132d11fbb06e3270682dd435ea6a8403f0cb3262e20e95f"
+      },
+      "source_manifest_sha256": {
+        "gin-2718": "734bfecc4bc4e154bc64411e0cc1ccce8e7109857ea91b42e9cd73df5220c504",
+        "click-1884": "1bf2c2d53d19c60776b1cfc575f3bc7b5c4d13cb82a39736191a11e765d4a6e5",
+        "undici-5520": "26660af2266be8b3688f0de1e1fc4803c9b7efd75f175e2a34f2a8433bfd3e57"
+      },
+      "primary": "Descriptive task-paired total provider-reported input plus output tokens, including cached input in total; no significance or promotion decision from this pilot.",
+      "quality": "Trusted verifier success, every task/arm reported; margin .10 reserved for future adequately sized held-out design, not tested on three tasks.",
+      "severe_loss": "Report every task where graf fails and a comparator passes; no acceptable-loss allowance or promotion decision from this pilot.",
+      "max_actions_per_attempt": 12,
+      "timeout_seconds_per_invocation": 60,
+      "timeout_seconds_per_attempt": 600,
+      "token_stop_threshold_per_attempt": 50000,
+      "token_stop_threshold_batch": 300000,
+      "limits_note": "Observed-token stop thresholds, not hard generation caps; last invocation/attempt can overshoot. Identical arm limits. Dollar cap unavailable with unmeasured subscription charge. Stop on provider/infrastructure/missing-usage errors; no replacement attempts.",
+      "cache_conditions": "Sequential fixed shuffled order; isolated per-attempt workspaces/indexes; shared warm OS/dependency caches; uncontrolled provider caches counted and logged. Each CLI startup included; trial wall time includes orientation and final verification; index work logged separately.",
+      "accounting": "Preserve prompts, commands, JSONL, stderr, source hashes, full broker payloads, verifier outputs, usage records, and failures. Count CLI invocations. Internal provider request count, subscription charge, API-equivalent cost remain unknown.",
+      "promotion_eligible": false,
+      "agent_efficiency_acceptance_pass": false,
+      "scope": "Three reused public natural tasks x one attempt x three arms = nine workflow diagnostics, insufficient for promotion. Code-only Graphify; no docs/Rust-task conclusion. No accepted graf version exists.",
+      "evidence": ".research/evidence/codex-d1",
+      "authorization": "User requested Codex for test batches and said Go. Issue/source/tool payloads sent to Codex using existing account; broker alone performs local edits and verification."
+    },
+    {
+      "id": "codex-d2",
+      "frozen_in_version": 30,
+      "solver_version": "codex-cli 0.156.1",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "low",
+      "service_tier": "default",
+      "authentication": "Existing ChatGPT Codex login; no API keys passed",
+      "catalog": "benchmark/natural-tasks-t4.json",
+      "catalog_sha256": "0555197e3a6454389d867493082b59840818f1f296d3673ec39b4e2cc5831020",
+      "task_ids": [
+        "gin-2718",
+        "click-1884",
+        "undici-5520"
+      ],
+      "selection": "Lexicographically first task in each of gin, click and undici; before any Codex task outcome",
+      "attempts": 1,
+      "arms": [
+        "graf_current_orient",
+        "graphify_orient",
+        "search_only"
+      ],
+      "seed": 20261025,
+      "protocol": "Fresh codex exec per structured action; full issue/tools/history resubmitted, no compaction; parent broker executes operations. Empty cwd, native tools disabled and native tool events invalidate trial. No pooling with Claude results. Explicit JSON-action examples added after the failed protocol pilot; known startup notices handled, unstable-feature warning suppressed; invalid-action usage retained separately from action validity.",
+      "graf_binary": ".research/bin/graf-codex-d1",
+      "search_binary": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path/rg",
+      "backend_sha256": {
+        "graf_current_orient": "580a2ea276d082cbecf5035e9eb84aaf59fd126fb3eef5edaad8b81ce609dbf2",
+        "graphify_orient": "e3f9ec68898c023f9b1f2ca6770edd81a7facabb1ec1e83bef7d460e33c03f01",
+        "search_only": "e97d666f32c3e86b2bd0e047cb1398d4385ea1f05bfb791a8201d3fa98a91bb9"
+      },
+      "graphify_pin": {
+        "id": "graphify",
+        "repository": "Graphify-Labs/graphify",
+        "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+        "language": "Python",
+        "role": "baseline"
+      },
+      "implementation_sha256": {
+        "benchmark/codex_solver.py": "4e35f31e07f5d229d3661b240a870233a16d7a2698c2f7966f0bb1648a8ae2ce",
+        "benchmark/run_codex_batch.py": "da91f4c389fc51593985f30dbf10c31b90f73854095befbfe0ca387bff661205",
+        "benchmark/agent_trials.py": "a652c498124815f5ff06fa198ca1ac90470954d0a64674f4b44eaea28ce6f58b",
+        "benchmark/task_session.py": "7fd08c5834617afc2d2f2e2116d8a5f6e5c45780a94bb30cb624fb8683db0f13",
+        "benchmark/run_agent_trial.py": "b4a2d9f941dea44bac58b966db0fb251ac477ee74f584930fe2136ca8153000e",
+        "benchmark/retrieval.py": "f0e39421af2970e26ae4d3bfae20ba0743500909a9b2ac1f7b686b26a13603fa",
+        "benchmark/compare_graphify.py": "fa95faf9cbc9cdf6cdf4ed31e495e980fab8d1205c309971f19690747ed4e426",
+        "benchmark/corpora.json": "6cfe85fb5dad9a84e132d11fbb06e3270682dd435ea6a8403f0cb3262e20e95f"
+      },
+      "source_manifest_sha256": {
+        "gin-2718": "734bfecc4bc4e154bc64411e0cc1ccce8e7109857ea91b42e9cd73df5220c504",
+        "click-1884": "1bf2c2d53d19c60776b1cfc575f3bc7b5c4d13cb82a39736191a11e765d4a6e5",
+        "undici-5520": "26660af2266be8b3688f0de1e1fc4803c9b7efd75f175e2a34f2a8433bfd3e57"
+      },
+      "primary": "Descriptive task-paired total provider-reported input plus output tokens, including cached input in total; no significance or promotion decision from this pilot.",
+      "quality": "Trusted verifier success, every task/arm reported; margin .10 reserved for future adequately sized held-out design, not tested on three tasks.",
+      "severe_loss": "Report every task where graf fails and a comparator passes; no acceptable-loss allowance or promotion decision from this pilot.",
+      "max_actions_per_attempt": 12,
+      "timeout_seconds_per_invocation": 60,
+      "timeout_seconds_per_attempt": 600,
+      "token_stop_threshold_per_attempt": 50000,
+      "token_stop_threshold_batch": 300000,
+      "limits_note": "Observed-token stop thresholds, not hard generation caps; last invocation/attempt can overshoot. Identical arm limits. Dollar cap unavailable with unmeasured subscription charge. Stop on provider/infrastructure/missing-usage errors; no replacement attempts.",
+      "cache_conditions": "Sequential fixed shuffled order; isolated per-attempt workspaces/indexes; shared warm OS/dependency caches; uncontrolled provider caches counted and logged. Each CLI startup included; trial wall time includes orientation and final verification; index work logged separately.",
+      "accounting": "Preserve prompts, commands, JSONL, stderr, source hashes, full broker payloads, verifier outputs, usage records, and failures. Count CLI invocations. Internal provider request count, subscription charge, API-equivalent cost remain unknown.",
+      "promotion_eligible": false,
+      "agent_efficiency_acceptance_pass": false,
+      "scope": "Three reused public natural tasks x one attempt x three arms = nine workflow diagnostics, insufficient for promotion. Code-only Graphify; no docs/Rust-task conclusion. No accepted graf version exists.",
+      "evidence": ".research/evidence/codex-d2",
+      "authorization": "User requested Codex for test batches and said Go. Issue/source/tool payloads sent to Codex using existing account; broker alone performs local edits and verification.",
+      "prior_failure": "codex-d1 stopped after one invocation: a deterministic startup warning was rejected as an unknown native tool. Raw usage 7275 input + 36 output, no broker action dispatched, harness verification failed. All nine planned cases retained with eight missing. Do not pool attempts or hide setup usage."
+    }
+  ]
+}

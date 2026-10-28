@@ -1,0 +1,139 @@
+{
+  "scope": "Experimental private-copy broker; 30 exposed development queries; pinned code-only Graphify. No accepted Graf; v59 experimental reference. Graphify hints do not establish source-anchor recall or documentation-task performance.",
+  "implemented": [
+    "Verified private copies of pinned source/index/graph bytes, distinct inodes and owner-only container",
+    "Rebuild root-bound Graf indexes inside private copy and compare every exported field except root with frozen semantic digest; original copy-only failure preserved",
+    "Pinned stdio v3 launcher using staged root and artifact configuration"
+  ],
+  "broker_status": "passed",
+  "integrity_cells_passed": 180,
+  "integrity_cells_failed": 0,
+  "mutation_contexts_passed": 9,
+  "stdio_sessions_passed": 3,
+  "stdio_sessions_failed": 0,
+  "focused_tests_passed": 75,
+  "metrics": [
+    {
+      "budget": 2000,
+      "arm": "graf_evidence_selective",
+      "mean_output_tokens": 1631.4333333333334,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 2000,
+      "arm": "graf_evidence_rescue",
+      "mean_output_tokens": 1557.3333333333333,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 2000,
+      "arm": "graphify",
+      "mean_output_tokens": 2414.366666666667,
+      "code_file_hint_recall": 0.8703703703703703,
+      "code_file_hint_recall_at_5": 0.7037037037037037,
+      "code_file_hint_recall_at_10": 0.8333333333333334,
+      "scored_queries": 27,
+      "over_cl100k_budget": 6
+    },
+    {
+      "budget": 8000,
+      "arm": "graf_evidence_selective",
+      "mean_output_tokens": 3985.4,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 8000,
+      "arm": "graf_evidence_rescue",
+      "mean_output_tokens": 3896.3,
+      "code_file_hint_recall": 0.9814814814814815,
+      "code_file_hint_recall_at_5": 0.8703703703703703,
+      "code_file_hint_recall_at_10": 0.9259259259259259,
+      "scored_queries": 27,
+      "over_cl100k_budget": 0
+    },
+    {
+      "budget": 8000,
+      "arm": "graphify",
+      "mean_output_tokens": 13004.933333333332,
+      "code_file_hint_recall": 0.8703703703703703,
+      "code_file_hint_recall_at_5": 0.7037037037037037,
+      "code_file_hint_recall_at_10": 0.8333333333333334,
+      "scored_queries": 27,
+      "over_cl100k_budget": 16
+    }
+  ],
+  "regressing_query_budget_cases": {
+    "graf_evidence_selective": 11,
+    "graf_evidence_rescue": 10
+  },
+  "acceptance_status": "not_passed",
+  "decision_status": "not_passed",
+  "exit_codes": {
+    "comparison": 0,
+    "audit": 0,
+    "acceptance": 1,
+    "decision": 1,
+    "tests": 0,
+    "broker": 0
+  },
+  "reproducibility_vs_prior": {
+    "graf_evidence_selective": {
+      "raw_matches": 60,
+      "printed_scratch_path_normalized_matches": 60,
+      "cells": 60
+    },
+    "graf_evidence_rescue": {
+      "raw_matches": 60,
+      "printed_scratch_path_normalized_matches": 60,
+      "cells": 60
+    },
+    "graphify": {
+      "raw_matches": 0,
+      "printed_scratch_path_normalized_matches": 60,
+      "cells": 60
+    }
+  },
+  "reproducibility_note": "Scratch-path normalization is only an integrity diagnostic. Official metrics retain raw printed paths; no algorithmic improvement claimed.",
+  "cache": "Fresh sequential native comparison; OS caches uncontrolled. Local tests may overlap tail of native execution; one repetition and excluded staging/verification overhead provide no latency inference.",
+  "native_queries": {
+    "comparison_shared_with_v1": 180,
+    "snapshot_integrity": 180,
+    "stdio": 3
+  },
+  "index_operations": {
+    "reference_exports": 3,
+    "rebuilds": 8,
+    "staged_exports": 8
+  },
+  "prior_failed_diagnostic": "results/readonly-broker-snapshot-v1-summary.json",
+  "source_reads": 183,
+  "solver_calls": 0,
+  "comparison_reused_unchanged": "results/readonly-broker-snapshot-v1-comparison.json",
+  "agent_savings": "unmeasured",
+  "product_promotion_allowed": false,
+  "limitations": [
+    "Private copies isolate subsequent live workspace writes but chmod is not a hostile same-UID security boundary",
+    "Verified bytes do not provide atomic filesystem capture or independent index semantic validation",
+    "Graphify printed graph path is normalized only for integrity checks; actual raw outputs and tokens retained",
+    "Native timing excludes staging and verification; no broker latency inference",
+    "Zero solver calls; provider failed-attempt accounting and hard limits remain unresolved",
+    "Graf rebuilds inside the private copy; new index hash enforced and full export equivalence excluding only root required. Setup overhead unmeasured."
+  ],
+  "next_prerequisites": [
+    "Separately freeze and measure matched staging/verification overhead",
+    "Complete provider attempt accounting and enforceable shared limits",
+    "Fresh independently reviewed natural tasks for matched solver evaluation against Graphify plus source reads"
+  ]
+}

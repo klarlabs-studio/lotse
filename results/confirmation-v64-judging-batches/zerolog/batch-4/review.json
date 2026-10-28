@@ -1,0 +1,29 @@
+{
+  "judge_id": "zerolog-3-independent-source-review",
+  "model": "gpt-6-luna",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "33d26df890a4796548ab8c06fc9feb4b6416949b04e2ea708772893498bf311c",
+  "source_manifest_sha256": "5bebbe70bd709485f9ef83008c3ee625f90e29f0461d49a8444bc7070bc48dd1",
+  "judgments_sha256": "977ea093573194db602c732c2471456b0ae426f58c9ef2d9dd708b06f2e1cf04",
+  "reviewed_query_ids": [
+    "h-zerolog-impact-diode-pool-cap",
+    "h-zerolog-impact-slog-disabled",
+    "h-zerolog-impact-warning-alias",
+    "h-zerolog-trace-dict-array",
+    "h-zerolog-trace-diode-lifecycle",
+    "h-zerolog-trace-journald-write",
+    "h-zerolog-trace-print-event",
+    "h-zerolog-trace-slog-handle",
+    "h-zerolog-trace-warning-parse-test"
+  ],
+  "pair_count": 118,
+  "unresolved_issues": [],
+  "limitations": [
+    "No API token or cost accounting is available from the session tools.",
+    "All 88 source-manifest hashes, exact pooled pair coverage, booleans, nonempty semantic reasons, and cited source line bounds were checked.",
+    "Relevance verdicts cover the supplied pairs only. The pool omits diode/diode.go for the diode buffer cap and lifecycle; event.go/event_test.go for the MsgFunc callback; context.go for Context.Dict; journald/journald.go for backend implementation; log.go/log_test.go for Print and ParseLevel; and slog.go for Handle implementation. These are retrieval coverage limitations, not uncertainty about the individual pooled pairs."
+  ]
+}

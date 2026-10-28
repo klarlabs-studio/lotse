@@ -1,0 +1,71 @@
+{
+  "mode": "offline_integrity_diagnostic",
+  "model_calls": 0,
+  "historical_checks": [
+    {
+      "batch": "codex-v1",
+      "historical_inventory_unchanged": true,
+      "totals": {
+        "cases": 18,
+        "visible_inventory_case_counts": {
+          "prompt": 18,
+          "instructions": 18,
+          "tool_definitions_reconstructed_canonical_json": 18,
+          "tool_definitions_captured_canonical_json": 0,
+          "native_request_params_canonical_json": 18,
+          "native_reply_text": 18
+        },
+        "visible_cl100k_inventory": {
+          "prompt": 30856,
+          "instructions": 2808,
+          "tool_definitions_reconstructed_canonical_json": 9630,
+          "tool_definitions_captured_canonical_json": null,
+          "native_request_params_canonical_json": 79123,
+          "native_reply_text": 138362
+        },
+        "exact_duplicate_retrieval_replies": 0,
+        "repeated_retrieved_unit_headers": 3,
+        "repeated_delivered_read_lines": 165,
+        "actual_tools_list_captured": 0
+      },
+      "historical_audit_sha256": "04c006f6fd9fdf6b73f19cb266231b3f9098e1906d04bbf37bf32061817ec460"
+    },
+    {
+      "batch": "codex-v2",
+      "historical_inventory_unchanged": true,
+      "totals": {
+        "cases": 13,
+        "visible_inventory_case_counts": {
+          "prompt": 13,
+          "instructions": 13,
+          "tool_definitions_reconstructed_canonical_json": 13,
+          "tool_definitions_captured_canonical_json": 0,
+          "native_request_params_canonical_json": 13,
+          "native_reply_text": 13
+        },
+        "visible_cl100k_inventory": {
+          "prompt": 23831,
+          "instructions": 2821,
+          "tool_definitions_reconstructed_canonical_json": 6862,
+          "tool_definitions_captured_canonical_json": null,
+          "native_request_params_canonical_json": 75311,
+          "native_reply_text": 140285
+        },
+        "exact_duplicate_retrieval_replies": 0,
+        "repeated_retrieved_unit_headers": 11,
+        "repeated_delivered_read_lines": 63,
+        "actual_tools_list_captured": 0
+      },
+      "historical_audit_sha256": "1465d5a262a604ccba38abca701dd8bcbd7ec9c3c9fa6196ae72d252b62cd959"
+    }
+  ],
+  "implementation_sha256": {
+    "benchmark/codex_discovery.py": "ce3c09f32fe088ad4037505513635bc1285e8d6c4688562451eadbe2e96e8718",
+    "benchmark/audit_codex_context.py": "54ad98d2369ca641865e98d3872611f7a406b54b3d7e88a401bf8afb27c83d48",
+    "benchmark/run_codex_mcp_batch.py": "b3cd0016ba99ef93d087a34d23a155f495ae8afa5660b69b290a9e4b76ab760d",
+    "benchmark/codex_validation.py": "901838642b86bd2f8e7b0f7701a06b499fc22d0e29828306d212c4839583572b"
+  },
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "interpretation": "Discovery validation and artifact inventory only; no performance comparison or savings measurement."
+}

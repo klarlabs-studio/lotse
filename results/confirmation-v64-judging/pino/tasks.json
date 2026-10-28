@@ -1,0 +1,749 @@
+{
+  "h-pino-01": {
+    "repo": "pino",
+    "query": "Which option controls Pino\u2019s maximum depth and breadth when its fallback serializer handles a value?",
+    "files": [
+      "test/types/pino.tst.ts",
+      "test/browser.test.js",
+      "test/types/pino-import.tst.js",
+      "lib/transport.js",
+      "browser.js",
+      "test/serializers.test.js",
+      "test/helper.js",
+      "test/transport/node-options.test.js",
+      "test/redact.test.js",
+      "test/levels.test.js",
+      "lib/tools.js",
+      "test/fixtures/transport-invalid-node-options.js",
+      "pino.d.ts",
+      "test/types/pino-type-only.tst.ts",
+      "test/types/pino.ts"
+    ]
+  },
+  "h-pino-02": {
+    "repo": "pino",
+    "query": "What exact warning code is emitted when a custom level formatter may break multi-target routing?",
+    "files": [
+      "test/multistream.test.js",
+      "test/types/pino.tst.ts",
+      "test/helper.js",
+      "lib/transport.js",
+      "test/browser-is-level-enabled.test.js",
+      "test/custom-levels.test.js",
+      "lib/transport-stream.js",
+      "test/transport/targets.test.js",
+      "lib/deprecations.js",
+      "lib/multistream.js",
+      "lib/proto.js",
+      "benchmarks/utils/wrap-log-level.js",
+      "test/types/pino.ts",
+      "test/formatters.test.js",
+      "test/transport/core.test.js"
+    ]
+  },
+  "h-pino-03": {
+    "repo": "pino",
+    "query": "How does a child logger expose the logger version and read-only numeric level value?",
+    "files": [
+      "pino.js",
+      "examples/transport.js",
+      "browser.js",
+      "pino.d.ts",
+      "test/custom-levels.test.js",
+      "test/browser-redaction.test.js",
+      "lib/levels.js",
+      "test/types/pino-type-only.tst.ts",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "test/basic.test.js",
+      "test/types/pino.tst.ts",
+      "test/helper.js",
+      "benchmarks/utils/wrap-log-level.js",
+      "test/levels.test.js"
+    ]
+  },
+  "h-pino-04": {
+    "repo": "pino",
+    "query": "What is the built-in censor text used when redaction does not specify a censor?",
+    "files": [
+      "lib/symbols.js",
+      "test/types/pino.tst.ts",
+      "lib/proto.js",
+      "test/helper.js",
+      "pino.js",
+      "test/browser-redaction.test.js",
+      "test/redact.test.js",
+      "lib/tools.js",
+      "lib/levels.js",
+      "test/custom-levels.test.js",
+      "pino.d.ts",
+      "browser.js",
+      "test/formatters.test.js"
+    ]
+  },
+  "h-pino-05": {
+    "repo": "pino",
+    "query": "How does the library handle an explicit useOnlyCustomLevels setting when customLevels is absent?",
+    "files": [
+      "lib/tools.js",
+      "test/browser-is-level-enabled.test.js",
+      "lib/proto.js",
+      "test/is-level-enabled.test.js",
+      "browser.js",
+      "lib/levels.js",
+      "lib/symbols.js",
+      "lib/transport.js",
+      "test/levels.test.js",
+      "test/browser.test.js",
+      "pino.d.ts",
+      "test/custom-levels.test.js",
+      "lib/redaction.js",
+      "test/basic.test.js"
+    ]
+  },
+  "h-pino-06": {
+    "repo": "pino",
+    "query": "What default values does Pino use for messageKey and errorKey?",
+    "files": [
+      "test/levels.test.js",
+      "pino.d.ts",
+      "test/error-key.test.js",
+      "test/serializers.test.js",
+      "test/fixtures/default-exit.js",
+      "test/helper.js",
+      "test/types/pino-import.tst.js",
+      "test/transport/uses-pino-config.test.js",
+      "test/types/pino.ts",
+      "lib/symbols.js",
+      "test/types/pino.tst.ts",
+      "lib/tools.js",
+      "lib/levels.js",
+      "test/error.test.js",
+      "lib/proto.js",
+      "browser.js",
+      "test/basic.test.js"
+    ]
+  },
+  "h-pino-07": {
+    "repo": "pino",
+    "query": "When a child receives msgPrefix, how is its prefix derived from the parent?",
+    "files": [
+      "benchmarks/basic.bench.js",
+      "lib/transport.js",
+      "test/multistream.test.js",
+      "test/browser-serializers.test.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts",
+      "lib/symbols.js",
+      "lib/tools.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "pino.js",
+      "test/serializers.test.js",
+      "browser.js",
+      "lib/levels.js",
+      "test/basic.test.js"
+    ]
+  },
+  "h-pino-08": {
+    "repo": "pino",
+    "query": "What metadata fields does a logger write onto a metadata-aware destination before writing the serialized line?",
+    "files": [
+      "browser.js",
+      "test/browser.test.js",
+      "examples/transport.js",
+      "test/transport/pipeline.test.js",
+      "test/types/pino.tst.ts",
+      "pino.js",
+      "test/metadata.test.js",
+      "pino.d.ts",
+      "test/types/pino.ts",
+      "test/multistream.test.js",
+      "test/types/pino-type-only.tst.ts",
+      "lib/multistream.js"
+    ]
+  },
+  "h-pino-09": {
+    "repo": "pino",
+    "query": "Why can a logger created with base:null omit pid and hostname, and what path adds its initial bindings otherwise?",
+    "files": [
+      "lib/levels.js",
+      "pino.d.ts",
+      "test/formatters.test.js",
+      "test/helper.js",
+      "browser.js",
+      "test/transport/core.test.js",
+      "test/basic.test.js",
+      "lib/proto.js",
+      "test/fixtures/pretty/null-prototype.js",
+      "test/syncfalse.test.js",
+      "test/internals/version.test.js",
+      "examples/transport.js",
+      "benchmarks/formatters.bench.js",
+      "benchmarks/internal/custom-levels.js"
+    ]
+  },
+  "h-pino-10": {
+    "repo": "pino",
+    "query": "How does the default mixin merge resolve a key supplied by both the log call and mixin?",
+    "files": [
+      "pino.d.ts",
+      "test/diagnostics.test.js",
+      "test/fixtures/default-exit.js",
+      "benchmarks/basic.bench.js",
+      "lib/symbols.js",
+      "benchmarks/utils/runbench.js",
+      "pino.js",
+      "test/mixin-merge-strategy.test.js",
+      "test/mixin.test.js",
+      "test/redact.test.js",
+      "test/error-key.test.js",
+      "test/helper.js",
+      "test/types/pino.tst.ts"
+    ]
+  },
+  "h-pino-11": {
+    "repo": "pino",
+    "query": "What distinction does Pino make between an Error passed as the log object and an ordinary object with an error field?",
+    "files": [
+      "lib/tools.js",
+      "pino.js",
+      "test/browser.test.js",
+      "benchmarks/deep-object.bench.js",
+      "lib/levels.js",
+      "test/basic.test.js",
+      "test/browser-transmit.test.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts",
+      "benchmarks/object.bench.js",
+      "test/error-key.test.js",
+      "benchmarks/utils/runbench.js",
+      "browser.js"
+    ]
+  },
+  "h-pino-12": {
+    "repo": "pino",
+    "query": "How do child bindings become part of output, and why can repeated binding names appear in the serialized line?",
+    "files": [
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "benchmarks/formatters.bench.js",
+      "test/browser-serializers.test.js",
+      "pino.d.ts",
+      "test/browser-bindings.test.js",
+      "lib/constants.js",
+      "test/transport/pipeline.test.js",
+      "test/syncfalse.test.js",
+      "test/browser-transmit.test.js",
+      "test/types/pino.tst.ts",
+      "lib/levels.js",
+      "browser.js",
+      "pino.js",
+      "test/helper.js",
+      "test/browser-set-bindings.test.js"
+    ]
+  },
+  "h-pino-13": {
+    "repo": "pino",
+    "query": "What is the distinction between logger-level gating and per-destination level filtering for a multistream?",
+    "files": [
+      "examples/transport.js",
+      "test/custom-levels.test.js",
+      "pino.d.ts",
+      "test/transport/module-link.test.js",
+      "test/helper.js",
+      "test/multistream.test.js",
+      "test/types/pino.ts",
+      "pino.js",
+      "test/browser-transmit.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino-type-only.tst.ts",
+      "lib/worker.js",
+      "test/syncfalse.test.js",
+      "benchmarks/multistream.js"
+    ]
+  },
+  "h-pino-14": {
+    "repo": "pino",
+    "query": "How does Pino preserve redaction when an object is interpolated into the message string?",
+    "files": [
+      "lib/tools.js",
+      "test/redact.test.js",
+      "test/browser-redaction.test.js",
+      "browser.js",
+      "benchmarks/object.bench.js",
+      "test/error.test.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts",
+      "test/serializers.test.js",
+      "lib/proto.js",
+      "test/types/pino.ts",
+      "lib/symbols.js",
+      "test/types/pino-import.tst.js",
+      "test/browser-transmit.test.js"
+    ]
+  },
+  "h-pino-15": {
+    "repo": "pino",
+    "query": "Why does a no-options child creation take a separate fast path, and what does it still reset or invoke?",
+    "files": [
+      "test/browser-child.test.js",
+      "benchmarks/internal/just-pino.bench.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "test/redact.test.js",
+      "test/types/pino.tst.ts",
+      "benchmarks/internal/custom-levels.js",
+      "test/basic.test.js",
+      "test/internals/version.test.js",
+      "test/transport/node-options.test.js",
+      "benchmarks/child-creation.bench.js",
+      "test/browser-bindings.test.js",
+      "browser.js",
+      "lib/transport.js"
+    ]
+  },
+  "h-pino-16": {
+    "repo": "pino",
+    "query": "How are standard level methods disabled or generated when the level threshold changes?",
+    "files": [
+      "pino.d.ts",
+      "test/browser-serializers.test.js",
+      "test/custom-levels.test.js",
+      "test/transport/core.test.js",
+      "lib/proto.js",
+      "lib/tools.js",
+      "test/browser-disabled.test.js",
+      "pino.js",
+      "test/helper.js",
+      "test/is-level-enabled.test.js",
+      "browser.js"
+    ]
+  },
+  "h-pino-17": {
+    "repo": "pino",
+    "query": "Trace the path from calling logger.info(object, message) to bytes written, including the mixin and streamWrite hook.",
+    "files": [
+      "test/internals/version.test.js",
+      "benchmarks/deep-object.bench.js",
+      "test/multistream.test.js",
+      "test/hooks.test.js",
+      "lib/caller.js",
+      "benchmarks/long-string.bench.js",
+      "lib/symbols.js",
+      "test/types/pino.tst.ts",
+      "examples/transport.js",
+      "test/mixin.test.js",
+      "test/mixin-merge-strategy.test.js",
+      "benchmarks/object.bench.js",
+      "test/levels.test.js",
+      "test/helper.js"
+    ]
+  },
+  "h-pino-18": {
+    "repo": "pino",
+    "query": "Trace how a custom level added at logger construction becomes a callable method and how changing logger.level updates that method set.",
+    "files": [
+      "pino.d.ts",
+      "lib/proto.js",
+      "pino.js",
+      "test/custom-levels.test.js",
+      "lib/caller.js",
+      "test/browser-transmit.test.js",
+      "test/types/pino.tst.ts",
+      "test/transport/core.test.js",
+      "examples/transport.js",
+      "test/browser.test.js",
+      "browser.js",
+      "test/is-level-enabled.test.js",
+      "test/helper.js",
+      "test/levels.test.js"
+    ]
+  },
+  "h-pino-19": {
+    "repo": "pino",
+    "query": "Follow a redact path from logger initialization into serialization and identify where redaction is applied.",
+    "files": [
+      "lib/levels.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts",
+      "test/timestamp-nano.test.js",
+      "test/redact.test.js",
+      "test/browser-redaction.test.js",
+      "browser.js",
+      "lib/tools.js",
+      "test/hooks.test.js",
+      "examples/transport.js",
+      "lib/redaction.js",
+      "lib/symbols.js",
+      "test/internals/version.test.js"
+    ]
+  },
+  "h-pino-20": {
+    "repo": "pino",
+    "query": "Trace how a child logger with new bindings and a custom serializer option is assembled.",
+    "files": [
+      "pino.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "test/types/pino.tst.ts",
+      "test/browser-bindings.test.js",
+      "test/transport/node-options.test.js",
+      "test/browser-set-bindings.test.js",
+      "test/browser-transmit.test.js",
+      "browser.js",
+      "pino.d.ts",
+      "examples/transport.js",
+      "lib/caller.js",
+      "test/helper.js",
+      "test/custom-levels.test.js",
+      "test/serializers.test.js"
+    ]
+  },
+  "h-pino-21": {
+    "repo": "pino",
+    "query": "Trace how fatal logging differs from info after the line is emitted.",
+    "files": [
+      "test/multistream.test.js",
+      "test/transport/pipeline.test.js",
+      "test/browser.test.js",
+      "test/is-level-enabled.test.js",
+      "lib/caller.js",
+      "test/basic.test.js",
+      "test/transport/core.test.js",
+      "lib/constants.js",
+      "examples/transport.js",
+      "test/transport/module-link.test.js",
+      "test/helper.js",
+      "pino.js",
+      "test/syncfalse.test.js",
+      "browser.js",
+      "benchmarks/multistream.js",
+      "test/types/pino.tst.ts",
+      "pino.d.ts"
+    ]
+  },
+  "h-pino-22": {
+    "repo": "pino",
+    "query": "Trace how a multistream determines which destinations receive one record when dedupe is enabled.",
+    "files": [
+      "test/is-level-enabled.test.js",
+      "pino.d.ts",
+      "test/transport/module-link.test.js",
+      "lib/levels.js",
+      "test/types/pino-multistream.tst.ts",
+      "test/syncfalse.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino.tst.ts",
+      "pino.js",
+      "test/multistream.test.js",
+      "benchmarks/multistream.js",
+      "lib/caller.js",
+      "test/browser-is-level-enabled.test.js",
+      "lib/transport.js"
+    ]
+  },
+  "h-pino-23": {
+    "repo": "pino",
+    "query": "Trace how a transport configured with multiple targets builds its worker-side routing stream.",
+    "files": [
+      "test/helper.js",
+      "pino.js",
+      "lib/transport.js",
+      "test/transport/targets.test.js",
+      "lib/transport-stream.js",
+      "lib/caller.js",
+      "test/transport/bundlers-support.test.js",
+      "test/transport/node-options.test.js",
+      "lib/tools.js",
+      "examples/transport.js",
+      "test/transport/native-type-stripping.test.mjs",
+      "test/transport/big.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino.tst.ts"
+    ]
+  },
+  "h-pino-24": {
+    "repo": "pino",
+    "query": "Trace how the logger\u2019s flush method behaves when its destination has no flush method.",
+    "files": [
+      "test/levels.test.js",
+      "test/esm/named-exports.mjs",
+      "pino.js",
+      "test/stdout-protection.test.js",
+      "lib/transport.js",
+      "test/browser.test.js",
+      "lib/levels.js",
+      "test/multistream.test.js",
+      "test/types/pino.ts",
+      "test/transport/native-type-stripping.test.mjs",
+      "test/syncfalse.test.js",
+      "examples/transport.js",
+      "test/browser-transmit.test.js",
+      "pino.d.ts",
+      "test/types/pino-top-export.tst.ts",
+      "test/types/pino-import.tst.js",
+      "lib/caller.js"
+    ]
+  },
+  "h-pino-25": {
+    "repo": "pino",
+    "query": "Which modules divide responsibility for logger construction, logger behavior, level mapping, and redaction?",
+    "files": [
+      "test/esm/named-exports.mjs",
+      "examples/transport.js",
+      "test/types/pino-top-export.tst.ts",
+      "test/custom-levels.test.js",
+      "test/transport/module-link.test.js",
+      "pino.d.ts",
+      "lib/tools.js",
+      "test/types/pino-type-only.tst.ts",
+      "test/browser-redaction.test.js",
+      "test/browser-child.test.js",
+      "test/levels.test.js",
+      "lib/transport-stream.js"
+    ]
+  },
+  "h-pino-26": {
+    "repo": "pino",
+    "query": "How are logger instances tied to EventEmitter behavior while sharing a prototype created by a factory?",
+    "files": [
+      "pino.d.ts",
+      "benchmarks/utils/wrap-log-level.js",
+      "test/basic.test.js",
+      "test/transport/core.test.js",
+      "test/transport/node-options.test.js",
+      "examples/transport.js",
+      "test/syncfalse.test.js",
+      "test/transport/module-link.test.js",
+      "test/transport/sync-false.test.js",
+      "test/diagnostics.test.js",
+      "test/helper.js",
+      "test/redact.test.js",
+      "test/formatters.test.js",
+      "browser.js",
+      "lib/levels.js",
+      "test/transport/pipeline.test.js"
+    ]
+  },
+  "h-pino-27": {
+    "repo": "pino",
+    "query": "What is the transport architecture boundary between application-thread logging and target processing?",
+    "files": [
+      "pino.js",
+      "lib/tools.js",
+      "test/transport/native-type-stripping.test.mjs",
+      "lib/symbols.js",
+      "test/transport/node-options.test.js",
+      "test/transport/core.test.js",
+      "test/types/pino.tst.ts",
+      "examples/transport.js",
+      "test/types/pino-top-export.tst.ts",
+      "lib/transport.js",
+      "test/transport/sync-false.test.js",
+      "pino.d.ts",
+      "test/helper.js",
+      "lib/transport-stream.js",
+      "test/transport/targets.test.js"
+    ]
+  },
+  "h-pino-28": {
+    "repo": "pino",
+    "query": "How does multi-target transport setup represent target routing state and shutdown behavior?",
+    "files": [
+      "test/types/pino.tst.ts",
+      "lib/transport.js",
+      "test/transport/module-link.test.js",
+      "test/transport/targets.test.js",
+      "test/transport/sync-false.test.js",
+      "examples/transport.js",
+      "test/helper.js",
+      "test/multistream.test.js",
+      "browser.js",
+      "test/transport/pipeline.test.js",
+      "test/transport/core.test.js",
+      "pino.js",
+      "pino.d.ts",
+      "lib/tools.js"
+    ]
+  },
+  "h-pino-29": {
+    "repo": "pino",
+    "query": "If a change renames the numeric level property in formatter output, what multi-target behavior and warning path should be reviewed?",
+    "files": [
+      "test/formatters.test.js",
+      "lib/proto.js",
+      "lib/tools.js",
+      "test/multistream.test.js",
+      "test/transport/targets.test.js",
+      "test/internals/version.test.js",
+      "lib/transport.js",
+      "pino.d.ts",
+      "test/syncfalse.test.js",
+      "lib/deprecations.js",
+      "test/transport/sync-false.test.js",
+      "test/transport/core.test.js",
+      "test/transport/sync-true.test.js",
+      "benchmarks/multi-arg.bench.js"
+    ]
+  },
+  "h-pino-30": {
+    "repo": "pino",
+    "query": "If child loggers are changed to merge bindings into objects instead of appending chindings, which documented duplicate-key behavior and tests are affected?",
+    "files": [
+      "test/browser-child.test.js",
+      "test/helper.js",
+      "pino.d.ts",
+      "test/browser-redaction.test.js",
+      "lib/proto.js",
+      "lib/tools.js",
+      "test/mixin-merge-strategy.test.js",
+      "test/transport/core.transpiled.test.ts",
+      "test/browser-set-bindings.test.js",
+      "lib/symbols.js",
+      "browser.js",
+      "test/complex-objects.test.js",
+      "test/error-key.test.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "pino.js",
+      "test/browser-bindings.test.js",
+      "test/browser-serializers.test.js"
+    ]
+  },
+  "h-pino-31": {
+    "repo": "pino",
+    "query": "If streamWrite hook behavior changes, what assertions should be checked about hook execution and the write path?",
+    "files": [
+      "test/transport/module-link.test.js",
+      "lib/tools.js",
+      "lib/levels.js",
+      "test/transport/core.test.js",
+      "test/internals/version.test.js",
+      "lib/multistream.js",
+      "test/browser-child.test.js",
+      "pino.d.ts",
+      "test/helper.js",
+      "test/multistream.test.js",
+      "lib/worker.js",
+      "test/basic.test.js",
+      "test/types/pino.tst.ts",
+      "test/syncfalse.test.js"
+    ]
+  },
+  "h-pino-32": {
+    "repo": "pino",
+    "query": "If a child-level redact override changes, which ordering constraint protects bindings and what serializer state must be rebuilt?",
+    "files": [
+      "lib/tools.js",
+      "benchmarks/internal/parent-vs-child.bench.js",
+      "pino.js",
+      "browser.js",
+      "test/transport/core.test.js",
+      "pino.d.ts",
+      "lib/redaction.js",
+      "test/basic.test.js",
+      "test/helper.js",
+      "test/serializers.test.js",
+      "test/browser-bindings.test.js",
+      "test/custom-levels.test.js",
+      "test/browser-redaction.test.js",
+      "test/types/pino.tst.ts"
+    ]
+  },
+  "h-pino-33": {
+    "repo": "pino",
+    "query": "If multistream dedupe sorting changes, which routing invariant and tests should guard delivery to streams at equal versus different levels?",
+    "files": [
+      "pino.d.ts",
+      "test/custom-levels.test.js",
+      "test/types/pino-multistream.tst.ts",
+      "lib/transport.js",
+      "lib/worker.js",
+      "test/transport/core.transpiled.test.ts",
+      "lib/constants.js",
+      "benchmarks/multistream.js",
+      "lib/levels.js",
+      "test/transport/core.test.js",
+      "test/types/pino.ts",
+      "pino.js",
+      "lib/proto.js",
+      "test/helper.js"
+    ]
+  },
+  "h-pino-34": {
+    "repo": "pino",
+    "query": "The redaction guide says the implementation is built on fast-redact. What dependency does this source revision actually import?",
+    "files": [
+      "benchmarks/deep-object.bench.js",
+      "lib/worker.js",
+      "benchmarks/multi-arg.bench.js",
+      "test/browser-redaction.test.js",
+      "lib/proto.js",
+      "benchmarks/child.bench.js",
+      "benchmarks/object.bench.js",
+      "benchmarks/child-creation.bench.js",
+      "test/redact.test.js",
+      "benchmarks/child-child.bench.js",
+      "browser.js",
+      "test/fixtures/transport-uses-pino-config.js",
+      "test/fixtures/ts/transpile.cjs",
+      "benchmarks/long-string.bench.js",
+      "benchmarks/basic.bench.js",
+      "lib/transport-stream.js",
+      "test/fixtures/transport-transform.js"
+    ]
+  },
+  "h-pino-35": {
+    "repo": "pino",
+    "query": "The API lists `redact` default as `undefined`. When callers omit it, what value is merged into options internally, and does that value enter the redactor setup branch?",
+    "files": [
+      "test/escaping.test.js",
+      "test/browser-redaction.test.js",
+      "test/caller.test.js",
+      "lib/transport.js",
+      "test/fixtures/default-exit.js",
+      "test/transport/node-options.test.js",
+      "test/levels.test.js",
+      "test/helper.js",
+      "pino.d.ts",
+      "test/redact.test.js",
+      "browser.js",
+      "lib/redaction.js"
+    ]
+  },
+  "h-pino-36": {
+    "repo": "pino",
+    "query": "The transport guide says transport.level is ignored with a single target. What does the worker do when that target has a level?",
+    "files": [
+      "test/types/pino-transport.tst.ts",
+      "test/transport/crash.test.js",
+      "test/transport/targets.test.js",
+      "lib/transport-stream.js",
+      "test/transport/core.test.js",
+      "pino.d.ts",
+      "test/transport/bundlers-support.test.js",
+      "test/helper.js",
+      "lib/transport.js",
+      "test/transport/node-options.test.js",
+      "lib/tools.js",
+      "test/types/pino.tst.ts",
+      "examples/transport.js",
+      "pino.js"
+    ]
+  },
+  "h-pino-37": {
+    "repo": "pino",
+    "query": "The API reference lists the default for `customLevels` as `undefined`. For an omitted option, what default enters normalized logger options?",
+    "files": [
+      "lib/levels.js",
+      "test/fixtures/default-exit.js",
+      "lib/worker.js",
+      "test/transport/node-options.test.js",
+      "pino.d.ts",
+      "test/serializers.test.js",
+      "test/types/pino.ts",
+      "examples/transport.js",
+      "test/browser-is-level-enabled.test.js",
+      "test/helper.js",
+      "test/levels.test.js",
+      "test/escaping.test.js",
+      "lib/proto.js",
+      "test/custom-levels.test.js"
+    ]
+  }
+}

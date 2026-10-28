@@ -1,0 +1,118 @@
+{
+  "batch": "codex-v3",
+  "preregistration_version": 38,
+  "status": "prepared_offline_checks_passed_no_solver_calls",
+  "graphify_adapter": {
+    "id": "native-cli-v2",
+    "driver_sha256": "4b10ed92dc6bf6ee8f38e46040ff2e1b49b5de99207d0fe606f04168ba21e72f",
+    "manifest_sha256": "a64d3592b6eb9a8407c717398383ab6a48717545b4addcc5dfceafd6245d7d58"
+  },
+  "model": "gpt-6-luna",
+  "reasoning_effort": "medium",
+  "python_tests_passed": 181,
+  "planned_trials": 18,
+  "completed_solver_trials": 0,
+  "model_calls": 0,
+  "implementation_hashes_match": true,
+  "fixture_controls_passed": true,
+  "fixture_controls": [
+    {
+      "task": "gin-2718",
+      "source_manifest_sha256": "734bfecc4bc4e154bc64411e0cc1ccce8e7109857ea91b42e9cd73df5220c504",
+      "faulted": {
+        "ok": true,
+        "result": {
+          "verification_passed": false,
+          "returncode": 1,
+          "output": "2026/10/23 08:07:24 The AppEngine flag is going to be deprecated. Please check issues #2723 and #2739 and use 'TrustedPlatform: gin.PlatformGoogleAppEngine' instead.\n--- FAIL: TestContextClientIP (0.00s)\n    context_test.go:2172: \n        \tError Trace:\t/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-gin-2718/workspace/context_test.go:2172\n        \tError:      \tNot equal: \n        \t            \texpected: \"20.20.20.20\"\n        \t            \tactual  : \"\"\n        \t            \t\n        \t            \tDiff:\n        \t            \t--- Expected\n        \t            \t+++ Actual\n        \t            \t@@ -1 +1 @@\n        \t            \t-20.20.20.20\n        \t            \t+\n        \tTest:       \tTestContextClientIP\n[GIN] 2026/10/23 - 08:07:24 | 200 |      1\u00b5s |       192.0.2.1 | GET      \"/name1/api\"\n[GIN] 2026/10/23 - 08:07:24 | 200 |  2.167\u00b5s |       192.0.2.1 | GET      \"/name2/api\"\n[GIN] 2026/10/23 - 08:07:24 | 200 |  1.084\u00b5s |       127.0.0.1 | GET      \"/\"\n[GIN] 2026/10/23 - 08:07:24 | 200 | 18.292\u00b5s |       192.0.2.1 | GET      \"/test?birthday=2000-01-01\"\n[GIN] 2026/10/23 - 08:07:24 | 200 |  4.458\u00b5s |       192.0.2.1 | GET      \"/test/copy/race\"\nFAIL\nFAIL\tgithub.com/gin-gonic/gin\t0.484s\nFAIL\n"
+        }
+      },
+      "reference": {
+        "ok": true,
+        "result": {
+          "verification_passed": true,
+          "returncode": 0,
+          "output": "ok  \tgithub.com/gin-gonic/gin\t0.498s\n"
+        }
+      },
+      "protected_tests_unchanged": true,
+      "model_calls": 0,
+      "comparison_eligible": false
+    },
+    {
+      "task": "click-1884",
+      "source_manifest_sha256": "1bf2c2d53d19c60776b1cfc575f3bc7b5c4d13cb82a39736191a11e765d4a6e5",
+      "faulted": {
+        "ok": true,
+        "result": {
+          "verification_passed": false,
+          "returncode": 1,
+          "output": "........................................................................ [ 66%]\n........................FF...........                                    [100%]\n=================================== FAILURES ===================================\n___________ test_version_option_resolves_import_name_to_distribution ___________\n\nrunner = <click.testing.CliRunner object at 0x107c5d040>\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107c5d640>\n\n    def test_version_option_resolves_import_name_to_distribution(runner, monkeypatch):\n        \"\"\"When ``package_name`` (detected or passed) is an import name that\n        differs from its installed distribution name (``PIL`` vs ``Pillow``),\n        ``version_option`` resolves it via ``packages_distributions()`` instead\n        of raising ``RuntimeError``.\n        \"\"\"\n        import importlib.metadata\n    \n        def fake_version(name):\n            if name == \"pillow\":\n                return \"10.4.0\"\n            raise importlib.metadata.PackageNotFoundError(name)\n    \n        monkeypatch.setattr(importlib.metadata, \"version\", fake_version)\n        monkeypatch.setattr(\n            importlib.metadata,\n            \"packages_distributions\",\n            lambda: {\"PIL\": [\"pillow\"]},\n        )\n    \n        @click.command()\n        @click.version_option(package_name=\"PIL\")\n        def cli():\n            pass\n    \n        result = runner.invoke(cli, [\"--version\"], prog_name=\"imageapp\")\n>       assert result.exit_code == 0\nE       assert 1 == 0\nE        +  where 1 = <Result RuntimeError(\"'PIL' is not installed. Try passing 'package_name' instead.\")>.exit_code\n\ntests/test_basic.py:889: AssertionError\n_______________ test_version_option_ambiguous_import_name_errors _______________\n\nrunner = <click.testing.CliRunner object at 0x107c5fe00>\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107c5fd10>\n\n    def test_version_option_ambiguous_import_name_errors(runner, monkeypatch):\n        \"\"\"When an import name maps to multiple installed distributions, the\n        user must disambiguate. The error names the candidates.\n        \"\"\"\n        import importlib.metadata\n    \n        def fake_version(name):\n            raise importlib.metadata.PackageNotFoundError(name)\n    \n        monkeypatch.setattr(importlib.metadata, \"version\", fake_version)\n        monkeypatch.setattr(\n            importlib.metadata,\n            \"packages_distributions\",\n            lambda: {\"plug\": [\"foo-plug\", \"bar-plug\"]},\n        )\n    \n        @click.command()\n        @click.version_option(package_name=\"plug\")\n        def cli():\n            pass\n    \n        result = runner.invoke(cli, [\"--version\"])\n        assert result.exit_code != 0\n        msg = str(result.exception)\n>       assert \"multiple installed distributions\" in msg\nE       assert 'multiple installed distributions' in \"'plug' is not installed. Try passing 'package_name' instead.\"\n\ntests/test_basic.py:917: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_basic.py::test_version_option_resolves_import_name_to_distribution\nFAILED tests/test_basic.py::test_version_option_ambiguous_import_name_errors\n2 failed, 107 passed in 0.11s\n"
+        }
+      },
+      "reference": {
+        "ok": true,
+        "result": {
+          "verification_passed": true,
+          "returncode": 0,
+          "output": "........................................................................ [ 66%]\n.....................................                                    [100%]\n109 passed in 0.09s\n"
+        }
+      },
+      "protected_tests_unchanged": true,
+      "model_calls": 0,
+      "comparison_eligible": false
+    },
+    {
+      "task": "undici-5520",
+      "source_manifest_sha256": "26660af2266be8b3688f0de1e1fc4803c9b7efd75f175e2a34f2a8433bfd3e57",
+      "faulted": {
+        "ok": true,
+        "result": {
+          "verification_passed": false,
+          "returncode": 1,
+          "output": "\u2714 request dump head (12.901333ms)\n\u2714 request dump big (6.958792ms)\n\u2714 request dump (1.953125ms)\n\u2714 request dump with abort signal (1.649542ms)\n\u2714 request dump with POJO as invalid signal (1.370708ms)\n\u2714 request dump with aborted signal (0.91425ms)\n\u2714 request hwm (0.865083ms)\n\u2714 request abort before headers (1.176542ms)\n\u2714 request body destroyed on invalid callback (0.31575ms)\n\u2714 trailers (1.152ms)\n\u2714 destroy socket abruptly (1.144375ms)\n\u2714 destroy socket abruptly with keep-alive (0.676958ms)\n\u2714 request json (0.845709ms)\n\u2714 request long multibyte json (1.325041ms)\n\u2714 request text (0.735875ms)\n\u25b6 headers\n  \u25b6 invalid headers\n    \u2714 invalid header value - array with string with invalid character (0.392083ms)\n    \u2714 invalid header value - array with POJO (0.109792ms)\n    \u2714 invalid header value - string with invalid character (0.08825ms)\n    \u2714 invalid header value - object (0.090041ms)\n  \u2714 invalid headers (0.782416ms)\n  \u25b6 array\n    \u2714 empty host header (1.426916ms)\n  \u2714 array (1.649792ms)\n  \u25b6 host\n    \u2714 invalid host header (0.115917ms)\n    \u2714 empty host header (0.9005ms)\n  \u2714 host (1.2195ms)\n\u2714 headers (3.7595ms)\n\u2714 request long multibyte text (1.217916ms)\n\u2714 request blob (0.756375ms)\n\u2714 request arrayBuffer (0.752541ms)\n\u2714 request bytes (0.69575ms)\n\u2714 request body (1.273917ms)\n\u2714 request post body no missing data (1.133166ms)\n\u2714 request post body no extra data handler (1.502875ms)\n\u2714 request with onInfo callback (0.829333ms)\n\u2714 request with onInfo callback but socket is destroyed before end of response (1.5895ms)\n\u2714 request onInfo callback headers parsing (0.655375ms)\n\u2714 request raw responseHeaders (0.797375ms)\n\u2714 request formData (0.754209ms)\n\u2714 request text2 (0.68375ms)\n\u2714 request with FormData body (0.377ms)\n\u2716 request rejects FormData bodies from another implementation (4.396917ms)\n\u2714 request post body Buffer from string (1.137333ms)\n\u2714 request post body Buffer from buffer (0.8545ms)\n\u2714 request post body Uint8Array (0.688791ms)\n\u2714 request post body Uint32Array (0.663625ms)\n\u2714 request post body Float64Array (0.755042ms)\n\u2714 request post body BigUint64Array (0.642459ms)\n\u2714 request post body DataView (0.562125ms)\n\u2714 request multibyte json with setEncoding (103.466208ms)\n\u2714 request multibyte text with setEncoding (104.294875ms)\n\u2714 request multibyte text with setEncoding (102.388416ms)\n\u2714 setEncoding('utf8') handles 3-byte UTF-8 characters split across chunks (55.542375ms)\n\u2714 #5611 - setEncoding() then .text() does not truncate a body that arrives in several chunks (3.869459ms)\n\u2714 #3736 - Aborted Response (without consuming body) (1.652708ms)\n\u2139 tests 50\n\u2139 suites 4\n\u2139 pass 49\n\u2139 fail 1\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 563.455166\n\n\u2716 failing tests:\n\ntest at test/client-request.js:1204:1\n\u2716 request rejects FormData bodies from another implementation (4.396917ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n  + actual - expected\n  \n    Comparison {\n  +   message: 'unexpected connection',\n  +   name: 'Error'\n  -   code: 'UND_ERR_INVALID_ARG',\n  -   message: 'body must be a FormData created by this undici package instance; FormData from other sources, such as the built-in FormData provided by Node.js, is not supported',\n  -   name: 'InvalidArgumentError'\n    }\n  \n      at async TestContext.<anonymous> (/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/test/client-request.js:1228:5)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: Error: unexpected connection\n        at connect (/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/test/client-request.js:1219:16)\n        at Client.connect (/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/lib/dispatcher/client.js:297:37)\n        at connect (/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/lib/dispatcher/client.js:534:23)\n        at _resume (/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/lib/dispatcher/client.js:729:7)\n        at resume (/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/lib/dispatcher/client.js:653:3)\n        at /Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/lib/dispatcher/client.js:417:28\n        at node:internal/process/task_queues:151:7\n        at AsyncResource.runInAsyncScope (node:async_hooks:226:14)\n        at AsyncResource.runMicrotask (node:internal/process/task_queues:148:8),\n    expected: InvalidArgumentError: body must be a FormData created by this undici package instance; FormData from other sources, such as the built-in FormData provided by Node.js, is not supported\n        at TestContext.<anonymous> (/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/trials/codex-v3-local-control-undici-5520/workspace/test/client-request.js:1224:25)\n        at Test.runInAsyncScope (node:async_hooks:226:14)\n        at Test.run (node:internal/test_runner/test:1402:25)\n        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n        at Test.postRun (node:internal/test_runner/test:1542:19)\n        at Test.run (node:internal/test_runner/test:1467:12)\n        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),\n    operator: 'rejects',\n    diff: 'simple'\n  }\n"
+        }
+      },
+      "reference": {
+        "ok": true,
+        "result": {
+          "verification_passed": true,
+          "returncode": 0,
+          "output": "\u2714 request dump head (11.418375ms)\n\u2714 request dump big (7.078542ms)\n\u2714 request dump (1.647916ms)\n\u2714 request dump with abort signal (1.294375ms)\n\u2714 request dump with POJO as invalid signal (1.150791ms)\n\u2714 request dump with aborted signal (0.915666ms)\n\u2714 request hwm (0.960416ms)\n\u2714 request abort before headers (1.194458ms)\n\u2714 request body destroyed on invalid callback (0.286458ms)\n\u2714 trailers (1.008417ms)\n\u2714 destroy socket abruptly (1.224792ms)\n\u2714 destroy socket abruptly with keep-alive (0.797084ms)\n\u2714 request json (1.003209ms)\n\u2714 request long multibyte json (1.308083ms)\n\u2714 request text (0.842417ms)\n\u25b6 headers\n  \u25b6 invalid headers\n    \u2714 invalid header value - array with string with invalid character (0.367792ms)\n    \u2714 invalid header value - array with POJO (0.113083ms)\n    \u2714 invalid header value - string with invalid character (0.08025ms)\n    \u2714 invalid header value - object (0.089959ms)\n  \u2714 invalid headers (0.732ms)\n  \u25b6 array\n    \u2714 empty host header (1.337541ms)\n  \u2714 array (1.531375ms)\n  \u25b6 host\n    \u2714 invalid host header (0.116959ms)\n    \u2714 empty host header (0.941958ms)\n  \u2714 host (1.243291ms)\n\u2714 headers (3.60125ms)\n\u2714 request long multibyte text (1.027875ms)\n\u2714 request blob (0.818459ms)\n\u2714 request arrayBuffer (0.838917ms)\n\u2714 request bytes (0.760667ms)\n\u2714 request body (1.148292ms)\n\u2714 request post body no missing data (1.085416ms)\n\u2714 request post body no extra data handler (1.480042ms)\n\u2714 request with onInfo callback (0.859667ms)\n\u2714 request with onInfo callback but socket is destroyed before end of response (1.281625ms)\n\u2714 request onInfo callback headers parsing (0.650541ms)\n\u2714 request raw responseHeaders (0.825791ms)\n\u2714 request formData (0.6295ms)\n\u2714 request text2 (0.555542ms)\n\u2714 request with FormData body (0.377042ms)\n\u2714 request rejects FormData bodies from another implementation (3.639333ms)\n\u2714 request post body Buffer from string (0.746959ms)\n\u2714 request post body Buffer from buffer (0.799667ms)\n\u2714 request post body Uint8Array (0.722584ms)\n\u2714 request post body Uint32Array (0.648958ms)\n\u2714 request post body Float64Array (0.62775ms)\n\u2714 request post body BigUint64Array (0.7ms)\n\u2714 request post body DataView (0.719208ms)\n\u2714 request multibyte json with setEncoding (102.897375ms)\n\u2714 request multibyte text with setEncoding (103.287375ms)\n\u2714 request multibyte text with setEncoding (105.560875ms)\n\u2714 setEncoding('utf8') handles 3-byte UTF-8 characters split across chunks (53.941667ms)\n\u2714 #5611 - setEncoding() then .text() does not truncate a body that arrives in several chunks (3.594375ms)\n\u2714 #3736 - Aborted Response (without consuming body) (1.716667ms)\n\u2139 tests 50\n\u2139 suites 4\n\u2139 pass 50\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 539.565333\n"
+        }
+      },
+      "protected_tests_unchanged": true,
+      "model_calls": 0,
+      "comparison_eligible": false
+    }
+  ],
+  "sandbox_failure_preserved": ".research/evidence/codex-v3/fixture-controls.json",
+  "execution_condition": "Reference controls require localhost listener access. Initial sandboxed Go reference failed bind with operation not permitted. All three faulted/reference controls passed after approved execution outside sandbox; unchanged verifiers and source manifests.",
+  "commands": [
+    [
+      ".research/venv/bin/python",
+      "benchmark/run_codex_mcp_batch.py",
+      "--dry-run"
+    ],
+    [
+      ".research/venv/bin/python",
+      ".research/evidence/codex-v3/check_fixtures.py"
+    ],
+    [
+      ".research/venv/bin/python",
+      ".research/evidence/codex-v3/check_fixtures_local.py"
+    ]
+  ],
+  "source_sha256": {
+    "benchmark/preregistration.json": "f257ac51d2265b2eaea693f13d8670e49d3839b24b0b6e2cd89a14987f3129f4",
+    ".research/evidence/codex-v3/spec.json": "59412d7e95bca5275cb56eba46a0e4597820faab5eaf7f979aaaefd93fd49ab7",
+    ".research/evidence/codex-v3/preflight-dry-run.json": "b444c69473dabdf4439fcc47b67390841d123bb4c21cdd74519199e5b6938f6a",
+    ".research/evidence/codex-v3/fixture-controls.json": "445354d3685a22d09d075322ecf37e40113a884516422afe4c23f04dfe77969f",
+    ".research/evidence/codex-v3/fixture-controls-local.json": "55f2fdebc38b3a1e6a927d4d16ae5fe201b61338ccf944ffd70e5c2a990cefcf",
+    ".research/evidence/codex-v3/check_fixtures.py": "518296f8900d93d153b5b6137ffc8c4275e9a98246a967681d40726310885a0e",
+    ".research/evidence/codex-v3/check_fixtures_local.py": "020cf6a73bfcc1ef59d08b4a8af3e9ca4d0d711707e929c1b9a2c6664f092f5b"
+  },
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "limitation": "Offline protocol and fixture readiness only. No new retrieval comparison, solver outcomes or performance evidence. v37 remains stopped; v38 is a separate development diagnostic."
+}

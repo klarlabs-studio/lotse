@@ -1,0 +1,174 @@
+{
+  "h-zerolog-impact-diode-pool-cap": {
+    "repo": "zerolog",
+    "query": "What would change if the 64 KiB cap before returning diode buffers to the pool were raised or removed, and where is that cap enforced?",
+    "files": [
+      "diode/internal/diodes/many_to_one.go",
+      "writer.go",
+      "event.go",
+      "journald/journald_test.go",
+      "internal/cbor/types_64_test.go",
+      "log_test.go",
+      "globals.go",
+      "internal/json/types_test.go",
+      "event_test.go",
+      "internal/cbor/types_test.go",
+      "diode/internal/diodes/poller.go",
+      "log/log_example_test.go",
+      "slog_test.go",
+      "hlog/hlog_test.go",
+      "diode/diode_example_test.go",
+      "diode/diode_test.go",
+      "diode/internal/diodes/waiter.go",
+      "array.go",
+      "log.go"
+    ]
+  },
+  "h-zerolog-impact-slog-disabled": {
+    "repo": "zerolog",
+    "query": "If disabled loggers began returning non-nil Events, which nil-guarded message callback behavior would be at risk, and what test currently protects the lazy callback contract?",
+    "files": [
+      "log/log.go",
+      "array.go",
+      "slog_test.go",
+      "console.go",
+      "globals.go",
+      "benchmark_test.go",
+      "ctx_test.go",
+      "binary_test.go",
+      "error_marshal_test.go",
+      "fixtures_test.go",
+      "context.go",
+      "log_test.go"
+    ]
+  },
+  "h-zerolog-impact-warning-alias": {
+    "repo": "zerolog",
+    "query": "If Event.Interface stopped dispatching LogObjectMarshaler values to Object, what encoding behavior would change and which interface-field test case exercises that path?",
+    "files": [
+      "fields.go",
+      "log_test.go",
+      "internal/testcases.go",
+      "ctx_test.go",
+      "context.go",
+      "log.go",
+      "slog_test.go",
+      "array.go",
+      "benchmark_test.go",
+      "context_test.go"
+    ]
+  },
+  "h-zerolog-trace-dict-array": {
+    "repo": "zerolog",
+    "query": "Trace a Context.Dict call to finalization: how is the nested Event terminated and appended, and how is that temporary Event disposed?",
+    "files": [
+      "array.go",
+      "syslog_test.go",
+      "binary_test.go",
+      "event.go",
+      "log_test.go",
+      "slog_test.go",
+      "event_test.go",
+      "log_example_test.go",
+      "log/log.go",
+      "log.go"
+    ]
+  },
+  "h-zerolog-trace-diode-lifecycle": {
+    "repo": "zerolog",
+    "query": "Trace a log line through diode.NewWriter to the wrapped writer, then explain how Close waits for the background consumer and closes the destination when supported.",
+    "files": [
+      "error_marshal_test.go",
+      "diode/internal/diodes/poller.go",
+      "writer_test.go",
+      "internal/cbor/types_test.go",
+      "hlog/hlog_example_test.go",
+      "log.go",
+      "log_test.go",
+      "diode/diode_example_test.go",
+      "hlog/internal/mutil/writer_proxy.go",
+      "diode/diode_test.go",
+      "diode/internal/diodes/waiter.go",
+      "hlog/hlog.go",
+      "writer.go",
+      "syslog_test.go",
+      "log/log.go"
+    ]
+  },
+  "h-zerolog-trace-journald-write": {
+    "repo": "zerolog",
+    "query": "Trace a JSON record through the journald writer: how are priority and key/value arguments derived, and what extra argument contains the original record?",
+    "files": [
+      "context.go",
+      "syslog_test.go",
+      "slog.go",
+      "log/log.go",
+      "journald/journald_test.go",
+      "diode/diode.go",
+      "event_test.go",
+      "log.go",
+      "internal/json/types_test.go",
+      "log/log_example_test.go",
+      "slog_test.go",
+      "log_test.go"
+    ]
+  },
+  "h-zerolog-trace-print-event": {
+    "repo": "zerolog",
+    "query": "Follow Logger.Print from the convenience method to the emitted event: which level does it use, how is the caller adjusted, and what message string is sent?",
+    "files": [
+      "event.go",
+      "log/log.go",
+      "hlog/hlog.go",
+      "log_test.go",
+      "log/log_example_test.go",
+      "context.go",
+      "writer.go",
+      "hlog/hlog_test.go",
+      "internal/cbor/time_test.go",
+      "event_test.go",
+      "log_example_test.go",
+      "binary_test.go",
+      "globals.go",
+      "hook_test.go"
+    ]
+  },
+  "h-zerolog-trace-slog-handle": {
+    "repo": "zerolog",
+    "query": "Trace how SlogHandler.Handle maps a slog level, attaches the supplied context, adds record attributes, and emits the message.",
+    "files": [
+      "ctx.go",
+      "log/log.go",
+      "log.go",
+      "binary_test.go",
+      "syslog.go",
+      "writer.go",
+      "hlog/hlog.go",
+      "event.go",
+      "log_test.go",
+      "slog_test.go",
+      "syslog_test.go",
+      "hlog/hlog_example_test.go",
+      "context.go",
+      "event_test.go"
+    ]
+  },
+  "h-zerolog-trace-warning-parse-test": {
+    "repo": "zerolog",
+    "query": "Trace parsing \"WARNING\" from the public parser through the regression test: what level and error outcome should a caller get?",
+    "files": [
+      "hook_test.go",
+      "binary_test.go",
+      "globals.go",
+      "fixtures_test.go",
+      "event_test.go",
+      "journald/journald.go",
+      "syslog.go",
+      "syslog_test.go",
+      "writer.go",
+      "event.go",
+      "log/log.go",
+      "internal/cbor/decode_stream.go"
+    ]
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "version": 9,
+  "frozen_on": "2026-10-18",
+  "rationale": "research/next-experiments.md; sources in research/evidence.md",
+  "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
+  "workloads": {
+    "development": {
+      "queries": "benchmark/queries.json",
+      "role": "variance pilot and regression diagnostics; already used for tuning, so it cannot pass the decision rule"
+    },
+    "held_out": {
+      "queries": "benchmark/heldout-queries.json",
+      "sha256": "665e1fbacccc88a00b705d2bf90dc9ba89e07996cfa958caccfb445fed0576df",
+      "minimum_queries": 110,
+      "requirements": "authored and judged independently of graf tuning; pooled top-10 files of every arm and Graphify judged blind; freeze sha256 here before any arm runs",
+      "frozen_on": "2026-10-18",
+      "authoring": "123 queries (111 with code evidence) drafted by three Claude subagents, one per repository, that read only the pinned snapshots and had no access to graf, Graphify, or any retrieval output; the operator chose this over independent human authoring. A random sample of 9 was spot-checked, 4 line by line. Weaker independence than human authoring; report it with every result",
+      "judging": "after the run, pool the top-10 cited files of every arm and Graphify per query; a fresh agent that is not told which system cited a file judges each pooled file; recall uses author labels plus judged-relevant files"
+    }
+  },
+  "unit": "query",
+  "comparators": [
+    "graphify (pin in benchmark/corpora.json)",
+    "last accepted graf version, once one exists"
+  ],
+  "primary": {
+    "metric": "output_tokens",
+    "budget": 2000,
+    "hypothesis": "candidate delivers fewer tokens than the comparator",
+    "test": "one-sided paired sign-flip permutation on comparator minus candidate",
+    "alpha": 0.05
+  },
+  "guardrails": {
+    "metrics": [
+      "code_file_hint_recall",
+      "code_file_hint_recall_at_5",
+      "code_file_hint_recall_at_10"
+    ],
+    "budgets": [
+      2000,
+      8000
+    ],
+    "test": "one-sided paired sign-flip non-inferiority on candidate minus comparator",
+    "margin": 0.1,
+    "alpha": 0.05,
+    "correction": "holm",
+    "scope": "queries whose annotations contain code evidence"
+  },
+  "tail": {
+    "severe_loss": "candidate code_file_hint_recall is 0 at any budget where the comparator's is above 0",
+    "max_wilson_upper": 0.15,
+    "confidence": 0.95
+  },
+  "latency": {
+    "gated": false,
+    "invocations_per_case": 15,
+    "report": "median and bootstrap interval; cold and warm cache separately",
+    "held_out_quality_run": "1 invocation per tool and case (outputs are deterministic and checked); timings from this run are not used for inference",
+    "latency_run": "15 alternating invocations per case on a quiet machine, only for arms that pass the decision rule, against Graphify"
+  },
+  "agent_trials": {
+    "minimum_tasks": 20,
+    "minimum_paired_trials_per_task_and_arm": 5,
+    "success": "non-inferiority, Wilson intervals, pass^k for k = 1..5",
+    "efficiency": "superiority on total cost across all attempts",
+    "solver": "Claude Code 2.1.302 headless: claude -p --model claude-haiku-5-5 --tools \"\" --strict-mcp-config --mcp-config <broker server for the arm> --setting-sources \"\" --disable-slash-commands --no-session-persistence --output-format stream-json --max-budget-usd 0.50; the broker (benchmark/task_session.py) is the only tool surface",
+    "model": "claude-haiku-5-5",
+    "spend_cap_usd": null,
+    "billing": "the operator's Claude Code Max 5x subscription; caps are usage-equivalent, not charges",
+    "per_run_cap": "--max-budget-usd 0.50 estimated; a run that hits the cap counts as a failure with its full usage",
+    "pacing": "batches sized to the subscription's usage windows; every attempt, including capped and errored runs, is recorded",
+    "usage_source": "stream-json usage per model call; estimated cost reported separately from tokens",
+    "max_budget_usd": 0.5,
+    "implementation": "benchmark/run_agent_trial.py (runner) and benchmark/broker_mcp.py (MCP adapter)",
+    "isolation_check": "2026-10-18 smoke call: empty cwd, no tools or MCP servers, ~730 input tokens total, model reported no personal instructions or recalled context"
+  },
+  "report_every_case": true,
+  "revisions": [
+    {
+      "version": 2,
+      "date": "2026-10-18",
+      "change": "adopted query-level rule with non-inferiority margin 0.05"
+    },
+    {
+      "version": 3,
+      "date": "2026-10-18",
+      "change": "margin 0.05 -> 0.10 and held-out minimum 70 -> 110, decided after the development-set variance pilot implied ~410-430 queries at 0.05; no held-out data existed"
+    },
+    {
+      "version": 4,
+      "date": "2026-10-18",
+      "change": "recorded the query-time candidate arm definitions, constants, and a Bonferroni split of the primary alpha across experimental arms before any run"
+    },
+    {
+      "version": 5,
+      "date": "2026-10-18",
+      "change": "added index-time arms B2 (path weight 3) and C1-C3 (English stopwords, none, English plus full identifiers) for locate before any run; primary alpha now split across 9 experimental arms"
+    },
+    {
+      "version": 6,
+      "date": "2026-10-18",
+      "change": "added combined arms (damped file score with gap or floor stopping) and fixed the agent model to claude-haiku-5-5, before any held-out data existed. The combination was proposed after seeing development-set diagnostics, so its held-out result is the only valid evidence; primary alpha now split across 11 experimental arms"
+    },
+    {
+      "version": 7,
+      "date": "2026-10-18",
+      "change": "specified the agent solver (headless Claude Code with Haiku, broker-only tools) and per-run cap under the operator's subscription; decision rule unchanged; machine-readable max_budget_usd and --disable-slash-commands added the same day, before any trial"
+    },
+    {
+      "version": 8,
+      "date": "2026-10-18",
+      "change": "froze the held-out workload (sha256 665e1fbacccc88a0...) before any retrieval tool saw it"
+    },
+    {
+      "version": 9,
+      "date": "2026-10-18",
+      "change": "split the held-out run into a 1-repeat quality/token run (any load) and a separate 15-repeat latency run for passing arms; 15 repeats of 14 tools over 246 cases would take ~6 h on a quiet machine. Decided before any held-out run"
+    }
+  ],
+  "arms": {
+    "accepted": {
+      "graf": "search",
+      "graf_locate": "locate"
+    },
+    "experimental": {
+      "graf_gap": "search --stop gap",
+      "graf_floor": "search --stop floor",
+      "graf_locate_gap": "locate --stop gap",
+      "graf_locate_floor": "locate --stop floor",
+      "graf_locate_damped": "locate --file-score damped",
+      "graf_locate_english": "locate (index --stopwords english)",
+      "graf_locate_nostop": "locate (index --stopwords none)",
+      "graf_locate_fullid": "locate (index --stopwords english --full-identifiers)",
+      "graf_locate_path3": "locate (index --path-weight 3)",
+      "graf_locate_damped_gap": "locate --file-score damped --stop gap",
+      "graf_locate_damped_floor": "locate --file-score damped --stop floor"
+    },
+    "constants": "src/policy.rs: gap minimum 3, buffer 2, search share 0.9; floor ratio 0.5; damping 1, 0.5, 0.25. src/terms.rs: C1 is Lucene's 33-word EnglishAnalyzer stop set; C3 adds lowercased identifiers that split into two or more parts; B2 counts path terms 3 times (BM25F, integer weight, shared length normalization)",
+    "deferred": "index-time arms run with locate only: search fills the budget, so it cannot pass the token test whatever the analyzer",
+    "multiplicity": "the primary test for each experimental arm uses alpha / number of experimental arms (Bonferroni); guardrails and the tail cap apply unchanged; report every arm, including losing ones"
+  }
+}

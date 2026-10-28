@@ -1,0 +1,55 @@
+{
+  "batch": "codex-d1",
+  "planned_trials": 9,
+  "completed_trials": 1,
+  "arms": {
+    "graf_current_orient": {
+      "completed_trials": 0,
+      "verifier_passes": 0,
+      "recorded_tokens": 0,
+      "all_invocations_have_usage": true
+    },
+    "graphify_orient": {
+      "completed_trials": 0,
+      "verifier_passes": 0,
+      "recorded_tokens": 0,
+      "all_invocations_have_usage": true
+    },
+    "search_only": {
+      "completed_trials": 1,
+      "verifier_passes": 0,
+      "recorded_tokens": 0,
+      "all_invocations_have_usage": false
+    }
+  },
+  "cases": [
+    {
+      "task": "gin-2718",
+      "attempt": 1,
+      "trial": "codex-d1-gin-2718-search_only-1",
+      "arm": "search_only",
+      "model": "gpt-6-luna",
+      "error": "ValueError: Native tool or unknown item violates broker isolation: error",
+      "passed": false,
+      "agent_called_finish": false,
+      "wall_s": 8.546568582998589,
+      "invocations": 1,
+      "completed_usage_records": 0,
+      "reported_usage_complete": false,
+      "internal_model_request_count": null,
+      "subscription_charge_usd": null,
+      "api_equivalent_cost_usd": null,
+      "infrastructure_error": false,
+      "audit": null,
+      "promotion_eligible": false
+    }
+  ],
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false,
+  "blockers": [
+    "Reused three-task diagnostic, insufficient for promotion or statistical inference",
+    "Internal provider request counts and subscription charges unmeasured",
+    "Missing trials",
+    "Incomplete invocation usage"
+  ]
+}

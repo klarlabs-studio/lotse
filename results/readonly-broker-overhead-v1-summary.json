@@ -1,0 +1,298 @@
+{
+  "scope": "Six exposed development queries; descriptive overhead diagnostic only; no latency inference, superiority or agent-savings claim",
+  "plan": ".research/evidence/readonly-broker-overhead-v1/plan.json",
+  "status": "completed",
+  "session_count": 108,
+  "arms": {
+    "graf_v59": {
+      "sessions": 36,
+      "failures": 0,
+      "timing": {
+        "snapshot_enter_wall_ms": {
+          "median_ms": 1019.5050835027359,
+          "min_ms": 287.4577499751467,
+          "max_ms": 4555.600000021514,
+          "samples": 36
+        },
+        "broker_init_wall_ms": {
+          "median_ms": 72.19614549831022,
+          "min_ms": 24.216624995460734,
+          "max_ms": 503.1463750055991,
+          "samples": 36
+        },
+        "retrieve_wall_ms": {
+          "median_ms": 426.37985451438,
+          "min_ms": 191.83054199675098,
+          "max_ms": 2255.2095419960096,
+          "samples": 36
+        },
+        "source_read_wall_ms": {
+          "median_ms": 0.6984999927226454,
+          "min_ms": 0.395249982830137,
+          "max_ms": 7.6683750085067,
+          "samples": 36
+        },
+        "broker_close_wall_ms": {
+          "median_ms": 0.008791990694589913,
+          "min_ms": 0.004917004844173789,
+          "max_ms": 0.02029098686762154,
+          "samples": 36
+        },
+        "snapshot_cleanup_wall_ms": {
+          "median_ms": 33.541478507686406,
+          "min_ms": 5.616458016447723,
+          "max_ms": 217.37604201189242,
+          "samples": 36
+        },
+        "native_child_ms": {
+          "median_ms": 231.37643749942072,
+          "min_ms": 145.2022499870509,
+          "max_ms": 1099.1454999893904,
+          "samples": 36
+        },
+        "total_ms": {
+          "median_ms": 1584.1611654905137,
+          "min_ms": 518.4182910015807,
+          "max_ms": 7268.6758350464515,
+          "samples": 36
+        },
+        "actual_wall_ms": {
+          "median_ms": 1625.5188539944356,
+          "min_ms": 527.3654159973375,
+          "max_ms": 7513.864167005522,
+          "samples": 36
+        },
+        "overhead_total_minus_native_ms": {
+          "median_ms": 1335.4208345117513,
+          "min_ms": 361.1486660083756,
+          "max_ms": 6197.036210040096,
+          "samples": 36
+        }
+      },
+      "serialized_payload_tokens": 143128
+    },
+    "graf_v61": {
+      "sessions": 36,
+      "failures": 0,
+      "timing": {
+        "snapshot_enter_wall_ms": {
+          "median_ms": 1045.609479493578,
+          "min_ms": 277.6458750013262,
+          "max_ms": 6482.791916991118,
+          "samples": 36
+        },
+        "broker_init_wall_ms": {
+          "median_ms": 70.10918750893325,
+          "min_ms": 22.12899998994544,
+          "max_ms": 647.5788749812637,
+          "samples": 36
+        },
+        "retrieve_wall_ms": {
+          "median_ms": 429.31402099202387,
+          "min_ms": 228.54179100249894,
+          "max_ms": 5539.885957987281,
+          "samples": 36
+        },
+        "source_read_wall_ms": {
+          "median_ms": 0.7299579883692786,
+          "min_ms": 0.3167910035699606,
+          "max_ms": 18.659082998055965,
+          "samples": 36
+        },
+        "broker_close_wall_ms": {
+          "median_ms": 0.009875002433545887,
+          "min_ms": 0.006208021659404039,
+          "max_ms": 0.022541993530467153,
+          "samples": 36
+        },
+        "snapshot_cleanup_wall_ms": {
+          "median_ms": 29.821521005942486,
+          "min_ms": 6.407707987818867,
+          "max_ms": 1287.599582981784,
+          "samples": 36
+        },
+        "native_child_ms": {
+          "median_ms": 255.681854498107,
+          "min_ms": 185.3432499920018,
+          "max_ms": 3370.5713749805,
+          "samples": 36
+        },
+        "total_ms": {
+          "median_ms": 1630.7193339598598,
+          "min_ms": 541.5934990160167,
+          "max_ms": 9643.160915962653,
+          "samples": 36
+        },
+        "actual_wall_ms": {
+          "median_ms": 1688.1706040003337,
+          "min_ms": 556.4476660219952,
+          "max_ms": 10254.171542008407,
+          "samples": 36
+        },
+        "overhead_total_minus_native_ms": {
+          "median_ms": 1410.8885219611693,
+          "min_ms": 352.62558300746605,
+          "max_ms": 8845.38066497771,
+          "samples": 36
+        }
+      },
+      "serialized_payload_tokens": 147382
+    },
+    "graphify": {
+      "sessions": 36,
+      "failures": 0,
+      "timing": {
+        "snapshot_enter_wall_ms": {
+          "median_ms": 161.35285449854564,
+          "min_ms": 28.17920799134299,
+          "max_ms": 1948.8061250012834,
+          "samples": 36
+        },
+        "broker_init_wall_ms": {
+          "median_ms": 51.814812497468665,
+          "min_ms": 9.452291007619351,
+          "max_ms": 907.9465830000117,
+          "samples": 36
+        },
+        "retrieve_wall_ms": {
+          "median_ms": 619.6644169976935,
+          "min_ms": 248.71941699529998,
+          "max_ms": 4425.948541000253,
+          "samples": 36
+        },
+        "source_read_wall_ms": {
+          "median_ms": 0.7137295033317059,
+          "min_ms": 0.3809169866144657,
+          "max_ms": 4.084249987499788,
+          "samples": 36
+        },
+        "broker_close_wall_ms": {
+          "median_ms": 0.010208517778664827,
+          "min_ms": 0.007375027053058147,
+          "max_ms": 0.02054200740531087,
+          "samples": 36
+        },
+        "snapshot_cleanup_wall_ms": {
+          "median_ms": 28.567437489982694,
+          "min_ms": 6.052584009012207,
+          "max_ms": 152.37037499900907,
+          "samples": 36
+        },
+        "native_child_ms": {
+          "median_ms": 454.2010629957076,
+          "min_ms": 218.54854197590612,
+          "max_ms": 3041.6125830088276,
+          "samples": 36
+        },
+        "total_ms": {
+          "median_ms": 873.0316675209906,
+          "min_ms": 293.1914580112789,
+          "max_ms": 7336.453624971909,
+          "samples": 36
+        },
+        "actual_wall_ms": {
+          "median_ms": 876.3829375093337,
+          "min_ms": 294.60649998509325,
+          "max_ms": 7362.510750012007,
+          "samples": 36
+        },
+        "overhead_total_minus_native_ms": {
+          "median_ms": 406.29970900772605,
+          "min_ms": 74.64291603537276,
+          "max_ms": 4294.841041963082,
+          "samples": 36
+        }
+      },
+      "serialized_payload_tokens": 303183
+    }
+  },
+  "native_comparison_summary": {
+    "2000": {
+      "graf_evidence_selective": {
+        "code_file_hint_recall": 1.0,
+        "scored_queries": 6,
+        "code_file_hint_recall_at_5": 0.9166666666666666,
+        "code_file_hint_recall_at_10": 1.0,
+        "median_cited_files": 20.5,
+        "median_query_ms": 282.0048544963356,
+        "median_output_tokens": 1665.5,
+        "over_cl100k_budget": 0
+      },
+      "graf_evidence_rescue": {
+        "code_file_hint_recall": 1.0,
+        "scored_queries": 6,
+        "code_file_hint_recall_at_5": 0.9166666666666666,
+        "code_file_hint_recall_at_10": 1.0,
+        "median_cited_files": 20.5,
+        "median_query_ms": 214.40102100314107,
+        "median_output_tokens": 1559.5,
+        "over_cl100k_budget": 0
+      },
+      "graphify": {
+        "code_file_hint_recall": 1.0,
+        "scored_queries": 6,
+        "code_file_hint_recall_at_5": 1.0,
+        "code_file_hint_recall_at_10": 1.0,
+        "median_cited_files": 16.5,
+        "median_query_ms": 397.016208502464,
+        "median_output_tokens": 1863.5,
+        "over_cl100k_budget": 2
+      }
+    },
+    "8000": {
+      "graf_evidence_selective": {
+        "code_file_hint_recall": 1.0,
+        "scored_queries": 6,
+        "code_file_hint_recall_at_5": 0.9166666666666666,
+        "code_file_hint_recall_at_10": 1.0,
+        "median_cited_files": 20.5,
+        "median_query_ms": 278.961687523406,
+        "median_output_tokens": 3720.0,
+        "over_cl100k_budget": 0
+      },
+      "graf_evidence_rescue": {
+        "code_file_hint_recall": 1.0,
+        "scored_queries": 6,
+        "code_file_hint_recall_at_5": 0.9166666666666666,
+        "code_file_hint_recall_at_10": 1.0,
+        "median_cited_files": 20.5,
+        "median_query_ms": 213.35079199343454,
+        "median_output_tokens": 3588.5,
+        "over_cl100k_budget": 0
+      },
+      "graphify": {
+        "code_file_hint_recall": 1.0,
+        "scored_queries": 6,
+        "code_file_hint_recall_at_5": 1.0,
+        "code_file_hint_recall_at_10": 1.0,
+        "median_cited_files": 17.5,
+        "median_query_ms": 389.52077049179934,
+        "median_output_tokens": 10653.0,
+        "over_cl100k_budget": 4
+      }
+    }
+  },
+  "acceptance": {
+    "status": "not_passed",
+    "arms": [
+      {
+        "candidate": "graf_evidence_selective",
+        "status": "not_passed",
+        "regressing_cases": 3,
+        "invalid_cases": 0
+      },
+      {
+        "candidate": "graf_evidence_rescue",
+        "status": "not_passed",
+        "regressing_cases": 3,
+        "invalid_cases": 0
+      }
+    ]
+  },
+  "decision": "invalid_evidence: subset differs from full registered development workload; exit1 preserved",
+  "product_promotion_allowed": false,
+  "agent_savings": "unmeasured",
+  "model_calls": 0,
+  "cache_conditions": "OS caches uncontrolled; native queries in fresh processes; Python broker process reused; fresh snapshot per session; no concurrent benchmark/test processes",
+  "timing_scope": "total_ms is additive subtotal of six preregistered measured phases, not entire workflow. actual_wall_ms also includes configuration, receipt writes and post-payload verification. Nested native_child_ms uses graphify executable while direct comparison uses python -m graphify; never subtract direct comparison timing. Setup snapshots rebuilt for both Graf arms. Initial live index builds and index amortization across multiple requests are outside this diagnostic."
+}

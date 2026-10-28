@@ -1,0 +1,180 @@
+{
+  "h-zerolog-arch-context-builders": {
+    "repo": "zerolog",
+    "query": "Which logger-associated state do Context.CreateDict and Context.CreateArray copy into temporary dictionary and array values?",
+    "files": [
+      "event.go",
+      "binary_test.go",
+      "log_example_test.go",
+      "pkgerrors/stacktrace.go",
+      "log_test.go",
+      "event_test.go",
+      "hook_test.go",
+      "slog.go",
+      "hlog/hlog.go",
+      "log.go",
+      "array.go",
+      "ctx.go",
+      "sampler.go",
+      "hook.go",
+      "writer.go"
+    ]
+  },
+  "h-zerolog-arch-diode-components": {
+    "repo": "zerolog",
+    "query": "What components make diode.Writer non-blocking for producers while a separate consumer writes to the destination, and what role does the poll interval play?",
+    "files": [
+      "error_marshal_test.go",
+      "log.go",
+      "event.go",
+      "writer_test.go",
+      "hlog/internal/mutil/writer_proxy_test.go",
+      "writer.go",
+      "syslog_test.go",
+      "fixtures_test.go",
+      "benchmark_test.go",
+      "diode/internal/diodes/waiter.go",
+      "diode/diode_example_test.go",
+      "diode/internal/diodes/many_to_one.go",
+      "diode/diode_test.go",
+      "internal/cbor/decode_stream.go",
+      "journald/journald.go",
+      "diode/internal/diodes/poller.go",
+      "event_test.go"
+    ]
+  },
+  "h-zerolog-arch-logger-event-encoder": {
+    "repo": "zerolog",
+    "query": "Describe the path from a Logger method such as Info to an Event and then to the writer, including where the level is filtered and where the message is encoded.",
+    "files": [
+      "console.go",
+      "writer_test.go",
+      "context.go",
+      "hlog/hlog.go",
+      "diode/diode.go",
+      "syslog.go",
+      "hlog/hlog_example_test.go",
+      "binary_test.go",
+      "writer.go",
+      "log_example_test.go",
+      "diode/diode_test.go",
+      "slog_test.go",
+      "log/log.go"
+    ]
+  },
+  "h-zerolog-arch-slog-adapter": {
+    "repo": "zerolog",
+    "query": "How is standard-library slog integrated with zerolog, from handler construction through level conversion and attribute conversion?",
+    "files": [
+      "globals.go",
+      "log/log.go",
+      "hlog/hlog_example_test.go",
+      "slog_test.go",
+      "event.go",
+      "log.go",
+      "log/log_example_test.go",
+      "hlog/hlog.go",
+      "syslog.go",
+      "journald/journald.go",
+      "writer.go",
+      "log_test.go",
+      "hlog/hlog_test.go",
+      "sampler.go",
+      "event_test.go"
+    ]
+  },
+  "h-zerolog-conceptual-burst-sampling": {
+    "repo": "zerolog",
+    "query": "How does BurstSampler behave after its initial per-period burst is exhausted, including when there is no follow-on sampler?",
+    "files": [
+      "sampler_test.go",
+      "diode/internal/diodes/poller.go",
+      "event.go",
+      "hook.go",
+      "console_test.go",
+      "diode/internal/diodes/many_to_one.go",
+      "diode/diode.go",
+      "slog.go",
+      "writer.go",
+      "fixtures_test.go",
+      "array.go",
+      "log.go",
+      "context.go",
+      "slog_test.go",
+      "hlog/hlog.go",
+      "journald/journald_test.go",
+      "log/log_example_test.go"
+    ]
+  },
+  "h-zerolog-conceptual-console-pipeline": {
+    "repo": "zerolog",
+    "query": "What does ConsoleWriter do to an incoming log record before producing human-readable output, and how can callers control part ordering?",
+    "files": [
+      "log.go",
+      "writer_test.go",
+      "writer.go",
+      "log/log.go",
+      "slog.go",
+      "hlog/hlog_example_test.go",
+      "log_test.go",
+      "slog_test.go",
+      "console_test.go",
+      "globals.go"
+    ]
+  },
+  "h-zerolog-conceptual-interface-reflection": {
+    "repo": "zerolog",
+    "query": "How does an Event\u2019s Interface field method handle values that implement the package\u2019s object-marshaling interface versus other values?",
+    "files": [
+      "internal/json/types_test.go",
+      "hook.go",
+      "event_test.go",
+      "writer.go",
+      "slog.go",
+      "hlog/hlog.go",
+      "fields.go",
+      "ctx_test.go",
+      "context.go",
+      "cmd/lint/lint.go",
+      "log.go",
+      "internal/json/types.go",
+      "benchmark_test.go",
+      "internal/cbor/types_test.go"
+    ]
+  },
+  "h-zerolog-conceptual-msg-completion": {
+    "repo": "zerolog",
+    "query": "Why can a chained logging call compile yet emit nothing if the developer only adds fields and never finishes the event?",
+    "files": [
+      "binary_test.go",
+      "writer.go",
+      "diode/internal/diodes/waiter.go",
+      "console.go",
+      "fields.go",
+      "journald/journald_test.go",
+      "slog.go",
+      "fixtures_test.go",
+      "log_example_test.go",
+      "event_test.go",
+      "hook.go",
+      "context.go",
+      "log_test.go"
+    ]
+  },
+  "h-zerolog-conceptual-slog-groups": {
+    "repo": "zerolog",
+    "query": "How do repeated SlogHandler.WithAttrs calls accumulate pre-attached attributes, and when are those attributes added to each record?",
+    "files": [
+      "slog_test.go",
+      "journald/journald_test.go",
+      "cmd/prettylog/prettylog.go",
+      "event.go",
+      "log/log_example_test.go",
+      "hlog/hlog.go",
+      "event_test.go",
+      "context.go",
+      "hlog/hlog_example_test.go",
+      "array.go"
+    ]
+  }
+}

@@ -1,0 +1,770 @@
+{
+  "id": "counted-request-local-v2",
+  "scope": "synthetic_fixture_only",
+  "plan_sha256": "cb90baf72917648ccc6c1c7eec76922b2e18afe233b3f4e8d6dac214d703e094",
+  "implementation_hash_checks": {
+    "benchmark/counted_request.py": true,
+    "benchmark/test_counted_request.py": true,
+    "benchmark/probe_counted_request_v2.py": true,
+    "benchmark/request_ledger.py": true
+  },
+  "cases": {
+    "success": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "valid_usage_exact": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 0,
+        "generation": {
+          "request_count": 1,
+          "accepted_attempts": 1,
+          "denied_requests": 0,
+          "reserved_tokens": 24,
+          "actual_observed_tokens": 11,
+          "unknown_usage_attempts": 0,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "completed"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses",
+          "request_sha256": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+          "response_sha256": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/success/count-journal.jsonl": "bc18a94b8a465d0fee329128f72957ddf53d770df575524d2f4fb25ebdbb87d5",
+        ".research/evidence/counted-request-local-v2/run/success/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/success/count-response-000001.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/success/generation-ledger.jsonl": "7da0131f089c2a14f271ed275997d80d8abf160f33f3a9e780b9de3beaf50886",
+        ".research/evidence/counted-request-local-v2/run/success/generation-request-000001.json": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/success/generation-response-000001.json": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66",
+        ".research/evidence/counted-request-local-v2/run/success/independent-transport-receipts.json": "a70891fb92c270111f11b6d1571b04081cbdb773df6a72a4deace4041e4e93f4",
+        ".research/evidence/counted-request-local-v2/run/success/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/success/transport-0-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/success/transport-1-request.bin": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/success/transport-1-response.bin": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66"
+      }
+    },
+    "count_http_error": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "failed_count_visible": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 1,
+        "generation": {
+          "request_count": 0,
+          "accepted_attempts": 0,
+          "denied_requests": 0,
+          "reserved_tokens": 0,
+          "actual_observed_tokens": 0,
+          "unknown_usage_attempts": 0,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "count_failed",
+            "reason": "ValueError"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "e0284061372401072fcea1015b6404b8781fc03221b20232c0b36fa81224845a",
+          "status": 503,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/count_http_error/count-journal.jsonl": "8a2b294e02740244d4a7829e7053ed548c59b01bf92e57106e6dfd5930a138c3",
+        ".research/evidence/counted-request-local-v2/run/count_http_error/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/count_http_error/count-response-000001.json": "e0284061372401072fcea1015b6404b8781fc03221b20232c0b36fa81224845a",
+        ".research/evidence/counted-request-local-v2/run/count_http_error/generation-ledger.jsonl": "8cfe4ee9f83f2aedef617b9509f8fed274b15a30a3536444bd4e1160ef2bed1d",
+        ".research/evidence/counted-request-local-v2/run/count_http_error/independent-transport-receipts.json": "c430515fd143bbf3fa799f5946951e87424c2c95f74f57609530220be83d69bb",
+        ".research/evidence/counted-request-local-v2/run/count_http_error/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/count_http_error/transport-0-response.bin": "e0284061372401072fcea1015b6404b8781fc03221b20232c0b36fa81224845a"
+      }
+    },
+    "count_invalid": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "failed_count_visible": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 1,
+        "generation": {
+          "request_count": 0,
+          "accepted_attempts": 0,
+          "denied_requests": 0,
+          "reserved_tokens": 0,
+          "actual_observed_tokens": 0,
+          "unknown_usage_attempts": 0,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "count_failed",
+            "reason": "ValueError"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "291f3b01a874b317cf5284c9717caddbd928e418bc5f6e5dc47752ea49b913fd",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/count_invalid/count-journal.jsonl": "9a8cb595c3b8be68073537cbc2787bcdb5c28f7749ccde3fa219955ee0e4c119",
+        ".research/evidence/counted-request-local-v2/run/count_invalid/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/count_invalid/count-response-000001.json": "291f3b01a874b317cf5284c9717caddbd928e418bc5f6e5dc47752ea49b913fd",
+        ".research/evidence/counted-request-local-v2/run/count_invalid/generation-ledger.jsonl": "8cfe4ee9f83f2aedef617b9509f8fed274b15a30a3536444bd4e1160ef2bed1d",
+        ".research/evidence/counted-request-local-v2/run/count_invalid/independent-transport-receipts.json": "ceaf467b416ef0029441d17a4723032e250cc5c4bcaa3f15445719f67a932c8d",
+        ".research/evidence/counted-request-local-v2/run/count_invalid/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/count_invalid/transport-0-response.bin": "291f3b01a874b317cf5284c9717caddbd928e418bc5f6e5dc47752ea49b913fd"
+      }
+    },
+    "generation_retry": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "unknown_usage_retained": true,
+        "valid_usage_exact": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 2,
+        "count_failures": 0,
+        "generation": {
+          "request_count": 2,
+          "accepted_attempts": 2,
+          "denied_requests": 0,
+          "reserved_tokens": 48,
+          "actual_observed_tokens": 11,
+          "unknown_usage_attempts": 1,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "http_error"
+          }
+        },
+        {
+          "result": {
+            "outcome": "completed"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses",
+          "request_sha256": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+          "response_sha256": "f3d4d18983b6d75e339bedf952cdaef823772a1fc87ab10ed87aef7ddfc1b0af",
+          "status": 503,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses",
+          "request_sha256": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+          "response_sha256": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/generation_retry/count-journal.jsonl": "bd077d9ca737f3fa6ddc768444adc9423e7b4857c79fad941ca8eedc0c59c43e",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/count-request-000002.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/count-response-000001.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/count-response-000002.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/generation-ledger.jsonl": "d9bee6114cee784e693d15fbe2a509cd38a3b017697d18f93028a6c381eb23d3",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/generation-request-000001.json": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/generation-request-000002.json": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/generation-response-000001.json": "f3d4d18983b6d75e339bedf952cdaef823772a1fc87ab10ed87aef7ddfc1b0af",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/generation-response-000002.json": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/independent-transport-receipts.json": "13ab4d2264d9238912451a64f52a712e1a5c271cd30e7f1280f5b87fe8ce9d74",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-0-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-1-request.bin": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-1-response.bin": "f3d4d18983b6d75e339bedf952cdaef823772a1fc87ab10ed87aef7ddfc1b0af",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-2-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-2-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-3-request.bin": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/generation_retry/transport-3-response.bin": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66"
+      }
+    },
+    "output_cap": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "cap_terminal_usage_counted": true,
+        "cap_remains_incomplete": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 0,
+        "generation": {
+          "request_count": 1,
+          "accepted_attempts": 1,
+          "denied_requests": 0,
+          "reserved_tokens": 24,
+          "actual_observed_tokens": 24,
+          "unknown_usage_attempts": 0,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "incomplete"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses",
+          "request_sha256": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+          "response_sha256": "3daefb661cd5b643dadf465f5d028c6d55828d895f888a4f88a52402963d87c3",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/output_cap/count-journal.jsonl": "bc18a94b8a465d0fee329128f72957ddf53d770df575524d2f4fb25ebdbb87d5",
+        ".research/evidence/counted-request-local-v2/run/output_cap/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/output_cap/count-response-000001.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/output_cap/generation-ledger.jsonl": "252e186e05865534e7e42c33f367fda05262fff27142fcc87ae79dcbe8007b1b",
+        ".research/evidence/counted-request-local-v2/run/output_cap/generation-request-000001.json": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/output_cap/generation-response-000001.json": "3daefb661cd5b643dadf465f5d028c6d55828d895f888a4f88a52402963d87c3",
+        ".research/evidence/counted-request-local-v2/run/output_cap/independent-transport-receipts.json": "622131841109b4442cc7ba46b5cdca34eab18ee59f90930af529aa812914e5b7",
+        ".research/evidence/counted-request-local-v2/run/output_cap/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/output_cap/transport-0-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/output_cap/transport-1-request.bin": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/output_cap/transport-1-response.bin": "3daefb661cd5b643dadf465f5d028c6d55828d895f888a4f88a52402963d87c3"
+      }
+    },
+    "input_mismatch": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "unknown_usage_retained": true,
+        "mismatch_poisons": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 0,
+        "generation": {
+          "request_count": 1,
+          "accepted_attempts": 1,
+          "denied_requests": 0,
+          "reserved_tokens": 24,
+          "actual_observed_tokens": 0,
+          "unknown_usage_attempts": 1,
+          "pending_attempts": 0,
+          "poisoned": true,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": true,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "exception_type": "LedgerError"
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses",
+          "request_sha256": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+          "response_sha256": "d8ef186df8b43f0b45a9a7425ad8d8c46f7b384b86740c32898528baca7ab22e",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/count-journal.jsonl": "bc18a94b8a465d0fee329128f72957ddf53d770df575524d2f4fb25ebdbb87d5",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/count-response-000001.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/generation-ledger.jsonl": "cb9d43619687aae3ad142f8cb988f37bc11bc8c5b824f6f20ea3f1b54f74ab64",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/generation-request-000001.json": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/generation-response-000001.json": "d8ef186df8b43f0b45a9a7425ad8d8c46f7b384b86740c32898528baca7ab22e",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/independent-transport-receipts.json": "b21a9922313c193b5277ebc12fae89338330fd0049d751ea134d1acf72f145ad",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/transport-0-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/transport-1-request.bin": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/input_mismatch/transport-1-response.bin": "d8ef186df8b43f0b45a9a7425ad8d8c46f7b384b86740c32898528baca7ab22e"
+      }
+    },
+    "missing_usage": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "unknown_usage_retained": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 0,
+        "generation": {
+          "request_count": 1,
+          "accepted_attempts": 1,
+          "denied_requests": 0,
+          "reserved_tokens": 24,
+          "actual_observed_tokens": 0,
+          "unknown_usage_attempts": 1,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "usage_unknown",
+            "reason": "missing_usage"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses",
+          "request_sha256": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+          "response_sha256": "9e644bfbd7b95295fb3deb0bcaed1a54e63c63764ce9f8925d536032eb488628",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/missing_usage/count-journal.jsonl": "bc18a94b8a465d0fee329128f72957ddf53d770df575524d2f4fb25ebdbb87d5",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/count-response-000001.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/generation-ledger.jsonl": "18f65210be2280c7612abd6ee2e398c55ec13a938320a767c1376cb1a153a949",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/generation-request-000001.json": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/generation-response-000001.json": "9e644bfbd7b95295fb3deb0bcaed1a54e63c63764ce9f8925d536032eb488628",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/independent-transport-receipts.json": "0b37b4b55f2c02fdc5d7b596b44d2ada8e31c532dd10d571cca8b4d397a3caab",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/transport-0-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/transport-1-request.bin": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/missing_usage/transport-1-response.bin": "9e644bfbd7b95295fb3deb0bcaed1a54e63c63764ce9f8925d536032eb488628"
+      }
+    },
+    "count_limit": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true,
+        "valid_usage_exact": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 0,
+        "generation": {
+          "request_count": 1,
+          "accepted_attempts": 1,
+          "denied_requests": 0,
+          "reserved_tokens": 24,
+          "actual_observed_tokens": 11,
+          "unknown_usage_attempts": 0,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "completed"
+          }
+        },
+        {
+          "result": {
+            "outcome": "rejected",
+            "reason": "count_limit"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        },
+        {
+          "path": "/v1/responses",
+          "request_sha256": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+          "response_sha256": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/count_limit/count-journal.jsonl": "23f450e5fc67eff1935306d436149fa0f9197fb655503e808132e016cfd5da0b",
+        ".research/evidence/counted-request-local-v2/run/count_limit/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/count_limit/count-response-000001.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/count_limit/generation-ledger.jsonl": "7da0131f089c2a14f271ed275997d80d8abf160f33f3a9e780b9de3beaf50886",
+        ".research/evidence/counted-request-local-v2/run/count_limit/generation-request-000001.json": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/count_limit/generation-response-000001.json": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66",
+        ".research/evidence/counted-request-local-v2/run/count_limit/independent-transport-receipts.json": "a70891fb92c270111f11b6d1571b04081cbdb773df6a72a4deace4041e4e93f4",
+        ".research/evidence/counted-request-local-v2/run/count_limit/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/count_limit/transport-0-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/count_limit/transport-1-request.bin": "c875755877fe31fa2cd50a31b029ecca61dd950bf4279815a4818bcbc752c74f",
+        ".research/evidence/counted-request-local-v2/run/count_limit/transport-1-response.bin": "c4e5bf00af5f5077126a27d38a57c3b62ad86680d7ca7fd830c8ebf1665f3c66"
+      }
+    },
+    "budget_denial": {
+      "checks": {
+        "count_attempts_exact": true,
+        "durable_count_pairs": true,
+        "durable_count_ids": true,
+        "durable_count_generation_hash": true,
+        "durable_count_response_hashes": true,
+        "durable_before_each_transport_call": true,
+        "generation_attempts_exact": true,
+        "exact_generation_bytes": true,
+        "count_projection_exact": true,
+        "reservations_retained": true,
+        "within_budget": true,
+        "no_pending_attempts": true,
+        "durable_admits_exact": true,
+        "durable_finishes_exact": true,
+        "all_fixture_counts_bound": true,
+        "count_journal_preserved": true,
+        "gates_still_unpassed": true
+      },
+      "fixture_diagnostic_pass": true,
+      "summary": {
+        "count_attempts": 1,
+        "count_failures": 0,
+        "generation": {
+          "request_count": 1,
+          "accepted_attempts": 0,
+          "denied_requests": 1,
+          "reserved_tokens": 0,
+          "actual_observed_tokens": 0,
+          "unknown_usage_attempts": 0,
+          "pending_attempts": 0,
+          "poisoned": false,
+          "scope": "synthetic_fixture_only",
+          "complete_agent_accounting_pass": false,
+          "product_promotion_pass": false,
+          "live_token_cap": "real_provider_unverified",
+          "agent_savings": "unmeasured"
+        },
+        "poisoned": false,
+        "scope": "synthetic_fixture_only",
+        "live_provider_unverified": true,
+        "agent_savings": "unmeasured",
+        "product_promotion_pass": false
+      },
+      "returns": [
+        {
+          "result": {
+            "outcome": "admission_denied"
+          }
+        }
+      ],
+      "transport_receipts": [
+        {
+          "path": "/v1/responses/input_tokens",
+          "request_sha256": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+          "response_sha256": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+          "status": 200,
+          "durable_before_call": true
+        }
+      ],
+      "evidence_sha256": {
+        ".research/evidence/counted-request-local-v2/run/budget_denial/count-journal.jsonl": "bc18a94b8a465d0fee329128f72957ddf53d770df575524d2f4fb25ebdbb87d5",
+        ".research/evidence/counted-request-local-v2/run/budget_denial/count-request-000001.json": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/budget_denial/count-response-000001.json": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54",
+        ".research/evidence/counted-request-local-v2/run/budget_denial/generation-ledger.jsonl": "50445e3c9c2da75a58881ceb66fb30584eee1a85f49a41d3b088c146997177f2",
+        ".research/evidence/counted-request-local-v2/run/budget_denial/independent-transport-receipts.json": "dc0552da8f36c25dd142a430818aa107f09257ece9029f5b754cc7c6efc15888",
+        ".research/evidence/counted-request-local-v2/run/budget_denial/transport-0-request.bin": "4e36dec7196ab41c90fa1261cda9bc339771214a15b20656d9a442f39378126b",
+        ".research/evidence/counted-request-local-v2/run/budget_denial/transport-0-response.bin": "2505708f67f570c38c38a96851f61afd174275f5c034c2ef9f869161235d1d54"
+      }
+    }
+  },
+  "fixture_diagnostic_pass": true,
+  "live_provider_invocations": 0,
+  "network_requests": 0,
+  "live_token_cap": "real_provider_unverified",
+  "complete_agent_accounting_pass": false,
+  "product_promotion_pass": false,
+  "agent_savings": "unmeasured"
+}

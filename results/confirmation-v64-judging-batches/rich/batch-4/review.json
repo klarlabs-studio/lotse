@@ -1,0 +1,29 @@
+{
+  "judge_id": "blind-v64-rich-4-independent",
+  "model": "gpt-6-luna",
+  "independent_of_tuning": true,
+  "independent_of_authoring": true,
+  "blind_to_retriever": true,
+  "source_only": true,
+  "tasks_sha256": "4247a446312388e6274ed12226baf583f724705457f01745797ba87ac93be6d0",
+  "source_manifest_sha256": "0ac2bfcfa68c58157bafbc086089c7baa71b48271b81ca1e60d191af3bd15660",
+  "judgments_sha256": "4d50fc68fcb2bb9ddd3846d9a539c4fea2a1dec30a932114254ae0112dcfd5a3",
+  "reviewed_query_ids": [
+    "h-rich-31",
+    "h-rich-32",
+    "h-rich-33",
+    "h-rich-34",
+    "h-rich-35",
+    "h-rich-36",
+    "h-rich-37"
+  ],
+  "pair_count": 101,
+  "unresolved_issues": [],
+  "limitations": [
+    "The supplied h-rich-32 and h-rich-33 pairs omit rich/progress.py, which contains Progress task-table filtering and update/reset/sample implementation. The included tests and examples support the supplied pair judgments, but do not provide the full implementation context.",
+    "The supplied h-rich-34 and h-rich-35 pairs omit rich/console.py, the implementation that passes Console.print/out flags. Their relevance judgments are limited to the evidence present in the supplied files; exact argument values for Console.out cannot be recovered from this pool.",
+    "The supplied h-rich-36 pairs omit rich/live.py, which defines Live.update. The included auto-refresh test does not assert the method’s default refresh behavior, so this pool does not establish that default.",
+    "The supplied h-rich-37 pairs omit rich/text.py and rich/console.py, the implementations of Text.wrap and Console.print soft_wrap. The included tests establish output behavior but not the complete internal option path.",
+    "No API cost or token-count measurement is available in this review session."
+  ]
+}

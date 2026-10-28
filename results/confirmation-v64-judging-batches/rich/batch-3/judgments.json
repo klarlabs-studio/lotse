@@ -1,0 +1,630 @@
+{
+  "h-rich-21": {
+    "rich/traceback.py": {
+      "relevant": false,
+      "reason": "Traceback formats exceptions; it does not implement Live.update conversion or refresh synchronization. (rich/traceback.py:56)"
+    },
+    "rich/control.py": {
+      "relevant": false,
+      "reason": "Control constructs terminal control codes; it does not convert the new Live renderable. (rich/control.py:48)"
+    },
+    "tests/test_live_render.py": {
+      "relevant": true,
+      "reason": "LiveRender tests set and retrieve string renderables and directly show how a string is represented by the live display layer. (tests/test_live_render.py:13)"
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "These initial Console tests cover terminal color detection and are unrelated to Live.update. (tests/test_console.py:37)"
+    },
+    "rich/status.py": {
+      "relevant": false,
+      "reason": "Status wraps a spinner renderable, not Live.update\u2019s string refresh path. (rich/status.py:11)"
+    },
+    "tests/test_progress.py": {
+      "relevant": false,
+      "reason": "Progress tests focus on task clocks/columns rather than Live.update conversion. (tests/test_progress.py:36)"
+    },
+    "rich/color.py": {
+      "relevant": false,
+      "reason": "Color defines terminal color systems, not synchronization or renderable conversion. (rich/color.py:21)"
+    },
+    "rich/jupyter.py": {
+      "relevant": false,
+      "reason": "JupyterMixin packages notebook output; it does not synchronize a Live update. (rich/jupyter.py:18)"
+    },
+    "rich/repr.py": {
+      "relevant": false,
+      "reason": "Repr decorators configure object representation, not Live refresh behavior. (rich/repr.py:22)"
+    },
+    "tests/test_color.py": {
+      "relevant": false,
+      "reason": "Color tests validate color values, not Live update behavior. (tests/test_color.py:16)"
+    },
+    "examples/top_lite_simulator.py": {
+      "relevant": false,
+      "reason": "The simulator\u2019s process model builds display content but does not exercise Live.update(string, refresh=True). (examples/top_lite_simulator.py:15)"
+    },
+    "tests/test_pretty.py": {
+      "relevant": false,
+      "reason": "Pretty tests cover object formatting/installation, not Live synchronization. (tests/test_pretty.py:47)"
+    },
+    "rich/console.py": {
+      "relevant": true,
+      "reason": "Console.render_str converts a string into Text (or applies markup/highlighting), a direct conversion step used when Live renders the updated string. (rich/console.py:1409)"
+    },
+    "rich/color_triplet.py": {
+      "relevant": false,
+      "reason": "ColorTriplet converts RGB values, unrelated to Live update. (rich/color_triplet.py:4)"
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "Progress thread methods update progress tasks, a separate refresh mechanism from Live.update. (rich/progress.py:64)"
+    },
+    "tests/test_live.py": {
+      "relevant": true,
+      "reason": "The growing-display test repeatedly calls Live.update(display, refresh=True) and verifies refreshed output, direct behavior evidence for the query. (tests/test_live.py:38)"
+    }
+  },
+  "h-rich-22": {
+    "rich/styled.py": {
+      "relevant": false,
+      "reason": "Styled applies a Style to an existing renderable; it does not parse markup strings. (rich/styled.py:11)"
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "ProgressColumn renders task values and has no markup parser sequence. (rich/progress.py:64)"
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "Console tests exercise markup-enabled string rendering and options, supporting the Console-to-Text parsing entry path. (tests/test_console.py:313)"
+    },
+    "tests/test_markup.py": {
+      "relevant": true,
+      "reason": "Markup tests call render on tagged strings and assert the resulting plain text and spans; this directly tests parsed styled output. (tests/test_markup.py:95)"
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style parses style declarations and combines attributes but does not tokenize markup tags or use the no-bracket fast path. (rich/style.py:40)"
+    },
+    "tests/test_traceback.py": {
+      "relevant": false,
+      "reason": "Traceback tests exercise exception rendering rather than markup parsing. (tests/test_traceback.py:13)"
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "Table renders rows and annotations; it consumes strings but does not explain markup parsing. (rich/table.py:475)"
+    },
+    "rich/text.py": {
+      "relevant": true,
+      "reason": "Text.from_markup delegates to markup.render and attaches text options to the returned Text, a direct conversion step in the requested sequence. (rich/text.py:260)"
+    },
+    "tests/test_pretty.py": {
+      "relevant": false,
+      "reason": "Pretty tests format Python values; they do not assert markup parse behavior. (tests/test_pretty.py:47)"
+    },
+    "tests/test_text.py": {
+      "relevant": true,
+      "reason": "Text tests cover Text.from_markup construction, directly checking the styled-text result of markup conversion. (tests/test_text.py:95)"
+    },
+    "rich/console.py": {
+      "relevant": true,
+      "reason": "Console.render_str selects markup mode and invokes render_markup for enabled strings, establishing the dispatch into markup parsing. (rich/console.py:1409)"
+    },
+    "rich/logging.py": {
+      "relevant": false,
+      "reason": "RichHandler formats log records and delegates string formatting; its logging behavior does not implement the markup parser fast path. (rich/logging.py:24)"
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "Segment stores already-rendered text/style/control units and does not parse tag syntax. (rich/segment.py:61)"
+    },
+    "tests/test_ansi.py": {
+      "relevant": false,
+      "reason": "ANSI tests decode terminal escape sequences, a different syntax from bracket markup. (tests/test_ansi.py:9)"
+    },
+    "rich/traceback.py": {
+      "relevant": false,
+      "reason": "Traceback converts exception data into syntax renderables; markup token parsing is separate. (rich/traceback.py:56)"
+    },
+    "rich/syntax.py": {
+      "relevant": false,
+      "reason": "Syntax maps lexer tokens to styles; it is not the console-markup parser. (rich/syntax.py:127)"
+    }
+  },
+  "h-rich-23": {
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "Console tests shown here exercise terminal configuration and soft wrapping, not Layout tree rendering. (tests/test_console.py:37)"
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "Table\u2019s column/row model concerns tabular output, not allocating Layout regions. (rich/table.py:39)"
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "Live manages periodic display refresh and is distinct from Layout\u2019s split-to-leaf path. (rich/live.py:41)"
+    },
+    "rich/traceback.py": {
+      "relevant": false,
+      "reason": "Traceback formatting does not allocate child regions or compose Layout output rows. (rich/traceback.py:56)"
+    },
+    "tests/test_live_render.py": {
+      "relevant": false,
+      "reason": "LiveRender tests concern replacing a single live renderable and cursor control, not Layout child splitting. (tests/test_live_render.py:9)"
+    },
+    "rich/console.py": {
+      "relevant": true,
+      "reason": "Console.render/render_lines dispatches renderables under ConsoleOptions dimensions and returns line segments, the surrounding path from dimensions to output rows. (rich/console.py:1294)"
+    },
+    "tests/test_markdown.py": {
+      "relevant": false,
+      "reason": "Markdown tests assert Markdown conversion and rendering, not Layout region allocation. (tests/test_markdown.py:81)"
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style holds terminal formatting data; it does not divide Layout rectangles. (rich/style.py:40)"
+    },
+    "tests/test_markdown_no_hyperlinks.py": {
+      "relevant": false,
+      "reason": "Markdown no-hyperlink tests exercise link rendering, not Layout rows. (tests/test_markdown_no_hyperlinks.py:75)"
+    },
+    "tests/test_layout.py": {
+      "relevant": true,
+      "reason": "Layout integration tests build split children including a Panel, print the layout at fixed dimensions, and assert the composed output. (tests/test_layout.py:35)"
+    },
+    "tests/render.py": {
+      "relevant": true,
+      "reason": "The render helper captures the rendered form as text for assertions, useful to verify the final Layout output rows. (tests/render.py:18)"
+    },
+    "rich/terminal_theme.py": {
+      "relevant": false,
+      "reason": "TerminalTheme supplies color palettes, not terminal dimensions or leaf layout rendering. (rich/terminal_theme.py:9)"
+    },
+    "rich/segment.py": {
+      "relevant": true,
+      "reason": "Segment and its line helpers represent the final output pieces that Layout yields after assembling leaf lines. (rich/segment.py:61)"
+    },
+    "rich/containers.py": {
+      "relevant": false,
+      "reason": "Renderables aggregates generic children; it is not the Layout region splitter or final-row composer. (rich/containers.py:30)"
+    }
+  },
+  "h-rich-24": {
+    "tests/test_segment.py": {
+      "relevant": true,
+      "reason": "Segment tests assert split_and_crop_lines behavior for embedded newline text, direct evidence for the queried newline handling. (tests/test_segment.py:60)"
+    },
+    "rich/console.py": {
+      "relevant": true,
+      "reason": "Console.render_lines uses Segment splitting/cropping to turn rendered output into lines, a direct consumer of the behavior in question. (rich/console.py:1345)"
+    },
+    "rich/containers.py": {
+      "relevant": false,
+      "reason": "Renderables yields child renderables and does not define how a normal Segment with embedded newlines is split. (rich/containers.py:30)"
+    },
+    "rich/live_render.py": {
+      "relevant": true,
+      "reason": "LiveRender renders content to lines and maintains prior output shape, relying on segment line handling in its display path. (rich/live_render.py:13)"
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style applies visual attributes; it does not split newline-containing segments. (rich/style.py:40)"
+    },
+    "tests/test_panel.py": {
+      "relevant": false,
+      "reason": "Panel tests assert border and child sizing rather than Segment.split_and_crop_lines treatment. (tests/test_panel.py:41)"
+    },
+    "rich/layout.py": {
+      "relevant": false,
+      "reason": "Layout composes child rows but does not define Segment\u2019s newline splitting algorithm. (rich/layout.py:143)"
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "Text tests cover Text wrapping and line rendering, not the Segment helper\u2019s exact embedded-newline semantics. (tests/test_text.py:95)"
+    },
+    "tests/test_pretty.py": {
+      "relevant": false,
+      "reason": "Pretty formatting tests do not test Segment.split_and_crop_lines. (tests/test_pretty.py:47)"
+    },
+    "rich/syntax.py": {
+      "relevant": false,
+      "reason": "Syntax creates highlighted renderables; the newline segmentation primitive is not implemented here. (rich/syntax.py:127)"
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "Console tests assert text output under wrap modes, exercising the rendered-line path that consumes Segment line splitting. (tests/test_console.py:604)"
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text wraps its own plain text before yielding output segments; it is not the helper that handles embedded newlines inside a preexisting Segment. (rich/text.py:689)"
+    },
+    "tests/test_cells.py": {
+      "relevant": false,
+      "reason": "Cell tests measure Unicode display widths; they do not split segment streams at newline characters. (tests/test_cells.py:29)"
+    },
+    "tests/test_rule.py": {
+      "relevant": false,
+      "reason": "Rule tests cover horizontal lines and alignment, not embedded newline handling in Segment. (tests/test_rule.py:10)"
+    },
+    "rich/logging.py": {
+      "relevant": false,
+      "reason": "Logging formats records and emits them through Console; it does not define Segment\u2019s line splitting. (rich/logging.py:24)"
+    }
+  },
+  "h-rich-25": {
+    "tests/test_inspect.py": {
+      "relevant": false,
+      "reason": "Inspect tests verify rendered object inspection, not the two custom-renderable protocol hooks. (tests/test_inspect.py:58)"
+    },
+    "rich/traceback.py": {
+      "relevant": false,
+      "reason": "Traceback implements exception rendering, not the generic __rich__/__rich_console__ protocol. (rich/traceback.py:56)"
+    },
+    "tests/test_pretty.py": {
+      "relevant": false,
+      "reason": "Pretty tests focus on pretty representation and installation, not the protocol signatures. (tests/test_pretty.py:47)"
+    },
+    "rich/prompt.py": {
+      "relevant": true,
+      "reason": "PromptError\u2019s __rich__ returns a renderable value, demonstrating the single-renderable hook in actual application code. (rich/prompt.py:26)"
+    },
+    "rich/layout.py": {
+      "relevant": false,
+      "reason": "Layout is a renderable implementation but its split/region behavior does not define the protocol hook contract. (rich/layout.py:143)"
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "Table implements a renderer but does not explain custom objects returning or yielding renderables. (rich/table.py:39)"
+    },
+    "tests/render.py": {
+      "relevant": false,
+      "reason": "This helper captures outputs for tests; it does not define a custom-object protocol. (tests/render.py:18)"
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "Live manages refresh, not the rendering protocol signatures. (rich/live.py:41)"
+    },
+    "rich/protocol.py": {
+      "relevant": true,
+      "reason": "is_renderable recognizes either __rich__ or __rich_console__, while rich_cast calls __rich__ recursively; this is the protocol\u2019s conversion side. (rich/protocol.py:9)"
+    },
+    "rich/color.py": {
+      "relevant": false,
+      "reason": "Color defines color models and is not an example of either renderable protocol hook. (rich/color.py:21)"
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "Text span tests concern text edits, not custom object hooks. (tests/test_text.py:13)"
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "The custom test object implements __rich_console__(console, options), directly showing the multi-render hook\u2019s two arguments. (tests/test_console.py:500)"
+    },
+    "rich/markup.py": {
+      "relevant": false,
+      "reason": "Markup defines bracket tags and parsing rather than renderable protocols. (rich/markup.py:20)"
+    },
+    "rich/pretty.py": {
+      "relevant": false,
+      "reason": "Pretty\u2019s formatting helpers do not establish the __rich__ versus __rich_console__ contract. (rich/pretty.py:60)"
+    }
+  },
+  "h-rich-26": {
+    "rich/region.py": {
+      "relevant": true,
+      "reason": "Region is the rectangular x/y/width/height value passed between splitters and layout nodes, so it represents the allocation side of the division. (rich/region.py:4)"
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "These cases construct and print data tables and check table widths; they do not exercise Layout regions or leaf assignment. (tests/test_table.py:26)"
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "The file tests Text mutation, wrapping, and spans rather than Layout region allocation or leaf rendering. (tests/test_text.py:95)"
+    },
+    "tests/test_segment.py": {
+      "relevant": false,
+      "reason": "These tests focus on Segment transformations such as splitting and cropping, without relating segments to Layout allocation or leaves. (tests/test_segment.py:60)"
+    },
+    "rich/logging.py": {
+      "relevant": false,
+      "reason": "RichHandler formats log records and emits them through Console; it has no Layout region or leaf responsibilities. (rich/logging.py:24)"
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text.__rich_console__ wraps a Text value into segments, but does not allocate regions among Layout children or assign leaf renderables. (rich/text.py:689)"
+    },
+    "rich/pretty.py": {
+      "relevant": false,
+      "reason": "Pretty handles recursive Python object formatting and optional text wrapping, not Layout region division. (rich/pretty.py:280)"
+    },
+    "tests/test_layout.py": {
+      "relevant": true,
+      "reason": "The integration test splits a root Layout into named children, assigns Panel/string leaves, prints at a fixed height, and checks the resulting composed rows. (tests/test_layout.py:35)"
+    },
+    "rich/segment.py": {
+      "relevant": true,
+      "reason": "Segment\u2019s line and crop helpers provide the terminal-line representation that a Layout leaf render can compose into its assigned rows. (rich/segment.py:307)"
+    },
+    "rich/measure.py": {
+      "relevant": false,
+      "reason": "Measurement.get obtains width bounds for arbitrary renderables, but this is not the Layout subsystem\u2019s region allocation or leaf-rendering split. (rich/measure.py:78)"
+    },
+    "rich/table.py": {
+      "relevant": false,
+      "reason": "Table.__rich_console__ lays out table columns and rows, a separate container from Layout\u2019s region tree. (rich/table.py:475)"
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "Live periodically refreshes one renderable and its screen state; it does not divide Layout regions or render leaf layouts. (rich/live.py:41)"
+    },
+    "rich/console.py": {
+      "relevant": true,
+      "reason": "Console.render_lines renders a renderable under bounded ConsoleOptions into padded line segments, the leaf-rendering mechanism used when Layout children are rendered. (rich/console.py:1345)"
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "These Console tests cover soft wrapping and general output behavior; they do not build or render Layout children. (tests/test_console.py:48)"
+    },
+    "rich/_ratio.py": {
+      "relevant": true,
+      "reason": "ratio_resolve allocates a total width or height across edges according to size, ratio, and minimum constraints, which supplies Layout splitter allocation. (rich/_ratio.py:14)"
+    }
+  },
+  "h-rich-27": {
+    "rich/prompt.py": {
+      "relevant": false,
+      "reason": "Prompt creates input prompts and validation messages; it does not implement or test Table\u2019s column measurement/render delegation. (rich/prompt.py:33)"
+    },
+    "rich/columns.py": {
+      "relevant": false,
+      "reason": "Columns is a separate multi-column renderable that builds a Table.grid, not the Table rendering pipeline\u2019s _measure_column/_render calls. (rich/columns.py:62)"
+    },
+    "tests/render.py": {
+      "relevant": false,
+      "reason": "This helper captures arbitrary renderable output for assertions but never checks Table\u2019s measurement or render delegation. (tests/render.py:18)"
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text wraps individual cell text after it receives render options; it does not define Table\u2019s public hook or its _measure_column/_render stages. (rich/text.py:689)"
+    },
+    "rich/live.py": {
+      "relevant": false,
+      "reason": "Live refreshes a renderable periodically and is not part of Table\u2019s measurement-to-row rendering pipeline. (rich/live.py:41)"
+    },
+    "rich/syntax.py": {
+      "relevant": false,
+      "reason": "Syntax renders lexer tokens as styled lines; it contains no Table column measurement or row rendering delegation. (rich/syntax.py:127)"
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "Console dispatches renderables and renders lines generically, but it does not establish the Table-specific _measure_column and _render steps asked about. (rich/console.py:1294)"
+    },
+    "tests/test_table.py": {
+      "relevant": true,
+      "reason": "The Table rendering tests vary the available width and check resulting rows, while measurement tests assert Table.__rich_measure__; they exercise the public path whose measurement and rendering stages are queried. (tests/test_table.py:16)"
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "These assertions exercise Text wrapping and span behavior, not Table\u2019s own measure-column and render methods. (tests/test_text.py:538)"
+    },
+    "rich/_inspect.py": {
+      "relevant": false,
+      "reason": "Inspect\u2019s private _render yields fields for object inspection; the similarly named method is not Table._render or its column measurement path. (rich/_inspect.py:125)"
+    },
+    "tests/test_spinner.py": {
+      "relevant": false,
+      "reason": "Spinner tests verify spinner frames and timing, with no Table column measurement or rendering pipeline. (tests/test_spinner.py:1)"
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style parsing and combination supplies formatting values but does not perform Table column measurement or row rendering. (rich/style.py:40)"
+    },
+    "tests/test_pretty.py": {
+      "relevant": false,
+      "reason": "Pretty tests assert Python object formatting and do not exercise Table\u2019s column pipeline. (tests/test_pretty.py:47)"
+    },
+    "tests/test_block_bar.py": {
+      "relevant": false,
+      "reason": "BlockBar tests check progress-bar segment output rather than Table\u2019s measurement/render delegation. (tests/test_block_bar.py:1)"
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "Progress constructs a task display table, but this file\u2019s task-table assembly is distinct from the queried Table._measure_column and Table._render implementation. (rich/progress.py:1562)"
+    },
+    "tests/test_rule_in_table.py": {
+      "relevant": false,
+      "reason": "This test checks a Rule used as a table cell, without assertions about Table\u2019s column measurements or _render delegation. (tests/test_rule_in_table.py:1)"
+    }
+  },
+  "h-rich-28": {
+    "rich/columns.py": {
+      "relevant": false,
+      "reason": "Columns is a separate terminal multi-column renderable; its Table.grid construction arranges arbitrary items and does not convert Progress column specs. (rich/columns.py:16)"
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "Segment represents rendered text and terminal controls; it has no role in translating Progress columns into grid headers. (rich/segment.py:61)"
+    },
+    "tests/test_progress.py": {
+      "relevant": true,
+      "reason": "The Progress tests combine string specs with ProgressColumn instances and render progress rows, while the default-column test checks a mixed string/object specification list. (tests/test_progress.py:338)"
+    },
+    "tests/test_rule_in_table.py": {
+      "relevant": false,
+      "reason": "This file checks Rule rendering inside an already-created table and does not cover Progress column conversion. (tests/test_rule_in_table.py:1)"
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "The table tests exercise generic Table construction and widths without using Progress columns or make_tasks_table. (tests/test_table.py:26)"
+    },
+    "tests/test_columns.py": {
+      "relevant": false,
+      "reason": "The Columns tests exercise arrangement of generic renderables, rather than the Progress task table\u2019s column conversion. (tests/test_columns.py:1)"
+    },
+    "examples/live_progress.py": {
+      "relevant": false,
+      "reason": "The example passes a string and ProgressColumn objects to Progress but wraps whole Progress renderables in an outer Table.grid, so it does not show make_tasks_table\u2019s per-task column conversion. (examples/live_progress.py:14)"
+    },
+    "rich/measure.py": {
+      "relevant": false,
+      "reason": "Measurement computes widths of renderables after they exist; it does not turn string or ProgressColumn specs into Table columns. (rich/measure.py:78)"
+    },
+    "tools/make_width_tables.py": {
+      "relevant": false,
+      "reason": "This utility builds reference tables from measured terminal widths and is unrelated to Progress.make_tasks_table. (tools/make_width_tables.py:1)"
+    },
+    "rich/__main__.py": {
+      "relevant": false,
+      "reason": "The CLI constructs several presentation tables directly and has no Progress column-spec conversion path. (rich/__main__.py:43)"
+    },
+    "tests/test_columns_align.py": {
+      "relevant": false,
+      "reason": "These tests check alignment of the separate Columns renderable and do not cover Progress table columns. (tests/test_columns_align.py:1)"
+    },
+    "rich/prompt.py": {
+      "relevant": false,
+      "reason": "Prompt handles interactive input and does not construct task tables from Progress column specs. (rich/prompt.py:33)"
+    },
+    "rich/table.py": {
+      "relevant": true,
+      "reason": "Table.grid accepts Column or string headers and constructs the no-header table receiving Progress.make_tasks_table\u2019s converted specs. (rich/table.py:252)"
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style resolves formatting attributes; it neither recognizes ProgressColumn objects nor builds grid columns. (rich/style.py:40)"
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "Console renders arbitrary renderables but does not decide how Progress specs become Table.grid columns. (rich/console.py:1294)"
+    },
+    "examples/fullscreen.py": {
+      "relevant": false,
+      "reason": "The fullscreen example uses Layout and manually populated Tables, not a Progress task table or Progress column conversion. (examples/fullscreen.py:1)"
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text.__rich_console__ wraps and emits Text as Segments after it has become a renderable; it does not convert Progress column specs into grid columns. (rich/text.py:689)"
+    }
+  },
+  "h-rich-29": {
+    "tests/test_text.py": {
+      "relevant": true,
+      "reason": "The Text tests include soft-wrap output and a no-wrap/no-crop case, directly checking how text behaves when wrap and crop controls are changed. (tests/test_text.py:652)"
+    },
+    "examples/overflow.py": {
+      "relevant": false,
+      "reason": "The example iterates fold/crop/ellipsis for ordinary Console.print calls and never combines soft_wrap with explicit no_wrap/overflow values. (examples/overflow.py:7)"
+    },
+    "tests/test_syntax.py": {
+      "relevant": false,
+      "reason": "These tests verify Syntax highlighting and syntax-specific options, not precedence among Console.print soft_wrap, no_wrap, overflow, and crop. (tests/test_syntax.py:233)"
+    },
+    "rich/traceback.py": {
+      "relevant": false,
+      "reason": "Traceback configures overflow for displayed locals but does not determine soft_wrap precedence or Console cropping. (rich/traceback.py:781)"
+    },
+    "tests/render.py": {
+      "relevant": false,
+      "reason": "The helper only captures a renderable with an optional no_wrap argument; it does not assert soft_wrap precedence or crop behavior. (tests/render.py:18)"
+    },
+    "rich/pretty.py": {
+      "relevant": false,
+      "reason": "Pretty passes its own overflow/no_wrap settings into recursive formatting, but it does not implement Console.print\u2019s soft_wrap override or cropping. (rich/pretty.py:319)"
+    },
+    "tests/test_console.py": {
+      "relevant": true,
+      "reason": "Console tests compare ordinary soft wrapping against no_wrap output, demonstrating the key visible distinction when soft_wrap is enabled. (tests/test_console.py:598)"
+    },
+    "rich/text.py": {
+      "relevant": true,
+      "reason": "Text.__rich_console__ forwards resolved ConsoleOptions into wrap, where no_wrap controls line division and overflow chooses fold/truncate behavior; explicit Console arguments therefore survive when soft_wrap only supplies defaults. (rich/text.py:689)"
+    },
+    "tests/test_table.py": {
+      "relevant": false,
+      "reason": "These tests vary table widths and column wrapping, not Console.print soft_wrap precedence for a text value. (tests/test_table.py:26)"
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "Progress assembles task tables and renderable columns; it does not decide the Console.print soft_wrap/no_wrap/overflow/crop combination. (rich/progress.py:1562)"
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "Segment offers line cropping primitives, but the queried change is Console.print disabling its crop step and preserving supplied Text wrapping options. (rich/segment.py:307)"
+    },
+    "rich/prompt.py": {
+      "relevant": false,
+      "reason": "Prompt renders user input and validation messages but does not set the soft_wrap or crop controls asked about. (rich/prompt.py:33)"
+    },
+    "benchmarks/benchmarks.py": {
+      "relevant": false,
+      "reason": "These benchmarks time rendering workloads and do not assert what explicit Console.print options survive soft_wrap. (benchmarks/benchmarks.py:23)"
+    },
+    "rich/__init__.py": {
+      "relevant": false,
+      "reason": "The package initializer exports Rich APIs and contains no behavior for resolving print flags or text cropping. (rich/__init__.py:1)"
+    }
+  },
+  "h-rich-30": {
+    "tests/test_table.py": {
+      "relevant": true,
+      "reason": "The rendering fixture prints the same table at progressively narrow widths and marks its first column no_wrap, with expected output snapshots showing shrink behavior under width pressure. (tests/test_table.py:26)"
+    },
+    "rich/columns.py": {
+      "relevant": false,
+      "reason": "Columns is a separate multi-column layout helper, not the table column-collapse policy. (rich/columns.py:16)"
+    },
+    "rich/markdown.py": {
+      "relevant": false,
+      "reason": "Markdown creates a Table to represent parsed blocks, but it does not select shrinkable columns or handle a table exceeding max width. (rich/markdown.py:255)"
+    },
+    "tests/test_rule.py": {
+      "relevant": false,
+      "reason": "Rule tests cover horizontal separator rendering and alignment, not table column eligibility or width fallback. (tests/test_rule.py:10)"
+    },
+    "rich/progress.py": {
+      "relevant": false,
+      "reason": "Progress builds its own task table and columns, but this file does not implement Table\u2019s width-collapse decision. (rich/progress.py:1562)"
+    },
+    "rich/text.py": {
+      "relevant": false,
+      "reason": "Text wrapping and truncation operate within an assigned cell width; they do not choose which Table columns may shrink. (rich/text.py:1201)"
+    },
+    "tests/test_text.py": {
+      "relevant": false,
+      "reason": "These tests assert text wrapping and soft-wrap output, not which table columns yield under a width constraint. (tests/test_text.py:538)"
+    },
+    "tests/test_console.py": {
+      "relevant": false,
+      "reason": "Console tests cover global width, wrapping, and printing; they do not test Table\u2019s per-column shrink eligibility or fallback. (tests/test_console.py:598)"
+    },
+    "tests/test_columns_align.py": {
+      "relevant": false,
+      "reason": "The tested alignment belongs to the separate Columns container, not Table\u2019s width-collapse algorithm. (tests/test_columns_align.py:1)"
+    },
+    "tests/test_rule_in_table.py": {
+      "relevant": false,
+      "reason": "This test checks rendering a Rule as a table cell, not how Table chooses shrinkable columns. (tests/test_rule_in_table.py:1)"
+    },
+    "rich/panel.py": {
+      "relevant": false,
+      "reason": "Panel constrains and draws a border around one child renderable; it has no table-column collapse policy. (rich/panel.py:185)"
+    },
+    "rich/style.py": {
+      "relevant": false,
+      "reason": "Style objects carry terminal formatting, not the width measurements or shrink eligibility for columns. (rich/style.py:40)"
+    },
+    "rich/segment.py": {
+      "relevant": false,
+      "reason": "Segment crops already-rendered lines, downstream from Table width assignment; it cannot answer which columns are initially eligible. (rich/segment.py:307)"
+    },
+    "rich/measure.py": {
+      "relevant": true,
+      "reason": "Measurement.get resolves minimum/maximum widths under the available max_width, supplying the bounds from which a table\u2019s column widths are initially calculated. (rich/measure.py:78)"
+    },
+    "rich/console.py": {
+      "relevant": false,
+      "reason": "Console provides max-width options and generic rendering, but does not decide Table column shrink eligibility or the fallback reduction. (rich/console.py:1652)"
+    }
+  }
+}

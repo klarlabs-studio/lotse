@@ -1,0 +1,100 @@
+{
+  "mode": "offline_source_and_adapter_integrity_audit",
+  "model_calls": 0,
+  "pin": {
+    "id": "graphify",
+    "repository": "Graphify-Labs/graphify",
+    "commit": "86c57be8204673c2a1b9849a3292a7dd3ab373d8",
+    "language": "Python",
+    "role": "baseline"
+  },
+  "installed_version": "0.9.92",
+  "baseline_python_files_checked": 95,
+  "all_baseline_python_hashes_match": true,
+  "adapter_probe": {
+    "benchmark_adapter": {
+      "command": [
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/benchmark/compare_graphify.py",
+        "--graphify-query",
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-source-audit-2026-10-23/graph.json",
+        "callee",
+        "2000"
+      ],
+      "returncode": 0,
+      "stdout": "Traversal: BFS depth=3 | Start: ['callee'] | 2 nodes found\n\nNODE callee [src=b.py loc=L1 community=]\nNODE caller [src=a.py loc=L1 community=]\nEDGE callee --calls [EXTRACTED]--> caller at=a.py:L2",
+      "stderr": "",
+      "call_direction_correct": false
+    },
+    "pinned_native_cli": {
+      "command": [
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/venv/bin/python",
+        "-m",
+        "graphify",
+        "query",
+        "callee",
+        "--graph",
+        "/Users/felixgeelhaar/Developer/klarlabs/oss/graf/.research/evidence/graphify-source-audit-2026-10-23/graph.json",
+        "--budget",
+        "2000"
+      ],
+      "returncode": 0,
+      "stdout": "Graph: graph.json (2 nodes) | Traversal: BFS depth=2 | Start: ['callee'] | 2 nodes found\n\nNODE callee [src=b.py loc=L1 community=]\nNODE caller [src=a.py loc=L1 community=]\nEDGE caller --calls [EXTRACTED]--> callee at=a.py:L2\n",
+      "stderr": "",
+      "call_direction_correct": true
+    }
+  },
+  "native_cli_parity_pass": false,
+  "saved_trial_graph": {
+    "path": ".research/trials/codex-v1-click-1884-graphify_orient-1/retrieval-output/graphify-out/graph.json",
+    "nodes": 2872,
+    "edges": 6029,
+    "relation_counts": {
+      "imports_from": 173,
+      "imports": 439,
+      "contains": 1537,
+      "method": 418,
+      "references": 987,
+      "rationale_for": 588,
+      "calls": 1098,
+      "indirect_call": 459,
+      "inherits": 36,
+      "re_exports": 9,
+      "uses": 285
+    },
+    "limitation": "Stored extraction facts, not independently validated relationship accuracy."
+  },
+  "source_sha256": {
+    "benchmark/compare_graphify.py": "fa95faf9cbc9cdf6cdf4ed31e495e980fab8d1205c309971f19690747ed4e426",
+    "benchmark/task_session.py": "7fd08c5834617afc2d2f2e2116d8a5f6e5c45780a94bb30cb624fb8683db0f13",
+    "src/units.rs": "1a76caeea7e244207eaef0608f486d88dd7e5346dc47829faac539d6df7abc74",
+    "src/triage.rs": "e61b7abb9aef9e3979251b7e7c8447a2fb4e6788853c7173bd80b03ab745db83",
+    "src/query.rs": "31c7d865c4121306ef0282acacfb73e3b6bce4880be0e35601021caf8253979c",
+    "src/terms.rs": "59e0c51fa3bf9503c8c8df6be6d4950669d8f87e4802b132382ba413a87169a3",
+    ".research/corpora/graphify/graphify/serve.py": "19a9b82966e69669237c7301fa8a54d508e6bbb567c5b1407c956a0c47e076f3",
+    ".research/corpora/graphify/graphify/cli.py": "91fe687e9c0bca2ca3ab4e8429e3e41a66b84635c08ff0463d0c38e14549118c",
+    ".research/corpora/graphify/graphify/symbol_resolution.py": "e42da4eec86f364e47be29a4f9779713fad93f683a12cc118e9857861fda8932",
+    ".research/corpora/graphify/graphify/extractors/resolution.py": "5eaa255ecc68c514d8e007d3e0f3398e77eb98b514c60594003289d54c1ca307",
+    ".research/corpora/graphify/graphify/cache.py": "5fc48bed55d2c878545f76c1f2d6b44e694f77819aede845c8e8de45e5296212",
+    ".research/evidence/graphify-source-audit-2026-10-23/graph.json": "8b5ff6eceadb212f8534429138b105d134f17d76eb62af02acd7f796b0483be5",
+    ".research/trials/codex-v1-click-1884-graphify_orient-1/retrieval-output/graphify-out/graph.json": "7913f2c8e66a9e33d40ac7be1b7f0bd6e19dd8a524adca9ba0da6107962e5e68",
+    ".research/evidence/graphify-source-audit-2026-10-23/reproduce.py": "1fd8245166873433cc6558cbf581b50764f03c07a7a0a0d6b47758f2dbecd781"
+  },
+  "findings": [
+    "Graphify ranks symbol labels using exact/prefix/substrings, IDF and multi-term label coverage.",
+    "Graphify diversifies seeds and traverses relationships with hub suppression; graf units use BM25 and one-hop name-linked propagation.",
+    "Graphify has import-guided and ambiguity-aware resolution; graf links up to three same-named definitions without import proof.",
+    "Graphify outputs relationship metadata and call sites; graf units output source excerpts without relationship provenance.",
+    "Graphify native renderer estimates tokens by characters and intentionally permits completeness overshoot; graf uses cl100k packing.",
+    "Pinned CLI preserves per-edge direction markers and uses depth 2; benchmark adapter omits markers and defaults to depth 3.",
+    "Current trials expose Graphify query plus reads, not its complete native MCP tools or semantic documentation pipeline."
+  ],
+  "interpretation": "Mechanical adapter mismatch reproduced. Historical verifier outcomes remain observed, but native-CLI parity is not established. No claim that the mismatch caused repair failures. No comparative efficiency or retrieval-quality measurement.",
+  "next_steps": [
+    "Resolve the adapter contract and direction parity before new model calls.",
+    "Record a new adapter revision and freeze; preserve earlier artifacts and Graphify pin.",
+    "Test import-aware symbol resolution, symbol-field ranking and compact relationship context as separate experiments."
+  ],
+  "product_promotion_pass": false,
+  "agent_efficiency_acceptance_pass": false
+}
