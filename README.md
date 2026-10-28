@@ -60,9 +60,9 @@ line ranges you need. Use `units` for follow-up questions instead of reading who
 ### Status of the evidence
 
 - **Offline localization:** current `triage` performance against the pinned Graphify baseline is unmeasured for this implementation batch. The pinned Graphify t6 binary remains unchanged; prior results are documented in the [localization report](research/localization-results.md).
-- **Agent cost:** savings for the current CLI and MCP behavior are unmeasured. Earlier batches did not establish a general agent-efficiency win; see the [agent results](research/agent-results.md).
-- **Experimental flag:** until those batches finish, `triage`, `units`, and `outline` are marked experimental, and no agent-efficiency claim is made. See [AGENTS.md](AGENTS.md) for the rules.
-- **Large repositories:** `triage` answers in about half a second on Kubernetes and VS Code; see the [scale diagnostic](research/scale-results.md).
+- **Agent cost:** no graf orientation has saved agent cost against Graphify. In three preregistered batches on fresh natural tasks (t7–t9, Claude Haiku 5.5), graf's orientation cost the same as Graphify's or more, with non-inferior success; on tasks both always solved, costs were equal. Savings for the current CLI and MCP behavior are unmeasured. See the [agent results](research/agent-results.md).
+- **Experimental flag:** `triage`, `units`, and `outline` stay experimental, and no agent-efficiency claim is made. See [AGENTS.md](AGENTS.md) for the rules.
+- **Large repositories:** in a single-sample diagnostic, a warm `triage` answered in about half a second on Kubernetes and VS Code; see the [scale diagnostic](research/scale-results.md).
 
 `graf units "<query>" --focus --budget 2000` is an additional experiment for
 oversized functions. It returns a source window around the strongest matching
