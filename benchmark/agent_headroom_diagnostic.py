@@ -25,8 +25,9 @@ SEARCH_TOOLS = {"search", "read", "retrieve", "outline", "find"}
 
 
 def calls_and_results(stream):
-    """Model calls in order (usage deduplicated by message id) and the tool results that followed each call."""
-    calls, names, seen, output = [], {}, set(), 0
+    """Model calls in order (usage deduplicated by message id) and the tool results that followed each call,
+    with each result's tool arguments and text alongside."""
+    calls, names, arguments, seen, output = [], {}, {}, set(), 0
     for line in stream.read_text().splitlines():
         record = json.loads(line)
         if record.get("type") == "result":
@@ -36,15 +37,18 @@ def calls_and_results(stream):
             for block in message["content"]:
                 if block.get("type") == "tool_use":
                     names[block["id"]] = block["name"].rsplit("__", 1)[-1]
+                    arguments[block["id"]] = block.get("input") or {}
             if message["id"] not in seen:
                 seen.add(message["id"])
-                calls.append({"usage": message["usage"], "results": []})
+                calls.append({"usage": message["usage"], "results": [], "arguments": [], "texts": []})
         elif record.get("type") == "user" and calls and isinstance(record["message"]["content"], list):
             for block in record["message"]["content"]:
                 if block.get("type") == "tool_result":
                     text = "".join(part.get("text", "") for part in block["content"]) \
                         if isinstance(block["content"], list) else str(block["content"])
                     calls[-1]["results"].append((names.get(block["tool_use_id"], "unknown"), len(tokens(text))))
+                    calls[-1]["arguments"].append(arguments.get(block["tool_use_id"], {}))
+                    calls[-1]["texts"].append(text)
     return calls, output
 
 
