@@ -199,7 +199,7 @@ Each arm's p is the larger of its two one-sided McNemar tests; wins are the disc
 
 `ast_graph_ids` reaches 20.9% unit Acc@5, against 21.6% for `graf_floor_ids` and 20.1% for Graphify. It is not significantly better than either (p 0.87 and 0.19), so graf's function picks do not beat Graphify on TypeScript.
 
-The rule is `localization_screen.typescript` in [preregistration.json](../benchmark/preregistration.json): two tests, each against both comparators, Holm-corrected at family alpha 0.05. Data: [localization-decision-typescript.json](../results/localization-decision-typescript.json) and [localization-typescript.json](../results/localization-typescript.json).
+The rule is `localization_screen.typescript` in [preregistration.json](../benchmark/preregistration.json): two tests, each against both comparators, Holm-corrected at family alpha 0.05. Data: [localization-decision-typescript.json](../results/localization-decision-typescript.json) and `results/localization-typescript.json` (archived; see [raw-archive.json](../results/raw-archive.json)).
 
 - **Conditions.**
   - **Repositories:** zod, hono, trpc, tanstack-query, vitest and typeorm, at pinned heads.

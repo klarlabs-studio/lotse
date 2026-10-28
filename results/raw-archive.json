@@ -1,16 +1,150 @@
 {
-  "purpose": "raw outputs too large for git (over GitHub's 100 MB limit), kept outside the repository; each is summarized and verified by the committed summary and verification reports",
-  "restore": "gunzip -c ARCHIVE > RESULT, then check sha256",
+  "purpose": "raw outputs over 20 MB, kept outside git; their committed summary, verification and decision reports carry the findings",
+  "restore": "python benchmark/raw_archive.py restore [results/FILE.json ...]",
   "files": [
     {
-      "result": "results/readonly-broker-session-v1.json",
-      "sha256": "af7ad6e72875cb7e4e46f6c6ea455df1d16d1f95b5c3b54b27700687f6c1f399",
-      "bytes": 446346863,
-      "archive": ".research/evidence/readonly-broker-session-v1/readonly-broker-session-v1.json.gz",
-      "archive_sha256": "c16e5fe4f16fa2b0f6c6e40d5c093a2439406d6bf685105d061af02580210c6a",
-      "archive_bytes": 69514772,
-      "summary": "results/readonly-broker-session-v1-summary.json",
-      "verification": "results/readonly-broker-session-v1-verification.json"
+      "result": "results/bundled-evidence-v51-comparison.json",
+      "sha256": "b8f8d047181cfc55eca71aea68940185cf209403bbab2e57e6fdf14f8f5d3715",
+      "bytes": 37213738,
+      "archive": ".research/evidence/raw/bundled-evidence-v51-comparison.json.gz",
+      "archive_sha256": "8d1f3d2ec9037026d1ccfc63df27e94f08f1319ca47339379b638242fd2ad308",
+      "archive_bytes": 3908197
+    },
+    {
+      "result": "results/callees-evidence-v60-comparison.json",
+      "sha256": "287acfb81fe2bdcaa90d45a60f9745e0ec38e570851e4634251dc2a2265fb7f1",
+      "bytes": 52106679,
+      "archive": ".research/evidence/raw/callees-evidence-v60-comparison.json.gz",
+      "archive_sha256": "e8152f0da874c5d9d34bf9bd9fe5c19da298c5baff8b21c75ec90299f21a9280",
+      "archive_bytes": 4744928
+    },
+    {
+      "result": "results/callees-v43-comparison.json",
+      "sha256": "9706364e93ea4ecf1fa8e7bfd4b62a92f1eecc9647dd99d377e4c7822f0d1a3f",
+      "bytes": 28421735,
+      "archive": ".research/evidence/raw/callees-v43-comparison.json.gz",
+      "archive_sha256": "cf49d14bece5b2924fcd443315ef029d1aeadd9e3f777aaefc2c4a2d42e2b600",
+      "archive_bytes": 3263845
+    },
+    {
+      "result": "results/complement-evidence-v55-comparison.json",
+      "sha256": "adf447014a924c3928d2404abcbbc843e3dc8fee36b2a724d8222e25c1b85c44",
+      "bytes": 44229109,
+      "archive": ".research/evidence/raw/complement-evidence-v55-comparison.json.gz",
+      "archive_sha256": "a625e0a6209489bc141c2526a587fec58ea0afa994f0a0c6ff78da7f2dd59d6a",
+      "archive_bytes": 4433950
+    },
+    {
+      "result": "results/confirmation-v64-comparison.json",
+      "sha256": "1cd731799f390e6e7053c63ff3a606b59175118fe6c9d380833bd5c27b3c2f90",
+      "bytes": 26778430,
+      "archive": ".research/evidence/raw/confirmation-v64-comparison.json.gz",
+      "archive_sha256": "dd20127eeeb5e8a43f8bc061178b0a7fd572155825fd8e09002e87a3d57159e3",
+      "archive_bytes": 2705027
+    },
+    {
+      "result": "results/coverage-evidence-v52-comparison.json",
+      "sha256": "f0e622fbeb9f8265bab61d48fbc108868da32ee61e9b8a771cb7e4a908476d64",
+      "bytes": 38755872,
+      "archive": ".research/evidence/raw/coverage-evidence-v52-comparison.json.gz",
+      "archive_sha256": "82c35bee8eea09c6854af4538ae0ed2c9df5d6db0e98d605acde85d752a5252d",
+      "archive_bytes": 3981132
+    },
+    {
+      "result": "results/evidence-v45-comparison.json",
+      "sha256": "866169a205cfd28425927d440dee1687c7b76d632bcf03d7b8bd8b21828bf685",
+      "bytes": 32826011,
+      "archive": ".research/evidence/raw/evidence-v45-comparison.json.gz",
+      "archive_sha256": "8619f0c0ab982a7e72ebbebddc071c61063eb642aad4c7320490a17c4c391e4d",
+      "archive_bytes": 3897595
+    },
+    {
+      "result": "results/evidence-v46-comparison.json",
+      "sha256": "f87d4494865d61ba470ed6b9704904d0fb89c7de1acf46e3fe3ed5a8a80ce03d",
+      "bytes": 32046941,
+      "archive": ".research/evidence/raw/evidence-v46-comparison.json.gz",
+      "archive_sha256": "98a1850c981dcda61bf67db8c7e98fc3b29e0834c0376f73026cb5737e414b01",
+      "archive_bytes": 3664063
+    },
+    {
+      "result": "results/family-evidence-v53-comparison.json",
+      "sha256": "f7dd63770714767f0567c4651dfe781d0d1ab951db06bab43d2cb88d5529a620",
+      "bytes": 40285191,
+      "archive": ".research/evidence/raw/family-evidence-v53-comparison.json.gz",
+      "archive_sha256": "bac8a2bf1e71854a34d0991acaa1a7658d2957f913196c3962e7178b2e7d0627",
+      "archive_bytes": 4050785
+    },
+    {
+      "result": "results/focused-units-v39-comparison.json",
+      "sha256": "efc65121b859af4cc25c3aa5ac0f2bf22f793a0d918e63677ee91d923fde1f2f",
+      "bytes": 21593852,
+      "archive": ".research/evidence/raw/focused-units-v39-comparison.json.gz",
+      "archive_sha256": "4202416c9964fb8d99033ccb3bb56435cef8ac3bbc0b257b76184ef1d5c1cca2",
+      "archive_bytes": 2595072
+    },
+    {
+      "result": "results/fused-evidence-v57-comparison.json",
+      "sha256": "56f07b4fb3faba90b802e2e0ef490dc5533aed529940032afbb4b2a4bf523cd9",
+      "bytes": 47209784,
+      "archive": ".research/evidence/raw/fused-evidence-v57-comparison.json.gz",
+      "archive_sha256": "cb756972caafdf37d4078b089f3fd3aec309bd6b2b3d7282d82bc880d8886562",
+      "archive_bytes": 4585525
+    },
+    {
+      "result": "results/heldout-comparison.json",
+      "sha256": "2f6aba6944661fbc1f87f067aec40f77cab2261dba942a4aef4bd51099434644",
+      "bytes": 41870485,
+      "archive": ".research/evidence/raw/heldout-comparison.json.gz",
+      "archive_sha256": "8e8157c2ab3835394050fb11aa36ba67464256745431100d6693275e37c97e6b",
+      "archive_bytes": 6418730
+    },
+    {
+      "result": "results/linked-evidence-v50-comparison.json",
+      "sha256": "35d277f247b3fc7071b87ffd00ff68ef717a608e1d0139f6c14c29d35bb59200",
+      "bytes": 35345992,
+      "archive": ".research/evidence/raw/linked-evidence-v50-comparison.json.gz",
+      "archive_sha256": "215017aa8863fa3710d1dbfbf4851daaeaf36ac34fe4b82545ff12896ef195eb",
+      "archive_bytes": 3849365
+    },
+    {
+      "result": "results/localization-typescript-82dea833-partial.json",
+      "sha256": "125c397fb2d395ec2e1d99f7e604959b85605b9f16e4b0b221bd13ea61bbec33",
+      "bytes": 27702750,
+      "archive": ".research/evidence/raw/localization-typescript-82dea833-partial.json.gz",
+      "archive_sha256": "62ce2de93b845b11a7b9f9a6b65371ee8dd24c469970fbd2351134c583dc3069",
+      "archive_bytes": 1719747
+    },
+    {
+      "result": "results/localization-typescript.json",
+      "sha256": "3b68df902b417c8e723f78d7c3ce7bdb5a55d5badc3490364245e7be78ddf5dc",
+      "bytes": 60234696,
+      "archive": ".research/evidence/raw/localization-typescript.json.gz",
+      "archive_sha256": "a9ed41b89c4c83876e14a35b74844a4f99932b7449ca1eba1a05aae62df2bb4f",
+      "archive_bytes": 3906778
+    },
+    {
+      "result": "results/packing-v42-comparison.json",
+      "sha256": "74d3fd0617e4201797d4f82ed3af4bd8243408839632b55d620776ad43fcde50",
+      "bytes": 26568251,
+      "archive": ".research/evidence/raw/packing-v42-comparison.json.gz",
+      "archive_sha256": "8e829a7aa098a42d350ac82c7230b0ca8508cb67993295b01793924274f57b7f",
+      "archive_bytes": 3092769
+    },
+    {
+      "result": "results/passage-evidence-v54-comparison.json",
+      "sha256": "907b4670c8a51863e189c1185f459558ae29b033547468aa446e76fa5bb35abe",
+      "bytes": 42114035,
+      "archive": ".research/evidence/raw/passage-evidence-v54-comparison.json.gz",
+      "archive_sha256": "939f9e9ef596e90d7c8a0900adde15a980d41d7ef59839b4329306ba43f6186d",
+      "archive_bytes": 4226242
+    },
+    {
+      "result": "results/range-handles-v48-comparison.json",
+      "sha256": "60c120bb1b9d0bd6a242400a73dea81485802769c0c99a1d71cefc145fe716dd",
+      "bytes": 33549684,
+      "archive": ".research/evidence/raw/range-handles-v48-comparison.json.gz",
+      "archive_sha256": "1978d87cb3e8fc91c5cf4d381df4efc9b81ef9e20f90a1698ca30c6f5381a939",
+      "archive_bytes": 3775767
     },
     {
       "result": "results/readonly-broker-profile-v1.json",
@@ -23,6 +157,16 @@
       "verification": "results/readonly-broker-profile-v1-verification.json"
     },
     {
+      "result": "results/readonly-broker-session-v1.json",
+      "sha256": "af7ad6e72875cb7e4e46f6c6ea455df1d16d1f95b5c3b54b27700687f6c1f399",
+      "bytes": 446346863,
+      "archive": ".research/evidence/readonly-broker-session-v1/readonly-broker-session-v1.json.gz",
+      "archive_sha256": "c16e5fe4f16fa2b0f6c6e40d5c093a2439406d6bf685105d061af02580210c6a",
+      "archive_bytes": 69514772,
+      "summary": "results/readonly-broker-session-v1-summary.json",
+      "verification": "results/readonly-broker-session-v1-verification.json"
+    },
+    {
       "result": "results/readonly-broker-two-scans-v1.json",
       "sha256": "29596ef40112e2473ee30cc5c1380548301cf4aa122f1f1367d8655e0c016b30",
       "bytes": 181369496,
@@ -31,6 +175,70 @@
       "archive_bytes": 28278099,
       "summary": "results/readonly-broker-two-scans-v1-summary.json",
       "verification": "results/readonly-broker-two-scans-v1-verification.json"
+    },
+    {
+      "result": "results/referenced-evidence-v58-comparison.json",
+      "sha256": "04a84bb585114225b362a3af07bc4078cedc1076c5a98711b54a2cf1e5496827",
+      "bytes": 48684369,
+      "archive": ".research/evidence/raw/referenced-evidence-v58-comparison.json.gz",
+      "archive_sha256": "ff7e0ed35bf68ec28cc9f90413c1dc29dd663e65429674fc6c3bcffc554fe79e",
+      "archive_bytes": 4626216
+    },
+    {
+      "result": "results/rescue-evidence-v59-comparison.json",
+      "sha256": "09500462d2bb4b7f908ba75619a209598963ec8239f39f80f120ad5f2bb38d08",
+      "bytes": 50233413,
+      "archive": ".research/evidence/raw/rescue-evidence-v59-comparison.json.gz",
+      "archive_sha256": "d599ba3205b56045832aa129eba21d519b5413aa98a945033ef1b02c2391ee23",
+      "archive_bytes": 4671278
+    },
+    {
+      "result": "results/retain-body-v41-comparison.json",
+      "sha256": "52affec0343a551ef4ff7c774a96ced03b1fbf5717471dceea24d89240a35a24",
+      "bytes": 24714039,
+      "archive": ".research/evidence/raw/retain-body-v41-comparison.json.gz",
+      "archive_sha256": "f7e3f0bfab956347fef43af5ff7fe16823b9e14727d2473585aa3e5242d2cc3c",
+      "archive_bytes": 2911677
+    },
+    {
+      "result": "results/selective-evidence-v61-comparison.json",
+      "sha256": "5343f926ed9173dc803a95f7cea2fa7ff69b50b966055320b55ab53a8d149cdc",
+      "bytes": 53709730,
+      "archive": ".research/evidence/raw/selective-evidence-v61-comparison.json.gz",
+      "archive_sha256": "426505ee3a4112410067bc7de5f681bb6e0c4a3516d2fe053ae65ac1406045f2",
+      "archive_bytes": 4780119
+    },
+    {
+      "result": "results/stratified-evidence-v56-comparison.json",
+      "sha256": "7473927148bae38c894d5417301de2ae4ce01020826afee67f1c43f88f6243fb",
+      "bytes": 45747579,
+      "archive": ".research/evidence/raw/stratified-evidence-v56-comparison.json.gz",
+      "archive_sha256": "1dba527622e4d80e8f4927512fe89259f02e29bbff54c4a89e01f38aa0ec9e1c",
+      "archive_bytes": 4533278
+    },
+    {
+      "result": "results/structural-v47-comparison.json",
+      "sha256": "20dcb7fc8cb07b7e0ad55184062d921a854e8a208b2a70c0fea4101f38e20737",
+      "bytes": 33545615,
+      "archive": ".research/evidence/raw/structural-v47-comparison.json.gz",
+      "archive_sha256": "3a8052dd8d941f0d219523a2df885f7e12eea76cb18118eaa4039e5d38d4047a",
+      "archive_bytes": 3775360
+    },
+    {
+      "result": "results/symbol-units-v40-comparison.json",
+      "sha256": "d6b2faf6d72cec6e877d4d81a6036f899b451c040786a75fe573961f1951ff16",
+      "bytes": 22798395,
+      "archive": ".research/evidence/raw/symbol-units-v40-comparison.json.gz",
+      "archive_sha256": "17e81372f7e76e852a91532fc5871f5acf3b458e5b647686e907feb16a2adc0c",
+      "archive_bytes": 2725162
+    },
+    {
+      "result": "results/tail-v44-comparison.json",
+      "sha256": "d39786b574e615907ae2d06fa06dc33b228d87274fa3dc1c5376ed13d7c585be",
+      "bytes": 30338486,
+      "archive": ".research/evidence/raw/tail-v44-comparison.json.gz",
+      "archive_sha256": "74f51bdbb659997629a3d76f79a0c38a3e279b7d6dfec19c7d694302a8d144a9",
+      "archive_bytes": 3429861
     }
   ]
 }
