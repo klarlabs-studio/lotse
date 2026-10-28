@@ -2,6 +2,65 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t9: screen-qualified file list with function pointers versus Graphify (Haiku, fresh tasks); fails on cost
+
+**Outcome: the candidate `graf_pointer_orient` fails the preregistered rule.** It cost more than Graphify's orientation, not less: mean −$0.00175 per task (p 0.96), $0.670 in total against $0.544, about 23% more. Success was non-inferior: 62/72 against 59/72, p < 0.001. It also used more tokens: 15.22M against 13.07M (secondary, p 0.83). This is the third fresh-task batch in a row (t7, t8, t9) in which a lean graf orientation does not establish agent savings against Graphify. Every task and arm summary is in [agent-decision-t9.json](../results/agent-decision-t9.json).
+
+### Conditions
+
+- **Tasks.** 36 fresh natural tasks from seven repositories never used by any graf benchmark, frozen in v110 (catalog sha256 `2f0847b9…`) before any solver saw them:
+
+  | Language | Tasks |
+  |---|---|
+  | Go | 10 (fasthttp 8, lo 2) |
+  | Python | 16 (loguru 7, drf 5, pydantic 4) |
+  | JavaScript | 10 (moment 8, nodemon 2) |
+
+  - **Selection.** The v95 fill rule, as in t8. Every webpack candidate failed the fail-to-pass check by timing out under the frozen v109 runner. They were rejected as the rule requires; the runner was not changed after the fact.
+- **How the candidate was chosen.** Two offline localization screens on held-out tasks, with no solver:
+  - `file_code_screen` (v102) qualified the `file_graph_code` file ranking.
+  - `file_pointer_screen` (v104) qualified `file_pointers`: that ranking plus 2, 1 and 1 function pointers (name and line range) under its first three files, with no code.
+  - One `file_code_screen` log row (gorm-7790's file ranks for four arms, no unit result) was seen while checking the run's output path, before the pointer screen ran. This is recorded in its preregistration.
+  - `file_code_screen` crashed once on poetry-3022 after the process was suspended, and resumed from its 814 completed rows.
+- **Payload parity.** The shipped binary's payload was compared with the one the screen scored, before any t9 model call and without gold. It was identical on 1,449 of 1,459 screen tasks and on 30 of 36 t9 tasks. All the t9 differences are moment tasks: on five the eighth file differs, and on moment-6116 the binary splits a 4,500-line bundle into units differently. t9 tests the shipped binary as defined.
+- **Design.** 2 attempts per task and arm, 144 attempts in a seeded random order (seed 20261028), budget agreed on 2026-10-27.
+  - **Solver.** Claude Code 2.1.312 (pinned copy) running `claude-haiku-5-5` on the subscription. 80-turn cap, $0.50 per attempt, 1,200 s trial timeout, list-price cost. 2.1.312's Haiku 5.5 prices are identical to 2.1.311's.
+  - **Verifier deadline and bounded prefix.** Both on, as in t8.
+- **Arms.**
+  - `graf_pointer_orient`: `graf triage --lean --text --budget 1500` from `.research/bin/graf-c3fee50` (sha256 `813a3307…`). The median orientation was 94 cl100k tokens.
+  - `graphify_orient`: Graphify 0.9.97 orientation, a new baseline revision (the latest release at freeze, so the comparator differs from t8's 0.9.96), requested at 1,500 tokens and capped there. The median orientation was 1,490 tokens, cut to the cap on 30 of 36 tasks.
+- **Harness changes since t8 (both arms alike).** Every verifier and broker-tool command now runs under `run_group`, which kills every descendant still running when the command ends (issue #1: Playwright's browser escaped the process group). Output goes to files instead of pipes. This adds about 0.1–0.3 s of wall time per tool call, which is not gated.
+- **Completeness.** All 144 attempts are complete with full usage accounting. There were no infrastructure aborts and no reruns, and no attempt hit the solver timeout, so no cost was bounded.
+
+### Results
+
+| Arm | Passes / attempts | Success (Wilson 95%) | Total cost (list, USD) | Total tokens |
+| --- | ---: | --- | ---: | ---: |
+| `graf_pointer_orient` | 62 / 72 | 86.1% (76.3–92.3%) | 0.670 | 15.22M |
+| Graphify 0.9.97 orientation | 59 / 72 | 81.9% (71.5–89.1%) | 0.544 | 13.07M |
+
+| `graf_pointer_orient` versus | Mean cost reduction per task | Cost p (one-sided sign flip) | Cheaper tasks | Success difference (margin 0.10) | Pass |
+| --- | ---: | ---: | ---: | --- | --- |
+| Graphify orientation | −$0.00175 (costs more) | 0.96 | 16 / 36 | +0.042, non-inferior (p < 0.001) | no |
+
+- **Cost per task.** graf cost more than 1.5× Graphify on 3 tasks, the worst being nodemon-1320 at about 2.2×. It was up to 43% cheaper on others (loguru-1502).
+- **Success per task.** graf passed more attempts on 3 tasks (drf-9707 2 against 0, moment-6143, nodemon-1320) and fewer on 1 (loguru-1527).
+
+**By language (exploratory, not preregistered):**
+
+| Language | `graf_pointer_orient` passes, cost, tokens | Graphify passes, cost, tokens |
+| --- | --- | --- |
+| Go | 14/20, $0.155, 3.96M | 14/20, $0.134, 3.39M |
+| Python | 28/32, $0.234, 4.80M | 27/32, $0.206, 4.45M |
+| JavaScript | 20/20, $0.280, 6.46M | 18/20, $0.203, 5.23M |
+
+graf cost more in all three languages, by the widest margin on JavaScript.
+
+### Reading
+
+- **Better localization did not become cheaper agent runs.** The pointer payload won its offline localization screen, but here graf cost more on every language. A shorter orientation with better-ranked files did not stop the agent from spending more turns and tokens than it did with Graphify's longer one.
+- **Three batches, no cost advantage.** t7, t8 and t9 all fail on cost. No graf orientation is promoted, and agent savings against Graphify remain unestablished.
+
 ## Batch t8: replication of the lean file-list orientation versus Graphify (Haiku, fresh tasks); fails on cost
 
 **Outcome: the candidate `graf_lean_orient` fails the preregistered rule again.** It was not cheaper than Graphify's orientation (mean −$0.00021 per task, p 0.66). Success was non-inferior: 61/72 against 62/72, p 0.005. t7's 32% token saving did not replicate: graf used 14.32M tokens against Graphify's 14.41M (secondary, p 0.47). No attempt hit the trial timeout, so no cost was bounded and the v93 rule never applied. On these tasks, a file-list orientation does not establish agent savings against Graphify. Every task and arm summary is in [agent-decision-t8.json](../results/agent-decision-t8.json).
