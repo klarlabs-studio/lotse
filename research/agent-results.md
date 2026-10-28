@@ -2,6 +2,22 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Post-hoc diagnostic: where t8's and t9's cost gaps come from
+
+Exploratory and not preregistered. It was run after both decisions were recorded, using `benchmark/agent_cost_diagnostic.py` on the preserved trial logs, with no model calls. Rows are in [agent-cost-diagnostic-t9.json](../results/agent-cost-diagnostic-t9.json) and [agent-cost-diagnostic-t8.json](../results/agent-cost-diagnostic-t8.json).
+
+| Batch | Tasks every attempt of both arms solved | graf cost on those | Graphify cost on those | graf cost, all tasks | Graphify cost, all tasks |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| t9 | 27 / 36 | $0.291 | $0.292 | $0.670 | $0.544 |
+| t8 | 28 / 36 | $0.431 | $0.434 | $0.664 | $0.649 |
+
+- **On routine tasks the orientations cost the same.** On the tasks both arms always solve, graf and Graphify are within 1%. The agent reads the changed file first in most attempts either way: 57 of 72 graf attempts against 61 of 72 with Graphify in t9, and 53 against 62 in t8. In t9 the issue text itself names a changed file (its basename or stem) on 24 of 36 tasks. Typical attempts have no slack left: the median attempt took 11 turns in both arms.
+- **The gap comes from a few hard tasks.** In t9 one task, nodemon-1320, accounts for about two thirds of the $0.126 gap. graf's two attempts there took 28 and 45 turns ($0.042 and $0.112) and both passed. Graphify's took 20 and 36 turns and one passed. On drf-9707 graf passed both attempts at higher cost, while Graphify failed both more cheaply. The cost metric does not credit a costlier success over a cheaper failure, so solving more hard tasks shows up as extra cost.
+- **graf's first file was less often the changed file.** This held in both batches, although graf's file ranking won the offline localization screens. In t9 the changed file was graf's top file on 16 of 36 tasks, lower in the list on 13 and absent on 7. Tasks where it was listed but not first had the largest mean gap: +$0.0037 per attempt against +$0.0009 when it was first.
+- **graf attempts searched and retrieved more:** 209 against 184 searches and 49 against 13 retrievals in t9. With longer sessions, each turn re-reads a larger cached context: $0.00066 against $0.00058 per turn.
+
+**Reading (hypothesis, untested).** A shorter or better-ranked orientation cannot win on cost here. On most tasks the issue text already leads the agent to the right file, and the remaining cost comes from long sessions on hard tasks. Agent savings would have to come from shortening those sessions (for example, fewer exploratory search and retrieval turns after a missed first file), not from the orientation payload. Any such change needs its own preregistered screen and agreed budget before a claim.
+
 ## Batch t9: screen-qualified file list with function pointers versus Graphify (Haiku, fresh tasks); fails on cost
 
 **Outcome: the candidate `graf_pointer_orient` fails the preregistered rule.** It cost more than Graphify's orientation, not less: mean −$0.00175 per task (p 0.96), $0.670 in total against $0.544, about 23% more. Success was non-inferior: 62/72 against 59/72, p < 0.001. It also used more tokens: 15.22M against 13.07M (secondary, p 0.83). This is the third fresh-task batch in a row (t7, t8, t9) in which a lean graf orientation does not establish agent savings against Graphify. Every task and arm summary is in [agent-decision-t9.json](../results/agent-decision-t9.json).

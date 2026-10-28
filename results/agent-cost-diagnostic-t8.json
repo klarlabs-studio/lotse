@@ -1,0 +1,2877 @@
+{
+  "batch": "t8",
+  "status": "post-hoc exploratory diagnostic, not preregistered",
+  "arms": {
+    "graf_lean_orient": {
+      "turns_mean": 15.46,
+      "turns_median": 12.0,
+      "cost_per_turn": 0.000597,
+      "passed_cost_mean": 0.00844,
+      "failed_cost_mean": 0.01358,
+      "orientation_names_changed_file": 48,
+      "first_read_is_changed_file": 53,
+      "operations": {
+        "orient": 72,
+        "retrieve": 70,
+        "search": 226,
+        "read": 312,
+        "edit": 224,
+        "test": 127,
+        "finish": 72,
+        "None": 72,
+        "outline": 10
+      },
+      "total_cost_usd": 0.664,
+      "always_solved_cost_usd": 0.4309
+    },
+    "graphify_orient": {
+      "turns_mean": 14.89,
+      "turns_median": 13.0,
+      "cost_per_turn": 0.000606,
+      "passed_cost_mean": 0.00849,
+      "failed_cost_mean": 0.0123,
+      "orientation_names_changed_file": 54,
+      "first_read_is_changed_file": 62,
+      "operations": {
+        "orient": 72,
+        "search": 196,
+        "read": 333,
+        "edit": 231,
+        "test": 141,
+        "finish": 72,
+        "None": 72,
+        "retrieve": 27
+      },
+      "total_cost_usd": 0.6492,
+      "always_solved_cost_usd": 0.4339
+    }
+  },
+  "always_solved_tasks": 28,
+  "tasks": 36,
+  "largest_gaps": [
+    {
+      "task": "prettier-20172",
+      "mean_cost_gap_usd": 0.00824
+    },
+    {
+      "task": "validator-893",
+      "mean_cost_gap_usd": 0.00586
+    },
+    {
+      "task": "prettier-14694",
+      "mean_cost_gap_usd": 0.00566
+    },
+    {
+      "task": "prettier-20175",
+      "mean_cost_gap_usd": 0.00393
+    },
+    {
+      "task": "mux-534",
+      "mean_cost_gap_usd": 0.00384
+    }
+  ],
+  "attempts": [
+    {
+      "task": "handlebars-1838",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.00574976,
+      "tokens": 100949,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 5,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "handlebars-1838",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 11,
+      "cost_usd": 0.00484649,
+      "tokens": 67251,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "read": 5,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "handlebars-1838",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 11,
+      "cost_usd": 0.004120550000000001,
+      "tokens": 73881,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "read": 4,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "handlebars-1838",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.00605826,
+      "tokens": 111122,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 3,
+        "read": 6,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "handlebars-2164",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.00203687,
+      "tokens": 31403,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "retrieve": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "handlebars-2164",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.004985580000000002,
+      "tokens": 124964,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "retrieve": 3,
+        "edit": 2,
+        "test": 2,
+        "read": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": null
+    },
+    {
+      "task": "handlebars-2164",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.00260816,
+      "tokens": 41624,
+      "operations": {
+        "orient": 1,
+        "read": 2,
+        "search": 1,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "handlebars-2164",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.00473592,
+      "tokens": 98896,
+      "operations": {
+        "orient": 1,
+        "read": 4,
+        "search": 4,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "mux-534",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.0041521100000000005,
+      "tokens": 74907,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "mux-534",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.012807889999999999,
+      "tokens": 188099,
+      "operations": {
+        "orient": 1,
+        "retrieve": 4,
+        "search": 3,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "mux-534",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.00478794,
+      "tokens": 76086,
+      "operations": {
+        "orient": 1,
+        "read": 2,
+        "search": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "mux-534",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.004498400000000001,
+      "tokens": 77039,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "mux-739",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 21,
+      "cost_usd": 0.023332520000000002,
+      "tokens": 438620,
+      "operations": {
+        "orient": 1,
+        "read": 6,
+        "test": 2,
+        "search": 4,
+        "retrieve": 6,
+        "edit": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "mux-739",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 21,
+      "cost_usd": 0.021598420000000004,
+      "tokens": 328330,
+      "operations": {
+        "orient": 1,
+        "read": 9,
+        "search": 7,
+        "test": 2,
+        "edit": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "mux-739",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 26,
+      "cost_usd": 0.02371368,
+      "tokens": 505919,
+      "operations": {
+        "orient": 1,
+        "read": 11,
+        "test": 3,
+        "search": 7,
+        "retrieve": 1,
+        "edit": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "mux-739",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 25,
+      "cost_usd": 0.02276727,
+      "tokens": 579885,
+      "operations": {
+        "orient": 1,
+        "read": 9,
+        "search": 6,
+        "test": 4,
+        "retrieve": 1,
+        "edit": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-11565",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 11,
+      "cost_usd": 0.00775165,
+      "tokens": 83614,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "outline": 1,
+        "read": 1,
+        "edit": 3,
+        "test": 2,
+        "search": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-11565",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 11,
+      "cost_usd": 0.00713673,
+      "tokens": 90102,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "outline": 1,
+        "read": 2,
+        "edit": 3,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-11565",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.01002846,
+      "tokens": 149668,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 2,
+        "edit": 4,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-11565",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 10,
+      "cost_usd": 0.00962208,
+      "tokens": 139558,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14509",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.0038080600000000003,
+      "tokens": 50856,
+      "operations": {
+        "orient": 1,
+        "outline": 1,
+        "retrieve": 1,
+        "read": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14509",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0027813000000000004,
+      "tokens": 40495,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "outline": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14509",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.0045898,
+      "tokens": 97518,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 1,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14509",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.004085060000000001,
+      "tokens": 73860,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 1,
+        "read": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14694",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 30,
+      "cost_usd": 0.021832799999999996,
+      "tokens": 528048,
+      "operations": {
+        "orient": 1,
+        "search": 5,
+        "read": 9,
+        "edit": 7,
+        "test": 6,
+        "retrieve": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14694",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 22,
+      "cost_usd": 0.01488363,
+      "tokens": 341815,
+      "operations": {
+        "orient": 1,
+        "search": 5,
+        "read": 6,
+        "edit": 4,
+        "test": 4,
+        "retrieve": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14694",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 19,
+      "cost_usd": 0.01057011,
+      "tokens": 231451,
+      "operations": {
+        "orient": 1,
+        "search": 4,
+        "read": 5,
+        "edit": 4,
+        "test": 4,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-14694",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 26,
+      "cost_usd": 0.014827550000000002,
+      "tokens": 370253,
+      "operations": {
+        "orient": 1,
+        "search": 5,
+        "retrieve": 1,
+        "read": 6,
+        "edit": 7,
+        "test": 5,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-16184",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 21,
+      "cost_usd": 0.009656870000000003,
+      "tokens": 233586,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 11,
+        "search": 4,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 8
+    },
+    {
+      "task": "prettier-16184",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 24,
+      "cost_usd": 0.012957390000000003,
+      "tokens": 348639,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 5,
+        "read": 13,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 7
+    },
+    {
+      "task": "prettier-16184",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 19,
+      "cost_usd": 0.01234415,
+      "tokens": 296215,
+      "operations": {
+        "orient": 1,
+        "search": 4,
+        "read": 10,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 7
+    },
+    {
+      "task": "prettier-16184",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 15,
+      "cost_usd": 0.0071542,
+      "tokens": 180205,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "read": 8,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 3
+    },
+    {
+      "task": "prettier-20163",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.00468817,
+      "tokens": 80520,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 5,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-20163",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.006642579999999999,
+      "tokens": 126604,
+      "operations": {
+        "orient": 1,
+        "outline": 1,
+        "retrieve": 1,
+        "search": 1,
+        "read": 6,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 4
+    },
+    {
+      "task": "prettier-20163",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 11,
+      "cost_usd": 0.0073964,
+      "tokens": 113316,
+      "operations": {
+        "orient": 1,
+        "search": 1,
+        "read": 5,
+        "retrieve": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 4
+    },
+    {
+      "task": "prettier-20163",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.00892978,
+      "tokens": 189156,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "retrieve": 2,
+        "read": 3,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-20172",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 36,
+      "cost_usd": 0.026520399999999996,
+      "tokens": 703656,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 10,
+        "read": 19,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-20172",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 17,
+      "cost_usd": 0.013624970000000002,
+      "tokens": 232232,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 4,
+        "read": 7,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-20172",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 17,
+      "cost_usd": 0.01163604,
+      "tokens": 195949,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "retrieve": 1,
+        "read": 7,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-20172",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 15,
+      "cost_usd": 0.012023780000000001,
+      "tokens": 169204,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 5,
+        "edit": 4,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "prettier-20175",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 18,
+      "cost_usd": 0.01629386,
+      "tokens": 387641,
+      "operations": {
+        "orient": 1,
+        "retrieve": 2,
+        "search": 8,
+        "read": 3,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "prettier-20175",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 36,
+      "cost_usd": 0.03354815,
+      "tokens": 1002139,
+      "operations": {
+        "orient": 1,
+        "retrieve": 2,
+        "search": 12,
+        "read": 12,
+        "edit": 5,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 6
+    },
+    {
+      "task": "prettier-20175",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 18,
+      "cost_usd": 0.01476708,
+      "tokens": 293757,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 5,
+        "search": 3,
+        "edit": 5,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-20175",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 26,
+      "cost_usd": 0.027218199999999998,
+      "tokens": 559826,
+      "operations": {
+        "orient": 1,
+        "read": 7,
+        "search": 6,
+        "edit": 7,
+        "test": 4,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-5183",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 10,
+      "cost_usd": 0.00474941,
+      "tokens": 74287,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "outline": 1,
+        "read": 2,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-5183",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.00720618,
+      "tokens": 118204,
+      "operations": {
+        "orient": 1,
+        "search": 1,
+        "retrieve": 1,
+        "read": 4,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-5183",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 10,
+      "cost_usd": 0.0080888,
+      "tokens": 132461,
+      "operations": {
+        "orient": 1,
+        "read": 4,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "prettier-5183",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 13,
+      "cost_usd": 0.00862711,
+      "tokens": 158987,
+      "operations": {
+        "orient": 1,
+        "read": 6,
+        "search": 1,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-11783",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 24,
+      "cost_usd": 0.012455959999999999,
+      "tokens": 285355,
+      "operations": {
+        "orient": 1,
+        "read": 6,
+        "retrieve": 1,
+        "search": 5,
+        "edit": 7,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-11783",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 29,
+      "cost_usd": 0.01759006,
+      "tokens": 445513,
+      "operations": {
+        "orient": 1,
+        "read": 7,
+        "search": 5,
+        "edit": 10,
+        "test": 5,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-11783",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 15,
+      "cost_usd": 0.00695819,
+      "tokens": 151717,
+      "operations": {
+        "orient": 1,
+        "search": 6,
+        "read": 5,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-11783",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 30,
+      "cost_usd": 0.01751042,
+      "tokens": 465167,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 5,
+        "read": 8,
+        "edit": 9,
+        "test": 5,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12175",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 13,
+      "cost_usd": 0.0063216,
+      "tokens": 124771,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 5,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12175",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 14,
+      "cost_usd": 0.00722566,
+      "tokens": 143275,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 5,
+        "read": 4,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12175",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 11,
+      "cost_usd": 0.0062457400000000005,
+      "tokens": 114663,
+      "operations": {
+        "orient": 1,
+        "read": 4,
+        "search": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12175",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 12,
+      "cost_usd": 0.00686781,
+      "tokens": 130115,
+      "operations": {
+        "orient": 1,
+        "read": 5,
+        "search": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12223",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 25,
+      "cost_usd": 0.018073429999999998,
+      "tokens": 451721,
+      "operations": {
+        "orient": 1,
+        "retrieve": 2,
+        "search": 4,
+        "read": 4,
+        "edit": 7,
+        "test": 6,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12223",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 30,
+      "cost_usd": 0.017729819999999997,
+      "tokens": 508801,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 6,
+        "read": 9,
+        "edit": 7,
+        "test": 5,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12223",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 26,
+      "cost_usd": 0.01802858,
+      "tokens": 581150,
+      "operations": {
+        "orient": 1,
+        "search": 5,
+        "read": 5,
+        "edit": 8,
+        "test": 6,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-12223",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 22,
+      "cost_usd": 0.013367860000000002,
+      "tokens": 265351,
+      "operations": {
+        "orient": 1,
+        "search": 5,
+        "read": 4,
+        "edit": 6,
+        "test": 5,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-14912",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 37,
+      "cost_usd": 0.012128530000000002,
+      "tokens": 215739,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 6,
+        "edit": 25,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-14912",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 33,
+      "cost_usd": 0.012588180000000001,
+      "tokens": 214920,
+      "operations": {
+        "orient": 1,
+        "read": 6,
+        "search": 5,
+        "edit": 19,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-14912",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 39,
+      "cost_usd": 0.015090400000000004,
+      "tokens": 339896,
+      "operations": {
+        "orient": 1,
+        "read": 7,
+        "search": 10,
+        "edit": 19,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-14912",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 37,
+      "cost_usd": 0.013145259999999999,
+      "tokens": 182950,
+      "operations": {
+        "orient": 1,
+        "read": 5,
+        "search": 4,
+        "edit": 25,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-15132",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.0052908,
+      "tokens": 94745,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "retrieve": 1,
+        "read": 3,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 3
+    },
+    {
+      "task": "pytest-15132",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 17,
+      "cost_usd": 0.00835464,
+      "tokens": 201382,
+      "operations": {
+        "orient": 1,
+        "retrieve": 3,
+        "search": 3,
+        "read": 5,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": null
+    },
+    {
+      "task": "pytest-15132",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.00629422,
+      "tokens": 130105,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "read": 5,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-15132",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 13,
+      "cost_usd": 0.00562852,
+      "tokens": 134145,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "read": 5,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-15254",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 34,
+      "cost_usd": 0.02661282000000001,
+      "tokens": 638103,
+      "operations": {
+        "orient": 1,
+        "outline": 2,
+        "read": 7,
+        "edit": 12,
+        "search": 6,
+        "test": 5,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "pytest-15254",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 23,
+      "cost_usd": 0.028512449999999998,
+      "tokens": 571943,
+      "operations": {
+        "orient": 1,
+        "read": 6,
+        "outline": 1,
+        "search": 3,
+        "edit": 8,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 3
+    },
+    {
+      "task": "pytest-15254",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 27,
+      "cost_usd": 0.02690871,
+      "tokens": 810284,
+      "operations": {
+        "orient": 1,
+        "retrieve": 2,
+        "read": 7,
+        "search": 2,
+        "test": 6,
+        "edit": 8,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 3
+    },
+    {
+      "task": "pytest-15254",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 30,
+      "cost_usd": 0.02255,
+      "tokens": 540550,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 5,
+        "edit": 14,
+        "test": 7,
+        "search": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-6750",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.00286431,
+      "tokens": 44515,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-6750",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.00285263,
+      "tokens": 50418,
+      "operations": {
+        "orient": 1,
+        "read": 2,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-6750",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 6,
+      "cost_usd": 0.0030510100000000003,
+      "tokens": 46056,
+      "operations": {
+        "orient": 1,
+        "read": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-6750",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 10,
+      "cost_usd": 0.00475836,
+      "tokens": 109356,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 1,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-9924",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.0043359,
+      "tokens": 83776,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-9924",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 13,
+      "cost_usd": 0.00788269,
+      "tokens": 156812,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 5,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-9924",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 17,
+      "cost_usd": 0.010949220000000003,
+      "tokens": 312637,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 3,
+        "read": 9,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "pytest-9924",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.00920387,
+      "tokens": 223175,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "retrieve": 1,
+        "read": 7,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "requests-4795",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.00337542,
+      "tokens": 50490,
+      "operations": {
+        "orient": 1,
+        "search": 1,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "requests-4795",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 5,
+      "cost_usd": 0.0028834700000000004,
+      "tokens": 41032,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": null
+    },
+    {
+      "task": "requests-4795",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.0045445600000000004,
+      "tokens": 88801,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "requests-4795",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 6,
+      "cost_usd": 0.0033355699999999995,
+      "tokens": 53230,
+      "operations": {
+        "orient": 1,
+        "search": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "tqdm-1658",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.0026971799999999995,
+      "tokens": 49135,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 1,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "tqdm-1658",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0022374400000000003,
+      "tokens": 32256,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "tqdm-1658",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0029204,
+      "tokens": 44220,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "tqdm-1658",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0028235499999999998,
+      "tokens": 43861,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3040",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 8,
+      "cost_usd": 0.006009319999999999,
+      "tokens": 79421,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3040",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 8,
+      "cost_usd": 0.00633888,
+      "tokens": 92798,
+      "operations": {
+        "orient": 1,
+        "read": 2,
+        "search": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3040",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.01082394,
+      "tokens": 234055,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 3,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3040",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 9,
+      "cost_usd": 0.00749552,
+      "tokens": 132556,
+      "operations": {
+        "orient": 1,
+        "read": 4,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3202",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 11,
+      "cost_usd": 0.00818792,
+      "tokens": 133781,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "retrieve": 1,
+        "search": 1,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3202",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.0063165800000000005,
+      "tokens": 135980,
+      "operations": {
+        "orient": 1,
+        "read": 3,
+        "search": 1,
+        "retrieve": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3202",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.007749440000000001,
+      "tokens": 151237,
+      "operations": {
+        "orient": 1,
+        "read": 4,
+        "search": 2,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "uvicorn-3202",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.007472299999999999,
+      "tokens": 156370,
+      "operations": {
+        "orient": 1,
+        "read": 4,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1249",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 18,
+      "cost_usd": 0.007250630000000001,
+      "tokens": 121008,
+      "operations": {
+        "orient": 1,
+        "search": 6,
+        "read": 7,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1249",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 12,
+      "cost_usd": 0.0035540699999999995,
+      "tokens": 45520,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "read": 2,
+        "edit": 4,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1249",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 18,
+      "cost_usd": 0.006916729999999999,
+      "tokens": 150358,
+      "operations": {
+        "orient": 1,
+        "search": 4,
+        "read": 3,
+        "edit": 6,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1249",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 17,
+      "cost_usd": 0.00580126,
+      "tokens": 128085,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "read": 5,
+        "edit": 5,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1576",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 18,
+      "cost_usd": 0.00910478,
+      "tokens": 146732,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "read": 2,
+        "edit": 7,
+        "test": 4,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1576",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.006254200000000001,
+      "tokens": 103119,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "read": 2,
+        "edit": 4,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1576",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.00623259,
+      "tokens": 64913,
+      "operations": {
+        "orient": 1,
+        "search": 1,
+        "read": 2,
+        "edit": 2,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1576",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.00693104,
+      "tokens": 96978,
+      "operations": {
+        "orient": 1,
+        "search": 1,
+        "read": 2,
+        "edit": 4,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1602",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 6,
+      "cost_usd": 0.0020133,
+      "tokens": 33326,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": null
+    },
+    {
+      "task": "validator-1602",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.0025271499999999997,
+      "tokens": 46694,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1602",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0022696500000000002,
+      "tokens": 42754,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1602",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.0033548700000000007,
+      "tokens": 70858,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1641",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0022021700000000003,
+      "tokens": 35019,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1641",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0021588200000000005,
+      "tokens": 42117,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1641",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 6,
+      "cost_usd": 0.00175729,
+      "tokens": 35405,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1641",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 6,
+      "cost_usd": 0.00251363,
+      "tokens": 35654,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1647",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 22,
+      "cost_usd": 0.008720080000000002,
+      "tokens": 199730,
+      "operations": {
+        "orient": 1,
+        "search": 8,
+        "edit": 3,
+        "test": 3,
+        "read": 6,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": null
+    },
+    {
+      "task": "validator-1647",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 22,
+      "cost_usd": 0.006851080000000001,
+      "tokens": 174628,
+      "operations": {
+        "orient": 1,
+        "read": 6,
+        "search": 11,
+        "edit": 1,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1647",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 17,
+      "cost_usd": 0.00817461,
+      "tokens": 170229,
+      "operations": {
+        "orient": 1,
+        "read": 4,
+        "search": 4,
+        "edit": 3,
+        "test": 3,
+        "retrieve": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-1647",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 19,
+      "cost_usd": 0.00575215,
+      "tokens": 175511,
+      "operations": {
+        "orient": 1,
+        "search": 7,
+        "edit": 3,
+        "test": 3,
+        "read": 4,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": null
+    },
+    {
+      "task": "validator-766",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.00800142,
+      "tokens": 124596,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "retrieve": 1,
+        "read": 3,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 3
+    },
+    {
+      "task": "validator-766",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.005412610000000001,
+      "tokens": 78979,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": null
+    },
+    {
+      "task": "validator-766",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 10,
+      "cost_usd": 0.006323980000000001,
+      "tokens": 122056,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-766",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.00657629,
+      "tokens": 107039,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-893",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 34,
+      "cost_usd": 0.032391020000000006,
+      "tokens": 985475,
+      "operations": {
+        "orient": 1,
+        "retrieve": 7,
+        "search": 6,
+        "read": 11,
+        "edit": 5,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-893",
+      "arm": "graf_lean_orient",
+      "passed": false,
+      "turns": 35,
+      "cost_usd": 0.023609420000000002,
+      "tokens": 729657,
+      "operations": {
+        "orient": 1,
+        "search": 10,
+        "read": 14,
+        "retrieve": 1,
+        "edit": 5,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-893",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 24,
+      "cost_usd": 0.02056509,
+      "tokens": 589197,
+      "operations": {
+        "orient": 1,
+        "read": 12,
+        "search": 6,
+        "retrieve": 1,
+        "edit": 2,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "validator-893",
+      "arm": "graphify_orient",
+      "passed": false,
+      "turns": 31,
+      "cost_usd": 0.0237196,
+      "tokens": 729326,
+      "operations": {
+        "orient": 1,
+        "read": 12,
+        "search": 9,
+        "edit": 6,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-737",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 13,
+      "cost_usd": 0.00394675,
+      "tokens": 67745,
+      "operations": {
+        "orient": 1,
+        "read": 5,
+        "search": 2,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-737",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 13,
+      "cost_usd": 0.0061290599999999995,
+      "tokens": 111364,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 4,
+        "search": 2,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-737",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.00472245,
+      "tokens": 99743,
+      "operations": {
+        "orient": 1,
+        "read": 5,
+        "search": 1,
+        "edit": 3,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-737",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 18,
+      "cost_usd": 0.008888390000000001,
+      "tokens": 172953,
+      "operations": {
+        "orient": 1,
+        "read": 5,
+        "search": 3,
+        "edit": 5,
+        "test": 3,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-798",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 12,
+      "cost_usd": 0.0037852499999999996,
+      "tokens": 71628,
+      "operations": {
+        "orient": 1,
+        "search": 3,
+        "read": 4,
+        "outline": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 3
+    },
+    {
+      "task": "zap-798",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.00181095,
+      "tokens": 25918,
+      "operations": {
+        "orient": 1,
+        "search": 2,
+        "read": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-798",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 14,
+      "cost_usd": 0.00447301,
+      "tokens": 92110,
+      "operations": {
+        "orient": 1,
+        "read": 5,
+        "search": 5,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 2
+    },
+    {
+      "task": "zap-798",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.001737,
+      "tokens": 38178,
+      "operations": {
+        "orient": 1,
+        "search": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-810",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 6,
+      "cost_usd": 0.00244577,
+      "tokens": 40214,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "retrieve": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-810",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 5,
+      "cost_usd": 0.00128352,
+      "tokens": 17761,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-810",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 5,
+      "cost_usd": 0.00187978,
+      "tokens": 27304,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-810",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 6,
+      "cost_usd": 0.00205789,
+      "tokens": 29294,
+      "operations": {
+        "orient": 1,
+        "read": 1,
+        "search": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-896",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 17,
+      "cost_usd": 0.00960936,
+      "tokens": 220104,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 6,
+        "search": 4,
+        "test": 2,
+        "edit": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-896",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 15,
+      "cost_usd": 0.00761795,
+      "tokens": 163163,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 3,
+        "read": 4,
+        "test": 3,
+        "edit": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 3
+    },
+    {
+      "task": "zap-896",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 29,
+      "cost_usd": 0.02058593,
+      "tokens": 641113,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 18,
+        "search": 3,
+        "test": 3,
+        "edit": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-896",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 19,
+      "cost_usd": 0.012538069999999998,
+      "tokens": 294516,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 3,
+        "read": 9,
+        "test": 2,
+        "edit": 2,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-995",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.0022460300000000004,
+      "tokens": 46420,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-995",
+      "arm": "graf_lean_orient",
+      "passed": true,
+      "turns": 7,
+      "cost_usd": 0.00260015,
+      "tokens": 48385,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 1,
+        "read": 1,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": false,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-995",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 8,
+      "cost_usd": 0.00269601,
+      "tokens": 53861,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "read": 3,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    },
+    {
+      "task": "zap-995",
+      "arm": "graphify_orient",
+      "passed": true,
+      "turns": 9,
+      "cost_usd": 0.0037736199999999997,
+      "tokens": 84055,
+      "operations": {
+        "orient": 1,
+        "retrieve": 1,
+        "search": 2,
+        "read": 2,
+        "edit": 1,
+        "test": 1,
+        "finish": 1,
+        "None": 1
+      },
+      "orientation_names_changed_file": true,
+      "first_changed_file_read": 1
+    }
+  ]
+}
