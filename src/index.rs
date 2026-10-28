@@ -16,8 +16,9 @@ const SCHEMA: u32 = 2;
 const LEGACY_SCHEMA: u32 = 1;
 const MAX_PATH_WEIGHT: u32 = 10;
 const MAX_FILE_BYTES: u64 = 1_000_000;
-/// Keep damaged or unexpectedly large snapshots from consuming unbounded memory.
-const MAX_INDEX_BYTES: u64 = 128 * 1024 * 1024;
+/// Keep damaged or unexpectedly large snapshots from consuming unbounded memory. Real indexes
+/// stay well below: VS Code's was 159 MB and Kubernetes' 132 MB (research/scale-results.md).
+pub const MAX_INDEX_BYTES: u64 = 1024 * 1024 * 1024;
 const SKIPPED_DIRS: [&str; 5] = ["node_modules", "vendor", "target", "dist", "__pycache__"];
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

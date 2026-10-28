@@ -14,7 +14,7 @@ mod terms;
 pub mod triage;
 pub mod units;
 
-pub use index::{BuildReport, Index, IndexStats, Posting, index_path};
+pub use index::{BuildReport, Index, IndexStats, MAX_INDEX_BYTES, Posting, index_path};
 pub use policy::{FileScore, Policy, Stop};
 pub use response::{Excerpt, Hint, LocateResponse, Response};
 pub use source::{Chunk, Source, digest};

@@ -1,4 +1,4 @@
-use graf::{Analyzer, Index, Stopwords, canonical_root, index_path};
+use graf::{Analyzer, Index, MAX_INDEX_BYTES, Stopwords, canonical_root, index_path};
 use std::fs;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
@@ -156,13 +156,28 @@ fn oversized_snapshot_is_a_resource_error_for_both_load_paths() {
     Index::build(&root, true).unwrap();
     let path = index_path(&root);
     let file = fs::OpenOptions::new().write(true).open(&path).unwrap();
-    file.set_len(128 * 1024 * 1024 + 1).unwrap();
+    file.set_len(MAX_INDEX_BYTES + 1).unwrap();
 
     for result in [Index::load(&root), Index::load_or_rebuild_for_mcp(&root)] {
         let error = result.unwrap_err();
         assert!(error.to_string().contains("resource limit"));
     }
-    assert_eq!(fs::metadata(path).unwrap().len(), 128 * 1024 * 1024 + 1);
+    assert_eq!(fs::metadata(path).unwrap().len(), MAX_INDEX_BYTES + 1);
+}
+
+#[test]
+fn a_vs_code_sized_snapshot_is_within_the_limit() {
+    // The scale diagnostic's VS Code index was 159 MB (research/scale-results.md).
+    let (_dir, root) = fixture();
+    Index::build(&root, true).unwrap();
+    let file = fs::OpenOptions::new()
+        .write(true)
+        .open(index_path(&root))
+        .unwrap();
+    file.set_len(159_000_000).unwrap();
+
+    // Trailing bytes are allowed, so the padded snapshot still loads.
+    Index::load(&root).unwrap();
 }
 
 #[test]
