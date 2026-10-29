@@ -2,6 +2,14 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Feasibility screen: pointer-free tasks (v120); passes
+
+**Outcome: there are enough natural tasks whose issue does not point at the code to build a separate workload, so a batch on it can be proposed.** v120 froze the definition and the rule before any count. Of the 1,392 automatic-criteria candidates that no catalog has used, 240 are pointer-free (17%). The rule needed 90, from at least 6 repositories in each of Go, Python and JavaScript; there are 42 from 13 Go repositories, 59 from 16 Python repositories and 108 from 15 JavaScript repositories, plus 31 TypeScript. t10's repositories alone give 91. No solver ran and no test ran. Rows are in [pointer-free-screen.json](../results/pointer-free-screen.json), and the script is `benchmark/pointer_free_screen.py`.
+
+- **Definition.** The issue names no faulted file (path, file name, or a stem of four or more characters as a whole word). It also shares no code-shaped identifier with the faulted code: names with `_`, a digit or an inner capital, and lowercase names of six or more characters that are not dictionary words.
+- **Limit.** The criterion removes literal pointers, not conceptual ones. An issue about a "logarithmic" scale, fixed in `scale.logarithmic.js`, passes because the stem `scale.logarithmic` never appears. Pointer-free tasks are lexically harder to locate, not guaranteed hard.
+- **Scope.** Any result on this workload covers pointer-free natural tasks only, not issue-driven tasks in general.
+
 ## Batch t10 (v119): Claude Code with graf or Graphify installed, 48 fresh natural tasks; fails
 
 **Outcome: `graf_installed` fails the preregistered rule.** It is not significantly cheaper than either comparator:
