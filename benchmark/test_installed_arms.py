@@ -80,6 +80,14 @@ class AutoMemoryTest(unittest.TestCase):
         self.assertFalse(run_agent_trial.remove_empty_auto_memory(Path("/private/var/tmp/graf-trials/b/workspace"), projects))
         self.assertTrue((kept / "MEMORY.md").is_file())
 
+    def test_finds_the_folder_of_an_arm_name_with_underscores(self):
+        projects = Path(tempfile.mkdtemp())
+        folder = projects / "-private-var-tmp-graf-trials-t-graf-installed-1-workspace"
+        folder.mkdir()
+        workspace = Path("/private/var/tmp/graf-trials/t-graf_installed-1/workspace")
+        self.assertTrue(run_agent_trial.remove_empty_auto_memory(workspace, projects))
+        self.assertFalse(folder.exists())
+
 
 class OutsideWorkspaceTest(unittest.TestCase):
     def stream(self, *events):

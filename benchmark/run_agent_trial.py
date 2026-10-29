@@ -14,6 +14,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -234,7 +235,7 @@ def outside_workspace(stream, workspace):
 
 def remove_empty_auto_memory(workspace, projects=Path.home() / ".claude/projects"):
     """Claude Code's default auto-memory makes an empty memory folder per working directory; leave none behind."""
-    folder = projects / ("-" + str(workspace).strip("/").replace("/", "-"))
+    folder = projects / re.sub(r"[^A-Za-z0-9]", "-", str(workspace))  # Claude Code's own folder naming.
     if not folder.is_dir() or any(path.is_file() for path in folder.rglob("*")):
         return False
     for path in sorted(folder.rglob("*"), reverse=True):
