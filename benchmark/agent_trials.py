@@ -63,8 +63,8 @@ def prepare(task, trial_id):
 
 def verify(task, workspace, timeout=180):
     root = workspace.resolve()
-    allowed = (BASE / ".research/trials").resolve()
-    if not root.is_relative_to(allowed) or not root.is_dir():
+    allowed = [(BASE / ".research/trials").resolve(), Path("/private/var/tmp/graf-trials").resolve()]  # Batch t10.
+    if not any(root.is_relative_to(a) for a in allowed) or not root.is_dir():
         raise ValueError("Verification is restricted to prepared trial workspaces")
     if json.loads((root.parent / "task.json").read_text())["task"] != task["id"]:
         raise ValueError("Task identity does not match this workspace")

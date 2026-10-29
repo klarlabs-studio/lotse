@@ -39,7 +39,14 @@ TOOL_DEFINITIONS = [
 GRAF_QUERY_FLAGS = {"graf": (), "graf_floor": ("--file-score", "damped", "--stop", "floor")}
 GRAF_ORIENT_ARMS = ("graf_orient", "graf_current_orient", "graf_lean_orient", "graf_pointer_orient")
 ORIENT_ARMS = (*GRAF_ORIENT_ARMS, "graphify_orient")
-ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph", *ORIENT_ARMS)
+# Batch t10: Claude Code's built-in tools, alone or with a tool set up as its own documentation says. The broker
+# only runs the tests and grades; the workspace lives outside any git repository or Claude Code configuration.
+INSTALLED_ARMS = ("builtin", "graphify_installed", "graf_installed")
+ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph", *ORIENT_ARMS, *INSTALLED_ARMS)
+EXTERNAL_TRIALS = Path("/private/var/tmp/graf-trials")
+# Build and test configuration the installed arms' built-in Edit could change; verification refuses any change.
+CONFIGURATION_FILES = {"package.json", "package-lock.json", "pyproject.toml", "setup.py", "setup.cfg", "tox.ini",
+                       "pytest.ini", "go.mod", "go.sum", "Makefile"}
 SCRIPTS = Path(__file__).resolve().parent
 AST_BACKEND = BASE / "frozen-t4"  # The ast_graph backend as batch t4 started; see frozen-t4/README.md.
 ORIENT_BUDGET = 1500  # Batch t5: the orientation shown before the first turn (preregistration v22).
@@ -70,7 +77,10 @@ def graf_binary(arm):
 
 
 def tool_definitions(arm):
-    """The operations an arm's model can request; search-only has no retriever, and only graf_orient outlines."""
+    """The operations an arm's model can request; search-only has no retriever, and only graf_orient outlines.
+    The installed arms read, search and edit with Claude Code's own tools, so the broker offers test and finish."""
+    if arm in INSTALLED_ARMS:
+        return [d for d in TOOL_DEFINITIONS if d["name"] in ("test", "finish")]
     return [d for d in TOOL_DEFINITIONS
             if not (arm == "search_only" and d["name"] == "retrieve")
             and not (arm not in GRAF_ORIENT_ARMS and d["name"] == "outline")]
@@ -149,6 +159,40 @@ def is_test_path(path):
             or ".test." in p.name or ".spec." in p.name or p.name == "conftest.py")
 
 
+def configuration_hashes(root):
+    """Hashes of the build and test configuration files outside dependency and version-control directories."""
+    hashes = {}
+    for folder, directories, files in os.walk(root):
+        directories[:] = [d for d in directories if d not in {"node_modules", ".git", ".graf", "graphify-out"}]
+        for name in sorted(set(files) & CONFIGURATION_FILES):
+            path = Path(folder) / name
+            hashes[str(path.relative_to(root))] = sha(path.read_text(errors="replace"))
+    return hashes
+
+
+def relocate_workspace(directory):
+    """Move a prepared workspace outside the repository and leave a link in its place."""
+    external = EXTERNAL_TRIALS / directory.name
+    if external.exists():
+        raise ValueError("Refusing to overwrite an external workspace")
+    external.mkdir(parents=True)
+    shutil.move(str(directory / "workspace"), str(external / "workspace"))
+    (external / "task.json").write_text((directory / "task.json").read_text())
+    (directory / "workspace").symlink_to(external / "workspace", target_is_directory=True)
+
+
+def restore_workspace(directory):
+    """Bring an installed arm's workspace back under the trial directory once the solver has exited."""
+    link = directory / "workspace"
+    if not link.is_symlink():
+        return
+    external = link.resolve()
+    link.unlink()
+    shutil.move(str(external), str(link))
+    (external.parent / "task.json").unlink(missing_ok=True)
+    external.parent.rmdir()
+
+
 def graphify_pin():
     return graphify_baseline()
 
@@ -161,9 +205,13 @@ class Session:
         if graphify_adapter is not None and graphify_adapter not in GRAPHIFY_ADAPTERS:
             raise ValueError("Unknown Graphify adapter")
         self.graphify_adapter = graphify_adapter or "library-v1"
-        self.root = (BASE / ".research/trials" / trial_id / "workspace").resolve()
-        self.directory = self.root.parent
-        if not self.root.is_relative_to((BASE / ".research/trials").resolve()):
+        trials = (BASE / ".research/trials").resolve()
+        self.directory = trials / trial_id
+        if self.directory.resolve().parent != trials:
+            raise ValueError("Unsafe trial id")
+        # An installed arm's workspace is a link to its copy outside the repository while the solver runs.
+        self.root = (self.directory / "workspace").resolve()
+        if not (self.root.is_relative_to(trials) or self.root.is_relative_to(EXTERNAL_TRIALS.resolve())):
             raise ValueError("Unsafe trial id")
         self.input = self.directory / "retrieval-input"
         self.output = self.directory / "retrieval-output"
@@ -196,6 +244,8 @@ class Session:
             for path, text in load_documents(self.root).items():
                 if is_test_path(path):
                     self.protected[path] = sha(text)
+            if arm in INSTALLED_ARMS:
+                self.protected.update(configuration_hashes(self.root))
         state = self.directory / "tool-state.json"
         if state.exists():
             saved = json.loads(state.read_text())
@@ -469,6 +519,8 @@ def trial_deadline(directory):
 def prepare_session(task, trial_id, arm, graphify_adapter=None):
     with contextlib.redirect_stdout(io.StringIO()):
         prepare(task, trial_id)
+    if arm in INSTALLED_ARMS:
+        relocate_workspace(BASE / ".research/trials" / trial_id)
     session = Session(task, trial_id, arm, graphify_adapter)
     (session.directory / "session.json").write_text(json.dumps({
         "task": task["id"], "arm": arm, "issue": task["issue"],

@@ -21,7 +21,8 @@ import time
 
 from agent_trials import BASE, audit_trace, tasks
 from retrieval import GRAPHIFY
-from task_session import ARMS, GRAF_ORIENT_ARMS, ORIENT_ARMS, Session, prepare_session
+from task_session import (ARMS, GRAF_ORIENT_ARMS, INSTALLED_ARMS, ORIENT_ARMS, Session, prepare_session,
+                          restore_workspace)
 
 SYSTEM_PROMPT = (
     "You are repairing a bug in a software repository. You can act only through the "
@@ -46,6 +47,20 @@ ORIENT_PROMPT = (" The issue report is followed by an automatically generated or
                  "where to look first.")
 GRAF_ORIENT_PROMPT = SYSTEM_PROMPT.replace(
     "read shows source lines, ", "read shows source lines, outline lists a file's functions, ") + ORIENT_PROMPT
+# Batch t10: the installed arms keep Claude Code's own system prompt and add only the task's ground rules.
+INSTALLED_PROMPT = (
+    "You are repairing a bug in the repository in your working directory. Find the cause and make the smallest "
+    "correct fix in non-test source files; do not edit tests or build configuration. The broker's test tool runs "
+    "the project's verification and its finish tool ends the attempt: run test, then call finish when the fix is "
+    "in place or when you cannot make progress.")
+BUILTIN_TOOLS = ("Read", "Grep", "Glob", "Edit")
+GRAF_T10 = BASE / ".research/bin/graf-t10"
+# graf's README, "Use with agents (MCP)": the snippet it asks users to add to CLAUDE.md.
+GRAF_CLAUDE_MD = (
+    "## Finding code\n"
+    "Before reading files, call graf `triage` with the task text. It lists likely files and the likely\n"
+    "functions in full. Use `outline` to see a file's functions before opening it, and read only the\n"
+    "line ranges you need. Use `units` for follow-up questions instead of reading whole files.\n")
 TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "target/release/graf",
                  "graf_orient": BASE / ".research/bin/graf-t5",
                  "graf_current_orient": BASE / ".research/bin/graf-t6",
@@ -53,6 +68,8 @@ TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "tar
                  "graf_pointer_orient": BASE / ".research/bin/graf-c3fee50",
                  "graphify_orient": GRAPHIFY, "graphify": GRAPHIFY,
                  "search_only": Path(shutil.which("rg") or "rg"),
+                 "builtin": BASE / ".research/bin/claude-2.1.312", "graphify_installed": GRAPHIFY,
+                 "graf_installed": GRAF_T10,
                  "ast_graph": [BASE / "frozen-t4" / name
                                for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
 
@@ -135,6 +152,77 @@ def claude_command(issue, mcp_config, model, budget, arm):
             "--max-budget-usd", str(budget), "--system-prompt", system_prompt(arm), *turn_cap()]
 
 
+def installed_command(issue, mcp_config, model, budget, arm):
+    """Claude Code with its own read, search and edit tools in the workspace, and the arm's tool as documented."""
+    tools, allowed = list(BUILTIN_TOOLS), ["mcp__broker"]
+    if arm == "graphify_installed":  # Graphify's CLAUDE.md rules run `graphify query` and friends from a shell.
+        tools.append("Bash")
+        allowed.append("Bash(graphify:*)")
+    if arm == "graf_installed":
+        allowed.append("mcp__graf")
+    return [solver(), "-p", f"Issue report:\n\n{issue}",
+            "--model", model, "--tools", ",".join(tools), "--strict-mcp-config", "--mcp-config", str(mcp_config),
+            "--allowedTools", *allowed, "--permission-mode", "acceptEdits", "--permission-prompts", "none",
+            "--setting-sources", "project", "--disable-slash-commands", "--no-session-persistence",
+            "--output-format", "stream-json", "--verbose", "--max-budget-usd", str(budget),
+            "--append-system-prompt", INSTALLED_PROMPT, *turn_cap()]
+
+
+def set_up_installed(session):
+    """Before the solver starts, set the arm's tool up in the workspace the way its documentation says."""
+    workspace, steps = session.root, []
+    if session.arm == "graphify_installed":
+        home = session.directory / "graphify-home"
+        home.mkdir(exist_ok=True)
+        steps = [[str(GRAPHIFY), "update", "."], [str(GRAPHIFY), "claude", "install"]]
+        env = {**os.environ, "HOME": str(home)}
+    elif session.arm == "graf_installed":
+        steps = [[str(GRAF_T10), "--root", str(workspace), "index"]]
+        env = dict(os.environ)
+        claude_md = workspace / "CLAUDE.md"
+        existing = claude_md.read_text() if claude_md.is_file() else ""
+        claude_md.write_text(existing + ("\n" if existing and not existing.endswith("\n") else "")
+                             + ("\n" if existing else "") + GRAF_CLAUDE_MD)
+    records = []
+    for command in steps:
+        start = time.perf_counter()
+        done = subprocess.run(command, cwd=workspace, env=env, capture_output=True, text=True, timeout=600)
+        records.append({"command": command, "returncode": done.returncode, "seconds": time.perf_counter() - start,
+                        "stdout": done.stdout[-20000:], "stderr": done.stderr[-20000:]})
+        if done.returncode:
+            (session.directory / "setup.json").write_text(json.dumps(records, indent=2) + "\n")
+            raise OrientationError(f"{session.arm} setup failed; no agent was started")
+    (session.directory / "setup.json").write_text(json.dumps(records, indent=2) + "\n")
+
+
+def solver_environment(arm):
+    """Graphify's rules call `graphify` by name, so its pinned environment comes first on PATH."""
+    if arm != "graphify_installed":
+        return None
+    return {**os.environ, "PATH": f"{GRAPHIFY.parent}{os.pathsep}{os.environ.get('PATH', '')}"}
+
+
+def outside_workspace(stream, workspace):
+    """Built-in tool calls aimed outside the workspace: (requested, answered without an error)."""
+    workspace = workspace.resolve()
+    requested, answered, pending = 0, 0, {}
+    for line in stream.read_text().splitlines():
+        message = json.loads(line).get("message")
+        for block in message.get("content", []) if isinstance(message, dict) else []:
+            if not isinstance(block, dict):
+                continue
+            if block.get("type") == "tool_use" and block.get("name") in BUILTIN_TOOLS:
+                target = (block.get("input") or {}).get("file_path") or (block.get("input") or {}).get("path")
+                if isinstance(target, str) and target:
+                    resolved = (workspace / target).resolve() if not Path(target).is_absolute() else Path(target).resolve()
+                    if not resolved.is_relative_to(workspace):
+                        requested += 1
+                        pending[block.get("id")] = True
+            elif block.get("type") == "tool_result" and pending.pop(block.get("tool_use_id"), False):
+                answered += not block.get("is_error", False)
+    return requested, answered
+
+
 def turn_cap():
     """A batch's turn cap (SOLVER_MAX_TURNS): a looping solver stops and still reports its usage."""
     turns = os.environ.get("SOLVER_MAX_TURNS")
@@ -174,16 +262,32 @@ def run(task, trial_id, arm, catalog):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
     binary_sha = preflight(arm, TOOL_BINARIES[arm])
     session = prepare_session(task, trial_id, arm)
+    try:
+        return run_prepared(task, trial_id, arm, catalog, prereg, binary_sha, session)
+    finally:
+        restore_workspace(session.directory)
+
+
+def run_prepared(task, trial_id, arm, catalog, prereg, binary_sha, session):
     directory = session.directory
-    agent_cwd = directory / "agent-cwd"
-    agent_cwd.mkdir()
+    servers = {"broker": {"command": sys.executable,
+                          "args": [str(BASE / "benchmark/broker_mcp.py"), task["id"], trial_id, "--arm", arm,
+                                   "--catalog", str(catalog)]}}
+    if arm in INSTALLED_ARMS:
+        set_up_installed(session)
+        agent_cwd = session.root
+        if arm == "graf_installed":  # README: `claude mcp add graf -- graf mcp`, run in the repository.
+            servers["graf"] = {"command": str(GRAF_T10), "args": ["--root", str(session.root), "mcp"]}
+    else:
+        agent_cwd = directory / "agent-cwd"
+        agent_cwd.mkdir()
     mcp_config = directory / "mcp.json"
-    mcp_config.write_text(json.dumps({"mcpServers": {"broker": {
-        "command": sys.executable,
-        "args": [str(BASE / "benchmark/broker_mcp.py"), task["id"], trial_id, "--arm", arm,
-                 "--catalog", str(catalog)]}}}, indent=2) + "\n")
-    prompt = issue_prompt(task["issue"], orient(session))
-    command = claude_command(prompt, mcp_config, solver_model(prereg["model"]), solver_budget(prereg["max_budget_usd"]), arm)
+    mcp_config.write_text(json.dumps({"mcpServers": servers}, indent=2) + "\n")
+    model, budget = solver_model(prereg["model"]), solver_budget(prereg["max_budget_usd"])
+    if arm in INSTALLED_ARMS:
+        command = installed_command(task["issue"], mcp_config, model, budget, arm)
+    else:
+        command = claude_command(issue_prompt(task["issue"], orient(session)), mcp_config, model, budget, arm)
     if os.environ.get("SOLVER_VERIFIER_DEADLINE") == "True":  # Batch t8 (v94): the broker fits verifier runs inside it.
         (directory / "deadline.json").write_text(json.dumps({"epoch_seconds": time.time() + TIMEOUT_SECONDS}) + "\n")
     start = time.perf_counter()
@@ -191,12 +295,20 @@ def run(task, trial_id, arm, catalog):
          (directory / "agent-stderr.txt").open("w") as stderr:
         try:
             process = subprocess.run(command, cwd=agent_cwd, stdin=subprocess.DEVNULL, stdout=stream,
-                                     stderr=stderr, timeout=TIMEOUT_SECONDS)
+                                     stderr=stderr, timeout=TIMEOUT_SECONDS, env=solver_environment(arm))
             exit_code = process.returncode
         except subprocess.TimeoutExpired:
             exit_code = "timeout"
     wall = time.perf_counter() - start
-    return finalize(task, trial_id, arm, command, exit_code, wall, binary_sha)
+    summary = finalize(task, trial_id, arm, command, exit_code, wall, binary_sha)
+    if arm in INSTALLED_ARMS:
+        requested, answered = outside_workspace(directory / "agent-stream.jsonl", session.root)
+        summary["outside_workspace"] = {"requested": requested, "answered": answered}
+        if answered:  # Preregistered: a tool call answered from outside the workspace fails the attempt.
+            summary["passed"] = False
+            summary["isolation_breach"] = True
+        (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+    return summary
 
 
 def finalize(task, trial_id, arm, command, exit_code, wall, binary_sha):
