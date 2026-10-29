@@ -21,7 +21,11 @@ from retrieval import tokens
 BASE = Path(__file__).resolve().parent.parent
 OUT = BASE / "results/agent-headroom-diagnostic.json"
 PRICE = {"input": 0.1e-6, "output": 0.5e-6, "cache_write_5m": 0.125e-6, "cache_write_1h": 0.2e-6, "cache_read": 0.01e-6}
-SEARCH_TOOLS = {"search", "read", "retrieve", "outline", "find"}
+SEARCH_TOOLS = {"search", "read", "retrieve", "outline", "find",
+                "Grep", "Glob", "Read",  # Claude Code built-ins (installed arms, t10).
+                "triage", "units", "locate", "expand",  # graf as installed.
+                "Bash"}  # graphify_installed allows Bash only as Bash(graphify:*).
+EDIT_TOOLS = {"edit", "Edit", "Write", "MultiEdit"}
 
 
 def calls_and_results(stream):
@@ -91,7 +95,7 @@ def attribute(calls, output):
             cost[f"tool:{name}"] += share * per_token
             if not edited and name in SEARCH_TOOLS:
                 cost["search_before_first_edit"] += share * per_token
-            if name == "edit":
+            if name in EDIT_TOOLS:
                 edited = True
         cost["history"] += max(carried, 0) * per_token
     return cost
@@ -102,7 +106,7 @@ def attempt(directory):
     calls, output = calls_and_results(directory / "agent-stream.jsonl")
     cost = attribute(calls, output)
     search = sum(v for k, v in cost.items() if k.startswith("tool:") and k[5:] in SEARCH_TOOLS)
-    first_edit = next((i + 1 for i, call in enumerate(calls) if any(name == "edit" for name, _ in call["results"])),
+    first_edit = next((i + 1 for i, call in enumerate(calls) if any(name in EDIT_TOOLS for name, _ in call["results"])),
                       len(calls))
     return {"trial": directory.name, "task": summary["task"], "arm": summary["arm"], "passed": summary["passed"],
             "calls": len(calls), "calls_to_first_edit": first_edit, "cost_usd": summary["audit"]["cost_usd"],

@@ -2,6 +2,106 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t10 (v119): Claude Code with graf or Graphify installed, 48 fresh natural tasks; fails
+
+**Outcome: `graf_installed` fails the preregistered rule.** It is not significantly cheaper than either comparator:
+- against `builtin`: one-sided paired sign flip p = 0.288;
+- against `graphify_installed`: p = 0.117.
+
+Success is non-inferior against both. The rule required both comparisons to pass (intersection-union, alpha 0.05), so graf stays experimental. Every attempt completed: 288 of 288, with usage complete, no infrastructure errors and no protected-file edits. The decision is in [agent-decision-t10.json](../results/agent-decision-t10.json).
+
+| Arm | Passed | Total cost | Median per attempt | Tokens |
+|---|---|---|---|---|
+| `builtin` | 84 / 96 | $1.679 | $0.0082 | 35.8 M |
+| `graphify_installed` | 81 / 96 | $1.275 | $0.0102 | 36.3 M |
+| `graf_installed` | 85 / 96 | $1.186 | $0.0074 | 31.9 M |
+
+- **Setup.** Claude Code 2.1.312 on `claude-haiku-5-5`. Each tool was installed as its README says:
+  - Graphify 0.9.97 through `graphify update .` and `graphify claude install`, with Bash allowed only as `graphify`;
+  - graf (`.research/bin/graf-t10`, main `7a3b88a`) through `graf index`, `graf mcp` and the README's CLAUDE.md snippet.
+
+  Attempts were capped at $0.50 and 1,200 s, two per task and arm. The tasks are the 48 of the v118 catalog, 16 per language.
+- **Against `graphify_installed`:**
+  - graf was cheaper on 33 of 48 tasks, saving $0.0009 per task on average;
+  - token reduction p = 0.050, a secondary measure that is not gated;
+  - it solved 4 more attempts.
+- **Against `builtin`:**
+  - graf was cheaper on 22 of 48 tasks;
+  - the mean difference is driven by one task. `builtin` spent $0.63 on `caddy-8235` (two failed attempts), while graf spent $0.12 and Graphify $0.10;
+  - without that task (post-hoc), `builtin` costs $1.051 and graf $1.068.
+- **Every agent used the installed tool.**
+  - Every graf attempt called `triage` at least once. Over 1,410 tool calls, graf attempts made 286 `Read` and 277 `Grep` calls, against 369 and 427 under `builtin`.
+  - Every Graphify attempt ran `graphify` through Bash (500 calls).
+- **Isolation.** Claude Code saved 12 oversized tool outputs into its own project folder outside the workspace, in 7 `builtin` attempts and 5 installed-arm attempts. When the agent then tried to read them, the request was refused (18 requests, 0 answered), as the isolation rule requires. The saved outputs are kept in each trial's `claude-code-project-folder`.
+- **Per task.** Passes out of 2 and mean cost per attempt, in the order `builtin` / `graphify_installed` / `graf_installed`:
+
+| Task | builtin | graphify_installed | graf_installed |
+|---|---|---|---|
+| `bubbletea-1711` | 2/2, $0.0045 | 2/2, $0.0055 | 2/2, $0.0046 |
+| `bubbletea-1828` | 2/2, $0.0073 | 2/2, $0.0160 | 2/2, $0.0094 |
+| `caddy-8235` | 0/2, $0.3142 | 0/2, $0.0488 | 0/2, $0.0590 |
+| `caddy-8240` | 2/2, $0.0079 | 2/2, $0.0139 | 2/2, $0.0050 |
+| `caddy-8247` | 0/2, $0.0124 | 0/2, $0.0205 | 1/2, $0.0223 |
+| `caddy-8250` | 1/2, $0.0082 | 1/2, $0.0111 | 2/2, $0.0077 |
+| `caddy-8254` | 2/2, $0.0045 | 2/2, $0.0076 | 2/2, $0.0057 |
+| `caddy-8258` | 2/2, $0.0035 | 2/2, $0.0034 | 2/2, $0.0025 |
+| `caddy-8265` | 2/2, $0.0115 | 2/2, $0.0082 | 2/2, $0.0059 |
+| `caddy-8283` | 2/2, $0.0242 | 1/2, $0.0388 | 2/2, $0.0222 |
+| `faker-2082` | 2/2, $0.0064 | 2/2, $0.0071 | 2/2, $0.0062 |
+| `faker-2280` | 2/2, $0.0042 | 2/2, $0.0049 | 2/2, $0.0048 |
+| `faker-2322` | 2/2, $0.0246 | 2/2, $0.0240 | 2/2, $0.0187 |
+| `faker-2361` | 2/2, $0.0082 | 2/2, $0.0081 | 2/2, $0.0070 |
+| `faker-2377` | 2/2, $0.0129 | 2/2, $0.0105 | 2/2, $0.0103 |
+| `faker-2398` | 2/2, $0.0061 | 2/2, $0.0078 | 2/2, $0.0049 |
+| `faker-2399` | 2/2, $0.0074 | 2/2, $0.0079 | 2/2, $0.0054 |
+| `faker-2426` | 2/2, $0.0059 | 2/2, $0.0064 | 2/2, $0.0072 |
+| `lazygit-1964` | 1/2, $0.0352 | 2/2, $0.0521 | 2/2, $0.0511 |
+| `lazygit-2427` | 1/2, $0.0223 | 0/2, $0.0242 | 1/2, $0.0258 |
+| `lazygit-4890` | 2/2, $0.0098 | 2/2, $0.0145 | 2/2, $0.0092 |
+| `lazygit-5266` | 0/2, $0.0159 | 0/2, $0.0186 | 0/2, $0.0136 |
+| `lazygit-5823` | 2/2, $0.0665 | 2/2, $0.0335 | 2/2, $0.0380 |
+| `mongoose-112` | 2/2, $0.0187 | 2/2, $0.0206 | 1/2, $0.0253 |
+| `mongoose-16532` | 2/2, $0.0137 | 2/2, $0.0138 | 2/2, $0.0111 |
+| `mongoose-16539` | 2/2, $0.0052 | 2/2, $0.0104 | 2/2, $0.0069 |
+| `mongoose-16560` | 2/2, $0.0026 | 2/2, $0.0041 | 2/2, $0.0027 |
+| `mongoose-16561` | 2/2, $0.0029 | 2/2, $0.0048 | 2/2, $0.0042 |
+| `mongoose-16573` | 2/2, $0.0108 | 2/2, $0.0119 | 2/2, $0.0137 |
+| `mongoose-16601` | 2/2, $0.0124 | 1/2, $0.0183 | 0/2, $0.0123 |
+| `multer-814` | 2/2, $0.0063 | 2/2, $0.0104 | 2/2, $0.0104 |
+| `multer-950` | 2/2, $0.0056 | 2/2, $0.0065 | 2/2, $0.0071 |
+| `networkx-8471` | 2/2, $0.0079 | 2/2, $0.0093 | 2/2, $0.0071 |
+| `networkx-8885` | 2/2, $0.0074 | 2/2, $0.0084 | 2/2, $0.0049 |
+| `networkx-8891` | 2/2, $0.0042 | 2/2, $0.0058 | 2/2, $0.0066 |
+| `networkx-8898` | 2/2, $0.0029 | 2/2, $0.0042 | 2/2, $0.0029 |
+| `pre-commit-1972` | 0/2, $0.0161 | 0/2, $0.0162 | 0/2, $0.0115 |
+| `pre-commit-2970` | 2/2, $0.0029 | 2/2, $0.0035 | 2/2, $0.0039 |
+| `pre-commit-3514` | 2/2, $0.0027 | 2/2, $0.0037 | 2/2, $0.0027 |
+| `pre-commit-3706` | 2/2, $0.0026 | 2/2, $0.0048 | 2/2, $0.0033 |
+| `stylelint-7181` | 2/2, $0.0113 | 2/2, $0.0147 | 2/2, $0.0323 |
+| `stylelint-9119` | 2/2, $0.0126 | 2/2, $0.0138 | 2/2, $0.0166 |
+| `stylelint-9172` | 1/2, $0.0189 | 0/2, $0.0112 | 2/2, $0.0239 |
+| `stylelint-9221` | 2/2, $0.0050 | 2/2, $0.0094 | 2/2, $0.0065 |
+| `stylelint-9325` | 2/2, $0.0079 | 2/2, $0.0059 | 2/2, $0.0085 |
+| `stylelint-9422` | 2/2, $0.0100 | 2/2, $0.0071 | 2/2, $0.0065 |
+| `stylelint-9527` | 2/2, $0.0180 | 2/2, $0.0164 | 2/2, $0.0074 |
+| `task-3040` | 2/2, $0.0075 | 2/2, $0.0087 | 2/2, $0.0079 |
+
+### Post-hoc diagnostic (t10)
+
+Exploratory and not preregistered. It was run after the decision with `benchmark/agent_headroom_diagnostic.py`, whose tool lists now include the installed tools' names; the t5–t9 rows are unchanged.
+
+**Code search and reads were a small part of the cost under the installed tools.** The share was:
+- 11.7% under `builtin`;
+- 16.3% under `graphify_installed`;
+- 15.6% under `graf_installed`.
+
+The 40–54% that the built-in replay estimated did not appear. That replay assumed whole-file reads, but agents with Claude Code's own `Read` mostly passed `offset` or `limit`: 250 of 369 reads under `builtin`, 207 of 261 under Graphify and 224 of 286 under graf. Most of the cost is the agent's output and carried history (49–64%) and the base context (11–17%).
+
+- **The costliest attempts carry the gaps.** Under `builtin`, the costliest 10% of attempts carry 56% of the cost; under graf, 37%.
+- **The first edit comes after a median of 4–5 calls** in every arm.
+- **Unexplained cost under `builtin`.** The attribution there covers 74% of the audited cost, against 97–100% in the installed arms. Of the $0.43 that is not attributed, $0.41 comes from `caddy-8235`.
+- **What this implies.** The headroom that motivated t10 is not there on these tasks, so a smaller-results tool cannot win by much here. The remaining differences come from how many calls an attempt takes.
+
 ## Post-hoc estimate: the same sessions with Claude Code's built-in Grep and Read (t5–t9)
 
 **Finding: replayed with the built-in tools' result sizes, the recorded sessions would cost 1.36–1.73 times as much, and search and read results would rise from 14–20% to 40–54% of cost.** For the two `search_only` arms the share is 50.6% and 51.8% (51.1% pooled), just over the bar stated before the first run (at least half), so a batch against a built-in-tools baseline is worth proposing. No model was called. This is exploratory and not preregistered, and it supports no efficiency or superiority claim. Rows are in [agent-native-replay.json](../results/agent-native-replay.json), and the script is `benchmark/agent_native_replay.py`.
