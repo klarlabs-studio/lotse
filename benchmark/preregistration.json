@@ -1,5 +1,5 @@
 {
-  "version": 113,
+  "version": 114,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1291,7 +1291,8 @@
       "runtime": "as t9; repository-specific runtime and runner details are recorded in a later version before any fail-to-pass check",
       "minimum_tasks": 36,
       "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
-      "source_files": "each language's own suffix: .go, .py, .js; stylelint's source is ECMAScript modules, so its suffix is .mjs (graf indexes .mjs as JavaScript)"
+      "source_files": "each language's own suffix: .go, .py, .js; stylelint's source is ECMAScript modules, so its suffix is .mjs (graf indexes .mjs as JavaScript)",
+      "snapshots_v114": "The first enumeration (2026-10-29) ran before the pinned snapshots were fetched, so every fix touching an existing file was rejected as not reverting on the pin (2 of 6,927 candidates met the automatic criteria). Its outputs are kept as .research/history/REPO-candidates-without-snapshot.json. The snapshots were then fetched with benchmark/fetch.py --t10 (receipts in results/snapshots-t10.json), and the automatic criteria rerun on the same cached pull-request lists, before any bug judgment or fail-to-pass check"
     }
   },
   "report_every_case": true,
@@ -1815,6 +1816,11 @@
       "version": 113,
       "date": "2026-10-29",
       "reason": "Pin twenty-three unused repositories for a fresh natural-task catalog (t10) before any of their pull requests is listed; motivated by the built-in-tools replay; batch t10 not yet preregistered"
+    },
+    {
+      "version": 114,
+      "date": "2026-10-29",
+      "reason": "No rule change. t10's first enumeration ran without the pinned snapshots; snapshots fetched and the automatic criteria rerun on the cached pull-request lists before any judgment"
     }
   ],
   "arms": {
