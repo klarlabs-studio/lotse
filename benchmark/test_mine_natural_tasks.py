@@ -46,6 +46,25 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("express", "lib/response.js"), "source")
         self.assertEqual(classify("undici", "test/fetch/client.js"), "test")
 
+    def test_natural_tasks_t10_test_files(self):
+        self.assertEqual(classify("pre-commit", "testing/util.py"), "test")
+        self.assertEqual(classify("pre-commit", "pre_commit/main.py"), "source")
+        self.assertEqual(classify("networkx", "networkx/algorithms/tests/test_cycles.py"), "test")
+        self.assertEqual(classify("networkx", "networkx/algorithms/cycles.py"), "source")
+        self.assertEqual(classify("tornado", "tornado/test/web_test.py"), "test")
+        self.assertEqual(classify("tornado", "tornado/web.py"), "source")
+        self.assertEqual(classify("locust", "locust/test/test_runners.py"), "test")
+        self.assertEqual(classify("stylelint", "lib/rules/color-no-invalid-hex/__tests__/index.mjs"), "test")
+        self.assertEqual(classify("stylelint", "system-tests/cli/cli.test.mjs"), "test")
+        self.assertEqual(classify("stylelint", "lib/rules/color-no-invalid-hex/index.mjs"), "source")
+        self.assertEqual(classify("stylelint", "lib/rules/index.cjs"), "other")
+        self.assertEqual(classify("less", "packages/less/test/index.js"), "test")
+        self.assertEqual(classify("less", "packages/test-data/less/calc.js"), "test")
+        self.assertEqual(classify("less", "packages/less/lib/less/parser/parser.js"), "source")
+        self.assertEqual(classify("mongoose", "test/document.test.js"), "test")
+        self.assertEqual(classify("mongoose", "lib/document.js"), "source")
+        self.assertEqual(classify("caddy", "modules/caddyhttp/server_test.go"), "test")
+
     def test_batch_t7_repositories(self):
         self.assertEqual(classify("commander", "tests/command.name.test.js"), "test")
         self.assertEqual(classify("commander", "lib/command.js"), "source")

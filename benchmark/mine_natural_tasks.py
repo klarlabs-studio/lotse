@@ -41,7 +41,15 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    **{repo: TYPESCRIPT_SOURCES for repo in ("lodash", "leaflet", "xstate", "zustand")},
                    **{repo: (".go",) for repo in ("websocket", "lo", "sqlx", "fasthttp")},  # natural_tasks_t9 (v105).
                    **{repo: (".py",) for repo in ("loguru", "pydantic", "drf", "sqlmodel")},
-                   **{repo: (".js",) for repo in ("moment", "ramda", "jsdom", "nock", "async", "nodemon", "webpack")}}
+                   **{repo: (".js",) for repo in ("moment", "ramda", "jsdom", "nock", "async", "nodemon", "webpack")},
+                   # natural_tasks_t10 (v113).
+                   **{repo: (".go",) for repo in ("gjson", "bubbletea", "fzf", "task", "caddy", "lazygit", "badger")},
+                   **{repo: (".py",) for repo in ("faker", "cookiecutter", "pre-commit", "fabric", "networkx", "tornado",
+                                                  "locust", "pipenv")},
+                   "stylelint": (".mjs",),
+                   **{repo: (".js",) for repo in ("multer", "mongoose", "showdown", "underscore", "less", "jquery", "chartjs")}}
+T10_TESTS = {"pre-commit": ("tests/", "testing/"), "tornado": ("tornado/test/",), "locust": ("locust/test/",),
+             "stylelint": ("system-tests/",), "less": ("packages/test-data/",)}  # natural_tasks_t10 test_files (v113).
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
@@ -72,6 +80,10 @@ def classify(repo, path):
     if repo == "gorm" and path.startswith("tests/") or repo == "leaflet" and path.startswith("spec/"):
         return "test"
     if suffix == (".go",) and (name.endswith("_test.go") or "/testdata/" in f"/{path}"):
+        return "test"
+    if path.startswith(T10_TESTS.get(repo, ())) or repo == "networkx" and "tests" in Path(path).parts[:-1] \
+            or repo == "stylelint" and "__tests__" in Path(path).parts[:-1] \
+            or repo == "less" and len(Path(path).parts) > 3 and Path(path).parts[0] == "packages" and Path(path).parts[2] == "test":
         return "test"
     if suffix == (".py",) and path.startswith("tests/"):
         return "test"
@@ -254,7 +266,7 @@ def verify_command(repo, tests):
 
 
 def pinned(repo):
-    """The pinned snapshot: the benchmark corpora, the batch t4/t7/t8 repositories, or the localization ones."""
+    """The pinned snapshot: the benchmark corpora, the batch t4/t7/t8/t9/t10 repositories, or the localization ones."""
     for r in json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]:
         if r["id"] == repo:
             return r
@@ -262,6 +274,7 @@ def pinned(repo):
     screen = prereg["localization_screen"]
     for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["agent_trials"]["natural_tasks_t7"],
                  prereg["agent_trials"]["natural_tasks_t8"], prereg["agent_trials"]["natural_tasks_t9"],
+                 prereg["agent_trials"]["natural_tasks_t10"],
                  screen["confirmation"], screen["file_screen"],
                  screen["typescript"], screen["file_code_screen"]):
         if repo in spec["repositories"]:

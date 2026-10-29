@@ -1,5 +1,5 @@
 {
-  "version": 112,
+  "version": 113,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1129,6 +1129,169 @@
       "runtime_v109": "2026-10-27, after the issue-only judgments of nodemon (2 bugs of 2) and webpack (14 of 14) and before their fail-to-pass checks: node_modules from each pinned package.json and lockfile via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full. nodemon: its spec script, TEST=1 mocha --exit --timeout 30000 on the changed *.test.js files. webpack: its test:base invocation (node --expose-gc --max-old-space-size=4096 --experimental-vm-modules jest-cli) on the changed top-level test/*.test.js, *.basictest.js, *.unittest.js and *.longtest.js files; webpack's setup step (linking itself into node_modules) is not run. A fix whose tests are only fixtures under test/*Cases/ names no runnable file and fails the check, since those runners exceed the 180 s verifier",
       "frozen_catalog_sha256": "2f0847b9750a793dc2bf7cd6f4ec2e260d965c043957b1c635f448b46b6b5887",
       "frozen_v110": "2026-10-27: 36 tasks (Go: lo 2, fasthttp 8; Python: loguru 7, pydantic 4, drf 5; JavaScript: moment 8, nodemon 2); no solver has seen any. Bug judgments (results/natural-tasks-t9-judgments.json, 109) from the issue title and body alone, first 14 automatic-criteria candidates per repository, before any fail-to-pass check. Fail-to-pass (results/natural-tasks-t9-f2p.json): 50 of 81 bugs pass. Rejected: websocket 2, sqlx 1, pydantic 8, drf 1, ramda 5 (the v107 reasons) and webpack 14: every webpack fix's tests are config or unit case fixtures under test/*Cases/, which v109 named no runnable file for, so jest ran its whole suite and all three phases of all 14 timed out at 180 s, as v109 stated beforehand; the runner was not changed after seeing this. Filled by the v95 rule, newest merge first (checked against each repository's mined merge dates): at most 8 per repository and 16 per language; Go and JavaScript fall short of 16, and the total equals minimum_tasks (36), so if_fewer does not apply. Disclosed harness repairs during the checks, none changing a task or the pass rule: a restored file's directory is created (4c44837); a fix-added file that upstream later removed counts as absent at the pin (cb48ae8, 324a5ea, 0c137a5); a verifier's process group is killed when it ends (70fa209); each check workspace is removed once its phases are logged (34b9d8b). Runs that crashed on those faults or on a full disk were set aside unscored (.research/task-logs/t9*-crashed, t9*-aside, t9g-diskfull) and every affected candidate was re-checked from scratch. Batch t9 itself is not preregistered: it needs a qualifying screen and an agreed budget"
+    },
+    "natural_tasks_t10": {
+      "catalog": "benchmark/natural-tasks-t10.json",
+      "purpose": "fresh natural repair tasks for a possible batch t10 comparing Claude Code's built-in tools alone, with Graphify as its own installer sets it up, and with graf as its README sets it up (motivated by the post-hoc built-in-tools replay, results/agent-native-replay.json). Repositories never used as a repository by any graf benchmark, screen, corpus or agent batch (searched across benchmark/, results/, research/ and the corpora on 2026-10-29; mentions inside other repositories' issue text do not count). Batch t10 itself is preregistered separately, and runs only if the operator agrees a budget",
+      "repositories": {
+        "gjson": {
+          "repository": "tidwall/gjson",
+          "commit": "690362d6edf4bcbde1e9f54d552d3814f1cd5bcb",
+          "language": "Go"
+        },
+        "bubbletea": {
+          "repository": "charmbracelet/bubbletea",
+          "commit": "67b4c7a8a2b34a0b1ce15261b0c705bc7e1a04b7",
+          "language": "Go"
+        },
+        "fzf": {
+          "repository": "junegunn/fzf",
+          "commit": "26ff936df038b6a62ec42cf18db27b2ea2bb8ec3",
+          "language": "Go"
+        },
+        "task": {
+          "repository": "go-task/task",
+          "commit": "ad2782e1709f0bcf8fbbe0d8e00c2d239141e099",
+          "language": "Go"
+        },
+        "caddy": {
+          "repository": "caddyserver/caddy",
+          "commit": "32bba1545989e07368c0977a37652f33d80c8cd4",
+          "language": "Go"
+        },
+        "lazygit": {
+          "repository": "jesseduffield/lazygit",
+          "commit": "4e1eebe278790f257a875da6633234391a5a85b3",
+          "language": "Go"
+        },
+        "badger": {
+          "repository": "dgraph-io/badger",
+          "commit": "78b99b8b0f014b539455186404697a0ff58c55f2",
+          "language": "Go"
+        },
+        "faker": {
+          "repository": "joke2k/faker",
+          "commit": "685ea97a9fbb4ab36dc32ea4d318498992f7ba7e",
+          "language": "Python"
+        },
+        "cookiecutter": {
+          "repository": "cookiecutter/cookiecutter",
+          "commit": "c88fbe921c97c58b65f1883ba90a0ab53cc91b34",
+          "language": "Python"
+        },
+        "pre-commit": {
+          "repository": "pre-commit/pre-commit",
+          "commit": "8cb5845c835b1ff72240eb2484239411ec481d92",
+          "language": "Python"
+        },
+        "fabric": {
+          "repository": "fabric/fabric",
+          "commit": "ded51893f02c33d2bc7c157624c44a039a952037",
+          "language": "Python"
+        },
+        "networkx": {
+          "repository": "networkx/networkx",
+          "commit": "8ff5a974cd03813a676c7fa5fdf4e9b6ee710a7f",
+          "language": "Python"
+        },
+        "tornado": {
+          "repository": "tornadoweb/tornado",
+          "commit": "57deb98e96e13c5887ddde237c266fa4872ae46d",
+          "language": "Python"
+        },
+        "locust": {
+          "repository": "locustio/locust",
+          "commit": "8c86553c4e7f61a1071cf3fcf241fb4b693ce536",
+          "language": "Python"
+        },
+        "pipenv": {
+          "repository": "pypa/pipenv",
+          "commit": "cb92306cb68992f54c2c883778159509375b917b",
+          "language": "Python"
+        },
+        "stylelint": {
+          "repository": "stylelint/stylelint",
+          "commit": "5290eea81de5b5242f46b1cca319c338f95f0257",
+          "language": "JavaScript"
+        },
+        "multer": {
+          "repository": "expressjs/multer",
+          "commit": "2c380d06cdaacc68bbef8b36244493a3d33d6b88",
+          "language": "JavaScript"
+        },
+        "mongoose": {
+          "repository": "Automattic/mongoose",
+          "commit": "f59e13a4464a8499994c3cca6e33c0dfd4f66298",
+          "language": "JavaScript"
+        },
+        "showdown": {
+          "repository": "showdownjs/showdown",
+          "commit": "d1a8d16344b855ea2f37677ee8a9e0cc2c597ea4",
+          "language": "JavaScript"
+        },
+        "underscore": {
+          "repository": "jashkenas/underscore",
+          "commit": "5c1e5f686f8500af9c9d15614ed60289d6d35d6b",
+          "language": "JavaScript"
+        },
+        "less": {
+          "repository": "less/less.js",
+          "commit": "713331655e437401dfea6cd233893a69762734e1",
+          "language": "JavaScript"
+        },
+        "jquery": {
+          "repository": "jquery/jquery",
+          "commit": "c2f27864e4ffc2d1409c289fcb9a42b6165dfeaf",
+          "language": "JavaScript"
+        },
+        "chartjs": {
+          "repository": "chartjs/Chart.js",
+          "commit": "71d44219e79e3ac41e6f9dc907022eebf574868d",
+          "language": "JavaScript"
+        }
+      },
+      "repository_order": {
+        "Go": [
+          "gjson",
+          "bubbletea",
+          "fzf",
+          "task",
+          "caddy",
+          "lazygit",
+          "badger"
+        ],
+        "Python": [
+          "faker",
+          "cookiecutter",
+          "pre-commit",
+          "fabric",
+          "networkx",
+          "tornado",
+          "locust",
+          "pipenv"
+        ],
+        "JavaScript": [
+          "stylelint",
+          "multer",
+          "mongoose",
+          "showdown",
+          "underscore",
+          "less",
+          "jquery",
+          "chartjs"
+        ]
+      },
+      "repository_choice": "main language by GitHub is Go, Python or JavaScript (the languages the agent harness runs) with that language's own suffix as the source files (repositories whose source is TypeScript under a JavaScript label, such as immerjs/immer and markedjs/marked, were left out); over 11,000 GitHub stars; not archived; default-branch heads resolved on 2026-10-29 before any of their pull requests was listed; ordered by expected local test runnability, browser-only test suites last",
+      "selection": "the natural_tasks_t9 protocol unchanged: the t8 protocol (t4 criteria, newest merge first, issue text only, hidden tests, bug judgment from the issue title and body alone (first 900 characters) of the first 14 automatic-criteria candidates per repository before any fail-to-pass check, size bound 10 files and 400 lines, unique revert with drift fallback, fail-to-pass within 180 s with timeouts rejected, duplicate issues keep the newest merge) and the v95 fill rule: per language, repositories in repository_order, at most 8 tasks each, until 16 per language",
+      "test_files": {
+        "Go": "*_test.go and testdata/",
+        "Python": "faker, cookiecutter, fabric, pipenv: under tests/; pre-commit: under tests/ or testing/; networkx: any path with a tests/ directory; tornado: under tornado/test/; locust: under locust/test/",
+        "JavaScript": "stylelint: any path with a __tests__/ directory, or under system-tests/; less: under packages/<name>/test/ or packages/test-data/; multer, mongoose, showdown, underscore, jquery, chartjs: under test/"
+      },
+      "runtime": "as t9; repository-specific runtime and runner details are recorded in a later version before any fail-to-pass check",
+      "minimum_tasks": 36,
+      "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
+      "source_files": "each language's own suffix: .go, .py, .js; stylelint's source is ECMAScript modules, so its suffix is .mjs (graf indexes .mjs as JavaScript)"
     }
   },
   "report_every_case": true,
@@ -1647,6 +1810,11 @@
       "version": 112,
       "date": "2026-10-28",
       "reason": "Preregister find_replay_screen: offline replay of t7-t9 search-then-read pairs against graf find (95c9106) before any replay output is seen"
+    },
+    {
+      "version": 113,
+      "date": "2026-10-29",
+      "reason": "Pin twenty-three unused repositories for a fresh natural-task catalog (t10) before any of their pull requests is listed; motivated by the built-in-tools replay; batch t10 not yet preregistered"
     }
   ],
   "arms": {
