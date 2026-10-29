@@ -1,5 +1,5 @@
 {
-  "version": 117,
+  "version": 118,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1312,7 +1312,9 @@
         },
         "repair": "benchmark/t10_runtime_repair.py (sha256 c6dc6d35e1631d6773dd86e93c5d6001c28f83c2df0227f2b7dfd29af9d09c92): metadata-only dist-info for pre_commit 4.7.0 (setup.cfg) and networkx 3.7.1rc0.dev0 (networkx/__init__.py) with its nx_loopback entry point, no package code; a meta path finder (appended last, as pytest's v100 runtime) serving locust._version as 2.46.8.dev71 (hatch-vcs at the pin: 71 commits after tag 2.46.7); pytest-cov 7.1.0 and pytest-xdist 3.8.0 (with coverage 7.17.0, execnet 2.1.2) in pipenv's virtualenv, requirements-frozen.txt rewritten. tornado's runner becomes python -m tornado.test.runtests on the changed *_test.py modules (mine_natural_tasks.verify_command)",
         "recheck": "Only these five repositories' 54 candidates (.research/history/t10-f2p-recheck-candidates.json, sha256 7983cef60950cb0b360608728aa5e03cc4312b2a83e4d3cb1fca0f651ab5f22d; tornado's verify commands rewritten for its runner, all 7 re-checked so every tornado task uses the same runner) are re-checked once under the unchanged fail-to-pass rule, report results/natural-tasks-t10-f2p-recheck.json. A candidate whose base still fails is rejected and the runtime is not changed again. badger's timeouts (10 of 12) and less's base failures (8 of 8, expected in v116) stand as rejections, as do the other per-candidate rejections (base failures: task 5, mongoose 2, bubbletea 1, caddy 1; fault runs that pass: caddy 1, lazygit 1, faker 1; timeout: mongoose 1)"
-      }
+      },
+      "frozen_catalog_sha256": "861dd88c620cfaf3c8113cbd47864c630900090f5c5478f081dffaa8bf8a54ec",
+      "frozen_v118": "2026-10-29: 48 tasks (Go: bubbletea 2, task 1, caddy 8, lazygit 5; Python: faker 8, pre-commit 4, networkx 4; JavaScript: stylelint 7, multer 2, mongoose 7); no solver has seen any. Bug judgments (results/natural-tasks-t10-judgments.json, 155 bugs among 198 judged) from the issue title and the first 900 characters of its body, first 14 automatic-criteria candidates per repository, before any fail-to-pass check. Fail-to-pass: 135 bugs checked (jquery 7 and chartjs 13 have no runtime, v116); first check (results/natural-tasks-t10-f2p.json) 51 pass; the v117 runtime repair re-checked pre-commit, networkx, locust, pipenv and tornado once (results/natural-tasks-t10-f2p-recheck.json, 28 of 54 pass; a first re-check attempt stopped on a full disk before checking any candidate and left no report). 78 pass in all, with tornado's verdicts from the re-check only. Rejected: badger 10 (base or restored run timed out at 180 s), less 8 (base fails, v116), pre-commit 9 (8 base fails, 1 timeout), locust 7 (5 base fails, 2 timeouts), task 5 (base fails), pipenv 5 (4 base fails, 1 fault passes), mongoose 3 (2 base fails, 1 timeout), tornado 3 (2 fault passes, 1 fault timeout), caddy 2 (1 base fails, 1 fault passes), networkx 2 (1 fault passes, 1 fault timeout), bubbletea 1, faker 1 and lazygit 1 (fault passes for the last two, base fails for bubbletea). No two passing candidates share an issue. Filled by the v95 rule, newest merge first: per language, repositories in repository_order, at most 8 each, until 16 per language; every language reaches 16, so the catalog exceeds minimum_tasks (36) and if_fewer does not apply. Not selected although passing: caddy 2, lazygit 4, badger 2 (Go full); networkx 5, tornado 4, locust 5, pipenv 6 (Python full); mongoose 2 (JavaScript full)"
     }
   },
   "report_every_case": true,
@@ -1856,6 +1858,11 @@
       "version": 117,
       "date": "2026-10-29",
       "reason": "No rule change. Repair t10 runtimes for pre-commit, networkx, locust, pipenv and tornado's runner after the first fail-to-pass check; re-check only their candidates once"
+    },
+    {
+      "version": 118,
+      "date": "2026-10-29",
+      "reason": "No rule change. Freeze the t10 catalog (48 tasks) by the preregistered fill rule after both fail-to-pass checks"
     }
   ],
   "arms": {
