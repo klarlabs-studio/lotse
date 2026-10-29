@@ -166,6 +166,8 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(verify_command("express", ["test/res.send.js", "test/support/utils.js"]),
                          ["node_modules/.bin/mocha", "--require", "test/support/env", "--check-leaks", "test/res.send.js"])
         self.assertEqual(verify_command("undici", ["test/fetch/a.js"]), ["node", "--test", "test/fetch/a.js"])
+        self.assertEqual(verify_command("tornado", ["tornado/test/web_test.py", "tornado/test/static/robots.txt"]),
+                         ["{python}", "-m", "tornado.test.runtests", "tornado.test.web_test"])
 
     def test_t4_repositories_resolve_to_their_pins(self):
         from mine_natural_tasks import pinned

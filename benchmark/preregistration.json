@@ -1,5 +1,5 @@
 {
-  "version": 116,
+  "version": 117,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1300,6 +1300,18 @@
         "python": "uv virtualenvs on Python 3.12.15 with test dependencies only, each with requirements-frozen.txt; the package comes from the workspace (working directory); pytest -q -p no:cacheprovider on the changed .py test files. faker (pytest, freezegun, python-stdnum, ukpostcodeparser, validators, Pillow, xmltodict from its tox environment, without sphinx; its own pytest plugin loaded with -p faker.contrib.pytest.plugin, since the installed package normally registers it), pre-commit (its install_requires and requirements-dev.txt), networkx (numpy, scipy, matplotlib, pandas, pytest), tornado (pytest), locust (its dependencies and test group), pipenv (its dependencies and tests extra without pytest-xdist)",
         "javascript": "node v26.10.0; node_modules from the pinned package.json and lockfile via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full. stylelint: its test script (node scripts/test.mjs: node --test with its setup and reporter) on the changed *.test.* files and rule test files (__tests__/index.mjs); a fix naming none runs the whole suite. multer: mocha --exit --check-leaks on the changed top-level test/*.js files. mongoose: mocha --exit on the changed *.test.js files, with its .mocharc.yml (test/mocha-fixtures.js starts an in-memory MongoDB through mongodb-memory-server). less: node packages/less/test/index.js (its node suite over every fixture); its pnpm workspace packages (@less/test-data, @less/test-import-module) are not installed, because linking them would expose the pinned post-fix test data to the agent through node_modules, and no npm lockfile exists, so its dependencies resolve on 2026-10-29. jquery and chartjs have no runtime: their unit tests run in a browser (jtr, karma) after a build the harness does not run, so their candidates are not checked and contribute no task",
         "repositories_without_candidates": "gjson and fabric list no issue-closing pull request before the pin; fzf, cookiecutter (no judged bug), showdown and underscore have no automatic-criteria candidate"
+      },
+      "runtime_v117": {
+        "recorded": "2026-10-29, after the first t10 fail-to-pass check (results/natural-tasks-t10-f2p.json: 51 of 135 pass; no solver run) and before any re-check",
+        "first_check_failures_by_cause": {
+          "pre-commit": "13 of 13 fail on the unmodified base: pre_commit/constants.py reads importlib.metadata.version('pre_commit'), and v116's runtime has no pre_commit distribution metadata (pytest exit 4)",
+          "networkx": "11 of 11 fail on the unmodified base: networkx/conftest.py turns the missing nx_loopback entry point (group networkx.backends, declared in pyproject.toml) into a pytest INTERNALERROR (exit 3)",
+          "locust": "12 of 12 fail on the unmodified base: locust/__init__.py imports locust/_version.py, which hatch-vcs writes at build time and the snapshot lacks (collection error, exit 2)",
+          "pipenv": "11 of 11 fail on the unmodified base: its pytest addopts pass --no-cov, which needs pytest-cov, left out of v116's runtime (exit 4)",
+          "tornado": "5 of 7 fail on the unmodified base (one of them also timed out on its fault run): under plain pytest the web tests' empty-log assertion sees tornado.access lines that its own runner (tornado.test.runtests) silences"
+        },
+        "repair": "benchmark/t10_runtime_repair.py (sha256 c6dc6d35e1631d6773dd86e93c5d6001c28f83c2df0227f2b7dfd29af9d09c92): metadata-only dist-info for pre_commit 4.7.0 (setup.cfg) and networkx 3.7.1rc0.dev0 (networkx/__init__.py) with its nx_loopback entry point, no package code; a meta path finder (appended last, as pytest's v100 runtime) serving locust._version as 2.46.8.dev71 (hatch-vcs at the pin: 71 commits after tag 2.46.7); pytest-cov 7.1.0 and pytest-xdist 3.8.0 (with coverage 7.17.0, execnet 2.1.2) in pipenv's virtualenv, requirements-frozen.txt rewritten. tornado's runner becomes python -m tornado.test.runtests on the changed *_test.py modules (mine_natural_tasks.verify_command)",
+        "recheck": "Only these five repositories' 54 candidates (.research/history/t10-f2p-recheck-candidates.json, sha256 7983cef60950cb0b360608728aa5e03cc4312b2a83e4d3cb1fca0f651ab5f22d; tornado's verify commands rewritten for its runner, all 7 re-checked so every tornado task uses the same runner) are re-checked once under the unchanged fail-to-pass rule, report results/natural-tasks-t10-f2p-recheck.json. A candidate whose base still fails is rejected and the runtime is not changed again. badger's timeouts (10 of 12) and less's base failures (8 of 8, expected in v116) stand as rejections, as do the other per-candidate rejections (base failures: task 5, mongoose 2, bubbletea 1, caddy 1; fault runs that pass: caddy 1, lazygit 1, faker 1; timeout: mongoose 1)"
       }
     }
   },
@@ -1839,6 +1851,11 @@
       "version": 116,
       "date": "2026-10-29",
       "reason": "No rule change. t10 runtimes and runners recorded after the bug judgments and before any fail-to-pass check"
+    },
+    {
+      "version": 117,
+      "date": "2026-10-29",
+      "reason": "No rule change. Repair t10 runtimes for pre-commit, networkx, locust, pipenv and tornado's runner after the first fail-to-pass check; re-check only their candidates once"
     }
   ],
   "arms": {

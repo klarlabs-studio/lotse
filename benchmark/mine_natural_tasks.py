@@ -278,6 +278,9 @@ def verify_command(repo, tests):
     if repo == "faker":  # Its pytest plugin is registered by the installed package, which the workspace replaces.
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "faker.contrib.pytest.plugin",
                 *sorted(t for t in tests if t.endswith(".py"))]
+    if repo == "tornado":  # Its runner silences the access log that its tests assert stays empty (v117).
+        return ["{python}", "-m", "tornado.test.runtests",
+                *sorted(t.removesuffix(".py").replace("/", ".") for t in tests if t.endswith("_test.py"))]
     if SOURCE_SUFFIXES[repo] == (".py",):
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(t for t in tests if t.endswith(".py"))]
     return ["node", "--test", *sorted(t for t in tests if t.endswith(".js"))]
