@@ -47,9 +47,16 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    **{repo: (".py",) for repo in ("faker", "cookiecutter", "pre-commit", "fabric", "networkx", "tornado",
                                                   "locust", "pipenv")},
                    "stylelint": (".mjs",),
-                   **{repo: (".js",) for repo in ("multer", "mongoose", "showdown", "underscore", "less", "jquery", "chartjs")}}
+                   **{repo: (".js",) for repo in ("multer", "mongoose", "showdown", "underscore", "less", "jquery", "chartjs")},
+                   # natural_tasks_t11 (v121).
+                   **{repo: (".go",) for repo in ("excelize", "gh-cli", "chezmoi", "helm", "restic", "sops",
+                                                  "golangci-lint", "hugo", "d2", "traefik")},
+                   **{repo: (".py",) for repo in ("yt-dlp", "scrapy", "fastapi", "ansible", "mitmproxy", "searxng",
+                                                  "aider", "thefuck")},
+                   **{repo: (".js",) for repo in ("validatorjs", "node-red", "semantic-release", "highlightjs", "pm2")}}
 T10_TESTS = {"pre-commit": ("tests/", "testing/"), "tornado": ("tornado/test/",), "locust": ("locust/test/",),
-             "stylelint": ("system-tests/",), "less": ("packages/test-data/",)}  # natural_tasks_t10 test_files (v113).
+             "stylelint": ("system-tests/",), "less": ("packages/test-data/",),  # natural_tasks_t10 test_files (v113).
+             **{repo: ("test/",) for repo in ("yt-dlp", "ansible", "mitmproxy")}}  # natural_tasks_t11 (v121).
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
@@ -295,7 +302,7 @@ def pinned(repo):
     screen = prereg["localization_screen"]
     for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["agent_trials"]["natural_tasks_t7"],
                  prereg["agent_trials"]["natural_tasks_t8"], prereg["agent_trials"]["natural_tasks_t9"],
-                 prereg["agent_trials"]["natural_tasks_t10"],
+                 prereg["agent_trials"]["natural_tasks_t10"], prereg["agent_trials"]["natural_tasks_t11"],
                  screen["confirmation"], screen["file_screen"],
                  screen["typescript"], screen["file_code_screen"]):
         if repo in spec["repositories"]:

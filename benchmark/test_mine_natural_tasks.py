@@ -65,6 +65,19 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("mongoose", "lib/document.js"), "source")
         self.assertEqual(classify("caddy", "modules/caddyhttp/server_test.go"), "test")
 
+    def test_natural_tasks_t11_test_files(self):
+        self.assertEqual(classify("yt-dlp", "test/test_utils.py"), "test")
+        self.assertEqual(classify("yt-dlp", "yt_dlp/utils/_utils.py"), "source")
+        self.assertEqual(classify("ansible", "test/units/module_utils/test_text.py"), "test")
+        self.assertEqual(classify("mitmproxy", "test/mitmproxy/test_http.py"), "test")
+        self.assertEqual(classify("scrapy", "tests/test_http_request.py"), "test")
+        self.assertEqual(classify("fastapi", "fastapi/routing.py"), "source")
+        self.assertEqual(classify("gh-cli", "pkg/cmd/pr/create/create_test.go"), "test")
+        self.assertEqual(classify("hugo", "hugolib/site.go"), "source")
+        self.assertEqual(classify("validatorjs", "test/validators.test.js"), "test")
+        self.assertEqual(classify("validatorjs", "src/lib/isEmail.js"), "source")
+        self.assertEqual(classify("traefik", "webui/src/App.tsx"), "other")
+
     def test_batch_t7_repositories(self):
         self.assertEqual(classify("commander", "tests/command.name.test.js"), "test")
         self.assertEqual(classify("commander", "lib/command.js"), "source")
