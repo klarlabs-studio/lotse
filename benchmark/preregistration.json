@@ -1,5 +1,5 @@
 {
-  "version": 120,
+  "version": 121,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1387,6 +1387,196 @@
       "screen_rule": "a pointer-free batch is proposed only if at least 90 pool candidates are pointer-free, from at least 6 repositories in each of Go, Python and JavaScript (t10 kept 48 tasks from 198 judged; 90 allows the same yield with margin). Otherwise the workload is recorded as too rare among natural issues to test, and no batch is proposed",
       "outputs": "results/pointer-free-screen.json: per candidate, the criterion's parts; counts per repository and language. No solver, no test run",
       "next_if_passed": "a new version freezes the catalog selection (t10 protocol: issue-only bug judgment, fail-to-pass, fill caps), the arms and a budget request, before any fail-to-pass check of these candidates"
+    },
+    "natural_tasks_t11": {
+      "catalog": "benchmark/natural-tasks-t11.json",
+      "purpose": "pointer-free natural repair tasks (agent_trials.pointer_free_screen, v120) for one batch t11 comparing builtin, graphify_installed and graf_installed as in t10; the operator chose new repositories (2026-10-29) and agreed 288 Haiku runs",
+      "workload": "pointer-free natural tasks only; any claim covers that workload, not issue-driven tasks in general",
+      "repositories": {
+        "excelize": {
+          "repository": "qax-os/excelize",
+          "commit": "c5fd73bde8f611a2f9c30eaf7b0494f2189cb79a",
+          "language": "Go"
+        },
+        "gh-cli": {
+          "repository": "cli/cli",
+          "commit": "8553724d157cd73dd42c937c79c51787f86e814a",
+          "language": "Go"
+        },
+        "chezmoi": {
+          "repository": "twpayne/chezmoi",
+          "commit": "cdbbdc0fbe0e1b80433c937640cfe8542eda269a",
+          "language": "Go"
+        },
+        "helm": {
+          "repository": "helm/helm",
+          "commit": "1673dc4e8ff65b96b692a3442014343f9c3cd2ea",
+          "language": "Go"
+        },
+        "restic": {
+          "repository": "restic/restic",
+          "commit": "dd09b6bd01af220b1d5d95c0d4d7d472e05e05c4",
+          "language": "Go"
+        },
+        "sops": {
+          "repository": "getsops/sops",
+          "commit": "91eacd394a512ca4b3c999eef679be97bca95bce",
+          "language": "Go"
+        },
+        "golangci-lint": {
+          "repository": "golangci/golangci-lint",
+          "commit": "39821a0ac5ea3097d571fc8e723df80890be9603",
+          "language": "Go"
+        },
+        "hugo": {
+          "repository": "gohugoio/hugo",
+          "commit": "a1668da327a05646e98af10b622b75bc9355f287",
+          "language": "Go"
+        },
+        "d2": {
+          "repository": "d2lang/d2",
+          "commit": "6a7b4837838a3907604a1d9eec57ee98b6f3cd01",
+          "language": "Go"
+        },
+        "traefik": {
+          "repository": "traefik/traefik",
+          "commit": "ee45d7a18e0f9efe87ffc74dfb793abc6c095da3",
+          "language": "Go"
+        },
+        "yt-dlp": {
+          "repository": "yt-dlp/yt-dlp",
+          "commit": "34ea29166e37d6f16849217982d0429aafc463e8",
+          "language": "Python"
+        },
+        "scrapy": {
+          "repository": "scrapy/scrapy",
+          "commit": "71e4b2b074b38913dbbab671f36a8624954415ac",
+          "language": "Python"
+        },
+        "fastapi": {
+          "repository": "fastapi/fastapi",
+          "commit": "79cab5bed28b24d92c185d236feb33f5783dfeb3",
+          "language": "Python"
+        },
+        "ansible": {
+          "repository": "ansible/ansible",
+          "commit": "efb06653bbfe6b3194715240a6acf3001d522863",
+          "language": "Python"
+        },
+        "mitmproxy": {
+          "repository": "mitmproxy/mitmproxy",
+          "commit": "df14a28624b0e813b4a26b3b33921c1991f20eba",
+          "language": "Python"
+        },
+        "searxng": {
+          "repository": "searxng/searxng",
+          "commit": "c15647b5a5921858d5147d291c658fbda3cba12c",
+          "language": "Python"
+        },
+        "aider": {
+          "repository": "Aider-AI/aider",
+          "commit": "5dc9490bb35f9729ef2c95d00a19ccd30c26339c",
+          "language": "Python"
+        },
+        "thefuck": {
+          "repository": "nvbn/thefuck",
+          "commit": "c7e7e1d884d3bb241ea6448f72a989434c2a35ec",
+          "language": "Python"
+        },
+        "validatorjs": {
+          "repository": "validatorjs/validator.js",
+          "commit": "9ff342479591ca5a43cb30000195bcf55c1bbed9",
+          "language": "JavaScript"
+        },
+        "node-red": {
+          "repository": "node-red/node-red",
+          "commit": "22d019c4eccac31d95f3b6167c7334de72ef02a6",
+          "language": "JavaScript"
+        },
+        "semantic-release": {
+          "repository": "semantic-release/semantic-release",
+          "commit": "04c1923646eb801cf6f0f90455cf00b78b94fdb7",
+          "language": "JavaScript"
+        },
+        "highlightjs": {
+          "repository": "highlightjs/highlight.js",
+          "commit": "fc3f06392f189354eed922973635ab9e9268b983",
+          "language": "JavaScript"
+        },
+        "pm2": {
+          "repository": "Unitech/pm2",
+          "commit": "34dec9197301165850741b319890b2633ae797f4",
+          "language": "JavaScript"
+        }
+      },
+      "t10_repositories": "t10's 23 repositories at their t10 pins are included: no solver has seen their unused candidates and graf was never tuned on them (t10 evaluated other tasks there). Their candidates are the existing .research/history files",
+      "repository_choice": "new repositories: never used by any graf benchmark, screen, corpus or agent batch (every 'repository' slug in benchmark/*.json and results/*.json, 102 slugs, checked 2026-10-29); GitHub main language Go, Python or JavaScript with that suffix as the source (traefik and mitmproxy also hold TypeScript web UIs, which are not source here); over 11,000 stars; not archived; tutorials, lists and applications needing services, GPUs or a build before their unit tests were skipped; default-branch heads resolved on 2026-10-29T18:54Z before any of their pull requests was listed",
+      "repository_order": {
+        "Go": [
+          "gjson",
+          "bubbletea",
+          "fzf",
+          "task",
+          "caddy",
+          "lazygit",
+          "badger",
+          "excelize",
+          "gh-cli",
+          "chezmoi",
+          "helm",
+          "restic",
+          "sops",
+          "golangci-lint",
+          "hugo",
+          "d2",
+          "traefik"
+        ],
+        "Python": [
+          "faker",
+          "cookiecutter",
+          "pre-commit",
+          "fabric",
+          "networkx",
+          "tornado",
+          "locust",
+          "pipenv",
+          "yt-dlp",
+          "scrapy",
+          "fastapi",
+          "ansible",
+          "mitmproxy",
+          "searxng",
+          "aider",
+          "thefuck"
+        ],
+        "JavaScript": [
+          "stylelint",
+          "multer",
+          "mongoose",
+          "showdown",
+          "underscore",
+          "less",
+          "jquery",
+          "chartjs",
+          "validatorjs",
+          "node-red",
+          "semantic-release",
+          "highlightjs",
+          "pm2"
+        ]
+      },
+      "order_rationale": "t10 repositories first (their runtimes are already set up and verified), then new ones by expected local test runnability",
+      "selection": "the natural_tasks_t10 protocol unchanged (automatic criteria, newest merge first, issue text only, hidden tests, size bound 10 files and 400 lines, unique revert, fail-to-pass within 180 s with timeouts rejected, duplicate issues keep the newest merge, binary changes rejected), with one added step: after the automatic criteria and before any bug judgment, only candidates that are pointer-free under v120 (benchmark/pointer_free_screen.py) remain; candidates in any earlier catalog are excluded. Bug judgment from the issue title and the first 900 characters of its body, of the first 14 pointer-free candidates per repository, newest merge first. A t10-repository candidate already judged or fail-to-pass checked for t10 keeps that outcome. Fill rule as v95: per language, repositories in repository_order, at most 8 tasks each, until 16 per language",
+      "test_files": {
+        "Go": "*_test.go and testdata/",
+        "Python": "yt-dlp, ansible, mitmproxy: under test/; scrapy, fastapi, searxng, aider, thefuck: under tests/; t10 repositories as in t10",
+        "JavaScript": "validatorjs, node-red, semantic-release, highlightjs, pm2: under test/; t10 repositories as in t10"
+      },
+      "source_files": "each language's own suffix: .go, .py, .js (t10 repositories as in t10)",
+      "runtime": "recorded in a later version after the bug judgments and before any fail-to-pass check, as in t10 (v116)",
+      "minimum_tasks": 36,
+      "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
+      "batch_budget": "operator agreed on 2026-10-29: 288 Haiku attempts (48 tasks x 3 arms x 2 attempts, $0.50 cap) for one batch t11, frozen in its own version before any model call"
     }
   },
   "report_every_case": true,
@@ -1945,6 +2135,11 @@
       "version": 120,
       "date": "2026-10-29",
       "reason": "Freeze the pointer-free task definition and its feasibility screen before counting it over any candidate"
+    },
+    {
+      "version": 121,
+      "date": "2026-10-29",
+      "reason": "Freeze the t11 pointer-free catalog protocol and 23 new repositories with their pins, before listing any of their pull requests"
     }
   ],
   "arms": {
