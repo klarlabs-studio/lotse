@@ -100,7 +100,12 @@ The 40–54% that the built-in replay estimated did not appear. That replay assu
 - **The costliest attempts carry the gaps.** Under `builtin`, the costliest 10% of attempts carry 56% of the cost; under graf, 37%.
 - **The first edit comes after a median of 4–5 calls** in every arm.
 - **Unexplained cost under `builtin`.** The attribution there covers 74% of the audited cost, against 97–100% in the installed arms. Of the $0.43 that is not attributed, $0.41 comes from `caddy-8235`.
-- **What this implies.** The headroom that motivated t10 is not there on these tasks, so a smaller-results tool cannot win by much here. The remaining differences come from how many calls an attempt takes.
+- **Localization is close to free on these tasks.**
+  - In every arm, the median attempt reads a faulted file after 1–2 tool calls, and the first tool result already names that file.
+  - The issue text explains why. 46 of the 48 issues share an identifier of six or more characters with the faulted code; 13 give its full path and 11 more its file name.
+  - graf's `triage` named a faulted file in 77 of 96 attempts. Attempts where it missed cost no more: $0.0117 on average, against $0.0125 when it named one.
+- **Cost goes into fixing and failing.** Failed attempts carry 47% of the cost under `builtin`, 28% under Graphify and 21% under graf.
+- **What this implies.** The headroom that motivated t10 is not there on these tasks. A tool that finds code faster or returns smaller results cannot win by much when the issue already points at the code. The remaining differences come from how many calls an attempt takes to fix the fault. Rows are in [t10-localization-diagnostic.json](../results/t10-localization-diagnostic.json), and the script is `benchmark/t10_localization_diagnostic.py`.
 
 ## Post-hoc estimate: the same sessions with Claude Code's built-in Grep and Read (t5–t9)
 
