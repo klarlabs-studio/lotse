@@ -53,10 +53,12 @@ T10_TESTS = {"pre-commit": ("tests/", "testing/"), "tornado": ("tornado/test/",)
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
-                                                    "moment", "ramda", "nodemon", "webpack")}}
+                                                    "moment", "ramda", "nodemon", "webpack",
+                                                    "stylelint", "multer", "mongoose", "less")}}
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
                                                      "requests", "tqdm", "httpie", "uvicorn", "pytest",
-                                                     "loguru", "pydantic", "drf")}
+                                                     "loguru", "pydantic", "drf",
+                                                     "faker", "pre-commit", "networkx", "tornado", "locust", "pipenv")}
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
 QUERY = """query($owner: String!, $name: String!, $cursor: String) {
@@ -255,6 +257,16 @@ def verify_command(repo, tests):
         return ["node", "--expose-gc", "--max-old-space-size=4096", "--experimental-vm-modules",
                 "node_modules/jest-cli/bin/jest", *sorted(t for t in tests if t.startswith("test/") and "/" not in
                                                            t[len("test/"):] and t.endswith(WEBPACK_RUNNERS))]
+    if repo == "stylelint":  # Its test script: node --test with its setup and reporter, on the changed test files.
+        return ["node", "scripts/test.mjs", *sorted(t for t in tests if t.endswith((".mjs", ".js", ".cjs"))
+                                                    and (".test." in Path(t).name or Path(t).name == "index.mjs"))]
+    if repo == "multer":
+        return ["node_modules/.bin/mocha", "--exit", "--check-leaks",
+                *sorted(t for t in tests if t.startswith("test/") and t.endswith(".js") and t.count("/") == 1)]
+    if repo == "mongoose":  # .mocharc.yml requires test/mocha-fixtures.js, which starts an in-memory MongoDB.
+        return ["node_modules/.bin/mocha", "--exit", *sorted(t for t in tests if t.endswith(".test.js"))]
+    if repo == "less":  # Its node suite runs every fixture in packages/test-data against lib/.
+        return ["node", "packages/less/test/index.js"]
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
@@ -263,6 +275,9 @@ def verify_command(repo, tests):
         if any(t.startswith("tests/data/") for t in tests):
             modules.add("tests/test_format.py")
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(modules)]
+    if repo == "faker":  # Its pytest plugin is registered by the installed package, which the workspace replaces.
+        return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "faker.contrib.pytest.plugin",
+                *sorted(t for t in tests if t.endswith(".py"))]
     if SOURCE_SUFFIXES[repo] == (".py",):
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(t for t in tests if t.endswith(".py"))]
     return ["node", "--test", *sorted(t for t in tests if t.endswith(".js"))]

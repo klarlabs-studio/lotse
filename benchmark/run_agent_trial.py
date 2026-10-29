@@ -203,8 +203,18 @@ def solver_environment(arm):
 
 
 def outside_workspace(stream, workspace):
-    """Built-in tool calls aimed outside the workspace: (requested, answered without an error)."""
-    workspace = workspace.resolve()
+    """Built-in tool calls aimed outside the workspace: (requested, answered without an error).
+
+    Paths are compared as written, without following links, so a dependency read through the workspace's
+    node_modules link counts as inside; macOS's /var is the same directory as /private/var.
+    """
+    workspace = os.path.normpath(workspace)
+
+    def inside(path):
+        path = os.path.normpath(path)
+        return any(candidate == workspace or candidate.startswith(workspace + os.sep)
+                   for candidate in (path, "/private" + path))
+
     requested, answered, pending = 0, 0, {}
     for line in stream.read_text().splitlines():
         message = json.loads(line).get("message")
@@ -214,8 +224,7 @@ def outside_workspace(stream, workspace):
             if block.get("type") == "tool_use" and block.get("name") in BUILTIN_TOOLS:
                 target = (block.get("input") or {}).get("file_path") or (block.get("input") or {}).get("path")
                 if isinstance(target, str) and target:
-                    resolved = (workspace / target).resolve() if not Path(target).is_absolute() else Path(target).resolve()
-                    if not resolved.is_relative_to(workspace):
+                    if not inside(target if os.path.isabs(target) else os.path.join(workspace, target)):
                         requested += 1
                         pending[block.get("id")] = True
             elif block.get("type") == "tool_result" and pending.pop(block.get("tool_use_id"), False):

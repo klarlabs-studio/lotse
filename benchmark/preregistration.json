@@ -1,5 +1,5 @@
 {
-  "version": 115,
+  "version": 116,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1293,7 +1293,14 @@
       "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
       "source_files": "each language's own suffix: .go, .py, .js; stylelint's source is ECMAScript modules, so its suffix is .mjs (graf indexes .mjs as JavaScript)",
       "snapshots_v114": "The first enumeration (2026-10-29) ran before the pinned snapshots were fetched, so every fix touching an existing file was rejected as not reverting on the pin (2 of 6,927 candidates met the automatic criteria). Its outputs are kept as .research/history/REPO-candidates-without-snapshot.json. The snapshots were then fetched with benchmark/fetch.py --t10 (receipts in results/snapshots-t10.json), and the automatic criteria rerun on the same cached pull-request lists, before any bug judgment or fail-to-pass check",
-      "binary_changes_v115": "A candidate whose fix changes a binary file (networkx and chartjs crashed on a PNG while decoding it as text) is rejected with that reason: a binary change cannot be reverted as a text edit. Recorded after the v114 rerun's counts and before any bug judgment or fail-to-pass check"
+      "binary_changes_v115": "A candidate whose fix changes a binary file (networkx and chartjs crashed on a PNG while decoding it as text) is rejected with that reason: a binary change cannot be reverted as a text edit. Recorded after the v114 rerun's counts and before any bug judgment or fail-to-pass check",
+      "runtime_v116": {
+        "recorded": "2026-10-29, after the issue-only bug judgments (results/natural-tasks-t10-judgments.json: 155 bugs among 198 judged) and before any fail-to-pass check or test run",
+        "go": "go 1.27.3; bubbletea, task, caddy and badger modules downloaded into .research/go-modules from temporary copies (go mod download all); lazygit vendors its modules; go test -count=1 on the changed test files' packages",
+        "python": "uv virtualenvs on Python 3.12.15 with test dependencies only, each with requirements-frozen.txt; the package comes from the workspace (working directory); pytest -q -p no:cacheprovider on the changed .py test files. faker (pytest, freezegun, python-stdnum, ukpostcodeparser, validators, Pillow, xmltodict from its tox environment, without sphinx; its own pytest plugin loaded with -p faker.contrib.pytest.plugin, since the installed package normally registers it), pre-commit (its install_requires and requirements-dev.txt), networkx (numpy, scipy, matplotlib, pandas, pytest), tornado (pytest), locust (its dependencies and test group), pipenv (its dependencies and tests extra without pytest-xdist)",
+        "javascript": "node v26.10.0; node_modules from the pinned package.json and lockfile via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full. stylelint: its test script (node scripts/test.mjs: node --test with its setup and reporter) on the changed *.test.* files and rule test files (__tests__/index.mjs); a fix naming none runs the whole suite. multer: mocha --exit --check-leaks on the changed top-level test/*.js files. mongoose: mocha --exit on the changed *.test.js files, with its .mocharc.yml (test/mocha-fixtures.js starts an in-memory MongoDB through mongodb-memory-server). less: node packages/less/test/index.js (its node suite over every fixture); its pnpm workspace packages (@less/test-data, @less/test-import-module) are not installed, because linking them would expose the pinned post-fix test data to the agent through node_modules, and no npm lockfile exists, so its dependencies resolve on 2026-10-29. jquery and chartjs have no runtime: their unit tests run in a browser (jtr, karma) after a build the harness does not run, so their candidates are not checked and contribute no task",
+        "repositories_without_candidates": "gjson and fabric list no issue-closing pull request before the pin; fzf, cookiecutter (no judged bug), showdown and underscore have no automatic-criteria candidate"
+      }
     }
   },
   "report_every_case": true,
@@ -1827,6 +1834,11 @@
       "version": 115,
       "date": "2026-10-29",
       "reason": "No selection change beyond rejecting binary-file fixes, which crashed the miner on networkx and chartjs; recorded before any judgment"
+    },
+    {
+      "version": 116,
+      "date": "2026-10-29",
+      "reason": "No rule change. t10 runtimes and runners recorded after the bug judgments and before any fail-to-pass check"
     }
   ],
   "arms": {

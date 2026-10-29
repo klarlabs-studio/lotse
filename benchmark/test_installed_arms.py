@@ -99,6 +99,15 @@ class OutsideWorkspaceTest(unittest.TestCase):
                              use("d", "Glob", {"pattern": "*.py"}), result("d", False))
         self.assertEqual(outside_workspace(stream, workspace), (2, 1))
 
+    def test_links_inside_the_workspace_and_the_var_alias_count_as_inside(self):
+        workspace = Path("/private/var/tmp/graf-trials/x/workspace")
+        use = lambda i, arg: {"type": "assistant", "message": {"content": [
+            {"type": "tool_use", "id": i, "name": "Read", "input": {"file_path": arg}}]}}
+        stream = self.stream(use("a", "/private/var/tmp/graf-trials/x/workspace/node_modules/dep/index.js"),
+                             use("b", "/var/tmp/graf-trials/x/workspace/src/a.py"),
+                             use("c", "/private/var/tmp/graf-trials/x/workspace/../task.json"))
+        self.assertEqual(outside_workspace(stream, workspace), (1, 0))
+
 
 if __name__ == "__main__":
     unittest.main()
