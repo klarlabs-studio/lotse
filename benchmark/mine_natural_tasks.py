@@ -200,8 +200,11 @@ def candidate(repo, pr, pin):
             target.append({"path": path, "added": True})
             continue
         pinned = BASE / ".research/corpora" / repo / path
-        edits = revert_edits(path, git(repo, "show", f"{commit}^1:{path}"), git(repo, "show", f"{commit}:{path}"),
-                             pinned.read_text()) if pinned.is_file() else None
+        try:
+            edits = revert_edits(path, git(repo, "show", f"{commit}^1:{path}"), git(repo, "show", f"{commit}:{path}"),
+                                 pinned.read_text()) if pinned.is_file() else None
+        except UnicodeDecodeError:  # natural_tasks_t10 (v115): a binary file cannot be reverted as a text edit.
+            return {**record, "outcome": "rejected", "reason": f"{path} is a binary file change"}
         if edits is None:
             return {**record, "outcome": "rejected", "reason": f"{path} does not revert uniquely on the pin"}
         target += edits

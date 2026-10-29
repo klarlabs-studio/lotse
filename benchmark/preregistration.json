@@ -1,5 +1,5 @@
 {
-  "version": 114,
+  "version": 115,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1292,7 +1292,8 @@
       "minimum_tasks": 36,
       "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
       "source_files": "each language's own suffix: .go, .py, .js; stylelint's source is ECMAScript modules, so its suffix is .mjs (graf indexes .mjs as JavaScript)",
-      "snapshots_v114": "The first enumeration (2026-10-29) ran before the pinned snapshots were fetched, so every fix touching an existing file was rejected as not reverting on the pin (2 of 6,927 candidates met the automatic criteria). Its outputs are kept as .research/history/REPO-candidates-without-snapshot.json. The snapshots were then fetched with benchmark/fetch.py --t10 (receipts in results/snapshots-t10.json), and the automatic criteria rerun on the same cached pull-request lists, before any bug judgment or fail-to-pass check"
+      "snapshots_v114": "The first enumeration (2026-10-29) ran before the pinned snapshots were fetched, so every fix touching an existing file was rejected as not reverting on the pin (2 of 6,927 candidates met the automatic criteria). Its outputs are kept as .research/history/REPO-candidates-without-snapshot.json. The snapshots were then fetched with benchmark/fetch.py --t10 (receipts in results/snapshots-t10.json), and the automatic criteria rerun on the same cached pull-request lists, before any bug judgment or fail-to-pass check",
+      "binary_changes_v115": "A candidate whose fix changes a binary file (networkx and chartjs crashed on a PNG while decoding it as text) is rejected with that reason: a binary change cannot be reverted as a text edit. Recorded after the v114 rerun's counts and before any bug judgment or fail-to-pass check"
     }
   },
   "report_every_case": true,
@@ -1821,6 +1822,11 @@
       "version": 114,
       "date": "2026-10-29",
       "reason": "No rule change. t10's first enumeration ran without the pinned snapshots; snapshots fetched and the automatic criteria rerun on the cached pull-request lists before any judgment"
+    },
+    {
+      "version": 115,
+      "date": "2026-10-29",
+      "reason": "No selection change beyond rejecting binary-file fixes, which crashed the miner on networkx and chartjs; recorded before any judgment"
     }
   ],
   "arms": {
