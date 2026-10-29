@@ -1,7 +1,7 @@
 """Reverting a real fix must be exact: every hunk maps back to the pre-fix text once."""
 import unittest
 
-from mine_natural_tasks import classify, clean_issue, revert_edits, verify_command
+from mine_natural_tasks import JS_RUNTIME, PYTHON_RUNTIME, classify, clean_issue, revert_edits, verify_command
 
 PRE = "def value():\n    return 2\n\n\nx\n" + "y\n" * 4 + "    a = 1\n    b = 2\n    return a + b\n"
 POST = PRE.replace("return 2", "return fixed()").replace("    b = 2\n", "    b = 2\n    c = 3\n")
@@ -77,6 +77,21 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("validatorjs", "test/validators.test.js"), "test")
         self.assertEqual(classify("validatorjs", "src/lib/isEmail.js"), "source")
         self.assertEqual(classify("traefik", "webui/src/App.tsx"), "other")
+
+    def test_natural_tasks_t11_runners(self):
+        self.assertEqual(verify_command("ansible", ["test/units/modules/test_copy.py", "test/integration/targets/copy/tasks/main.yml"]),
+                         ["env", "PYTHONPATH=lib", "{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider",
+                          "test/units/modules/test_copy.py"])
+        self.assertIsNone(verify_command("ansible", ["test/integration/targets/git/tasks/main.yml"]))
+        self.assertEqual(verify_command("highlightjs", ["test/markup/go/methods.txt", "test/markup/go/methods.expect.txt"]),
+                         ["sh", "-c", "node tools/build.js -t node > /dev/null && node_modules/.bin/mocha test/markup"])
+        self.assertIsNone(verify_command("highlightjs", ["test/builds/browser_build_as_commonjs.js"]))
+        self.assertEqual(verify_command("node-red", ["test/nodes/core/function/15-change_spec.js"]),
+                         ["node_modules/.bin/mocha", "test/nodes/core/function/15-change_spec.js"])
+        self.assertEqual(verify_command("validatorjs", ["test/validators.test.js"]),
+                         ["node_modules/.bin/mocha", "--require", "@babel/register", "test/validators.test.js"])
+        self.assertEqual(PYTHON_RUNTIME["thefuck"], "thefuck-venv")
+        self.assertEqual(JS_RUNTIME["highlightjs"], "highlightjs-full")
 
     def test_batch_t7_repositories(self):
         self.assertEqual(classify("commander", "tests/command.name.test.js"), "test")

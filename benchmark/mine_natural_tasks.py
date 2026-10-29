@@ -61,11 +61,15 @@ JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "u
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
                                                     "moment", "ramda", "nodemon", "webpack",
-                                                    "stylelint", "multer", "mongoose", "less")}}
+                                                    "stylelint", "multer", "mongoose", "less",
+                                                    "validatorjs", "node-red", "highlightjs")}}
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
                                                      "requests", "tqdm", "httpie", "uvicorn", "pytest",
                                                      "loguru", "pydantic", "drf",
-                                                     "faker", "pre-commit", "networkx", "tornado", "locust", "pipenv")}
+                                                     "faker", "pre-commit", "networkx", "tornado", "locust", "pipenv",
+                                                     "yt-dlp", "scrapy", "fastapi", "ansible", "mitmproxy", "searxng",
+                                                     "thefuck")}
+HIGHLIGHTJS_SUITES = ("api", "detect", "markup", "parser", "regex", "special")  # Node suites; builds/ and browser/ need a browser build.
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
 QUERY = """query($owner: String!, $name: String!, $cursor: String) {
@@ -274,6 +278,15 @@ def verify_command(repo, tests):
         return ["node_modules/.bin/mocha", "--exit", *sorted(t for t in tests if t.endswith(".test.js"))]
     if repo == "less":  # Its node suite runs every fixture in packages/test-data against lib/.
         return ["node", "packages/less/test/index.js"]
+    if repo == "validatorjs":  # Its test:ci script without coverage: mocha through @babel/register over src/.
+        return ["node_modules/.bin/mocha", "--require", "@babel/register", *sorted(t for t in tests if t.endswith(".js"))]
+    if repo == "node-red":  # Its mocha script on the changed spec files.
+        return ["node_modules/.bin/mocha", *sorted(t for t in tests if t.endswith("_spec.js"))]
+    if repo == "highlightjs":  # Its build_and_test script: the node build, then mocha on the changed node suites.
+        suites = sorted({"test/" + Path(t).parts[1] for t in tests
+                         if len(Path(t).parts) > 2 and Path(t).parts[0] == "test" and Path(t).parts[1] in HIGHLIGHTJS_SUITES})
+        return ["sh", "-c", "node tools/build.js -t node > /dev/null && node_modules/.bin/mocha " + " ".join(suites)] \
+            if suites else None  # No node suite: no runtime, not checked.
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
@@ -288,6 +301,9 @@ def verify_command(repo, tests):
     if repo == "tornado":  # Its runner silences the access log that its tests assert stays empty (v117).
         return ["{python}", "-m", "tornado.test.runtests",
                 *sorted(t.removesuffix(".py").replace("/", ".") for t in tests if t.endswith("_test.py"))]
+    if repo == "ansible":  # Unit tests, with lib/ on the path as ansible-test sets it; integration targets need ansible-test.
+        units = sorted(t for t in tests if t.startswith("test/units/") and t.endswith(".py"))
+        return ["env", "PYTHONPATH=lib", "{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *units] if units else None
     if SOURCE_SUFFIXES[repo] == (".py",):
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(t for t in tests if t.endswith(".py"))]
     return ["node", "--test", *sorted(t for t in tests if t.endswith(".js"))]

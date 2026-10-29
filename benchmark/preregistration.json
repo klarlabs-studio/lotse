@@ -1,5 +1,5 @@
 {
-  "version": 121,
+  "version": 122,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1576,7 +1576,17 @@
       "runtime": "recorded in a later version after the bug judgments and before any fail-to-pass check, as in t10 (v116)",
       "minimum_tasks": 36,
       "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
-      "batch_budget": "operator agreed on 2026-10-29: 288 Haiku attempts (48 tasks x 3 arms x 2 attempts, $0.50 cap) for one batch t11, frozen in its own version before any model call"
+      "batch_budget": "operator agreed on 2026-10-29: 288 Haiku attempts (48 tasks x 3 arms x 2 attempts, $0.50 cap) for one batch t11, frozen in its own version before any model call",
+      "runtime_v122": {
+        "recorded": "2026-10-29, after the issue-only bug judgments (results/natural-tasks-t11-judgments.json: 122 bugs among 160 judged; 25 further candidates keep t10 judgments) and before any t11 fail-to-pass check or test run",
+        "t10_repositories": "t10 runtimes and runners unchanged (v116, v117 repairs included); a candidate already fail-to-pass checked for t10 keeps that outcome",
+        "go": "go 1.27.3; excelize, gh-cli, chezmoi, helm, restic, sops, golangci-lint, hugo, d2 and traefik modules downloaded into .research/go-modules from temporary copies (go mod download all); go test -count=1 on the changed test files' packages",
+        "python": "uv virtualenvs with test dependencies only, each with requirements-frozen.txt; the package comes from the workspace (working directory). yt-dlp (default extra and test group), fastapi (tests group) and mitmproxy (dependencies and dev group) from their uv.lock (uv export --frozen); scrapy (its dependencies and tox test-requirements, resolved 2026-10-29); searxng (requirements.txt plus mock, aiounittest, parameterized, pytest); thefuck (psutil, colorama, six, decorator, pyte, pytest, mock, pytest-mock, pexpect); Python 3.12.15, except ansible on 3.14.8 (requires >=3.13; requirements.txt and ansible-test's units.txt). Runner: pytest -q -p no:cacheprovider on the changed .py test files; ansible runs only changed test/units/*.py files with PYTHONPATH=lib (as ansible-test sets it), so a candidate whose tests are integration targets only has no runtime",
+        "javascript": "node v26.10.0; node_modules via npm install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full from the pinned package.json and lockfile (validatorjs has no lockfile: resolved 2026-10-29). validatorjs: mocha --require @babel/register on the changed test files (its test:ci script without coverage). node-red: mocha on the changed *_spec.js files. highlightjs: its build_and_test script, node tools/build.js -t node then mocha on the changed node suites (api, detect, markup, parser, regex, special); builds/ and browser/ tests need a browser build, so a candidate with only those has no runtime. jquery and chartjs still have no runtime (v116)",
+        "runners": "benchmark/mine_natural_tasks.py verify_command; benchmark/t11_f2p_candidates.py recomputes each candidate's runner and runtime under it",
+        "check_candidates": ".research/history/t11-f2p-candidates.json, sha256 edf3ddadd90e2163800524e62e0b6521fe4c0dc696954a1c108da59c2da910d9: 108 judged bugs not checked for t10; 21 have no runtime (7 ansible integration-only, jquery 1, chartjs 12, highlightjs 1)",
+        "rule": "the t10 fail-to-pass rule unchanged: base passes, fault fails without timeout, restored passes, each within 180 s; one check, report results/natural-tasks-t11-f2p.json. Any runtime repair is recorded in a new version before a re-check, as v117"
+      }
     }
   },
   "report_every_case": true,
@@ -2140,6 +2150,11 @@
       "version": 121,
       "date": "2026-10-29",
       "reason": "Freeze the t11 pointer-free catalog protocol and 23 new repositories with their pins, before listing any of their pull requests"
+    },
+    {
+      "version": 122,
+      "date": "2026-10-29",
+      "reason": "Record t11 runtimes, runners and the fail-to-pass candidate list after the bug judgments and before any fail-to-pass check"
     }
   ],
   "arms": {
