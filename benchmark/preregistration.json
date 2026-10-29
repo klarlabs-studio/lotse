@@ -1,5 +1,5 @@
 {
-  "version": 119,
+  "version": 120,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1373,6 +1373,20 @@
       },
       "frozen_catalog_sha256": "861dd88c620cfaf3c8113cbd47864c630900090f5c5478f081dffaa8bf8a54ec",
       "frozen_v118": "2026-10-29: 48 tasks (Go: bubbletea 2, task 1, caddy 8, lazygit 5; Python: faker 8, pre-commit 4, networkx 4; JavaScript: stylelint 7, multer 2, mongoose 7); no solver has seen any. Bug judgments (results/natural-tasks-t10-judgments.json, 155 bugs among 198 judged) from the issue title and the first 900 characters of its body, first 14 automatic-criteria candidates per repository, before any fail-to-pass check. Fail-to-pass: 135 bugs checked (jquery 7 and chartjs 13 have no runtime, v116); first check (results/natural-tasks-t10-f2p.json) 51 pass; the v117 runtime repair re-checked pre-commit, networkx, locust, pipenv and tornado once (results/natural-tasks-t10-f2p-recheck.json, 28 of 54 pass; a first re-check attempt stopped on a full disk before checking any candidate and left no report). 78 pass in all, with tornado's verdicts from the re-check only. Rejected: badger 10 (base or restored run timed out at 180 s), less 8 (base fails, v116), pre-commit 9 (8 base fails, 1 timeout), locust 7 (5 base fails, 2 timeouts), task 5 (base fails), pipenv 5 (4 base fails, 1 fault passes), mongoose 3 (2 base fails, 1 timeout), tornado 3 (2 fault passes, 1 fault timeout), caddy 2 (1 base fails, 1 fault passes), networkx 2 (1 fault passes, 1 fault timeout), bubbletea 1, faker 1 and lazygit 1 (fault passes for the last two, base fails for bubbletea). No two passing candidates share an issue. Filled by the v95 rule, newest merge first: per language, repositories in repository_order, at most 8 each, until 16 per language; every language reaches 16, so the catalog exceeds minimum_tasks (36) and if_fewer does not apply. Not selected although passing: caddy 2, lazygit 4, badger 2 (Go full); networkx 5, tornado 4, locust 5, pipenv 6 (Python full); mongoose 2 (JavaScript full)"
+    },
+    "pointer_free_screen": {
+      "recorded": "2026-10-29, after the t10 decision and its post-hoc localization diagnostic (results/t10-localization-diagnostic.json), before any count of the criterion below over any candidate",
+      "motivation": "in t10 every arm read a faulted file after a median of 1-2 tool calls; 46 of 48 issues share an identifier with the faulted code. A code-search tool can only save where locating the code is the work, so the operator chose a separate, explicitly scoped workload: issues that do not point at the code",
+      "workload": "pointer-free natural repair tasks. A claim from it covers that workload only, never issue-driven tasks in general",
+      "pointer_free": {
+        "paths": "no faulted file's repository path, file name (case-insensitive substring) or stem of 4+ characters (case-insensitive whole word) appears in the issue text the solver gets (title plus body as the catalog stores it)",
+        "identifiers": "no code-shaped identifier from any fault's before or after text appears in the issue as a whole word (case-sensitive). Identifiers are [A-Za-z_][A-Za-z0-9_]* of 4+ characters; code-shaped means containing '_' or a digit, or an uppercase letter after the first character, or all lowercase and 6+ characters and absent from /usr/share/dict/words (case-insensitive) and from the language's keywords",
+        "implementation": "benchmark/pointer_free_screen.py, unit-tested before it reads any candidate"
+      },
+      "pool": "every candidate with outcome 'automatic criteria met' in .research/history/*-candidates.json (not the -without-snapshot files) whose task id is in no natural-tasks*.json catalog; reported separately for t10's repositories (pinned 2026-10-29) and for older repositories",
+      "screen_rule": "a pointer-free batch is proposed only if at least 90 pool candidates are pointer-free, from at least 6 repositories in each of Go, Python and JavaScript (t10 kept 48 tasks from 198 judged; 90 allows the same yield with margin). Otherwise the workload is recorded as too rare among natural issues to test, and no batch is proposed",
+      "outputs": "results/pointer-free-screen.json: per candidate, the criterion's parts; counts per repository and language. No solver, no test run",
+      "next_if_passed": "a new version freezes the catalog selection (t10 protocol: issue-only bug judgment, fail-to-pass, fill caps), the arms and a budget request, before any fail-to-pass check of these candidates"
     }
   },
   "report_every_case": true,
@@ -1926,6 +1940,11 @@
       "version": 119,
       "date": "2026-10-29",
       "reason": "Freeze batch t10: builtin, graphify_installed and graf_installed on the 48-task t10 catalog, before any t10 model call"
+    },
+    {
+      "version": 120,
+      "date": "2026-10-29",
+      "reason": "Freeze the pointer-free task definition and its feasibility screen before counting it over any candidate"
     }
   ],
   "arms": {
