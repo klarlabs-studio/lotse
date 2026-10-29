@@ -1,5 +1,5 @@
 {
-  "version": 118,
+  "version": 119,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -749,6 +749,64 @@
         "harness_changes_since_t8": "fail-to-pass and task tooling fixes that change no task or pass rule (4c44837, cb48ae8, 324a5ea, 0c137a5, 34b9d8b); a verifier's process group is killed when it ends (70fa209); and from 27f8c59 (issue #1) every verifier and broker-tool command runs under agent_trials.run_group, which records the command's descendants by sampling the process tree every 0.25 s and terminates every one still running when it ends (Playwright's browser leaves the process group), with output written to files instead of pipes. This applies to both arms alike; it adds about 0.1-0.3 s of wall time to each tool call, and tool wall time is diagnostic, not a gated metric. No t9 runtime launches a browser",
         "payload_parity": "graf_pointer_orient's payload against the payload file_pointer_screen scored (localization.py file_pointers from graf-a9c9e4d's locate output), compared before any t9 model call and without gold: identical on 1,449 of 1,459 file_code_screen tasks (the 10 differences are leaflet tasks with identical file lists and one different lower-ranked pointer, where Rust and the prototype order units of object-literal methods differently) and on 30 of 36 t9 tasks (6 moment tasks: on 5 the eighth file differs, and on moment-6116 the two split moment's 4,500-line UMD bundles into units differently). t9 tests the shipped binary as defined; the differences are reported, not repaired",
         "dry_run_v111": "2026-10-28, no model: each of the 36 tasks x 2 arms prepared and oriented with bounded_prefix on: 72 of 72 orientations ok and nonempty; graf_pointer_orient median 94 cl100k tokens, none truncated; graphify_orient median 1,490, truncated to the cap on 30 of 36. No outcome was graded"
+      },
+      "t10": {
+        "arms": [
+          "builtin",
+          "graphify_installed",
+          "graf_installed"
+        ],
+        "candidates": [
+          "graf_installed"
+        ],
+        "controls": [],
+        "comparators": [
+          "builtin",
+          "graphify_installed"
+        ],
+        "catalog": "benchmark/natural-tasks-t10.json",
+        "seed": 20261029,
+        "frozen_in_version": 119,
+        "arm_definitions": {
+          "builtin": "Claude Code as shipped, without retrieval tooling: built-in Read, Grep, Glob and Edit at their 2.1.312 defaults (Read 2,000 lines and a 25,000-token refusal, Grep files_with_matches with head_limit 250 and its 20,000-character result cap); no Bash. The broker MCP server offers only test and finish",
+          "graphify_installed": "builtin plus Graphify 0.9.97 set up as its README says, before the solver starts: `graphify update .` (code graph, no LLM) and `graphify claude install` (project CLAUDE.md section and .claude/settings.json PreToolUse hooks that nudge Grep/Glob/Read/Bash toward the graph and never block), with HOME pointed at a per-trial folder so nothing global is written; Bash is added and allowed only as Bash(graphify:*)",
+          "graf_installed": "builtin plus graf as its README says: `graf index`, `graf mcp` registered as an MCP server over the workspace, and the README's 'Finding code' CLAUDE.md snippet (call triage first, outline before reading, read line ranges, units for follow-ups), appended to any CLAUDE.md the repository has"
+        },
+        "common_setup": "every arm: the same INSTALLED_PROMPT appended to Claude Code's own system prompt (repair the bug in non-test source, do not edit tests or build configuration, run test, then finish), --setting-sources project (the workspace's own .claude settings only, no user settings or personal CLAUDE.md), --strict-mcp-config, --disable-slash-commands, --permission-mode acceptEdits with --permission-prompts none, --no-session-persistence. The workspace is moved outside any git repository to /private/var/tmp/graf-trials/<trial>/workspace and moved back after the run; an empty auto-memory folder Claude Code creates for it is removed. Test files, build and test configuration files (package.json, lockfiles, pyproject.toml, setup.py/cfg, tox.ini, pytest.ini, go.mod, go.sum, Makefile, outside node_modules and the tools' own output folders) are hash-protected; an edit to any of them fails the attempt",
+        "isolation_rule": "a tool call answered with content from outside the workspace (lexical path check; links inside the workspace such as node_modules count as inside) fails the attempt and is reported as isolation_breach; refused requests are counted and reported",
+        "graf_binary": ".research/bin/graf-t10, built with --locked from main at 7a3b88a (the latest graf), sha256 4d00f3178e64e958875b92fedebd15ef2e906d179ab7e73ea3f845ffb005d9e8",
+        "backend_sha256": {
+          "builtin": "6b5ec691195e551b02c41df9f7d723f4ea61eaa03c2df90acefe3736f1aeb620",
+          "graphify_installed": "b0bbea3ad648b435ed5dce6819c15aa3ee5aea689bbdc2e55d50f2ca95eb5bef",
+          "graf_installed": "4d00f3178e64e958875b92fedebd15ef2e906d179ab7e73ea3f845ffb005d9e8"
+        },
+        "solver_version": "2.1.312 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.312",
+        "solver_sha256": "6b5ec691195e551b02c41df9f7d723f4ea61eaa03c2df90acefe3736f1aeb620",
+        "model": "claude-haiku-5-5",
+        "graphify_commit": "0a8cd4e1e342235fe53e881fb5d591bf0460071f",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.97",
+        "versions_checked": "2026-10-29 with benchmark/check_latest.py: Graphify 0.9.97 and ripgrep 15.2.0 are the latest releases; Claude Code's latest is 2.1.312, the pinned solver copy (the operator's PATH claude is 2.1.311 and is not used); claude-haiku-5-5 is the latest Haiku (by hand); graf is main's head",
+        "attempts_per_task_and_arm": 2,
+        "solver_max_turns": 80,
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200
+        },
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription; the v93 cost table",
+        "rule": "the agent_trials.rule (cost superiority by one-sided paired sign flip at alpha 0.05 on per-task mean cost_usd, success non-inferiority within 0.10) for graf_installed against each comparator; it passes only by passing against both builtin and graphify_installed (intersection-union, alpha not split)",
+        "secondary": "turns, tokens, tool calls by type; the headroom attribution of benchmark/agent_headroom_diagnostic.py (search and read payload share of cost, calls to the first edit); graphify_installed against builtin and every task reported; exploratory, not gated",
+        "role": "first test of the tools as a user installs them, where the built-in replay estimated search and read payloads at 40-54% of cost; a pass is evidence for graf as installed on these tasks and conditions, not product promotion, and leads to a confirmation on fresh tasks frozen later",
+        "budget": "operator agreed on 2026-10-29: 288 Haiku attempts on the subscription (48 tasks x 3 arms x 2 attempts)",
+        "planned_runs": "48 tasks x 2 attempts x 3 arms = 288, as agreed",
+        "rationale": "in t2-t9 no retrieval arm beat search_only under the capped broker tools, where the post-hoc headroom diagnostic put search and read payloads at 14-20% of cost; replaying the same sessions with Claude Code's built-in Grep and Read raised that share to 40-54% (search_only 51%), mostly from whole-file reads. t10 therefore compares the tools in the setting agents actually use",
+        "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply under v93, setup failure: set aside and rerun at most twice)",
+        "verifier_deadline": true,
+        "deadline_rule": "unchanged from t8/t9: the 1,200 s deadline is recorded before the solver starts, broker test runs are capped at the time left minus a 120 s reserve, and every verdict gets the full 180 s verifier",
+        "solver_timeout": "the v93 rule stays in force as a fallback",
+        "harness": "benchmark at commit 52bf237: installed-arm runner (106fdca, 66e6e28), lexical isolation audit, tornado runner (v117)",
+        "dry_run_v119": "2026-10-29, no model (benchmark/t10_dry_run.py, results/t10-dry-run.json): each of the 48 tasks x 3 arms prepared, relocated and restored: 144 of 144 ok. graphify_installed: graphify update and claude install exit 0 on all 48 (update median 6.6 s, max 31.1 s), graph.json, CLAUDE.md section and .claude/settings.json hooks present on all 48. graf_installed: graf index exits 0 on all 48 (median 0.5 s, max 1.4 s), CLAUDE.md snippet on all 48. builtin: no setup; lazygit's 5 tasks carry the repository's own CLAUDE.md, which every arm sees and the installed tools append to. No outcome was graded",
+        "schedule": "runs after the t10 catalog freeze (v118) and the no-model dry run; frozen before any t10 model call"
       }
     },
     "natural_tasks": {
@@ -1863,6 +1921,11 @@
       "version": 118,
       "date": "2026-10-29",
       "reason": "No rule change. Freeze the t10 catalog (48 tasks) by the preregistered fill rule after both fail-to-pass checks"
+    },
+    {
+      "version": 119,
+      "date": "2026-10-29",
+      "reason": "Freeze batch t10: builtin, graphify_installed and graf_installed on the 48-task t10 catalog, before any t10 model call"
     }
   ],
   "arms": {
