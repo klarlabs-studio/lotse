@@ -223,6 +223,17 @@ def outside_workspace(stream, workspace):
     return requested, answered
 
 
+def remove_empty_auto_memory(workspace, projects=Path.home() / ".claude/projects"):
+    """Claude Code's default auto-memory makes an empty memory folder per working directory; leave none behind."""
+    folder = projects / ("-" + str(workspace).strip("/").replace("/", "-"))
+    if not folder.is_dir() or any(path.is_file() for path in folder.rglob("*")):
+        return False
+    for path in sorted(folder.rglob("*"), reverse=True):
+        path.rmdir()
+    folder.rmdir()
+    return True
+
+
 def turn_cap():
     """A batch's turn cap (SOLVER_MAX_TURNS): a looping solver stops and still reports its usage."""
     turns = os.environ.get("SOLVER_MAX_TURNS")
@@ -304,6 +315,7 @@ def run_prepared(task, trial_id, arm, catalog, prereg, binary_sha, session):
     if arm in INSTALLED_ARMS:
         requested, answered = outside_workspace(directory / "agent-stream.jsonl", session.root)
         summary["outside_workspace"] = {"requested": requested, "answered": answered}
+        summary["auto_memory_left_empty"] = remove_empty_auto_memory(session.root)
         if answered:  # Preregistered: a tool call answered from outside the workspace fails the attempt.
             summary["passed"] = False
             summary["isolation_breach"] = True

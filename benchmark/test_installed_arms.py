@@ -67,6 +67,20 @@ class WorkspaceTest(unittest.TestCase):
         self.assertEqual(set(configuration_hashes(root)), {"package.json"})
 
 
+class AutoMemoryTest(unittest.TestCase):
+    def test_removes_only_an_empty_memory_folder(self):
+        projects = Path(tempfile.mkdtemp())
+        empty = projects / "-private-var-tmp-graf-trials-a-workspace/memory"
+        empty.mkdir(parents=True)
+        self.assertTrue(run_agent_trial.remove_empty_auto_memory(Path("/private/var/tmp/graf-trials/a/workspace"), projects))
+        self.assertFalse(empty.parent.exists())
+        kept = projects / "-private-var-tmp-graf-trials-b-workspace/memory"
+        kept.mkdir(parents=True)
+        (kept / "MEMORY.md").write_text("x")
+        self.assertFalse(run_agent_trial.remove_empty_auto_memory(Path("/private/var/tmp/graf-trials/b/workspace"), projects))
+        self.assertTrue((kept / "MEMORY.md").is_file())
+
+
 class OutsideWorkspaceTest(unittest.TestCase):
     def stream(self, *events):
         path = Path(tempfile.mkdtemp()) / "agent-stream.jsonl"
