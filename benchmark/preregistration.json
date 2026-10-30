@@ -1,5 +1,5 @@
 {
-  "version": 130,
+  "version": 131,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1914,6 +1914,13 @@
         "recorded": "2026-10-30, after the v129 check stopped at beego-4396 and before any re-check",
         "cause": "verify restores hidden tests from the pinned snapshot; beego-4396's adapter/context/param/conv_test.go is absent at the pin (removed upstream after the fix), so the check raised FileNotFoundError before its base run. 28 candidates had completed all three phases",
         "rule": "a candidate with any hidden test file absent at the pin cannot be checked and is rejected: beego-4396, markitdown-1982, markitdown-2188, markitdown-2411, markitdown-2449. The 28 completed candidates keep their logged return codes (.research/t12-f2p.log); the remaining 129 are checked once under the unchanged v129 runners and rule (.research/history/t12-f2p-candidates-rest.json, sha256 c9bc013466738d2383d858ff829ed11f944ae527f82f5f4c8f200c8b6219819a); benchmark/t12_f2p_report.py combines both into results/natural-tasks-t12-f2p.json"
+      },
+      "catalog_v131": {
+        "recorded": "2026-10-30, after the fail-to-pass check and before any t12 dry run or model call",
+        "check": "results/natural-tasks-t12-f2p.json (sha256 09f9507c96a369c9ef49f184c9471c373c05551b26c11405c9c5ddcef1498abb): 124 of 162 candidates fail-to-pass under the v129 rule with the v130 repair",
+        "passing_by_repository": "arrow 5, attrs 4, beego 2, boltons 4, browserify 1, cyberchef 8, gitleaks 1, glance 1, go-zero 11, isort 6, knex 5, lipgloss 4, markitdown 2, mathjs 12, micro 1, more-itertools 6, nunjucks 3, pendulum 8, prism 2, prometheus 8, svelte 3, sympy 11, syncthing 3, textual 13",
+        "catalog": "benchmark/natural-tasks-t12.json, sha256 fe22ea94be520cc2eb1b1945222e6b23f9a4d0ab75cd0f8e2099c4ad4de3f5bc, written by benchmark/t12_catalog.py under the v95 fill rule: 48 tasks. Go 16 (micro 1, gitleaks 1, lipgloss 4, glance 1, go-zero 8, beego 1), Python 16 (arrow 5, boltons 4, more-itertools 6, attrs 1), JavaScript 16 (mathjs 8, nunjucks 3, prism 2, knex 3)",
+        "planned_runs": "48 tasks x 4 arms x 2 attempts = 384, the agreed budget"
       }
     }
   },
@@ -2523,6 +2530,11 @@
       "version": 130,
       "date": "2026-10-30",
       "reason": "natural_tasks_t12.check_repair_v130: reject candidates whose hidden tests are absent at the pin; resume the fail-to-pass check for the unchecked rest"
+    },
+    {
+      "version": 131,
+      "date": "2026-10-30",
+      "reason": "natural_tasks_t12.catalog_v131: the t12 catalog (48 tasks) frozen from the fail-to-pass results, before any dry run or model call"
     }
   ],
   "arms": {
