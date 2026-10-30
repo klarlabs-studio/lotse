@@ -1,5 +1,5 @@
 {
-  "version": 125,
+  "version": 126,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1653,6 +1653,25 @@
       },
       "frozen_v124": "2026-10-30: 47 tasks (Go: caddy 7, lazygit 3, excelize 3, gh-cli 3; Python: faker 2, pre-commit 1, networkx 5, locust 1, yt-dlp 2, scrapy 2, ansible 1, mitmproxy 1; JavaScript: stylelint 4, mongoose 8, highlightjs 4); no solver has seen any. benchmark/natural-tasks-t11.json, sha256 a19482251a3abd2d71ed3b904d36b950dcb7d28663b8c988bb0cd7bf43b1db4f, written by benchmark/t11_catalog.py. Fail-to-pass: 102 candidates checked under v122 (node-red's 6 excluded by v123): results/natural-tasks-t11-f2p.json (sha256 814f5edc89ff9bd25b7ad21bc1b91837c61a24e2132b5de407cf436bacc4f49a; benchmark/t11_f2p_report.py combines the stopped run's logged return codes with results/natural-tasks-t11-f2p-highlightjs.json, sha256 e9ba686cc1a9820c08a7b174a4ab403ca98df56676403bbeddfd421338cc681a), 70 pass; t10 outcomes carry over for lazygit 3, networkx 1 and locust 1. Rejected: chezmoi 6 (fault passes), thefuck 4 (base fails), validatorjs 3 (base fails), caddy 4 (3 base fails, 1 fault passes), gh-cli, restic and sops 2 each (1 base fails, 1 fault passes), mongoose 2 (1 base fails, 1 fault times out), golangci-lint 1 and pre-commit 1 (base fails), d2, faker, fastapi and searxng 1 each (fault passes), mitmproxy 1 (fault times out). Base-state failures are kept as rejections and not retried, as in t9: no runtime repair is made, since the catalog exceeds minimum_tasks without one. Filled by the v95 rule, newest merge first: at most 8 per repository and 16 per language in repository_order; Go and JavaScript reach 16, Python 15 (its list is exhausted), so if_fewer does not apply. No two selected tasks share an issue and none is in an earlier catalog. Not selected although passing: gh-cli 3, hugo 14, d2 4, helm 1, traefik 1, sops 1, chezmoi 1 (Go full); mongoose 1, highlightjs 2 (JavaScript full). The batch budget's 48 tasks become 47: at most 282 Haiku attempts (47 x 3 arms x 2), within the agreed 288; batch t11 is frozen in its own version before any model call",
       "frozen_catalog_sha256": "a19482251a3abd2d71ed3b904d36b950dcb7d28663b8c988bb0cd7bf43b1db4f"
+    },
+    "triage_miss_screen_v126": {
+      "recorded": "2026-10-30, after batch t11 and its post-hoc diagnostics, before any triage replay or any graf change",
+      "motivation": "t11 post-hoc: graf's triage named a faulted file in 59 of 94 attempts; misses took a median of 5 tool calls to reach a faulted file against 1, passed 21 of 35 against 52 of 59, and cost $0.0171 against $0.0144 per attempt",
+      "status": "development screen, no model calls. The 95 tasks of benchmark/natural-tasks-t10.json (48) and benchmark/natural-tasks-t11.json (47) become development data for triage: no result on them can support a claim about a changed triage. Any candidate that passes needs a batch on fresh tasks, frozen in its own version with an agreed budget, before it is anything but experimental",
+      "workspaces": "each task prepared as in the batches (benchmark/agent_trials.prepare: fault applied, hidden tests reverted), indexed with the graf under test (`graf --root W index`)",
+      "queries": {
+        "primary": "the issue and budget of the first triage call of each graf_installed attempt in batches t10 and t11 (190 calls; budget 1500, the MCP default, when the agent passed none)",
+        "secondary": "the task's issue text verbatim, budget 1500"
+      },
+      "metric": {
+        "hit": "a faulted file (a path in the task's faults) appears in triage's Likely files or among its cited units",
+        "file_rank": "position of the first faulted file in Likely files (reciprocal rank, 0 when absent)",
+        "context_tokens": "triage's own context_tokens"
+      },
+      "baseline": ".research/bin/graf-t10 (sha256 4d00f3178e64e958875b92fedebd15ef2e906d179ab7e73ea3f845ffb005d9e8), the graf both batches ran",
+      "graphify_comparison": "Graphify 0.9.97 (`graphify query`, the command its installed CLAUDE.md section points agents to) on the same primary queries in the same workspaces after `graphify update .`; shared metric: code-file hint recall (a faulted path named anywhere in its output) and output tokens (cl100k). Graphify output is navigation hints, not source; source-anchor measures are not attributed to it",
+      "rule": "a candidate passes the screen only if, on the primary queries, its hit rate exceeds the baseline's by at least 10 points with one-sided exact McNemar p < 0.05 on paired calls, its median context_tokens is at most 1.10 x the baseline's, and it loses at most 5% of the baseline's hits. Every call is reported. Secondary queries are reported, not gated",
+      "next_if_passed": "a fresh-task batch (new repositories, catalog protocol as t11 or t10) freezing graf_installed with the candidate against builtin and graphify_installed, budget agreed with the operator first"
     }
   },
   "report_every_case": true,
@@ -2236,6 +2255,11 @@
       "version": 125,
       "date": "2026-10-30",
       "reason": "Freeze batch t11: the t10 arms, rule and limits on the 47-task pointer-free catalog, Claude Code 2.1.314, before any t11 model call"
+    },
+    {
+      "version": 126,
+      "date": "2026-10-30",
+      "reason": "Preregister an offline development screen of triage misses on the t10 and t11 tasks, before any replay or graf change"
     }
   ],
   "arms": {
