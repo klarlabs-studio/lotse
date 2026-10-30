@@ -1,5 +1,5 @@
 {
-  "version": 123,
+  "version": 124,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1592,7 +1592,8 @@
         "cause": "node-red keeps its own source under packages/node_modules. agent_trials.prepare skips every node_modules directory when copying a corpus, and both indexers skip node_modules too (graf src/index.rs SKIPPED_DIRS; Graphify detect.py), so neither retrieval arm can see node-red's code",
         "rule": "repositories whose own source lies under a node_modules directory are excluded from t11; node-red's 6 candidates (node-red-5248, -5411, -4577, -4221, -4279, -3891) are dropped unchecked. Operator chose this on 2026-10-30 over a harness repair or an indexer change. Graf, the harness and the other repositories are unchanged",
         "completion": "the v122 check's unreached highlightjs candidates (6) ran once under the v122 runtime with an unchanged checker (results/natural-tasks-t11-f2p-highlightjs.json); the 96 candidates checked before the stop keep their logged return codes. results/natural-tasks-t11-f2p.json combines both under the v122 rule"
-      }
+      },
+      "frozen_v124": "2026-10-30: 47 tasks (Go: caddy 7, lazygit 3, excelize 3, gh-cli 3; Python: faker 2, pre-commit 1, networkx 5, locust 1, yt-dlp 2, scrapy 2, ansible 1, mitmproxy 1; JavaScript: stylelint 4, mongoose 8, highlightjs 4); no solver has seen any. benchmark/natural-tasks-t11.json, sha256 a19482251a3abd2d71ed3b904d36b950dcb7d28663b8c988bb0cd7bf43b1db4f, written by benchmark/t11_catalog.py. Fail-to-pass: 102 candidates checked under v122 (node-red's 6 excluded by v123): results/natural-tasks-t11-f2p.json (sha256 814f5edc89ff9bd25b7ad21bc1b91837c61a24e2132b5de407cf436bacc4f49a; benchmark/t11_f2p_report.py combines the stopped run's logged return codes with results/natural-tasks-t11-f2p-highlightjs.json, sha256 e9ba686cc1a9820c08a7b174a4ab403ca98df56676403bbeddfd421338cc681a), 70 pass; t10 outcomes carry over for lazygit 3, networkx 1 and locust 1. Rejected: chezmoi 6 (fault passes), thefuck 4 (base fails), validatorjs 3 (base fails), caddy 4 (3 base fails, 1 fault passes), gh-cli, restic and sops 2 each (1 base fails, 1 fault passes), mongoose 2 (1 base fails, 1 fault times out), golangci-lint 1 and pre-commit 1 (base fails), d2, faker, fastapi and searxng 1 each (fault passes), mitmproxy 1 (fault times out). Base-state failures are kept as rejections and not retried, as in t9: no runtime repair is made, since the catalog exceeds minimum_tasks without one. Filled by the v95 rule, newest merge first: at most 8 per repository and 16 per language in repository_order; Go and JavaScript reach 16, Python 15 (its list is exhausted), so if_fewer does not apply. No two selected tasks share an issue and none is in an earlier catalog. Not selected although passing: gh-cli 3, hugo 14, d2 4, helm 1, traefik 1, sops 1, chezmoi 1 (Go full); mongoose 1, highlightjs 2 (JavaScript full). The batch budget's 48 tasks become 47: at most 282 Haiku attempts (47 x 3 arms x 2), within the agreed 288; batch t11 is frozen in its own version before any model call"
     }
   },
   "report_every_case": true,
@@ -2166,6 +2167,11 @@
       "version": 123,
       "date": "2026-10-30",
       "reason": "Exclude node-red from t11 (its source lies under node_modules, which the harness and both indexers skip), before any node-red outcome"
+    },
+    {
+      "version": 124,
+      "date": "2026-10-30",
+      "reason": "No rule change. Freeze the t11 catalog (47 tasks) by the preregistered fill rule after the fail-to-pass check"
     }
   ],
   "arms": {
