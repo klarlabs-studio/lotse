@@ -61,8 +61,9 @@ fn sources_digest(index: &Index) -> String {
     digest(&listing)
 }
 
-/// Files listed before the code.
-pub const TRIAGE_FILES: usize = 8;
+/// Files listed before the code. 15, not 8: on the t10/t11 replay (preregistration v126) a faulted
+/// file ranked 9-15 in 21 of the 55 calls whose list missed one. Experimental, not an accepted improvement.
+pub const TRIAGE_FILES: usize = 15;
 /// The locate budget the file-ranking screen used to collect file scores.
 const LOCATE_BUDGET: usize = 2000;
 /// Characters of each signature line in an outline.

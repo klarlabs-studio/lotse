@@ -640,6 +640,26 @@ fn triage_lists_files_then_whole_functions_within_budget() {
 }
 
 #[test]
+fn triage_lists_up_to_fifteen_likely_files() {
+    let dir = TempDir::new().unwrap();
+    fs::create_dir(dir.path().join("lib")).unwrap();
+    for i in 0..20 {
+        fs::write(
+            dir.path().join(format!("lib/codec{i}.js")),
+            format!("function decode{i} (frame) {{\n  return frame.payload\n}}\n"),
+        )
+        .unwrap();
+    }
+    let root = canonical_root(dir.path()).unwrap();
+    Index::build(&root, false).unwrap();
+    let index = Index::load(&root).unwrap();
+    let bpe = cl100k_base().unwrap();
+    let result = graf::triage::triage(&bpe, &index, "decode frame payload", 2000).unwrap();
+    assert_eq!(result.files.len(), graf::triage::TRIAGE_FILES);
+    assert_eq!(graf::triage::TRIAGE_FILES, 15);
+}
+
+#[test]
 fn outline_lists_functions_with_line_ranges() {
     let dir = agent_fixture();
     let root = canonical_root(dir.path()).unwrap();

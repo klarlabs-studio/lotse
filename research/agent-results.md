@@ -2,6 +2,22 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Offline screen: triage misses on the t10/t11 tasks (v126); 15 listed files pass, development only
+
+**Outcome: listing 15 likely files instead of 8 passes the preregistered screen.** It is a development result on tasks already used, not evidence of agent savings. The screen replays the first `triage` call of each of the 190 `graf_installed` attempts in t10 and t11, with the agent's own query and budget, in the task's prepared workspace. A hit means triage names a faulted file. No model was called. The script is `benchmark/triage_replay.py`.
+
+| Configuration | Hits (of 190) | File MRR | Median tokens | Verbatim issue hits (of 95) |
+|---|---|---|---|---|
+| graf-t10, 8 files (baseline) | 136 | 0.473 | 1,326 | 61 |
+| path weight 3 (index flag) | 136 (2 gained, 2 lost) | 0.493 | 1,327 | 62 |
+| **15 files** (`.research/bin/graf-triage15`) | **157** (21 gained, 0 lost; McNemar p = 5e-7) | 0.483 | 1,367 | 68 |
+| Graphify 0.9.97 `graphify query`, same text | 119 | n/a | 1,773 | n/a |
+
+- **Why 15.** A diagnostic build that listed every ranked file showed that in 21 of the 55 calls without a faulted file in the list, one ranked 9th to 15th. Removing triage's score floor did not help (133). The other 34 misses rank lower or are not ranked at all: the path, not the code, identifies the file (faker locale providers, highlightjs language files, stylelint rule folders), or the fix touches a changeset or a file no query term reaches. Ranking those is still open.
+- **Bias.** The list length was chosen after seeing ranks on these same 190 calls, and a longer list raises recall almost by construction. The passed rule (v126: +10 points, McNemar p < 0.05, tokens within 10%, at most 5% of hits lost) guards tokens and losses, not that choice.
+- **What it does not show.** That agents read fewer files or spend less. A longer list can also send agents to more files. Only a batch on fresh tasks, frozen with an agreed budget, can show that; until then the change stays experimental.
+- **Results.** [triage-replay-baseline.json](../results/triage-replay-baseline.json), [triage-replay-pathweight3.json](../results/triage-replay-pathweight3.json), [triage-replay-triage15.json](../results/triage-replay-triage15.json); diagnostic builds' full rankings in [triage-replay-diag-floor.json](../results/triage-replay-diag-floor.json) and [triage-replay-diag-full.json](../results/triage-replay-diag-full.json) (scratch builds, not candidates).
+
 ## Batch t11 (v125): graf or Graphify installed, 47 pointer-free natural tasks; fails
 
 **Outcome: `graf_installed` fails the preregistered rule.** It is not significantly cheaper than either comparator:
