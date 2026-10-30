@@ -19,7 +19,7 @@ import sys
 from agent_decision import attempts
 from agent_trials import BASE, tasks
 from retrieval import graphify_baseline
-from run_agent_trial import TOOL_BINARIES, OrientationError, preflight, run, solver
+from run_agent_trial import OrientationError, backend, preflight, run, solver
 
 def plan(task_ids, trials, arms, seed):
     """Every (task, trial, arm), shuffled deterministically."""
@@ -125,7 +125,7 @@ def main():
         if batch.get("graphify_commit") and graphify_baseline()["commit"] != batch["graphify_commit"]:
             raise SystemExit("Graphify baseline differs from this batch's frozen one; run under its virtualenv")
         for arm, expected in batch.get("backend_sha256", {}).items():
-            if preflight(arm, TOOL_BINARIES[arm]) != expected:
+            if preflight(arm, backend(arm)) != expected:
                 raise SystemExit(f"{arm} differs from this batch's frozen backend")
     catalog = (BASE / batch.get("catalog", "benchmark/agent-tasks.json")).resolve()
     by_id = {t["id"]: t for t in tasks(catalog)}

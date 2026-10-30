@@ -69,7 +69,7 @@ TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "tar
                  "graf_pointer_orient": BASE / ".research/bin/graf-c3fee50",
                  "graphify_orient": GRAPHIFY, "graphify": GRAPHIFY,
                  "search_only": Path(shutil.which("rg") or "rg"),
-                 "builtin": BASE / ".research/bin/claude-2.1.312", "graphify_installed": GRAPHIFY,
+                 "graphify_installed": GRAPHIFY,
                  "graf_installed": GRAF_T10,
                  "ast_graph": [BASE / "frozen-t4" / name
                                for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
@@ -119,6 +119,13 @@ def preflight(arm, binary):
 def solver():
     """A batch's pinned copy of the solver (CLAUDE_BINARY), which its self-update cannot change mid-run."""
     return os.environ.get("CLAUDE_BINARY", "claude")
+
+
+def backend(arm):
+    """An arm's frozen backend; the builtin arm has no retrieval tool, so its backend is the pinned solver."""
+    if arm == "builtin":
+        return Path(shutil.which(solver()) or solver())
+    return TOOL_BINARIES[arm]
 
 
 def solver_model(default):
@@ -281,7 +288,7 @@ def scored_events(tool_events):
 
 def run(task, trial_id, arm, catalog):
     prereg = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
-    binary_sha = preflight(arm, TOOL_BINARIES[arm])
+    binary_sha = preflight(arm, backend(arm))
     session = prepare_session(task, trial_id, arm)
     try:
         return run_prepared(task, trial_id, arm, catalog, prereg, binary_sha, session)
@@ -492,7 +499,7 @@ def recover(task, trial_id, arm, reason):
     result = next(json.loads(l) for l in reversed(lines) if json.loads(l).get("type") == "result")
     command = claude_command(task["issue"], directory / "mcp.json", solver_model(prereg["model"]), solver_budget(prereg["max_budget_usd"]), arm)
     summary = finalize(task, trial_id, arm, command, None, result["duration_ms"] / 1000,
-                       preflight(arm, TOOL_BINARIES[arm]))
+                       preflight(arm, backend(arm)))
     summary["recovered"] = (f"{reason}; summary rebuilt from the preserved artifacts without rerunning the "
                             "agent; exit code not recorded, wall time from the result event")
     (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")

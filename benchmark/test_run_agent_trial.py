@@ -186,6 +186,12 @@ class FrozenBackendTests(unittest.TestCase):
         from run_agent_trial import TOOL_BINARIES
         self.assertTrue(preflight("ast_graph", TOOL_BINARIES["ast_graph"]).startswith("fc85e65972d1"))
 
+    def test_the_builtin_backend_is_the_batch_solver(self):
+        from run_agent_trial import backend
+        with patch.dict("os.environ", {"CLAUDE_BINARY": "/pinned/claude-2.1.314"}):
+            self.assertEqual(backend("builtin"), Path("/pinned/claude-2.1.314"))
+        self.assertEqual(backend("graf_installed").name, "graf-t10")
+
 
 class PreflightTests(unittest.TestCase):
     def test_missing_tool_binary_stops_before_the_agent_runs(self):
