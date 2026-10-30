@@ -72,13 +72,19 @@ JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "u
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
                                                     "moment", "ramda", "nodemon", "webpack",
                                                     "stylelint", "multer", "mongoose", "less",
-                                                    "validatorjs", "node-red", "highlightjs")}}
+                                                    "validatorjs", "node-red", "highlightjs",
+                                                    "mathjs", "nunjucks", "prism", "knex", "browserify",
+                                                    "cyberchef", "svelte")}}  # natural_tasks_t12.
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
                                                      "requests", "tqdm", "httpie", "uvicorn", "pytest",
                                                      "loguru", "pydantic", "drf",
                                                      "faker", "pre-commit", "networkx", "tornado", "locust", "pipenv",
                                                      "yt-dlp", "scrapy", "fastapi", "ansible", "mitmproxy", "searxng",
-                                                     "thefuck")}
+                                                     "thefuck",
+                                                     "arrow", "boltons", "more-itertools", "attrs", "isort", "pendulum",
+                                                     "sympy", "textual", "markitdown")}  # natural_tasks_t12.
+GO_SUBMODULES = {"go-zero": ("tools/goctl",)}  # natural_tasks_t12: tests in a nested module run from its directory.
+TEXTUAL_SNAPSHOTS = "tests/snapshot_tests/__snapshots__/test_snapshots/"
 HIGHLIGHTJS_SUITES = ("api", "detect", "markup", "parser", "regex", "special")  # Node suites; builds/ and browser/ need a browser build.
 PAGES = 40
 CONTEXTS = (5, 3, 2, 1, 0)  # Context lines per changed region; the widest unique one wins.
@@ -298,6 +304,8 @@ def verify_command(repo, tests):
                          if len(Path(t).parts) > 2 and Path(t).parts[0] == "test" and Path(t).parts[1] in HIGHLIGHTJS_SUITES})
         return ["sh", "-c", "node tools/build.js -t node > /dev/null && node_modules/.bin/mocha " + " ".join(suites)] \
             if suites else None  # No node suite: no runtime, not checked.
+    if repo in T12_RUNNERS:
+        return T12_RUNNERS[repo](tests)
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
@@ -318,6 +326,101 @@ def verify_command(repo, tests):
     if SOURCE_SUFFIXES[repo] == (".py",):
         return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *sorted(t for t in tests if t.endswith(".py"))]
     return ["node", "--test", *sorted(t for t in tests if t.endswith(".js"))]
+
+
+def pytest_run(tests, env=(), plugins=(), options=()):
+    """natural_tasks_t12: pytest on the changed test modules; none changed leaves the candidate without a runtime."""
+    modules = sorted({t for t in tests if t.endswith(".py") and Path(t).name.startswith("test")})
+    plugin_args = [a for p in plugins for a in ("-p", p)]
+    return [*(("env", *env) if env else ()), "{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *plugin_args,
+            *options, *modules] if modules else None
+
+
+def go_modules(repo, tests):
+    """natural_tasks_t12: go test per module, from each module's directory; a testdata change tests the package that
+    owns the testdata directory."""
+    packages = sorted({str(Path(t).parent) for t in tests if t.endswith("_test.go")}
+                      | {str(Path(*Path(t).parts[:Path(t).parts.index("testdata")])) for t in tests
+                         if "testdata" in Path(t).parts})
+    groups = {}
+    for package in packages:
+        module = next((m for m in GO_SUBMODULES.get(repo, ()) if package == m or package.startswith(m + "/")), ".")
+        groups.setdefault(module, []).append("./" + str(Path(package).relative_to(module)))
+    if list(groups) in ([], ["."]):
+        return ["go", "test", *groups.get(".", []), "-count=1"]
+    return ["sh", "-c", " && ".join(f"(cd {m} && go test {' '.join(p)} -count=1)" for m, p in sorted(groups.items()))]
+
+
+def textual_run(tests):
+    """Changed snapshot images name the snapshot tests that compare against them."""
+    ids = {f"tests/snapshot_tests/test_snapshots.py::{Path(t).stem.split('[')[0]}"
+           for t in tests if t.startswith(TEXTUAL_SNAPSHOTS) and t.endswith(".svg")}
+    modules = {t for t in tests if t.endswith(".py") and Path(t).name.startswith("test")
+               and t != "tests/snapshot_tests/test_snapshots.py"}
+    if "tests/snapshot_tests/test_snapshots.py" in tests and not ids:
+        modules.add("tests/snapshot_tests/test_snapshots.py")
+    selected = sorted(modules | ids)
+    return ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *selected] if selected else None
+
+
+def js_files(tests, prefix, suffix=".js", exclude=()):
+    return sorted(t for t in tests if t.startswith(prefix) and t.endswith(suffix) and Path(t).name not in exclude)
+
+
+def cyberchef_run(tests):
+    """Its test script: regenerate the operation config and test indexes, then run the changed suite's index."""
+    suites = [s for s in ("node", "operations") if any(t.startswith(f"tests/{s}/") for t in tests)]
+    flags = "node --no-warnings --no-deprecation --openssl-legacy-provider"
+    config = " && ".join(["echo [] > src/core/config/OperationConfig.json",
+                          *(f"{flags} src/core/config/scripts/{s}.mjs"
+                            for s in ("generateHTMLEntities", "generateOpsIndex", "generateConfig")),
+                          f"{flags} src/node/config/scripts/generateNodeIndex.mjs"])
+    return ["sh", "-c", " && ".join([config, *(f"{flags} tests/{s}/index.mjs" for s in suites)])] if suites else None
+
+
+def svelte_run(tests):
+    """vitest on the changed suites, FILTER-ed to the changed samples when only samples changed; runtime-browser needs
+    a browser."""
+    suites, samples, whole = set(), set(), False
+    for test in tests:
+        parts = Path(test).parts
+        if len(parts) < 5 or parts[:3] != ("packages", "svelte", "tests") or parts[3] == "runtime-browser":
+            continue
+        suite = Path(*parts[:4])
+        if (suite / "test.ts").as_posix() in tests or not (len(parts) > 6 and parts[4] == "samples"):
+            whole = True
+        else:
+            samples.add(parts[5])
+        suites.add((suite / "test.ts").as_posix())
+    if not suites:
+        return None
+    filters = () if whole else (f"FILTER=/^({'|'.join(sorted(samples))})$/",)
+    return ["env", *filters, "node_modules/.bin/vitest", "run", *sorted(suites)]
+
+
+T12_RUNNERS = {  # natural_tasks_t12 runners, recorded before its fail-to-pass check.
+    **{repo: lambda tests: None for repo in ("hypothesis", "node-fetch")},  # No runtime (benchmark/t12_runtime.py).
+    **{repo: (lambda tests, repo=repo: go_modules(repo, tests))
+       for repo in ("micro", "gitleaks", "lipgloss", "glance", "ntfy", "dive", "go-zero", "beego", "prometheus",
+                    "syncthing")},
+    **{repo: pytest_run for repo in ("boltons", "more-itertools", "attrs", "isort", "pendulum", "sympy")},
+    "arrow": lambda tests: pytest_run(tests, options=("--no-cov",)),  # Its tox.ini fails any run under 99% coverage.
+    "markitdown": lambda tests: pytest_run(tests, ("PYTHONPATH=packages/markitdown/src",)),
+    "textual": textual_run,
+    "mathjs": lambda tests: ["node_modules/.bin/mocha", *files] if (
+        files := js_files(tests, "test/unit-tests/", ".test.js")) else None,
+    "nunjucks": lambda tests: ["env", "NODE_ENV=test", "NODE_PATH=tests/test-node-pkgs", "node_modules/.bin/mocha",
+                               "-r", "tests/setup", "-r", "@babel/register", *files] if (
+        files := [t for t in js_files(tests, "tests/") if t.count("/") == 1]) else None,
+    "prism": lambda tests: ["node_modules/.bin/mocha", *files] if (files := js_files(tests, "tests/")) else None,
+    "knex": lambda tests: ["env", "KNEX_PATH=../knex.js", "KNEX=bin/cli.js", "node_modules/.bin/mocha", "--exit", "-t",
+                           "10000", *files] if (
+        files := js_files(tests, "test/unit/") + js_files(tests, "test/cli/", ".spec.js")) else None,
+    "browserify": lambda tests: ["node_modules/.bin/tap", *files] if (
+        files := [t for t in js_files(tests, "test/") if t.count("/") == 1]) else None,
+    "cyberchef": cyberchef_run,
+    "svelte": svelte_run,
+}
 
 
 def pinned(repo):

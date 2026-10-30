@@ -1,5 +1,5 @@
 {
-  "version": 128,
+  "version": 129,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1898,6 +1898,17 @@
         "secondary_declared": "ranking: per task, the share of first triage calls whose first listed file is a faulted file, graf_installed_codefiles against graf_installed, one-sided paired sign flip at alpha 0.05; reported, not a promotion gate. Also the v126 hit measure per arm, turns, tokens and the headroom attribution",
         "budget": "operator agreed on 2026-10-30: 4 arms and about 384 Haiku attempts (48 tasks x 4 arms x 2 attempts, $0.50 cap per attempt); a smaller catalog shrinks the runs",
         "freeze": "the batch is frozen in its own version after the catalog freeze and a no-model dry run, with check_latest.py, before any model call"
+      },
+      "runtime_v129": {
+        "recorded": "2026-10-30, after the issue-only bug judgments (results/natural-tasks-t12-judgments.json: 184 bugs among 233 judged) and before any t12 fail-to-pass check; the runtimes were smoke-tested on unmodified pinned snapshots with test files that are no candidate's hidden tests (benchmark/t12_runtime_smoke.py, .research/history/t12-runtime-smoke.json sha256 c5acddd8415b3780dae18c0aad9599cb20a788caca4467bfd64d45e71678eb31: 19 of 19 pass)",
+        "build": "benchmark/t12_runtime.py, one repository at a time, from temporary copies of the pinned snapshots; the package code still comes from the workspace",
+        "go": "go 1.27.3; modules of micro, gitleaks, lipgloss, glance, ntfy, go-zero (root and tools/goctl), beego, prometheus and syncthing downloaded into .research/go-modules (go mod download all). Runner: go test -count=1 on the packages of the changed _test.go files, plus the package that owns any changed testdata directory; packages inside go-zero's nested tools/goctl module run from that module's directory",
+        "python": "uv virtualenvs on CPython 3.14.8 (resolved for 3.14) with test dependencies only and requirements-frozen.txt: arrow (python-dateutil, pytest, pytest-cov, pytest-mock, pytz==2025.2, simplejson==3.*, dateparser==1.*), boltons and more-itertools (pytest), attrs (uv.lock tests group), isort (uv.lock dev group, installed without dependencies, plus distribution metadata only for isort 10.0.0b2.dev27, hatch-vcs at the pin, as v117), pendulum (python-dateutil, tzdata, pytest, time-machine, pytest-benchmark; its pure-Python path), sympy (mpmath, pytest, hypothesis), textual (uv.lock with all extras, plus pytest>=8.3.1,<9, pytest-asyncio, pytest-textual-snapshot>=1.0.0), markitdown (packages/markitdown with extra all, plus pytest), resolved 2026-10-30. Runner: pytest -q -p no:cacheprovider on the changed test modules; arrow adds --no-cov (its tox.ini fails any run under 99% coverage); markitdown runs with PYTHONPATH=packages/markitdown/src; textual's changed snapshot images select the snapshot tests of the same name in tests/snapshot_tests/test_snapshots.py. No changed test module: no runtime",
+        "javascript": "node v26.10.0; node_modules via npm 11.19.1 install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full from the pinned package.json and lockfile (knex and browserify have no lockfile: resolved 2026-10-30); cyberchef then runs its postinstall steps (fixCryptoApiImports.mjs, fixSnackBarMarkup.mjs); svelte by pnpm 10.33.4 (its packageManager) install --frozen-lockfile --ignore-scripts with node-linker=hoisted. Runners: mathjs mocha on changed test/unit-tests *.test.js; nunjucks mocha -r tests/setup -r @babel/register with NODE_ENV=test and NODE_PATH=tests/test-node-pkgs on changed top-level tests/*.js; prism mocha on changed tests/**/*.js; knex mocha --exit -t 10000 on changed test/unit files and test/cli *.spec.js (integration tests need databases: no runtime); browserify tap on changed top-level test/*.js; cyberchef its test script's config generation, then tests/node/index.mjs and/or tests/operations/index.mjs for the changed suites (browser tests: no runtime); svelte vitest run on the changed suites' test.ts, FILTER-ed to the changed samples when only samples changed (runtime-browser needs a browser: no runtime)",
+        "no_runtime": "hypothesis imports its Rust extension (hypothesis._native, built by maturin) with no Python fallback; node-fetch's mocha 9 cannot load its yargs under node 26",
+        "runners": "benchmark/mine_natural_tasks.py verify_command (T12_RUNNERS); benchmark/t12_f2p_candidates.py recomputes each candidate's runner and runtime under it",
+        "check_candidates": ".research/history/t12-f2p-candidates.json, sha256 87a8db581295f8b394b8e9fcdcb6baa368da6bc337c13d8364b2c8f4f86b907f: 162 of the 184 judged bugs; 22 have no runner (hypothesis 12, node-fetch 4, knex 3 integration-only, mathjs 1 TypeScript types test, cyberchef 1 browser test, svelte 1 runtime-browser)",
+        "rule": "the t10 fail-to-pass rule unchanged: base passes, fault fails without timeout, restored passes, each within 180 s; one check, report results/natural-tasks-t12-f2p.json. Any runtime repair is recorded in a new version before a re-check, as v117"
       }
     }
   },
@@ -2497,6 +2508,11 @@
       "version": 128,
       "date": "2026-10-30",
       "reason": "Freeze the t12 catalog protocol, 30 new repositories with their pins, two graf candidates and the agreed 4-arm budget, before listing any of their pull requests"
+    },
+    {
+      "version": 129,
+      "date": "2026-10-30",
+      "reason": "natural_tasks_t12.runtime_v129: t12 runtimes, runners and the 162 fail-to-pass check candidates, recorded after the bug judgments and before any fail-to-pass check"
     }
   ],
   "arms": {

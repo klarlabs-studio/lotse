@@ -215,6 +215,26 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(verify_command("tornado", ["tornado/test/web_test.py", "tornado/test/static/robots.txt"]),
                          ["{python}", "-m", "tornado.test.runtests", "tornado.test.web_test"])
 
+    def test_t12_runners(self):
+        from mine_natural_tasks import verify_command
+        self.assertEqual(verify_command("go-zero", ["tools/goctl/api/parser/a_test.go", "core/filex/file_test.go"]),
+                         ["sh", "-c", "(cd . && go test ./core/filex -count=1) && "
+                                      "(cd tools/goctl && go test ./api/parser -count=1)"])
+        self.assertEqual(verify_command("lipgloss", ["table/testdata/T/a.golden"]), ["go", "test", "./table", "-count=1"])
+        self.assertIsNone(verify_command("hypothesis", ["hypothesis/tests/cover/test_a.py"]))
+        self.assertEqual(verify_command("markitdown", ["packages/markitdown/tests/test_a.py"])[:2],
+                         ["env", "PYTHONPATH=packages/markitdown/src"])
+        self.assertIsNone(verify_command("arrow", ["tests/conftest.py"]))
+        self.assertEqual(verify_command("textual", ["tests/snapshot_tests/__snapshots__/test_snapshots/test_x[a].svg",
+                                                    "tests/snapshot_tests/test_snapshots.py"])[-1],
+                         "tests/snapshot_tests/test_snapshots.py::test_x")
+        self.assertEqual(verify_command("svelte", ["packages/svelte/tests/runtime-runes/samples/a-b/_config.js"]),
+                         ["env", "FILTER=/^(a-b)$/", "node_modules/.bin/vitest", "run",
+                          "packages/svelte/tests/runtime-runes/test.ts"])
+        self.assertIsNone(verify_command("svelte", ["packages/svelte/tests/runtime-browser/samples/a/_config.js"]))
+        self.assertIsNone(verify_command("cyberchef", ["tests/browser/00_nightwatch.js"]))
+        self.assertIsNone(verify_command("knex", ["test/integration2/schema/set-nullable.spec.js"]))
+
     def test_t4_repositories_resolve_to_their_pins(self):
         from mine_natural_tasks import pinned
         self.assertEqual(pinned("undici")["repository"], "nodejs/undici")
