@@ -1,5 +1,5 @@
 {
-  "version": 131,
+  "version": 132,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -865,6 +865,72 @@
         "harness": "benchmark at commit c0be49f: the t10 harness, with the builtin arm's backend hash taken from the batch's pinned solver (it was hardcoded to claude-2.1.312, the t10 solver)",
         "schedule": "runs after the t11 catalog freeze (v124) and the no-model dry run; frozen before any t11 model call",
         "dry_run_v125": "2026-10-30, no model (benchmark/t11_dry_run.py, results/t11-dry-run.json, sha256 3a4d13d52e275612e1692fa540ba1a7b1a5d0070c60ddef6e61f1149d2aea758): each of the 47 tasks x 3 arms prepared, relocated and restored: 141 of 141 ok. graphify_installed: graphify update and claude install exit 0 on all 47 (update median 11.2 s, max 130.8 s on mitmproxy-5891), graph.json, CLAUDE.md section and .claude/settings.json hooks present on all 47. graf_installed: graf index exits 0 on all 47 (median 0.8 s, max 2.7 s), CLAUDE.md snippet on all 47. builtin: no setup; ansible-80128 and lazygit's 3 tasks carry the repository's own CLAUDE.md, which every arm sees and the installed tools append to. No outcome was graded"
+      },
+      "t12": {
+        "arms": [
+          "builtin",
+          "graphify_installed",
+          "graf_installed",
+          "graf_installed_codefiles"
+        ],
+        "candidates": [
+          "graf_installed",
+          "graf_installed_codefiles"
+        ],
+        "controls": [],
+        "comparators": [
+          "builtin",
+          "graphify_installed"
+        ],
+        "catalog": "benchmark/natural-tasks-t12.json",
+        "seed": 20261031,
+        "frozen_in_version": 132,
+        "arm_definitions": {
+          "builtin": "Claude Code as shipped, without retrieval tooling: built-in Read, Grep, Glob and Edit at their 2.1.314 defaults (Read 2,000 lines and a 25,000-token refusal, Grep files_with_matches with head_limit 250 and its 20,000-character result cap); no Bash. The broker MCP server offers only test and finish",
+          "graphify_installed": "builtin plus Graphify 0.9.97 set up as its README says, before the solver starts: `graphify update .` (code graph, no LLM) and `graphify claude install` (project CLAUDE.md section and .claude/settings.json PreToolUse hooks that nudge Grep/Glob/Read/Bash toward the graph and never block), with HOME pointed at a per-trial folder so nothing global is written; Bash is added and allowed only as Bash(graphify:*)",
+          "graf_installed": "as t10/t11 with .research/bin/graf-triage15 (sha256 a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a, research/agent-headroom at 20d32cb: triage lists 15 files)",
+          "graf_installed_codefiles": "as graf_installed with .research/bin/graf-codefiles (sha256 d58ecc8af45b3b77e3a391478e846b6b947a1685f54dc69c1b553d81453d068c: 15 files, code files only)"
+        },
+        "common_setup": "every arm: the same INSTALLED_PROMPT appended to Claude Code's own system prompt (repair the bug in non-test source, do not edit tests or build configuration, run test, then finish), --setting-sources project (the workspace's own .claude settings only, no user settings or personal CLAUDE.md), --strict-mcp-config, --disable-slash-commands, --permission-mode acceptEdits with --permission-prompts none, --no-session-persistence. The workspace is moved outside any git repository to /private/var/tmp/graf-trials/<trial>/workspace and moved back after the run; an empty auto-memory folder Claude Code creates for it is removed. Test files, build and test configuration files (package.json, lockfiles, pyproject.toml, setup.py/cfg, tox.ini, pytest.ini, go.mod, go.sum, Makefile, outside node_modules and the tools' own output folders) are hash-protected; an edit to any of them fails the attempt",
+        "isolation_rule": "a tool call answered with content from outside the workspace (lexical path check; links inside the workspace such as node_modules count as inside) fails the attempt and is reported as isolation_breach; refused requests are counted and reported",
+        "backend_sha256": {
+          "builtin": "21d6e7b9a6f07b4cfcb7df13760b3b72aa25e084e13a5354413382987ba832ed",
+          "graphify_installed": "b0bbea3ad648b435ed5dce6819c15aa3ee5aea689bbdc2e55d50f2ca95eb5bef",
+          "graf_installed": "a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a",
+          "graf_installed_codefiles": "d58ecc8af45b3b77e3a391478e846b6b947a1685f54dc69c1b553d81453d068c"
+        },
+        "solver_version": "2.1.314 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.314",
+        "solver_sha256": "21d6e7b9a6f07b4cfcb7df13760b3b72aa25e084e13a5354413382987ba832ed",
+        "model": "claude-haiku-5-5",
+        "graphify_commit": "0a8cd4e1e342235fe53e881fb5d591bf0460071f",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.97",
+        "versions_checked": "2026-10-30 with benchmark/check_latest.py: Graphify 0.9.97, Claude Code 2.1.314 and ripgrep 15.2.0 are the latest releases; claude-haiku-5-5 is the latest Haiku (by hand); graf's source on main is unchanged since 7a3b88a, and both candidates are research builds of research/agent-headroom (natural_tasks_t12.batch_plan)",
+        "attempts_per_task_and_arm": 2,
+        "solver_max_turns": 80,
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200
+        },
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription; the v93 cost table",
+        "rule": "the t10/t11 rule (cost superiority by one-sided paired sign flip on per-task mean cost_usd, success non-inferiority within 0.10, intersection-union against builtin and graphify_installed) for each graf candidate; the two candidates' cost tests are Holm-corrected at family alpha 0.05; Holm over the two candidates uses each candidate's largest cost p across the comparators; the success guard keeps the agent_trials.rule alpha split",
+        "secondary": "ranking: per task, the share of first triage calls whose first listed file is a faulted file, graf_installed_codefiles against graf_installed, one-sided paired sign flip at alpha 0.05; reported, not a promotion gate. Also the v126 hit measure per arm, turns, tokens and the headroom attribution; benchmark/t12_diagnostic.py, results/t12-diagnostic.json",
+        "role": "natural issue-driven repair tasks from 14 repositories graf was not tuned on; tests whether graf as installed with the triage15 or codefiles build is cheaper than builtin and graphify_installed at non-inferior success. A pass is evidence for that build on this workload and these conditions only, not product promotion",
+        "budget": "operator agreed on 2026-10-30: 4 arms and about 384 Haiku attempts (48 tasks x 4 arms x 2 attempts, $0.50 cap per attempt); a smaller catalog shrinks the runs",
+        "planned_runs": "48 tasks x 4 arms x 2 attempts = 384, the agreed budget",
+        "rationale": "t10 and t11 did not pass with graf-t10; the offline screens v126/v127 favoured triage15 and codefiles, which t12 tests as installed tools against the same comparators",
+        "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply under v93, setup failure: set aside and rerun at most twice)",
+        "verifier_deadline": true,
+        "deadline_rule": "unchanged from t8/t9: the 1,200 s deadline is recorded before the solver starts, broker test runs are capped at the time left minus a 120 s reserve, and every verdict gets the full 180 s verifier",
+        "solver_timeout": "the v93 rule stays in force as a fallback",
+        "harness": "benchmark at commit 5f832db: the t11 harness plus per-arm graf binaries (backend_binaries), the graf_installed_codefiles arm and Holm multiplicity",
+        "schedule": "runs after the catalog freeze (v131) and the no-model dry run; frozen before any t12 model call",
+        "multiplicity": "holm",
+        "backend_binaries": {
+          "graf_installed": ".research/bin/graf-triage15",
+          "graf_installed_codefiles": ".research/bin/graf-codefiles"
+        },
+        "dry_run_v132": "2026-10-30, no model (benchmark/t12_dry_run.py, results/t12-dry-run.json, sha256 f35e1910a39fce95b27573ab94d8b9bfac2cdf9b7db28ec764ce5a9e816f8f6a): each of the 48 tasks x 4 arms prepared, set up, relocated and restored: 192 of 192 ok, no nonzero setup step. graphify_installed: CLAUDE.md section, .claude/settings.json hooks and graphify-out on all 48 (setup step median 0.7 s, max 23.8 s). graf_installed and graf_installed_codefiles: graf index and the CLAUDE.md snippet on all 48 (step max 0.5 s and 0.6 s). No outcome was graded"
       }
     },
     "natural_tasks": {
@@ -1921,7 +1987,8 @@
         "passing_by_repository": "arrow 5, attrs 4, beego 2, boltons 4, browserify 1, cyberchef 8, gitleaks 1, glance 1, go-zero 11, isort 6, knex 5, lipgloss 4, markitdown 2, mathjs 12, micro 1, more-itertools 6, nunjucks 3, pendulum 8, prism 2, prometheus 8, svelte 3, sympy 11, syncthing 3, textual 13",
         "catalog": "benchmark/natural-tasks-t12.json, sha256 fe22ea94be520cc2eb1b1945222e6b23f9a4d0ab75cd0f8e2099c4ad4de3f5bc, written by benchmark/t12_catalog.py under the v95 fill rule: 48 tasks. Go 16 (micro 1, gitleaks 1, lipgloss 4, glance 1, go-zero 8, beego 1), Python 16 (arrow 5, boltons 4, more-itertools 6, attrs 1), JavaScript 16 (mathjs 8, nunjucks 3, prism 2, knex 3)",
         "planned_runs": "48 tasks x 4 arms x 2 attempts = 384, the agreed budget"
-      }
+      },
+      "frozen_catalog_sha256": "fe22ea94be520cc2eb1b1945222e6b23f9a4d0ab75cd0f8e2099c4ad4de3f5bc"
     }
   },
   "report_every_case": true,
@@ -2535,6 +2602,11 @@
       "version": 131,
       "date": "2026-10-30",
       "reason": "natural_tasks_t12.catalog_v131: the t12 catalog (48 tasks) frozen from the fail-to-pass results, before any dry run or model call"
+    },
+    {
+      "version": 132,
+      "date": "2026-10-30",
+      "reason": "agent_trials.batches.t12 frozen after the v131 catalog, the no-model dry run (192 of 192 ok) and check_latest.py, before any t12 model call; natural_tasks_t12.frozen_catalog_sha256 recorded from v131"
     }
   ],
   "arms": {
