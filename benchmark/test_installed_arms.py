@@ -34,6 +34,17 @@ class InstalledCommandTest(unittest.TestCase):
         self.assertIn("mcp__graf", graf)
         self.assertNotIn("mcp__graf", builtin)
 
+    def test_both_graf_arms_get_graf_and_each_its_batch_frozen_binary(self):
+        self.assertIn("mcp__graf", self.flags("graf_installed_codefiles"))
+        with patch.dict("os.environ", {"GRAF_BINARY_GRAF_INSTALLED": ".research/bin/graf-triage15",
+                                       "GRAF_BINARY_GRAF_INSTALLED_CODEFILES": ".research/bin/graf-codefiles"}):
+            self.assertEqual(run_agent_trial.graf_binary("graf_installed").name, "graf-triage15")
+            self.assertEqual(run_agent_trial.backend("graf_installed_codefiles").name, "graf-codefiles")
+        with patch.dict("os.environ", {}, clear=True):
+            self.assertEqual(run_agent_trial.graf_binary("graf_installed"), run_agent_trial.GRAF_T10)
+            with self.assertRaises(RuntimeError):
+                run_agent_trial.graf_binary("graf_installed_codefiles")
+
     def test_the_broker_offers_only_test_and_finish(self):
         self.assertEqual([d["name"] for d in tool_definitions("graf_installed")], ["test", "finish"])
 

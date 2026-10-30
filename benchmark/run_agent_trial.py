@@ -22,7 +22,7 @@ import time
 
 from agent_trials import BASE, audit_trace, tasks
 from retrieval import GRAPHIFY
-from task_session import (ARMS, GRAF_ORIENT_ARMS, INSTALLED_ARMS, ORIENT_ARMS, Session, prepare_session,
+from task_session import (ARMS, GRAF_INSTALLED_ARMS, GRAF_ORIENT_ARMS, INSTALLED_ARMS, ORIENT_ARMS, Session, prepare_session,
                           restore_workspace)
 
 SYSTEM_PROMPT = (
@@ -70,7 +70,6 @@ TOOL_BINARIES = {"graf": BASE / "target/release/graf", "graf_floor": BASE / "tar
                  "graphify_orient": GRAPHIFY, "graphify": GRAPHIFY,
                  "search_only": Path(shutil.which("rg") or "rg"),
                  "graphify_installed": GRAPHIFY,
-                 "graf_installed": GRAF_T10,
                  "ast_graph": [BASE / "frozen-t4" / name
                                for name in ("ast_retrieve.py", "localization.py", "retrieval.py")]}
 
@@ -125,7 +124,18 @@ def backend(arm):
     """An arm's frozen backend; the builtin arm has no retrieval tool, so its backend is the pinned solver."""
     if arm == "builtin":
         return Path(shutil.which(solver()) or solver())
-    return TOOL_BINARIES[arm]
+    return graf_binary(arm) if arm in GRAF_INSTALLED_ARMS else TOOL_BINARIES[arm]
+
+
+def graf_binary(arm):
+    """An installed graf arm's batch-frozen binary (GRAF_BINARY_<ARM>, set from the batch's backend_binaries); batches
+    t10 and t11 froze none and ran graf-t10 as graf_installed."""
+    frozen = os.environ.get(f"GRAF_BINARY_{arm.upper()}")
+    if frozen:
+        return BASE / frozen
+    if arm == "graf_installed":
+        return GRAF_T10
+    raise RuntimeError(f"{arm} has no batch-frozen graf binary; no trial was started")
 
 
 def solver_model(default):
@@ -166,7 +176,7 @@ def installed_command(issue, mcp_config, model, budget, arm):
     if arm == "graphify_installed":  # Graphify's CLAUDE.md rules run `graphify query` and friends from a shell.
         tools.append("Bash")
         allowed.append("Bash(graphify:*)")
-    if arm == "graf_installed":
+    if arm in GRAF_INSTALLED_ARMS:
         allowed.append("mcp__graf")
     return [solver(), "-p", f"Issue report:\n\n{issue}",
             "--model", model, "--tools", ",".join(tools), "--strict-mcp-config", "--mcp-config", str(mcp_config),
@@ -184,8 +194,8 @@ def set_up_installed(session):
         home.mkdir(exist_ok=True)
         steps = [[str(GRAPHIFY), "update", "."], [str(GRAPHIFY), "claude", "install"]]
         env = {**os.environ, "HOME": str(home)}
-    elif session.arm == "graf_installed":
-        steps = [[str(GRAF_T10), "--root", str(workspace), "index"]]
+    elif session.arm in GRAF_INSTALLED_ARMS:
+        steps = [[str(graf_binary(session.arm)), "--root", str(workspace), "index"]]
         env = dict(os.environ)
         claude_md = workspace / "CLAUDE.md"
         existing = claude_md.read_text() if claude_md.is_file() else ""
@@ -304,8 +314,8 @@ def run_prepared(task, trial_id, arm, catalog, prereg, binary_sha, session):
     if arm in INSTALLED_ARMS:
         set_up_installed(session)
         agent_cwd = session.root
-        if arm == "graf_installed":  # README: `claude mcp add graf -- graf mcp`, run in the repository.
-            servers["graf"] = {"command": str(GRAF_T10), "args": ["--root", str(session.root), "mcp"]}
+        if arm in GRAF_INSTALLED_ARMS:  # README: `claude mcp add graf -- graf mcp`, run in the repository.
+            servers["graf"] = {"command": str(graf_binary(arm)), "args": ["--root", str(session.root), "mcp"]}
     else:
         agent_cwd = directory / "agent-cwd"
         agent_cwd.mkdir()

@@ -41,7 +41,8 @@ GRAF_ORIENT_ARMS = ("graf_orient", "graf_current_orient", "graf_lean_orient", "g
 ORIENT_ARMS = (*GRAF_ORIENT_ARMS, "graphify_orient")
 # Batch t10: Claude Code's built-in tools, alone or with a tool set up as its own documentation says. The broker
 # only runs the tests and grades; the workspace lives outside any git repository or Claude Code configuration.
-INSTALLED_ARMS = ("builtin", "graphify_installed", "graf_installed")
+GRAF_INSTALLED_ARMS = ("graf_installed", "graf_installed_codefiles")  # Batch t12: two graf builds, one setup.
+INSTALLED_ARMS = ("builtin", "graphify_installed", *GRAF_INSTALLED_ARMS)
 ARMS = (*GRAF_QUERY_FLAGS, "graphify", "search_only", "ast_graph", *ORIENT_ARMS, *INSTALLED_ARMS)
 EXTERNAL_TRIALS = Path("/private/var/tmp/graf-trials")
 # Build and test configuration the installed arms' built-in Edit could change; verification refuses any change.

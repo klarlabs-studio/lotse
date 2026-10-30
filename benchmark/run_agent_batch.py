@@ -115,6 +115,8 @@ def main():
     prereg = agent_preregistration()
     batch_id = args.batch or list(prereg["batches"])[-1]
     batch = prereg["batches"][batch_id]
+    for arm, binary in batch.get("backend_binaries", {}).items():  # Batch t12: each graf arm's frozen build.
+        os.environ[f"GRAF_BINARY_{arm.upper()}"] = binary
     if not args.dry_run:
         if batch.get("solver_binary"):
             use_frozen_solver(batch)
