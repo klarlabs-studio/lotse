@@ -1,5 +1,5 @@
 {
-  "version": 126,
+  "version": 127,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1672,6 +1672,14 @@
       "graphify_comparison": "Graphify 0.9.97 (`graphify query`, the command its installed CLAUDE.md section points agents to) on the same primary queries in the same workspaces after `graphify update .`; shared metric: code-file hint recall (a faulted path named anywhere in its output) and output tokens (cl100k). Graphify output is navigation hints, not source; source-anchor measures are not attributed to it",
       "rule": "a candidate passes the screen only if, on the primary queries, its hit rate exceeds the baseline's by at least 10 points with one-sided exact McNemar p < 0.05 on paired calls, its median context_tokens is at most 1.10 x the baseline's, and it loses at most 5% of the baseline's hits. Every call is reported. Secondary queries are reported, not gated",
       "next_if_passed": "a fresh-task batch (new repositories, catalog protocol as t11 or t10) freezing graf_installed with the candidate against builtin and graphify_installed, budget agreed with the operator first"
+    },
+    "triage_path_screen_v127": {
+      "recorded": "2026-10-30, after the v126 screen passed with 15 listed files (results/triage-replay-triage15.json: 157 of 190) and before any further candidate was built or replayed",
+      "target": "the 33 primary calls the 15-file triage still misses, mostly files identified by their path (locale, language or rule folders, __init__/index files) rather than their code",
+      "baseline": ".research/bin/graf-triage15 (sha256 a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a)",
+      "queries_and_metric": "as v126 (benchmark/triage_replay.py, same 190 primary and 95 secondary calls, same hit definition)",
+      "rule": "a candidate passes only if, on the primary calls against the baseline, it gains more hits than it loses with one-sided exact McNemar p < 0.05, loses at most 5% of the baseline's hits, and its median context_tokens is at most 1.10 x the baseline's. Every candidate tried is reported with its result, including failures; the count of candidates is reported because they share these development calls",
+      "status": "development only, as v126; a passing candidate replaces graf-triage15 as the candidate for a fresh-task batch, which still needs an operator-agreed budget"
     }
   },
   "report_every_case": true,
@@ -2260,6 +2268,11 @@
       "version": 126,
       "date": "2026-10-30",
       "reason": "Preregister an offline development screen of triage misses on the t10 and t11 tasks, before any replay or graf change"
+    },
+    {
+      "version": 127,
+      "date": "2026-10-30",
+      "reason": "Preregister a follow-up offline screen of path-identified triage misses against the 15-file triage, before any further candidate"
     }
   ],
   "arms": {
