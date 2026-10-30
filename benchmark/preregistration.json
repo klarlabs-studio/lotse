@@ -1,5 +1,5 @@
 {
-  "version": 122,
+  "version": 123,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1586,6 +1586,12 @@
         "runners": "benchmark/mine_natural_tasks.py verify_command; benchmark/t11_f2p_candidates.py recomputes each candidate's runner and runtime under it",
         "check_candidates": ".research/history/t11-f2p-candidates.json, sha256 edf3ddadd90e2163800524e62e0b6521fe4c0dc696954a1c108da59c2da910d9: 108 judged bugs not checked for t10; 21 have no runtime (7 ansible integration-only, jquery 1, chartjs 12, highlightjs 1)",
         "rule": "the t10 fail-to-pass rule unchanged: base passes, fault fails without timeout, restored passes, each within 180 s; one check, report results/natural-tasks-t11-f2p.json. Any runtime repair is recorded in a new version before a re-check, as v117"
+      },
+      "exclusion_v123": {
+        "recorded": "2026-10-30, after the v122 check stopped on node-red-5248 (the 97th of 108 candidates) before testing it, and before any node-red outcome was seen",
+        "cause": "node-red keeps its own source under packages/node_modules. agent_trials.prepare skips every node_modules directory when copying a corpus, and both indexers skip node_modules too (graf src/index.rs SKIPPED_DIRS; Graphify detect.py), so neither retrieval arm can see node-red's code",
+        "rule": "repositories whose own source lies under a node_modules directory are excluded from t11; node-red's 6 candidates (node-red-5248, -5411, -4577, -4221, -4279, -3891) are dropped unchecked. Operator chose this on 2026-10-30 over a harness repair or an indexer change. Graf, the harness and the other repositories are unchanged",
+        "completion": "the v122 check's unreached highlightjs candidates (6) ran once under the v122 runtime with an unchanged checker (results/natural-tasks-t11-f2p-highlightjs.json); the 96 candidates checked before the stop keep their logged return codes. results/natural-tasks-t11-f2p.json combines both under the v122 rule"
       }
     }
   },
@@ -2155,6 +2161,11 @@
       "version": 122,
       "date": "2026-10-29",
       "reason": "Record t11 runtimes, runners and the fail-to-pass candidate list after the bug judgments and before any fail-to-pass check"
+    },
+    {
+      "version": 123,
+      "date": "2026-10-30",
+      "reason": "Exclude node-red from t11 (its source lies under node_modules, which the harness and both indexers skip), before any node-red outcome"
     }
   ],
   "arms": {
