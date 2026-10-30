@@ -1,5 +1,5 @@
 {
-  "version": 127,
+  "version": 128,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1680,6 +1680,225 @@
       "queries_and_metric": "as v126 (benchmark/triage_replay.py, same 190 primary and 95 secondary calls, same hit definition)",
       "rule": "a candidate passes only if, on the primary calls against the baseline, it gains more hits than it loses with one-sided exact McNemar p < 0.05, loses at most 5% of the baseline's hits, and its median context_tokens is at most 1.10 x the baseline's. Every candidate tried is reported with its result, including failures; the count of candidates is reported because they share these development calls",
       "status": "development only, as v126; a passing candidate replaces graf-triage15 as the candidate for a fresh-task batch, which still needs an operator-agreed budget"
+    },
+    "natural_tasks_t12": {
+      "catalog": "benchmark/natural-tasks-t12.json",
+      "purpose": "natural repair tasks for one batch t12 testing the two triage candidates that passed or nearly passed the offline screens (v126, v127) as installed tools, against builtin and graphify_installed; the operator agreed 4 arms and about 384 Haiku runs on 2026-10-30",
+      "workload": "issue-driven natural tasks under the natural_tasks_t10 protocol, without the pointer-free filter: t11 showed that the filter did not make the fault harder to reach (builtin read a faulted file after a median 2 tool calls) and it keeps only 17% of candidates. Claims cover natural issue-driven repair tasks in these repositories",
+      "repositories": {
+        "micro": {
+          "repository": "micro-editor/micro",
+          "commit": "e69c000696906cd90340c54ef39648befe773fff",
+          "language": "Go"
+        },
+        "gitleaks": {
+          "repository": "gitleaks/gitleaks",
+          "commit": "5f6ec56cfa6f8c67648d863582c7ae2f206d5c1c",
+          "language": "Go"
+        },
+        "lipgloss": {
+          "repository": "charmbracelet/lipgloss",
+          "commit": "19f011f1cc573e5d2bf9d7a9c4f14d429647759e",
+          "language": "Go"
+        },
+        "glance": {
+          "repository": "glanceapp/glance",
+          "commit": "8958aa827275cf81c01f3d5afe7180354a200cc6",
+          "language": "Go"
+        },
+        "ntfy": {
+          "repository": "binwiederhier/ntfy",
+          "commit": "5c2a1ddeefdaa77dd6e4b1b5dad551b197c3bab0",
+          "language": "Go"
+        },
+        "dive": {
+          "repository": "wagoodman/dive",
+          "commit": "e97febbeb6956b11f679f6d823762752185e3fef",
+          "language": "Go"
+        },
+        "go-zero": {
+          "repository": "zeromicro/go-zero",
+          "commit": "534c635995db0e0d1c2e54636ce388ed026b5203",
+          "language": "Go"
+        },
+        "beego": {
+          "repository": "beego/beego",
+          "commit": "939cfde380bb9f15844ad633b84f037f7da21584",
+          "language": "Go"
+        },
+        "prometheus": {
+          "repository": "prometheus/prometheus",
+          "commit": "9e28ec50ba751345a1f01a4fdc0d6887f533a37b",
+          "language": "Go"
+        },
+        "syncthing": {
+          "repository": "syncthing/syncthing",
+          "commit": "ed38528d7fba3dd6a42c9c9fc6780af432dc15d2",
+          "language": "Go"
+        },
+        "arrow": {
+          "repository": "arrow-py/arrow",
+          "commit": "2224255c4acc594d734cef0bbc83360452a67983",
+          "language": "Python"
+        },
+        "boltons": {
+          "repository": "mahmoud/boltons",
+          "commit": "d31d821d56c8f7756af9c30a864077f2e5855321",
+          "language": "Python"
+        },
+        "more-itertools": {
+          "repository": "more-itertools/more-itertools",
+          "commit": "08dca284ba5446a026afdc34067b658f9da989eb",
+          "language": "Python"
+        },
+        "attrs": {
+          "repository": "python-attrs/attrs",
+          "commit": "c8bb9bfaa2843e7844b5bb13bed4370b51feec4f",
+          "language": "Python"
+        },
+        "isort": {
+          "repository": "PyCQA/isort",
+          "commit": "1060ab47708b7a7c907f30e1be56bf6b2647bd0e",
+          "language": "Python"
+        },
+        "pendulum": {
+          "repository": "python-pendulum/pendulum",
+          "commit": "e06dacedc4cdea90fa1286b3965d180ab94cf251",
+          "language": "Python"
+        },
+        "hypothesis": {
+          "repository": "HypothesisWorks/hypothesis",
+          "commit": "255a880b2f626852a139934e7893479039db7d1e",
+          "language": "Python"
+        },
+        "sympy": {
+          "repository": "sympy/sympy",
+          "commit": "d83f721f2cf5f8259a9a697a922f46a7da71a176",
+          "language": "Python"
+        },
+        "textual": {
+          "repository": "Textualize/textual",
+          "commit": "5e5b7ef58b8c5572c13a3ff9027d756623661495",
+          "language": "Python"
+        },
+        "markitdown": {
+          "repository": "microsoft/markitdown",
+          "commit": "7482c092d9c0074a89803c9fdb63a969e7fe17fc",
+          "language": "Python"
+        },
+        "mathjs": {
+          "repository": "josdejong/mathjs",
+          "commit": "f8887ed3fa67897cae0f5f85bb3e39572df3927c",
+          "language": "JavaScript"
+        },
+        "nunjucks": {
+          "repository": "mozilla/nunjucks",
+          "commit": "a3e90a92a1e38217bd9631f4cf60b010780d41a7",
+          "language": "JavaScript"
+        },
+        "prism": {
+          "repository": "PrismJS/prism",
+          "commit": "7e435fdd21a64c8c9baad6aae39b1df12cb98727",
+          "language": "JavaScript"
+        },
+        "ejs": {
+          "repository": "mde/ejs",
+          "commit": "88bd19074205f01df65dc9f118fb1a0000c40ec8",
+          "language": "JavaScript"
+        },
+        "node-fetch": {
+          "repository": "node-fetch/node-fetch",
+          "commit": "8b3320d2a7c07bce4afc6b2bf6c3bbddda85b01f",
+          "language": "JavaScript"
+        },
+        "chalk": {
+          "repository": "chalk/chalk",
+          "commit": "72110019e147683f60e13fa0ff5c14a0c27cd9fe",
+          "language": "JavaScript"
+        },
+        "knex": {
+          "repository": "knex/knex",
+          "commit": "e25d54bcb707714a17f5a5744eba5c4246bb4d1d",
+          "language": "JavaScript"
+        },
+        "browserify": {
+          "repository": "browserify/browserify",
+          "commit": "cd60f059d7a8432f2c3acea7d4dfcb81b97e7a3d",
+          "language": "JavaScript"
+        },
+        "cyberchef": {
+          "repository": "gchq/CyberChef",
+          "commit": "b75398f1134fc59fd74d288f620aa1eecba77dc9",
+          "language": "JavaScript"
+        },
+        "svelte": {
+          "repository": "sveltejs/svelte",
+          "commit": "fe21fce019e7797a9eeb5066211ff42e4e7cca8d",
+          "language": "JavaScript"
+        }
+      },
+      "repository_choice": "never used by any graf benchmark, screen, corpus or agent batch (every 'repository' slug in benchmark/*.json and results/*.json, 125 slugs, checked 2026-10-30); in particular none of t10's or t11's, whose tasks tuned triage (v126, v127). GitHub main language Go, Python or JavaScript with that language as the source (repositories now mostly TypeScript, such as marked, zx, yargs and json-server, were skipped); over 5,000 stars (lower than t11's 11,000 because few Python and JavaScript libraries above it remain unused); not archived; lists, tutorials, applications that need services, GPUs or model weights, and projects whose tests run only in a browser (preact) were skipped. Default-branch heads resolved 2026-10-30T20:04Z-20:06Z, before any pull request was listed",
+      "repository_order": {
+        "Go": [
+          "micro",
+          "gitleaks",
+          "lipgloss",
+          "glance",
+          "ntfy",
+          "dive",
+          "go-zero",
+          "beego",
+          "prometheus",
+          "syncthing"
+        ],
+        "Python": [
+          "arrow",
+          "boltons",
+          "more-itertools",
+          "attrs",
+          "isort",
+          "pendulum",
+          "hypothesis",
+          "sympy",
+          "textual",
+          "markitdown"
+        ],
+        "JavaScript": [
+          "mathjs",
+          "nunjucks",
+          "prism",
+          "ejs",
+          "node-fetch",
+          "chalk",
+          "knex",
+          "browserify",
+          "cyberchef",
+          "svelte"
+        ]
+      },
+      "order_rationale": "within each language, by expected local test runnability (small pure libraries first, projects with builds or snapshot fixtures last)",
+      "test_files": {
+        "Go": "*_test.go and testdata/",
+        "Python": "tests/ (arrow, boltons, more-itertools, attrs, isort, pendulum, textual); hypothesis/tests/ (hypothesis); any tests/ folder (sympy); packages/*/tests/ (markitdown)",
+        "JavaScript": "test/ (mathjs, ejs, node-fetch, chalk, knex, browserify); tests/ (nunjucks, prism, cyberchef); packages/svelte/tests/ (svelte)"
+      },
+      "source_files": "each language's own suffix: .go, .py, .js; cyberchef also .mjs (its operations are ES modules)",
+      "selection": "the natural_tasks_t10 protocol unchanged (automatic criteria, newest merge first, issue text only, hidden tests, size bound 10 files and 400 lines, unique revert, fail-to-pass within 180 s with timeouts rejected, duplicate issues keep the newest merge, binary changes rejected). Bug judgment from the issue title and the first 900 characters of its body, of the first 14 automatic-criteria candidates per repository, newest merge first, before any fail-to-pass check. Fill rule as v95: per language, repositories in repository_order, at most 8 tasks each, until 16 per language",
+      "runtime": "recorded in a later version after the bug judgments and before any fail-to-pass check, as v116 and v122",
+      "minimum_tasks": 36,
+      "if_fewer": "if fewer than 36 tasks qualify, no batch runs on a loosened set; any added repository is recorded in a new version before its pull requests are listed",
+      "batch_plan": {
+        "arms": {
+          "builtin": "as t10/t11",
+          "graphify_installed": "as t10/t11",
+          "graf_installed": "as t10/t11 with .research/bin/graf-triage15 (sha256 a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a, research/agent-headroom at 20d32cb: triage lists 15 files)",
+          "graf_installed_codefiles": "as graf_installed with .research/bin/graf-codefiles (sha256 d58ecc8af45b3b77e3a391478e846b6b947a1685f54dc69c1b553d81453d068c: 15 files, code files only)"
+        },
+        "rule": "the t10/t11 rule (cost superiority by one-sided paired sign flip on per-task mean cost_usd, success non-inferiority within 0.10, intersection-union against builtin and graphify_installed) for each graf candidate; the two candidates' cost tests are Holm-corrected at family alpha 0.05",
+        "secondary_declared": "ranking: per task, the share of first triage calls whose first listed file is a faulted file, graf_installed_codefiles against graf_installed, one-sided paired sign flip at alpha 0.05; reported, not a promotion gate. Also the v126 hit measure per arm, turns, tokens and the headroom attribution",
+        "budget": "operator agreed on 2026-10-30: 4 arms and about 384 Haiku attempts (48 tasks x 4 arms x 2 attempts, $0.50 cap per attempt); a smaller catalog shrinks the runs",
+        "freeze": "the batch is frozen in its own version after the catalog freeze and a no-model dry run, with check_latest.py, before any model call"
+      }
     }
   },
   "report_every_case": true,
@@ -2273,6 +2492,11 @@
       "version": 127,
       "date": "2026-10-30",
       "reason": "Preregister a follow-up offline screen of path-identified triage misses against the 15-file triage, before any further candidate"
+    },
+    {
+      "version": 128,
+      "date": "2026-10-30",
+      "reason": "Freeze the t12 catalog protocol, 30 new repositories with their pins, two graf candidates and the agreed 4-arm budget, before listing any of their pull requests"
     }
   ],
   "arms": {
