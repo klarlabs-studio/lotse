@@ -53,10 +53,20 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                                                   "golangci-lint", "hugo", "d2", "traefik")},
                    **{repo: (".py",) for repo in ("yt-dlp", "scrapy", "fastapi", "ansible", "mitmproxy", "searxng",
                                                   "aider", "thefuck")},
-                   **{repo: (".js",) for repo in ("validatorjs", "node-red", "semantic-release", "highlightjs", "pm2")}}
+                   **{repo: (".js",) for repo in ("validatorjs", "node-red", "semantic-release", "highlightjs", "pm2")},
+                   # natural_tasks_t12 (v128).
+                   **{repo: (".go",) for repo in ("micro", "gitleaks", "lipgloss", "glance", "ntfy", "dive", "go-zero",
+                                                  "beego", "prometheus", "syncthing")},
+                   **{repo: (".py",) for repo in ("arrow", "boltons", "more-itertools", "attrs", "isort", "pendulum",
+                                                  "hypothesis", "sympy", "textual", "markitdown")},
+                   **{repo: (".js",) for repo in ("mathjs", "nunjucks", "prism", "ejs", "node-fetch", "chalk", "knex",
+                                                  "browserify", "svelte")},
+                   "cyberchef": (".mjs", ".js")}
 T10_TESTS = {"pre-commit": ("tests/", "testing/"), "tornado": ("tornado/test/",), "locust": ("locust/test/",),
              "stylelint": ("system-tests/",), "less": ("packages/test-data/",),  # natural_tasks_t10 test_files (v113).
-             **{repo: ("test/",) for repo in ("yt-dlp", "ansible", "mitmproxy")}}  # natural_tasks_t11 (v121).
+             **{repo: ("test/",) for repo in ("yt-dlp", "ansible", "mitmproxy")},  # natural_tasks_t11 (v121).
+             "hypothesis": ("hypothesis/tests/",), "svelte": ("packages/svelte/tests/",),  # natural_tasks_t12 (v128).
+             **{repo: ("tests/",) for repo in ("nunjucks", "prism", "cyberchef")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
@@ -94,7 +104,8 @@ def classify(repo, path):
         return "test"
     if suffix == (".go",) and (name.endswith("_test.go") or "/testdata/" in f"/{path}"):
         return "test"
-    if path.startswith(T10_TESTS.get(repo, ())) or repo == "networkx" and "tests" in Path(path).parts[:-1] \
+    if path.startswith(T10_TESTS.get(repo, ())) or repo in ("networkx", "sympy") and "tests" in Path(path).parts[:-1] \
+            or repo == "markitdown" and len(Path(path).parts) > 3 and Path(path).parts[2] == "tests" \
             or repo == "stylelint" and "__tests__" in Path(path).parts[:-1] \
             or repo == "less" and len(Path(path).parts) > 3 and Path(path).parts[0] == "packages" and Path(path).parts[2] == "test":
         return "test"
@@ -319,6 +330,7 @@ def pinned(repo):
     for spec in (prereg["agent_trials"]["natural_tasks_t4"], prereg["agent_trials"]["natural_tasks_t7"],
                  prereg["agent_trials"]["natural_tasks_t8"], prereg["agent_trials"]["natural_tasks_t9"],
                  prereg["agent_trials"]["natural_tasks_t10"], prereg["agent_trials"]["natural_tasks_t11"],
+                 prereg["agent_trials"]["natural_tasks_t12"],
                  screen["confirmation"], screen["file_screen"],
                  screen["typescript"], screen["file_code_screen"]):
         if repo in spec["repositories"]:

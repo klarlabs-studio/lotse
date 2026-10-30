@@ -78,6 +78,24 @@ class MinerTests(unittest.TestCase):
         self.assertEqual(classify("validatorjs", "src/lib/isEmail.js"), "source")
         self.assertEqual(classify("traefik", "webui/src/App.tsx"), "other")
 
+    def test_natural_tasks_t12_test_files(self):
+        self.assertEqual(classify("micro", "internal/buffer/buffer_test.go"), "test")
+        self.assertEqual(classify("arrow", "tests/test_arrow.py"), "test")
+        self.assertEqual(classify("arrow", "arrow/arrow.py"), "source")
+        self.assertEqual(classify("hypothesis", "hypothesis/tests/cover/test_core.py"), "test")
+        self.assertEqual(classify("hypothesis", "hypothesis/src/hypothesis/core.py"), "source")
+        self.assertEqual(classify("sympy", "sympy/core/tests/test_basic.py"), "test")
+        self.assertEqual(classify("sympy", "sympy/core/basic.py"), "source")
+        self.assertEqual(classify("markitdown", "packages/markitdown/tests/test_module.py"), "test")
+        self.assertEqual(classify("markitdown", "packages/markitdown/src/markitdown/_markitdown.py"), "source")
+        self.assertEqual(classify("mathjs", "test/unit-tests/function/arithmetic/add.test.js"), "test")
+        self.assertEqual(classify("nunjucks", "tests/compiler.js"), "test")
+        self.assertEqual(classify("nunjucks", "nunjucks/src/compiler.js"), "source")
+        self.assertEqual(classify("cyberchef", "src/core/operations/ToBase64.mjs"), "source")
+        self.assertEqual(classify("cyberchef", "tests/operations/tests/Base64.mjs"), "test")
+        self.assertEqual(classify("svelte", "packages/svelte/tests/runtime-runes/samples/a/main.svelte"), "test")
+        self.assertEqual(classify("svelte", "packages/svelte/src/compiler/index.js"), "source")
+
     def test_natural_tasks_t11_runners(self):
         self.assertEqual(verify_command("ansible", ["test/units/modules/test_copy.py", "test/integration/targets/copy/tasks/main.yml"]),
                          ["env", "PYTHONPATH=lib", "{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider",
