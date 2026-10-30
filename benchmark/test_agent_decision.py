@@ -116,6 +116,21 @@ class AgentDecisionTests(unittest.TestCase):
         self.assertAlmostEqual(result["comparisons"]["graf_floor"]["versus"]["graphify"]["success"]["alpha"],
                                RULE["success"]["alpha"] / 2)
 
+    def test_holm_steps_down_over_candidates_cost_tests(self):
+        self.assertEqual(agent_decision.holm({"a": 0.001, "b": 0.04}, 0.05),
+                         {"a": (0.025, True), "b": (0.05, True)})
+        self.assertEqual(agent_decision.holm({"a": 0.04, "b": 0.03}, 0.05),
+                         {"b": (0.025, False), "a": (0.05, False)})
+        two = {"arms": ["graf_floor", "search_only", "graphify"], "candidates": ["graf_floor", "search_only"],
+               "controls": [], "comparators": ["graphify"], "multiplicity": "holm"}
+        result = evaluate(batch(costs={"graf_floor": 0.002, "search_only": 0.003, "graphify": 0.004}),
+                          TASKS, 5, RULE, two)
+        alphas = sorted(result["comparisons"][a]["versus"]["graphify"]["primary"]["alpha"] for a in two["candidates"])
+        self.assertEqual(alphas, [RULE["primary"]["alpha"] / 2, RULE["primary"]["alpha"]])
+        self.assertAlmostEqual(result["comparisons"]["search_only"]["versus"]["graphify"]["success"]["alpha"],
+                               RULE["success"]["alpha"] / 2)
+        self.assertTrue(result["passed"])
+
     def test_a_solver_timeout_counts_at_its_least_favorable_cost_bound(self):
         def timed_out(row):
             return {**row, "passed": False, "cost_bounds_usd": [0.001, 0.5],

@@ -6,7 +6,8 @@ Reads every .research/trials/ID-*/summary.json of one preregistered batch, pairs
 each candidate and control with the comparator by task, and writes
 results/agent-decision-ID.json. A candidate passes only if it costs significantly
 less across all attempts and its verifier success is non-inferior within the
-margin; alphas are split across tested arms. Controls are reported but never pass
+margin; alphas are split across tested arms, or, for a batch with multiplicity
+"holm" (t12), the candidates' cost tests are Holm-corrected. Controls are reported but never pass
 a batch. Missing trials or incomplete usage fail closed.
 Exits nonzero unless the rule passes.
 """
@@ -121,6 +122,27 @@ def _compare(per_task, arm, comparator, rule, family):
                           "token_reduction_p": sign_flip_p(tokens) if tokens else None}}
 
 
+def holm(p_values, alpha):
+    """Holm's step-down: {arm: (threshold, passed)}; once a test fails, every later one fails."""
+    result, rejecting = {}, True
+    for rank, (arm, p) in enumerate(sorted(p_values.items(), key=lambda item: (item[1], item[0]))):
+        threshold = alpha / (len(p_values) - rank)
+        rejecting = rejecting and p <= threshold
+        result[arm] = (threshold, rejecting)
+    return result
+
+
+def _holm_cost(comparisons, candidates, alpha):
+    """Batch t12 (v128): each candidate's cost p is its largest against any comparator (intersection-union)."""
+    steps = holm({arm: max(v["primary"]["p"] for v in comparisons[arm]["versus"].values()) for arm in candidates},
+                 alpha)
+    for arm, (threshold, rejected) in steps.items():
+        for test in comparisons[arm]["versus"].values():
+            test["primary"].update(alpha=threshold, passed=rejected, correction="holm")
+            test["passed"] = test["primary"]["passed"] and test["success"]["passed"]
+        comparisons[arm]["passed"] = all(v["passed"] for v in comparisons[arm]["versus"].values())
+
+
 def evaluate(summaries, task_ids, trials, rule, batch):
     """Compare every candidate and control with each comparator; only a candidate can pass, and only
     by passing against every comparator (intersection-union, so comparators do not split alpha)."""
@@ -141,6 +163,8 @@ def evaluate(summaries, task_ids, trials, rule, batch):
         versus = {comp: _compare(per_task, arm, comp, rule, len(tested)) for comp in comparators}
         comparisons[arm] = {"role": "candidate" if arm in batch["candidates"] else "control",
                             "passed": all(v["passed"] for v in versus.values()), "versus": versus}
+    if batch.get("multiplicity") == "holm":
+        _holm_cost(comparisons, batch["candidates"], rule["primary"]["alpha"])
     if not any(comparisons[arm]["passed"] for arm in batch["candidates"]):
         reasons.append("no candidate passed both the cost and success tests")
     return {"passed": not reasons, "reasons": reasons, "comparators": comparators,
