@@ -1,5 +1,5 @@
 {
-  "version": 129,
+  "version": 130,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1909,6 +1909,11 @@
         "runners": "benchmark/mine_natural_tasks.py verify_command (T12_RUNNERS); benchmark/t12_f2p_candidates.py recomputes each candidate's runner and runtime under it",
         "check_candidates": ".research/history/t12-f2p-candidates.json, sha256 87a8db581295f8b394b8e9fcdcb6baa368da6bc337c13d8364b2c8f4f86b907f: 162 of the 184 judged bugs; 22 have no runner (hypothesis 12, node-fetch 4, knex 3 integration-only, mathjs 1 TypeScript types test, cyberchef 1 browser test, svelte 1 runtime-browser)",
         "rule": "the t10 fail-to-pass rule unchanged: base passes, fault fails without timeout, restored passes, each within 180 s; one check, report results/natural-tasks-t12-f2p.json. Any runtime repair is recorded in a new version before a re-check, as v117"
+      },
+      "check_repair_v130": {
+        "recorded": "2026-10-30, after the v129 check stopped at beego-4396 and before any re-check",
+        "cause": "verify restores hidden tests from the pinned snapshot; beego-4396's adapter/context/param/conv_test.go is absent at the pin (removed upstream after the fix), so the check raised FileNotFoundError before its base run. 28 candidates had completed all three phases",
+        "rule": "a candidate with any hidden test file absent at the pin cannot be checked and is rejected: beego-4396, markitdown-1982, markitdown-2188, markitdown-2411, markitdown-2449. The 28 completed candidates keep their logged return codes (.research/t12-f2p.log); the remaining 129 are checked once under the unchanged v129 runners and rule (.research/history/t12-f2p-candidates-rest.json, sha256 c9bc013466738d2383d858ff829ed11f944ae527f82f5f4c8f200c8b6219819a); benchmark/t12_f2p_report.py combines both into results/natural-tasks-t12-f2p.json"
       }
     }
   },
@@ -2513,6 +2518,11 @@
       "version": 129,
       "date": "2026-10-30",
       "reason": "natural_tasks_t12.runtime_v129: t12 runtimes, runners and the 162 fail-to-pass check candidates, recorded after the bug judgments and before any fail-to-pass check"
+    },
+    {
+      "version": 130,
+      "date": "2026-10-30",
+      "reason": "natural_tasks_t12.check_repair_v130: reject candidates whose hidden tests are absent at the pin; resume the fail-to-pass check for the unchecked rest"
     }
   ],
   "arms": {
