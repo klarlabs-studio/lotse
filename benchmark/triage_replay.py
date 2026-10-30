@@ -131,7 +131,7 @@ def mcnemar_one_sided(gained, lost):
     return sum(comb(n, k) for k in range(gained, n + 1)) / 2 ** n if n else 1.0
 
 
-def compare(baseline, candidate):
+def compare(baseline, candidate, rule="v126"):
     load = lambda label: json.loads((BASE / f"results/triage-replay-{label}.json").read_text())["rows"]
     pairs = list(zip(load(baseline), load(candidate)))
     assert all((b["task"], b["attempt"], b["kind"]) == (c["task"], c["attempt"], c["kind"]) for b, c in pairs)
@@ -145,8 +145,10 @@ def compare(baseline, candidate):
     p = mcnemar_one_sided(gained, lost)
     verdict = {"baseline_hits": base_hits, "candidate_hits": cand_hits, "calls": n, "gained": gained, "lost": lost,
                "p": p, "median_tokens": [base_tokens, cand_tokens],
-               "passed": (cand_hits - base_hits) / n >= 0.10 and p < 0.05 and cand_tokens <= 1.10 * base_tokens
-               and lost <= 0.05 * base_hits}
+               "rule": rule,
+               # v126 asks for 10 more points of hits; v127 (against the 15-file triage) for more gains than losses.
+               "passed": ((cand_hits - base_hits) / n >= 0.10 if rule == "v126" else gained > lost)
+               and p < 0.05 and cand_tokens <= 1.10 * base_tokens and lost <= 0.05 * base_hits}
     print(json.dumps(verdict))
     return verdict
 
@@ -157,9 +159,10 @@ if __name__ == "__main__":
     parser.add_argument("--label")
     parser.add_argument("--graphify", action="store_true")
     parser.add_argument("--compare", nargs=2)
+    parser.add_argument("--rule", choices=("v126", "v127"), default="v126")
     parser.add_argument("--index-arg", action="append", default=[], help="an experimental index flag, repeatable")
     args = parser.parse_args()
     if args.compare:
-        compare(*args.compare)
+        compare(*args.compare, args.rule)
     else:
         replay(args.graf.resolve(), args.label, args.graphify, args.index_arg)

@@ -18,6 +18,13 @@ Three preregistered batches with the same solver and spend cap. Batches `t` and 
 - **What it does not show.** That agents read fewer files or spend less. A longer list can also send agents to more files. Only a batch on fresh tasks, frozen with an agreed budget, can show that; until then the change stays experimental.
 - **Results.** [triage-replay-baseline.json](../results/triage-replay-baseline.json), [triage-replay-pathweight3.json](../results/triage-replay-pathweight3.json), [triage-replay-triage15.json](../results/triage-replay-triage15.json); diagnostic builds' full rankings in [triage-replay-diag-floor.json](../results/triage-replay-diag-floor.json) and [triage-replay-diag-full.json](../results/triage-replay-diag-full.json) (scratch builds, not candidates).
 
+## Offline follow-up: code files only in triage's list (v127); fails
+
+**Outcome: listing only code files in triage's 15 does not pass v127 against the 15-file triage.** It names a faulted file in 157 of 190 calls, the same count: 5 gained (mongoose 4, stylelint 1), 5 lost (faker-2399 twice, lazygit 3, one of whose faults sits under an integration-test folder that the code-only filter drops). Median tokens 1,355 against 1,367. One candidate has been tried under v127. The source change is reverted; `graf-triage15` stays the candidate. Results are in [triage-replay-codefiles.json](../results/triage-replay-codefiles.json) (binary `.research/bin/graf-codefiles`, sha256 d58ecc8a...).
+
+- **Not gated, seen after the fact.** It ranks faulted files much higher: first in 100 calls against 62, in the top 3 in 128 against 113 (file MRR 0.613 against 0.483), and it hits 75 of 95 verbatim issues against 68. Test files, READMEs and changelogs had taken list places ahead of the code. Because this was seen on the development calls after the rule was frozen, it is a hypothesis for a preregistered measure on fresh tasks, not a result.
+- **Still missed by both.** 18 tasks, among them all 5 faker locale tasks, where the folder (`bank/es_ES`) is the only distinguishing signal, and highlightjs-4226 and -4261.
+
 ## Batch t11 (v125): graf or Graphify installed, 47 pointer-free natural tasks; fails
 
 **Outcome: `graf_installed` fails the preregistered rule.** It is not significantly cheaper than either comparator:
