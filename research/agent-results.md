@@ -2,6 +2,87 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t11 (v125): graf or Graphify installed, 47 pointer-free natural tasks; fails
+
+**Outcome: `graf_installed` fails the preregistered rule.** It is not significantly cheaper than either comparator:
+- against `builtin`: it cost more on average, $0.0017 per task (one-sided paired sign flip p = 0.743);
+- against `graphify_installed`: $0.0005 cheaper per task, p = 0.475.
+
+Success is non-inferior against both (margin 0.10; p = 0.022 and 0.013). Both comparisons had to pass, so graf stays experimental. Every attempt completed: 282 of 282, with usage complete, no infrastructure errors, no reruns and no protected-file edits. The decision is in [agent-decision-t11.json](../results/agent-decision-t11.json).
+
+| Arm | Passed | Total cost | Median per attempt | Tokens |
+|---|---|---|---|---|
+| `builtin` | 76 / 94 | $1.294 | $0.0107 | 33.7 M |
+| `graphify_installed` | 74 / 94 | $1.499 | $0.0147 | 43.2 M |
+| `graf_installed` | 73 / 94 | $1.451 | $0.0113 | 37.6 M |
+
+- **Workload.** The 47 tasks of the v124 catalog: 16 Go, 15 Python (the pool ran out), 16 JavaScript, from 15 repositories graf was never tuned on. Every issue is pointer-free under v120: it names no faulted file and shares no code-shaped identifier with the fault. node-red was excluded before any of its outcomes (v123): its source lies under `node_modules`, which the harness and both indexers skip.
+- **Setup.** As t10, except Claude Code 2.1.314 (the latest on 2026-10-30). Graphify 0.9.97; graf `.research/bin/graf-t10` (main `7a3b88a`, unchanged since). `claude-haiku-5-5`, $0.50 and 1,200 s per attempt, two attempts per task and arm.
+- **Against `builtin`:** graf was cheaper on 19 of 47 tasks. The largest gap is `mongoose-11913`, where graf spent $0.236 over two attempts (one pass) against `builtin`'s $0.074 (none). Tokens: graf used 41,000 more per task (p = 0.819, secondary, not gated).
+- **Against `graphify_installed`:** graf was cheaper on 35 of 47 tasks and used 59,000 fewer tokens per task (p = 0.088, secondary, not gated), but the cost difference is not significant.
+- **Every agent used the installed tool.** Every graf attempt called `triage` (94), and graf attempts also called `outline` 68, `units` 49 and `search` 48 times. They still made 362 `Read` and 313 `Grep` calls, against 434 and 481 under `builtin`. Every Graphify attempt ran `graphify` through Bash (542 calls). `builtin` attempts tried Bash 19 times; it is not offered to that arm.
+- **Isolation.** Two `graphify_installed` attempts read Claude Code's saved oversized outputs outside the workspace (`lazygit-3721` attempt 2, 4 answered; `mongoose-16072` attempt 2, 3 answered). Under the isolation rule both fail; both are counted as failures above. All other outside requests were refused (7 `builtin`, 4 `graphify_installed`, 5 `graf_installed`).
+
+### Post-hoc diagnostics (exploratory, no model calls)
+
+- **Pointer-free issues did not make locating the fault hard.** Under `builtin` the agent read a faulted file after a median of 2 tool calls, the same as Graphify (3) and graf (2) ([t11-localization-diagnostic.json](../results/t11-localization-diagnostic.json), `benchmark/t11_localization_diagnostic.py`). Removing literal pointers left the conceptual ones, as v120's limit warned.
+- **graf's triage named a faulted file in 59 of 94 attempts.** When it did, the attempt cost $0.0144 on average and passed 52 times, and the agent read a faulted file after a median of 1 call. When it did not (35), the attempt cost $0.0171, passed 21 times, and took a median of 5 calls to reach the faulted file.
+- **Search and read payloads are 15-16% of cost in every arm** ([agent-headroom-diagnostic.json](../results/agent-headroom-diagnostic.json)): `builtin` 16.0%, Graphify 16.2%, graf 15.4%. Output (29-35%) and conversation history (29-32%) dominate. Even a retrieval tool that removed search payloads entirely could not save more than about a sixth of cost on this workload, which is less than the variance between attempts.
+
+### Per task
+
+Passes out of 2 and mean cost per attempt.
+
+| Task | builtin | graphify_installed | graf_installed |
+|---|---|---|---|
+| `ansible-80128` | 2/2, $0.0060 | 2/2, $0.0090 | 2/2, $0.0071 |
+| `caddy-5836` | 2/2, $0.0083 | 2/2, $0.0098 | 2/2, $0.0077 |
+| `caddy-6392` | 1/2, $0.0135 | 1/2, $0.0127 | 0/2, $0.0095 |
+| `caddy-7396` | 2/2, $0.0287 | 2/2, $0.0214 | 2/2, $0.0210 |
+| `caddy-7596` | 2/2, $0.0099 | 2/2, $0.0093 | 2/2, $0.0091 |
+| `caddy-7724` | 2/2, $0.0069 | 2/2, $0.0073 | 2/2, $0.0062 |
+| `caddy-7741` | 2/2, $0.0121 | 2/2, $0.0174 | 2/2, $0.0109 |
+| `caddy-8127` | 2/2, $0.0082 | 2/2, $0.0093 | 2/2, $0.0066 |
+| `excelize-1414` | 2/2, $0.0156 | 2/2, $0.0232 | 2/2, $0.0181 |
+| `excelize-2126` | 2/2, $0.0079 | 2/2, $0.0069 | 2/2, $0.0212 |
+| `excelize-2426` | 2/2, $0.0037 | 2/2, $0.0053 | 2/2, $0.0063 |
+| `faker-2161` | 2/2, $0.0188 | 2/2, $0.0170 | 2/2, $0.0181 |
+| `faker-2315` | 2/2, $0.0192 | 2/2, $0.0230 | 2/2, $0.0138 |
+| `gh-cli-11097` | 2/2, $0.0246 | 2/2, $0.0208 | 2/2, $0.0148 |
+| `gh-cli-12683` | 2/2, $0.0093 | 2/2, $0.0095 | 2/2, $0.0077 |
+| `gh-cli-9132` | 0/2, $0.0439 | 2/2, $0.0252 | 0/2, $0.0241 |
+| `highlightjs-4196` | 0/2, $0.0118 | 0/2, $0.0180 | 0/2, $0.0118 |
+| `highlightjs-4226` | 2/2, $0.0118 | 0/2, $0.0221 | 1/2, $0.0203 |
+| `highlightjs-4231` | 2/2, $0.0066 | 2/2, $0.0074 | 1/2, $0.0078 |
+| `highlightjs-4261` | 0/2, $0.0572 | 0/2, $0.0261 | 0/2, $0.0205 |
+| `lazygit-3444` | 2/2, $0.0103 | 2/2, $0.0168 | 2/2, $0.0114 |
+| `lazygit-3721` | 2/2, $0.0205 | 1/2, $0.0310 | 2/2, $0.0382 |
+| `lazygit-4321` | 2/2, $0.0153 | 1/2, $0.0248 | 1/2, $0.0169 |
+| `locust-3438` | 2/2, $0.0021 | 2/2, $0.0033 | 2/2, $0.0025 |
+| `mitmproxy-5891` | 0/2, $0.0089 | 0/2, $0.0162 | 0/2, $0.0103 |
+| `mongoose-11913` | 0/2, $0.0372 | 0/2, $0.0305 | 1/2, $0.1178 |
+| `mongoose-12739` | 2/2, $0.0107 | 2/2, $0.0120 | 2/2, $0.0131 |
+| `mongoose-13760` | 0/2, $0.0155 | 0/2, $0.0211 | 0/2, $0.0197 |
+| `mongoose-15120` | 2/2, $0.0332 | 2/2, $0.0423 | 1/2, $0.0300 |
+| `mongoose-15192` | 1/2, $0.0053 | 2/2, $0.0059 | 2/2, $0.0069 |
+| `mongoose-15494` | 1/2, $0.0226 | 1/2, $0.0308 | 1/2, $0.0315 |
+| `mongoose-15653` | 2/2, $0.0118 | 2/2, $0.0197 | 2/2, $0.0232 |
+| `mongoose-16072` | 1/2, $0.0204 | 1/2, $0.0288 | 2/2, $0.0137 |
+| `networkx-6336` | 2/2, $0.0056 | 2/2, $0.0069 | 2/2, $0.0063 |
+| `networkx-6920` | 2/2, $0.0176 | 2/2, $0.0216 | 2/2, $0.0153 |
+| `networkx-6921` | 2/2, $0.0091 | 2/2, $0.0102 | 2/2, $0.0096 |
+| `networkx-7720` | 2/2, $0.0034 | 2/2, $0.0041 | 2/2, $0.0066 |
+| `networkx-8188` | 2/2, $0.0129 | 1/2, $0.0228 | 2/2, $0.0178 |
+| `pre-commit-2002` | 2/2, $0.0056 | 2/2, $0.0098 | 2/2, $0.0108 |
+| `scrapy-7042` | 2/2, $0.0047 | 2/2, $0.0048 | 2/2, $0.0043 |
+| `scrapy-7604` | 2/2, $0.0031 | 2/2, $0.0036 | 2/2, $0.0030 |
+| `stylelint-8134` | 2/2, $0.0023 | 2/2, $0.0038 | 2/2, $0.0028 |
+| `stylelint-8818` | 2/2, $0.0076 | 2/2, $0.0109 | 2/2, $0.0096 |
+| `stylelint-8983` | 2/2, $0.0034 | 2/2, $0.0052 | 2/2, $0.0047 |
+| `stylelint-9008` | 2/2, $0.0030 | 2/2, $0.0046 | 2/2, $0.0032 |
+| `yt-dlp-15017` | 2/2, $0.0155 | 2/2, $0.0311 | 1/2, $0.0123 |
+| `yt-dlp-7544` | 0/2, $0.0155 | 0/2, $0.0262 | 0/2, $0.0214 |
+
 ## Feasibility screen: pointer-free tasks (v120); passes
 
 **Outcome: there are enough natural tasks whose issue does not point at the code to build a separate workload, so a batch on it can be proposed.** v120 froze the definition and the rule before any count. Of the 1,392 automatic-criteria candidates that no catalog has used, 240 are pointer-free (17%). The rule needed 90, from at least 6 repositories in each of Go, Python and JavaScript; there are 42 from 13 Go repositories, 59 from 16 Python repositories and 108 from 15 JavaScript repositories, plus 31 TypeScript. t10's repositories alone give 91. No solver ran and no test ran. Rows are in [pointer-free-screen.json](../results/pointer-free-screen.json), and the script is `benchmark/pointer_free_screen.py`.

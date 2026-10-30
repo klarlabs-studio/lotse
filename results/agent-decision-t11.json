@@ -1,0 +1,1670 @@
+{
+  "preregistration_version": 125,
+  "batch": "t11",
+  "attempts_per_task_and_arm": 2,
+  "excluded_later_attempts": 0,
+  "passed": false,
+  "reasons": [
+    "no candidate passed both the cost and success tests"
+  ],
+  "comparators": [
+    "builtin",
+    "graphify_installed"
+  ],
+  "comparisons": {
+    "graf_installed": {
+      "role": "candidate",
+      "passed": false,
+      "versus": {
+        "builtin": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": -0.0016627976595744685,
+            "p": 0.7429125708742913,
+            "alpha": 0.05,
+            "passed": false
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": -0.031914893617021274,
+            "margin": 0.1,
+            "p": 0.021979780202197978,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": false,
+          "cheaper_tasks": 19,
+          "secondary": {
+            "mean_token_reduction": -41451.28723404255,
+            "token_reduction_p": 0.8192718072819272
+          }
+        },
+        "graphify_installed": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": 0.0005105507446808512,
+            "p": 0.4752752472475275,
+            "alpha": 0.05,
+            "passed": false
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": -0.010638297872340425,
+            "margin": 0.1,
+            "p": 0.013309866901330987,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": false,
+          "cheaper_tasks": 35,
+          "secondary": {
+            "mean_token_reduction": 59247.51063829787,
+            "token_reduction_p": 0.08786912130878691
+          }
+        }
+      }
+    }
+  },
+  "solver_timeouts_least_favorable": [],
+  "arms": {
+    "builtin": {
+      "attempts": 94,
+      "passes": 76,
+      "success_rate": 0.8085106382978723,
+      "success_wilson95": [
+        0.7174971706384233,
+        0.8752985695221128
+      ],
+      "pass_hat_k": [
+        0.8085106382978723,
+        0.7659574468085106
+      ],
+      "total_cost_usd": 1.2943259200000001,
+      "total_tokens": 33684869.0
+    },
+    "graphify_installed": {
+      "attempts": 94,
+      "passes": 74,
+      "success_rate": 0.7872340425531915,
+      "success_wilson95": [
+        0.6940820730069563,
+        0.8578312023149222
+      ],
+      "pass_hat_k": [
+        0.7872340425531915,
+        0.723404255319149
+      ],
+      "total_cost_usd": 1.49862067,
+      "total_tokens": 43150556.0
+    },
+    "graf_installed": {
+      "attempts": 94,
+      "passes": 73,
+      "success_rate": 0.776595744680851,
+      "success_wilson95": [
+        0.6824912052295028,
+        0.8489808376730469
+      ],
+      "pass_hat_k": [
+        0.776595744680851,
+        0.7021276595744681
+      ],
+      "total_cost_usd": 1.4506289,
+      "total_tokens": 37581290.0
+    }
+  },
+  "tasks": [
+    {
+      "task": "ansible-80128",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006021865,
+        "mean_tokens": 122549.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00898573,
+        "mean_tokens": 221030.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007117905,
+        "mean_tokens": 169646.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "caddy-5836",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00826984,
+        "mean_tokens": 262860.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009770275000000002,
+        "mean_tokens": 289925.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007670215000000001,
+        "mean_tokens": 258313.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "caddy-6392",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.01348298,
+        "mean_tokens": 391089.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.0127023,
+        "mean_tokens": 392708.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.009460605,
+        "mean_tokens": 227881.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "caddy-7396",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.028654975,
+        "mean_tokens": 1078161.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.021440059999999997,
+        "mean_tokens": 735082.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.021035405,
+        "mean_tokens": 749389.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "caddy-7596",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00989365,
+        "mean_tokens": 301388.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009325030000000002,
+        "mean_tokens": 274518.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00914273,
+        "mean_tokens": 306072.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "caddy-7724",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006873995,
+        "mean_tokens": 141782.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0072558,
+        "mean_tokens": 174707.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00620908,
+        "mean_tokens": 147638.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "caddy-7741",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.012064125,
+        "mean_tokens": 369918.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01736336,
+        "mean_tokens": 610257.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010871615,
+        "mean_tokens": 353881.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "caddy-8127",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00822321,
+        "mean_tokens": 181147.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00933061,
+        "mean_tokens": 257827.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006601965,
+        "mean_tokens": 179728.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "excelize-1414",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.015570185000000002,
+        "mean_tokens": 269887.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.023175249999999998,
+        "mean_tokens": 453721.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01805343,
+        "mean_tokens": 263746.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "excelize-2126",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00791436,
+        "mean_tokens": 214568.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0068739149999999995,
+        "mean_tokens": 163674.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.021233784999999998,
+        "mean_tokens": 564142.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "excelize-2426",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00373528,
+        "mean_tokens": 80259.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005307850000000001,
+        "mean_tokens": 116263.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006255935000000001,
+        "mean_tokens": 138375.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "faker-2161",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.018835585,
+        "mean_tokens": 503064.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.016960155000000005,
+        "mean_tokens": 564327.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.018060895,
+        "mean_tokens": 650400.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "faker-2315",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.019242010000000004,
+        "mean_tokens": 460022.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.02298649,
+        "mean_tokens": 521787.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.013795455,
+        "mean_tokens": 283245.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "gh-cli-11097",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.02455408,
+        "mean_tokens": 869379.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.020759190000000004,
+        "mean_tokens": 768004.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.014817780000000003,
+        "mean_tokens": 463811.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "gh-cli-12683",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009296735,
+        "mean_tokens": 249665.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009526195000000001,
+        "mean_tokens": 289287.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007723515,
+        "mean_tokens": 195426.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "gh-cli-9132",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.04391803,
+        "mean_tokens": 1840828.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.025169005,
+        "mean_tokens": 818196.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.024092225000000002,
+        "mean_tokens": 804934.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "highlightjs-4196",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.011783595000000001,
+        "mean_tokens": 227629.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.018001415,
+        "mean_tokens": 379430.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.01181583,
+        "mean_tokens": 224941.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "highlightjs-4226",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.011833725,
+        "mean_tokens": 259016.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.022114325,
+        "mean_tokens": 677956.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.020284444999999998,
+        "mean_tokens": 514307.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "highlightjs-4231",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006586315,
+        "mean_tokens": 102887.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007403005000000001,
+        "mean_tokens": 127980.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.00775871,
+        "mean_tokens": 152248.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "highlightjs-4261",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.057224330000000004,
+        "mean_tokens": 785098.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.026081925,
+        "mean_tokens": 838278.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.020540999999999997,
+        "mean_tokens": 533832.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "lazygit-3444",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010334915,
+        "mean_tokens": 291961.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01675077,
+        "mean_tokens": 609495.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.011445505000000002,
+        "mean_tokens": 415454.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "lazygit-3721",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.02050312,
+        "mean_tokens": 482293.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.030999134999999997,
+        "mean_tokens": 1095195.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.03819492000000001,
+        "mean_tokens": 1072719.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "lazygit-4321",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01530039,
+        "mean_tokens": 316671.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.024757969999999997,
+        "mean_tokens": 678136.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.01689417,
+        "mean_tokens": 377403.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "locust-3438",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002142705,
+        "mean_tokens": 41784.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0032538050000000002,
+        "mean_tokens": 80249.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0025277500000000005,
+        "mean_tokens": 63885.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mitmproxy-5891",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.008929425000000001,
+        "mean_tokens": 186385.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.01615301,
+        "mean_tokens": 494362.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.010251325,
+        "mean_tokens": 243836.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-11913",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.037159715,
+        "mean_tokens": 1089472.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.030539285000000006,
+        "mean_tokens": 874395.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.11776746,
+        "mean_tokens": 2327118.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-12739",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01073122,
+        "mean_tokens": 231515.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0119978,
+        "mean_tokens": 297361.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.013147640000000002,
+        "mean_tokens": 355715.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-13760",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.015450745,
+        "mean_tokens": 380568.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.02107154,
+        "mean_tokens": 633809.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.019744400000000002,
+        "mean_tokens": 510688.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-15120",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.033212900000000004,
+        "mean_tokens": 943529.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.042344405,
+        "mean_tokens": 1322094.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.029957905000000003,
+        "mean_tokens": 910943.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-15192",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.005251855,
+        "mean_tokens": 94931.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005899725000000001,
+        "mean_tokens": 120603.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006852615000000001,
+        "mean_tokens": 139334.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-15494",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.022631395000000002,
+        "mean_tokens": 671196.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.030841285000000003,
+        "mean_tokens": 1008541.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.03146343,
+        "mean_tokens": 1083292.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-15653",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.011826159999999999,
+        "mean_tokens": 346406.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.019677015,
+        "mean_tokens": 642258.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.023157675000000003,
+        "mean_tokens": 809312.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mongoose-16072",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.020403879999999996,
+        "mean_tokens": 566413.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.028830365000000004,
+        "mean_tokens": 904888.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.013694500000000002,
+        "mean_tokens": 368808.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "networkx-6336",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005575125,
+        "mean_tokens": 135731.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006916675000000001,
+        "mean_tokens": 197241.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006252905,
+        "mean_tokens": 168394.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "networkx-6920",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.017631130000000002,
+        "mean_tokens": 494147.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.021556365,
+        "mean_tokens": 607763.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.015323435,
+        "mean_tokens": 413614.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "networkx-6921",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009078860000000001,
+        "mean_tokens": 234674.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010207300000000002,
+        "mean_tokens": 290315.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009641700000000001,
+        "mean_tokens": 205884.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "networkx-7720",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003359635,
+        "mean_tokens": 71153.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0040795499999999995,
+        "mean_tokens": 93347.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006596545,
+        "mean_tokens": 147844.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "networkx-8188",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.012896365,
+        "mean_tokens": 268184.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.022829965,
+        "mean_tokens": 536272.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.017808115000000003,
+        "mean_tokens": 333131.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pre-commit-2002",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005649265,
+        "mean_tokens": 126455.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009777560000000001,
+        "mean_tokens": 266916.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01079703,
+        "mean_tokens": 332703.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "scrapy-7042",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004694915000000001,
+        "mean_tokens": 133427.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0048124000000000005,
+        "mean_tokens": 125247.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004252530000000001,
+        "mean_tokens": 110174.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "scrapy-7604",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00312636,
+        "mean_tokens": 52602.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003642045000000001,
+        "mean_tokens": 78285.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0029526450000000003,
+        "mean_tokens": 64963.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "stylelint-8134",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00232596,
+        "mean_tokens": 51793.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00381233,
+        "mean_tokens": 88085.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002783395,
+        "mean_tokens": 65969.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "stylelint-8818",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007604975000000001,
+        "mean_tokens": 148049.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010885885000000001,
+        "mean_tokens": 261651.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009643885,
+        "mean_tokens": 267563.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "stylelint-8983",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003363985,
+        "mean_tokens": 66953.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0052407849999999995,
+        "mean_tokens": 115299.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004714895,
+        "mean_tokens": 89595.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "stylelint-9008",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003030165,
+        "mean_tokens": 56508.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004639035,
+        "mean_tokens": 101772.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0032121100000000002,
+        "mean_tokens": 62632.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "yt-dlp-15017",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.015494504999999999,
+        "mean_tokens": 374873.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.031094545,
+        "mean_tokens": 1008263.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.012283184999999999,
+        "mean_tokens": 288205.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "yt-dlp-7544",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.01547442,
+        "mean_tokens": 273556.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.0261679,
+        "mean_tokens": 368467.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.021410255,
+        "mean_tokens": 379500.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ],
+  "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself"
+}
