@@ -1,5 +1,5 @@
 {
-  "version": 140,
+  "version": 141,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2391,6 +2391,73 @@
         "repair": "alasql's runner uses bun 1.4.4 (the current release, @oven/bun-darwin-aarch64 binary in its runtime's node_modules/.bin; packages still from the v139 bun.lock install); luxon's runner sets TZ=America/New_York; kratos' runner sets GOTOOLCHAIN=go1.26.10 (the last release before go 1.27; kratos' go.mod declares go 1.25.0). Smoke re-run: .research/history/t14-runtime-smoke.json sha256 04fa5350ac9cfac45571a6efd1bf23c097448998ecc21d153d39b5256f272b21, 25 of 25 pass (alasql now with test/test000.js, a non-candidate test that calls before())",
         "recheck": "all 26 candidates of alasql, luxon and kratos (.research/history/t14-f2p-recheck-v140.json, sha256 eeb1fe4a6197ac66f8f9478f277da1edb530daa8406620f66fe7c178c1776e89; benchmark/check_tasks.py --run-id t14-f2p-v140), whichever their v139 result, under the unchanged t10 rule; every other candidate keeps its v139 result. Full candidate list under the v140 runners: .research/history/t14-f2p-candidates.json, sha256 b43b4291cdd46e8d8301eab6b39f0c73781275f688af5918251aedc9f857098a. Combined report: results/natural-tasks-t14-f2p.json",
         "agent_note": "the repairs apply to verification only; an agent working on a kratos task under the default go 1.27 sees transport/http fail to build, on every arm alike"
+      },
+      "screen_v141": {
+        "recorded": "2026-11-01, after the v140 fail-to-pass re-check (results/natural-tasks-t14-f2p.json: 122 of 133 pass; benchmark/t14_f2p_report.py) and before any screen attempt",
+        "pool": "151 candidates: the 122 t14 fail-to-pass passes (Go 35, Python 28, JavaScript 59) and the 29 existing t12 passes (pool.existing)",
+        "fill_order": {
+          "Go": [
+            "jwt",
+            "toml",
+            "goldmark",
+            "mvdan-sh",
+            "dasel",
+            "yq",
+            "miller",
+            "go-github",
+            "bleve",
+            "kratos",
+            "gqlgen",
+            "ent"
+          ],
+          "Python": [
+            "pypdf",
+            "prompt-toolkit",
+            "peewee",
+            "pelican",
+            "beets",
+            "robotframework",
+            "sqlalchemy",
+            "pendulum",
+            "sympy",
+            "textual",
+            "markitdown"
+          ],
+          "JavaScript": [
+            "qs",
+            "json5",
+            "bignumber.js",
+            "acorn",
+            "chai",
+            "joi",
+            "terser",
+            "luxon",
+            "readability",
+            "papaparse",
+            "alasql",
+            "svelte"
+          ]
+        },
+        "fill_order_rationale": "the v138 order within each language, then the existing t12 repositories in t12's repository_order; both orders put projects with large suites last, and the t12 repositories are larger than the v138 ones",
+        "procedure": "benchmark/t14_screen.py: languages take turns (Go, Python, JavaScript), one candidate each; within a language repositories follow fill_order, newest merge first. A repository is passed over once 8 of its candidates are kept and a language once 16 are, so the screen attempts every candidate the fill could still take and no other, and the fill (at most 8 per repository, 16 per language, newest merge first in fill_order) selects the same tasks a screen of all 151 would. Attempts, infrastructure reruns included, stop at attempt_budget; candidates not reached are not kept",
+        "per_repository": 8,
+        "per_language": 16,
+        "keep_at_tool_calls": 15,
+        "attempt_budget": 150,
+        "trial_prefix": "t14-screen",
+        "catalog": "benchmark/natural-tasks-t14-screen.json",
+        "catalog_sha256": "94044abd6ab7fde800c912e9fe76070ffa6032ae794a37912dfa5bd9ee105b66",
+        "arm": "builtin exactly as batch t13 (arm_definitions.builtin and common_setup), isolation agent_trials.isolation_rule_v136; claude-haiku-5-5 (agent_trials.model, the latest Haiku), $0.50 (agent_trials.max_budget_usd) and 1,200 s per attempt",
+        "solver_version": "2.1.316 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.316",
+        "solver_sha256": "64c327e92b2c5e0f78c0a980c5a518121e1f0d140ca771ca5dd4488d1a2dcb3f",
+        "backend_sha256": {
+          "builtin": "64c327e92b2c5e0f78c0a980c5a518121e1f0d140ca771ca5dd4488d1a2dcb3f"
+        },
+        "solver_max_turns": 80,
+        "verifier_deadline": true,
+        "versions_checked": "2026-11-01, benchmark/check_latest.py --batch t13: graphify 0.9.99, Claude Code 2.1.316 and ripgrep 15.2.0 are each the latest release; claude-haiku-5-5 is the latest Haiku",
+        "reading": "only each attempt's tool_use count is read before the catalog freeze (results/t14-screen.json); pass/fail, cost and transcripts are not inspected until the batch is analysed; the batch log is grepped only for Traceback or Error"
       }
     }
   },
@@ -3050,6 +3117,11 @@
       "version": 140,
       "date": "2026-11-01",
       "reason": "t14 runtime repairs for alasql (bun 1.4.4), luxon (TZ) and kratos (go 1.26.10) after the v139 fail-to-pass check, before any re-check (natural_tasks_t14.check_repair_v140)"
+    },
+    {
+      "version": 141,
+      "date": "2026-11-01",
+      "reason": "t14 screen: pool of 151, fill order, early-stopping procedure equivalent to a full screen, frozen solver and screen catalog, before any screen attempt (natural_tasks_t14.screen_v141)"
     }
   ],
   "arms": {
