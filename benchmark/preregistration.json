@@ -1,5 +1,5 @@
 {
-  "version": 136,
+  "version": 137,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2131,6 +2131,47 @@
       "change": "a Read of the output file Claude Code writes for a command it moved to the background in the trial's own workspace counts as inside the workspace: exactly /private/tmp/claude-<uid>/<workspace path with every non-alphanumeric character replaced by '-'>/<session>/tasks/<name>.output (also via /tmp). Any other tool, another workspace's folder, or any other path outside the workspace is still a breach",
       "reason": "batch t13 (Claude Code 2.1.316): all 15 graphify_installed isolation breaches were Reads of the agent's own backgrounded graphify command output, not outside content; t12 (2.1.314) had none",
       "check": "benchmark/run_agent_trial.py outside_workspace; test_installed_arms.py; rescoring the t13 streams with it clears all 15 breaches and adds none (diagnostic only)"
+    },
+    "natural_tasks_t14": {
+      "catalog": "benchmark/natural-tasks-t14.json",
+      "purpose": "confirmatory test of whether graf as installed is cheaper than both builtin and graphify_installed on search-heavy natural repair tasks, the one setting the exploratory scoping left open",
+      "hypothesis_origin": "exploratory, chosen after t10 to t13 were seen (benchmark/large_repo_scope.py at 6e0cfb3, results/large-repo-scope.json): repository size and calls before the first faulted read did not predict graf's saving over builtin; split-half, where one builtin attempt made 15 or more tool calls graf saved $0.0033 per task against builtin's other attempt but was cheaper in only 64 of 126 pairs. No t10 to t13 task can enter t14",
+      "workload": "search-heavy natural repair tasks: issue-driven natural tasks (natural_tasks_t10 protocol) on which a single builtin screening attempt made 15 or more tool calls. Claims cover such tasks in these repositories under these conditions only",
+      "pool": {
+        "existing": "the 29 t12 fail-to-pass passes that neither t12 nor t13 used and that share no issue with a t12 or t13 task (markitdown 2, pendulum 1, svelte 2, sympy 11, textual 13); never run by an agent, already checked under the v129 runners with the v130 repair",
+        "new": "issue-driven candidates from repositories never used by any graf benchmark, screen, corpus or agent batch, chosen under natural_tasks_t12.repository_choice (Go, Python or JavaScript source; over 5,000 stars; not archived; same exclusions). The repositories, their pins and runtimes are recorded in later versions before any of their pull requests is listed, and the fail-to-pass check runs under the natural_tasks_t10 protocol as in t12 (size bound 10 files and 400 lines, 180 s, timeouts rejected, missing hidden test files rejected as v130)",
+        "target": "enough fail-to-pass candidates that the screen can keep at least 36 tasks; about a third are expected to qualify, so about 110 to 150 candidates"
+      },
+      "screen": {
+        "attempt": "one builtin attempt per fail-to-pass candidate, set up exactly as the batch's builtin arm (same Claude Code, model, prompt, caps and isolation rule)",
+        "keep": "the candidate is kept if that attempt made 15 or more tool calls, counted as tool_use blocks in its stream (benchmark/t12_diagnostic.py tool_calls), whether or not it passed. The threshold is the upper-tercile boundary of t10 to t13 and is fixed here",
+        "independence": "screen attempts never enter the batch; the batch makes fresh attempts on every arm, so builtin's regression to the mean applies to the arms equally. Only builtin's tool-call count is seen before the catalog freeze; screen pass/fail and cost are not inspected until the batch is analysed",
+        "infrastructure": "a screen attempt with an infrastructure error is set aside and rerun at most twice, as v83-v86"
+      },
+      "fill": "screen-kept tasks per language, repositories in a recorded order, newest merge first, at most 8 per repository, at most 48 tasks in total and at most 16 per language; no per-language minimum",
+      "minimum_tasks": 36,
+      "if_fewer": "if fewer than 36 tasks are kept, no batch runs on a lower threshold or a loosened set; more repositories may be added only by a new version recorded before their pull requests are listed",
+      "batch_plan": {
+        "arms": {
+          "builtin": "as t13, with the versions current at the freeze",
+          "graphify_installed": "as t13, with the latest Graphify recorded as a baseline revision if it changed",
+          "graf_installed": "as t13 with .research/bin/graf-triage15 (sha256 a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a)"
+        },
+        "candidates": [
+          "graf_installed"
+        ],
+        "comparators": [
+          "builtin",
+          "graphify_installed"
+        ],
+        "rule": "the agent_trials.rule for graf_installed against builtin and graphify_installed, intersection-union: cost superiority by one-sided paired sign flip at alpha 0.05 on per-task mean cost_usd against each comparator, and success non-inferiority within 0.10 against each; graf passes only if all four tests pass",
+        "isolation": "agent_trials.isolation_rule_v136",
+        "attempts": "2 per task and arm; $0.50 and 1,200 s per attempt; claude-haiku-5-5 or the latest Haiku at the freeze",
+        "secondary_declared": "builtin's median tool calls in the batch against its screen (regression check); per-arm tokens, turns and calls before the first faulted read; reported, not gated",
+        "power": "the scoping effect is small and carried by a few tasks (graf cheaper in about half the pairs); the batch may well fail, and a failure ends the agent-efficiency research on this hypothesis",
+        "freeze": "the batch is frozen in its own version after the catalog freeze and a no-model dry run, with check_latest.py, before any batch model call"
+      },
+      "budget": "operator agreed on 2026-10-31: at most 438 Haiku attempts, at most 150 screening attempts plus at most 288 batch attempts (48 tasks x 3 arms x 2, $0.50 cap per attempt); a smaller pool or catalog shrinks both"
     }
   },
   "report_every_case": true,
@@ -2769,6 +2810,11 @@
       "version": 136,
       "date": "2026-10-31",
       "reason": "agent_trials.isolation_rule_v136: Claude Code's own background-command output for the trial's workspace is not an isolation breach, for batches frozen from v136 on; no batch is planned and earlier results are unchanged"
+    },
+    {
+      "version": 137,
+      "date": "2026-10-31",
+      "reason": "natural_tasks_t14: confirmatory search-heavy workload (builtin screen at 15 or more tool calls, fresh paired batch against builtin and graphify_installed), from the exploratory scoping at 6e0cfb3; pool, screen, rule and proposed budget recorded before any t14 candidate is mined, screened or run"
     }
   ],
   "arms": {
