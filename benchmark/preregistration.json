@@ -1,5 +1,5 @@
 {
-  "version": 134,
+  "version": 135,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -931,6 +931,68 @@
           "graf_installed_codefiles": ".research/bin/graf-codefiles"
         },
         "dry_run_v132": "2026-10-30, no model (benchmark/t12_dry_run.py, results/t12-dry-run.json, sha256 f35e1910a39fce95b27573ab94d8b9bfac2cdf9b7db28ec764ce5a9e816f8f6a): each of the 48 tasks x 4 arms prepared, set up, relocated and restored: 192 of 192 ok, no nonzero setup step. graphify_installed: CLAUDE.md section, .claude/settings.json hooks and graphify-out on all 48 (setup step median 0.7 s, max 23.8 s). graf_installed and graf_installed_codefiles: graf index and the CLAUDE.md snippet on all 48 (step max 0.5 s and 0.6 s). No outcome was graded"
+      },
+      "t13": {
+        "arms": [
+          "builtin",
+          "graphify_installed",
+          "graf_installed"
+        ],
+        "candidates": [
+          "graf_installed"
+        ],
+        "controls": [],
+        "comparators": [
+          "graphify_installed"
+        ],
+        "catalog": "benchmark/natural-tasks-t13.json",
+        "seed": 20261101,
+        "frozen_in_version": 135,
+        "arm_definitions": {
+          "builtin": "Claude Code 2.1.316 as shipped, without retrieval tooling: built-in Read, Grep, Glob and Edit at their 2.1.316 defaults (t12 recorded the 2.1.314 defaults; not re-measured); no Bash. The broker MCP server offers only test and finish. Reported side by side, not gated",
+          "graphify_installed": "builtin plus Graphify 0.9.99 (baseline revision graphify-0.9.99, commit a0946f962af31b19bff941b453f6dae9a7077c7a) set up as its README says, before the solver starts: `graphify update .` (code graph, no LLM) and `graphify claude install` (project CLAUDE.md section and .claude/settings.json PreToolUse hooks), with HOME pointed at a per-trial folder so nothing global is written; Bash is added and allowed only as Bash(graphify:*)",
+          "graf_installed": "as t12 with .research/bin/graf-triage15 (sha256 a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a), under Claude Code 2.1.316"
+        },
+        "common_setup": "every arm: the same INSTALLED_PROMPT appended to Claude Code's own system prompt (repair the bug in non-test source, do not edit tests or build configuration, run test, then finish), --setting-sources project (the workspace's own .claude settings only, no user settings or personal CLAUDE.md), --strict-mcp-config, --disable-slash-commands, --permission-mode acceptEdits with --permission-prompts none, --no-session-persistence. The workspace is moved outside any git repository to /private/var/tmp/graf-trials/<trial>/workspace and moved back after the run; an empty auto-memory folder Claude Code creates for it is removed. Test files, build and test configuration files (package.json, lockfiles, pyproject.toml, setup.py/cfg, tox.ini, pytest.ini, go.mod, go.sum, Makefile, outside node_modules and the tools' own output folders) are hash-protected; an edit to any of them fails the attempt",
+        "isolation_rule": "a tool call answered with content from outside the workspace (lexical path check; links inside the workspace such as node_modules count as inside) fails the attempt and is reported as isolation_breach; refused requests are counted and reported",
+        "backend_sha256": {
+          "builtin": "64c327e92b2c5e0f78c0a980c5a518121e1f0d140ca771ca5dd4488d1a2dcb3f",
+          "graphify_installed": "85d3a5dbc7e9a01eaa978885f709ff288b64cdd7c14b03a594e5195372acd781",
+          "graf_installed": "a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a"
+        },
+        "solver_version": "2.1.316 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.316",
+        "solver_sha256": "64c327e92b2c5e0f78c0a980c5a518121e1f0d140ca771ca5dd4488d1a2dcb3f",
+        "model": "claude-haiku-5-5",
+        "graphify_commit": "a0946f962af31b19bff941b453f6dae9a7077c7a",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.99",
+        "versions_checked": "2026-10-31 with benchmark/check_latest.py: Graphify 0.9.97 and Claude Code 2.1.314 were behind, so Graphify 0.9.99 (tag v0.9.99, recorded as baseline revision graphify-0.9.99; the PyPI wheel matches the snapshot apart from extractors/MIGRATION.md) and Claude Code 2.1.316 (native binary from npm @anthropic-ai/claude-code-darwin-arm64@2.1.316; the same route reproduces the pinned 2.1.314 byte for byte) were pinned; ripgrep 15.2.0 is the latest; claude-haiku-5-5 is the latest Haiku (by hand); graf's source on main is unchanged since 7a3b88a and the candidate is the t12 research build. Rechecked after this freeze with check_latest.py --batch t13",
+        "attempts_per_task_and_arm": 2,
+        "solver_max_turns": 80,
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200
+        },
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription; the v93 cost table",
+        "rule": "natural_tasks_t13.batch_plan.rule: the agent_trials.rule for graf_installed against graphify_installed alone (cost superiority by one-sided paired sign flip at alpha 0.05 on per-task mean cost_usd, success non-inferiority within 0.10); one test, no split, no multiplicity correction; builtin is not a comparator",
+        "secondary": "none gated. Reported: per-task costs of all three arms, turns, tool calls and calls before the first faulted read per arm (the t12 diagnostics applied to t13)",
+        "role": "confirmatory: natural issue-driven repair tasks from t12's fail-to-pass pool not used by t12, no shared issue; tests whether graf as installed with the triage15 build is cheaper than Graphify as installed at non-inferior success. A pass supports only that claim on this workload and these conditions (natural_tasks_t13.batch_plan.reporting), not product promotion",
+        "budget": "operator agreed on 2026-10-31: about 282 Haiku attempts (47 tasks x 3 arms x 2 attempts, $0.50 cap per attempt)",
+        "planned_runs": "47 tasks x 3 arms x 2 attempts = 282, the agreed budget",
+        "rationale": "t12: graf_installed was cheaper than graphify_installed (p = 0.016) but not than builtin; t13 tests the Graphify comparison alone on fresh tasks",
+        "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply under v93, setup failure: set aside and rerun at most twice)",
+        "verifier_deadline": true,
+        "deadline_rule": "unchanged from t8/t9: the 1,200 s deadline is recorded before the solver starts, broker test runs are capped at the time left minus a 120 s reserve, and every verdict gets the full 180 s verifier",
+        "solver_timeout": "the v93 rule stays in force as a fallback",
+        "harness": "benchmark at commit 5f832db for run_agent_trial, task_session, run_agent_batch, agent_decision and retrieval (unchanged through 0188bbc); the Graphify executable is the one in graphify_virtualenv, so the batch runs under .research/venv-graphify-0.9.99/bin/python",
+        "schedule": "runs after the catalog freeze (v134) and the no-model dry run under the pinned versions; frozen before any t13 model call",
+        "backend_binaries": {
+          "graf_installed": ".research/bin/graf-triage15"
+        },
+        "reported_not_gated": [
+          "builtin"
+        ],
+        "dry_run_v135": "2026-10-31, no model (benchmark/t12_dry_run.py t13, results/t13-dry-run.json, sha256 d9622468da6471fc925b37b00d1a7899564e37c730bb21d9ce5c21f7c4be59bf): each of the 47 tasks x 3 arms prepared, set up, relocated and restored under Graphify 0.9.99: 141 of 141 ok, no nonzero setup step. graphify_installed: CLAUDE.md section, .claude/settings.json hooks and graphify-out/graph.json on all 47 (setup step median 1.6 s, max 485.1 s on svelte-19091 under a 15-minute load average near 20; re-timed at 306.4 s under lighter load, inside the 600 s step limit). graf_installed: graf index and the CLAUDE.md snippet on all 47 (step max 5.5 s). builtin carries the repository's own CLAUDE.md on 8 tasks. An earlier dry run under Graphify 0.9.97 (results/t13-dry-run-graphify-0.9.97.json) was also 141 of 141 ok and is superseded by the version bump. No outcome was graded"
       }
     },
     "natural_tasks": {
@@ -2691,6 +2753,11 @@
       "version": 134,
       "date": "2026-10-31",
       "reason": "natural_tasks_t13.catalog_v134: the 47-task t13 catalog frozen, before any dry run or model call"
+    },
+    {
+      "version": 135,
+      "date": "2026-10-31",
+      "reason": "Freeze batch t13 (natural_tasks_t13.batch_plan): builtin (reported only), graphify_installed on new baseline revision graphify-0.9.99, graf_installed with graf-triage15, Claude Code 2.1.316, Haiku, 282 attempts; one test against graphify_installed. Before any t13 model call"
     }
   ],
   "arms": {
