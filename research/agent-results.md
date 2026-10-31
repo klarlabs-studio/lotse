@@ -2,6 +2,17 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Scoping (exploratory, after t13): repository size does not predict graf's saving; search effort might
+
+This is hypothesis generation for a possible new preregistration, chosen after t10 to t13 were seen; it is not evidence. Over the 190 tasks of t10 to t13 (`benchmark/large_repo_scope.py`, [large-repo-scope.json](../results/large-repo-scope.json)):
+
+- **Repository size does not matter.** graf's per-task saving over `builtin` has a rank correlation of 0.00 with the snapshot's code-file count. The largest third (819 to 8,191 code files) is graf's worst: $0.0020 more per task, cheaper on 21 of 63. A workload chosen by repository size is not expected to help.
+- **Neither does how quickly the fault is found.** The correlation with `builtin`'s calls before it first reads a faulted file is 0.06.
+- **How hard `builtin` had to search might.** Group tasks by one `builtin` attempt's tool calls and compare graf with the *other* `builtin` attempt, so grouping and comparison never share an attempt. Where `builtin` made 15 or more tool calls, graf saved $0.0033 per task. But it was cheaper in only 64 of 126 pairs, so a few large savings carry the mean. Below 15 calls graf cost more. The correlation is 0.09. Using the same attempts for grouping and comparison would inflate it to 0.22. The pairs are not independent, because each task contributes two.
+- **Candidate snapshots.** Only four unused snapshots have 2,000 or more code files (webpack, prettier, typeorm, vitest, all JavaScript).
+
+**Proposal, not preregistered.** A search-heavy workload: mine new fail-to-pass tasks from repositories t10 to t13 did not use. Run one `builtin` screening attempt per candidate and keep tasks whose screen made 15 or more tool calls. Then run a fresh paired batch on those tasks only, so that `builtin`'s regression to the mean applies equally to every arm. It needs its own preregistration and budget before anything runs.
+
 ## Batch t13 (v135): graf against Graphify alone, 47 unused natural tasks; fails
 
 **Outcome: `graf_installed` is not significantly cheaper than `graphify_installed` (p = 0.140), so the confirmatory test fails. Claude Code without a retrieval tool (`builtin`, reported, not gated) was cheaper than graf: $0.790 against $0.973 in total, at similar success.** graf was cheaper than Graphify on 37 of 47 tasks, by $0.0014 per task on average. It is not significant because one task, `prometheus-14695`, cost graf $0.046 more per attempt than Graphify. That task was identified after seeing the data, and no claim rests on it. The t12 result against Graphify (p = 0.016) did not replicate on fresh tasks. graf stays experimental.
