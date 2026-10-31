@@ -2,6 +2,19 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Conclusion (2026-10-31): agent-efficiency research stopped; graf is not promoted
+
+graf does not meet the preregistered agent-efficiency requirement. In t10, t11 and t12, graf installed as Claude Code's tool was never significantly cheaper than Claude Code's built-in tools at non-inferior success, so it never beat both comparators. These batches used issue-driven and pointer-free natural repair tasks in fresh Go, Python and JavaScript repositories, with `claude-haiku-5-5`, $0.50 and 1,200 s per attempt.
+
+Against Graphify 0.9.97 alone, the 15-file triage build was cheaper on 34 of 48 t12 tasks (p = 0.016). That is a single-comparison result, not a pass under the rule, and not a superiority claim.
+
+The diagnostics agree on why:
+- the agents reach a faulted file within one or two tool calls;
+- search and read payloads are about a sixth of cost;
+- removing graf's whole fixed context overhead would still not make t12 pass (p = 0.249).
+
+Further batches on this workload are not expected to change the outcome. A claim for large repositories, where locating the fault takes real search, would need its own workload and preregistration. Every candidate build stays experimental.
+
 ## Batch t12 (v132): two triage builds installed, 48 fresh natural tasks; fails
 
 **Outcome: neither graf candidate passes the preregistered rule.** Neither is significantly cheaper than both comparators; with Holm over the two candidates, the smaller of their largest p-values (0.376) is tested at 0.025 and fails, so both fail.
