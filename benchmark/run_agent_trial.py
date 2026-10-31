@@ -224,13 +224,18 @@ def outside_workspace(stream, workspace):
     """Built-in tool calls aimed outside the workspace: (requested, answered without an error).
 
     Paths are compared as written, without following links, so a dependency read through the workspace's
-    node_modules link counts as inside; macOS's /var is the same directory as /private/var.
+    node_modules link counts as inside; macOS's /var is the same directory as /private/var. A Read of the output file
+    Claude Code writes for a command it moved to the background in this workspace is the agent's own output, not
+    outside content (v136: 2.1.316 does this, so 15 t13 graphify_installed attempts failed on it).
     """
     workspace = os.path.normpath(workspace)
+    own_output = re.compile(r"/private/tmp/claude-\d+/" + re.escape(re.sub(r"[^A-Za-z0-9]", "-", workspace))
+                            + r"/[^/]+/tasks/[^/]+\.output")
 
-    def inside(path):
+    def inside(path, name):
         path = os.path.normpath(path)
         return any(candidate == workspace or candidate.startswith(workspace + os.sep)
+                   or (name == "Read" and own_output.fullmatch(candidate))
                    for candidate in (path, "/private" + path))
 
     requested, answered, pending = 0, 0, {}
@@ -242,7 +247,8 @@ def outside_workspace(stream, workspace):
             if block.get("type") == "tool_use" and block.get("name") in BUILTIN_TOOLS:
                 target = (block.get("input") or {}).get("file_path") or (block.get("input") or {}).get("path")
                 if isinstance(target, str) and target:
-                    if not inside(target if os.path.isabs(target) else os.path.join(workspace, target)):
+                    if not inside(target if os.path.isabs(target) else os.path.join(workspace, target),
+                                  block.get("name")):
                         requested += 1
                         pending[block.get("id")] = True
             elif block.get("type") == "tool_result" and pending.pop(block.get("tool_use_id"), False):

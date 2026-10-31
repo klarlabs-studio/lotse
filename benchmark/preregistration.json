@@ -1,5 +1,5 @@
 {
-  "version": 135,
+  "version": 136,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2125,6 +2125,12 @@
         "catalog": "benchmark/natural-tasks-t13.json written by benchmark/t13_catalog.py: 47 tasks, none sharing a task or an issue with t12. Go 15 (go-zero 3, beego 1, prometheus 8, syncthing 3: the pool ran out), Python 16 (attrs 3, isort 6, pendulum 7), JavaScript 16 (mathjs 4, knex 2, browserify 1, cyberchef 8, svelte 1)",
         "planned_runs": "47 tasks x 3 arms x 2 attempts = 282, the agreed budget"
       }
+    },
+    "isolation_rule_v136": {
+      "applies_to": "batches frozen in version 136 or later; t10 to t13 keep the isolation_rule they were frozen with, and their results stay as scored",
+      "change": "a Read of the output file Claude Code writes for a command it moved to the background in the trial's own workspace counts as inside the workspace: exactly /private/tmp/claude-<uid>/<workspace path with every non-alphanumeric character replaced by '-'>/<session>/tasks/<name>.output (also via /tmp). Any other tool, another workspace's folder, or any other path outside the workspace is still a breach",
+      "reason": "batch t13 (Claude Code 2.1.316): all 15 graphify_installed isolation breaches were Reads of the agent's own backgrounded graphify command output, not outside content; t12 (2.1.314) had none",
+      "check": "benchmark/run_agent_trial.py outside_workspace; test_installed_arms.py; rescoring the t13 streams with it clears all 15 breaches and adds none (diagnostic only)"
     }
   },
   "report_every_case": true,
@@ -2758,6 +2764,11 @@
       "version": 135,
       "date": "2026-10-31",
       "reason": "Freeze batch t13 (natural_tasks_t13.batch_plan): builtin (reported only), graphify_installed on new baseline revision graphify-0.9.99, graf_installed with graf-triage15, Claude Code 2.1.316, Haiku, 282 attempts; one test against graphify_installed. Before any t13 model call"
+    },
+    {
+      "version": 136,
+      "date": "2026-10-31",
+      "reason": "agent_trials.isolation_rule_v136: Claude Code's own background-command output for the trial's workspace is not an isolation breach, for batches frozen from v136 on; no batch is planned and earlier results are unchanged"
     }
   ],
   "arms": {

@@ -127,6 +127,17 @@ class OutsideWorkspaceTest(unittest.TestCase):
                              use("c", "/private/var/tmp/graf-trials/x/workspace/../task.json"))
         self.assertEqual(outside_workspace(stream, workspace), (1, 0))
 
+    def test_reading_claude_codes_own_background_output_for_this_workspace_counts_as_inside(self):
+        workspace = Path("/private/var/tmp/graf-trials/t-x_y-1/workspace")
+        own = "/private/tmp/claude-501/-private-var-tmp-graf-trials-t-x-y-1-workspace/2b6b-c9/tasks/bu6e.output"
+        use = lambda i, name, arg: {"type": "assistant", "message": {"content": [
+            {"type": "tool_use", "id": i, "name": name, "input": {"file_path": arg}}]}}
+        stream = self.stream(use("a", "Read", own), use("b", "Read", own.replace("/private/tmp", "/tmp")),
+                             use("c", "Read", own.replace("t-x-y-1", "t-other-1")),
+                             use("d", "Read", own.replace("tasks/bu6e.output", "tasks/../secret")),
+                             use("e", "Edit", own))
+        self.assertEqual(outside_workspace(stream, workspace), (3, 0))
+
 
 if __name__ == "__main__":
     unittest.main()

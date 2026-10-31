@@ -10,6 +10,7 @@ Three preregistered batches with the same solver and spend cap. Batches `t` and 
   - 15 of Graphify's 21 failures are isolation breaches. In each, Claude Code 2.1.316 had moved a slow `graphify` Bash command to the background, and the agent read that command's own output file under `/private/tmp/claude-501/…/tasks/`. The preregistered lexical path check counts any read outside the workspace as a breach, which fails the attempt.
   - graf and `builtin` had none, and t12 (Claude Code 2.1.314) had none.
   - The success guard therefore favours graf here for a reason unrelated to retrieval. The cost test is unaffected, because failed attempts count at their cost.
+  - Preregistration v136 (`agent_trials.isolation_rule_v136`) exempts exactly these reads for batches frozen from then on. Rescoring the t13 streams with it clears all 15 and adds none; t13 stays as scored.
 - **Against `builtin`** (reported, not gated): graf cost $0.0020 more per task and was cheaper on only 17 of 47 tasks (p = 0.895). So, as in t10 to t12, graf does not save cost over Claude Code's built-in tools on this workload.
 - **Tokens** (secondary, not gated): graf used 80,000 fewer tokens per task than Graphify (p < 0.0001).
 - **Completeness.** All 282 of 282 planned attempts completed, with usage complete and no infrastructure errors. The decision is in [agent-decision-t13.json](../results/agent-decision-t13.json); diagnostics are in [t13-diagnostic.json](../results/t13-diagnostic.json).
