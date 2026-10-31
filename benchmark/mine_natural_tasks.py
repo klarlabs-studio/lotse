@@ -83,7 +83,9 @@ JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "u
                                                     "stylelint", "multer", "mongoose", "less",
                                                     "validatorjs", "node-red", "highlightjs",
                                                     "mathjs", "nunjucks", "prism", "knex", "browserify",
-                                                    "cyberchef", "svelte")}}  # natural_tasks_t12.
+                                                    "cyberchef", "svelte",  # natural_tasks_t12.
+                                                    "qs", "acorn", "chai", "joi", "terser", "luxon", "readability",
+                                                    "papaparse", "alasql")}}  # natural_tasks_t14.
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
                                                      "requests", "tqdm", "httpie", "uvicorn", "pytest",
                                                      "loguru", "pydantic", "drf",
@@ -91,8 +93,10 @@ PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Bat
                                                      "yt-dlp", "scrapy", "fastapi", "ansible", "mitmproxy", "searxng",
                                                      "thefuck",
                                                      "arrow", "boltons", "more-itertools", "attrs", "isort", "pendulum",
-                                                     "sympy", "textual", "markitdown")}  # natural_tasks_t12.
-GO_SUBMODULES = {"go-zero": ("tools/goctl",)}  # natural_tasks_t12: tests in a nested module run from its directory.
+                                                     "sympy", "textual", "markitdown",  # natural_tasks_t12.
+                                                     "pypdf", "prompt-toolkit", "pelican", "beets", "robotframework",
+                                                     "sqlalchemy")}  # natural_tasks_t14.
+GO_SUBMODULES = {"go-zero": ("tools/goctl",), "go-github": ("otel",)}  # natural_tasks_t12 and t14: tests in a nested module run from its directory.
 TEXTUAL_SNAPSHOTS = "tests/snapshot_tests/__snapshots__/test_snapshots/"
 HIGHLIGHTJS_SUITES = ("api", "detect", "markup", "parser", "regex", "special")  # Node suites; builds/ and browser/ need a browser build.
 PAGES = 40
@@ -315,6 +319,8 @@ def verify_command(repo, tests):
             if suites else None  # No node suite: no runtime, not checked.
     if repo in T12_RUNNERS:
         return T12_RUNNERS[repo](tests)
+    if repo in T14_RUNNERS:
+        return T14_RUNNERS[repo](tests)
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
@@ -429,6 +435,65 @@ T12_RUNNERS = {  # natural_tasks_t12 runners, recorded before its fail-to-pass c
         files := [t for t in js_files(tests, "test/") if t.count("/") == 1]) else None,
     "cyberchef": cyberchef_run,
     "svelte": svelte_run,
+}
+
+
+def terser_run(tests):
+    """Its test:compress script on the changed compress fixtures."""
+    if js_files(tests, "test/mocha/"):  # Its mocha's yargs cannot load under node 26, as node-fetch's: no runtime.
+        return None
+    names = [Path(t).name for t in js_files(tests, "test/compress/") if t.count("/") == 2]
+    return ["node", "test/compress.js", *names] if names else None
+
+
+def sqlalchemy_run(tests):
+    """Typing plain files run through test/typing/test_mypy.py, selected by file name; other changed test modules
+    through pytest, with lib/ on the path."""
+    stems = sorted({Path(t).stem for t in tests if t.startswith("test/typing/plain_files/") and t.endswith(".py")})
+    modules = sorted({t for t in tests if t.endswith(".py") and Path(t).name.startswith("test_")})
+    if not stems and not modules:
+        return None
+    selection = (["test/typing/test_mypy.py", "-k", " or ".join(stems)] if stems else [])
+    return ["env", "PYTHONPATH=lib", "{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *modules, *selection]
+
+
+T14_RUNNERS = {  # natural_tasks_t14 runners, recorded before its fail-to-pass check.
+    **{repo: (lambda tests, repo=repo: go_modules(repo, tests))
+       for repo in ("jwt", "toml", "goldmark", "mvdan-sh", "dasel", "yq", "miller", "go-github", "bleve", "kratos",
+                    "gqlgen")},
+    # entc/integration is its own module whose package tests need MySQL, PostgreSQL and other databases: no runtime.
+    "ent": lambda tests: None if any(t.startswith("entc/integration/") for t in tests) else go_modules("ent", tests),
+    **{repo: pytest_run for repo in ("prompt-toolkit", "pelican", "peewee")},
+    # The sample-files submodule is not part of the snapshot, as in every batch: its samples tests are deselected.
+    "pypdf": lambda tests: pytest_run(tests, options=("-m", "not samples")),
+    "beets": lambda tests: ["{python}", "-m", "pytest", "-q", "-p", "no:randomly", *modules] if (  # No shuffled order;
+        modules := sorted({t for t in tests if t.endswith(".py") and Path(t).name.startswith("test")})) else None,
+    # beets keeps the cache provider: its setup.cfg sets cache_dir, which pytest rejects without it.
+    "robotframework": lambda tests: pytest_run(  # utest/run.py's path setup.
+        tests, ("PYTHONPATH=src:atest/testresources/testlibs:utest/resources",)),
+    "sqlalchemy": sqlalchemy_run,
+    "qs": lambda tests: ["node_modules/.bin/tape", *files] if (files := js_files(tests, "test/")) else None,
+    "acorn": lambda tests: ["env", "NODE_PATH=.", "sh", "-c", "node_modules/.bin/rollup -c acorn/rollup.config.mjs > /dev/null"
+                            " && node_modules/.bin/rollup -c acorn-loose/rollup.config.mjs > /dev/null"
+                            " && node test/run.js"] if js_files(tests, "test/") else None,  # Its pretest build; NODE_PATH=. resolves
+    # acorn-loose's import of acorn to the workspace's own package (benchmark/t14_runtime.py NESTED).
+    "chai": lambda tests: ["sh", "-c", "node_modules/.bin/esbuild --bundle --format=esm --target=es2021 --keep-names"
+                           " --legal-comments=none --log-level=warning --outfile=index.js lib/chai.js"
+                           " && node_modules/.bin/mocha --require ./test/bootstrap/index.js " + " ".join(files)] if (
+        files := [t for t in js_files(tests, "test/") if t.count("/") == 1]) else None,  # Its build, then test-node.
+    "joi": lambda tests: ["node_modules/.bin/lab", "-a", "@hapi/code", *files] if (
+        files := [t for t in js_files(tests, "test/") if "/helpers" not in t]) else None,
+    "terser": terser_run,
+    "luxon": lambda tests: ["node_modules/.bin/jest", *files] if (files := js_files(tests, "test/", ".test.js")) else None,
+    "readability": lambda tests: ["node_modules/.bin/mocha", *sorted(
+        {"test/test-readability.js" if t.startswith("test/test-pages/") else t for t in tests
+         if t.startswith("test/test-pages/") or (t.startswith("test/test-") and t.endswith(".js"))})] if any(
+        t.startswith("test/test-") for t in tests) else None,  # Fixture pages run through test-readability.js.
+    "papaparse": lambda tests: ["node_modules/.bin/mocha", *files] if (
+        files := [t for t in ("tests/node-tests.js", "tests/test-cases.js") if t in tests]) else None,
+    "alasql": lambda tests: ["sh", "-c", 'PATH="$PWD/node_modules/.bin:$PATH" sh build.sh > /dev/null 2>&1'
+                             " && bun test --preload ./test/bun-setup.js " + " ".join(f"./{t}" for t in files)] if (
+        files := [t for t in js_files(tests, "test/") if t.count("/") == 1]) else None,  # Its test script.
 }
 
 

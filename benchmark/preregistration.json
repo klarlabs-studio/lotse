@@ -1,5 +1,5 @@
 {
-  "version": 138,
+  "version": 139,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2374,6 +2374,16 @@
         "source_files": "each language's own suffix: .go, .py, .js; also .mjs where a repository ships ES-module sources",
         "selection": "natural_tasks_t12.selection unchanged: the natural_tasks_t10 protocol, issue-only bug judgment of the first 14 automatic-criteria candidates per repository, newest merge first, before any fail-to-pass check",
         "runtime": "recorded in a later version after the bug judgments and before any fail-to-pass check, as v129"
+      },
+      "runtime_v139": {
+        "recorded": "2026-11-01, after the issue-only bug judgments (results/natural-tasks-t14-judgments.json: 137 bugs among 190 judged) and before any t14 fail-to-pass check; the runtimes were smoke-tested on unmodified pinned snapshots with test files that are no candidate's hidden tests (benchmark/t14_runtime_smoke.py, .research/history/t14-runtime-smoke.json sha256 3d828821e6f457454acae98d619a45570e4f8b93ad39811d4f3ca673bee480c1: 25 of 25 pass). acorn's runner always runs its whole suite, so its smoke includes its candidates' test files with no fault applied; go-github's otel module has one test file, a hidden test, and is not smoke-tested",
+        "build": "benchmark/t14_runtime.py, one repository at a time, from temporary copies of the pinned snapshots; the package code still comes from the workspace",
+        "go": "go 1.27.3; modules of jwt, toml, mvdan-sh, dasel, yq, go-github (root and otel), bleve, kratos, gqlgen and ent downloaded into .research/go-modules (go mod download all). Runner: as t12, go test -count=1 on the packages of the changed _test.go files plus the package owning any changed testdata directory; go-github's nested otel module runs from its directory. ent's entc/integration is its own module whose package tests need MySQL, PostgreSQL and other databases: no runtime",
+        "python": "uv 0.12.23 virtualenvs on CPython 3.14.8 with test dependencies only and requirements-frozen.txt, resolved 2026-11-01: pypdf (requirements/ci.in), prompt-toolkit (wcwidth>=0.1.4, pytest, pytest-mock), pelican (pyproject.toml dependencies plus requirements/test.pip), beets (uv.lock: project dependencies, the test group and its extras except bpd, replaygain and metasync, whose PyGObject and dbus-python need system libraries, autobpm (librosa, numba) and reflink (a C extension)), robotframework (utest/requirements.txt plus pytest), sqlalchemy (typing-extensions>=4.6.0, greenlet, mypy>=2.4, types-greenlet, pytest>8,<10). Runner: pytest -q -p no:cacheprovider on the changed test modules, as t12; pypdf adds -m 'not samples' (its sample-files submodule is not part of the snapshot, as in every batch); beets adds -p no:randomly (pytest-randomly would shuffle the order) and keeps the cache provider (its setup.cfg sets cache_dir); robotframework runs with PYTHONPATH=src:atest/testresources/testlibs:utest/resources (utest/run.py's path); sqlalchemy runs with PYTHONPATH=lib and selects changed test/typing/plain_files by name through test/typing/test_mypy.py. No changed test module: no runtime",
+        "javascript": "node v26.10.0; node_modules via npm 11.19.1 install --ignore-scripts --legacy-peer-deps in .research/task-runtime/<repo>-full from the pinned package.json and lockfile (qs, joi and papaparse have no lockfile: resolved 2026-11-01); acorn's lockfile hoists acorn 6.4.2 for buble, its build's only user, so acorn 6 and its plugins (acorn-dynamic-import, acorn-jsx) are nested under buble and the hoisted copy removed; alasql by bun 1.1.22 install --frozen-lockfile --ignore-scripts from its bun.lock. Runners: qs tape on changed test/*.js; acorn its pretest build (rollup for acorn and acorn-loose), then node test/run.js (the whole suite) with NODE_PATH=. so acorn-loose loads the workspace's acorn; chai its build (esbuild of lib/chai.js to index.js), then mocha --require ./test/bootstrap/index.js on changed top-level test/*.js; joi lab -a @hapi/code on changed test files; terser node test/compress.js on the changed compress fixtures (test/mocha needs mocha's yargs, which node 26 cannot load, as node-fetch's in v129: no runtime); luxon jest on changed *.test.js; readability mocha test/test-readability.js for changed test-pages fixtures, or the changed test/test-*.js; papaparse mocha on changed tests/node-tests.js and tests/test-cases.js; alasql its build (build.sh with node_modules/.bin on PATH), then bun test --preload ./test/bun-setup.js on changed top-level test files",
+        "runners": "benchmark/mine_natural_tasks.py verify_command (T14_RUNNERS); benchmark/t14_f2p_candidates.py recomputes each candidate's runner and runtime under it",
+        "check_candidates": ".research/history/t14-f2p-candidates.json, sha256 e94636432ed039285fccaa2512a7c568dad51db5bcf67b3485c8a68c173e5fbc: 133 of the 137 judged bugs; 4 have no runner (ent-3558, ent-3412, ent-1817, ent-1376: entc/integration)",
+        "rule": "the t10 fail-to-pass rule unchanged: base passes, fault fails without timeout, restored passes, each within 180 s; one check (benchmark/check_tasks.py --run-id t14-f2p), report results/natural-tasks-t14-f2p.json; a candidate with a hidden test absent at the pin is rejected (v130). The 29 existing pool tasks passed t12's check under the v129 runtimes and are not re-checked. Any runtime repair is recorded in a new version before a re-check, as v117"
       }
     }
   },
@@ -3023,6 +3033,11 @@
       "version": 138,
       "date": "2026-10-31",
       "reason": "natural_tasks_t14.repositories_v138: 30 new repositories (Go 12, Python 7, JavaScript 11), pins, order and test layouts, before any of their pull requests is listed"
+    },
+    {
+      "version": 139,
+      "date": "2026-11-01",
+      "reason": "t14 runtimes, runners and fail-to-pass candidates, recorded after the issue-only bug judgments and before any t14 fail-to-pass check (natural_tasks_t14.runtime_v139)"
     }
   ],
   "arms": {
