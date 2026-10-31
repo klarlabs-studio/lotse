@@ -2,6 +2,98 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t12 (v132): two triage builds installed, 48 fresh natural tasks; fails
+
+**Outcome: neither graf candidate passes the preregistered rule.** Neither is significantly cheaper than both comparators; with Holm over the two candidates, the smaller of their largest p-values (0.376) is tested at 0.025 and fails, so both fail.
+
+- `graf_installed` (`graf-triage15`, 15 listed files):
+  - against `builtin`: $0.0004 cheaper per task, p = 0.376;
+  - against `graphify_installed`: $0.0019 cheaper per task, p = 0.016. Taken alone, that would be under 0.025, but the rule requires both comparisons and Holm stops at the first failure.
+- `graf_installed_codefiles` (`graf-codefiles`):
+  - against `builtin`: $0.0026 more per task, p = 0.572;
+  - against `graphify_installed`: $0.0011 more per task, p = 0.499.
+
+Success is non-inferior for both candidates against both comparators (margin 0.10; p ≤ 0.016). Both builds stay experimental. All 384 of 384 planned attempts completed, with usage complete, no infrastructure errors and no isolation breaches. One attempt (`mathjs-3192`, codefiles, attempt 2) failed before any model call: the disk filled with system swap while its workspace was being copied. Its partial folder is kept as `aborted-enospc-…`, and it was rerun once under the infrastructure rule. The decision is in [agent-decision-t12.json](../results/agent-decision-t12.json).
+
+| Arm | Passed | Total cost | Median per attempt | Tokens |
+|---|---|---|---|---|
+| `builtin` | 82 / 96 | $0.936 | $0.0046 | 25.0 M |
+| `graphify_installed` | 82 / 96 | $1.076 | $0.0064 | 29.5 M |
+| `graf_installed` | 81 / 96 | $0.893 | $0.0063 | 24.2 M |
+| `graf_installed_codefiles` | 79 / 96 | $1.183 | $0.0061 | 27.2 M |
+
+- **Workload.** The 48 tasks of the v131 catalog, 16 per language, from 14 repositories graf was not tuned on (Go: go-zero, lipgloss, micro, gitleaks, glance, beego; Python: more-itertools, arrow, boltons, attrs; JavaScript: mathjs, nunjucks, knex, prism). They are issue-driven natural tasks without t11's pointer-free filter.
+- **Setup.** As t11: Claude Code 2.1.314, Graphify 0.9.97, `claude-haiku-5-5`, $0.50 and 1,200 s per attempt, two attempts per task and arm, seed 20261031. All were the latest releases on 2026-10-30 (`check_latest.py`). The graf builds were `.research/bin/graf-triage15` (sha256 a77bd8dc...) and `.research/bin/graf-codefiles` (sha256 d58ecc8a...).
+- **Against `builtin`, graf's mean gain comes from a few expensive tasks.** `graf_installed` was cheaper on only 15 of 48 tasks. On most cheap tasks `builtin` is cheaper, by up to a factor of 2 (for example `mathjs-2199`: $0.0023 against $0.0055). graf's mean gain comes from three tasks where `builtin` was expensive: `go-zero-4800`, `lipgloss-941` and `gitleaks-1590`. Against `graphify_installed`, graf was cheaper on 34 of 48 tasks and used 55,000 fewer tokens per task (p = 0.043, secondary, not gated).
+- **One task decides codefiles' cost.** On `go-zero-4957`, `graf_installed_codefiles` spent $0.20 per attempt and passed neither attempt; the other arms spent $0.02 to $0.06.
+
+### Declared secondary and diagnostics (no model calls)
+
+- **Ranking secondary (declared, not a gate): codefiles ranks a faulted file first more often.** Per task, the share of first `triage` calls that list a faulted file first was 0.656 for codefiles and 0.469 for triage15. The paired difference is 0.19 (one-sided sign flip p = 0.0004, over 48 tasks). Codefiles' first file was a faulted one in 63 of 96 attempts, against 45. Both builds named a faulted file somewhere in the list in 92 of 96 attempts.
+- **Better ranking did not lower cost.** Every arm reached a faulted file almost at once. The median number of tool calls before the first read of a faulted file was:
+  - `builtin`: 1.5;
+  - `graphify_installed`: 2;
+  - both graf arms: 1.
+
+  So there was almost no search left for retrieval to save. graf's fixed overhead (the MCP tool definitions, the `CLAUDE.md` snippet and the triage call) is what shows on the many cheap tasks. Median turns: `builtin` 7, Graphify 10, graf 8 for both builds.
+- **Permission denials.** 103 tool requests were refused. 70 of them were `graphify_installed` Bash commands other than `graphify`, which its arm does not allow. The rest are Glob or Grep calls refused as needing approval (`builtin` 10, `graf_installed` 11, codefiles 5, Graphify 7). Under `acceptEdits` that means a path outside the workspace, though the stream does not record the path. None was answered.
+- **Script.** `benchmark/t12_diagnostic.py`, [t12-diagnostic.json](../results/t12-diagnostic.json).
+
+### Per task
+
+Passes out of 2 and mean cost per attempt.
+
+| Task | builtin | graphify_installed | graf_installed | graf_installed_codefiles |
+|---|---|---|---|---|
+| `arrow-1015` | 2/2, $0.0037 | 2/2, $0.0068 | 2/2, $0.0074 | 2/2, $0.0060 |
+| `arrow-1033` | 2/2, $0.0053 | 2/2, $0.0063 | 2/2, $0.0060 | 2/2, $0.0067 |
+| `arrow-1062` | 2/2, $0.0041 | 2/2, $0.0057 | 2/2, $0.0048 | 2/2, $0.0045 |
+| `arrow-1138` | 2/2, $0.0046 | 2/2, $0.0053 | 2/2, $0.0064 | 2/2, $0.0057 |
+| `arrow-851` | 2/2, $0.0036 | 2/2, $0.0044 | 2/2, $0.0033 | 2/2, $0.0030 |
+| `attrs-1575` | 2/2, $0.0036 | 2/2, $0.0046 | 2/2, $0.0061 | 2/2, $0.0049 |
+| `beego-4936` | 1/2, $0.0083 | 2/2, $0.0113 | 0/2, $0.0078 | 1/2, $0.0086 |
+| `boltons-158` | 2/2, $0.0032 | 2/2, $0.0069 | 2/2, $0.0035 | 2/2, $0.0026 |
+| `boltons-261` | 2/2, $0.0123 | 2/2, $0.0130 | 2/2, $0.0082 | 2/2, $0.0089 |
+| `boltons-340` | 2/2, $0.0047 | 2/2, $0.0045 | 2/2, $0.0047 | 2/2, $0.0055 |
+| `boltons-393` | 2/2, $0.0118 | 2/2, $0.0148 | 2/2, $0.0167 | 2/2, $0.0123 |
+| `gitleaks-1590` | 1/2, $0.0416 | 1/2, $0.0371 | 1/2, $0.0171 | 1/2, $0.0402 |
+| `glance-1031` | 2/2, $0.0029 | 2/2, $0.0071 | 2/2, $0.0035 | 2/2, $0.0036 |
+| `go-zero-4800` | 2/2, $0.0568 | 2/2, $0.0381 | 2/2, $0.0344 | 2/2, $0.0296 |
+| `go-zero-4957` | 2/2, $0.0225 | 1/2, $0.0391 | 0/2, $0.0617 | 0/2, $0.2022 |
+| `go-zero-5617` | 1/2, $0.0127 | 1/2, $0.0201 | 2/2, $0.0270 | 1/2, $0.0212 |
+| `go-zero-5647` | 0/2, $0.0239 | 0/2, $0.0207 | 0/2, $0.0121 | 0/2, $0.0095 |
+| `go-zero-5661` | 2/2, $0.0086 | 2/2, $0.0120 | 2/2, $0.0098 | 2/2, $0.0089 |
+| `go-zero-5745` | 2/2, $0.0022 | 2/2, $0.0030 | 2/2, $0.0027 | 2/2, $0.0027 |
+| `go-zero-5787` | 2/2, $0.0023 | 2/2, $0.0028 | 2/2, $0.0033 | 2/2, $0.0033 |
+| `go-zero-5788` | 2/2, $0.0032 | 2/2, $0.0042 | 2/2, $0.0036 | 2/2, $0.0032 |
+| `knex-5053` | 2/2, $0.0048 | 2/2, $0.0062 | 2/2, $0.0068 | 2/2, $0.0068 |
+| `knex-6376` | 2/2, $0.0048 | 2/2, $0.0074 | 2/2, $0.0074 | 2/2, $0.0068 |
+| `knex-6383` | 2/2, $0.0031 | 2/2, $0.0039 | 2/2, $0.0029 | 2/2, $0.0030 |
+| `lipgloss-376` | 2/2, $0.0022 | 2/2, $0.0032 | 2/2, $0.0025 | 2/2, $0.0029 |
+| `lipgloss-449` | 2/2, $0.0066 | 2/2, $0.0092 | 2/2, $0.0067 | 2/2, $0.0069 |
+| `lipgloss-468` | 2/2, $0.0110 | 2/2, $0.0122 | 2/2, $0.0106 | 2/2, $0.0121 |
+| `lipgloss-941` | 0/2, $0.0502 | 0/2, $0.0341 | 0/2, $0.0178 | 0/2, $0.0159 |
+| `mathjs-2199` | 2/2, $0.0023 | 2/2, $0.0045 | 2/2, $0.0055 | 2/2, $0.0056 |
+| `mathjs-3192` | 2/2, $0.0042 | 2/2, $0.0039 | 2/2, $0.0025 | 2/2, $0.0025 |
+| `mathjs-3247` | 0/2, $0.0258 | 0/2, $0.0330 | 0/2, $0.0198 | 0/2, $0.0211 |
+| `mathjs-3422` | 2/2, $0.0034 | 2/2, $0.0082 | 2/2, $0.0051 | 2/2, $0.0046 |
+| `mathjs-3562` | 1/2, $0.0168 | 2/2, $0.0169 | 2/2, $0.0197 | 1/2, $0.0156 |
+| `mathjs-3574` | 0/2, $0.0101 | 0/2, $0.0162 | 0/2, $0.0115 | 0/2, $0.0103 |
+| `mathjs-3578` | 2/2, $0.0041 | 2/2, $0.0059 | 2/2, $0.0057 | 2/2, $0.0052 |
+| `mathjs-3579` | 2/2, $0.0052 | 2/2, $0.0127 | 2/2, $0.0068 | 2/2, $0.0082 |
+| `micro-4084` | 2/2, $0.0022 | 2/2, $0.0034 | 2/2, $0.0040 | 2/2, $0.0042 |
+| `more-itertools-1001` | 2/2, $0.0020 | 2/2, $0.0027 | 2/2, $0.0025 | 2/2, $0.0027 |
+| `more-itertools-1192` | 2/2, $0.0024 | 2/2, $0.0033 | 2/2, $0.0026 | 2/2, $0.0026 |
+| `more-itertools-1247` | 2/2, $0.0080 | 2/2, $0.0108 | 2/2, $0.0085 | 2/2, $0.0083 |
+| `more-itertools-1250` | 2/2, $0.0022 | 2/2, $0.0033 | 2/2, $0.0023 | 2/2, $0.0026 |
+| `more-itertools-1277` | 2/2, $0.0031 | 2/2, $0.0045 | 2/2, $0.0029 | 2/2, $0.0026 |
+| `more-itertools-658` | 2/2, $0.0024 | 2/2, $0.0037 | 2/2, $0.0028 | 2/2, $0.0026 |
+| `nunjucks-1188` | 2/2, $0.0039 | 2/2, $0.0053 | 2/2, $0.0052 | 2/2, $0.0057 |
+| `nunjucks-1331` | 2/2, $0.0076 | 1/2, $0.0236 | 2/2, $0.0081 | 0/2, $0.0145 |
+| `nunjucks-782` | 2/2, $0.0043 | 2/2, $0.0063 | 2/2, $0.0039 | 2/2, $0.0042 |
+| `prism-4128` | 1/2, $0.0222 | 0/2, $0.0153 | 0/2, $0.0108 | 1/2, $0.0114 |
+| `prism-4166` | 1/2, $0.0109 | 2/2, $0.0105 | 2/2, $0.0116 | 2/2, $0.0089 |
+
 ## Offline screen: triage misses on the t10/t11 tasks (v126); 15 listed files pass, development only
 
 **Outcome: listing 15 likely files instead of 8 passes the preregistered screen.** It is a development result on tasks already used, not evidence of agent savings. The screen replays the first `triage` call of each of the 190 `graf_installed` attempts in t10 and t11, with the agent's own query and budget, in the task's prepared workspace. A hit means triage names a faulted file. No model was called. The script is `benchmark/triage_replay.py`.
