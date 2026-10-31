@@ -1,5 +1,5 @@
 {
-  "version": 137,
+  "version": 138,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2171,7 +2171,210 @@
         "power": "the scoping effect is small and carried by a few tasks (graf cheaper in about half the pairs); the batch may well fail, and a failure ends the agent-efficiency research on this hypothesis",
         "freeze": "the batch is frozen in its own version after the catalog freeze and a no-model dry run, with check_latest.py, before any batch model call"
       },
-      "budget": "operator agreed on 2026-10-31: at most 438 Haiku attempts, at most 150 screening attempts plus at most 288 batch attempts (48 tasks x 3 arms x 2, $0.50 cap per attempt); a smaller pool or catalog shrinks both"
+      "budget": "operator agreed on 2026-10-31: at most 438 Haiku attempts, at most 150 screening attempts plus at most 288 batch attempts (48 tasks x 3 arms x 2, $0.50 cap per attempt); a smaller pool or catalog shrinks both",
+      "repositories_v138": {
+        "recorded": "2026-10-31, before any pull request of these repositories was listed; default-branch heads resolved 2026-10-31T20:31Z",
+        "choice": "under natural_tasks_t12.repository_choice: none appears in any 'repository' slug of benchmark/*.json or results/*.json (155 slugs) or as a .research/corpora snapshot name (148); GitHub main language Go, Python or JavaScript (checked by size share); not archived; libraries whose tests should run locally without services, browsers or GPUs, chosen from GitHub's star-ranked lists (up to 1,000 per language) by description, then by hand. mkdocs/mkdocs (last push 2025-10-20) and mishoo/UglifyJS (2024-11-22) were dropped as inactive. Python gets fewer new repositories because 24 of the 29 existing pool tasks are Python",
+        "repositories": {
+          "jwt": {
+            "repository": "golang-jwt/jwt",
+            "commit": "9a618efd06fc5036c19970cdbb1af8d0f802cc49",
+            "language": "Go"
+          },
+          "toml": {
+            "repository": "BurntSushi/toml",
+            "commit": "d733fc535e4a9f3c454e421a87b90ade5d49bf31",
+            "language": "Go"
+          },
+          "goldmark": {
+            "repository": "yuin/goldmark",
+            "commit": "3f129ed3309403d4a8bc0baadc1f6c49eb791634",
+            "language": "Go"
+          },
+          "mvdan-sh": {
+            "repository": "mvdan/sh",
+            "commit": "e96ef1dae52c71e86cf87eb594cb4917fa49aaba",
+            "language": "Go"
+          },
+          "dasel": {
+            "repository": "TomWright/dasel",
+            "commit": "069166fe2dfc2f14d443a09b592188c2cc7e9c08",
+            "language": "Go"
+          },
+          "yq": {
+            "repository": "mikefarah/yq",
+            "commit": "fb05831b3aa710b699fbdb8561268847061b8689",
+            "language": "Go"
+          },
+          "miller": {
+            "repository": "johnkerl/miller",
+            "commit": "d035f6f56e4321ef0a07636614f4168c19bfe558",
+            "language": "Go"
+          },
+          "go-github": {
+            "repository": "google/go-github",
+            "commit": "eeb77ef803f7342ad42b8afeb0d9ed2a56b086d4",
+            "language": "Go"
+          },
+          "bleve": {
+            "repository": "blevesearch/bleve",
+            "commit": "6abe37307eb4a902d29bc472d39c23bc1bb90a79",
+            "language": "Go"
+          },
+          "kratos": {
+            "repository": "go-kratos/kratos",
+            "commit": "dd0fb7df1e325daf5ffb9c30862be8f1091763eb",
+            "language": "Go"
+          },
+          "gqlgen": {
+            "repository": "99designs/gqlgen",
+            "commit": "4c4858a47825476d80ec62c23170f0da024e29d7",
+            "language": "Go"
+          },
+          "ent": {
+            "repository": "ent/ent",
+            "commit": "8037bc89bcab9a264099afa2672581237a3e079b",
+            "language": "Go"
+          },
+          "pypdf": {
+            "repository": "py-pdf/pypdf",
+            "commit": "140204ceebb31d4b2d6016bf7f9c30c71a495167",
+            "language": "Python"
+          },
+          "prompt-toolkit": {
+            "repository": "prompt-toolkit/python-prompt-toolkit",
+            "commit": "6c7fbc1080dd331a031a2be1f96d4ebc0421f7ea",
+            "language": "Python"
+          },
+          "peewee": {
+            "repository": "coleifer/peewee",
+            "commit": "8851f8f2dc5d40b1c76b5cc4f055755f303c42bb",
+            "language": "Python"
+          },
+          "pelican": {
+            "repository": "getpelican/pelican",
+            "commit": "c2fff5344b5c285643f8f12c1e23895fec7b534b",
+            "language": "Python"
+          },
+          "beets": {
+            "repository": "beetbox/beets",
+            "commit": "ab4bdfd5dd845bf8e22e51b8017845c881793e10",
+            "language": "Python"
+          },
+          "robotframework": {
+            "repository": "robotframework/robotframework",
+            "commit": "2a5f984040dfd6da9231596b67e0b04e1f1ae855",
+            "language": "Python"
+          },
+          "sqlalchemy": {
+            "repository": "sqlalchemy/sqlalchemy",
+            "commit": "c6494316e0b42b724433cd0d14491f3c229ba14f",
+            "language": "Python"
+          },
+          "qs": {
+            "repository": "ljharb/qs",
+            "commit": "43baea4655cb9b543fb1c5cc0db95cde42852140",
+            "language": "JavaScript"
+          },
+          "json5": {
+            "repository": "json5/json5",
+            "commit": "6d21f2f86f58379171dbbadc5b00d0ae17ab9919",
+            "language": "JavaScript"
+          },
+          "bignumber.js": {
+            "repository": "MikeMcl/bignumber.js",
+            "commit": "02109ca2749538d57551cdcc7e38585db111b4bb",
+            "language": "JavaScript"
+          },
+          "acorn": {
+            "repository": "acornjs/acorn",
+            "commit": "69788e23ca00483aef84005502dc3b88f2af38df",
+            "language": "JavaScript"
+          },
+          "chai": {
+            "repository": "chaijs/chai",
+            "commit": "8cd999c735f025102a4294217309650f60d8cf96",
+            "language": "JavaScript"
+          },
+          "joi": {
+            "repository": "hapijs/joi",
+            "commit": "4009bfb93639b7da53b7cb1de2e2d8617d36d5f5",
+            "language": "JavaScript"
+          },
+          "terser": {
+            "repository": "terser/terser",
+            "commit": "707c978227009aa6948f2a1048aa59f5fdd5bc40",
+            "language": "JavaScript"
+          },
+          "luxon": {
+            "repository": "moment/luxon",
+            "commit": "f427515a38f6a671f8de663e6bcc040ed81f114e",
+            "language": "JavaScript"
+          },
+          "readability": {
+            "repository": "mozilla/readability",
+            "commit": "ab4027a8b37669745016869a37a504727992b2ba",
+            "language": "JavaScript"
+          },
+          "papaparse": {
+            "repository": "mholt/PapaParse",
+            "commit": "1fcb83c64acf61ae636b556b0eadeebaca0aea33",
+            "language": "JavaScript"
+          },
+          "alasql": {
+            "repository": "AlaSQL/alasql",
+            "commit": "72973ef5ce338499d0767eeb3ba8fdd58f503017",
+            "language": "JavaScript"
+          }
+        },
+        "repository_order": {
+          "Go": [
+            "jwt",
+            "toml",
+            "goldmark",
+            "mvdan-sh",
+            "dasel",
+            "yq",
+            "miller",
+            "go-github",
+            "bleve",
+            "kratos",
+            "gqlgen",
+            "ent"
+          ],
+          "Python": [
+            "pypdf",
+            "prompt-toolkit",
+            "peewee",
+            "pelican",
+            "beets",
+            "robotframework",
+            "sqlalchemy"
+          ],
+          "JavaScript": [
+            "qs",
+            "json5",
+            "bignumber.js",
+            "acorn",
+            "chai",
+            "joi",
+            "terser",
+            "luxon",
+            "readability",
+            "papaparse",
+            "alasql"
+          ]
+        },
+        "order_rationale": "within each language, by expected local test runnability (small pure libraries first, projects with builds, code generation or large suites last)",
+        "test_files": {
+          "Go": "*_test.go and testdata/",
+          "Python": "tests/ (pypdf, prompt-toolkit, peewee); pelican/tests/ (pelican); test/ (beets, sqlalchemy); utest/ (robotframework; its atest/ Robot acceptance suite is not run)",
+          "JavaScript": "test/ (qs, json5, bignumber.js, acorn, chai, joi, terser, luxon, readability, alasql); tests/ (papaparse)"
+        },
+        "source_files": "each language's own suffix: .go, .py, .js; also .mjs where a repository ships ES-module sources",
+        "selection": "natural_tasks_t12.selection unchanged: the natural_tasks_t10 protocol, issue-only bug judgment of the first 14 automatic-criteria candidates per repository, newest merge first, before any fail-to-pass check",
+        "runtime": "recorded in a later version after the bug judgments and before any fail-to-pass check, as v129"
+      }
     }
   },
   "report_every_case": true,
@@ -2815,6 +3018,11 @@
       "version": 137,
       "date": "2026-10-31",
       "reason": "natural_tasks_t14: confirmatory search-heavy workload (builtin screen at 15 or more tool calls, fresh paired batch against builtin and graphify_installed), from the exploratory scoping at 6e0cfb3; pool, screen, rule and proposed budget recorded before any t14 candidate is mined, screened or run"
+    },
+    {
+      "version": 138,
+      "date": "2026-10-31",
+      "reason": "natural_tasks_t14.repositories_v138: 30 new repositories (Go 12, Python 7, JavaScript 11), pins, order and test layouts, before any of their pull requests is listed"
     }
   ],
   "arms": {
