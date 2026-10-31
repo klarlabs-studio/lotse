@@ -14,6 +14,7 @@ def fetch(t4=False, confirmation=False, screen=None, batch=None, baseline=None, 
     batch = batch or ("t4" if t4 else None)
     if batch:  # Agent-batch task repositories (natural_tasks_<batch>), pinned in the preregistration.
         repos = prereg["agent_trials"][f"natural_tasks_{batch}"]
+        repos = repos.get("repositories_v138", repos)  # natural_tasks_t14 records its repositories in v138.
         items = [{"id": k, **v, "role": "agent_tasks"} for k, v in repos["repositories"].items()
                  if not only or k in only]  # Repositories a later version added beside the fetched ones.
     elif confirmation or screen:  # Localization screen repositories (v21 confirmation, v24 file_screen).
@@ -58,7 +59,7 @@ def fetch(t4=False, confirmation=False, screen=None, batch=None, baseline=None, 
 if __name__ == "__main__":
     import sys
     args = sys.argv[1:]
-    fetch(t4="--t4" in args, batch=next((b for b in ("t7", "t8", "t9", "t10", "t11", "t12") if f"--{b}" in args), None),
+    fetch(t4="--t4" in args, batch=next((b for b in ("t7", "t8", "t9", "t10", "t11", "t12", "t14") if f"--{b}" in args), None),
           confirmation="--confirmation" in args,
           screen="file_screen" if "--file-screen" in args else "typescript" if "--typescript" in args else None,
           baseline=args[args.index("--baseline") + 1] if "--baseline" in args else None,

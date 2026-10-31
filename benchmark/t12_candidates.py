@@ -17,10 +17,10 @@ HISTORY = BASE / ".research/history"
 OUT = HISTORY / "t12-judgment-candidates.json"
 
 
-def main():
-    spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t12"]
+def judgment_candidates(repository_order):
+    """Automatic-criteria candidates per repository in no earlier catalog, newest merge first; the first 14 are judged."""
     used, rows, counts = used_ids(), [], {}
-    for language, order in spec["repository_order"].items():
+    for language, order in repository_order.items():
         for repo in order:
             path = HISTORY / f"{repo}-candidates.json"
             records = json.loads(path.read_text())["candidates"] if path.is_file() else []
@@ -36,6 +36,12 @@ def main():
             counts[repo] = len(kept)
             rows += [{"id": t["id"], "repo": repo, "language": language, "shown_issue": shown_issue(t["issue"]), "task": t}
                      for t in kept[:PER_REPOSITORY]]
+    return counts, rows
+
+
+def main():
+    spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t12"]
+    counts, rows = judgment_candidates(spec["repository_order"])
     OUT.write_text(json.dumps({"automatic_candidates": counts, "candidates": rows}, indent=1) + "\n")
     print(json.dumps(counts), len(rows), "to judge")
     return 0

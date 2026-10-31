@@ -61,12 +61,21 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                                                   "hypothesis", "sympy", "textual", "markitdown")},
                    **{repo: (".js",) for repo in ("mathjs", "nunjucks", "prism", "ejs", "node-fetch", "chalk", "knex",
                                                   "browserify", "svelte")},
-                   "cyberchef": (".mjs", ".js")}
+                   "cyberchef": (".mjs", ".js"),
+                   # natural_tasks_t14 (v138).
+                   **{repo: (".go",) for repo in ("jwt", "toml", "goldmark", "mvdan-sh", "dasel", "yq", "miller",
+                                                  "go-github", "bleve", "kratos", "gqlgen", "ent")},
+                   **{repo: (".py",) for repo in ("pypdf", "prompt-toolkit", "peewee", "pelican", "beets",
+                                                  "robotframework", "sqlalchemy")},
+                   **{repo: (".js",) for repo in ("qs", "json5", "bignumber.js", "acorn", "chai", "joi", "terser",
+                                                  "luxon", "readability", "papaparse", "alasql")}}
 T10_TESTS = {"pre-commit": ("tests/", "testing/"), "tornado": ("tornado/test/",), "locust": ("locust/test/",),
              "stylelint": ("system-tests/",), "less": ("packages/test-data/",),  # natural_tasks_t10 test_files (v113).
              **{repo: ("test/",) for repo in ("yt-dlp", "ansible", "mitmproxy")},  # natural_tasks_t11 (v121).
              "hypothesis": ("hypothesis/tests/",), "svelte": ("packages/svelte/tests/",),  # natural_tasks_t12 (v128).
-             **{repo: ("tests/",) for repo in ("nunjucks", "prism", "cyberchef")}}
+             **{repo: ("tests/",) for repo in ("nunjucks", "prism", "cyberchef")},
+             "pelican": ("pelican/tests/",), "robotframework": ("utest/",), "papaparse": ("tests/",),  # natural_tasks_t14 (v138).
+             **{repo: ("test/",) for repo in ("beets", "sqlalchemy")}}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
@@ -424,7 +433,7 @@ T12_RUNNERS = {  # natural_tasks_t12 runners, recorded before its fail-to-pass c
 
 
 def pinned(repo):
-    """The pinned snapshot: the benchmark corpora, the batch t4/t7/t8/t9/t10 repositories, or the localization ones."""
+    """The pinned snapshot: the benchmark corpora, the batch t4/t7/t8/t9/t10 to t12 and t14 repositories, or the localization ones."""
     for r in json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]:
         if r["id"] == repo:
             return r
@@ -438,6 +447,9 @@ def pinned(repo):
                  screen["typescript"], screen["file_code_screen"]):
         if repo in spec["repositories"]:
             return {"id": repo, **spec["repositories"][repo]}
+    t14 = prereg["agent_trials"]["natural_tasks_t14"]["repositories_v138"]["repositories"]
+    if repo in t14:
+        return {"id": repo, **t14[repo]}
     raise KeyError(repo)
 
 
