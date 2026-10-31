@@ -1,5 +1,5 @@
 {
-  "version": 133,
+  "version": 134,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2056,6 +2056,12 @@
         "reporting": "builtin is reported side by side with every task; a pass supports 'graf as installed is cheaper than Graphify as installed on these tasks', never 'graf saves cost over Claude Code without a retrieval tool'. If builtin is cheaper than graf, the write-up says so in its outcome line",
         "budget": "operator agreed on 2026-10-31: about 282 Haiku attempts (about 47 tasks x 3 arms x 2 attempts, $0.50 cap per attempt); a smaller catalog shrinks the runs",
         "freeze": "the batch is frozen in its own version after the catalog freeze and a no-model dry run, with check_latest.py, before any model call"
+      },
+      "frozen_catalog_sha256": "9ecc6935f9404de4559ea34de21c5817298c347e1e8c45ad4997c47f9da91bef",
+      "catalog_v134": {
+        "recorded": "2026-10-31, before any t13 dry run or model call",
+        "catalog": "benchmark/natural-tasks-t13.json written by benchmark/t13_catalog.py: 47 tasks, none sharing a task or an issue with t12. Go 15 (go-zero 3, beego 1, prometheus 8, syncthing 3: the pool ran out), Python 16 (attrs 3, isort 6, pendulum 7), JavaScript 16 (mathjs 4, knex 2, browserify 1, cyberchef 8, svelte 1)",
+        "planned_runs": "47 tasks x 3 arms x 2 attempts = 282, the agreed budget"
       }
     }
   },
@@ -2680,6 +2686,11 @@
       "version": 133,
       "date": "2026-10-31",
       "reason": "natural_tasks_t13: the confirmatory graf_installed-versus-graphify_installed test suggested by t12, its pool (unused t12 fail-to-pass passes), rule and budget, before the t13 catalog exists"
+    },
+    {
+      "version": 134,
+      "date": "2026-10-31",
+      "reason": "natural_tasks_t13.catalog_v134: the 47-task t13 catalog frozen, before any dry run or model call"
     }
   ],
   "arms": {

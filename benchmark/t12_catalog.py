@@ -20,10 +20,10 @@ def passing():
     return found
 
 
-def main():
-    spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t12"]
-    found, catalog = passing(), []
-    for language, repos in spec["repository_order"].items():
+def fill(order, found):
+    """The v95 fill rule: per language in repository order, newest merge first, capped per repository and language."""
+    catalog = []
+    for language, repos in order.items():
         chosen = []
         for repo in repos:
             if repo in found and len(chosen) < PER_LANGUAGE:
@@ -35,12 +35,17 @@ def main():
     issues = [t["issue"] for t in catalog]
     if len(set(issues)) != len(issues):
         raise SystemExit("Two selected tasks share an issue")
+    return catalog
+
+
+def main():
+    spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t12"]
+    catalog = fill(spec["repository_order"], passing())
     if len(catalog) < spec["minimum_tasks"]:
         raise SystemExit(f"Only {len(catalog)} tasks; natural_tasks_t12 requires {spec['minimum_tasks']}; nothing written")
     OUT.write_text(json.dumps(catalog, indent=2) + "\n")
     print(len(catalog), "tasks")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
