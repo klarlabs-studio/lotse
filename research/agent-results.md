@@ -2,11 +2,35 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t13 (v135): graf against Graphify alone, 47 unused natural tasks; fails
+
+**Outcome: `graf_installed` is not significantly cheaper than `graphify_installed` (p = 0.140), so the confirmatory test fails. Claude Code without a retrieval tool (`builtin`, reported, not gated) was cheaper than graf: $0.790 against $0.973 in total, at similar success.** graf was cheaper than Graphify on 37 of 47 tasks, by $0.0014 per task on average. It is not significant because one task, `prometheus-14695`, cost graf $0.046 more per attempt than Graphify. That task was identified after seeing the data, and no claim rests on it. The t12 result against Graphify (p = 0.016) did not replicate on fresh tasks. graf stays experimental.
+
+- **Success.** Non-inferior: graf 89 of 94 against Graphify 73 of 94 (p < 0.0001, margin 0.10). The gap is mostly an artifact:
+  - 15 of Graphify's 21 failures are isolation breaches. In each, Claude Code 2.1.316 had moved a slow `graphify` Bash command to the background, and the agent read that command's own output file under `/private/tmp/claude-501/…/tasks/`. The preregistered lexical path check counts any read outside the workspace as a breach, which fails the attempt.
+  - graf and `builtin` had none, and t12 (Claude Code 2.1.314) had none.
+  - The success guard therefore favours graf here for a reason unrelated to retrieval. The cost test is unaffected, because failed attempts count at their cost.
+- **Against `builtin`** (reported, not gated): graf cost $0.0020 more per task and was cheaper on only 17 of 47 tasks (p = 0.895). So, as in t10 to t12, graf does not save cost over Claude Code's built-in tools on this workload.
+- **Tokens** (secondary, not gated): graf used 80,000 fewer tokens per task than Graphify (p < 0.0001).
+- **Completeness.** All 282 of 282 planned attempts completed, with usage complete and no infrastructure errors. The decision is in [agent-decision-t13.json](../results/agent-decision-t13.json); diagnostics are in [t13-diagnostic.json](../results/t13-diagnostic.json).
+- **One stopped attempt.** I stopped the batch between trials when free disk fell below 10 GB, but its child solver went on to start `isort-2010` (graf, attempt 2). That attempt was stopped before it completed, set aside as `aborted-disk-t13-isort-2010-graf_installed-2`, and rerun from scratch. The disk was filled mostly from outside the batch: other sessions' Go builds and swap.
+- **Interim outcomes.** While the batch was being stopped, a monitoring command printed three per-trial outcome lines (the tail of the chunk 2 log), against the counts-only rule during runs. Nothing was changed as a result; the freeze, catalog and rule were fixed before any model call.
+
+| Arm | Passed | Total cost | Median per attempt | Tokens | Median turns | Median calls before the faulted file is read |
+|---|---|---|---|---|---|---|
+| `builtin` (reported) | 87 / 94 | $0.790 | $0.0062 | 19.7 M | 9 | 2 |
+| `graphify_installed` | 73 / 94 | $1.103 | $0.0078 | 32.7 M | 11 | 2 |
+| `graf_installed` | 89 / 94 | $0.973 | $0.0070 | 25.1 M | 9 | 1 |
+
+- **Workload.** The 47 tasks of the v134 catalog: t12's fail-to-pass passes that t12 did not use, sharing no issue with a t12 task. Go 15 (go-zero, beego, prometheus, syncthing), Python 16 (attrs, isort, pendulum), JavaScript 16 (mathjs, knex, browserify, cyberchef, svelte).
+- **Setup.** As t12 except for the versions: Claude Code 2.1.316 (`.research/bin/claude-2.1.316`) and Graphify 0.9.99, recorded as the separate baseline revision `graphify-0.9.99`; t12 keeps 0.9.97. Model `claude-haiku-5-5`, $0.50 and 1,200 s per attempt, two attempts per task and arm, seed 20261101. All were the latest releases at the freeze (`check_latest.py --batch t13`). graf was `.research/bin/graf-triage15` (sha256 a77bd8dc...).
+- **Localization.** graf's first triage call named a faulted file in 88 of 94 attempts, but listed one first in only 26. All arms reached a faulted file within one or two calls, as in t12.
+
 ## Conclusion (2026-10-31): agent-efficiency research stopped; graf is not promoted
 
 graf does not meet the preregistered agent-efficiency requirement. In t10, t11 and t12, graf installed as Claude Code's tool was never significantly cheaper than Claude Code's built-in tools at non-inferior success, so it never beat both comparators. These batches used issue-driven and pointer-free natural repair tasks in fresh Go, Python and JavaScript repositories, with `claude-haiku-5-5`, $0.50 and 1,200 s per attempt.
 
-Against Graphify 0.9.97 alone, the 15-file triage build was cheaper on 34 of 48 t12 tasks (p = 0.016). That is a single-comparison result, not a pass under the rule, and not a superiority claim.
+Against Graphify 0.9.97 alone, the 15-file triage build was cheaper on 34 of 48 t12 tasks (p = 0.016). That is a single-comparison result, not a pass under the rule, and not a superiority claim. The confirmatory batch t13 tested it alone on 47 fresh tasks and it did not replicate (p = 0.140); `builtin` was again cheaper than graf.
 
 The diagnostics agree on why:
 - the agents reach a faulted file within one or two tool calls;

@@ -1,7 +1,7 @@
-"""Batch t12 diagnostics, no model calls: the declared ranking secondary (natural_tasks_t12.batch_plan, v128) and
-per-attempt localization. Writes results/t12-diagnostic.json.
+"""Batch t12 or t13 diagnostics, no model calls: the declared ranking secondary (natural_tasks_t12.batch_plan, v128) and
+per-attempt localization. Writes results/<batch>-diagnostic.json.
 
-    python benchmark/t12_diagnostic.py
+    python benchmark/t12_diagnostic.py [t13]
 
 Ranking: per task, the share of a graf arm's attempts whose first triage call lists a faulted file first;
 graf_installed_codefiles against graf_installed by a one-sided paired sign flip at alpha 0.05, over tasks where both
@@ -11,12 +11,14 @@ arms called triage. Reported, not a promotion gate. Also per arm: whether the fi
 import json
 from pathlib import Path
 import statistics
+import sys
 
 from paired_stats import sign_flip_p
 
 BASE = Path(__file__).resolve().parents[1]
-ARMS = ("builtin", "graphify_installed", "graf_installed", "graf_installed_codefiles")
-GRAF_ARMS = ARMS[2:]
+ARMS = {"t12": ("builtin", "graphify_installed", "graf_installed", "graf_installed_codefiles"),
+        "t13": ("builtin", "graphify_installed", "graf_installed")}
+GRAF_ARMS = ("graf_installed", "graf_installed_codefiles")
 ALPHA = 0.05
 
 
@@ -98,13 +100,13 @@ def ranking(rows):
             "codefiles_ranks_better": p <= ALPHA}
 
 
-def main():
+def main(batch="t12"):
     catalog = {t["id"]: {f["path"] for f in t["faults"]}
-               for t in json.loads((BASE / "benchmark/natural-tasks-t12.json").read_text())}
+               for t in json.loads((BASE / f"benchmark/natural-tasks-{batch}.json").read_text())}
     rows = [attempt(s, catalog[json.loads(s.read_text())["task"]])
-            for s in sorted((BASE / ".research/trials").glob("t12-*/summary.json"))]
+            for s in sorted((BASE / ".research/trials").glob(f"{batch}-*/summary.json"))]
     per_arm = {}
-    for arm in ARMS:
+    for arm in ARMS[batch]:
         r = [x for x in rows if x["arm"] == arm]
         reads = [x["calls_before_faulted_read"] for x in r if x["calls_before_faulted_read"] is not None]
         per_arm[arm] = {"attempts": len(r), "median_turns": statistics.median(x["turns"] for x in r) if r else None,
@@ -113,11 +115,12 @@ def main():
                         "median_calls_before_faulted_read": statistics.median(reads) if reads else None,
                         **({"triage_names_faulted": sum(x["triage_names_faulted"] for x in r),
                             "first_file_faulted": sum(x["first_file_faulted"] for x in r)} if arm in GRAF_ARMS else {})}
-    result = {"ranking_secondary": ranking(rows), "arms": per_arm, "attempts": rows}
-    (BASE / "results/t12-diagnostic.json").write_text(json.dumps(result, indent=1) + "\n")
+    result = {"ranking_secondary": ranking(rows) if set(GRAF_ARMS) <= set(ARMS[batch]) else None,
+              "arms": per_arm, "attempts": rows}
+    (BASE / f"results/{batch}-diagnostic.json").write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps({"ranking_secondary": result["ranking_secondary"], "arms": per_arm}, indent=1))
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(*sys.argv[1:]))

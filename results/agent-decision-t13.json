@@ -1,0 +1,1646 @@
+{
+  "preregistration_version": 135,
+  "batch": "t13",
+  "attempts_per_task_and_arm": 2,
+  "excluded_later_attempts": 0,
+  "passed": false,
+  "reasons": [
+    "no candidate passed both the cost and success tests"
+  ],
+  "comparators": [
+    "graphify_installed"
+  ],
+  "comparisons": {
+    "graf_installed": {
+      "role": "candidate",
+      "passed": false,
+      "versus": {
+        "graphify_installed": {
+          "primary": {
+            "metric": "cost_usd",
+            "mean_reduction": 0.0013844230851063836,
+            "p": 0.13984860151398487,
+            "alpha": 0.05,
+            "passed": false
+          },
+          "success": {
+            "metric": "success_rate",
+            "mean_difference": 0.1702127659574468,
+            "margin": 0.1,
+            "p": 9.99990000099999e-06,
+            "alpha": 0.05,
+            "passed": true
+          },
+          "passed": false,
+          "cheaper_tasks": 37,
+          "secondary": {
+            "mean_token_reduction": 80138.90425531915,
+            "token_reduction_p": 9.99990000099999e-06
+          }
+        }
+      }
+    }
+  },
+  "solver_timeouts_least_favorable": [],
+  "arms": {
+    "builtin": {
+      "attempts": 94,
+      "passes": 87,
+      "success_rate": 0.925531914893617,
+      "success_wilson95": [
+        0.8541878776397197,
+        0.9634614191334335
+      ],
+      "pass_hat_k": [
+        0.925531914893617,
+        0.8723404255319149
+      ],
+      "total_cost_usd": 0.79018991,
+      "total_tokens": 19718986.0
+    },
+    "graphify_installed": {
+      "attempts": 94,
+      "passes": 73,
+      "success_rate": 0.776595744680851,
+      "success_wilson95": [
+        0.6824912052295028,
+        0.8489808376730469
+      ],
+      "pass_hat_k": [
+        0.776595744680851,
+        0.6808510638297872
+      ],
+      "total_cost_usd": 1.10349194,
+      "total_tokens": 32678629.0
+    },
+    "graf_installed": {
+      "attempts": 94,
+      "passes": 89,
+      "success_rate": 0.9468085106382979,
+      "success_wilson95": [
+        0.8814635102974011,
+        0.97706825131441
+      ],
+      "pass_hat_k": [
+        0.9468085106382979,
+        0.9361702127659575
+      ],
+      "total_cost_usd": 0.97335617,
+      "total_tokens": 25145572.0
+    }
+  },
+  "tasks": [
+    {
+      "task": "attrs-1295",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003294435,
+        "mean_tokens": 62930.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00401635,
+        "mean_tokens": 87168.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0032825400000000005,
+        "mean_tokens": 69366.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "attrs-1348",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007578040000000001,
+        "mean_tokens": 155727.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.012134815,
+        "mean_tokens": 316158.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006616970000000001,
+        "mean_tokens": 152990.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "attrs-1427",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0032675100000000004,
+        "mean_tokens": 76115.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00594484,
+        "mean_tokens": 165705.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004319005000000001,
+        "mean_tokens": 106317.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "beego-4698",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008093865,
+        "mean_tokens": 234285.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01108537,
+        "mean_tokens": 397297.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009193605,
+        "mean_tokens": 290621.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "browserify-1580",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00643655,
+        "mean_tokens": 152129.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0068328600000000005,
+        "mean_tokens": 173573.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005556680000000001,
+        "mean_tokens": 136145.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-1807",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006457335,
+        "mean_tokens": 156906.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010262375,
+        "mean_tokens": 295220.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00924098,
+        "mean_tokens": 289505.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-1950",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00451083,
+        "mean_tokens": 103805.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0066105750000000005,
+        "mean_tokens": 183790.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00464589,
+        "mean_tokens": 106279.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-2590",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008072030000000001,
+        "mean_tokens": 201764.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01133835,
+        "mean_tokens": 315710.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009821555,
+        "mean_tokens": 285444.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-2610",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005965195000000001,
+        "mean_tokens": 148268.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.0049377250000000004,
+        "mean_tokens": 118221.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00412148,
+        "mean_tokens": 87065.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-2642",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004642179999999999,
+        "mean_tokens": 82213.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005873185,
+        "mean_tokens": 135952.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006286020000000001,
+        "mean_tokens": 169034.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-2658",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00648866,
+        "mean_tokens": 131109.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.006603045,
+        "mean_tokens": 162466.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005199390000000001,
+        "mean_tokens": 122631.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-2720",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.017107900000000002,
+        "mean_tokens": 419476.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.012811485,
+        "mean_tokens": 363393.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.016251599999999998,
+        "mean_tokens": 420455.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "cyberchef-2746",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00374618,
+        "mean_tokens": 66724.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003920105,
+        "mean_tokens": 81987.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00352931,
+        "mean_tokens": 82004.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "go-zero-5445",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.013462945000000002,
+        "mean_tokens": 338659.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.013918555000000003,
+        "mean_tokens": 379848.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.013236170000000002,
+        "mean_tokens": 307942.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "go-zero-5607",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0023542,
+        "mean_tokens": 47579.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0030252200000000003,
+        "mean_tokens": 66313.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0027263,
+        "mean_tokens": 69762.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "go-zero-5614",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0042800500000000005,
+        "mean_tokens": 101593.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00529916,
+        "mean_tokens": 157084.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00423371,
+        "mean_tokens": 130379.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "isort-1574",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.030794075000000004,
+        "mean_tokens": 874269.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.027291525000000004,
+        "mean_tokens": 802303.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.02020124,
+        "mean_tokens": 647414.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "isort-1984",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005790295000000001,
+        "mean_tokens": 157660.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007153240000000001,
+        "mean_tokens": 201775.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007954815,
+        "mean_tokens": 236933.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "isort-1985",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008918055000000001,
+        "mean_tokens": 234531.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00977536,
+        "mean_tokens": 239828.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008975625000000001,
+        "mean_tokens": 222275.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "isort-2010",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00793513,
+        "mean_tokens": 133557.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.018408695000000003,
+        "mean_tokens": 361776.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.011330455,
+        "mean_tokens": 215212.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "isort-2723",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004874395,
+        "mean_tokens": 105924.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006301659999999999,
+        "mean_tokens": 160888.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004157635000000001,
+        "mean_tokens": 86373.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "isort-2760",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0035527,
+        "mean_tokens": 76187.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00439343,
+        "mean_tokens": 103132.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004543695,
+        "mean_tokens": 115184.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "knex-5690",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004521674999999999,
+        "mean_tokens": 78941.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006707365,
+        "mean_tokens": 146213.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00871333,
+        "mean_tokens": 222585.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "knex-6277",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0039099700000000005,
+        "mean_tokens": 67423.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005250355,
+        "mean_tokens": 94687.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003964175,
+        "mean_tokens": 63642.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mathjs-2413",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002596195,
+        "mean_tokens": 50076.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00391262,
+        "mean_tokens": 79962.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00346449,
+        "mean_tokens": 77748.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mathjs-2508",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.009207990000000001,
+        "mean_tokens": 149406.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.023555655000000005,
+        "mean_tokens": 342732.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.015091189999999997,
+        "mean_tokens": 278584.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mathjs-2818",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0033211750000000004,
+        "mean_tokens": 66175.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.00705839,
+        "mean_tokens": 254622.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004934635,
+        "mean_tokens": 158762.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "mathjs-2990",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00907875,
+        "mean_tokens": 244467.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00787349,
+        "mean_tokens": 219616.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0078873,
+        "mean_tokens": 198921.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pendulum-1008",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.002926825,
+        "mean_tokens": 57663.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004505175,
+        "mean_tokens": 109089.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.003363695,
+        "mean_tokens": 87570.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pendulum-502",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006208895,
+        "mean_tokens": 137870.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006994380000000001,
+        "mean_tokens": 178707.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005033070000000001,
+        "mean_tokens": 124212.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pendulum-767",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006083255000000001,
+        "mean_tokens": 134245.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.010001504999999999,
+        "mean_tokens": 234410.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008320130000000002,
+        "mean_tokens": 219531.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pendulum-768",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.013686055000000003,
+        "mean_tokens": 337266.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0147651,
+        "mean_tokens": 412034.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.018784445,
+        "mean_tokens": 437475.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "pendulum-849",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00420032,
+        "mean_tokens": 81358.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.005921405,
+        "mean_tokens": 147528.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00610765,
+        "mean_tokens": 148525.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pendulum-870",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0022404,
+        "mean_tokens": 53790.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0035815250000000003,
+        "mean_tokens": 92987.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0035252749999999996,
+        "mean_tokens": 95539.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "pendulum-899",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01104503,
+        "mean_tokens": 301481.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.012795085000000001,
+        "mean_tokens": 356683.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01256355,
+        "mean_tokens": 345211.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-14695",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.02700988000000001,
+        "mean_tokens": 867349.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.05742609,
+        "mean_tokens": 2256793.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.10288952999999998,
+        "mean_tokens": 2407284.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-15175",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.022798345000000005,
+        "mean_tokens": 592840.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.03421241,
+        "mean_tokens": 1080441.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.014269325,
+        "mean_tokens": 381979.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-18896",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01118979,
+        "mean_tokens": 243121.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.016506124999999996,
+        "mean_tokens": 480131.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0091291,
+        "mean_tokens": 224741.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-19424",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.01336725,
+        "mean_tokens": 323091.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.017284050000000002,
+        "mean_tokens": 622600.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0137253,
+        "mean_tokens": 383860.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-19699",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004816865,
+        "mean_tokens": 97358.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.008428115,
+        "mean_tokens": 248457.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.0054595500000000005,
+        "mean_tokens": 115168.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-19864",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.015672005,
+        "mean_tokens": 470537.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.027998935000000006,
+        "mean_tokens": 1072613.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.020545495000000004,
+        "mean_tokens": 731532.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-19897",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.004423975,
+        "mean_tokens": 102499.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.007057165,
+        "mean_tokens": 239946.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.006456894999999999,
+        "mean_tokens": 206974.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "prometheus-20045",
+      "builtin": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.008141160000000001,
+        "mean_tokens": 158042.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.014671060000000001,
+        "mean_tokens": 426012.5,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.008563810000000002,
+        "mean_tokens": 231236.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "svelte-19091",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007706975000000001,
+        "mean_tokens": 225687.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.01228027,
+        "mean_tokens": 403987.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.007156740000000002,
+        "mean_tokens": 186075.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "syncthing-10469",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.020536070000000003,
+        "mean_tokens": 678541.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 1,
+        "mean_cost_usd": 0.029743729999999996,
+        "mean_tokens": 1170904.0,
+        "pass_hat_k": [
+          0.5,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.017977525,
+        "mean_tokens": 590495.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "task": "syncthing-1628",
+      "builtin": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.008398880000000001,
+        "mean_tokens": 187443.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.010490505,
+        "mean_tokens": 294558.5,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 0,
+        "mean_cost_usd": 0.00842579,
+        "mean_tokens": 209802.0,
+        "pass_hat_k": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "task": "syncthing-9267",
+      "builtin": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00438467,
+        "mean_tokens": 91404.0,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graphify_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00478754,
+        "mean_tokens": 104002.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      },
+      "graf_installed": {
+        "attempts": 2,
+        "passes": 2,
+        "mean_cost_usd": 0.00490142,
+        "mean_tokens": 95993.5,
+        "pass_hat_k": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "scope": "synthetic fault-repair tasks are harness evidence, not natural held-out issues; a pass cannot authorize product promotion by itself"
+}
