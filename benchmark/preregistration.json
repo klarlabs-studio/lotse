@@ -1,5 +1,5 @@
 {
-  "version": 132,
+  "version": 133,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1989,6 +1989,74 @@
         "planned_runs": "48 tasks x 4 arms x 2 attempts = 384, the agreed budget"
       },
       "frozen_catalog_sha256": "fe22ea94be520cc2eb1b1945222e6b23f9a4d0ab75cd0f8e2099c4ad4de3f5bc"
+    },
+    "natural_tasks_t13": {
+      "catalog": "benchmark/natural-tasks-t13.json",
+      "purpose": "one confirmatory batch t13 of the single hypothesis t12 suggested: graf_installed with graf-triage15 is cheaper than graphify_installed at non-inferior success. The operator agreed about 282 Haiku runs (3 arms, builtin reported and not gated) on 2026-10-31",
+      "hypothesis_origin": "t12 (v132) was gated against builtin and graphify_installed and failed; its graf_installed versus graphify_installed comparison alone gave p = 0.016 (34 of 48 tasks cheaper). That comparison was not t12's decision, so t13 tests it on tasks no agent has seen",
+      "workload": "as natural_tasks_t12: issue-driven natural repair tasks in t12's repositories, under the same protocol, runtimes (v129), runners and fail-to-pass rule (v129, v130)",
+      "pool": "the t12 candidates that passed the t12 fail-to-pass check (results/natural-tasks-t12-f2p.json, sha256 09f9507c96a369c9ef49f184c9471c373c05551b26c11405c9c5ddcef1498abb) and are not in the t12 catalog (benchmark/natural-tasks-t12.json, sha256 fe22ea94be520cc2eb1b1945222e6b23f9a4d0ab75cd0f8e2099c4ad4de3f5bc); no agent has attempted any of them. A task whose issue is also a t12 task's issue is excluded",
+      "selection": "the v95 fill rule as t12: per language in natural_tasks_t12.repository_order, newest merge first, at most 8 per repository and 16 per language; no new mining, judging or checking",
+      "repository_order": {
+        "Go": [
+          "micro",
+          "gitleaks",
+          "lipgloss",
+          "glance",
+          "ntfy",
+          "dive",
+          "go-zero",
+          "beego",
+          "prometheus",
+          "syncthing"
+        ],
+        "Python": [
+          "arrow",
+          "boltons",
+          "more-itertools",
+          "attrs",
+          "isort",
+          "pendulum",
+          "hypothesis",
+          "sympy",
+          "textual",
+          "markitdown"
+        ],
+        "JavaScript": [
+          "mathjs",
+          "nunjucks",
+          "prism",
+          "ejs",
+          "node-fetch",
+          "chalk",
+          "knex",
+          "browserify",
+          "cyberchef",
+          "svelte"
+        ]
+      },
+      "minimum_tasks": 36,
+      "if_fewer": "if fewer than 36 tasks qualify, no batch runs; nothing is added without a new version",
+      "batch_plan": {
+        "arms": {
+          "builtin": "as t12, reported only",
+          "graphify_installed": "as t12",
+          "graf_installed": "as t12 with .research/bin/graf-triage15 (sha256 a77bd8dc511cbbb712487af3e3268e317001df8d9ad53fd2fd3d8a7f22ecda3a)"
+        },
+        "candidates": [
+          "graf_installed"
+        ],
+        "comparators": [
+          "graphify_installed"
+        ],
+        "reported_not_gated": [
+          "builtin"
+        ],
+        "rule": "the agent_trials.rule for graf_installed against graphify_installed alone: cost superiority by one-sided paired sign flip at alpha 0.05 on per-task mean cost_usd, success non-inferiority within 0.10 at its alpha; no split, one test",
+        "reporting": "builtin is reported side by side with every task; a pass supports 'graf as installed is cheaper than Graphify as installed on these tasks', never 'graf saves cost over Claude Code without a retrieval tool'. If builtin is cheaper than graf, the write-up says so in its outcome line",
+        "budget": "operator agreed on 2026-10-31: about 282 Haiku attempts (about 47 tasks x 3 arms x 2 attempts, $0.50 cap per attempt); a smaller catalog shrinks the runs",
+        "freeze": "the batch is frozen in its own version after the catalog freeze and a no-model dry run, with check_latest.py, before any model call"
+      }
     }
   },
   "report_every_case": true,
@@ -2607,6 +2675,11 @@
       "version": 132,
       "date": "2026-10-30",
       "reason": "agent_trials.batches.t12 frozen after the v131 catalog, the no-model dry run (192 of 192 ok) and check_latest.py, before any t12 model call; natural_tasks_t12.frozen_catalog_sha256 recorded from v131"
+    },
+    {
+      "version": 133,
+      "date": "2026-10-31",
+      "reason": "natural_tasks_t13: the confirmatory graf_installed-versus-graphify_installed test suggested by t12, its pool (unused t12 fail-to-pass passes), rule and budget, before the t13 catalog exists"
     }
   ],
   "arms": {
