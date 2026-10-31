@@ -1,7 +1,12 @@
 """List the t14 candidates the fail-to-pass check runs (natural_tasks_t14, v139): judged bugs, with the runner and
-runtime the miner now assigns; a candidate whose changed tests have no runner is not checked."""
+runtime the miner now assigns; a candidate whose changed tests have no runner is not checked. The v140 re-check
+lists the candidates of the repaired repositories (alasql, luxon, kratos) in t14-f2p-recheck-v140.json.
+
+    python benchmark/t14_f2p_candidates.py [repo ...]
+"""
 import json
 from pathlib import Path
+import sys
 
 from mine_natural_tasks import JS_RUNTIME, PYTHON_RUNTIME, verify_command
 from t11_f2p_candidates import merge_details
@@ -11,7 +16,7 @@ HISTORY = BASE / ".research/history"
 OUT = HISTORY / "t14-f2p-candidates.json"
 
 
-def main():
+def main(repos=()):
     rows = json.loads((HISTORY / "t14-judgment-candidates.json").read_text())["candidates"]
     judged = json.loads((BASE / "results/natural-tasks-t14-judgments.json").read_text())["judgments"]
     checked, skipped, details = [], [], {}
@@ -29,10 +34,12 @@ def main():
         if repo not in details:
             details[repo] = merge_details(repo)
         checked.append({**task, **details[repo][row["id"]]})
-    OUT.write_text(json.dumps(checked, indent=1) + "\n")
+    if repos:
+        checked = [task for task in checked if task["repo"] in repos]
+    (HISTORY / "t14-f2p-recheck-v140.json" if repos else OUT).write_text(json.dumps(checked, indent=1) + "\n")
     print(len(checked), "to check;", len(skipped), "without a runner:", ", ".join(skipped))
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv[1:]))

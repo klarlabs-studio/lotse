@@ -38,7 +38,8 @@ NPM = ("qs", "acorn", "chai", "joi", "terser", "luxon", "readability", "papapars
 # 6 and its plugins are nested under buble and the hoisted copy removed; the runner's NODE_PATH=. resolves acorn to
 # the workspace's own package.
 NESTED = {"acorn": {"buble": ("acorn", "acorn-dynamic-import", "acorn-jsx")}}
-BUN = ("alasql",)  # Its test-only script runs bun test; installed from the pinned bun.lock.
+BUN = ("alasql",)
+BUN_VERSION = "1.4.4"  # v140.  # Its test-only script runs bun test; installed from the pinned bun.lock.
 
 
 def go(repo):
@@ -77,6 +78,12 @@ def bun(repo):
     for name in ("package.json", "bun.lock"):
         shutil.copy2(CORPORA / repo / name, dest / name)
     run("bun install --frozen-lockfile --ignore-scripts > bun-log.txt 2>&1", dest)
+    # v140: bun 1.1.22 lacks the preload-scope beforeAll that test/bun-setup.js uses; the runner's bun is the current
+    # release's binary, installed beside the packages.
+    tool = RUNTIME / f"bun-{BUN_VERSION}"
+    run(f"npm install --prefix {tool} --ignore-scripts --no-audit --no-fund @oven/bun-darwin-aarch64@{BUN_VERSION}"
+        " > /dev/null 2>&1", dest)
+    shutil.copy2(tool / "node_modules/@oven/bun-darwin-aarch64/bin/bun", dest / "node_modules/.bin/bun")
 
 
 def main(repos):

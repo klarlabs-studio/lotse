@@ -459,8 +459,10 @@ def sqlalchemy_run(tests):
 
 T14_RUNNERS = {  # natural_tasks_t14 runners, recorded before its fail-to-pass check.
     **{repo: (lambda tests, repo=repo: go_modules(repo, tests))
-       for repo in ("jwt", "toml", "goldmark", "mvdan-sh", "dasel", "yq", "miller", "go-github", "bleve", "kratos",
-                    "gqlgen")},
+       for repo in ("jwt", "toml", "goldmark", "mvdan-sh", "dasel", "yq", "miller", "go-github", "bleve", "gqlgen")},
+    # v140: its pinned grpc v1.81.0 with x/net v0.54.0 does not build under go 1.27 (http2.TrailerPrefix); go 1.26.10,
+    # the last release before 1.27, builds it.
+    "kratos": lambda tests: ["env", "GOTOOLCHAIN=go1.26.10", *go_modules("kratos", tests)],
     # entc/integration is its own module whose package tests need MySQL, PostgreSQL and other databases: no runtime.
     "ent": lambda tests: None if any(t.startswith("entc/integration/") for t in tests) else go_modules("ent", tests),
     **{repo: pytest_run for repo in ("prompt-toolkit", "pelican", "peewee")},
@@ -484,7 +486,8 @@ T14_RUNNERS = {  # natural_tasks_t14 runners, recorded before its fail-to-pass c
     "joi": lambda tests: ["node_modules/.bin/lab", "-a", "@hapi/code", *files] if (
         files := [t for t in js_files(tests, "test/") if "/helpers" not in t]) else None,
     "terser": terser_run,
-    "luxon": lambda tests: ["node_modules/.bin/jest", *files] if (files := js_files(tests, "test/", ".test.js")) else None,
+    "luxon": lambda tests: ["env", "TZ=America/New_York", "node_modules/.bin/jest", *files] if (  # Its CI's zone (v140).
+        files := js_files(tests, "test/", ".test.js")) else None,
     "readability": lambda tests: ["node_modules/.bin/mocha", *sorted(
         {"test/test-readability.js" if t.startswith("test/test-pages/") else t for t in tests
          if t.startswith("test/test-pages/") or (t.startswith("test/test-") and t.endswith(".js"))})] if any(
@@ -492,7 +495,7 @@ T14_RUNNERS = {  # natural_tasks_t14 runners, recorded before its fail-to-pass c
     "papaparse": lambda tests: ["node_modules/.bin/mocha", *files] if (
         files := [t for t in ("tests/node-tests.js", "tests/test-cases.js") if t in tests]) else None,
     "alasql": lambda tests: ["sh", "-c", 'PATH="$PWD/node_modules/.bin:$PATH" sh build.sh > /dev/null 2>&1'
-                             " && bun test --preload ./test/bun-setup.js " + " ".join(f"./{t}" for t in files)] if (
+                             " && node_modules/.bin/bun test --preload ./test/bun-setup.js " + " ".join(f"./{t}" for t in files)] if (
         files := [t for t in js_files(tests, "test/") if t.count("/") == 1]) else None,  # Its test script.
 }
 

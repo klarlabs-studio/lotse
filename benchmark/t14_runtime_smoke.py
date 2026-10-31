@@ -26,7 +26,7 @@ SMOKE = {
     "qs": ["test/utils.js"], "acorn": ["test/tests-es7.js"], "chai": ["test/utilities.js"], "joi": ["test/ref.js"],
     "terser": ["test/compress/arrays.js"], "luxon": ["test/datetime/set.test.js"],
     "readability": ["test/test-isProbablyReaderable.js"], "papaparse": ["tests/node-tests.js"],
-    "alasql": ["test/test042.js"],
+    "alasql": ["test/test000.js"],
 }
 
 

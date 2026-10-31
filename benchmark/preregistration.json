@@ -1,5 +1,5 @@
 {
-  "version": 139,
+  "version": 140,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2384,6 +2384,13 @@
         "runners": "benchmark/mine_natural_tasks.py verify_command (T14_RUNNERS); benchmark/t14_f2p_candidates.py recomputes each candidate's runner and runtime under it",
         "check_candidates": ".research/history/t14-f2p-candidates.json, sha256 e94636432ed039285fccaa2512a7c568dad51db5bcf67b3485c8a68c173e5fbc: 133 of the 137 judged bugs; 4 have no runner (ent-3558, ent-3412, ent-1817, ent-1376: entc/integration)",
         "rule": "the t10 fail-to-pass rule unchanged: base passes, fault fails without timeout, restored passes, each within 180 s; one check (benchmark/check_tasks.py --run-id t14-f2p), report results/natural-tasks-t14-f2p.json; a candidate with a hidden test absent at the pin is rejected (v130). The 29 existing pool tasks passed t12's check under the v129 runtimes and are not re-checked. Any runtime repair is recorded in a new version before a re-check, as v117"
+      },
+      "check_repair_v140": {
+        "recorded": "2026-11-01, after the v139 fail-to-pass check (preserved as results/natural-tasks-t14-f2p-v139.json, sha256 c89e25c4904e01219bcfcfa3494bffb7a4e8555e86a015f97a29063496e9c301: 110 of 133 pass; its candidate list preserved as .research/history/t14-f2p-candidates-v139.json, sha256 e94636432ed039285fccaa2512a7c568dad51db5bcf67b3485c8a68c173e5fbc) and before any re-check, as v117 and v130. No agent has run any t14 task",
+        "diagnosis": "base-step failures on unmodified pins that come from the runtime, not the task: alasql (6 base failures) \u2014 bun 1.1.22 lacks the preload-scope beforeAll that test/bun-setup.js uses; luxon (2) \u2014 tests assume its CI's zone, TZ America/New_York (.github/workflows/test.yml, docker/Dockerfile); kratos (2) \u2014 its pinned grpc v1.81.0 with x/net v0.54.0 does not build under go 1.27 (undefined: http2.TrailerPrefix) and builds and passes under go 1.26.10. Not repaired: yq (9) \u2014 TestJSONScenarios fails at the pin under go 1.27.3 and go 1.26.10 alike, so its pkg/yqlib candidates keep their rejection; pypdf-4176 \u2014 a sample-files test without the samples marker; mvdan-sh-606 \u2014 the fault passes",
+        "repair": "alasql's runner uses bun 1.4.4 (the current release, @oven/bun-darwin-aarch64 binary in its runtime's node_modules/.bin; packages still from the v139 bun.lock install); luxon's runner sets TZ=America/New_York; kratos' runner sets GOTOOLCHAIN=go1.26.10 (the last release before go 1.27; kratos' go.mod declares go 1.25.0). Smoke re-run: .research/history/t14-runtime-smoke.json sha256 04fa5350ac9cfac45571a6efd1bf23c097448998ecc21d153d39b5256f272b21, 25 of 25 pass (alasql now with test/test000.js, a non-candidate test that calls before())",
+        "recheck": "all 26 candidates of alasql, luxon and kratos (.research/history/t14-f2p-recheck-v140.json, sha256 eeb1fe4a6197ac66f8f9478f277da1edb530daa8406620f66fe7c178c1776e89; benchmark/check_tasks.py --run-id t14-f2p-v140), whichever their v139 result, under the unchanged t10 rule; every other candidate keeps its v139 result. Full candidate list under the v140 runners: .research/history/t14-f2p-candidates.json, sha256 b43b4291cdd46e8d8301eab6b39f0c73781275f688af5918251aedc9f857098a. Combined report: results/natural-tasks-t14-f2p.json",
+        "agent_note": "the repairs apply to verification only; an agent working on a kratos task under the default go 1.27 sees transport/http fail to build, on every arm alike"
       }
     }
   },
@@ -3038,6 +3045,11 @@
       "version": 139,
       "date": "2026-11-01",
       "reason": "t14 runtimes, runners and fail-to-pass candidates, recorded after the issue-only bug judgments and before any t14 fail-to-pass check (natural_tasks_t14.runtime_v139)"
+    },
+    {
+      "version": 140,
+      "date": "2026-11-01",
+      "reason": "t14 runtime repairs for alasql (bun 1.4.4), luxon (TZ) and kratos (go 1.26.10) after the v139 fail-to-pass check, before any re-check (natural_tasks_t14.check_repair_v140)"
     }
   ],
   "arms": {
