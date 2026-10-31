@@ -1,0 +1,106 @@
+{
+ "arms": {
+  "builtin": {
+   "median_first_prompt_tokens": 7362.5,
+   "median_first_prompt_excess_over_builtin": 0.0,
+   "median_model_calls": 7.0,
+   "graf_tool_calls": {}
+  },
+  "graphify_installed": {
+   "median_first_prompt_tokens": 9466.5,
+   "median_first_prompt_excess_over_builtin": 2105.0,
+   "median_model_calls": 10.0,
+   "graf_tool_calls": {}
+  },
+  "graf_installed": {
+   "median_first_prompt_tokens": 9175.5,
+   "median_first_prompt_excess_over_builtin": 1814.0,
+   "median_model_calls": 8.0,
+   "graf_tool_calls": {
+    "expand": {
+     "calls": 1,
+     "median_result_chars": 868
+    },
+    "locate": {
+     "calls": 2,
+     "median_result_chars": 2997.5
+    },
+    "outline": {
+     "calls": 68,
+     "median_result_chars": 807.5
+    },
+    "search": {
+     "calls": 38,
+     "median_result_chars": 7158.5
+    },
+    "triage": {
+     "calls": 97,
+     "median_result_chars": 5374
+    },
+    "units": {
+     "calls": 46,
+     "median_result_chars": 7800.0
+    }
+   }
+  },
+  "graf_installed_codefiles": {
+   "median_first_prompt_tokens": 9190.5,
+   "median_first_prompt_excess_over_builtin": 1829.0,
+   "median_model_calls": 8.0,
+   "graf_tool_calls": {
+    "locate": {
+     "calls": 1,
+     "median_result_chars": 3181
+    },
+    "outline": {
+     "calls": 57,
+     "median_result_chars": 758
+    },
+    "search": {
+     "calls": 42,
+     "median_result_chars": 7219.0
+    },
+    "triage": {
+     "calls": 96,
+     "median_result_chars": 5125.0
+    },
+    "units": {
+     "calls": 43,
+     "median_result_chars": 6944
+    }
+   }
+  }
+ },
+ "counterfactual_without_fixed_overhead": {
+  "graf_installed": {
+   "fixed_overhead_tokens": 1814.0,
+   "median_overhead_usd_per_attempt": 0.00048978,
+   "share_of_arm_cost": 0.057987308946422844,
+   "observed": {
+    "mean_reduction_vs_builtin": 0.00044610083333333295,
+    "cheaper_tasks": 15,
+    "p": 0.37625623743762565
+   },
+   "without_overhead": {
+    "mean_reduction_vs_builtin": 0.0009853879166666663,
+    "cheaper_tasks": 22,
+    "p": 0.24852751472485274
+   }
+  },
+  "graf_installed_codefiles": {
+   "fixed_overhead_tokens": 1829.0,
+   "median_overhead_usd_per_attempt": 0.00049383,
+   "share_of_arm_cost": 0.04426155162513584,
+   "observed": {
+    "mean_reduction_vs_builtin": -0.002577399479166667,
+    "cheaper_tasks": 15,
+    "p": 0.5724742752572475
+   },
+   "without_overhead": {
+    "mean_reduction_vs_builtin": -0.002031938333333334,
+    "cheaper_tasks": 26,
+    "p": 0.5277147228527714
+   }
+  }
+ }
+}
