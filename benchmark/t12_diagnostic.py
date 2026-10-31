@@ -32,7 +32,7 @@ def tool_calls(stream):
     """[(turn, name, input, result text)] in call order."""
     calls, results, turns = [], {}, set()
     for event in events(stream):
-        message = event.get("message") or {}
+        message = event.get("message") if isinstance(event.get("message"), dict) else {}  # permission_denied: text
         content = message.get("content") if isinstance(message.get("content"), list) else []
         if event.get("type") == "assistant":
             turns.add(message.get("id"))
