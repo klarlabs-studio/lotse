@@ -18,9 +18,6 @@ CORPORA = BASE / ".research/corpora"
 
 
 def utf8(path):
-    """A missing file is left to the check, which rejects it (v130)."""
-    if not path.is_file():
-        return True
     try:
         path.read_text()
         return True
@@ -31,11 +28,14 @@ def utf8(path):
 def main(repos=()):
     rows = json.loads((HISTORY / "t15-judgment-candidates.json").read_text())["candidates"]
     judged = json.loads((BASE / "results/natural-tasks-t15-judgments.json").read_text())["judgments"]
-    checked, skipped, details = [], [], {}
+    checked, skipped, absent, details = [], [], [], {}
     for row in rows:
         if not judged[row["id"]]["bug"]:
             continue
         task, repo = dict(row["task"]), row["repo"]
+        if any(not (CORPORA / repo / t["path"]).is_file() for t in task["hidden_tests"]):
+            absent.append(row["id"])  # A hidden test file absent at the pin cannot be checked (v130).
+            continue
         if any(not utf8(CORPORA / repo / t["path"]) for t in task["hidden_tests"]):
             skipped.append(row["id"])  # The natural_tasks_t10 protocol rejects binary changes (v148).
             continue
@@ -52,7 +52,8 @@ def main(repos=()):
     if repos:
         checked = [task for task in checked if task["repo"] in repos]
     (HISTORY / "t15-f2p-recheck.json" if repos else OUT).write_text(json.dumps(checked, indent=1) + "\n")
-    print(len(checked), "to check;", len(skipped), "without a runner:", ", ".join(skipped))
+    print(len(checked), "to check;", len(skipped), "without a runner or with binary tests:", ", ".join(skipped))
+    print(len(absent), "with a hidden test file absent at the pin:", ", ".join(absent))
     return 0
 
 
