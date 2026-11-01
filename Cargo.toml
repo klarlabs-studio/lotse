@@ -9,6 +9,11 @@ description = "Local, budgeted source evidence for coding agents"
 keywords = ["retrieval", "bm25", "code-search", "agents", "cli"]
 categories = ["command-line-utilities", "development-tools"]
 
+[features]
+# Experimental: triage's likely files fused with graph-files (graph_rank) by reciprocal rank. Off by default; an
+# agent arm uses a build with it on. Not an accepted improvement.
+graph-triage = []
+
 [dependencies]
 anyhow = "1.0"
 bincode = "1.3"

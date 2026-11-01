@@ -515,10 +515,15 @@ pub fn triage_with(
         .iter()
         .map(|h| (h.path.clone(), h.score))
         .collect();
-    let mut files: Vec<String> = file_propagate(&scores, &indexed.units, &indexed.edges, WEIGHT)
+    let ranked: Vec<String> = file_propagate(&scores, &indexed.units, &indexed.edges, WEIGHT)
         .into_iter()
         .take(TRIAGE_FILES)
         .collect();
+    // The graph-triage feature fuses Graphify-style traversal ranks, from the issue as given, into these files
+    // (rank_fusion_v144).
+    #[cfg(feature = "graph-triage")]
+    let ranked = crate::graph_rank::fuse(&ranked, &crate::graph_rank::graph_files(indexed, issue));
+    let mut files: Vec<String> = ranked.into_iter().take(TRIAGE_FILES).collect();
     let mut context = String::new();
     if !files.is_empty() {
         context.push_str("Likely files:\n");
