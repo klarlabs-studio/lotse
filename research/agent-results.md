@@ -2,6 +2,27 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Rank fusion check (v144, offline): fusing Graphify's graph into graf's triage passes
+
+**Outcome: fused with Graphify's graph traversal, graf's triage put a faulted file first in 43 of 94 replayed calls, against 32 for graf alone (16 gained, 5 lost; one-sided exact McNemar p = 0.013).** This passes the preregistered rule (`natural_tasks_t14.rank_fusion_v144`). It is an offline ranking diagnostic with no model calls, so it is not agent-efficiency evidence and supports no cost or superiority claim. What it justifies is building the fusion into graf and testing it in a fresh, preregistered agent batch.
+
+- **Method.** Each t14 `graf_installed` attempt's first triage call was replayed in the task's prepared workspace, with the same text and budget, and ranked three ways:
+  - graf-triage15's triage file list;
+  - Graphify 0.9.100's `query` on the same text, taking files in the order its output first names them;
+  - both fused by reciprocal rank, with k = 60 and ties broken in graf's order, so nothing was tuned.
+
+  The rule was committed (e502ba6) before any t14 replay was scored. A smoke run on two t13 tasks only checked the pipeline. Script: `benchmark/rank_fusion_check.py`. Results: [rank-fusion-t14.json](../results/rank-fusion-t14.json).
+- **Consistency.** Replayed, graf alone ranks a faulted file first in 32 of 94 calls, the same count the batch's own triage calls gave (t14 diagnostic).
+
+| Ranking | Faulted file first | In top 3 | Listed at all | File MRR |
+|---|---|---|---|---|
+| graf | 32 / 94 | 58 | 81 | 0.498 |
+| Graphify | 20 / 94 | 48 | 78 | 0.393 |
+| fused | 43 / 94 | 58 | 92 | 0.581 |
+
+- **Spread.** The 16 gains come from 12 tasks in 9 repositories: alasql 4, beets, gqlgen, joi and pypdf 2 each, bleve, chai, luxon and toml 1 each. The 5 losses are beets 2, and alasql, dasel and ent 1 each. Fused against Graphify alone (reported, not gated): 27 gained, 4 lost.
+- **Limits.** The gain is in placing the faulted file first; the top-3 count is unchanged at 58. It is untested whether a better first file lowers the agent's cost; t14 suggests the agent finds the file within two or three calls anyway. A product build must also build or bundle the graph, and that indexing cost has not been measured.
+
 ## Batch t14 (v143): search-heavy natural tasks, graf against both comparators; fails
 
 **Outcome: `graf_installed` beats Graphify but not Claude Code's built-in tools, so the preregistered rule fails and graf stays experimental.** On 47 search-heavy natural tasks graf cost $1.611 in total, against $1.735 for `builtin` and $1.990 for `graphify_installed`. Against `builtin` it saved $0.0013 per task, not significant (p = 0.248), and was cheaper on only 20 of 47 tasks. Against Graphify 0.9.100 it saved $0.0040 per task (p = 0.0004) and was cheaper on 38 of 47 tasks. The rule requires both. The exploratory hypothesis that prompted t14 (graf saves where `builtin` has to search; see the scoping section below) is not confirmed.
