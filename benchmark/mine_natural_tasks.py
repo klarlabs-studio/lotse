@@ -68,14 +68,25 @@ SOURCE_SUFFIXES = {"cobra": (".go",), "flask": (".py",), "fastify": (".js",), "g
                    **{repo: (".py",) for repo in ("pypdf", "prompt-toolkit", "peewee", "pelican", "beets",
                                                   "robotframework", "sqlalchemy")},
                    **{repo: (".js",) for repo in ("qs", "json5", "bignumber.js", "acorn", "chai", "joi", "terser",
-                                                  "luxon", "readability", "papaparse", "alasql")}}
+                                                  "luxon", "readability", "papaparse", "alasql")},
+                   # natural_tasks_t15 (v146).
+                   **{repo: (".go",) for repo in ("env", "carbon", "lancet", "gocron", "revive", "fq", "oapi-codegen",
+                                                  "go-git", "compress", "vale", "go-swagger", "dns")},
+                   **{repo: (".py",) for repo in ("tenacity", "jc", "sqlglot", "apscheduler", "falcon", "django-ninja",
+                                                  "streamlink", "trio", "sqlfluff")},
+                   **{repo: (".js", ".mjs", ".cjs") for repo in ("node-semver", "chroma", "svgo", "markdownlint", "sinon",
+                                                                 "formidable", "pdfkit", "cytoscape", "isomorphic-git")}}
 T10_TESTS = {"pre-commit": ("tests/", "testing/"), "tornado": ("tornado/test/",), "locust": ("locust/test/",),
              "stylelint": ("system-tests/",), "less": ("packages/test-data/",),  # natural_tasks_t10 test_files (v113).
              **{repo: ("test/",) for repo in ("yt-dlp", "ansible", "mitmproxy")},  # natural_tasks_t11 (v121).
              "hypothesis": ("hypothesis/tests/",), "svelte": ("packages/svelte/tests/",),  # natural_tasks_t12 (v128).
              **{repo: ("tests/",) for repo in ("nunjucks", "prism", "cyberchef")},
              "pelican": ("pelican/tests/",), "robotframework": ("utest/",), "papaparse": ("tests/",),  # natural_tasks_t14 (v138).
-             **{repo: ("test/",) for repo in ("beets", "sqlalchemy")}}
+             **{repo: ("test/",) for repo in ("beets", "sqlalchemy")},
+             # natural_tasks_t15 (v146); trio's tests sit in src/trio/**/_tests/ (classify).
+             **{repo: ("test/",) for repo in ("sqlfluff", "node-semver", "chroma", "svgo", "markdownlint", "sinon",
+                                              "cytoscape")},
+             "formidable": ("test/", "test-node/", "test-legacy/"), "pdfkit": ("tests/",), "isomorphic-git": ("__tests__/",)}
 JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "undici-full",
               "commander": "commander-full", "ws": "ws-full", "eslint": "eslint-full", "dayjs": "dayjs-full",
               **{repo: f"{repo}-full" for repo in ("handlebars", "winston", "pug", "superagent", "prettier",
@@ -126,6 +137,7 @@ def classify(repo, path):
     if path.startswith(T10_TESTS.get(repo, ())) or repo in ("networkx", "sympy") and "tests" in Path(path).parts[:-1] \
             or repo == "markitdown" and len(Path(path).parts) > 3 and Path(path).parts[2] == "tests" \
             or repo == "stylelint" and "__tests__" in Path(path).parts[:-1] \
+            or repo == "trio" and "_tests" in Path(path).parts[:-1] \
             or repo == "less" and len(Path(path).parts) > 3 and Path(path).parts[0] == "packages" and Path(path).parts[2] == "test":
         return "test"
     if suffix == (".py",) and path.startswith("tests/"):
@@ -501,7 +513,7 @@ T14_RUNNERS = {  # natural_tasks_t14 runners, recorded before its fail-to-pass c
 
 
 def pinned(repo):
-    """The pinned snapshot: the benchmark corpora, the batch t4/t7/t8/t9/t10 to t12 and t14 repositories, or the localization ones."""
+    """The pinned snapshot: the benchmark corpora, the batch t4/t7/t8/t9/t10 to t12, t14 and t15 repositories, or the localization ones."""
     for r in json.loads((BASE / "benchmark/corpora.json").read_text())["repositories"]:
         if r["id"] == repo:
             return r
@@ -515,9 +527,10 @@ def pinned(repo):
                  screen["typescript"], screen["file_code_screen"]):
         if repo in spec["repositories"]:
             return {"id": repo, **spec["repositories"][repo]}
-    t14 = prereg["agent_trials"]["natural_tasks_t14"]["repositories_v138"]["repositories"]
-    if repo in t14:
-        return {"id": repo, **t14[repo]}
+    for batch, version in (("t14", "v138"), ("t15", "v146")):
+        repositories = prereg["agent_trials"][f"natural_tasks_{batch}"][f"repositories_{version}"]["repositories"]
+        if repo in repositories:
+            return {"id": repo, **repositories[repo]}
     raise KeyError(repo)
 
 

@@ -1,0 +1,25 @@
+"""List batch t15's judgment candidates (natural_tasks_t15.repositories_v146); no solver, no test run.
+
+    python benchmark/t15_candidates.py
+
+As t12_candidates over the v146 repository order. Writes .research/history/t15-judgment-candidates.json.
+"""
+import json
+from pathlib import Path
+
+from t12_candidates import judgment_candidates
+
+BASE = Path(__file__).resolve().parents[1]
+OUT = BASE / ".research/history/t15-judgment-candidates.json"
+
+
+def main():
+    spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t15"]
+    counts, rows = judgment_candidates(spec["repositories_v146"]["repository_order"])
+    OUT.write_text(json.dumps({"automatic_candidates": counts, "candidates": rows}, indent=1) + "\n")
+    print(json.dumps(counts), len(rows), "to judge")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
