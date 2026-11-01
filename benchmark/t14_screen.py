@@ -73,14 +73,14 @@ def calls(identifier):
     return len(tool_calls(TRIALS / identifier / "agent-stream.jsonl")[0])
 
 
-def attempt(task, identifier, used, budget):
+def attempt(task, identifier, used, budget, catalog=SCREEN_CATALOG):
     """One screen attempt, rerunning an infrastructure abort at most twice; returns the attempts it used."""
     for number in range(1, INFRASTRUCTURE_RERUNS + 2):
         if used >= budget:
             return used, False
         used += 1
         try:
-            summary = run(task, identifier, "builtin", SCREEN_CATALOG)
+            summary = run(task, identifier, "builtin", catalog)
         except OrientationError as error:
             summary = {"infrastructure_error": True, "orientation_error": str(error)}
         if not summary["infrastructure_error"]:
@@ -104,15 +104,16 @@ def frozen(spec):
     configure_solver(spec)
 
 
-def main():
+def main(batch="t14", version="screen_v141", order_of=None, catalog=SCREEN_CATALOG, out=OUT):
+    """The screen; t15_screen.py reuses it with its own spec, pool order and output paths."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     spec = json.loads((BASE / "benchmark/preregistration.json").read_text())[
-        "agent_trials"]["natural_tasks_t14"]["screen_v141"]
-    order = ordered(spec)
-    SCREEN_CATALOG.write_text(json.dumps([t for tasks in order.values() for t in tasks], indent=2) + "\n")
-    if hashlib.sha256(SCREEN_CATALOG.read_bytes()).hexdigest() != spec["catalog_sha256"] and not args.dry_run:
+        "agent_trials"][f"natural_tasks_{batch}"][version]
+    order = (order_of or ordered)(spec)
+    catalog.write_text(json.dumps([t for tasks in order.values() for t in tasks], indent=2) + "\n")
+    if hashlib.sha256(catalog.read_bytes()).hexdigest() != spec["catalog_sha256"] and not args.dry_run:
         raise SystemExit("The screen catalog differs from the frozen one")
     language = {t["id"]: lang for lang, tasks in order.items() for t in tasks}
     by_repo, by_language, results = {}, {}, {}
@@ -132,7 +133,7 @@ def main():
         elif (TRIALS / identifier).exists():
             raise SystemExit(f"{identifier} exists without a summary; inspect it before rerunning")
         else:
-            used, ran = attempt(task, identifier, used, spec["attempt_budget"])
+            used, ran = attempt(task, identifier, used, spec["attempt_budget"], catalog)
             if not ran:
                 print("attempt budget reached", flush=True)
                 break
@@ -143,7 +144,7 @@ def main():
         by_language[lang] = by_language.get(lang, 0) + kept
         print(json.dumps({"trial": identifier, "tool_calls": count, "kept": kept, "attempts": used}), flush=True)
     if not args.dry_run:
-        OUT.write_text(json.dumps({"attempts": used, "kept_by_language": by_language, "candidates": results},
+        out.write_text(json.dumps({"attempts": used, "kept_by_language": by_language, "candidates": results},
                                   indent=2) + "\n")
     return 0
 

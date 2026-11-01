@@ -42,15 +42,20 @@ def _apply(root, edits):
         path.write_text(text.replace(edit["before"], edit["after"], 1))
 
 
+# Repositories whose source has a directory named target (natural_tasks_t15, v148: revive's
+# testdata/package_directory_mismatch/target); every other repository keeps the skip it was prepared with.
+SOURCE_TARGET = ("revive",)
+
+
 def prepare(task, trial_id):
     if not trial_id.replace("-", "").replace("_", "").isalnum():
         raise ValueError("trial id must be alphanumeric with hyphens or underscores")
     dest = BASE / ".research/trials" / trial_id / "workspace"
     if dest.exists():
         raise ValueError("Refusing to overwrite a trial")
-    shutil.copytree(BASE / ".research/corpora" / task["repo"], dest,
-                    ignore=shutil.ignore_patterns(".graf", "graphify-out", ".git", "__pycache__",
-                                                 ".pytest_cache", "node_modules", "target"))
+    skipped = (".graf", "graphify-out", ".git", "__pycache__", ".pytest_cache", "node_modules",
+               *(() if task["repo"] in SOURCE_TARGET else ("target",)))  # target: Rust build output.
+    shutil.copytree(BASE / ".research/corpora" / task["repo"], dest, ignore=shutil.ignore_patterns(*skipped))
     _apply(dest, [*task_faults(task), *task.get("hidden_tests", [])])
     runtime = task.get("runtime", "fastify" if task["repo"] == "fastify" else None)
     if runtime:  # Provisioned dependencies, shared read-only; never part of the indexed source.
@@ -78,6 +83,7 @@ def verify(task, workspace, timeout=180):
     start = time.perf_counter()
     try:
         for name, path in hidden.items():
+            path.parent.mkdir(parents=True, exist_ok=True)  # A hidden test may sit in a directory the fault removed.
             path.write_text((BASE / ".research/corpora" / task["repo"] / name).read_text())
         run = run_group(command, root, env, timeout)
     finally:
