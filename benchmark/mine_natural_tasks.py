@@ -14,6 +14,7 @@ import argparse
 import json
 from pathlib import Path
 import re
+import shlex
 import subprocess
 from difflib import SequenceMatcher
 import sys
@@ -21,6 +22,7 @@ import time
 
 BASE = Path(__file__).resolve().parents[1]
 HISTORY = BASE / ".research/history"
+CORPORA = BASE / ".research/corpora"
 MAX_FILES = 10
 MAX_LINES = 400
 ISSUE_LIMIT = 4000
@@ -96,7 +98,9 @@ JS_RUNTIME = {"fastify": "fastify-full", "express": "express-full", "undici": "u
                                                     "mathjs", "nunjucks", "prism", "knex", "browserify",
                                                     "cyberchef", "svelte",  # natural_tasks_t12.
                                                     "qs", "acorn", "chai", "joi", "terser", "luxon", "readability",
-                                                    "papaparse", "alasql")}}  # natural_tasks_t14.
+                                                    "papaparse", "alasql",  # natural_tasks_t14.
+                                                    "node-semver", "chroma", "svgo", "sinon", "formidable", "pdfkit",
+                                                    "cytoscape")}}  # natural_tasks_t15.
 PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Batch t7 and t8: own virtualenvs.
                                                      "requests", "tqdm", "httpie", "uvicorn", "pytest",
                                                      "loguru", "pydantic", "drf",
@@ -106,8 +110,11 @@ PYTHON_RUNTIME = {repo: f"{repo}-venv" for repo in ("starlette", "black",  # Bat
                                                      "arrow", "boltons", "more-itertools", "attrs", "isort", "pendulum",
                                                      "sympy", "textual", "markitdown",  # natural_tasks_t12.
                                                      "pypdf", "prompt-toolkit", "pelican", "beets", "robotframework",
-                                                     "sqlalchemy")}  # natural_tasks_t14.
-GO_SUBMODULES = {"go-zero": ("tools/goctl",), "go-github": ("otel",)}  # natural_tasks_t12 and t14: tests in a nested module run from its directory.
+                                                     "sqlalchemy",  # natural_tasks_t14.
+                                                     "tenacity", "sqlglot", "apscheduler", "falcon", "django-ninja",
+                                                     "streamlink", "trio", "sqlfluff")}  # natural_tasks_t15.
+GO_SUBMODULES = {"go-zero": ("tools/goctl",), "go-github": ("otel",),  # natural_tasks_t12, t14 and t15: tests in a
+                 "oapi-codegen": ("internal/test",)}  # nested module run from its directory.
 TEXTUAL_SNAPSHOTS = "tests/snapshot_tests/__snapshots__/test_snapshots/"
 HIGHLIGHTJS_SUITES = ("api", "detect", "markup", "parser", "regex", "special")  # Node suites; builds/ and browser/ need a browser build.
 PAGES = 40
@@ -333,6 +340,8 @@ def verify_command(repo, tests):
         return T12_RUNNERS[repo](tests)
     if repo in T14_RUNNERS:
         return T14_RUNNERS[repo](tests)
+    if repo in T15_RUNNERS:
+        return T15_RUNNERS[repo](tests)
     if SOURCE_SUFFIXES[repo] == (".go",):
         packages = sorted({"./" + str(Path(t).parent) for t in tests if t.endswith("_test.go")})
         return ["go", "test", *packages, "-count=1"]
@@ -509,6 +518,95 @@ T14_RUNNERS = {  # natural_tasks_t14 runners, recorded before its fail-to-pass c
     "alasql": lambda tests: ["sh", "-c", 'PATH="$PWD/node_modules/.bin:$PATH" sh build.sh > /dev/null 2>&1'
                              " && node_modules/.bin/bun test --preload ./test/bun-setup.js " + " ".join(f"./{t}" for t in files)] if (
         files := [t for t in js_files(tests, "test/") if t.count("/") == 1]) else None,  # Its test script.
+}
+
+
+def testdata_owner(tests, owners):
+    """natural_tasks_t15: testdata files mapped to the Go package whose tests read them (prefix to package)."""
+    def owned(test, prefix):
+        return test.startswith(prefix) and "testdata" in Path(test).parts
+    # A stand-in test file name in the owning package, so go_modules tests that package.
+    return [t for t in tests if not any(owned(t, prefix) for prefix in owners)] + [
+        f"{package}/owned_test.go" for prefix, package in owners.items() if any(owned(t, prefix) for t in tests)]
+
+
+def sqlfluff_run(tests):
+    """Changed *_test.py modules, dialect fixtures through dialects_test.py and rule cases through
+    yaml_test_cases_test.py, each selected by name."""
+    modules = sorted({t for t in tests if t.endswith("_test.py")})
+    fixtures = sorted({(Path(t).parts[3], Path(t).stem) for t in tests
+                       if t.startswith("test/fixtures/dialects/") and len(Path(t).parts) == 5})
+    rules = sorted({Path(t).stem for t in tests if t.startswith("test/fixtures/rules/std_rule_cases/")})
+    steps = [["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *modules]] if modules else []
+    if fixtures:
+        steps.append(["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", "test/dialects/dialects_test.py",
+                      "-k", " or ".join(f"({d} and {f})" for d, f in fixtures)])
+    if rules:
+        steps.append(["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", "test/rules/yaml_test_cases_test.py",
+                      "-k", " or ".join(rules)])
+    if not steps:
+        return None
+    if len(steps) == 1:
+        return ["env", "PYTHONPATH=src", *steps[0]]
+    return ["sh", "-c", " && ".join("PYTHONPATH=src " + " ".join(shlex.quote(a) for a in step) for step in steps)]
+
+
+def node_semver_run(tests):
+    """tap on changed test files plus the test files that load a changed fixture."""
+    files = set(js_files(tests, "test/", exclude=()))
+    fixtures = {t for t in files if t.startswith("test/fixtures/")}
+    files -= fixtures
+    for fixture in fixtures:
+        name = "fixtures/" + Path(fixture).stem
+        files |= {str(f.relative_to(CORPORA / "node-semver")) for f in (CORPORA / "node-semver/test").rglob("*.js")
+                  if "/fixtures/" not in str(f) and name in f.read_text()}
+    return ["node_modules/.bin/tap", "--no-coverage", *sorted(files)] if files else None
+
+
+def svgo_run(tests):
+    """vitest on changed test files; plugin fixtures run through test/plugins/_index.test.js, coa fixtures through
+    test/coa/_index.test.js."""
+    files = {t for t in tests if t.startswith("test/") and t.endswith(".test.js")}
+    if any(t.startswith("test/plugins/") and not t.endswith(".js") for t in tests):
+        files.add("test/plugins/_index.test.js")
+    if any(t.startswith("test/coa/") and not t.endswith(".js") for t in tests):
+        files.add("test/coa/_index.test.js")
+    return ["node_modules/.bin/vitest", "run", *sorted(files)] if files else None
+
+
+T15_RUNNERS = {  # natural_tasks_t15 runners, recorded before its fail-to-pass check.
+    **{repo: (lambda tests, repo=repo: go_modules(repo, tests))
+       for repo in ("env", "carbon", "lancet", "gocron", "oapi-codegen", "go-git", "compress", "go-swagger")},
+    # dns's TestSocketOptions expects Linux SO_REUSEADDR/SO_REUSEPORT semantics and fails on unmodified macOS snapshots.
+    "dns": lambda tests: [*command[:-1], "-skip", "TestSocketOptions", "-count=1"]
+    if (command := go_modules("dns", tests))[0] == "go" and len(command) > 3 else command,
+    # revive's root testdata/ is read by the rule tests in test/; fq's format testdata by format/fqtest_test.go;
+    # vale's testdata/e2e suites by internal/e2e, which builds the vale binary from the workspace.
+    "revive": lambda tests: go_modules("revive", testdata_owner(tests, {"testdata/": "test"})),
+    "fq": lambda tests: go_modules("fq", testdata_owner(tests, {"format/": "format"})),
+    "vale": lambda tests: go_modules("vale", testdata_owner(tests, {"testdata/e2e/": "internal/e2e"})),
+    **{repo: pytest_run for repo in ("tenacity", "falcon", "django-ninja")},
+    "sqlglot": lambda tests: pytest_run(  # Optimizer fixtures run through tests/test_optimizer.py.
+        tests + (["tests/test_optimizer.py"] if any(t.startswith("tests/fixtures/optimizer/") for t in tests) else [])),
+    # src layouts: the workspace's package on the path. apscheduler's external-service tests need databases.
+    "apscheduler": lambda tests: pytest_run(tests, ("PYTHONPATH=src",), options=("-m", "not external_service")),
+    "streamlink": lambda tests: pytest_run(tests, ("PYTHONPATH=src",)),
+    "trio": lambda tests: ["env", "PYTHONPATH=src", "{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider", *modules]
+    if (modules := sorted({t for t in tests if t.endswith(".py") and Path(t).name.startswith("test_")})) else None,
+    "sqlfluff": sqlfluff_run,
+    "node-semver": node_semver_run,
+    "chroma": lambda tests: ["node_modules/.bin/vitest", "run", *files] if (files := js_files(tests, "test/", ".test.js")) else None,
+    "svgo": svgo_run,
+    "sinon": lambda tests: ["sh", "-c", "node ./build.cjs > /dev/null && node_modules/.bin/mocha -R dot " + " ".join(files)]
+    if (files := js_files(tests, "test/", "-test.js")) else None,  # Its pretest-node build, then test-node.
+    "formidable": lambda tests: ["sh", "-c", "rm -rf ./test/tmp && mkdir ./test/tmp && node --experimental-vm-modules"
+                                 " ./node_modules/jest/bin/jest.js " + " ".join(files)] if (
+        files := js_files(tests, "test/", ".test.js")) else None,  # Its pretest, then test-jest:ci without coverage.
+    "pdfkit": lambda tests: ["node_modules/.bin/vitest", "run", "--testTimeout", "8000", *files] if (
+        files := js_files(tests, "tests/unit/", ".spec.js")) else None,
+    "cytoscape": lambda tests: ["node_modules/.bin/mocha", *files] if (files := js_files(tests, "test/", ".mjs")) else None,
+    # isomorphic-git's node suite needs its fixture index build and a git-http-mock-server: no runtime.
+    "isomorphic-git": lambda tests: None,
 }
 
 

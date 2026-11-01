@@ -1,5 +1,5 @@
 {
-  "version": 146,
+  "version": 147,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2813,6 +2813,16 @@
             "language": "JavaScript"
           }
         }
+      },
+      "runtime_v147": {
+        "recorded": "2026-11-01, after the issue-only bug judgments (results/natural-tasks-t15-judgments.json: 183 bugs among 248 judged) and before any t15 fail-to-pass check; the runtimes were smoke-tested on unmodified pinned snapshots with test files that are no candidate's hidden tests (benchmark/t15_runtime_smoke.py, .research/history/t15-runtime-smoke.json sha256 7a8ae4cafc792c49d63da74d713b5533b3bb75c766ee08c17abd37c8a7278ab8: 27 of 27 pass)",
+        "smoke_repairs": "first smoke 24 of 27: sqlfluff reads its version and finds its own plugins through distribution metadata, so its venv gets a metadata-only dist-info with the pinned pyproject's version and entry points; dns's TestSocketOptions expects Linux SO_REUSEADDR/SO_REUSEPORT semantics and fails on unmodified macOS snapshots, so dns runs with -skip TestSocketOptions; go-swagger's first smoke file ran the whole generator package past 300 s, a package no candidate tests, so its smoke uses the candidates' own funcmaps package. No candidate's tests were run",
+        "build": "benchmark/t15_runtime.py, one repository at a time, from temporary copies of the pinned snapshots; the package code still comes from the workspace",
+        "go": "go 1.27.3; modules of env, carbon, lancet, gocron, revive, fq, oapi-codegen (root and internal/test), go-git, compress, vale, go-swagger and dns downloaded into .research/go-modules. Runner: as t12 and t14, go test -count=1 on the packages of changed _test.go files; testdata goes to the package whose tests read it: revive's testdata/ to ./test, fq's format testdata to ./format (fqtest_test.go), vale's testdata/e2e to ./internal/e2e (which builds vale from the workspace); oapi-codegen's internal/test module runs from its directory; dns adds -skip TestSocketOptions",
+        "python": "uv 0.12.23 virtualenvs on CPython 3.14.8 with test dependencies only and requirements-frozen.txt, resolved 2026-11-01: tenacity (pytest, tornado>=6.0, trio), sqlglot (pytest, duckdb>=0.6, pandas, python-dateutil, pytz), apscheduler (its project dependencies and test group without asyncmy, PySide6 and uwsgi), falcon (requirements/tests), django-ninja and streamlink (uv.lock, test group), trio (test-requirements.txt as pinned), sqlfluff (pyproject dependencies plus hypothesis and pytest, and the metadata-only dist-info above). Runner: pytest -q -p no:cacheprovider on changed test modules; sqlglot optimizer fixtures run through tests/test_optimizer.py; apscheduler, streamlink, trio and sqlfluff run with PYTHONPATH=src; apscheduler adds -m 'not external_service'; trio takes test_*.py under src/trio; sqlfluff takes changed *_test.py modules, dialect fixtures through test/dialects/dialects_test.py -k '(dialect and file)' and rule cases through test/rules/yaml_test_cases_test.py -k RULE. No changed test module: no runtime (apscheduler-1141 changes only conftest.py; django-ninja-1713 only tests/mypy_test.py, a mypy check)",
+        "javascript": "node v26.10.0; node_modules in .research/task-runtime/<repo>-full: npm 11.19.1 install --ignore-scripts --legacy-peer-deps from the pinned package-lock.json (sinon, cytoscape) or resolved 2026-11-01 (node-semver has no lockfile; pdfkit's Yarn 4 lockfile npm cannot read); pnpm 10.24.0 install --frozen-lockfile --ignore-scripts, hoisted (chroma, svgo, formidable). Runners: node-semver tap --no-coverage on changed test files plus the test files that load a changed fixture; chroma vitest run; svgo vitest run, with plugin fixtures through test/plugins/_index.test.js and coa fixtures through test/coa/_index.test.js; sinon its pretest build (node ./build.cjs), then mocha -R dot; formidable its pretest (fresh test/tmp), then jest under --experimental-vm-modules; pdfkit vitest run --testTimeout 8000 on tests/unit; cytoscape mocha on changed .mjs tests. isomorphic-git's node suite needs its fixture index build and a git-http-mock-server: no runtime",
+        "candidates": "benchmark/t15_f2p_candidates.py: 171 of 183 judged bugs get a runner (.research/history/t15-f2p-candidates.json sha256 b1a5ede66ad71c719f6f742803a2570a1773f88a76d2bd06eabbfedc8c0424bc); 12 do not (isomorphic-git 10, apscheduler-1141, django-ninja-1713)",
+        "check": "benchmark/check_tasks.py under the natural_tasks_t10 protocol: base passes, injected fault fails, restored fix passes, 180 s per run, timeouts rejected, missing hidden test files rejected (v130)"
       }
     }
   },
@@ -3502,6 +3512,11 @@
       "version": 146,
       "date": "2026-11-01",
       "reason": "natural_tasks_t15: graph-triage agent batch design (as t14 on fresh tasks), budget and the 30 repositories with pins, before any of their pull requests is listed"
+    },
+    {
+      "version": 147,
+      "date": "2026-11-01",
+      "reason": "t15 runtimes, runners and fail-to-pass candidates (runtime_v147) before any t15 fail-to-pass check"
     }
   ],
   "arms": {
