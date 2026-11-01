@@ -2,6 +2,23 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Native rank fusion check (v145, offline): graf's own port of Graphify's traversal passes on t14
+
+**Outcome: fused with graf's native port of Graphify's traversal (`graph-files`, first 10 files), graf's triage put a faulted file first in 42 of 94 replayed t14 calls, against 32 for graf alone (16 gained, 6 lost; one-sided exact McNemar p = 0.026).** This passes the preregistered rule (`natural_tasks_t14.rank_fusion_v145`). Against fusion with real Graphify it is level (6 gained, 7 lost; reported, not gated). It is an offline ranking diagnostic with no model calls: it supports no cost or superiority claim, and only justifies the agent batch v145 names.
+
+- **Method.** As v144, with a fourth and fifth ranking from `.research/bin-dev/graf-graph2` (sha256 `8b9ecaf4…`): its `graph-files` list, and that list fused with graf's by reciprocal rank (k = 60, ties in graf's order). The 10-file cut was chosen on development batches t12 and t13 only, from cuts of 10, 15, 20, 30 and none (`benchmark/rank_fusion_variants.py`); cuts of 15 and above ranked identically to none. On the 190 pooled dev calls: graf 71 first, Graphify-fused 81, native-fused 79, neither significant against graf. v145 (705f293) was committed before the t14 native replay ran, and t14 is used once for this variant. Results: [rank-fusion-native-t14.json](../results/rank-fusion-native-t14.json); dev: [t12](../results/rank-fusion-native-t12.json), [t13](../results/rank-fusion-native-t13.json).
+- **Consistency.** The replay reproduces v144's counts exactly: graf 32, Graphify 20, Graphify-fused 43.
+
+| Ranking | Faulted file first | In top 3 | Listed at all | File MRR |
+|---|---|---|---|---|
+| graf | 32 / 94 | 58 | 81 | 0.498 |
+| Graphify-fused (v144) | 43 / 94 | 58 | 92 | 0.581 |
+| native `graph-files` | 26 / 94 | 43 | 68 | 0.406 |
+| native-fused | 42 / 94 | 55 | 89 | 0.566 |
+
+- **Spread.** The 16 gains come from 13 tasks in 11 repositories: alasql 4, gqlgen and luxon 2 each, beets, bleve, chai, ent, joi, sympy, textual and toml 1 each. The 6 losses are beets 3, go-github 2 and dasel 1.
+- **Limits.** As v144: the gain is in the first file, and the top-3 count falls slightly, from 58 to 55. On dev t12, where graf alone is strong, both fusions lost a little to graf. Whether a better first file lowers agent cost is untested.
+
 ## Rank fusion check (v144, offline): fusing Graphify's graph into graf's triage passes
 
 **Outcome: fused with Graphify's graph traversal, graf's triage put a faulted file first in 43 of 94 replayed calls, against 32 for graf alone (16 gained, 5 lost; one-sided exact McNemar p = 0.013).** This passes the preregistered rule (`natural_tasks_t14.rank_fusion_v144`). It is an offline ranking diagnostic with no model calls, so it is not agent-efficiency evidence and supports no cost or superiority claim. What it justifies is building the fusion into graf and testing it in a fresh, preregistered agent batch.
