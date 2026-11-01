@@ -1,5 +1,5 @@
 {
-  "version": 144,
+  "version": 145,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2544,6 +2544,37 @@
         "alpha": 0.05,
         "if_passed": "build fusion into graf as an experimental triage, then preregister and budget a fresh agent batch against builtin and graphify_installed",
         "if_failed": "no agent batch for this combination"
+      },
+      "rank_fusion_v145": {
+        "recorded": "2026-11-01, after the development runs on t12 and t13 (results/rank-fusion-native-t12.json, -t13.json) and before any native t14 replay was run",
+        "role": "offline diagnostic, no model calls, as rank_fusion_v144; gates only whether graf's native graph-triage build is worth the agent batch below; it is not agent-efficiency evidence and authorizes no claim",
+        "question": "does fusing graf's own native port of Graphify's traversal (graph-files) into graf's triage ranking put a faulted file first more often than graf alone?",
+        "script": "benchmark/rank_fusion_check.py --batch t14 --native .research/bin-dev/graf-graph2, under .research/venv-graphify-0.9.100",
+        "native_binary": {
+          "path": ".research/bin-dev/graf-graph2",
+          "sha256": "8b9ecaf483101b3a3f98d791f24ad7f6e6a8ecf8d02f27feb51f0ace0ac55e2b",
+          "graph_files": 10
+        },
+        "unit": "as rank_fusion_v144: each t14 graf_installed attempt's first triage call, replayed in the task's prepared workspace",
+        "rankings": {
+          "graf": "graf-triage15 triage file list at the recorded budget, as v144",
+          "native": "graf-graph2 graph-files on the same text: the first 10 files of the native traversal",
+          "native_fused": "reciprocal rank fusion of graf and native, k = 60, ties in graf's order"
+        },
+        "development": {
+          "batches": [
+            "t12",
+            "t13"
+          ],
+          "chosen": "a 10-file cut, from 10, 15, 20, 30 and uncut (benchmark/rank_fusion_variants.py); 15 and above were identical to uncut",
+          "pooled": "190 calls: graf 71 first, Graphify-fused 81 (26 gained, 16 lost, p 0.082), native top 10 fused 79 (24 gained, 16 lost, p 0.134); against Graphify-fused 10 gained, 12 lost"
+        },
+        "metric": "a faulted file ranked first",
+        "rule": "native_fused passes if it gains more calls than it loses against graf and a one-sided exact McNemar test gives p < 0.05; against Graphify-fused it is reported, not gated",
+        "alpha": 0.05,
+        "single_test": "t14 is used once for this variant; a failure is reported and not followed by retuning on t14",
+        "if_passed": "preregister a fresh natural-task agent batch: the graph-triage feature build against builtin and graphify_installed under agent_decision.py's intersection-union rule, latest versions checked by check_latest.py and frozen; the user agreed a budget of at most 440 Haiku attempts for it",
+        "if_failed": "no agent batch for the native combination"
       }
     }
   },
@@ -3223,6 +3254,11 @@
       "version": 144,
       "date": "2026-11-01",
       "reason": "t14 rank fusion check (rank_fusion_v144) frozen before any t14 replay is scored"
+    },
+    {
+      "version": 145,
+      "date": "2026-11-01",
+      "reason": "native rank fusion check (rank_fusion_v145, graf-graph2, 10-file cut chosen on t12/t13) frozen before any native t14 replay is run"
     }
   ],
   "arms": {
