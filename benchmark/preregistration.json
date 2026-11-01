@@ -1,5 +1,5 @@
 {
-  "version": 141,
+  "version": 142,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2458,7 +2458,15 @@
         "verifier_deadline": true,
         "versions_checked": "2026-11-01, benchmark/check_latest.py --batch t13: graphify 0.9.99, Claude Code 2.1.316 and ripgrep 15.2.0 are each the latest release; claude-haiku-5-5 is the latest Haiku",
         "reading": "only each attempt's tool_use count is read before the catalog freeze (results/t14-screen.json); pass/fail, cost and transcripts are not inspected until the batch is analysed; the batch log is grepped only for Traceback or Error"
-      }
+      },
+      "catalog_v142": {
+        "recorded": "2026-11-01, after the screen and before any batch attempt",
+        "screen": "results/t14-screen.json, sha256 b970a862a03f3c901c9d0734b5389140bfcc983d21fd0592fb7ec761e339dec2: 138 attempts (no infrastructure reruns), 138 candidates screened, 47 kept at 15 or more tool calls (Go 16, Python 16, JavaScript 15); 13 candidates not reached (repository or language already full). Only tool-call counts were read",
+        "fill": "benchmark/t14_catalog.py: every kept candidate fits the caps, so the catalog is the 47 kept tasks in fill order",
+        "catalog": "benchmark/natural-tasks-t14.json, 47 tasks (Go 16, Python 16, JavaScript 15)",
+        "budget": "the batch plan becomes 47 tasks x 3 arms x 2 attempts = 282 attempts, within the agreed 288; with the screen's 138, 420 of the agreed 438"
+      },
+      "frozen_catalog_sha256": "ae07638615c54e3d59c8a40fc4795763cdba79a9c10e92e18ba019e6698e9ab1"
     }
   },
   "report_every_case": true,
@@ -3122,6 +3130,11 @@
       "version": 141,
       "date": "2026-11-01",
       "reason": "t14 screen: pool of 151, fill order, early-stopping procedure equivalent to a full screen, frozen solver and screen catalog, before any screen attempt (natural_tasks_t14.screen_v141)"
+    },
+    {
+      "version": 142,
+      "date": "2026-11-01",
+      "reason": "t14 catalog frozen from the screen: 47 tasks (natural_tasks_t14.catalog_v142, frozen_catalog_sha256)"
     }
   ],
   "arms": {
