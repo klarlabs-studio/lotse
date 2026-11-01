@@ -1,5 +1,5 @@
 {
-  "version": 147,
+  "version": 148,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2823,6 +2823,99 @@
         "javascript": "node v26.10.0; node_modules in .research/task-runtime/<repo>-full: npm 11.19.1 install --ignore-scripts --legacy-peer-deps from the pinned package-lock.json (sinon, cytoscape) or resolved 2026-11-01 (node-semver has no lockfile; pdfkit's Yarn 4 lockfile npm cannot read); pnpm 10.24.0 install --frozen-lockfile --ignore-scripts, hoisted (chroma, svgo, formidable). Runners: node-semver tap --no-coverage on changed test files plus the test files that load a changed fixture; chroma vitest run; svgo vitest run, with plugin fixtures through test/plugins/_index.test.js and coa fixtures through test/coa/_index.test.js; sinon its pretest build (node ./build.cjs), then mocha -R dot; formidable its pretest (fresh test/tmp), then jest under --experimental-vm-modules; pdfkit vitest run --testTimeout 8000 on tests/unit; cytoscape mocha on changed .mjs tests. isomorphic-git's node suite needs its fixture index build and a git-http-mock-server: no runtime",
         "candidates": "benchmark/t15_f2p_candidates.py: 171 of 183 judged bugs get a runner (.research/history/t15-f2p-candidates.json sha256 b1a5ede66ad71c719f6f742803a2570a1773f88a76d2bd06eabbfedc8c0424bc); 12 do not (isomorphic-git 10, apscheduler-1141, django-ninja-1713)",
         "check": "benchmark/check_tasks.py under the natural_tasks_t10 protocol: base passes, injected fault fails, restored fix passes, 180 s per run, timeouts rejected, missing hidden test files rejected (v130)"
+      },
+      "f2p_v148": {
+        "recorded": "2026-11-01, after the fail-to-pass check and before any screen attempt",
+        "harness_fixes": [
+          "agent_trials.prepare keeps a source target/ directory for revive (SOURCE_TARGET), whose test data lives there; other repositories still skip target/ (31d07ff)",
+          "agent_trials.verify creates a hidden test's parent directory before writing it (31d07ff)",
+          "agent_trials.verify copies hidden tests as bytes, so non-UTF-8 fixtures are written unchanged (4008ed8)"
+        ],
+        "rejected_before_check": {
+          "no_runner_or_binary_tests": [
+            "fq-1340",
+            "apscheduler-1141",
+            "django-ninja-1713",
+            "pdfkit-1096",
+            "isomorphic-git x10"
+          ],
+          "hidden_test_absent_at_pin_v130": [
+            "oapi-codegen-2113",
+            "oapi-codegen-2031",
+            "svgo-1922",
+            "svgo-1410",
+            "svgo-1581"
+          ]
+        },
+        "candidates": ".research/history/t15-f2p-candidates.json, 164 tasks, sha256 f025095d6367a43a9812c2d0c54a5509ad99a2c3448051b067291c9cd0d61401 (supersedes runtime_v147.candidates; the v147 list is kept as t15-f2p-candidates-v147.json)",
+        "stopped_runs": "three earlier runs stopped on the harness faults above; their logs are kept as .research/history/t15-f2p-run{1,2,3}-stopped.log and their trial directories were regenerated",
+        "result": "results/natural-tasks-t15-f2p.json: 147 of 164 pass (Go 45, Python 57, JavaScript 45); 14 fail at the base, 2 pass under the fault, 1 times out under the fault; all 17 are rejected"
+      },
+      "screen_v148": {
+        "recorded": "2026-11-01, after f2p_v148 and before any t15 screen attempt",
+        "pool": "160 candidates: the 147 t15 fail-to-pass passes and the 13 t14 pool candidates its screen never attempted (pool.existing: textual 9, ent 2, markitdown 2); Go 47, Python 68, JavaScript 45",
+        "fill_order": {
+          "Go": [
+            "env",
+            "carbon",
+            "lancet",
+            "gocron",
+            "revive",
+            "fq",
+            "oapi-codegen",
+            "go-git",
+            "compress",
+            "vale",
+            "go-swagger",
+            "dns",
+            "ent"
+          ],
+          "Python": [
+            "tenacity",
+            "jc",
+            "sqlglot",
+            "apscheduler",
+            "falcon",
+            "django-ninja",
+            "streamlink",
+            "trio",
+            "sqlfluff",
+            "textual",
+            "markitdown"
+          ],
+          "JavaScript": [
+            "node-semver",
+            "chroma",
+            "svgo",
+            "markdownlint",
+            "sinon",
+            "formidable",
+            "pdfkit",
+            "cytoscape",
+            "isomorphic-git"
+          ]
+        },
+        "fill_order_rationale": "the v146 order within each language, then the existing t14 pool repositories in the t14 screen's order",
+        "procedure": "benchmark/t15_screen.py (benchmark/t14_screen.main): languages take turns (Go, Python, JavaScript), one candidate each; within a language repositories follow fill_order, newest merge first. A repository is passed over once 8 of its candidates are kept and a language once 16 are, so the screen attempts every candidate the fill could still take and no other, and the fill (at most 8 per repository, 16 per language, newest merge first in fill_order) selects the same tasks a screen of all 160 would. Attempts, infrastructure reruns included, stop at attempt_budget; candidates not reached are not kept",
+        "per_repository": 8,
+        "per_language": 16,
+        "keep_at_tool_calls": 15,
+        "attempt_budget": 150,
+        "trial_prefix": "t15-screen",
+        "catalog": "benchmark/natural-tasks-t15-screen.json",
+        "catalog_sha256": "2c4cd3eb8747497230b5f69ca271e618cbe955931f261e10e14368e7b72c55cd",
+        "arm": "builtin exactly as batch t14 (arm_definitions.builtin and common_setup), isolation agent_trials.isolation_rule_v136; claude-haiku-5-5 (agent_trials.model, the latest Haiku), $0.50 (agent_trials.max_budget_usd) and 1,200 s per attempt",
+        "solver_version": "2.1.316 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.316",
+        "solver_sha256": "64c327e92b2c5e0f78c0a980c5a518121e1f0d140ca771ca5dd4488d1a2dcb3f",
+        "backend_sha256": {
+          "builtin": "64c327e92b2c5e0f78c0a980c5a518121e1f0d140ca771ca5dd4488d1a2dcb3f"
+        },
+        "solver_max_turns": 80,
+        "verifier_deadline": true,
+        "versions_checked": "2026-11-01, benchmark/check_latest.py --batch t14: graphify 0.9.100, Claude Code 2.1.316 and ripgrep 15.2.0 are each the latest release; claude-haiku-5-5 is the latest Haiku",
+        "reading": "only each attempt's tool_use count is read before the catalog freeze (results/t15-screen.json); pass/fail, cost and transcripts are not inspected until the batch is analysed; the batch log is grepped only for Traceback or Error",
+        "budget": "the first 150 of the 438 agreed attempts (natural_tasks_t15.budget)"
       }
     }
   },
@@ -3517,6 +3610,11 @@
       "version": 147,
       "date": "2026-11-01",
       "reason": "t15 runtimes, runners and fail-to-pass candidates (runtime_v147) before any t15 fail-to-pass check"
+    },
+    {
+      "version": 148,
+      "date": "2026-11-01",
+      "reason": "t15 fail-to-pass result (147 of 164), the three harness fixes and pre-check rejections it needed, and the frozen t15 screen (natural_tasks_t15.screen_v148), before any screen attempt"
     }
   ],
   "arms": {
