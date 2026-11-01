@@ -1,5 +1,5 @@
 {
-  "version": 143,
+  "version": 144,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2527,7 +2527,24 @@
         "catalog": "benchmark/natural-tasks-t14.json, 47 tasks (Go 16, Python 16, JavaScript 15)",
         "budget": "the batch plan becomes 47 tasks x 3 arms x 2 attempts = 282 attempts, within the agreed 288; with the screen's 138, 420 of the agreed 438"
       },
-      "frozen_catalog_sha256": "ae07638615c54e3d59c8a40fc4795763cdba79a9c10e92e18ba019e6698e9ab1"
+      "frozen_catalog_sha256": "ae07638615c54e3d59c8a40fc4795763cdba79a9c10e92e18ba019e6698e9ab1",
+      "rank_fusion_v144": {
+        "recorded": "2026-11-01, after batch t14's decision (results/agent-decision-t14.json) and before any t14 replay was scored; a smoke run on two t13 tasks (attrs-1427, isort-2760) only checked the pipeline",
+        "role": "offline diagnostic, no model calls; gates only whether a graf build that fuses Graphify's graph ranking is worth a new agent preregistration and budget; it is not agent-efficiency evidence and authorizes no claim",
+        "question": "does fusing Graphify's graph traversal into graf's triage ranking put a faulted file first more often than graf alone?",
+        "script": "benchmark/rank_fusion_check.py --batch t14, under .research/venv-graphify-0.9.100",
+        "unit": "each t14 graf_installed attempt's first triage call (its issue text and budget), replayed in the task's prepared workspace",
+        "rankings": {
+          "graf": "graf-triage15 triage file list at the recorded budget",
+          "graphify": "graphify 0.9.100 `query` on the same text at its default budget; files in the order the output first names them",
+          "fused": "reciprocal rank fusion of the two, k = 60, ties in graf's order; nothing tuned"
+        },
+        "metric": "a faulted file ranked first",
+        "rule": "fused passes if it gains more calls than it loses against graf and a one-sided exact McNemar test gives p < 0.05; fused against graphify is reported, not gated",
+        "alpha": 0.05,
+        "if_passed": "build fusion into graf as an experimental triage, then preregister and budget a fresh agent batch against builtin and graphify_installed",
+        "if_failed": "no agent batch for this combination"
+      }
     }
   },
   "report_every_case": true,
@@ -3201,6 +3218,11 @@
       "version": 143,
       "date": "2026-11-01",
       "reason": "freeze batch t14 on Graphify 0.9.100 (new baseline revision) and Claude Code 2.1.316: 47 tasks x 3 arms x 2 attempts, graf_installed against builtin and graphify_installed (intersection-union), after the dry run and before any batch model call"
+    },
+    {
+      "version": 144,
+      "date": "2026-11-01",
+      "reason": "t14 rank fusion check (rank_fusion_v144) frozen before any t14 replay is scored"
     }
   ],
   "arms": {
