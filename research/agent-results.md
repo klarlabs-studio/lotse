@@ -2,6 +2,28 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Batch t14 (v143): search-heavy natural tasks, graf against both comparators; fails
+
+**Outcome: `graf_installed` beats Graphify but not Claude Code's built-in tools, so the preregistered rule fails and graf stays experimental.** On 47 search-heavy natural tasks graf cost $1.611 in total, against $1.735 for `builtin` and $1.990 for `graphify_installed`. Against `builtin` it saved $0.0013 per task, not significant (p = 0.248), and was cheaper on only 20 of 47 tasks. Against Graphify 0.9.100 it saved $0.0040 per task (p = 0.0004) and was cheaper on 38 of 47 tasks. The rule requires both. The exploratory hypothesis that prompted t14 (graf saves where `builtin` has to search; see the scoping section below) is not confirmed.
+
+- **Success.** Non-inferior against both comparators within the 0.10 margin: graf 77 of 94, `builtin` 80 of 94 (p = 0.033), Graphify 78 of 94 (p = 0.0002). Every failure, in every arm, is a hidden-test failure. No attempt read outside its workspace: the agent asked for such a read 39 times, in 35 attempts across all three arms, and every request was refused. None of the attempts timed out.
+- **Tokens** (secondary, not gated). graf used 116,000 fewer tokens per task than Graphify (p < 0.0001). Against `builtin` it used 5,000 more (p = 0.560).
+- **Screen regression check** (secondary, not gated). `builtin`'s median tool calls were 21 in the batch and 21 in its screen attempts on the same 47 tasks. These tasks stayed search-heavy outside the screen, so the null result against `builtin` is not because the workload regressed toward easy tasks.
+- **Completeness.** All 282 of 282 planned attempts completed, with usage complete and no infrastructure reruns. The decision is in [agent-decision-t14.json](../results/agent-decision-t14.json); diagnostics are in [t14-diagnostic.json](../results/t14-diagnostic.json).
+- **One stopped trial.** At 7 GB free I stopped the batch between trials, after trial 191. The next trial, `go-github-4457` (Graphify, attempt 1), had been prepared but its solver had not started. Its two partial setups are kept as `.research/trials-aside/t14-go-github-4457-graphify_installed-1-operator-stop-{1,2}`, and the trial was rerun from scratch. The second setup came from the first resume, which refused to overwrite the first setup's relocated workspace. The disk was filled mostly from outside the batch, by Docker's build cache.
+- **Scoring fix after the run.** `agent_decision.py` and `t12_diagnostic.py` select a batch's trials by the prefix `t14-`, which also matched the 138 screen trials (`t14-screen-*`, `screen_v141.trial_prefix`). The first decision run therefore stopped as "unplanned or duplicate trial" before evaluating anything. Both scripts now skip the screen prefix, and nothing else changed: re-running t13 gives the committed `agent-decision-t13.json` and `t13-diagnostic.json` unchanged, apart from the preregistration version field. That first run printed the per-arm pass counts. They were seen before the fix, but they do not depend on it.
+
+| Arm | Passed | Total cost | Median per attempt | Tokens | Median turns | Median tool calls | Median calls before the faulted file is read |
+|---|---|---|---|---|---|---|---|
+| `builtin` | 80 / 94 | $1.735 | $0.0131 | 46.2 M | 16 | 21 | 2 |
+| `graphify_installed` | 78 / 94 | $1.990 | $0.0158 | 57.6 M | 18.5 | 22 | 3 |
+| `graf_installed` | 77 / 94 | $1.611 | $0.0130 | 46.7 M | 16 | 18.5 | 2 |
+
+- **Workload.** The 47 tasks of the v142 catalog: fail-to-pass natural tasks whose one `builtin` screen attempt made 15 or more tool calls. They are drawn from 138 screen attempts over 151 candidates, filled under the preregistered caps of 8 per repository and 16 per language. Go 16 (jwt, toml, mvdan-sh, dasel, go-github, bleve, kratos, gqlgen, ent), Python 16 (pypdf, beets, sympy, textual), JavaScript 15 (chai, joi, luxon, papaparse, alasql). Eight tasks come from alasql and seven from beets, so those two repositories weigh heavily.
+- **Setup.** As t13 except for the versions and the comparators. Claude Code 2.1.316, and Graphify 0.9.100 (commit f5155bad), recorded as the separate baseline revision `graphify-0.9.100`; t13 keeps 0.9.99. Model `claude-haiku-5-5`, $0.50 and 1,200 s per attempt, two attempts per task and arm, seed 20261102. Isolation follows `isolation_rule_v136`. All were the latest releases at the freeze (`check_latest.py --batch t14`). graf was `.research/bin/graf-triage15` (sha256 a77bd8dc...), the same build as t13.
+- **Localization.** graf's first triage call named a faulted file in 81 of 94 attempts, but listed one first in only 32. Every arm first read a faulted file after a median of 2 or 3 calls.
+- **Budget.** 138 screen attempts and 282 batch attempts: 420 of the 438 Haiku attempts agreed.
+
 ## Scoping (exploratory, after t13): repository size does not predict graf's saving; search effort might
 
 This is hypothesis generation for a possible new preregistration, chosen after t10 to t13 were seen; it is not evidence. Over the 190 tasks of t10 to t13 (`benchmark/large_repo_scope.py`, [large-repo-scope.json](../results/large-repo-scope.json)):
@@ -43,6 +65,8 @@ This is hypothesis generation for a possible new preregistration, chosen after t
 graf does not meet the preregistered agent-efficiency requirement. In t10, t11 and t12, graf installed as Claude Code's tool was never significantly cheaper than Claude Code's built-in tools at non-inferior success, so it never beat both comparators. These batches used issue-driven and pointer-free natural repair tasks in fresh Go, Python and JavaScript repositories, with `claude-haiku-5-5`, $0.50 and 1,200 s per attempt.
 
 Against Graphify 0.9.97 alone, the 15-file triage build was cheaper on 34 of 48 t12 tasks (p = 0.016). That is a single-comparison result, not a pass under the rule, and not a superiority claim. The confirmatory batch t13 tested it alone on 47 fresh tasks and it did not replicate (p = 0.140); `builtin` was again cheaper than graf.
+
+Batch t14 (2026-11-01) reran the comparison against both comparators, on 47 tasks screened to be search-heavy. graf was significantly cheaper than Graphify 0.9.100 (p = 0.0004). It was not significantly cheaper than `builtin` (p = 0.248), so this conclusion stands.
 
 The diagnostics agree on why:
 - the agents reach a faulted file within one or two tool calls;

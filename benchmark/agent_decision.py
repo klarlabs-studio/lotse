@@ -183,7 +183,8 @@ def main():
     batch = spec["batches"][batch_id]
     task_ids = [t["id"] for t in tasks(BASE / batch.get("catalog", "benchmark/agent-tasks.json"))]
     summaries = [json.loads(p.read_text())
-                 for p in sorted((BASE / ".research/trials").glob(f"{batch_id}-*/summary.json"))]
+                 for p in sorted((BASE / ".research/trials").glob(f"{batch_id}-*/summary.json"))
+                 if not p.parent.name.startswith(f"{batch_id}-screen-")]  # A screen's trials (t14) are no attempts.
     trials = attempts(spec, batch)
     summaries, excluded = planned_attempts(summaries, trials)
     result = evaluate(summaries, task_ids, trials, spec["rule"], batch)

@@ -1,12 +1,14 @@
-"""Batch t12 or t13 diagnostics, no model calls: the declared ranking secondary (natural_tasks_t12.batch_plan, v128) and
+"""Batch t12, t13 or t14 diagnostics, no model calls: the declared ranking secondary (natural_tasks_t12.batch_plan, v128) and
 per-attempt localization. Writes results/<batch>-diagnostic.json.
 
-    python benchmark/t12_diagnostic.py [t13]
+    python benchmark/t12_diagnostic.py [t13|t14]
 
 Ranking: per task, the share of a graf arm's attempts whose first triage call lists a faulted file first;
 graf_installed_codefiles against graf_installed by a one-sided paired sign flip at alpha 0.05, over tasks where both
 arms called triage. Reported, not a promotion gate. Also per arm: whether the first triage call names a faulted file
-(the v126 hit measure), turns, tool calls and the calls before a faulted file is first read.
+(the v126 hit measure), turns, tool calls and the calls before a faulted file is first read. For t14 (v143), builtin's
+median tool calls in the batch against its screen attempts on the same tasks, a regression check; screen trials
+(t14-screen-*) are not batch attempts.
 """
 import json
 from pathlib import Path
@@ -17,7 +19,9 @@ from paired_stats import sign_flip_p
 
 BASE = Path(__file__).resolve().parents[1]
 ARMS = {"t12": ("builtin", "graphify_installed", "graf_installed", "graf_installed_codefiles"),
-        "t13": ("builtin", "graphify_installed", "graf_installed")}
+        "t13": ("builtin", "graphify_installed", "graf_installed"),
+        "t14": ("builtin", "graphify_installed", "graf_installed")}
+SCREENS = {"t14": "results/t14-screen.json"}
 GRAF_ARMS = ("graf_installed", "graf_installed_codefiles")
 ALPHA = 0.05
 
@@ -100,11 +104,21 @@ def ranking(rows):
             "codefiles_ranks_better": p <= ALPHA}
 
 
+def screen_regression(batch, rows):
+    """builtin's median tool calls per batch attempt against its single screen attempt, over the catalog's tasks."""
+    screen = json.loads((BASE / SCREENS[batch]).read_text())["candidates"]
+    batch_calls = [x["tool_calls"] for x in rows if x["arm"] == "builtin"]
+    tasks = sorted({x["task"] for x in rows if x["arm"] == "builtin"})
+    return {"tasks": len(tasks), "batch_median_tool_calls": statistics.median(batch_calls) if batch_calls else None,
+            "screen_median_tool_calls": statistics.median(screen[t]["tool_calls"] for t in tasks) if tasks else None}
+
+
 def main(batch="t12"):
     catalog = {t["id"]: {f["path"] for f in t["faults"]}
                for t in json.loads((BASE / f"benchmark/natural-tasks-{batch}.json").read_text())}
     rows = [attempt(s, catalog[json.loads(s.read_text())["task"]])
-            for s in sorted((BASE / ".research/trials").glob(f"{batch}-*/summary.json"))]
+            for s in sorted((BASE / ".research/trials").glob(f"{batch}-*/summary.json"))
+            if not s.parent.name.startswith(f"{batch}-screen-")]
     per_arm = {}
     for arm in ARMS[batch]:
         r = [x for x in rows if x["arm"] == arm]
@@ -116,9 +130,10 @@ def main(batch="t12"):
                         **({"triage_names_faulted": sum(x["triage_names_faulted"] for x in r),
                             "first_file_faulted": sum(x["first_file_faulted"] for x in r)} if arm in GRAF_ARMS else {})}
     result = {"ranking_secondary": ranking(rows) if set(GRAF_ARMS) <= set(ARMS[batch]) else None,
-              "arms": per_arm, "attempts": rows}
+              "arms": per_arm, **({"screen_regression": screen_regression(batch, rows)} if batch in SCREENS else {}),
+              "attempts": rows}
     (BASE / f"results/{batch}-diagnostic.json").write_text(json.dumps(result, indent=1) + "\n")
-    print(json.dumps({"ranking_secondary": result["ranking_secondary"], "arms": per_arm}, indent=1))
+    print(json.dumps({k: v for k, v in result.items() if k != "attempts"}, indent=1))
     return 0
 
 
