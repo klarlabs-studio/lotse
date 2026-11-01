@@ -14,6 +14,18 @@ from t11_f2p_candidates import merge_details
 BASE = Path(__file__).resolve().parents[1]
 HISTORY = BASE / ".research/history"
 OUT = HISTORY / "t15-f2p-candidates.json"
+CORPORA = BASE / ".research/corpora"
+
+
+def utf8(path):
+    """A missing file is left to the check, which rejects it (v130)."""
+    if not path.is_file():
+        return True
+    try:
+        path.read_text()
+        return True
+    except UnicodeDecodeError:
+        return False
 
 
 def main(repos=()):
@@ -24,6 +36,9 @@ def main(repos=()):
         if not judged[row["id"]]["bug"]:
             continue
         task, repo = dict(row["task"]), row["repo"]
+        if any(not utf8(CORPORA / repo / t["path"]) for t in task["hidden_tests"]):
+            skipped.append(row["id"])  # The natural_tasks_t10 protocol rejects binary changes (v148).
+            continue
         task["verify"] = verify_command(repo, sorted({t["path"] for t in task["hidden_tests"]}))
         if task["verify"] is None:
             skipped.append(row["id"])

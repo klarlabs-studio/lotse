@@ -79,19 +79,19 @@ def verify(task, workspace, timeout=180):
     env.update(GOCACHE=str(BASE / ".research/go-cache"), GOMODCACHE=str(BASE / ".research/go-modules"),
                PYTHONPATH=str(root / "src"), PYTHONDONTWRITEBYTECODE="1")
     hidden = {e["path"]: root / e["path"] for e in task.get("hidden_tests", [])}
-    agent_view = {name: path.read_text() if path.is_file() else None for name, path in hidden.items()}
+    agent_view = {name: path.read_bytes() if path.is_file() else None for name, path in hidden.items()}
     start = time.perf_counter()
     try:
         for name, path in hidden.items():
             path.parent.mkdir(parents=True, exist_ok=True)  # A hidden test may sit in a directory the fault removed.
-            path.write_text((BASE / ".research/corpora" / task["repo"] / name).read_text())
+            path.write_bytes((BASE / ".research/corpora" / task["repo"] / name).read_bytes())
         run = run_group(command, root, env, timeout)
     finally:
         for name, path in hidden.items():
             if agent_view[name] is None:
                 path.unlink(missing_ok=True)
             else:
-                path.write_text(agent_view[name])
+                path.write_bytes(agent_view[name])
     result = dict(task=task["id"], command=command, returncode=run.returncode,
                   verification_passed=run.returncode == 0, wall_s=time.perf_counter()-start,
                   stdout=run.stdout, stderr=run.stderr)
