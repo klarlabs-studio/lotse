@@ -217,6 +217,12 @@ enum Command {
         #[arg(long)]
         text: bool,
     },
+    /// Experimental: files in the order a native port of Graphify's query traversal reaches them.
+    GraphFiles {
+        /// Text that starts with `-` is still read as text, not as an option.
+        #[arg(allow_hyphen_values = true)]
+        issue: String,
+    },
     /// Experimental: a source file's functions with line ranges, to read one function, not the file.
     Outline {
         path: String,
@@ -595,6 +601,15 @@ fn run() -> Result<()> {
             let bpe = tiktoken_rs::cl100k_base()?;
             let response = graf::triage::triage(&bpe, &index, &issue, budget)?;
             emit(text, &response.context, &response)
+        }
+        Command::GraphFiles { issue } => {
+            let files =
+                graf::graph_rank::graph_files(&graf::triage::indexed_units(&index)?, &issue);
+            println!(
+                "{}",
+                serde_json::to_string(&serde_json::json!({ "files": files }))?
+            );
+            Ok(())
         }
         Command::Outline {
             path,

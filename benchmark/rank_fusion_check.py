@@ -13,6 +13,7 @@ import contextlib
 import io
 import json
 import os
+from pathlib import Path
 import re
 import shutil
 import subprocess
@@ -59,13 +60,13 @@ def calls(batch):
     return out
 
 
-def replay(task, queries, graf, graphify):
+def replay(task, queries, graf, graphify, native=None):
     faulted = {f["path"] for f in task_faults(task)}
     trial = f"rank-fusion-{task['id']}"
     with contextlib.redirect_stdout(io.StringIO()):
         prepare(task, trial)
     root = BASE / ".research/trials" / trial / "workspace"
-    rows = []
+    rows, triaged = [], []
     try:
         subprocess.run([str(graf), "--root", str(root), "index"], capture_output=True, check=True)
         home = root.parent / "graphify-home"  # As the batch ran it: nothing written globally.
@@ -74,12 +75,20 @@ def replay(task, queries, graf, graphify):
         subprocess.run([str(graphify), "update", "."], cwd=root, env=env, capture_output=True, check=True)
         for attempt, issue, budget in queries:
             ours = triage(graf, root, issue, budget)["files"]
+            triaged.append(ours)
             theirs = graphify_files(subprocess.run([str(graphify), "query", issue], cwd=root, env=env,
                                                    capture_output=True, text=True).stdout)
             both = fused(ours, theirs)
             rows.append({"task": task["id"], "attempt": attempt, "budget": budget,
                          **{name: {"first": first(r, faulted), "rank": rank(r, faulted), "listed": len(r)}
                             for name, r in (("graf", ours), ("graphify", theirs), ("fused", both))}})
+        if native:  # After every frozen-binary call, so the two builds never share an index mid-replay.
+            subprocess.run([str(native), "--root", str(root), "index"], capture_output=True, check=True)
+            for row, ours, (_, issue, _) in zip(rows, triaged, queries):
+                graph = json.loads(subprocess.run([str(native), "--root", str(root), "graph-files", "--", issue],
+                                                  capture_output=True, text=True, check=True).stdout)["files"]
+                for name, r in (("native", graph), ("native_fused", fused(ours, graph))):
+                    row[name] = {"first": first(r, faulted), "rank": rank(r, faulted), "listed": len(r)}
     finally:
         shutil.rmtree(root.parent)
     return rows
@@ -91,15 +100,20 @@ def verdict(rows, spec):
         lost = sum(r[baseline]["first"] and not r[candidate]["first"] for r in rows)
         p = mcnemar_one_sided(gained, lost)
         return {"gained": gained, "lost": lost, "p": p, "passed": gained > lost and p < spec["alpha"]}
+    names = [n for n in ("graf", "graphify", "fused", "native", "native_fused") if rows and n in rows[0]]
     return {"calls": len(rows), "tasks": len({r["task"] for r in rows}),
-            "first": {name: sum(r[name]["first"] for r in rows) for name in ("graf", "graphify", "fused")},
-            "fused_vs_graf": test("fused", "graf"), "fused_vs_graphify": test("fused", "graphify")}
+            "first": {name: sum(r[name]["first"] for r in rows) for name in names},
+            "fused_vs_graf": test("fused", "graf"), "fused_vs_graphify": test("fused", "graphify"),
+            **({"native_fused_vs_graf": test("native_fused", "graf"),
+                "native_fused_vs_graphify": test("native_fused", "graphify"),
+                "native_fused_vs_fused": test("native_fused", "fused")} if "native" in names else {})}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--batch", required=True)
     parser.add_argument("--tasks", nargs="*", help="a subset, for a smoke run; writes nothing")
+    parser.add_argument("--native", type=Path, help="a graf build with graph-files: also rank natively, fused")
     args = parser.parse_args()
     spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]
     batch = spec["batches"][args.batch]
@@ -110,7 +124,7 @@ def main():
     catalog = {t["id"]: t for t in tasks(BASE / batch["catalog"])}
     queries, rows = calls(args.batch), []
     for task_id in args.tasks or sorted(queries):
-        rows += replay(catalog[task_id], queries[task_id], graf, graphify)
+        rows += replay(catalog[task_id], queries[task_id], graf, graphify, args.native and args.native.resolve())
         print(task_id, len(rows), flush=True)
     rule = spec["natural_tasks_t14"].get("rank_fusion_v144", {"alpha": 0.05})
     result = verdict(rows, rule)
@@ -118,7 +132,8 @@ def main():
     if args.tasks:
         print(json.dumps(rows, indent=1))
     else:
-        (BASE / f"results/rank-fusion-{args.batch}.json").write_text(
+        name = f"rank-fusion-native-{args.batch}" if args.native else f"rank-fusion-{args.batch}"
+        (BASE / f"results/{name}.json").write_text(
             json.dumps({**result, "rows": rows}, indent=1) + "\n")
     return 0
 
