@@ -1,5 +1,5 @@
 {
-  "version": 145,
+  "version": 146,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2576,6 +2576,244 @@
         "if_passed": "preregister a fresh natural-task agent batch: the graph-triage feature build against builtin and graphify_installed under agent_decision.py's intersection-union rule, latest versions checked by check_latest.py and frozen; the user agreed a budget of at most 440 Haiku attempts for it",
         "if_failed": "no agent batch for the native combination"
       }
+    },
+    "natural_tasks_t15": {
+      "catalog": "benchmark/natural-tasks-t15.json",
+      "purpose": "confirmatory test of rank_fusion_v145's if_passed: is graf's experimental graph-triage build (native graph-files fusion) as installed cheaper than both builtin and graphify_installed on search-heavy natural repair tasks?",
+      "hypothesis_origin": "rank_fusion_v145 (results/rank-fusion-native-t14.json): native fusion ranked a faulted file first in 42 of 94 t14 replays against graf's 32 (p 0.026); whether that lowers agent cost is untested. Design as natural_tasks_t14 (v137 to v142) on fresh tasks; no t10 to t14 task can enter t15",
+      "workload": "as natural_tasks_t14.workload: issue-driven natural tasks on which a single builtin screening attempt made 15 or more tool calls. Claims cover such tasks in these repositories under these conditions only",
+      "pool": {
+        "existing": "the 13 natural_tasks_t14 pool candidates its screen never attempted because their repository or language was full (textual 9, ent 2, markitdown 2); fail-to-pass checked, never run by an agent",
+        "new": "issue-driven candidates from the repositories below, as natural_tasks_t14.pool.new: fail-to-pass check under the natural_tasks_t10 protocol (size bound 10 files and 400 lines, 180 s, timeouts rejected, missing hidden test files rejected as v130)",
+        "target": "enough fail-to-pass candidates that the screen can keep at least 36 tasks"
+      },
+      "screen": "as natural_tasks_t14.screen (one builtin attempt per candidate, set up as the batch's builtin arm; kept at 15 or more tool calls, pass or fail; only tool-call counts are read before the catalog freeze; infrastructure errors set aside and rerun at most twice)",
+      "fill": "as natural_tasks_t14.fill: screen-kept tasks per language, repositories in the recorded order, newest merge first, at most 8 per repository, at most 48 tasks in total and at most 16 per language",
+      "minimum_tasks": 36,
+      "if_fewer": "as natural_tasks_t14.if_fewer: no batch on a lower threshold or loosened set",
+      "batch_plan": {
+        "arms": {
+          "builtin": "as t14, with the versions current at the freeze",
+          "graphify_installed": "as t14, with the latest Graphify recorded as a baseline revision if it changed",
+          "graf_installed": "as t14 with a release build of graf with the graph-triage feature from the commit frozen in the batch version (graph-files and fusion as in rank_fusion_v145's graf-graph2)"
+        },
+        "candidates": [
+          "graf_installed"
+        ],
+        "comparators": [
+          "builtin",
+          "graphify_installed"
+        ],
+        "rule": "as natural_tasks_t14.batch_plan.rule: intersection-union; cost superiority by one-sided paired sign flip at alpha 0.05 on per-task mean cost_usd against each comparator, success non-inferiority within 0.10 against each; graf passes only if all four tests pass",
+        "isolation": "agent_trials.isolation_rule_v136",
+        "attempts": "2 per task and arm; $0.50 and 1,200 s per attempt; the latest Haiku at the freeze",
+        "versions": "latest Claude Code, Haiku and Graphify at the freeze, checked by benchmark/check_latest.py --batch and recorded; never mixed within the batch",
+        "secondary": "as t14: tokens, turns, tool calls, calls before the faulted file is read, and the screen regression check"
+      },
+      "budget": "operator agreed on 2026-11-01 (\"Proceed we need to get those answers\", after rank_fusion_v145 was proposed with about 440): at most 438 Haiku attempts, at most 150 screening attempts plus at most 288 batch attempts (48 x 3 x 2, $0.50 cap each); a smaller pool or catalog shrinks both",
+      "repositories_v146": {
+        "recorded": "2026-11-01, before any pull request of these repositories was listed; default-branch heads resolved 2026-11-01T18:21Z",
+        "choice": "under natural_tasks_t12.repository_choice: none appears in any 'repository' slug of benchmark/*.json or results/*.json (185 slugs) or as a .research/corpora snapshot name (179); GitHub main language Go, Python or JavaScript; not archived; pushed since 2026-08-01; over 5,000 stars; libraries whose tests should run locally without services, browsers or GPUs, from GitHub's star-ranked search (up to 1,000 per language) filtered by description, then by hand. Dropped on inspection before listing: google/yapf and bottlepy/bottle (0 and 3 merged pull requests in the past year), jupytext/jupytext (48% Python), kpdecker/jsdiff (35% TypeScript), meta/jscodeshift and mjmlio/mjml (tests inside source or package trees)",
+        "repository_order": {
+          "Go": [
+            "env",
+            "carbon",
+            "lancet",
+            "gocron",
+            "revive",
+            "fq",
+            "oapi-codegen",
+            "go-git",
+            "compress",
+            "vale",
+            "go-swagger",
+            "dns"
+          ],
+          "Python": [
+            "tenacity",
+            "jc",
+            "sqlglot",
+            "apscheduler",
+            "falcon",
+            "django-ninja",
+            "streamlink",
+            "trio",
+            "sqlfluff"
+          ],
+          "JavaScript": [
+            "node-semver",
+            "chroma",
+            "svgo",
+            "markdownlint",
+            "sinon",
+            "formidable",
+            "pdfkit",
+            "cytoscape",
+            "isomorphic-git"
+          ]
+        },
+        "order_rationale": "within each language, by expected local test runnability (small pure libraries first, projects with builds, generated code, fixtures or network-shaped suites last)",
+        "test_files": {
+          "Go": "*_test.go and testdata/",
+          "Python": "tests/ (tenacity, jc, sqlglot, apscheduler, falcon, django-ninja, streamlink); test/ (sqlfluff); src/trio/**/_tests/ (trio)",
+          "JavaScript": "test/ (node-semver, chroma, svgo, markdownlint, sinon, cytoscape); test/, test-node/, test-legacy/ (formidable); tests/ (pdfkit); __tests__/ (isomorphic-git)"
+        },
+        "source_files": "each language's own suffix: .go, .py, .js; also .mjs and .cjs where a repository ships them",
+        "selection": "natural_tasks_t12.selection unchanged, as t14",
+        "runtime": "recorded in a later version after the bug judgments and before any fail-to-pass check, as v139",
+        "repositories": {
+          "fq": {
+            "repository": "wader/fq",
+            "commit": "64c676f7f12ee6749c44c3cb8bcc1e41f05f47d4",
+            "language": "Go"
+          },
+          "go-git": {
+            "repository": "go-git/go-git",
+            "commit": "a0088e429af90a6801b73f6a937a188f9581c8c2",
+            "language": "Go"
+          },
+          "dns": {
+            "repository": "miekg/dns",
+            "commit": "2e4905fb030255032d4343cb83bc2f8c3cfcb82a",
+            "language": "Go"
+          },
+          "oapi-codegen": {
+            "repository": "oapi-codegen/oapi-codegen",
+            "commit": "b4fdfe1ac6b018a4bf03a97d674ed54cebb62cbc",
+            "language": "Go"
+          },
+          "revive": {
+            "repository": "revive-lint/revive",
+            "commit": "64ea66985129439a023a86e27058813517cda701",
+            "language": "Go"
+          },
+          "carbon": {
+            "repository": "dromara/carbon",
+            "commit": "353f556c59eaf0a966e5a83b456fb1d687a41f4b",
+            "language": "Go"
+          },
+          "lancet": {
+            "repository": "duke-git/lancet",
+            "commit": "eb9ad10f259401a4b349191f1080d7d8e4e97d50",
+            "language": "Go"
+          },
+          "gocron": {
+            "repository": "go-co-op/gocron",
+            "commit": "b39ae51e81891dc6c4d32b5c900c072a9fea1669",
+            "language": "Go"
+          },
+          "env": {
+            "repository": "caarlos0/env",
+            "commit": "c1b2429e2590d5ddc35531bf69baa11874e8b59a",
+            "language": "Go"
+          },
+          "compress": {
+            "repository": "klauspost/compress",
+            "commit": "48700052e5e9b5cbb3525e788bb678e15d1328a2",
+            "language": "Go"
+          },
+          "go-swagger": {
+            "repository": "go-swagger/go-swagger",
+            "commit": "3dae94ba4c8dec09e07a7f088bd4c322514d6e6a",
+            "language": "Go"
+          },
+          "vale": {
+            "repository": "vale-cli/vale",
+            "commit": "0d9e80234ba63323fefa027b5698467cf477c46d",
+            "language": "Go"
+          },
+          "sqlglot": {
+            "repository": "tobymao/sqlglot",
+            "commit": "6de2df31b0ae8b21155828f575a14dc8903c1b9b",
+            "language": "Python"
+          },
+          "sqlfluff": {
+            "repository": "sqlfluff/sqlfluff",
+            "commit": "4339c0759040e5961f13ea875b5255cda0aeca66",
+            "language": "Python"
+          },
+          "jc": {
+            "repository": "kellyjonbrazil/jc",
+            "commit": "d8698b5829bdd476579fc2eb20cee32abd04bcf4",
+            "language": "Python"
+          },
+          "falcon": {
+            "repository": "falconry/falcon",
+            "commit": "8d3aa53a6ac69331060b945050ce0fad616fc553",
+            "language": "Python"
+          },
+          "tenacity": {
+            "repository": "jd/tenacity",
+            "commit": "32ac68f0941319c0d2f4fb927f96e4ee29bb46c6",
+            "language": "Python"
+          },
+          "apscheduler": {
+            "repository": "agronholm/apscheduler",
+            "commit": "05b4e2d69f89e3f8d87c6eec5df71ed1dd5705ec",
+            "language": "Python"
+          },
+          "streamlink": {
+            "repository": "streamlink/streamlink",
+            "commit": "044fd603797eae413effd24690bf28307c2e6070",
+            "language": "Python"
+          },
+          "trio": {
+            "repository": "python-trio/trio",
+            "commit": "ec8d886f8be9ae78218f59312134be5fa85287f0",
+            "language": "Python"
+          },
+          "django-ninja": {
+            "repository": "vitalik/django-ninja",
+            "commit": "84765fa0bc39b7cc82eb433d181dd0c544e94d79",
+            "language": "Python"
+          },
+          "svgo": {
+            "repository": "svg/svgo",
+            "commit": "7b0c68659bcd687de2387578eebe7ad6b834ab7c",
+            "language": "JavaScript"
+          },
+          "markdownlint": {
+            "repository": "DavidAnson/markdownlint",
+            "commit": "5dd44fe44481cfbc8c6fee955719773fa17dc5d5",
+            "language": "JavaScript"
+          },
+          "node-semver": {
+            "repository": "npm/node-semver",
+            "commit": "7257c14239476205b4b0bf7e47b07b3e7a517be6",
+            "language": "JavaScript"
+          },
+          "chroma": {
+            "repository": "gka/chroma.js",
+            "commit": "c6f893a6e3bb83b3b03d397ceffd326cf818cd02",
+            "language": "JavaScript"
+          },
+          "sinon": {
+            "repository": "sinonjs/sinon",
+            "commit": "41c89bfc87da4b07b7a15d01752c4899b9255da8",
+            "language": "JavaScript"
+          },
+          "formidable": {
+            "repository": "node-formidable/formidable",
+            "commit": "a78b8f48d54783a9d524bdde88838fc257e6f01e",
+            "language": "JavaScript"
+          },
+          "pdfkit": {
+            "repository": "foliojs/pdfkit",
+            "commit": "b80dd614250cdb3f89451d427040c4fc7a508174",
+            "language": "JavaScript"
+          },
+          "cytoscape": {
+            "repository": "cytoscape/cytoscape.js",
+            "commit": "acaa3ad9a1288a8242948fe3d9f1c674c25adea9",
+            "language": "JavaScript"
+          },
+          "isomorphic-git": {
+            "repository": "isomorphic-git/isomorphic-git",
+            "commit": "86df2db391962c8690a7550c6887ca0e87798542",
+            "language": "JavaScript"
+          }
+        }
+      }
     }
   },
   "report_every_case": true,
@@ -3259,6 +3497,11 @@
       "version": 145,
       "date": "2026-11-01",
       "reason": "native rank fusion check (rank_fusion_v145, graf-graph2, 10-file cut chosen on t12/t13) frozen before any native t14 replay is run"
+    },
+    {
+      "version": 146,
+      "date": "2026-11-01",
+      "reason": "natural_tasks_t15: graph-triage agent batch design (as t14 on fresh tasks), budget and the 30 repositories with pins, before any of their pull requests is listed"
     }
   ],
   "arms": {
