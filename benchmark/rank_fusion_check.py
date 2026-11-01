@@ -66,7 +66,7 @@ def replay(task, queries, graf, graphify, native=None):
     with contextlib.redirect_stdout(io.StringIO()):
         prepare(task, trial)
     root = BASE / ".research/trials" / trial / "workspace"
-    rows, triaged = [], []
+    rows, triaged, graphified = [], [], []
     try:
         subprocess.run([str(graf), "--root", str(root), "index"], capture_output=True, check=True)
         home = root.parent / "graphify-home"  # As the batch ran it: nothing written globally.
@@ -78,17 +78,20 @@ def replay(task, queries, graf, graphify, native=None):
             triaged.append(ours)
             theirs = graphify_files(subprocess.run([str(graphify), "query", issue], cwd=root, env=env,
                                                    capture_output=True, text=True).stdout)
+            graphified.append(theirs)
             both = fused(ours, theirs)
             rows.append({"task": task["id"], "attempt": attempt, "budget": budget,
                          **{name: {"first": first(r, faulted), "rank": rank(r, faulted), "listed": len(r)}
                             for name, r in (("graf", ours), ("graphify", theirs), ("fused", both))}})
         if native:  # After every frozen-binary call, so the two builds never share an index mid-replay.
             subprocess.run([str(native), "--root", str(root), "index"], capture_output=True, check=True)
-            for row, ours, (_, issue, _) in zip(rows, triaged, queries):
+            for row, ours, theirs, (_, issue, _) in zip(rows, triaged, graphified, queries):
                 graph = json.loads(subprocess.run([str(native), "--root", str(root), "graph-files", "--", issue],
                                                   capture_output=True, text=True, check=True).stdout)["files"]
                 for name, r in (("native", graph), ("native_fused", fused(ours, graph))):
                     row[name] = {"first": first(r, faulted), "rank": rank(r, faulted), "listed": len(r)}
+                # The full rankings, so variants can be compared offline on development batches.
+                row["lists"] = {"graf": ours, "graphify": theirs, "native": graph, "faulted": sorted(faulted)}
     finally:
         shutil.rmtree(root.parent)
     return rows
@@ -126,7 +129,7 @@ def main():
     for task_id in args.tasks or sorted(queries):
         rows += replay(catalog[task_id], queries[task_id], graf, graphify, args.native and args.native.resolve())
         print(task_id, len(rows), flush=True)
-    rule = spec["natural_tasks_t14"].get("rank_fusion_v144", {"alpha": 0.05})
+    rule = spec["natural_tasks_t14"].get("rank_fusion_v145" if args.native else "rank_fusion_v144", {"alpha": 0.05})
     result = verdict(rows, rule)
     print(json.dumps(result, indent=1))
     if args.tasks:

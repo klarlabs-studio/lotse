@@ -6,7 +6,8 @@
 //! traversal and the output order follow Graphify 0.9.100's `serve.py`: label-tier scoring with IDF weights and
 //! squared term coverage, at most three seeds within a 20% score gap plus one per matched term, a depth-2 walk
 //! that does not pass through hubs, then nodes by hop distance and degree. Graphify's class, import and
-//! reference nodes, context filters and budget cut are not ported. Not an accepted improvement.
+//! reference nodes and context filters are not ported; its token budget cut is stood in for by keeping the first
+//! [`GRAPH_FILES`] files. Not an accepted improvement.
 use crate::triage::IndexedUnits;
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 
@@ -18,6 +19,8 @@ const MAX_SEEDS: usize = 3;
 const GAP_RATIO: f64 = 0.2;
 const DEPTH: usize = 2;
 const HUB_FLOOR: usize = 50;
+/// Files kept from the traversal; chosen on development batches t12 and t13 (rank_fusion_v145).
+pub const GRAPH_FILES: usize = 10;
 /// Reciprocal rank fusion's customary constant; fixed, not tuned.
 pub const FUSION_K: f64 = 60.0;
 
@@ -363,6 +366,9 @@ pub fn graph_files(indexed: &IndexedUnits, issue: &str) -> Vec<String> {
     let mut files = Vec::new();
     let mut seen = BTreeSet::new();
     for n in start.into_iter().chain(rest) {
+        if files.len() == GRAPH_FILES {
+            break;
+        }
         if seen.insert(g.nodes[n].path.as_str()) {
             files.push(g.nodes[n].path.clone());
         }
