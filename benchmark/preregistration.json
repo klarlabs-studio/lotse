@@ -1,5 +1,5 @@
 {
-  "version": 150,
+  "version": 151,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -1115,6 +1115,62 @@
         },
         "reported_not_gated": [],
         "dry_run_v150": "2026-11-02, no model (benchmark/t12_dry_run.py t15, results/t15-dry-run-v149.json, sha256 ab6c3db926dfd3b87dd9b1f7880a0a122984be2f31b146e92407b59fd7d688a7, run on the 48-task catalog): the 44 retained tasks x 3 arms: 132 of 132 ok, no nonzero setup step. graphify_installed: CLAUDE.md section, .claude/settings.json hooks and graphify-out/graph.json on all 44 (setup step median 0.7 s, max 164.2 s). graf_installed: graf index and the CLAUDE.md snippet on all 44 (step max 2.5 s). builtin carries the repository's own CLAUDE.md on 1 task. The 4 pdfkit graphify_installed setups timed out (catalog_v150). No outcome was graded"
+      },
+      "t15x": {
+        "arms": [
+          "graf_installed"
+        ],
+        "candidates": [
+          "graf_installed"
+        ],
+        "controls": [],
+        "comparators": [],
+        "catalog": "benchmark/natural-tasks-t15.json",
+        "seed": 20261104,
+        "frozen_in_version": 151,
+        "arm_definitions": {
+          "graf_installed": "as batch t15's graf_installed, with .research/bin/graf-triage-excerpts (sha256 c0f03a0b0636c580096f59b5aff6fe7ce132d18bb012290d69172b435dd28924): cargo build --release --features graph-triage,triage-excerpts at commit 0bd4c41; triage's files as graf-graph-triage, its likely code from the first three of them that are source files; its excerpts equal the offline check's on 12 replayed t15 calls"
+        },
+        "common_setup": "every arm: the same INSTALLED_PROMPT appended to Claude Code's own system prompt (repair the bug in non-test source, do not edit tests or build configuration, run test, then finish), --setting-sources project (the workspace's own .claude settings only, no user settings or personal CLAUDE.md), --strict-mcp-config, --disable-slash-commands, --permission-mode acceptEdits with --permission-prompts none, --no-session-persistence. The workspace is moved outside any git repository to /private/var/tmp/graf-trials/<trial>/workspace and moved back after the run; an empty auto-memory folder Claude Code creates for it is removed. Test files, build and test configuration files (package.json, lockfiles, pyproject.toml, setup.py/cfg, tox.ini, pytest.ini, go.mod, go.sum, Makefile, outside node_modules and the tools' own output folders) are hash-protected; an edit to any of them fails the attempt",
+        "isolation_rule": "agent_trials.isolation_rule_v136: as batch t13's, except that a Read of Claude Code's own background-task output for this workspace counts as inside",
+        "backend_sha256": {
+          "graf_installed": "c0f03a0b0636c580096f59b5aff6fe7ce132d18bb012290d69172b435dd28924"
+        },
+        "solver_version": "2.1.316 (Claude Code)",
+        "solver_binary": ".research/bin/claude-2.1.316",
+        "solver_sha256": "64c327e92b2c5e0f78c0a980c5a518121e1f0d140ca771ca5dd4488d1a2dcb3f",
+        "model": "claude-haiku-5-5",
+        "graphify_commit": "f5155badddaa3286c78a51653791131e9e2e4d29",
+        "graphify_virtualenv": ".research/venv-graphify-0.9.100",
+        "versions_checked": "2026-11-02 with benchmark/check_latest.py --batch t15: Graphify 0.9.100, Claude Code 2.1.316 and ripgrep 15.2.0 are each the latest, the same as batch t15; claude-haiku-5-5 is the latest Haiku",
+        "attempts_per_task_and_arm": 1,
+        "solver_max_turns": 80,
+        "resource_limits": {
+          "max_budget_usd_per_attempt": 0.5,
+          "timeout_seconds_per_attempt": 1200
+        },
+        "cost_basis": "list-price estimate (Claude Code costUSD, costBasis list) on the operator's Claude subscription; the v93 cost table",
+        "secondary": "none gated. Reported: builtin's median tool calls in the batch against its screen (regression check, results/t15-screen.json); per-arm costs, tokens, turns, tool calls and calls before the first faulted read (benchmark/t12_diagnostic.py t15)",
+        "role": "confirmatory on a search-heavy workload, fresh tasks (natural_tasks_t15): tests whether graf as installed with the graph-triage build (graf's native port of Graphify's traversal fused into triage) is cheaper than both builtin and Graphify as installed at non-inferior success. A pass supports only that claim on this workload and these conditions, not product promotion",
+        "budget": "operator agreed on 2026-11-01: at most 288 batch attempts; this batch plans 264 (44 tasks x 3 arms x 2 attempts, $0.50 cap per attempt), after 120 screen attempts: 384 of the agreed 438",
+        "planned_runs": "44 tasks x 3 arms x 2 attempts = 264",
+        "rationale": "t14 failed against builtin only; rank_fusion_v145 found fusing graf's native traversal into triage ranks a faulted file first more often than triage alone on held-out t14 calls (42 against 32 of 94, p = 0.026); t15 tests whether that carries over to agent cost on fresh tasks",
+        "infrastructure": "completeness and infrastructure-abort rules of v83-v86 unchanged (broker error, gateway refusal, lost reply under v93, setup failure: set aside and rerun at most twice)",
+        "verifier_deadline": true,
+        "deadline_rule": "unchanged from t8/t9: the 1,200 s deadline is recorded before the solver starts, broker test runs are capped at the time left minus a 120 s reserve, and every verdict gets the full 180 s verifier",
+        "solver_timeout": "the v93 rule stays in force as a fallback",
+        "harness": "benchmark at commit 4008ed8 for agent_trials (target/ and bytes fixes), eed0242 for agent_decision (screen trials are not attempts) and cf6d695 for run_agent_trial, task_session, run_agent_batch and retrieval; the batch runs under .research/venv-graphify-0.9.100/bin/python",
+        "schedule": "runs after the catalog freeze (v149, v150) and the no-model dry run; frozen before any t15 batch model call",
+        "backend_binaries": {
+          "graf_installed": ".research/bin/graf-triage-excerpts"
+        },
+        "reported_not_gated": [],
+        "dry_run_v150": "2026-11-02, no model (benchmark/t12_dry_run.py t15, results/t15-dry-run-v149.json, sha256 ab6c3db926dfd3b87dd9b1f7880a0a122984be2f31b146e92407b59fd7d688a7, run on the 48-task catalog): the 44 retained tasks x 3 arms: 132 of 132 ok, no nonzero setup step. graphify_installed: CLAUDE.md section, .claude/settings.json hooks and graphify-out/graph.json on all 44 (setup step median 0.7 s, max 164.2 s). graf_installed: graf index and the CLAUDE.md snippet on all 44 (step max 2.5 s). builtin carries the repository's own CLAUDE.md on 1 task. The 4 pdfkit graphify_installed setups timed out (catalog_v150). No outcome was graded",
+        "exploratory": true,
+        "purpose": "Exploratory pilot, development only, supports no claim: does graf with triage-excerpts (triage's likely code taken from its first three likely source files) shorten the agent loop on the t15 tasks? Chosen from the offline check results/excerpt-check.json (commit 0bd4c41) on t14/t15, which have been tested.",
+        "budget_attempts": 44,
+        "budget_note": "44 of the 54 attempts left in the agreed 438 Haiku attempts (screen 120 + t15 264 used); 10 remain after it",
+        "analysis": "Descriptive only, against batch t15's attempts on the same 44 tasks, solver, model and prompt (t15's graf_installed and builtin, both attempts): per arm, total and median cost_usd, pass count, median turns (num_turns), median tool calls, the share of attempts whose first test run passes, and loop phases as benchmark/loop_phases.py. A fresh preregistered confirmatory batch is proposed only if t15x's total cost is at least 5% below both t15 builtin's and t15 graf_installed's per-attempt mean and its pass rate is not lower by more than 0.10; otherwise triage-excerpts stays experimental and is not pursued further. Either way no claim is made: t15's arms ran earlier, so the comparison is not concurrent or randomized"
       }
     },
     "natural_tasks": {
@@ -3709,6 +3765,11 @@
       "version": 150,
       "date": "2026-11-02",
       "reason": "t15 catalog without the 4 pdfkit tasks Graphify cannot be set up on (catalog_v150, 44 tasks) and batch t15 frozen: graf-graph-triage against builtin and Graphify 0.9.100 under Claude Code 2.1.316, 44 x 3 x 2 = 264 attempts, after the dry run and before any batch model call"
+    },
+    {
+      "version": 151,
+      "date": "2026-11-02",
+      "reason": "exploratory pilot t15x frozen before any of its model calls: graf-triage-excerpts (graph-triage + triage-excerpts at 0bd4c41) as graf_installed on the 44 t15 tasks, 1 attempt each, compared descriptively with batch t15; no decision rule, no claim"
     }
   ],
   "arms": {
