@@ -1,14 +1,14 @@
-"""Batch t12, t13 or t14 diagnostics, no model calls: the declared ranking secondary (natural_tasks_t12.batch_plan, v128) and
+"""Batch t12, t13, t14 or t15 diagnostics, no model calls: the declared ranking secondary (natural_tasks_t12.batch_plan, v128) and
 per-attempt localization. Writes results/<batch>-diagnostic.json.
 
-    python benchmark/t12_diagnostic.py [t13|t14]
+    python benchmark/t12_diagnostic.py [t13|t14|t15]
 
 Ranking: per task, the share of a graf arm's attempts whose first triage call lists a faulted file first;
 graf_installed_codefiles against graf_installed by a one-sided paired sign flip at alpha 0.05, over tasks where both
 arms called triage. Reported, not a promotion gate. Also per arm: whether the first triage call names a faulted file
-(the v126 hit measure), turns, tool calls and the calls before a faulted file is first read. For t14 (v143), builtin's
+(the v126 hit measure), turns, tool calls and the calls before a faulted file is first read. For t14 (v143) and t15 (v150), builtin's
 median tool calls in the batch against its screen attempts on the same tasks, a regression check; screen trials
-(t14-screen-*) are not batch attempts.
+(t14-screen-*, t15-screen-*) are not batch attempts.
 """
 import json
 from pathlib import Path
@@ -20,8 +20,9 @@ from paired_stats import sign_flip_p
 BASE = Path(__file__).resolve().parents[1]
 ARMS = {"t12": ("builtin", "graphify_installed", "graf_installed", "graf_installed_codefiles"),
         "t13": ("builtin", "graphify_installed", "graf_installed"),
-        "t14": ("builtin", "graphify_installed", "graf_installed")}
-SCREENS = {"t14": "results/t14-screen.json"}
+        "t14": ("builtin", "graphify_installed", "graf_installed"),
+        "t15": ("builtin", "graphify_installed", "graf_installed")}
+SCREENS = {"t14": "results/t14-screen.json", "t15": "results/t15-screen.json"}
 GRAF_ARMS = ("graf_installed", "graf_installed_codefiles")
 ALPHA = 0.05
 
