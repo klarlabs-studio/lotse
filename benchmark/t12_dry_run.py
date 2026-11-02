@@ -1,6 +1,6 @@
-"""Batch t12, t13 or t14 dry run, no model: prepare every task under each arm, run the installed arms' setup, report, clean up.
+"""Batch t12, t13, t14 or t15 dry run, no model: prepare every task under each arm, run the installed arms' setup, report, clean up.
 
-    python benchmark/t12_dry_run.py [t13|t14]
+    python benchmark/t12_dry_run.py [t13|t14|t15]
 """
 import json
 import os
@@ -16,8 +16,9 @@ from task_session import prepare_session, restore_workspace  # noqa: E402
 
 BATCH = sys.argv[1] if len(sys.argv) > 1 else "t12"
 ARMS = {"t12": ("builtin", "graphify_installed", "graf_installed", "graf_installed_codefiles"),
-        **dict.fromkeys(("t13", "t14"), ("builtin", "graphify_installed", "graf_installed"))}[BATCH]
-os.environ.update(GRAF_BINARY_GRAF_INSTALLED=".research/bin/graf-triage15",  # batch_plan of v128 and v133.
+        **dict.fromkeys(("t13", "t14", "t15"), ("builtin", "graphify_installed", "graf_installed"))}[BATCH]
+os.environ.update(GRAF_BINARY_GRAF_INSTALLED=".research/bin/graf-graph-triage" if BATCH == "t15"  # natural_tasks_t15.
+                  else ".research/bin/graf-triage15",  # batch_plan of v128 and v133.
                   GRAF_BINARY_GRAF_INSTALLED_CODEFILES=".research/bin/graf-codefiles")
 catalog = {t["id"]: t for t in json.loads((BASE / f"benchmark/natural-tasks-{BATCH}.json").read_text())}
 report = []

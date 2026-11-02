@@ -1,5 +1,5 @@
 {
-  "version": 148,
+  "version": 149,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -2916,6 +2916,14 @@
         "versions_checked": "2026-11-01, benchmark/check_latest.py --batch t14: graphify 0.9.100, Claude Code 2.1.316 and ripgrep 15.2.0 are each the latest release; claude-haiku-5-5 is the latest Haiku",
         "reading": "only each attempt's tool_use count is read before the catalog freeze (results/t15-screen.json); pass/fail, cost and transcripts are not inspected until the batch is analysed; the batch log is grepped only for Traceback or Error",
         "budget": "the first 150 of the 438 agreed attempts (natural_tasks_t15.budget)"
+      },
+      "catalog_v149": {
+        "recorded": "2026-11-02, after the screen and before any batch attempt",
+        "screen": "results/t15-screen.json, sha256 c55a87c5ed0aac6cd05f3f7014e26b9db9410569ff1f812b3a36834fe55a4345: 120 attempts (no infrastructure reruns), 120 candidates screened (Go 43, Python 41, JavaScript 36), 48 kept at 15 or more tool calls (Go 16, Python 16, JavaScript 16); 40 candidates not reached (repository or language already full). Only tool-call counts were read",
+        "fill": "benchmark/t15_catalog.py (benchmark/t14_catalog.main, parameterised; the t14 catalog it rebuilds is unchanged): every kept candidate fits the caps, so the catalog is the 48 kept tasks in fill order",
+        "catalog": "benchmark/natural-tasks-t15.json, 48 tasks (Go 16, Python 16, JavaScript 16)",
+        "frozen_catalog_sha256": "7c2a8ebf869878ce52c2938f8aea9e406420f88785153adc248cd68c9724af2e",
+        "budget": "the batch plan stays 48 tasks x 3 arms x 2 attempts = 288 attempts, the agreed batch maximum; with the screen's 120, 408 of the agreed 438"
       }
     }
   },
@@ -3615,6 +3623,11 @@
       "version": 148,
       "date": "2026-11-01",
       "reason": "t15 fail-to-pass result (147 of 164), the three harness fixes and pre-check rejections it needed, and the frozen t15 screen (natural_tasks_t15.screen_v148), before any screen attempt"
+    },
+    {
+      "version": 149,
+      "date": "2026-11-02",
+      "reason": "t15 catalog frozen from the screen: 48 tasks (natural_tasks_t15.catalog_v149, frozen_catalog_sha256)"
     }
   ],
   "arms": {

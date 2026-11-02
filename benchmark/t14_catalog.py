@@ -7,11 +7,12 @@ BASE = Path(__file__).resolve().parents[1]
 OUT = BASE / "benchmark/natural-tasks-t14.json"
 
 
-def main():
-    spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"]["natural_tasks_t14"]
-    screen = json.loads((BASE / "results/t14-screen.json").read_text())["candidates"]
-    ordered = json.loads((BASE / spec["screen_v141"]["catalog"]).read_text())  # Fill order, newest merge first.
-    language = {repo: lang for lang, repos in spec["screen_v141"]["fill_order"].items() for repo in repos}
+def main(batch="t14", version="screen_v141", out=OUT):
+    """The freeze; t15_catalog.py reuses it with its own screen version and output path."""
+    spec = json.loads((BASE / "benchmark/preregistration.json").read_text())["agent_trials"][f"natural_tasks_{batch}"]
+    screen = json.loads((BASE / f"results/{batch}-screen.json").read_text())["candidates"]
+    ordered = json.loads((BASE / spec[version]["catalog"]).read_text())  # Fill order, newest merge first.
+    language = {repo: lang for lang, repos in spec[version]["fill_order"].items() for repo in repos}
     catalog, per_repo, per_language = [], {}, {}
     for task in ordered:
         repo, lang = task["repo"], language[task["repo"]]
@@ -21,10 +22,10 @@ def main():
     if len({t["issue"] for t in catalog}) != len(catalog):
         raise SystemExit("Two selected tasks share an issue")
     if len(catalog) < spec["minimum_tasks"]:
-        raise SystemExit(f"Only {len(catalog)} tasks; natural_tasks_t14 requires {spec['minimum_tasks']}; nothing written")
+        raise SystemExit(f"Only {len(catalog)} tasks; natural_tasks_{batch} requires {spec['minimum_tasks']}; nothing written")
     if len(catalog) != sum(v["kept"] for v in screen.values()):
         raise SystemExit("The fill dropped a kept task; the screen's stopping rule was not followed")
-    OUT.write_text(json.dumps(catalog, indent=2) + "\n")
+    out.write_text(json.dumps(catalog, indent=2) + "\n")
     print(len(catalog), "tasks", per_language)
     return 0
 
