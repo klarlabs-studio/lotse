@@ -217,6 +217,18 @@ enum Command {
         #[arg(long)]
         text: bool,
     },
+    /// Experimental: after a failed test run, the functions its output names or its failing
+    /// tests call, then their callees, within one budget. Pass the test output.
+    Failure {
+        /// Text that starts with `-` is still read as text, not as an option.
+        #[arg(allow_hyphen_values = true)]
+        output: String,
+        #[arg(long, default_value_t = 2000)]
+        budget: usize,
+        /// Emit only context, without JSON metadata.
+        #[arg(long)]
+        text: bool,
+    },
     /// Experimental: files in the order a native port of Graphify's query traversal reaches them.
     GraphFiles {
         /// Text that starts with `-` is still read as text, not as an option.
@@ -600,6 +612,15 @@ fn run() -> Result<()> {
         } => {
             let bpe = tiktoken_rs::cl100k_base()?;
             let response = graf::triage::triage(&bpe, &index, &issue, budget)?;
+            emit(text, &response.context, &response)
+        }
+        Command::Failure {
+            output,
+            budget,
+            text,
+        } => {
+            let bpe = tiktoken_rs::cl100k_base()?;
+            let response = graf::failure::failure(&bpe, &index, &output, budget)?;
             emit(text, &response.context, &response)
         }
         Command::GraphFiles { issue } => {

@@ -2,6 +2,25 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## `graf failure`: from a failed test run to the code (exploratory, offline, t14 and t15 replays)
+
+**Finding: an answer built from a failure's output reaches the faulted lines in 226 of 851 failed test runs (27%), but by the time of a failure the agent has already edited a faulted file in 645 of them (76%), and in 160 of the 226. After failures, agents are mostly in the right file and struggle with the fix, not with finding the code. The tool would newly point to the fault in at most 66 failures, fewer than one in ten attempts, so it is not worth a pilot. `graf failure` stays experimental and is not pursued further.** t14 and t15 have been tested; this supports no claim. Script: `benchmark/failure_check.py t14 t15`; results: [failure-check.json](../results/failure-check.json).
+
+- **Command.** `graf failure "<test output>"` (experimental, src/failure.rs) reads the source lines the output names, the functions its printed test code calls or its error names, and failing test names present in the index; it answers with those functions, then their callees, within the budget.
+- **Replay.** Every failed test run of every arm, with its output from the transcript, in the task's prepared workspace (the agent's starting view, so line numbers can drift from the edited state), at triage's MCP budget. Scoring as the excerpt check.
+
+| Failed test runs (all arms) | Count |
+|---|---|
+| Replayed | 851 |
+| Empty answer | 186 |
+| A failing test found in the index | 509 |
+| Answer in a faulted file / first unit in one | 347 / 298 |
+| Answer overlaps the faulted lines | 226 |
+| Agent had already edited a faulted file | 645 (160 of the 226) |
+| Look-up calls before the next edit: all / after covering answers | 2,659 / 541 |
+
+- **Upper bound.** Even if every look-up after a covering answer were saved, that is about one call per attempt of about 19, and calling the tool costs a turn of its own.
+
 ## After a failed test (exploratory, t14 and t15 transcripts, no model calls)
 
 **Finding: failure output rarely names the code to fix. About 15% of failed test runs name a non-test source file with a line number, and about 10% name a faulted file; the rest are assertion failures that name only the failing test. Agents spend 2 to 4 look-up calls (Read, Grep, Glob, graf) after each failure before their next edit, and over 85% of those follow failures that name no source file.** A tool that maps a failure to the code it exercises would have to go from the failing test through the call graph, not from file:line mentions. Diagnostic only; it supports no claim. Script: `benchmark/debug_phase.py t14 t15`; results: [debug-phase.json](../results/debug-phase.json).

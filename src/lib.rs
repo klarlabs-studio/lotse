@@ -1,4 +1,5 @@
 //! Deterministic lexical retrieval over versioned repository source excerpts.
+pub mod failure;
 pub mod graph_rank;
 mod handles;
 mod index;
