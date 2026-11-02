@@ -542,7 +542,10 @@ pub fn triage_with(
         .saturating_sub(bpe.encode_ordinary(header).len());
     let mut cited = Vec::new();
     if remaining > 0 {
+        #[cfg(not(feature = "triage-excerpts"))]
         let (picked, code) = ranked_from(bpe, index, indexed, &query, remaining)?;
+        #[cfg(feature = "triage-excerpts")]
+        let (picked, code) = file_excerpts(bpe, index, indexed, &query, &files, remaining)?;
         if !code.is_empty() {
             context.push_str(header);
             context.push_str(&code);
@@ -558,6 +561,82 @@ pub fn triage_with(
         context,
         experimental: "triage: file_graph_ids files, then ast_graph_ids units",
     })
+}
+
+/// Files whose functions the triage-excerpts feature may show.
+#[cfg(feature = "triage-excerpts")]
+pub const EXCERPT_FILES: usize = 3;
+
+/// Experimental (triage-excerpts): the likely code comes from the first [`EXCERPT_FILES`] source files of the
+/// likely files, not from a ranking of every function: each file's best-scoring function in file order, then
+/// the rest of those files' functions by score. Test and documentation files are left out. With the
+/// triage-tests feature, one test function that calls the first excerpt's function comes second.
+#[cfg(feature = "triage-excerpts")]
+fn file_excerpts(
+    bpe: &CoreBPE,
+    index: &Index,
+    indexed: &IndexedUnits,
+    query: &str,
+    files: &[String],
+    budget: usize,
+) -> Result<(Vec<Unit>, String)> {
+    let body = unit_scores(&indexed.bm25, &indexed.edges, query);
+    let sources: Vec<&String> = files
+        .iter()
+        .filter(|path| crate::source::kind(path) == "code")
+        .take(EXCERPT_FILES)
+        .collect();
+    let mut firsts = Vec::new();
+    let mut rest = Vec::new();
+    for path in &sources {
+        let mut mine: Vec<usize> = (0..indexed.units.len())
+            .filter(|&i| indexed.units[i].path == **path && body[i] > 0.0)
+            .collect();
+        mine.sort_by(|&a, &b| body[b].total_cmp(&body[a]).then(a.cmp(&b)));
+        if let Some((&first, others)) = mine.split_first() {
+            firsts.push(first);
+            rest.extend_from_slice(others);
+        }
+    }
+    rest.sort_by(|&a, &b| body[b].total_cmp(&body[a]).then(a.cmp(&b)));
+    #[allow(unused_mut)]
+    let mut order: Vec<usize> = firsts.into_iter().chain(rest).collect();
+    #[cfg(feature = "triage-tests")]
+    if let Some(test) = order
+        .first()
+        .and_then(|&first| calling_test(indexed, &body, first))
+    {
+        order.insert(1, test);
+    }
+    let mut texts: BTreeMap<&str, String> = BTreeMap::new();
+    let mut units = Vec::new();
+    for &i in &order {
+        let unit = &indexed.units[i];
+        if !texts.contains_key(unit.path.as_str()) {
+            texts.insert(&unit.path, index.current_text(&unit.path)?);
+        }
+        units.push(Unit {
+            text: unit_text_for_path(&unit.path, &texts[unit.path.as_str()], unit.start, unit.end),
+            ..unit.clone()
+        });
+    }
+    // Descending stand-in scores keep this order through the shared packer; no floor applies.
+    let ranks: Vec<f64> = (0..units.len()).map(|i| (units.len() - i) as f64).collect();
+    Ok(pack_units(bpe, &units, &ranks, budget, 0.0))
+}
+
+/// Experimental (triage-tests): the best-scoring test function that calls unit `first`'s function, shown second.
+#[cfg(feature = "triage-tests")]
+fn calling_test(indexed: &IndexedUnits, body: &[f64], first: usize) -> Option<usize> {
+    // Cached units keep their calls only as edges (caller, callee).
+    indexed
+        .edges
+        .iter()
+        .filter(|&&(caller, callee)| {
+            callee == first && crate::source::kind(&indexed.units[caller].path) == "test"
+        })
+        .map(|&(caller, _)| caller)
+        .max_by(|&a, &b| body[a].total_cmp(&body[b]).then(b.cmp(&a)))
 }
 
 #[derive(Debug, Serialize)]

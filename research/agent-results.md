@@ -2,6 +2,26 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Triage excerpts from its own top files (exploratory, offline, t14 and t15 replays)
+
+**Finding: showing functions only from triage's first three likely source files puts the code a fix changes in the excerpts in 91 of 182 replayed calls, against 72 for the t15 build (32 gained, 13 lost; one-sided exact McNemar p = 0.003).** t14 and t15 have been tested, so this chooses a variant for an exploratory pilot and supports no claim. Script: `benchmark/excerpt_check.py t14 t15`; results: [excerpt-check.json](../results/excerpt-check.json).
+
+- **Builds.** All three are graph-triage builds of the same source. `triage-excerpts` replaces the excerpt ranking, which ranked every function in the repository independently of the file list, with each of the first three likely source files' best-scoring function in file order, then those files' other functions by score; test and documentation files are left out. `triage-tests` also puts the best-scoring test function that calls the first excerpt's function second. Both are Cargo features, off by default.
+- **Replay.** Each graf_installed attempt's first triage call, with its text and budget, in the task's faulted workspace. "Covers the fault" means an excerpt overlaps the lines of the fault's text in that workspace.
+
+| Excerpts | t15 build | triage-excerpts | triage-tests |
+|---|---|---|---|
+| Overlap the faulted lines | 72 | 91 | 88 |
+| In a faulted file | 94 | 133 | 129 |
+| First excerpt in a faulted file | 52 | 98 | 98 |
+| Test-code excerpts | 266 | 0 | 44 |
+| In a hidden test's file | 59 | 0 | 23 |
+| Median tokens | 1,363 | 1,416 | 1,392 |
+
+- **Tests variant.** It adds a test in 44 of 182 calls, 23 of them from a file the hidden test replaces, and loses fault coverage in 3 calls. Whether a test helps the first fix cannot be read offline.
+- **Fixes during development.** The first tests build matched test functions by their call names, which the cached index clears; it now uses the call edges. The excerpt builds and their counts were unchanged between the three runs.
+- **Limits.** Half the calls still miss the faulted lines, mostly because the faulted file is not among the first three source files. Whether better excerpts cut turns is untested.
+
 ## Where the agent loop goes (exploratory, t14 and t15 transcripts, no model calls)
 
 **Finding: about half of every arm's tool calls come after the first test run, and the first test run fails in about 85% of attempts. Graf's triage saves about 1.5 calls in the locate phase and none afterwards.** This is a diagnostic of finished batches. It motivates the next hypothesis and supports no claim. Script: `benchmark/loop_phases.py t14 t15`; results: [loop-phases.json](../results/loop-phases.json).

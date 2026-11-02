@@ -13,6 +13,10 @@ categories = ["command-line-utilities", "development-tools"]
 # Experimental: triage's likely files fused with graph-files (graph_rank) by reciprocal rank. Off by default; an
 # agent arm uses a build with it on. Not an accepted improvement.
 graph-triage = []
+# Experimental: triage's likely code from its first three likely source files instead of a ranking of every
+# function; triage-tests adds one test that calls the first excerpt. Not accepted improvements.
+triage-excerpts = []
+triage-tests = ["triage-excerpts"]
 
 [dependencies]
 anyhow = "1.0"
