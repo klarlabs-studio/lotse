@@ -2,6 +2,19 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## After a failed test (exploratory, t14 and t15 transcripts, no model calls)
+
+**Finding: failure output rarely names the code to fix. About 15% of failed test runs name a non-test source file with a line number, and about 10% name a faulted file; the rest are assertion failures that name only the failing test. Agents spend 2 to 4 look-up calls (Read, Grep, Glob, graf) after each failure before their next edit, and over 85% of those follow failures that name no source file.** A tool that maps a failure to the code it exercises would have to go from the failing test through the call graph, not from file:line mentions. Diagnostic only; it supports no claim. Script: `benchmark/debug_phase.py t14 t15`; results: [debug-phase.json](../results/debug-phase.json).
+
+| Arm (182 attempts each) | Failed test runs | Name a source file | Name a faulted file | Look-up calls before the next edit | Of them, after failures naming no source file | Reads of faulted files among them |
+|---|---|---|---|---|---|---|
+| builtin | 290 | 47 | 33 | 1,069 (3.7 per failure) | 960 | 135 of 436 Reads |
+| Graphify 0.9.100 | 281 | 40 | 33 | 628 (2.2) | 567 | 101 of 267 |
+| graf | 280 | 32 | 25 | 962 (3.4) | 860 | 104 of 331 |
+
+- **Method.** A failure is a test run whose verdict is a failure. Mentions are `path:line` or Python frame lines; test files are not counted as source. Only workspace files the attempt read or the task faults are matched.
+- **Limit.** Look-up calls are counted until the next edit, test or finish, so calls that are not about the failure are included.
+
 ## Pilot t15x (v151): triage-excerpts in the agent loop; does not meet its criterion
 
 **Finding: with triage-excerpts, graf's mean cost per attempt is 2% below t15's graph-triage build and 4% below builtin, short of the preregistered 5%; the first test run passes no more often. triage-excerpts stays experimental and is not pursued further.** Exploratory: 44 attempts (1 per t15 task, Claude Code 2.1.316, claude-haiku-5-5), compared descriptively with batch t15's attempts, which ran earlier; no claim either way. Script: `benchmark/t15x_pilot.py`; results: [t15x-pilot.json](../results/t15x-pilot.json).
