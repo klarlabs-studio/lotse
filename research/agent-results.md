@@ -2,6 +2,20 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Pilot t15x (v151): triage-excerpts in the agent loop; does not meet its criterion
+
+**Finding: with triage-excerpts, graf's mean cost per attempt is 2% below t15's graph-triage build and 4% below builtin, short of the preregistered 5%; the first test run passes no more often. triage-excerpts stays experimental and is not pursued further.** Exploratory: 44 attempts (1 per t15 task, Claude Code 2.1.316, claude-haiku-5-5), compared descriptively with batch t15's attempts, which ran earlier; no claim either way. Script: `benchmark/t15x_pilot.py`; results: [t15x-pilot.json](../results/t15x-pilot.json).
+
+| Arm | Attempts | Mean cost | Passes | Median turns | First test passes | Median locate / compose / debug calls |
+|---|---|---|---|---|---|---|
+| graf, triage-excerpts (t15x) | 44 | $0.01554 | 34 (77%) | 20.5 | 9 (20%) | 5 / 1 / 11 |
+| graf, graph-triage (t15) | 88 | $0.01586 | 66 (75%) | 20 | 14 (16%) | 6 / 1 / 11 |
+| builtin (t15) | 88 | $0.01619 | 68 (77%) | 20 | 22 (25%) | 8 / 1 / 9 |
+
+- **Per task.** The pilot's attempt is cheaper than t15 graph-triage's mean on 26 of 44 tasks and than builtin's on 28.
+- **Reading.** Better excerpts shorten the locate phase by about one call again, but the debug phase, about half the calls, is unchanged. Retrieval changes at the first triage call do not reach the part of the loop that costs most.
+- **Run.** It stopped twice when other work on the machine brought free disk below 10 GB; the last 2 attempts ran at 8.1 GB with the operator's approval. No infrastructure reruns.
+
 ## Triage excerpts from its own top files (exploratory, offline, t14 and t15 replays)
 
 **Finding: showing functions only from triage's first three likely source files puts the code a fix changes in the excerpts in 91 of 182 replayed calls, against 72 for the t15 build (32 gained, 13 lost; one-sided exact McNemar p = 0.003).** t14 and t15 have been tested, so this chooses a variant for an exploratory pilot and supports no claim. Script: `benchmark/excerpt_check.py t14 t15`; results: [excerpt-check.json](../results/excerpt-check.json).
