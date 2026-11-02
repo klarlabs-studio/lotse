@@ -192,6 +192,8 @@ This is hypothesis generation for a possible new preregistration, chosen after t
 
 ## Conclusion (2026-10-31): agent-efficiency research stopped; graf is not promoted
 
+Superseded by the consolidated [agent-efficiency conclusion](agent-efficiency-conclusion.md) (2026-11-02), which adds t15 and the follow-up diagnostics. Kept as written.
+
 graf does not meet the preregistered agent-efficiency requirement. In t10, t11 and t12, graf installed as Claude Code's tool was never significantly cheaper than Claude Code's built-in tools at non-inferior success, so it never beat both comparators. These batches used issue-driven and pointer-free natural repair tasks in fresh Go, Python and JavaScript repositories, with `claude-haiku-5-5`, $0.50 and 1,200 s per attempt.
 
 Against Graphify 0.9.97 alone, the 15-file triage build was cheaper on 34 of 48 t12 tasks (p = 0.016). That is a single-comparison result, not a pass under the rule, and not a superiority claim. The confirmatory batch t13 tested it alone on 47 fresh tasks and it did not replicate (p = 0.140); `builtin` was again cheaper than graf.

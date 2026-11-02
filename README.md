@@ -60,7 +60,7 @@ line ranges you need. Use `units` for follow-up questions instead of reading who
 ### Status of the evidence
 
 - **Offline localization:** current `triage` performance against the pinned Graphify baseline is unmeasured for this implementation batch. The pinned Graphify t6 binary remains unchanged; prior results are documented in the [localization report](research/localization-results.md).
-- **Agent cost:** no graf orientation has saved agent cost against Graphify. In three preregistered batches on fresh natural tasks (t7–t9, Claude Haiku 5.5), graf's orientation cost the same as Graphify's or more, with non-inferior success; on tasks both always solved, costs were equal. Savings for the current CLI and MCP behavior are unmeasured. See the [agent results](research/agent-results.md).
+- **Agent cost:** graf does not meet the preregistered agent-efficiency requirement. In six batches with graf installed in Claude Code (t10–t15, Claude Haiku 5.5, natural Go, Python and JavaScript repair tasks), it was never significantly cheaper than Claude Code's built-in tools; against Graphify it was significantly cheaper once (t14). On these tasks agents find the code within one to three tool calls, and most of the cost goes to writing and testing the fix. See the [agent-efficiency conclusion](research/agent-efficiency-conclusion.md) and the [agent results](research/agent-results.md).
 - **Experimental flag:** `triage`, `units`, and `outline` stay experimental, and no agent-efficiency claim is made. See [AGENTS.md](AGENTS.md) for the rules.
 - **Large repositories:** in a single-sample diagnostic, a warm `triage` answered in about half a second on Kubernetes and VS Code; see the [scale diagnostic](research/scale-results.md).
 
