@@ -1,0 +1,6784 @@
+{
+ "summary": {
+  "builtin": {
+   "attempts": 182,
+   "median_calls": 19.0,
+   "median_locate": 8.0,
+   "median_compose": 1.0,
+   "median_debug": 10.0,
+   "mean_calls": 22.16,
+   "mean_locate": 10.25,
+   "mean_compose": 1.83,
+   "mean_debug": 11.79
+  },
+  "graphify_installed": {
+   "attempts": 182,
+   "median_calls": 21.0,
+   "median_locate": 8.0,
+   "median_compose": 1.0,
+   "median_debug": 11.0,
+   "mean_calls": 22.16,
+   "mean_locate": 9.89,
+   "mean_compose": 1.67,
+   "mean_debug": 12.32
+  },
+  "graf_installed": {
+   "attempts": 182,
+   "median_calls": 19.0,
+   "median_locate": 7.0,
+   "median_compose": 1.0,
+   "median_debug": 10.0,
+   "mean_calls": 20.88,
+   "mean_locate": 8.81,
+   "mean_compose": 1.86,
+   "mean_debug": 11.07
+  },
+  "graf_after_triage": {
+   "attempts": 182,
+   "mean_read_listed": 2.96,
+   "mean_read_unlisted": 1.52,
+   "mean_read_covered": 0.07,
+   "mean_grep_shown_ident": 2.68,
+   "mean_grep_other": 2.62,
+   "mean_outline": 0.83,
+   "mean_other_graf": 1.17,
+   "first_excerpt_is_test": 46
+  }
+ },
+ "rows": [
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-1953-builtin-1",
+   "arm": "builtin",
+   "calls": 24,
+   "locate": 14,
+   "compose": 0,
+   "debug": 22
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-1953-builtin-2",
+   "arm": "builtin",
+   "calls": 31,
+   "locate": 10,
+   "compose": 0,
+   "debug": 30
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-1953-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 35,
+   "locate": 13,
+   "compose": 9,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-1953-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 36,
+   "locate": 10,
+   "compose": 15,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 9,
+    "grep_other": 3,
+    "outline": 3,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-1953-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 39,
+   "locate": 18,
+   "compose": 10,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-1953-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 70,
+   "locate": 12,
+   "compose": 7,
+   "debug": 50
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2777-builtin-1",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 4,
+   "compose": 4,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2777-builtin-2",
+   "arm": "builtin",
+   "calls": 20,
+   "locate": 5,
+   "compose": 2,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2777-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 4,
+   "compose": 3,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2777-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 4,
+   "compose": 5,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2777-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 4,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2777-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 4,
+   "compose": 6,
+   "debug": 16
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2791-builtin-1",
+   "arm": "builtin",
+   "calls": 46,
+   "locate": 15,
+   "compose": 8,
+   "debug": 22
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2791-builtin-2",
+   "arm": "builtin",
+   "calls": 62,
+   "locate": 29,
+   "compose": 5,
+   "debug": 27
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2791-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 55,
+   "locate": 26,
+   "compose": 10,
+   "debug": 18,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 6,
+    "read_covered": 0,
+    "grep_shown_ident": 9,
+    "grep_other": 14,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2791-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 44,
+   "locate": 26,
+   "compose": 5,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 9,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 9,
+    "outline": 2,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2791-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 39,
+   "locate": 20,
+   "compose": 0,
+   "debug": 26
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2791-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 37,
+   "locate": 16,
+   "compose": 8,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2855-builtin-1",
+   "arm": "builtin",
+   "calls": 13,
+   "locate": 7,
+   "compose": 1,
+   "debug": 4
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2855-builtin-2",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 10,
+   "compose": 2,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2855-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 11,
+   "locate": 6,
+   "compose": 3,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2855-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 11,
+   "compose": 4,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2855-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 6,
+   "compose": 3,
+   "debug": 4
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2855-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 12,
+   "locate": 6,
+   "compose": 1,
+   "debug": 4
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2873-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 5,
+   "compose": 1,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2873-builtin-2",
+   "arm": "builtin",
+   "calls": 31,
+   "locate": 3,
+   "compose": 1,
+   "debug": 26
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2873-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 5,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 4,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2873-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 3,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2873-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 7,
+   "compose": 1,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2873-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 6,
+   "compose": 2,
+   "debug": 18
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2876-builtin-1",
+   "arm": "builtin",
+   "calls": 24,
+   "locate": 4,
+   "compose": 6,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2876-builtin-2",
+   "arm": "builtin",
+   "calls": 24,
+   "locate": 7,
+   "compose": 7,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2876-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 25,
+   "locate": 9,
+   "compose": 8,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 4,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2876-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 5,
+   "compose": 1,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2876-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 15,
+   "locate": 6,
+   "compose": 2,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2876-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 28,
+   "locate": 6,
+   "compose": 12,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2882-builtin-1",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 7,
+   "compose": 1,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2882-builtin-2",
+   "arm": "builtin",
+   "calls": 22,
+   "locate": 5,
+   "compose": 1,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2882-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 2,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2882-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 13,
+   "locate": 4,
+   "compose": 1,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2882-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 4,
+   "compose": 2,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-2882-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 13,
+   "locate": 4,
+   "compose": 2,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-887-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 10,
+   "compose": 1,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-887-builtin-2",
+   "arm": "builtin",
+   "calls": 20,
+   "locate": 11,
+   "compose": 1,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-887-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 29,
+   "locate": 18,
+   "compose": 1,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 4,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 8,
+    "outline": 2,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-887-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 7,
+   "compose": 1,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 0,
+    "outline": 2,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-887-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 6,
+   "compose": 3,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-alasql-887-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 26,
+   "locate": 9,
+   "compose": 2,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-2419-builtin-1",
+   "arm": "builtin",
+   "calls": 22,
+   "locate": 15,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-2419-builtin-2",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 16,
+   "compose": 0,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-2419-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 6,
+   "compose": 3,
+   "debug": 13,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-2419-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 11,
+   "compose": 0,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-2419-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 31,
+   "locate": 16,
+   "compose": 0,
+   "debug": 19
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-2419-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 6,
+   "compose": 1,
+   "debug": 16
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4057-builtin-1",
+   "arm": "builtin",
+   "calls": 22,
+   "locate": 14,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4057-builtin-2",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 11,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4057-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 12,
+   "compose": 0,
+   "debug": 14,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4057-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 20,
+   "locate": 8,
+   "compose": 1,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 5,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4057-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 16,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4057-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 26,
+   "locate": 21,
+   "compose": 0,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4889-builtin-1",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 11,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4889-builtin-2",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 16,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4889-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 11,
+   "compose": 0,
+   "debug": 3,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 5,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4889-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 15,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 8,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4889-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 12,
+   "locate": 8,
+   "compose": 0,
+   "debug": 4
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-4889-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 12,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-5171-builtin-1",
+   "arm": "builtin",
+   "calls": 20,
+   "locate": 16,
+   "compose": 0,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-5171-builtin-2",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 14,
+   "compose": 0,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-5171-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 10,
+   "compose": 0,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-5171-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 12,
+   "compose": 0,
+   "debug": 8,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-5171-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 10,
+   "locate": 5,
+   "compose": 0,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-5171-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 19,
+   "locate": 12,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-6989-builtin-1",
+   "arm": "builtin",
+   "calls": 28,
+   "locate": 4,
+   "compose": 3,
+   "debug": 20
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-6989-builtin-2",
+   "arm": "builtin",
+   "calls": 28,
+   "locate": 6,
+   "compose": 6,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-6989-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 20,
+   "locate": 6,
+   "compose": 4,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-6989-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 2,
+   "compose": 7,
+   "debug": 4,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-6989-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 7,
+   "compose": 5,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-6989-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 6,
+   "compose": 4,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7000-builtin-1",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 11,
+   "compose": 4,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7000-builtin-2",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 14,
+   "compose": 5,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7000-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 8,
+   "compose": 5,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7000-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 14,
+   "compose": 3,
+   "debug": 4,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7000-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 8,
+   "compose": 7,
+   "debug": 2
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7000-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 23,
+   "locate": 14,
+   "compose": 3,
+   "debug": 5
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7056-builtin-1",
+   "arm": "builtin",
+   "calls": 34,
+   "locate": 21,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7056-builtin-2",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 15,
+   "compose": 0,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7056-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 19,
+   "compose": 0,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 2,
+    "other_graf": 8,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7056-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 15,
+   "compose": 0,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 4,
+    "outline": 2,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7056-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 13,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-beets-7056-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 23,
+   "compose": 0,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-bleve-1956-builtin-1",
+   "arm": "builtin",
+   "calls": 24,
+   "locate": 3,
+   "compose": 1,
+   "debug": 19
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-bleve-1956-builtin-2",
+   "arm": "builtin",
+   "calls": 29,
+   "locate": 8,
+   "compose": 1,
+   "debug": 19
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-bleve-1956-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 5,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-bleve-1956-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 5,
+   "compose": 1,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-bleve-1956-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 4,
+   "compose": 2,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-bleve-1956-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 4,
+   "compose": 1,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-chai-1481-builtin-1",
+   "arm": "builtin",
+   "calls": 6,
+   "locate": 3,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-chai-1481-builtin-2",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 8,
+   "compose": 0,
+   "debug": 23
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-chai-1481-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 25,
+   "locate": 25,
+   "compose": 0,
+   "debug": 23,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 14,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-chai-1481-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 8,
+   "locate": 1,
+   "compose": 1,
+   "debug": 5,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-chai-1481-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 5,
+   "compose": 0,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-chai-1481-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 10,
+   "locate": 3,
+   "compose": 1,
+   "debug": 5
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-425-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 10,
+   "compose": 0,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-425-builtin-2",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 11,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-425-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 24,
+   "locate": 11,
+   "compose": 0,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-425-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 27,
+   "locate": 12,
+   "compose": 0,
+   "debug": 17,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 6,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-425-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 28,
+   "locate": 12,
+   "compose": 0,
+   "debug": 20
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-425-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 9,
+   "compose": 0,
+   "debug": 20
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-525-builtin-1",
+   "arm": "builtin",
+   "calls": 27,
+   "locate": 4,
+   "compose": 8,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-525-builtin-2",
+   "arm": "builtin",
+   "calls": 25,
+   "locate": 3,
+   "compose": 5,
+   "debug": 16
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-525-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 26,
+   "locate": 5,
+   "compose": 5,
+   "debug": 15,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 7,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-525-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 27,
+   "locate": 5,
+   "compose": 7,
+   "debug": 14,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 11,
+    "outline": 2,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-525-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 4,
+   "compose": 5,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-dasel-525-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 28,
+   "locate": 4,
+   "compose": 5,
+   "debug": 18
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-2205-builtin-1",
+   "arm": "builtin",
+   "calls": 28,
+   "locate": 19,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-2205-builtin-2",
+   "arm": "builtin",
+   "calls": 25,
+   "locate": 6,
+   "compose": 3,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-2205-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 4,
+   "compose": 1,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-2205-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 5,
+   "compose": 1,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-2205-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 38,
+   "locate": 20,
+   "compose": 0,
+   "debug": 26
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-2205-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 6,
+   "compose": 7,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-3221-builtin-1",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 10,
+   "compose": 1,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-3221-builtin-2",
+   "arm": "builtin",
+   "calls": 28,
+   "locate": 24,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-3221-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 15,
+   "compose": 0,
+   "debug": 13,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 4,
+    "read_covered": 0,
+    "grep_shown_ident": 9,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-3221-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 28,
+   "locate": 9,
+   "compose": 2,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 7,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-3221-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 15,
+   "locate": 10,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-ent-3221-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 19,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4457-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 6,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4457-builtin-2",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 3,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4457-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 24,
+   "locate": 5,
+   "compose": 5,
+   "debug": 13,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4457-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 3,
+   "compose": 1,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4457-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 20,
+   "locate": 4,
+   "compose": 1,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4457-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 23,
+   "locate": 7,
+   "compose": 4,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4655-builtin-1",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 4,
+   "compose": 3,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4655-builtin-2",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 6,
+   "compose": 3,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4655-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 3,
+   "compose": 3,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4655-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 1,
+   "compose": 3,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4655-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 2,
+   "compose": 3,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-go-github-4655-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 2,
+   "compose": 3,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-3713-builtin-1",
+   "arm": "builtin",
+   "calls": 28,
+   "locate": 9,
+   "compose": 3,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-3713-builtin-2",
+   "arm": "builtin",
+   "calls": 13,
+   "locate": 9,
+   "compose": 0,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-3713-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 11,
+   "compose": 0,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 6,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-3713-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 12,
+   "compose": 0,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-3713-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 10,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-3713-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 6,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4056-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 4,
+   "compose": 1,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4056-builtin-2",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 4,
+   "compose": 7,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4056-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 5,
+   "compose": 1,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4056-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 4,
+   "compose": 4,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4056-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 4,
+   "compose": 3,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4056-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 5,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4414-builtin-1",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 9,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4414-builtin-2",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 13,
+   "compose": 0,
+   "debug": 16
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4414-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 10,
+   "locate": 6,
+   "compose": 0,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4414-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 10,
+   "locate": 7,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 4,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4414-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 19,
+   "locate": 13,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-gqlgen-4414-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 11,
+   "compose": 0,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2406-builtin-1",
+   "arm": "builtin",
+   "calls": 38,
+   "locate": 3,
+   "compose": 1,
+   "debug": 33
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2406-builtin-2",
+   "arm": "builtin",
+   "calls": 31,
+   "locate": 3,
+   "compose": 1,
+   "debug": 26
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2406-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 29,
+   "locate": 2,
+   "compose": 1,
+   "debug": 25,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2406-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 3,
+   "compose": 1,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2406-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 28,
+   "locate": 3,
+   "compose": 1,
+   "debug": 23
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2406-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 4,
+   "compose": 1,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2729-builtin-1",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 11,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2729-builtin-2",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 11,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2729-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 10,
+   "compose": 2,
+   "debug": 2,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2729-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 12,
+   "locate": 9,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2729-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 11,
+   "compose": 1,
+   "debug": 3
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2729-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 12,
+   "locate": 8,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2974-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 18,
+   "compose": 0,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2974-builtin-2",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 19,
+   "compose": 0,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2974-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 23,
+   "compose": 0,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 9,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2974-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 19,
+   "compose": 0,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 8,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2974-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 27,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-2974-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 22,
+   "locate": 22,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-3141-builtin-1",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 13,
+   "compose": 3,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-3141-builtin-2",
+   "arm": "builtin",
+   "calls": 15,
+   "locate": 5,
+   "compose": 1,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-3141-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 5,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-3141-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 6,
+   "compose": 3,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 6,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-3141-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 8,
+   "compose": 1,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-joi-3141-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 9,
+   "compose": 2,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-jwt-442-builtin-1",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 2,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-jwt-442-builtin-2",
+   "arm": "builtin",
+   "calls": 12,
+   "locate": 1,
+   "compose": 1,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-jwt-442-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 2,
+   "compose": 1,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-jwt-442-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 13,
+   "locate": 2,
+   "compose": 1,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 1,
+    "grep_shown_ident": 2,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-jwt-442-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 4,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-jwt-442-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 15,
+   "locate": 2,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3853-builtin-1",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 3,
+   "compose": 3,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3853-builtin-2",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 1,
+   "compose": 3,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3853-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 3,
+   "compose": 4,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 1,
+    "grep_shown_ident": 1,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3853-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 11,
+   "locate": 2,
+   "compose": 2,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3853-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 3,
+   "compose": 4,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3853-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 20,
+   "locate": 5,
+   "compose": 3,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3881-builtin-1",
+   "arm": "builtin",
+   "calls": 22,
+   "locate": 13,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3881-builtin-2",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 14,
+   "compose": 0,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3881-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 18,
+   "compose": 0,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 2,
+    "outline": 3,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3881-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 30,
+   "locate": 18,
+   "compose": 0,
+   "debug": 17,
+   "after_triage": {
+    "read_listed": 6,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 6,
+    "grep_other": 2,
+    "outline": 5,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3881-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 28,
+   "locate": 14,
+   "compose": 0,
+   "debug": 20
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-kratos-3881-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 26,
+   "locate": 9,
+   "compose": 7,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-luxon-1050-builtin-1",
+   "arm": "builtin",
+   "calls": 10,
+   "locate": 7,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-luxon-1050-builtin-2",
+   "arm": "builtin",
+   "calls": 30,
+   "locate": 9,
+   "compose": 0,
+   "debug": 28
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-luxon-1050-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 8,
+   "locate": 5,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-luxon-1050-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 13,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 8,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-luxon-1050-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 13,
+   "locate": 9,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-luxon-1050-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 13,
+   "locate": 8,
+   "compose": 1,
+   "debug": 3
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-mvdan-sh-674-builtin-1",
+   "arm": "builtin",
+   "calls": 28,
+   "locate": 25,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-mvdan-sh-674-builtin-2",
+   "arm": "builtin",
+   "calls": 29,
+   "locate": 26,
+   "compose": 0,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-mvdan-sh-674-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 26,
+   "locate": 22,
+   "compose": 0,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 11,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-mvdan-sh-674-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 30,
+   "locate": 25,
+   "compose": 0,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 14,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-mvdan-sh-674-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 23,
+   "compose": 0,
+   "debug": 5
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-mvdan-sh-674-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 26,
+   "locate": 22,
+   "compose": 0,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-papaparse-1077-builtin-1",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 21,
+   "compose": 0,
+   "debug": 23
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-papaparse-1077-builtin-2",
+   "arm": "builtin",
+   "calls": 29,
+   "locate": 23,
+   "compose": 0,
+   "debug": 22
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-papaparse-1077-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 19,
+   "compose": 0,
+   "debug": 14,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-papaparse-1077-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 11,
+   "locate": 8,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-papaparse-1077-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 32,
+   "locate": 22,
+   "compose": 0,
+   "debug": 16
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-papaparse-1077-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 7,
+   "compose": 3,
+   "debug": 16
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-1649-builtin-1",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 10,
+   "compose": 1,
+   "debug": 5
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-1649-builtin-2",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 10,
+   "compose": 2,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-1649-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 9,
+   "compose": 1,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-1649-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 4,
+   "compose": 1,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 4,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-1649-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 22,
+   "locate": 15,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-1649-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 23,
+   "locate": 14,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-2273-builtin-1",
+   "arm": "builtin",
+   "calls": 12,
+   "locate": 5,
+   "compose": 1,
+   "debug": 5
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-2273-builtin-2",
+   "arm": "builtin",
+   "calls": 12,
+   "locate": 6,
+   "compose": 0,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-2273-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 9,
+   "locate": 3,
+   "compose": 1,
+   "debug": 4,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-2273-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 12,
+   "locate": 2,
+   "compose": 3,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-2273-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 11,
+   "locate": 3,
+   "compose": 1,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-2273-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 5,
+   "compose": 2,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4127-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 5,
+   "compose": 1,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4127-builtin-2",
+   "arm": "builtin",
+   "calls": 23,
+   "locate": 4,
+   "compose": 3,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4127-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 13,
+   "locate": 3,
+   "compose": 2,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4127-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 11,
+   "locate": 3,
+   "compose": 1,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4127-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 20,
+   "locate": 4,
+   "compose": 4,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4127-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 3,
+   "compose": 1,
+   "debug": 12
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4142-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 13,
+   "compose": 0,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4142-builtin-2",
+   "arm": "builtin",
+   "calls": 27,
+   "locate": 6,
+   "compose": 2,
+   "debug": 18
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4142-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 12,
+   "locate": 7,
+   "compose": 1,
+   "debug": 3,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 1,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4142-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 10,
+   "compose": 0,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4142-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 15,
+   "compose": 2,
+   "debug": 9
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-pypdf-4142-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 7,
+   "compose": 6,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-24112-builtin-1",
+   "arm": "builtin",
+   "calls": 29,
+   "locate": 15,
+   "compose": 0,
+   "debug": 24
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-24112-builtin-2",
+   "arm": "builtin",
+   "calls": 25,
+   "locate": 8,
+   "compose": 0,
+   "debug": 24
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-24112-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 41,
+   "locate": 9,
+   "compose": 0,
+   "debug": 35,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-24112-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 43,
+   "locate": 7,
+   "compose": 1,
+   "debug": 34,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 9,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-24112-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 36,
+   "locate": 13,
+   "compose": 0,
+   "debug": 30
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-24112-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 48,
+   "locate": 11,
+   "compose": 0,
+   "debug": 44
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-30644-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 4,
+   "compose": 6,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-30644-builtin-2",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 6,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-30644-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 5,
+   "compose": 10,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-30644-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 7,
+   "compose": 5,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-30644-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 10,
+   "compose": 6,
+   "debug": 7
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-30644-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 8,
+   "compose": 0,
+   "debug": 22
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-7769-builtin-1",
+   "arm": "builtin",
+   "calls": 42,
+   "locate": 30,
+   "compose": 0,
+   "debug": 41
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-7769-builtin-2",
+   "arm": "builtin",
+   "calls": 7,
+   "locate": 7,
+   "compose": 0,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-7769-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 40,
+   "locate": 19,
+   "compose": 0,
+   "debug": 38,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 4,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 4,
+    "outline": 2,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-7769-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 31,
+   "locate": 8,
+   "compose": 0,
+   "debug": 29,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 8,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 7,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-7769-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 44,
+   "locate": 12,
+   "compose": 0,
+   "debug": 42
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-sympy-7769-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 13,
+   "compose": 0,
+   "debug": 16
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-4852-builtin-1",
+   "arm": "builtin",
+   "calls": 71,
+   "locate": 68,
+   "compose": 0,
+   "debug": 44
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-4852-builtin-2",
+   "arm": "builtin",
+   "calls": 52,
+   "locate": 14,
+   "compose": 0,
+   "debug": 40
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-4852-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 58,
+   "locate": 16,
+   "compose": 0,
+   "debug": 45,
+   "after_triage": {
+    "read_listed": 14,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 6,
+    "grep_other": 5,
+    "outline": 1,
+    "other_graf": 5,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-4852-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 41,
+   "locate": 15,
+   "compose": 0,
+   "debug": 28,
+   "after_triage": {
+    "read_listed": 16,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 6,
+    "outline": 2,
+    "other_graf": 4,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-4852-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 48,
+   "locate": 44,
+   "compose": 0,
+   "debug": 36
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-4852-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 37,
+   "locate": 26,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-6322-builtin-1",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 18,
+   "compose": 0,
+   "debug": 10
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-6322-builtin-2",
+   "arm": "builtin",
+   "calls": 39,
+   "locate": 36,
+   "compose": 0,
+   "debug": 6
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-6322-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 27,
+   "locate": 7,
+   "compose": 0,
+   "debug": 25,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 4,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-6322-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 19,
+   "compose": 0,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 11,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-6322-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 32,
+   "locate": 28,
+   "compose": 0,
+   "debug": 23
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-textual-6322-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 17,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-497-builtin-1",
+   "arm": "builtin",
+   "calls": 33,
+   "locate": 7,
+   "compose": 3,
+   "debug": 22
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-497-builtin-2",
+   "arm": "builtin",
+   "calls": 33,
+   "locate": 9,
+   "compose": 8,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-497-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 7,
+   "compose": 2,
+   "debug": 13,
+   "after_triage": {
+    "read_listed": 6,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-497-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 7,
+   "compose": 3,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-497-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 15,
+   "locate": 4,
+   "compose": 2,
+   "debug": 8
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-497-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 26,
+   "locate": 7,
+   "compose": 3,
+   "debug": 15
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-498-builtin-1",
+   "arm": "builtin",
+   "calls": 27,
+   "locate": 4,
+   "compose": 1,
+   "debug": 21
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-498-builtin-2",
+   "arm": "builtin",
+   "calls": 25,
+   "locate": 4,
+   "compose": 1,
+   "debug": 19
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-498-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 32,
+   "locate": 4,
+   "compose": 1,
+   "debug": 26,
+   "after_triage": {
+    "read_listed": 8,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 6,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-498-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 21,
+   "locate": 5,
+   "compose": 1,
+   "debug": 14,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-498-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 31,
+   "locate": 7,
+   "compose": 1,
+   "debug": 22
+  },
+  {
+   "batch": "t14",
+   "trial": "t14-toml-498-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 4,
+   "compose": 1,
+   "debug": 19
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-1061-builtin-1",
+   "arm": "builtin",
+   "calls": 27,
+   "locate": 2,
+   "compose": 1,
+   "debug": 23
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-1061-builtin-2",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 3,
+   "compose": 1,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-1061-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 21,
+   "locate": 3,
+   "compose": 1,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 6,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-1061-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 20,
+   "locate": 6,
+   "compose": 1,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 6,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-1061-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 32,
+   "locate": 5,
+   "compose": 2,
+   "debug": 24
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-1061-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 12,
+   "locate": 2,
+   "compose": 2,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-529-builtin-1",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 5,
+   "compose": 1,
+   "debug": 19
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-529-builtin-2",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 4,
+   "compose": 1,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-529-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 24,
+   "locate": 5,
+   "compose": 1,
+   "debug": 17,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 5,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-529-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 25,
+   "locate": 4,
+   "compose": 4,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 5,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-529-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 11,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-apscheduler-529-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 26,
+   "locate": 3,
+   "compose": 2,
+   "debug": 20
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-281-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 8,
+   "compose": 1,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-281-builtin-2",
+   "arm": "builtin",
+   "calls": 25,
+   "locate": 10,
+   "compose": 1,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-281-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 5,
+   "compose": 1,
+   "debug": 15,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 8,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-281-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 8,
+   "compose": 1,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-281-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 5,
+   "compose": 1,
+   "debug": 18
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-281-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 5,
+   "compose": 2,
+   "debug": 19
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-356-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 15,
+   "compose": 0,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-356-builtin-2",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 11,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-356-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 7,
+   "locate": 4,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-356-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 11,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 4,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 1,
+    "outline": 2,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-356-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 10,
+   "locate": 6,
+   "compose": 0,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-chroma-356-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 19,
+   "locate": 12,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1308-builtin-1",
+   "arm": "builtin",
+   "calls": 11,
+   "locate": 4,
+   "compose": 3,
+   "debug": 3
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1308-builtin-2",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 5,
+   "compose": 8,
+   "debug": 3
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1308-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 3,
+   "compose": 3,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1308-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 5,
+   "compose": 3,
+   "debug": 8,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1308-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 13,
+   "locate": 4,
+   "compose": 3,
+   "debug": 5
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1308-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 13,
+   "locate": 4,
+   "compose": 3,
+   "debug": 5
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1560-builtin-1",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 5,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1560-builtin-2",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 6,
+   "compose": 1,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1560-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 6,
+   "compose": 1,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 4,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1560-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 6,
+   "compose": 1,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1560-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 5,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1560-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 4,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1792-builtin-1",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 3,
+   "compose": 2,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1792-builtin-2",
+   "arm": "builtin",
+   "calls": 13,
+   "locate": 1,
+   "compose": 2,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1792-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 11,
+   "locate": 3,
+   "compose": 2,
+   "debug": 5,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1792-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 5,
+   "compose": 2,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1792-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 15,
+   "locate": 5,
+   "compose": 2,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1792-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 15,
+   "locate": 5,
+   "compose": 2,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1805-builtin-1",
+   "arm": "builtin",
+   "calls": 35,
+   "locate": 1,
+   "compose": 1,
+   "debug": 32
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1805-builtin-2",
+   "arm": "builtin",
+   "calls": 24,
+   "locate": 1,
+   "compose": 1,
+   "debug": 21
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1805-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 27,
+   "locate": 5,
+   "compose": 1,
+   "debug": 20,
+   "after_triage": {
+    "read_listed": 7,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1805-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 37,
+   "locate": 1,
+   "compose": 1,
+   "debug": 34,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 6,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1805-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 28,
+   "locate": 2,
+   "compose": 1,
+   "debug": 24
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-django-ninja-1805-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 27,
+   "locate": 1,
+   "compose": 1,
+   "debug": 24
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-dns-1626-builtin-1",
+   "arm": "builtin",
+   "calls": 15,
+   "locate": 12,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-dns-1626-builtin-2",
+   "arm": "builtin",
+   "calls": 12,
+   "locate": 9,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-dns-1626-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 8,
+   "locate": 5,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-dns-1626-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 10,
+   "locate": 7,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-dns-1626-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 13,
+   "locate": 9,
+   "compose": 2,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-dns-1626-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 22,
+   "locate": 13,
+   "compose": 6,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-falcon-2671-builtin-1",
+   "arm": "builtin",
+   "calls": 15,
+   "locate": 7,
+   "compose": 1,
+   "debug": 6
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-falcon-2671-builtin-2",
+   "arm": "builtin",
+   "calls": 15,
+   "locate": 8,
+   "compose": 1,
+   "debug": 5
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-falcon-2671-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 4,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 1,
+    "read_covered": 2,
+    "grep_shown_ident": 1,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-falcon-2671-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 5,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 2,
+    "read_covered": 1,
+    "grep_shown_ident": 1,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-falcon-2671-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 23,
+   "locate": 8,
+   "compose": 2,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-falcon-2671-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 9,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1387-builtin-1",
+   "arm": "builtin",
+   "calls": 12,
+   "locate": 7,
+   "compose": 3,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1387-builtin-2",
+   "arm": "builtin",
+   "calls": 15,
+   "locate": 10,
+   "compose": 3,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1387-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 24,
+   "locate": 16,
+   "compose": 0,
+   "debug": 14,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 5,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1387-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 13,
+   "compose": 0,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 4,
+    "outline": 2,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1387-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 7,
+   "compose": 2,
+   "debug": 6
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1387-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 23,
+   "locate": 17,
+   "compose": 0,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1612-builtin-1",
+   "arm": "builtin",
+   "calls": 35,
+   "locate": 12,
+   "compose": 5,
+   "debug": 17
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1612-builtin-2",
+   "arm": "builtin",
+   "calls": 27,
+   "locate": 4,
+   "compose": 9,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1612-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 28,
+   "locate": 8,
+   "compose": 6,
+   "debug": 13,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 5,
+    "outline": 1,
+    "other_graf": 4,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1612-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 13,
+   "locate": 8,
+   "compose": 3,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 0,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1612-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 31,
+   "locate": 9,
+   "compose": 5,
+   "debug": 16
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-1612-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 8,
+   "compose": 3,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2124-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 12,
+   "compose": 0,
+   "debug": 16
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2124-builtin-2",
+   "arm": "builtin",
+   "calls": 23,
+   "locate": 13,
+   "compose": 8,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2124-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 12,
+   "compose": 0,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2124-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 20,
+   "locate": 15,
+   "compose": 0,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2124-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 12,
+   "compose": 0,
+   "debug": 15
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2124-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 22,
+   "locate": 16,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2531-builtin-1",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 5,
+   "compose": 2,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2531-builtin-2",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 13,
+   "compose": 1,
+   "debug": 4
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2531-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 5,
+   "compose": 3,
+   "debug": 8,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2531-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 5,
+   "compose": 3,
+   "debug": 13,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 3,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2531-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 11,
+   "compose": 2,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-git-2531-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 22,
+   "locate": 8,
+   "compose": 3,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-1047-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 8,
+   "compose": 2,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-1047-builtin-2",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 6,
+   "compose": 1,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-1047-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 30,
+   "locate": 9,
+   "compose": 9,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 9,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-1047-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 12,
+   "compose": 2,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 8,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-1047-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 8,
+   "compose": 1,
+   "debug": 6
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-1047-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 13,
+   "compose": 1,
+   "debug": 6
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-3087-builtin-1",
+   "arm": "builtin",
+   "calls": 34,
+   "locate": 31,
+   "compose": 0,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-3087-builtin-2",
+   "arm": "builtin",
+   "calls": 29,
+   "locate": 26,
+   "compose": 0,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-3087-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 30,
+   "locate": 26,
+   "compose": 0,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 11,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-3087-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 33,
+   "locate": 30,
+   "compose": 0,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 6,
+    "grep_other": 17,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-3087-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 37,
+   "locate": 33,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-go-swagger-3087-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 32,
+   "locate": 28,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-gocron-877-builtin-1",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 6,
+   "compose": 2,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-gocron-877-builtin-2",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 6,
+   "compose": 1,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-gocron-877-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 5,
+   "compose": 1,
+   "debug": 8,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 3,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-gocron-877-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 6,
+   "compose": 2,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-gocron-877-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 7,
+   "compose": 1,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-gocron-877-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 19,
+   "locate": 4,
+   "compose": 2,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-349-builtin-1",
+   "arm": "builtin",
+   "calls": 23,
+   "locate": 9,
+   "compose": 1,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-349-builtin-2",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 8,
+   "compose": 1,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-349-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 21,
+   "locate": 4,
+   "compose": 1,
+   "debug": 15,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-349-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 27,
+   "locate": 4,
+   "compose": 1,
+   "debug": 21,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-349-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 6,
+   "compose": 2,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-349-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 29,
+   "locate": 6,
+   "compose": 1,
+   "debug": 21
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-521-builtin-1",
+   "arm": "builtin",
+   "calls": 11,
+   "locate": 6,
+   "compose": 1,
+   "debug": 3
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-521-builtin-2",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 3,
+   "compose": 1,
+   "debug": 14
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-521-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 8,
+   "compose": 0,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 5,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-521-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 21,
+   "locate": 4,
+   "compose": 3,
+   "debug": 13,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-521-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 12,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-521-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 30,
+   "locate": 9,
+   "compose": 2,
+   "debug": 18
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-587-builtin-1",
+   "arm": "builtin",
+   "calls": 7,
+   "locate": 4,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-587-builtin-2",
+   "arm": "builtin",
+   "calls": 8,
+   "locate": 5,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-587-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 11,
+   "locate": 8,
+   "compose": 0,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-587-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 9,
+   "locate": 6,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 1,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-587-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 10,
+   "locate": 6,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-node-semver-587-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 12,
+   "locate": 8,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2488-builtin-1",
+   "arm": "builtin",
+   "calls": 24,
+   "locate": 19,
+   "compose": 0,
+   "debug": 17
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2488-builtin-2",
+   "arm": "builtin",
+   "calls": 23,
+   "locate": 16,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2488-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 10,
+   "compose": 0,
+   "debug": 14,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2488-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 9,
+   "compose": 2,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2488-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 12,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2488-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 23,
+   "locate": 11,
+   "compose": 2,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2555-builtin-1",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 10,
+   "compose": 1,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2555-builtin-2",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 5,
+   "compose": 1,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2555-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 20,
+   "locate": 7,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 4,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2555-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 29,
+   "locate": 15,
+   "compose": 2,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 6,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2555-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 5,
+   "compose": 1,
+   "debug": 18
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-oapi-codegen-2555-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 20,
+   "locate": 7,
+   "compose": 2,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1814-builtin-1",
+   "arm": "builtin",
+   "calls": 23,
+   "locate": 1,
+   "compose": 3,
+   "debug": 18
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1814-builtin-2",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 3,
+   "compose": 1,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1814-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 2,
+   "compose": 1,
+   "debug": 15,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1814-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 25,
+   "locate": 2,
+   "compose": 3,
+   "debug": 19,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1814-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 28,
+   "locate": 4,
+   "compose": 1,
+   "debug": 22
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1814-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 26,
+   "locate": 3,
+   "compose": 6,
+   "debug": 16
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1842-builtin-1",
+   "arm": "builtin",
+   "calls": 11,
+   "locate": 4,
+   "compose": 5,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1842-builtin-2",
+   "arm": "builtin",
+   "calls": 9,
+   "locate": 1,
+   "compose": 5,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1842-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 12,
+   "locate": 1,
+   "compose": 1,
+   "debug": 9,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1842-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 3,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 4,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1842-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 9,
+   "locate": 2,
+   "compose": 4,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1842-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 9,
+   "locate": 2,
+   "compose": 4,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1890-builtin-1",
+   "arm": "builtin",
+   "calls": 22,
+   "locate": 11,
+   "compose": 9,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1890-builtin-2",
+   "arm": "builtin",
+   "calls": 22,
+   "locate": 11,
+   "compose": 9,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1890-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 32,
+   "locate": 12,
+   "compose": 9,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 9,
+    "read_covered": 3,
+    "grep_shown_ident": 2,
+    "grep_other": 4,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1890-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 12,
+   "compose": 9,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 2,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1890-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 12,
+   "compose": 9,
+   "debug": 3
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1890-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 6,
+   "compose": 8,
+   "debug": 3
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1914-builtin-1",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 3,
+   "compose": 4,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1914-builtin-2",
+   "arm": "builtin",
+   "calls": 18,
+   "locate": 4,
+   "compose": 4,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1914-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 12,
+   "locate": 3,
+   "compose": 2,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1914-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 12,
+   "locate": 3,
+   "compose": 3,
+   "debug": 5,
+   "after_triage": {
+    "read_listed": 0,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1914-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 3,
+   "compose": 3,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1914-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 11,
+   "locate": 3,
+   "compose": 1,
+   "debug": 6
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1921-builtin-1",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 5,
+   "compose": 5,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1921-builtin-2",
+   "arm": "builtin",
+   "calls": 21,
+   "locate": 5,
+   "compose": 2,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1921-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 15,
+   "locate": 3,
+   "compose": 1,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1921-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 1,
+   "compose": 1,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 5,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1921-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 3,
+   "compose": 1,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-revive-1921-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 3,
+   "compose": 1,
+   "debug": 19
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-1741-builtin-1",
+   "arm": "builtin",
+   "calls": 32,
+   "locate": 14,
+   "compose": 1,
+   "debug": 16
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-1741-builtin-2",
+   "arm": "builtin",
+   "calls": 31,
+   "locate": 21,
+   "compose": 0,
+   "debug": 18
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-1741-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 26,
+   "locate": 11,
+   "compose": 2,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 6,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 9,
+    "grep_other": 1,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-1741-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 27,
+   "locate": 11,
+   "compose": 1,
+   "debug": 14,
+   "after_triage": {
+    "read_listed": 7,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 2,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-1741-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 11,
+   "compose": 1,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-1741-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 18,
+   "compose": 0,
+   "debug": 15
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2663-builtin-1",
+   "arm": "builtin",
+   "calls": 34,
+   "locate": 30,
+   "compose": 0,
+   "debug": 19
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2663-builtin-2",
+   "arm": "builtin",
+   "calls": 38,
+   "locate": 32,
+   "compose": 0,
+   "debug": 17
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2663-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 30,
+   "locate": 22,
+   "compose": 0,
+   "debug": 15,
+   "after_triage": {
+    "read_listed": 8,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 5,
+    "outline": 3,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2663-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 29,
+   "locate": 22,
+   "compose": 0,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 7,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 4,
+    "outline": 2,
+    "other_graf": 3,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2663-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 31,
+   "locate": 31,
+   "compose": 0,
+   "debug": 17
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2663-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 39,
+   "locate": 31,
+   "compose": 0,
+   "debug": 25
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2668-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 7,
+   "compose": 2,
+   "debug": 9
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2668-builtin-2",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 6,
+   "compose": 2,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2668-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 4,
+   "compose": 4,
+   "debug": 8,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 0,
+    "grep_other": 4,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2668-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 19,
+   "locate": 6,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2668-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 6,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2668-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 5,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2701-builtin-1",
+   "arm": "builtin",
+   "calls": 9,
+   "locate": 6,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2701-builtin-2",
+   "arm": "builtin",
+   "calls": 11,
+   "locate": 8,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2701-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 9,
+   "locate": 6,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 0,
+    "read_covered": 1,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2701-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 8,
+   "locate": 5,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2701-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 8,
+   "locate": 4,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sinon-2701-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 9,
+   "locate": 4,
+   "compose": 1,
+   "debug": 3
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8805-builtin-1",
+   "arm": "builtin",
+   "calls": 47,
+   "locate": 24,
+   "compose": 0,
+   "debug": 37
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8805-builtin-2",
+   "arm": "builtin",
+   "calls": 54,
+   "locate": 31,
+   "compose": 3,
+   "debug": 19
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8805-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 43,
+   "locate": 29,
+   "compose": 0,
+   "debug": 28,
+   "after_triage": {
+    "read_listed": 11,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 12,
+    "grep_other": 5,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8805-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 37,
+   "locate": 22,
+   "compose": 2,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 13,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 11,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8805-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 29,
+   "locate": 15,
+   "compose": 0,
+   "debug": 16
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8805-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 41,
+   "locate": 16,
+   "compose": 0,
+   "debug": 28
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8806-builtin-1",
+   "arm": "builtin",
+   "calls": 40,
+   "locate": 10,
+   "compose": 2,
+   "debug": 27
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8806-builtin-2",
+   "arm": "builtin",
+   "calls": 47,
+   "locate": 9,
+   "compose": 2,
+   "debug": 35
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8806-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 40,
+   "locate": 8,
+   "compose": 2,
+   "debug": 29,
+   "after_triage": {
+    "read_listed": 11,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 8,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8806-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 48,
+   "locate": 8,
+   "compose": 3,
+   "debug": 36,
+   "after_triage": {
+    "read_listed": 14,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 12,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8806-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 39,
+   "locate": 8,
+   "compose": 2,
+   "debug": 28
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-sqlglot-8806-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 24,
+   "locate": 16,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-4979-builtin-1",
+   "arm": "builtin",
+   "calls": 20,
+   "locate": 12,
+   "compose": 1,
+   "debug": 6
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-4979-builtin-2",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 14,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-4979-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 9,
+   "compose": 1,
+   "debug": 11,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 4,
+    "read_covered": 0,
+    "grep_shown_ident": 4,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-4979-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 9,
+   "compose": 1,
+   "debug": 7,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 5,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-4979-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 7,
+   "compose": 2,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-4979-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 23,
+   "locate": 16,
+   "compose": 0,
+   "debug": 16
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6375-builtin-1",
+   "arm": "builtin",
+   "calls": 9,
+   "locate": 6,
+   "compose": 0,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6375-builtin-2",
+   "arm": "builtin",
+   "calls": 11,
+   "locate": 11,
+   "compose": 0,
+   "debug": 5
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6375-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 16,
+   "locate": 16,
+   "compose": 0,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6375-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 12,
+   "locate": 9,
+   "compose": 0,
+   "debug": 5,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6375-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 13,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6375-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 11,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6757-builtin-1",
+   "arm": "builtin",
+   "calls": 16,
+   "locate": 13,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6757-builtin-2",
+   "arm": "builtin",
+   "calls": 12,
+   "locate": 9,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6757-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 12,
+   "compose": 1,
+   "debug": 4,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 4,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6757-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 9,
+   "locate": 6,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6757-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 13,
+   "locate": 4,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6757-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 10,
+   "locate": 6,
+   "compose": 0,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6879-builtin-1",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 13,
+   "compose": 0,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6879-builtin-2",
+   "arm": "builtin",
+   "calls": 9,
+   "locate": 6,
+   "compose": 0,
+   "debug": 5
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6879-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 10,
+   "locate": 2,
+   "compose": 2,
+   "debug": 5,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6879-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 10,
+   "locate": 2,
+   "compose": 2,
+   "debug": 5,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6879-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 7,
+   "compose": 1,
+   "debug": 7
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6879-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 16,
+   "locate": 11,
+   "compose": 1,
+   "debug": 3
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6911-builtin-1",
+   "arm": "builtin",
+   "calls": 20,
+   "locate": 14,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6911-builtin-2",
+   "arm": "builtin",
+   "calls": 26,
+   "locate": 17,
+   "compose": 0,
+   "debug": 11
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6911-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 27,
+   "locate": 19,
+   "compose": 0,
+   "debug": 10,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 5,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6911-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 22,
+   "locate": 14,
+   "compose": 0,
+   "debug": 8,
+   "after_triage": {
+    "read_listed": 4,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 2,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6911-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 12,
+   "compose": 0,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6911-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 17,
+   "locate": 10,
+   "compose": 0,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6985-builtin-1",
+   "arm": "builtin",
+   "calls": 32,
+   "locate": 7,
+   "compose": 1,
+   "debug": 23
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6985-builtin-2",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 5,
+   "compose": 1,
+   "debug": 10
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6985-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 17,
+   "locate": 3,
+   "compose": 1,
+   "debug": 12,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 3,
+    "grep_other": 3,
+    "outline": 0,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6985-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 21,
+   "locate": 2,
+   "compose": 1,
+   "debug": 17,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 1,
+    "grep_other": 5,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6985-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 10,
+   "compose": 2,
+   "debug": 12
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-6985-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 5,
+   "compose": 1,
+   "debug": 18
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-7024-builtin-1",
+   "arm": "builtin",
+   "calls": 19,
+   "locate": 16,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-7024-builtin-2",
+   "arm": "builtin",
+   "calls": 14,
+   "locate": 11,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-7024-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 18,
+   "locate": 14,
+   "compose": 2,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 1,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-7024-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 14,
+   "locate": 11,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 0,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-7024-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 14,
+   "compose": 1,
+   "debug": 2
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-streamlink-7024-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 18,
+   "locate": 13,
+   "compose": 0,
+   "debug": 8
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1493-builtin-1",
+   "arm": "builtin",
+   "calls": 39,
+   "locate": 9,
+   "compose": 4,
+   "debug": 25
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1493-builtin-2",
+   "arm": "builtin",
+   "calls": 24,
+   "locate": 5,
+   "compose": 5,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1493-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 35,
+   "locate": 7,
+   "compose": 8,
+   "debug": 19,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 5,
+    "outline": 1,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1493-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 32,
+   "locate": 7,
+   "compose": 4,
+   "debug": 20,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 7,
+    "grep_other": 5,
+    "outline": 1,
+    "other_graf": 2,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1493-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 14,
+   "locate": 9,
+   "compose": 3,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1493-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 30,
+   "locate": 16,
+   "compose": 0,
+   "debug": 23
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1926-builtin-1",
+   "arm": "builtin",
+   "calls": 11,
+   "locate": 8,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1926-builtin-2",
+   "arm": "builtin",
+   "calls": 8,
+   "locate": 5,
+   "compose": 1,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1926-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 8,
+   "locate": 5,
+   "compose": 1,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 3,
+    "read_unlisted": 0,
+    "read_covered": 2,
+    "grep_shown_ident": 0,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1926-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 8,
+   "locate": 4,
+   "compose": 2,
+   "debug": 1,
+   "after_triage": {
+    "read_listed": 2,
+    "read_unlisted": 0,
+    "read_covered": 1,
+    "grep_shown_ident": 0,
+    "grep_other": 0,
+    "outline": 0,
+    "other_graf": 1,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1926-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 10,
+   "locate": 4,
+   "compose": 1,
+   "debug": 4
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-1926-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 25,
+   "locate": 19,
+   "compose": 0,
+   "debug": 14
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-2158-builtin-1",
+   "arm": "builtin",
+   "calls": 43,
+   "locate": 18,
+   "compose": 1,
+   "debug": 23
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-2158-builtin-2",
+   "arm": "builtin",
+   "calls": 30,
+   "locate": 25,
+   "compose": 0,
+   "debug": 17
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-2158-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 30,
+   "locate": 12,
+   "compose": 1,
+   "debug": 16,
+   "after_triage": {
+    "read_listed": 5,
+    "read_unlisted": 2,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 4,
+    "outline": 2,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-2158-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 39,
+   "locate": 32,
+   "compose": 0,
+   "debug": 20,
+   "after_triage": {
+    "read_listed": 9,
+    "read_unlisted": 4,
+    "read_covered": 0,
+    "grep_shown_ident": 6,
+    "grep_other": 7,
+    "outline": 2,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-2158-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 30,
+   "locate": 24,
+   "compose": 0,
+   "debug": 18
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-svgo-2158-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 39,
+   "locate": 32,
+   "compose": 0,
+   "debug": 22
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-vale-1105-builtin-1",
+   "arm": "builtin",
+   "calls": 17,
+   "locate": 5,
+   "compose": 10,
+   "debug": 1
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-vale-1105-builtin-2",
+   "arm": "builtin",
+   "calls": 30,
+   "locate": 4,
+   "compose": 19,
+   "debug": 6
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-vale-1105-graf_installed-1",
+   "arm": "graf_installed",
+   "calls": 23,
+   "locate": 6,
+   "compose": 10,
+   "debug": 6,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 3,
+    "read_covered": 0,
+    "grep_shown_ident": 2,
+    "grep_other": 3,
+    "outline": 1,
+    "other_graf": 0,
+    "first_excerpt_is_test": false
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-vale-1105-graf_installed-2",
+   "arm": "graf_installed",
+   "calls": 40,
+   "locate": 9,
+   "compose": 0,
+   "debug": 31,
+   "after_triage": {
+    "read_listed": 1,
+    "read_unlisted": 6,
+    "read_covered": 0,
+    "grep_shown_ident": 5,
+    "grep_other": 4,
+    "outline": 2,
+    "other_graf": 1,
+    "first_excerpt_is_test": true
+   }
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-vale-1105-graphify_installed-1",
+   "arm": "graphify_installed",
+   "calls": 20,
+   "locate": 9,
+   "compose": 0,
+   "debug": 13
+  },
+  {
+   "batch": "t15",
+   "trial": "t15-vale-1105-graphify_installed-2",
+   "arm": "graphify_installed",
+   "calls": 21,
+   "locate": 6,
+   "compose": 0,
+   "debug": 15
+  }
+ ]
+}

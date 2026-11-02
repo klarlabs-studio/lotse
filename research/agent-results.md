@@ -2,6 +2,21 @@
 
 Three preregistered batches with the same solver and spend cap. Batches `t` and `t2` use 20 synthetic fault-repair tasks; batch `t3` uses 18 natural tasks mined from real upstream fixes. The newest batch is reported first.
 
+## Where the agent loop goes (exploratory, t14 and t15 transcripts, no model calls)
+
+**Finding: about half of every arm's tool calls come after the first test run, and the first test run fails in about 85% of attempts. Graf's triage saves about 1.5 calls in the locate phase and none afterwards.** This is a diagnostic of finished batches. It motivates the next hypothesis and supports no claim. Script: `benchmark/loop_phases.py t14 t15`; results: [loop-phases.json](../results/loop-phases.json).
+
+| Arm (182 attempts each) | Mean calls | Locate (before first edit) | Compose (to first test) | Debug (after first test) | First test passes |
+|---|---|---|---|---|---|
+| builtin | 22.2 | 10.3 | 1.8 | 11.8 | 31 |
+| graphify_installed | 22.2 | 9.9 | 1.7 | 12.3 | 23 |
+| graf_installed | 20.9 | 8.8 | 1.9 | 11.1 | 25 |
+
+- **Cost is fixed context times turns.** An attempt reads about 1M cached input tokens, Claude Code's own context re-read each turn. Tool results add only about 9k tokens per attempt, so payload size barely matters and turns do.
+- **First failures are mostly behavioural.** Of the first failed test runs, about 70% are assertion failures and about 16% are missing or mismatched APIs, in every arm. The agent finds the right file but writes the wrong first fix, then spends about 13 calls (4 Grep, 3 Read, 3 Edit) working out what the test expects.
+- **Triage's code excerpts miss.** Triage's file list names a faulted file in about 95% of calls, but its "Likely code" excerpts (4.7 per call) include the faulted file in only 94 of 182 calls, put it first in 52, and 26% of excerpts are test code. The lines the agent later reads fall inside an excerpt in 0.07 reads per attempt, so the excerpts neither save reads nor show the code that gets changed.
+- **After triage** the agent still makes about 3 Reads of files triage listed, 1.5 of files it didn't, 2.7 Greps for identifiers triage had shown, and 2.6 other Greps.
+
 ## Batch t15 (v150): graph-triage on fresh search-heavy tasks; fails
 
 **Outcome: graf with the graph-triage build is not significantly cheaper than either comparator, so the preregistered rule fails and graph-triage stays experimental.** On 44 fresh search-heavy natural tasks (2 attempts per task and arm, claude-haiku-5-5 under Claude Code 2.1.316), graf cost $1.395 in total, against $1.425 for `builtin` and $1.508 for `graphify_installed` (Graphify 0.9.100). Against `builtin` it saved $0.0003 per task (p = 0.345, cheaper on 21 of 44 tasks). Against Graphify it saved $0.0013 per task (p = 0.052, cheaper on 27 of 44), just short of alpha 0.05. Success was non-inferior to both within the 0.10 margin: 66 of 88 passes, against 68 for `builtin` and 64 for Graphify. The rule needs cost superiority against both.
