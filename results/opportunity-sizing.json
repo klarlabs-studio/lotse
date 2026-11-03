@@ -1,0 +1,81 @@
+{
+ "test_targeting": {
+  "sessions_scanned": 958,
+  "test_running_sessions": 37,
+  "test_calls_per_session": 290.65,
+  "setup_failures_per_session": 3.11,
+  "unscoped_share_of_test_calls": 0.057,
+  "test_output_share_of_tool_results": 0.023,
+  "clears_threshold": true
+ },
+ "context_profile": {
+  "benchmark_by_arm": {
+   "builtin": {
+    "attempts": 562,
+    "median_turns": 12.0,
+    "median_prefix": 7662.0,
+    "median_turn_context": 18013.274725274725,
+    "median_prefix_share": 0.46
+   },
+   "graphify_installed": {
+    "attempts": 562,
+    "median_turns": 14.0,
+    "median_prefix": 9591.0,
+    "median_turn_context": 21698.863636363636,
+    "median_prefix_share": 0.449
+   },
+   "graf_installed": {
+    "attempts": 562,
+    "median_turns": 12.0,
+    "median_prefix": 9300.0,
+    "median_turn_context": 19692.79411764706,
+    "median_prefix_share": 0.481
+   }
+  },
+  "t15_builtin_median_prefix": 7972.0,
+  "real_sessions": {
+   "attempts": 47,
+   "median_turns": 764,
+   "median_prefix": 71060,
+   "median_turn_context": 266051.00076824584,
+   "median_prefix_share": 0.267
+  },
+  "real_median_excess_share": 0.234,
+  "clears_threshold": true
+ },
+ "impact_check": {
+  "repeat_failures": {
+   "failures": 834,
+   "impact_linked": 23,
+   "impact_linked_share": 0.028,
+   "upper_bound_share": 0.046
+  },
+  "first_failures": {
+   "failures": 1076,
+   "impact_linked": 60,
+   "impact_linked_share": 0.056,
+   "upper_bound_share": 0.271
+  },
+  "repeat_by_arm": {
+   "builtin": {
+    "failures": 271,
+    "impact_linked": 6,
+    "impact_linked_share": 0.022,
+    "upper_bound_share": 0.037
+   },
+   "graphify_installed": {
+    "failures": 265,
+    "impact_linked": 9,
+    "impact_linked_share": 0.034,
+    "upper_bound_share": 0.057
+   },
+   "graf_installed": {
+    "failures": 298,
+    "impact_linked": 8,
+    "impact_linked_share": 0.027,
+    "upper_bound_share": 0.044
+   }
+  },
+  "clears_threshold": false
+ }
+}

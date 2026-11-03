@@ -235,6 +235,8 @@ enum Command {
         #[arg(allow_hyphen_values = true)]
         issue: String,
     },
+    /// Experimental: distinct cross-file call links (caller file, callee file) from the call edges.
+    CallLinks,
     /// Experimental: a source file's functions with line ranges, to read one function, not the file.
     Outline {
         path: String,
@@ -629,6 +631,25 @@ fn run() -> Result<()> {
             println!(
                 "{}",
                 serde_json::to_string(&serde_json::json!({ "files": files }))?
+            );
+            Ok(())
+        }
+        Command::CallLinks => {
+            let indexed = graf::triage::indexed_units(&index)?;
+            let links: std::collections::BTreeSet<(&str, &str)> = indexed
+                .edges
+                .iter()
+                .map(|&(a, b)| {
+                    (
+                        indexed.units[a].path.as_str(),
+                        indexed.units[b].path.as_str(),
+                    )
+                })
+                .filter(|(a, b)| a != b)
+                .collect();
+            println!(
+                "{}",
+                serde_json::to_string(&serde_json::json!({ "links": links }))?
             );
             Ok(())
         }
