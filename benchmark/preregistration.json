@@ -1,5 +1,5 @@
 {
-  "version": 151,
+  "version": 152,
   "frozen_on": "2026-10-24",
   "rationale": "research/next-experiments.md; sources in research/evidence.md",
   "parameter_note": "margin, tail threshold, primary budget, and latency/trial counts were chosen on 2026-10-18 from the proposal's examples, before any held-out data existed",
@@ -3770,6 +3770,11 @@
       "version": 151,
       "date": "2026-11-02",
       "reason": "exploratory pilot t15x frozen before any of its model calls: graf-triage-excerpts (graph-triage + triage-excerpts at 0bd4c41) as graf_installed on the 44 t15 tasks, 1 attempt each, compared descriptively with batch t15; no decision rule, no claim"
+    },
+    {
+      "version": 152,
+      "date": "2026-11-03",
+      "reason": "opportunity_sizing frozen before computing any of its measures: offline sizing of test targeting (real sessions), impact check (t10-t15 transcripts) and context profile (both), with build thresholds"
     }
   ],
   "arms": {
@@ -7569,5 +7574,55 @@
     "outputs": "results/find-replay-screen.json (rows and summary); the script benchmark/find_replay.py",
     "next_if_pass": "a new natural-task catalog (t10) under the v95 fill rule on fresh repositories, then a batch freezing arm graf_find_orient (graf_pointer_orient plus a graf-only find tool, as outline is graf-only) against graphify_orient, 144 runs, frozen before any model call",
     "next_if_fail": "no batch; the result is reported and find stays experimental"
+  },
+  "opportunity_sizing": {
+    "frozen_on": "2026-11-03",
+    "purpose": "Decide which of three tool ideas is worth a preregistered pilot. Offline, no model calls, exploratory: no claim rests on it.",
+    "seen_before_freezing": "Tool-call name counts for t14/t15 attempts (no outcomes) and the usage block of one t15 builtin attempt; the harness's zero-argument test tool was established from code.",
+    "data": {
+      "benchmark": "Batch attempts of t10-t15 (screens excluded), all arms: .research/trials/<batch>-*/agent-stream.jsonl.",
+      "real_sessions": "The operator's own Claude Code main-session transcripts under ~/.claude/projects modified within 60 days of 2026-11-03, subagent transcripts excluded. Read locally; only aggregate counts are written to results, never prompts, paths, commands or outputs."
+    },
+    "options": {
+      "test_targeting": {
+        "data": "real_sessions (the benchmark gives agents a test tool that already runs exactly the right tests, so it has no headroom there by construction)",
+        "test_call": "a Bash call whose command runs a test runner: cargo test|cargo nextest|go test|pytest|python -m pytest|python -m unittest|npm test|npm run test|yarn test|pnpm test|npx jest|npx vitest|jest|vitest|make test|mvn test|gradle test|ctest|bundle exec rspec|rspec|mix test",
+        "setup_failure": "a test call whose result reports no test outcome (no pass/fail/ok/FAIL summary line) and matches a setup-error pattern (command not found, no such file, cannot find, not found, no tests ran, no test files, unknown option, unrecognized, ModuleNotFoundError, could not find, error: no such)",
+        "unscoped": "a test call with no path, file, package, name or filter argument beyond the runner and its flags",
+        "metrics": [
+          "sessions with a test call",
+          "test calls per such session",
+          "setup failures per such session",
+          "unscoped calls per such session",
+          "share of the session's tool-result tokens (chars/4) that are test output"
+        ],
+        "build_threshold": "mean setup failures per test-running session >= 2.0, or test output >= 25% of tool-result tokens in test-running sessions with unscoped calls >= 50% of test calls"
+      },
+      "impact_check": {
+        "data": "benchmark",
+        "repeat_failure": "the k-th failed test-tool result of an attempt, k >= 2",
+        "impact_linked": "the edits between that failure and the next test or finish touch a non-test source file that was neither Read nor edited before the failure and that is call-linked at file level, in either direction, to a file edited before the failure; call links come from graf's call edges over the prepared (pre-fix) workspace",
+        "metrics": [
+          "repeat failures",
+          "impact-linked share",
+          "upper bound: share whose next edits touch any not-yet-opened non-test source file",
+          "the same for first failures (reported, not decided on)"
+        ],
+        "build_threshold": "impact-linked share of repeat failures >= 0.25"
+      },
+      "context_profile": {
+        "data": "both",
+        "turn": "one distinct assistant message id; its context = input + cache_creation + cache_read tokens",
+        "prefix": "the first turn's context",
+        "metrics": [
+          "median prefix and median per-turn context",
+          "prefix share = sum over turns of prefix / sum of context",
+          "excess prefix = real-session prefix minus the median prefix of t15 builtin attempts",
+          "excess share = excess prefix x turns / sum of context, median over real sessions with >= 5 turns"
+        ],
+        "build_threshold": "median excess share >= 0.10"
+      }
+    },
+    "after": "An option that clears its threshold gets its own preregistered pilot before any claim; one that does not is dropped. Several clearing: the largest margin over its threshold goes first."
   }
 }
